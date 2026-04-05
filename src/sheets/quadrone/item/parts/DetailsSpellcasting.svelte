@@ -49,13 +49,15 @@
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
       class="spell-method-search button button-icon-only"
       onclick={() => {
-        new MaxPreparedSpellsConfigFormApplication(
-          context.item.name,
-          context.item,
-          {
-            document: context.item,
-          },
-        ).render({ force: true });
+        context.sheet._renderChild(
+          new MaxPreparedSpellsConfigFormApplication(
+            context.item.name,
+            context.item,
+            {
+              document: context.item,
+            },
+          ),
+        );
       }}
       ><i class="fa-solid fa-search fa-fw"></i>
     </button>

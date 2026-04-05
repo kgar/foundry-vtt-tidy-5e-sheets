@@ -91,11 +91,12 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+        
+        this._renderChild(new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        }));
       },
     },
     dragDrop: [

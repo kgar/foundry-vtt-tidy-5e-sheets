@@ -103,9 +103,11 @@
           icon: 'fa-solid fa-list-check',
           label: 'TIDY5E.Utilities.AssignSpellsToClasses',
           onclick: (ev, doc) =>
-            new SpellSourceItemAssignmentsFormApplication({
-              document: context.actor,
-            }).render({ force: true }),
+            context.sheet._renderChild(
+              new SpellSourceItemAssignmentsFormApplication({
+                document: context.actor,
+              }),
+            ),
         },
       ],
     },
@@ -129,7 +131,12 @@
   });
 </script>
 
-<ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
+<ItemsActionBar
+  bind:searchCriteria
+  sections={spellbook}
+  {tabId}
+  {tabOptionGroups}
+/>
 
 <div class="tab-content">
   {#if showSheetPins}

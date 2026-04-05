@@ -90,6 +90,8 @@ export interface ApplicationRenderOptions {
    * custom content management.
    */
   soft?: boolean;
+  /** The desired sheet mode. */
+  mode?: number;
 }
 
 export interface ApplicationWindowRenderOptions {

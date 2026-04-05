@@ -15,7 +15,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       callback: async () => {
         const actor = await fromUuid(occupantUuid);
-        actor?.sheet.render(true);
+        app._openDocumentSheet(actor);
       },
       condition: () =>
         app.actor.isOwner && !FoundryAdapter.isLockedInCompendium(app.actor),

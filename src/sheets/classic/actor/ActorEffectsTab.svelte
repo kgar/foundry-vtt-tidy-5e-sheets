@@ -55,7 +55,7 @@
         result.push({
           component: ItemControl,
           props: ({ effect }) => ({
-            onclick: () => effect.deleteDialog(),
+            onclick: () => effect.deleteDialog({ sheet: context.actor?.sheet }),
             title: localize('DND5E.EffectDelete'),
             iconCssClass: 'fas fa-trash',
           }),

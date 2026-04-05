@@ -191,12 +191,12 @@
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(ev) =>
-        context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
+        context.editable && context.sheet.tryUseItem(ctx.document, ev)}
       onkeydown={(ev) =>
         ev.key === 'Enter' ||
         (ev.key === ' ' &&
           context.editable &&
-          FoundryAdapter.actorTryUseItem(ctx.document, ev))}
+          context.sheet.tryUseItem(ctx.document, ev))}
       data-has-roll-modes
       aria-label={ctx.document.name}
     >
@@ -367,7 +367,8 @@
   {#if context.unlocked && !isEditing}
     <a
       class="button button-icon-only button-borderless highlight-on-hover"
-      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+      data-action="showContextMenu"
+      data-target-selector="[data-item-id]"
     >
       <i class="fas fa-ellipsis-vertical"></i>
     </a>

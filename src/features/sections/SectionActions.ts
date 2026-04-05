@@ -172,7 +172,7 @@ class SectionActions {
         iconClass: 'fa-solid fa-diagram-cells',
         execute: (params) => {
           const firstMember = params.section.members[0].actor;
-          new SectionSelectorApplication({
+          const app = new SectionSelectorApplication({
             flag: `${TidyFlags.sections.prop}.${firstMember.id}`,
             callingDocument: group,
             document: group,
@@ -203,7 +203,9 @@ class SectionActions {
                 }
               ),
             },
-          }).render({ force: true });
+          });
+
+          group.sheet._renderChild(app);
         },
       });
     }
@@ -266,7 +268,7 @@ class SectionActions {
     return unlocked && actor.isOwner && !!section.items.length
       ? {
         execute: () => {
-          new SectionSelectorApplication({
+          const app = new SectionSelectorApplication({
             flag: flagProp,
             callingDocument: actor,
             document: section.items[0],
@@ -292,7 +294,9 @@ class SectionActions {
                 }
               ),
             },
-          }).render({ force: true });
+          });
+
+          actor.sheet._renderChild(app);
         },
         iconClass: 'fa-solid fa-diagram-cells',
         label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
@@ -309,7 +313,7 @@ class SectionActions {
     return unlocked && container.isOwner && !!section.items.length
       ? {
         execute: () => {
-          new SectionSelectorApplication({
+          const app = new SectionSelectorApplication({
             flag: flagProp,
             callingDocument: container,
             document: section.items[0],
@@ -333,7 +337,9 @@ class SectionActions {
               ),
             },
             sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-          }).render({ force: true });
+          });
+
+          container.sheet._renderChild(app);
         },
         iconClass: 'fa-solid fa-diagram-cells',
         label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',

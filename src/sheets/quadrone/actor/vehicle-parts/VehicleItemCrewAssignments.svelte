@@ -32,18 +32,6 @@
 
     context.sheet.browseAssignActor(item);
   }
-
-  function onMemberClicked(
-    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    actor: Actor5e,
-  ): any {
-    if (context.unlocked) {
-      EventHelper.triggerContextMenu(ev);
-      return;
-    }
-
-    actor.sheet.render({ force: true });
-  }
 </script>
 
 <TidyTable key="assigned" toggleable={false}>
@@ -68,24 +56,31 @@
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
                 <a
-                  onclick={(ev) =>
-                    context.editable &&
-                    context.unlocked &&
-                    EventHelper.triggerContextMenu(ev)}
+                  data-action="showContextMenu"
+                  data-target-selector="[data-context-menu]"
                 >
                   <i class="fa-solid fa-link-slash broken-link-icon"></i>
                 </a>
               </li>
             {:else if slot.actor}
+              {@const memberAttributes =
+                context.editable && !context.unlocked
+                  ? {
+                      'data-action': 'showDocument',
+                      'data-uuid': slot.actor.uuid,
+                    }
+                  : context.editable && context.unlocked
+                    ? {
+                        'data-action': 'showContextMenu',
+                        'data-target-selector': '[data-context-menu]',
+                      }
+                    : {}}
               <li
                 class="slot member-slot"
                 data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
-                <a
-                  onclick={(ev) =>
-                    context.editable && onMemberClicked(ev, slot.actor)}
-                >
+                <a {...memberAttributes}>
                   <img src={slot.actor.img} alt={slot.actor.name} />
                 </a>
               </li>

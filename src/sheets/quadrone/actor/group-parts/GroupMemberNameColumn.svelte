@@ -40,11 +40,8 @@
       { video: member.portrait.isVideo },
     ]}
     style="position: relative;"
-    onclick={() => member.actor.sheet.render(true)}
-    onkeydown={(e) =>
-      e.key === 'Enter' || e.key === ' '
-        ? member.actor.sheet.render(true)
-        : null}
+    data-action="showDocument"
+    data-uuid={member.actor.uuid}
     onmouseenter={() => (emphasizedActorRef.value = member)}
     onmouseleave={() => (emphasizedActorRef.value = undefined)}
   >
@@ -76,11 +73,8 @@
     role="button"
     data-keyboard-focus
     tabindex={0}
-    onclick={() => member.actor.sheet.render(true)}
-    onkeydown={(e) =>
-      e.key === 'Enter' || e.key === ' '
-        ? member.actor.sheet.render(true)
-        : null}
+    data-action="showDocument"
+    data-uuid={member.actor.uuid}
     onmouseenter={() => (emphasizedActorRef.value = member)}
     onmouseleave={() => (emphasizedActorRef.value = undefined)}
   >

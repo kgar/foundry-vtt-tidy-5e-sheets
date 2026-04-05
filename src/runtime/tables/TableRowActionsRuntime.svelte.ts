@@ -75,7 +75,7 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog(),
+              deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
@@ -130,7 +130,7 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog(),
+              deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
@@ -188,7 +188,7 @@ class TableRowActionsRuntime {
                   component: DeleteButton,
                   props: {
                     doc: args.data,
-                    deleteFn: () => args.data.deleteDialog(),
+                    deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
                   },
                   condition: (doc: any) => !doc.system.linkedActivity,
                 },
@@ -249,7 +249,7 @@ class TableRowActionsRuntime {
           component: DeleteButton,
           props: (args) => ({
             doc: args.data,
-            deleteFn: () => args.data.deleteDialog(),
+            deleteFn: () => args.data.deleteDialog({ sheet: itemParent?.sheet }),
           }),
         } satisfies TableAction<typeof DeleteButton>);
       } else if (
@@ -296,7 +296,7 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog(),
+              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -344,8 +344,8 @@ class TableRowActionsRuntime {
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: args.data.effect,
-          deleteFn: () => args.data.deleteDialog(),
+          doc: args.data,
+          deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }
@@ -381,7 +381,7 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog(),
+              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -421,7 +421,7 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog(),
+              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }

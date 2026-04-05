@@ -148,6 +148,7 @@
                       }),
                     },
                     uuid: member.uuid,
+                    sheet: context.actor.sheet as any // *shrug*, it's almost over, so...
                   })}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >

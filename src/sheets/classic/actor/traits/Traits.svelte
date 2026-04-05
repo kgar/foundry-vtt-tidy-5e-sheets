@@ -78,9 +78,11 @@
         trait: localize('DND5E.Languages'),
       })}
       onConfigureClicked={() =>
-        new dnd5e.applications.actor.LanguagesConfig({
-          document: context.actor,
-        }).render({ force: true })}
+        context.actor.sheet._renderChild(
+          new dnd5e.applications.actor.LanguagesConfig({
+            document: context.actor,
+          }),
+        )}
       show={context.unlocked || !!context.traits.languages.length}
       useConfigureButton={context.editable}
     >

@@ -48,7 +48,7 @@
         props: (args) => ({
           doc: context.item.system.advancement?.get(args.data.id),
           deleteFn: () =>
-            context.item.system.advancement?.get(args.data.id)?.deleteDialog(),
+            context.item.system.advancement?.get(args.data.id)?.deleteDialog({ sheet: context.item }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }

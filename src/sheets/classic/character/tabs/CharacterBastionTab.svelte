@@ -72,17 +72,20 @@
         ? CONSTANTS.FACILITY_TYPE_SPECIAL
         : CONSTANTS.FACILITY_TYPE_BASIC;
 
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters: {
-        locked: {
-          types: new Set(['facility']),
-          additional: {
-            type: { [type]: 1, [otherType]: -1 },
-            level: { max: context.actor.system.details.level },
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            types: new Set(['facility']),
+            additional: {
+              type: { [type]: 1, [otherType]: -1 },
+              level: { max: context.actor.system.details.level },
+            },
           },
         },
       },
-    });
+      context.actor.sheet._detachOptions(),
+    );
 
     if (result) {
       context.actor.sheet._onDropItemCreate(await fromUuid(result));
@@ -91,7 +94,10 @@
 
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = context.actor.items.get(chosen.id);
-    return facility?.use({ legacy: false, chooseActivity: true, event });
+    return facility?.use(
+      { legacy: false, chooseActivity: true, event },
+      { options: { sheet: context.actor.sheet } },
+    );
   }
 
   const localize = FoundryAdapter.localize;

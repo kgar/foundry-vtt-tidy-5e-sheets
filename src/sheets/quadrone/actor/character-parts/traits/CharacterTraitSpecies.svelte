@@ -17,10 +17,7 @@
 
   function openSheet(mode: number) {
     if (species) {
-      context.actor.items.get(species.id).sheet.render({
-        force: true,
-        mode: mode,
-      });
+      context.sheet._renderChild(context.actor.items.get(species.id), { mode });
     }
   }
 </script>
@@ -54,7 +51,8 @@
         })}
         data-keyboard-focus
         class="list-values trait-item"
-        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        data-action="showDocument"
+        data-uuid={speciesItem?.uuid}
         onmousedown={(event) =>
           FoundryAdapter.editOnMiddleClick(event, speciesItem)}
         onkeydown={(e) =>
@@ -76,8 +74,9 @@
             })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip
-            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+            data-tooltip=""
+            data-action="editDocument"
+            data-uuid={speciesItem?.uuid}
           >
             <i class="fa-solid fa-edit"></i>
           </button>
@@ -85,8 +84,8 @@
             aria-label={localize('Tidy5E.ContextMenu')}
             type="button"
             class="button button-borderless button-icon-only"
-            onclick={(ev) =>
-              EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            data-action="showContextMenu"
+            data-target-selector="[data-item-id]"
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </button>
@@ -100,11 +99,8 @@
         type="button"
         class="button button-primary"
         data-tooltip
-        onclick={(ev) =>
-          context.actor.sheet.findItem({
-            event: ev,
-            type: 'race',
-          })}
+        data-action="findItem"
+        data-item-type="race"
       >
         <i class="fa-solid fa-book-atlas"></i>
         {localize('DND5E.Species.Add')}

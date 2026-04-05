@@ -147,12 +147,12 @@
                 { disabled: !context.editable },
               ]}
               onclick={(ev) =>
-                context.editable && FoundryAdapter.actorTryUseItem(entry, ev)}
+                context.editable && context.actor.sheet.tryUseItem(entry, ev)}
               data-has-roll-modes
             >
               <img class="item-image" alt={entry.name} src={entry.img} />
               <span class="roll-prompt">
-                <i class="fa fa-dice-d20"></i>
+                <i class="fa-solid fa-dice-d20"></i>
               </span>
             </a>
 

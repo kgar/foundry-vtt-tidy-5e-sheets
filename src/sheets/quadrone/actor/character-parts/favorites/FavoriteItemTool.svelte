@@ -11,13 +11,13 @@
     favorite: ItemFavoriteContextEntry;
   }
 
-  let { favorite }: Props = $props();
+  const { favorite }: Props = $props();
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  const context = $derived(getCharacterSheetQuadroneContext());
 
-  let subtitle = $derived(favorite.item.system.type.label);
+  const subtitle = $derived(favorite.item.system.type.label);
 
-  let modifier = $derived(
+  const modifier = $derived(
     context.actor.system.tools?.[favorite.item.system.type.baseItem]?.total,
   );
 </script>
@@ -37,8 +37,7 @@
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={async (ev) =>
-      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item.name}
     {subtitle}
   />

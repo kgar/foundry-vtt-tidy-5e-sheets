@@ -4,23 +4,30 @@
   interface Props {
     disabled?: boolean;
     doc: any;
-    deleteFn?: Function;
     tooltip?: string;
   }
 
   let {
     doc,
     disabled,
-    deleteFn = () => FoundryAdapter.onActorItemDelete(doc.actor, doc),
     tooltip = FoundryAdapter.localize('DND5E.ItemDelete'),
   }: Props = $props();
+
+  const attributes = $derived(
+    !disabled && !!doc
+      ? {
+          'data-action': 'deleteDocument',
+          'data-uuid': doc.uuid,
+        }
+      : {},
+  );
 </script>
 
 <a
   class="tidy-table-button"
   aria-label={tooltip}
-  data-tooltip
-  onclick={() => !disabled && deleteFn()}
+  data-tooltip=""
+  {...attributes}
 >
   <i class="fa-solid fa-trash fa-fw"></i>
 </a>

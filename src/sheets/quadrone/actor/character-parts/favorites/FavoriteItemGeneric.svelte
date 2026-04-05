@@ -6,30 +6,32 @@
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
-  let { favorite }: Props = $props();
+  const { favorite }: Props = $props();
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [
       favorite.item.system.type?.label ??
         game.i18n.localize(CONFIG.Item.typeLabels[favorite.item.type]),
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
-  let uses = $derived(
+  const uses = $derived(
     favorite.item?.system?.hasLimitedUses
       ? favorite.item?.system?.getUsesData?.()
       : null,
   );
 
-  let modifier = $derived(favorite.item?.labels?.modifier);
+  const modifier = $derived(favorite.item?.labels?.modifier);
 
-  let save: any = $derived.by(() => {
-    const saveData = favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save;
+  const save: any = $derived.by(() => {
+    const saveData =
+      favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save;
     if (foundry.utils.getType(saveData?.ability) === 'Set')
       return {
         ...saveData,
@@ -38,14 +40,16 @@
             ? game.i18n.localize('DND5E.AbbreviationDC')
             : Array.from<string>(saveData.ability)
                 .map((k: string) => CONFIG.DND5E.abilities[k]?.abbreviation)
-                .filterJoin(' / ')
-      }
+                .filterJoin(' / '),
+      };
     return saveData;
   });
 
-  let quantity = $derived(favorite.item?.system?.quantity);
+  const quantity = $derived(favorite.item?.system?.quantity);
 
-  let range = $derived(favorite.item?.system?.range);
+  const range = $derived(favorite.item?.system?.range);
+
+  const context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
 <div
@@ -63,12 +67,15 @@
     {favorite}
     img={favorite.item?.img}
     title={favorite.item?.name}
-    onUse={async (ev) =>
-      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item?.name || ''}
     {subtitle}
   />
-    <div class={{stacked : uses?.max || !isNil(modifier) || save?.dc?.value || quantity}}>
+  <div
+    class={{
+      stacked: uses?.max || !isNil(modifier) || save?.dc?.value || quantity,
+    }}
+  >
     <span class="primary">
       {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />
@@ -83,12 +90,12 @@
           </span>
         </span>
       {:else if save?.dc?.value}
-      <span class="ability font-label-medium color-text-gold-emphasis">
-        {save.ability}
-      </span>
-      <span class="value font-data-medium">
-        {save.dc.value}
-      </span>
+        <span class="ability font-label-medium color-text-gold-emphasis">
+          {save.ability}
+        </span>
+        <span class="value font-data-medium">
+          {save.dc.value}
+        </span>
       {:else if quantity}
         <span class="sign">&times;</span>
         <span class="value">{quantity}</span>

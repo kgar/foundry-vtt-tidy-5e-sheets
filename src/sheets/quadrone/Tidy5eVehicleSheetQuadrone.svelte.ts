@@ -87,7 +87,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           types: new Set(['npc']),
         },
       },
-    });
+    }, this._detachOptions());
   }
 
   async browseAddActor(area: CrewArea5e) {

@@ -112,7 +112,7 @@
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           onclick={(event) =>
-            context.editable && FoundryAdapter.actorTryUseItem(item, event)}
+            context.editable && context.actor.sheet.tryUseItem(item, event)}
           oncontextmenu={(event) =>
             FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
           onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}

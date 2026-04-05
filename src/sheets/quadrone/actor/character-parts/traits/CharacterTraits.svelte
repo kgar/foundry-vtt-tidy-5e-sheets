@@ -25,9 +25,9 @@
         type="button"
         class="button"
         onclick={() =>
-          new SpecialTraitsApplication({ document: context.actor }).render({
-            force: true,
-          })}
+          context.sheet._renderChild(
+            new SpecialTraitsApplication({ document: context.actor }),
+          )}
       >
         <i class="fa-solid fa-star"></i>
         {localize('DND5E.SpecialTraits')}
