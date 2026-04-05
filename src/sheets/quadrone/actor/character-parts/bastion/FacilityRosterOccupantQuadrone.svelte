@@ -63,6 +63,7 @@
     (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
   onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
+  <!-- TODO: sheet actions - conditionally toggle between showing context menu on unlocked and showDocument on locked -->
   <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
     {#if occupant}
       <img src={occupant.img} alt={name} />
