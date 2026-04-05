@@ -95,8 +95,13 @@
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = context.actor.items.get(chosen.id);
     return facility?.use(
-      { legacy: false, chooseActivity: true, event, options: { sheet: context.sheet } },
-      {  },
+      {
+        legacy: false,
+        chooseActivity: true,
+        event,
+        options: { sheet: context.sheet },
+      },
+      {},
     );
   }
 
@@ -234,9 +239,8 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-menu highlight-on-hover"
-                  aria-label="TODO: Add label"
-                  onclick={(ev) =>
-                    EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+                  data-action="showContextMenu"
+                  data-target-selector="[data-item-id]"
                   onkeydown={onKeydown}
                   role="button"
                   data-keyboard-focus
@@ -424,9 +428,8 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-menu highlight-on-hover"
-                  aria-label="TODO: Add label"
-                  onclick={(ev) =>
-                    EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+                  data-action="showContextMenu"
+                  data-target-selector="[data-item-id]"
                   onkeydown={onKeydown}
                   role="button"
                   data-keyboard-focus

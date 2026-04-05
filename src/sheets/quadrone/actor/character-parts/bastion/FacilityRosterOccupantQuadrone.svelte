@@ -29,15 +29,19 @@
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 
-  function onRosterMemberClicked(
-    event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
-  ): any {
-    if (context.unlocked) {
-      EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
-      return;
-    }
-    occupant.sheet.render(true);
-  }
+  const linkAttributes = $derived(
+    context.editable && context.unlocked
+      ? {
+          'data-action': 'showContextMenu',
+          'data-target-selector': '[data-actor-uuid]',
+        }
+      : context.editable && !context.unlocked
+        ? {
+            'data-action': 'showDocument',
+            'data-uuid': occupant.uuid,
+          }
+        : {},
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -64,7 +68,7 @@
   onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
   <!-- TODO: sheet actions - conditionally toggle between showing context menu on unlocked and showDocument on locked -->
-  <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
+  <a {...linkAttributes}>
     {#if occupant}
       <img src={occupant.img} alt={name} />
     {:else}

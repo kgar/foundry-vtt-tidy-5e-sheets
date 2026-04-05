@@ -222,8 +222,8 @@
               aria-label={localize('Tidy5E.ContextMenu')}
               type="button"
               class="button button-borderless button-icon-only"
-              onclick={(ev) =>
-                EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+              data-action="showContextMenu"
+              data-target-selector="[data-item-id]"
             >
               <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
             </button>
@@ -344,8 +344,8 @@
             aria-label={localize('Tidy5E.ContextMenu')}
             type="button"
             class="button button-borderless button-icon-only"
-            onclick={(ev) =>
-              EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            data-action="showContextMenu"
+            data-target-selector="[data-item-id]"
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </button>

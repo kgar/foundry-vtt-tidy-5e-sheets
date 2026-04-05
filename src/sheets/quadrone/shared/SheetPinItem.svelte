@@ -367,7 +367,8 @@
   {#if context.unlocked && !isEditing}
     <a
       class="button button-icon-only button-borderless highlight-on-hover"
-      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+      data-action="showContextMenu"
+      data-target-selector="[data-item-id]"
     >
       <i class="fas fa-ellipsis-vertical"></i>
     </a>

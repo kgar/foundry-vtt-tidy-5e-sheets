@@ -79,10 +79,11 @@ export function TidyExtensibleDocumentSheetMixin<
       },
       actions: {
         //changeMode: PrimarySheet5e.#changeMode,
-        editDocument: TidyDocumentSheet.#showDocument,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
-        showDocument: TidyDocumentSheet.#showDocument,
+        editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
+        showContextMenu: TidyDocumentSheet.#showContextMenu,
+        showDocument: TidyDocumentSheet.#showDocument,
       },
     };
 
@@ -906,6 +907,51 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     async _deleteDocument(event: Event, target: HTMLElement): Promise<any> {}
 
+    /**
+     * Handle triggering a context menu. [data-target-selector] on the sheet action node 
+     * indicates the closest node (self or ancestor) where the
+     * context menu to look for context-menu-specific data.
+     * @this {PrimarySheet5e}
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     */
+    static async #showContextMenu(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      let clientX = 0;
+      let clientY = 0;
+
+      if (event instanceof PointerEvent || event instanceof MouseEvent) {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      } else {
+        var clientRect = target.getBoundingClientRect();
+        clientX = clientRect.left;
+        clientY = clientRect.top;
+      }
+
+      const targetSelector = target.getAttribute('data-target-selector');
+
+      const elementTarget = targetSelector
+        ? target?.closest(targetSelector)
+        : target;
+
+      elementTarget?.dispatchEvent(
+        new PointerEvent('contextmenu', {
+          view: window,
+          bubbles: true,
+          cancelable: true,
+          clientX,
+          clientY,
+        }),
+      );
+    }
+    
     /**
      * Handle opening a document sheet.
      * @this {PrimarySheet5e}

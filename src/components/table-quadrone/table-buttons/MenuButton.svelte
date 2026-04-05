@@ -15,7 +15,8 @@
 
 <a
   class="tidy-table-button"
-  onclick={(ev) => EventHelper.triggerContextMenu(ev, targetSelector)}
+  data-action="showContextMenu"
+  data-target-selector={targetSelector}
 >
   <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
 </a>

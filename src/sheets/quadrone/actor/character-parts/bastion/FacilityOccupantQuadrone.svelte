@@ -68,6 +68,20 @@
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 
+  const linkAttributes = $derived(
+    context.editable && context.unlocked
+      ? {
+          'data-action': 'showContextMenu',
+          'data-target-selector': '[data-actor-uuid]',
+        }
+      : context.editable && !context.unlocked
+        ? {
+            'data-action': 'showDocument',
+            'data-uuid': occupant.uuid,
+          }
+        : {},
+  );
+
   let localize = FoundryAdapter.localize;
 </script>
 
@@ -93,11 +107,7 @@
       (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
     onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
-    <a
-      class="item-image-link"
-      data-action="showDocument"
-      data-uuid={occupant.uuid}
-    >
+    <a class="item-image-link" {...linkAttributes}>
       {#if occupant}
         <img class="item-image" src={imageSrc} alt={name} />
       {:else}
