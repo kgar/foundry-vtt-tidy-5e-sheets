@@ -246,7 +246,7 @@
                     context.sheet.submit({
                       updateData: { 'system.craft': null },
                     })}
-                  data-tooltip
+                  data-tooltip=""
                   aria-label={localize('DND5E.FACILITY.Action.RemoveCraft')}
                 >
                   <i class="fa-solid fa-trash"></i>
