@@ -115,6 +115,10 @@ export function TidyExtensibleDocumentSheetMixin<
     #focusedInputSelector: string | undefined = '';
 
     async _onChangeForm(formConfig: unknown, event: any) {
+      if ( foundry.utils.isElementInstanceOf(event.target, foundry.applications.elements.HTMLSecretBlockElement) ) {
+        return this._onRevealSecret(event);
+      }
+
       if (event.type !== 'change') {
         return;
       }
@@ -145,6 +149,16 @@ export function TidyExtensibleDocumentSheetMixin<
           ui.notifications.error(failure.message)
         );
       }
+    }
+
+    /** @override */
+    _onRevealSecret(event: any) {
+      if ( super._onRevealSecret(event) ) return;
+      const target = event.target.closest("[data-target]")?.dataset.target;
+      if ( !target ) return;
+      const content = foundry.utils.getProperty(this.document, target);
+      const modified = event.target.toggleRevealed(content);
+      this.document.update({ [target]: modified });
     }
 
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {

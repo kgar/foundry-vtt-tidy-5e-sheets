@@ -127,7 +127,6 @@
   }
 </script>
 
-
 <div class="tab-content">
   {#if editing}
     {#key contentToEdit}
@@ -188,7 +187,8 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span
+            >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -256,16 +256,11 @@
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
       <ExpandableContainer {expanded}>
-        {#key enriched}
-          <div
-            class={['editor']}
-            use:manageSecrets={{ document: context.actor }}
-          >
-            <div data-field={field} class="user-select-text">
-              {@html enriched}
-            </div>
+        <div class={['editor']}>
+          <div data-field={field} data-target={field} class="user-select-text">
+            {@html enriched}
           </div>
-        {/key}
+        </div>
       </ExpandableContainer>
     </article>
   {/if}

@@ -337,6 +337,11 @@ export function SvelteApplicationMixin<
     _attachFrameListeners() {
       super._attachFrameListeners();
 
+      this.element.addEventListener(
+        'plugins',
+        this._onConfigurePlugins.bind(this),
+      );
+
       this.themeSettingsSubscription =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
           this.themeConfigOptions()
@@ -434,6 +439,16 @@ export function SvelteApplicationMixin<
       }
 
       return newPosition;
+    }
+
+    /**
+     * Configure plugins for the ProseMirror instance.
+     * @param {ProseMirrorPluginsEvent} event
+     * @protected
+     */
+    _onConfigurePlugins(event: any) {
+      event.plugins.highlightDocumentMatches =
+        ProseMirror.ProseMirrorHighlightMatchesPlugin.build(ProseMirror.defaultSchema);
     }
 
     /* -------------------------------------------- */

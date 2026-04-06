@@ -64,7 +64,6 @@
           documentUuid={app.document.uuid}
           content={value}
           editorOptions={{ toggled: false }}
-          manageSecrets={true}
           field="{baseField}.value"
           {enriched}
         />
@@ -76,8 +75,8 @@
     </h2>
 
     {#await enrichedPromise then enriched}
-      <div class="editor" use:manageSecrets={{ document: app.document }}>
-        <div data-field="{baseField}.value" class="user-select-text">
+      <div class="editor">
+        <div data-field="{baseField}.value" data-target="{baseField}.value" class="user-select-text">
           {@html enriched}
         </div>
       </div>
