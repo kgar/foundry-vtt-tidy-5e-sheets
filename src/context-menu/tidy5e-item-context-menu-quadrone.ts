@@ -175,6 +175,7 @@ export function getItemContextOptionsQuadrone(
     name: 'DND5E.DisplayCard',
     icon: '<i class="fas fa-message-arrow-up-right"></i>',
     group: 'common',
+    condition: () => item.actor,
     callback: () => item.displayCard(),
   });
 
