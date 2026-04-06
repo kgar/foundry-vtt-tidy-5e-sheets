@@ -694,7 +694,9 @@ export function TidyExtensibleDocumentSheetMixin<
         updatedOptions.window.controls.forEach((c) => {
           if (
             c.action === 'configureToken' ||
-            c.action === 'configurePrototypeToken'
+            c.action === 'configurePrototypeToken' ||
+            c.action === 'attach' ||
+            c.action === 'detach'
           ) {
             c.position = 'header';
           }
