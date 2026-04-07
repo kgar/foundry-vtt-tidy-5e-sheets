@@ -72,7 +72,7 @@
           },
         ]}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_CONTAINER}
-        data-tooltip-direction="LEFT"
+        data-tooltip-direction="RIGHT"
         data-key={ability.key}
         onmouseover={(ev) =>
           tooltip?.tryShow(ev, {

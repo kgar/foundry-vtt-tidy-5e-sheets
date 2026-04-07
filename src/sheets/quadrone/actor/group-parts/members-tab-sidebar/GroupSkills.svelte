@@ -73,7 +73,7 @@
             },
           ]}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
-          data-tooltip-direction="UP"
+          data-tooltip-direction="RIGHT"
           data-key={skill.key}
           onmouseover={(ev) =>
             tooltip?.tryShow(ev, {
