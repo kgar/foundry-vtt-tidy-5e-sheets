@@ -5,20 +5,22 @@
     disabled?: boolean;
     doc: any;
     tooltip?: string;
+    attributes?: Record<string, any>;
   }
 
   let {
     doc,
     disabled,
     tooltip = FoundryAdapter.localize('DND5E.ItemDelete'),
+    attributes: attributesOverride,
   }: Props = $props();
 
   const attributes = $derived(
     !disabled && !!doc
-      ? {
+      ? (attributesOverride ?? {
           'data-action': 'deleteDocument',
           'data-uuid': doc.uuid,
-        }
+        })
       : {},
   );
 </script>

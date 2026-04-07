@@ -64,6 +64,9 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
         return this.browseAddActor(area);
       },
+      removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
+      removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
+      removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
     },
   };
 
@@ -777,6 +780,43 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     return { ...this._context.data?.mountableItems };
   }
 
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+  
+  static async #onRemoveDraftAnimal(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+    if (uuid) {
+      return this.removeDraftAnimal(uuid);
+    }
+  }
+
+  static async #onRemovePassengers(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+    if (uuid) {
+      return this.removePassengers(uuid);
+    }
+  }
+
+  static async #onRemoveUnassignedCrew(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+    if (uuid) {
+      return this.removeUnassignedCrew(uuid);
+    }
+  }
+  
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */

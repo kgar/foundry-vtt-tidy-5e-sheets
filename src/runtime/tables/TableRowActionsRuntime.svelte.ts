@@ -75,7 +75,6 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
@@ -130,7 +129,6 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
@@ -188,7 +186,6 @@ class TableRowActionsRuntime {
                   component: DeleteButton,
                   props: {
                     doc: args.data,
-                    deleteFn: () => args.data.deleteDialog({ sheet: context.sheet }),
                   },
                   condition: (doc: any) => !doc.system.linkedActivity,
                 },
@@ -249,7 +246,6 @@ class TableRowActionsRuntime {
           component: DeleteButton,
           props: (args) => ({
             doc: args.data,
-            deleteFn: () => args.data.deleteDialog({ sheet: itemParent?.sheet }),
           }),
         } satisfies TableAction<typeof DeleteButton>);
       } else if (
@@ -296,7 +292,6 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -345,7 +340,6 @@ class TableRowActionsRuntime {
         component: DeleteButton,
         props: (args) => ({
           doc: args.data,
-          deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }
@@ -381,7 +375,6 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -421,7 +414,6 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -456,7 +448,10 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => actor.system.removeMember(args.data),
+              attributes: {
+                'data-action': 'removeMember',
+                'data-uuid': args.data.uuid,
+              },
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
@@ -492,7 +487,10 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => context.actor.system.removeMember(args.data),
+              attributes: {
+                'data-action': 'removeMember',
+                'data-uuid': args.data.uuid,
+              },
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
@@ -526,8 +524,9 @@ class TableRowActionsRuntime {
         component: DeleteButton,
         props: (args) => ({
           rowContext: args.rowContext,
-          deleteFn: () => {
-            context.sheet.removeDraftAnimal(args.data.uuid);
+          attributes: {
+            'data-action': 'removeDraftAnimal',
+            'data-uuid': args.data.uuid,
           },
           doc: context.document,
           tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
@@ -573,12 +572,14 @@ class TableRowActionsRuntime {
         component: DeleteButton,
         props: (args) => ({
           doc: context.document,
-          deleteFn: () => {
-            if (area === 'crew') {
-              return context.sheet.removeUnassignedCrew(args.data.uuid);
-            } else if (area === 'passengers') {
-              return context.sheet.removePassengers(args.data.uuid);
-            }
+          attributes: {
+            'data-action':
+              area === 'crew'
+                ? 'removeUnassignedCrew'
+                : area === 'passengers'
+                  ? 'removePassengers'
+                  : '',
+            'data-uuid': args.data.uuid,
           },
           tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
             name: FoundryAdapter.localize(memberTypeKey),
