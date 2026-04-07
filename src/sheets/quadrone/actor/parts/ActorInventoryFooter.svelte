@@ -45,7 +45,7 @@
       ),
   );
 
-  let attunementSummaryTooltip: AttunementSummaryTooltip;
+  let attunementSummaryTooltip = $state<AttunementSummaryTooltip>();
   let overattuned = $derived(
     context.actor.system.attributes.attunement.value >
       context.actor.system.attributes.attunement.max,
@@ -76,8 +76,8 @@
         ]}
         role="region"
         data-tooltip-direction="UP"
-        onmouseover={(ev) => attunementSummaryTooltip.tryShow(ev)}
-        onfocus={(ev) => attunementSummaryTooltip.tryShow(ev)}
+        onmouseover={(ev) => attunementSummaryTooltip?.tryShow(ev)}
+        onfocus={(ev) => attunementSummaryTooltip?.tryShow(ev)}
       >
         <i
           class={`fa-sun ${attuned ? 'fas highlighted' : 'far color-text-lighter'}`}
