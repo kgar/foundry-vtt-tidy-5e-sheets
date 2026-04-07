@@ -75,7 +75,7 @@
           {localize('DND5E.Passive')}
         </div>
         <div class="text-align-right font-label-small color-text-lightest">
-          {localize('DND5E.Proficiency')}
+          {localize('TIDY5E.AbbrProficiency')}
         </div>
       </li>
       {#each skill.members as member}
