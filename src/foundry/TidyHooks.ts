@@ -267,7 +267,7 @@ export class TidyHooks {
   }
 
   /**
-   * The group member context menu has established its options and is about to show.
+   * The group skill roll context menu has established its options and is about to show.
    * @param group             The affected group document instance.
    * @param skill             The key for the corresponding skill. Use it to look up the skill in CONFIG.DND5E.
    * @param contextOptions    The menu items for this group member.
@@ -289,6 +289,34 @@ export class TidyHooks {
     return Hooks.call(
       'tidy5e-sheet.getGroupMemberContextOptions',
       group,
+      skill,
+      contextOptions
+    );
+  }
+  
+  /**
+   * The actor skill roll context menu has established its options and is about to show.
+   * @param actor             The affected actor.
+   * @param skill             The key for the corresponding skill. Use it to look up the skill in CONFIG.DND5E.
+   * @param contextOptions    The menu items for this actor.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.tidy5eSheetsGetSkillRollContextOptions', (actor, skill, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetSkillRollContextOptions(
+    actor: Actor5e,
+    skill: string,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getGroupMemberContextOptions',
+      actor,
       skill,
       contextOptions
     );
