@@ -13,7 +13,7 @@
     ctx: SheetPinActivityContext;
   }
 
-  let { ctx }: Props = $props();
+  const { ctx }: Props = $props();
 
   let isEditing = $state(false);
 
@@ -26,7 +26,7 @@
       : ctx.document.img,
   );
 
-  let { usesDocument, value, maxText } = $derived.by(() => {
+  const { usesDocument, value, maxText } = $derived.by(() => {
     const uses = ctx.document.uses;
 
     return {
@@ -60,12 +60,11 @@
 
   let context = $derived(getSheetContext());
 
-  let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-  let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+  const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
 
   function getType() {
     if (isSpell) {
-      let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
+      const spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
       if (
         spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE &&
@@ -80,10 +79,20 @@
     }
     return 'none';
   }
-  let pinType = $derived(getType());
 
-  let localize = FoundryAdapter.localize;
+  let pinType = $derived(getType());
 </script>
+
+{#snippet pinName()}
+  <button
+    type="button"
+    class="button button-borderless font-label-medium pin-name truncate flex1"
+    data-action="showDocument"
+    data-uuid={ctx.document.sheet.uuid}
+  >
+    {coalesce(ctx.alias, ctx.document.name)}
+  </button>
+{/snippet}
 
 <div
   role="button"
@@ -157,9 +166,7 @@
         title="{ctx.document.name} | {ctx.document.item.name}"
       >
         {#if context.unlocked}
-          <span class="font-label-medium pin-name truncate flex1">
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
           <button
             class="button button-borderless button-icon-only flexshrink edit-name-button"
             onclick={(ev) => {
@@ -170,9 +177,7 @@
             <i class="fa-solid fa-pencil"></i>
           </button>
         {:else}
-          <span class="font-label-medium pin-name truncate">
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
         {/if}
       </div>
       <div class="pin-context {ctx.resource}">

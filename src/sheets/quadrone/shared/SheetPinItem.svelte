@@ -4,7 +4,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -17,11 +17,11 @@
     ctx: SheetPinItemContext;
   }
 
-  let { ctx }: Props = $props();
+  const { ctx }: Props = $props();
 
   let isEditing = $state(false);
 
-  let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
+  const { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
       if (ctx.linkedUses) {
         return {
@@ -77,20 +77,20 @@
     }
   }
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  const context = $derived(getSheetContext());
 
-  let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-  let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
-  let spellSlotTrackerMode = $derived(
+  const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
+  const spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+  const spellSlotTrackerMode = $derived(
     context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
       ? 'spell-slots-pips'
       : 'spell-slots',
   );
-  let spellcastingSection = $derived(
+  const spellcastingSection = $derived(
     ctx.document.parent.system.spells['spell' + ctx.document.system.level],
   );
 
-  let localize = FoundryAdapter.localize;
+  const localize = FoundryAdapter.localize;
 
   function getType() {
     if (ctx.document.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
@@ -107,7 +107,7 @@
 
     // Then handle spell-specific slot tracking
     if (isSpell) {
-      let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
+      const spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
       if (
         spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE ||
@@ -134,13 +134,15 @@
     }
     return 'none';
   }
-  let pinType = $derived(getType());
+
+  // TODO: Send this down in the pin context data.
+  const pinType = $derived(getType());
 
   function onPipClick(index: number, section: any, slotKey: string) {
     if (!section) return;
 
-    let isEmpty = index >= (section?.value ?? 0);
-    let value = isEmpty ? index + 1 : index;
+    const isEmpty = index >= (section?.value ?? 0);
+    const value = isEmpty ? index + 1 : index;
 
     context.actor.update({
       [`system.spells.${slotKey}.value`]: value,
@@ -170,6 +172,17 @@
       {/each}
     </div>
   {/if}
+{/snippet}
+
+{#snippet pinName()}
+  <button
+    type="button"
+    class="button button-borderless font-label-medium pin-name truncate flex1"
+    data-action={context.unlocked ? 'editDocument' : 'showDocument'}
+    data-uuid={ctx.document.uuid}
+  >
+    {coalesce(ctx.alias, ctx.document.name)}
+  </button>
 {/snippet}
 
 <div
@@ -244,10 +257,9 @@
     {:else}
       <div class="pin-name-container flexrow" title={ctx.document.name}>
         {#if context.unlocked}
-          <span class="font-label-medium pin-name truncate flex1">
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
           <button
+            type="button"
             aria-label="Edit Alias"
             class="button button-borderless button-icon-only flexshrink edit-name-button"
             onclick={(ev) => {
@@ -258,12 +270,7 @@
             <i class="fa-solid fa-pencil"></i>
           </button>
         {:else}
-          <span
-            class="font-label-medium pin-name truncate"
-            title={ctx.document.name}
-          >
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
         {/if}
       </div>
 
