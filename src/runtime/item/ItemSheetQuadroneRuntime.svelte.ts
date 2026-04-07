@@ -345,8 +345,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     },
     {
       id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
-      itemCount: (context) =>
-        Array.from(context.document.system.advancement ?? []).length,
+      itemCount: (context) => context.document.system.advancement?.size ?? 0,
       layout: 'quadrone',
       title: 'DND5E.AdvancementTitle',
       content: {

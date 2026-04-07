@@ -52,7 +52,9 @@
 <ul class="pills">
   {#each values as value}
     {@const onClick = value.onClick}
+
     <li
+      {...value.attributes}
       class={[
         'pill pill-medium trait-pill',
         pillClass,
@@ -88,6 +90,16 @@
               element: context.sheet.element,
               event: ev as unknown as MouseEvent,
             })}
+        >
+          {@render pillContents(value)}
+        </a>
+      {:else if !!value.attributes?.['data-action']}
+        <a
+          role="button"
+          tabindex="0"
+          aria-label={value.label}
+          data-keyboard-focus
+          class="button button-borderless"
         >
           {@render pillContents(value)}
         </a>

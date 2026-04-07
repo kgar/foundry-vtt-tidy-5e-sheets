@@ -22,7 +22,8 @@
 
 <a
   class="item-use-button"
-  onclick={(event) => !disabled && FoundryAdapter.actorTryUseItem(item, event)}
+  onclick={(event) =>
+    !disabled && item.parent.sheet.tryUseItem(item, event)}
   oncontextmenu={(event) =>
     FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
 >

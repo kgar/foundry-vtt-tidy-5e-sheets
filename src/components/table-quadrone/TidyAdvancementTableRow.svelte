@@ -28,7 +28,7 @@
     expanded = $bindable(false),
   }: Props = $props();
 
-  let doc = $derived(item.advancement?.byId[advancement.id]);
+  let doc = $derived(item.system.advancement?.get(advancement.id));
 
   function handleDragStart(event: DragEvent) {
     if (event.target !== event.currentTarget) {

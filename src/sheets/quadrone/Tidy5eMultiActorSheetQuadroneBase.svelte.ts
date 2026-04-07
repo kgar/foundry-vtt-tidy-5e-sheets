@@ -13,7 +13,10 @@ import type {
   MultiActorQuadroneContext,
   TidyItemSectionBase,
 } from 'src/types/types';
-import type { ApplicationRenderOptions } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationRenderOptions,
+} from 'src/types/application.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -28,6 +31,7 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { AbilityData, SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -35,6 +39,15 @@ export function Tidy5eMultiActorSheetQuadroneBase<
   const TidyActorSheetBase = Tidy5eActorSheetQuadroneBase<TContext>(sheetType);
 
   abstract class Tidy5eMultiActorSheetQuadroneBase extends TidyActorSheetBase {
+    static DEFAULT_OPTIONS: Partial<
+      ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
+    > = {
+      actions: {
+        placeMembers: Tidy5eMultiActorSheetQuadroneBase.#onPlaceMembers,
+        removeMember: Tidy5eMultiActorSheetQuadroneBase.#onRemoveMember,
+      }
+    };
+
     async _renderFrame(options: ApplicationRenderOptions) {
       const result = await super._renderFrame(options);
 
@@ -142,16 +155,41 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
     }
 
-    getGpSummary(actor: Actor5e) {
+    getDefaultCurrencySummary(actor: Actor5e) {
+      const defaultCurrency = FoundryAdapter.getDefaultCurrencyConfig();
+
+      if (!defaultCurrency) {
+        return 0;
+      }
+
       const currency = actor.system.currency;
 
-      return Math.round(
-        Object.keys(currency).reduce((total, key) => {
-          return key in CONFIG.DND5E.currencies
-            ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
-            : total;
-        }, 0)
+      const currencies = Object.entries(CONFIG.DND5E.currencies)
+        .filter(([, c]) => c.conversion)
+        .sort((a, b) => a[1].conversion - b[1].conversion);
+
+      const smallestCurrency = currencies.at(-1)?.[1];
+
+      if (!smallestCurrency) {
+        return 0;
+      }
+
+      const smallestConversion = smallestCurrency.conversion ?? 0;
+
+      let sumCurrencyInCheapestDenomination = currencies.reduce(
+        (amount, [denomination, config]) =>
+          amount +
+          currency[denomination] * (smallestConversion / config.conversion),
+        0,
       );
+
+      const conversion = smallestCurrency.conversion;
+      const multiplier = defaultCurrency.conversion / conversion;
+      const sumCurrencyInDefaultDenomination = Math.floor(
+        sumCurrencyInCheapestDenomination * multiplier,
+      );
+
+      return sumCurrencyInDefaultDenomination;
     }
 
     _prepareMemberLanguages(
@@ -159,9 +197,9 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       languages: Map<string, MeasurableGroupTrait<number>>
     ) {
       let memberLanguages =
-        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        actor.system.isCharacter
           ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
-          : actor.type === CONSTANTS.SHEET_TYPE_NPC
+          : actor.system.isNPC
           ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
           : [];
 
@@ -300,7 +338,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
       let units = unitsConfig?.abbreviation ?? unitsKey;
 
-      Object.entries(actor.system.attributes.senses ?? {}).forEach(
+      Object.entries(actor.system.attributes.senses.ranges ?? {}).forEach(
         ([key, sense]) => {
           const label = CONFIG.DND5E.senses[key];
           if (typeof sense !== 'number' || sense === 0 || !label) {
@@ -529,6 +567,33 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       );
     }
 
+    /* -------------------------------------------- */
+    /*  Sheet Actions                               */
+    /* -------------------------------------------- */
+    
+    /**
+     * Handle placing group members.
+     * @this {MultiActorSheet}
+     */
+    static async #onPlaceMembers(
+      this: Tidy5eMultiActorSheetQuadroneBase,
+      _event: Event,
+      _target: HTMLElement,
+    ): Promise<void> {
+      this.actor.system.placeMembers();
+    }
+
+    static async #onRemoveMember(
+      this: Tidy5eMultiActorSheetQuadroneBase,
+      _event: Event,
+      target: HTMLElement,
+    ): Promise<void> {
+      const member = await fromUuid(
+        target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid,
+      );
+      return this.actor.system.removeMember(member);
+    }
+    
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */

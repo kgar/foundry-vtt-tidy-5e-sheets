@@ -234,6 +234,8 @@ export type ItemSheetQuadroneContext = {
   scalarTarget: boolean;
   sheet: Tidy5eItemSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
+  sourceItemLocked: boolean;
+  sourceItemOptions: { text: string; value: string }[];
   spellcastingMethods: {
     label: string;
     value: string;

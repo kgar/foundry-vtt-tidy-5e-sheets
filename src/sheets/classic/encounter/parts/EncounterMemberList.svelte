@@ -148,6 +148,7 @@
                       }),
                     },
                     uuid: member.uuid,
+                    sheet: context.actor.sheet as any // *shrug*, it's almost over, so...
                   })}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
               >
@@ -196,7 +197,7 @@
             </TidyTableCell>
             {#if section.showCrColumn}
               <TidyTableCell>
-                {#if member.type === CONSTANTS.SHEET_TYPE_NPC}
+                {#if member.system.isNPC}
                   <abbr class="text-body-secondary"
                     >{localize('DND5E.AbbreviationCR')}</abbr
                   >&nbsp;
@@ -207,7 +208,7 @@
                     &nbsp;—&nbsp;
                     <span class="text-body semibold">
                       {FoundryAdapter.formatNumber(
-                        member.system.details.xp.value *
+                        (member.system.details.xp.value ?? 0) *
                           (ctx.quantity?.value ?? 1),
                       )}
                     </span>&nbsp;

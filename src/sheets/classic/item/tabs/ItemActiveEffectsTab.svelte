@@ -154,7 +154,7 @@
                     type="button"
                     class="active-effect-control inline-icon-button"
                     title={localize('DND5E.EffectDelete')}
-                    onclick={() => effect.deleteDialog()}
+                    onclick={() => effect.deleteDialog({ sheet: context.item?.sheet })}
                     tabindex={settings.value.useAccessibleKeyboardSupport
                       ? 0
                       : -1}

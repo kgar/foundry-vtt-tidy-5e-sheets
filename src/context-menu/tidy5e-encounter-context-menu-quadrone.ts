@@ -11,13 +11,14 @@ import { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadro
  */
 export function getEncounterMemberContextOptionsQuadrone(
   encounter: Actor5e,
-  memberPromise: Promise<Actor5e>
+  memberPromise: Promise<Actor5e>,
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
       name: 'DND5E.Group.Action.View',
       icon: `<i class="fas fa-eye fa-fw"></i>`,
-      callback: async () => (await memberPromise)?.sheet.render(true),
+      callback: async () =>
+        encounter.sheet._openDocumentSheet(await memberPromise),
       condition: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
     },

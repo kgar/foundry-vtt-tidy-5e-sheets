@@ -12,6 +12,8 @@
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
+  import { isNil } from 'src/utils/data';
+  import { CONSTANTS } from 'src/constants';
 
   type Props = {
     containingDocument: any;
@@ -19,7 +21,9 @@
     inlineToggleService: InlineToggleService;
     itemContext: Record<
       string,
-      ContainerItemContext | CharacterItemQuadroneContext | NpcItemQuadroneContext
+      | ContainerItemContext
+      | CharacterItemQuadroneContext
+      | NpcItemQuadroneContext
     >;
     /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
     root?: boolean;
@@ -65,6 +69,12 @@
   );
 
   let containerToggleMap = $derived(inlineToggleService.map);
+
+  let actor = $derived(
+    sheetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
+      ? sheetDocument
+      : sheetDocument.actor,
+  );
 </script>
 
 <TidyItemTable
@@ -113,16 +123,35 @@
   {/snippet}
 
   {#snippet afterFirstCell(entry, ctx)}
+    {@const mastered = actor.system.traits?.weaponProf?.mastery?.value?.has(
+      entry.system.type?.baseItem ?? '',
+    )}
+    
+    {#if mastered}
+      {@const mastery = CONFIG.DND5E.weaponMasteries[entry.system.mastery]}
+      {@const tooltip = !isNil(mastery?.label, '')
+        ? FoundryAdapter.localize('TIDY5E.Weapon.Mastery.LabelWithMastery', {
+            mastery: mastery.label,
+          })
+        : game.i18n.format('DND5E.WEAPON.Mastery.Label')}
+
+      <i
+        class="fa-solid fa-circle-star color-text-gold-emphasis highlighted mastery item-state-indicator"
+        data-tooltip={!mastery?.reference ? tooltip : null}
+        data-reference-tooltip={mastery?.reference}
+      ></i>
+    {/if}
+
     {#if ctx.attunement}
       {@const iconClass = entry.system.attuned
-        ? 'fa-solid fa-sun color-text-highlight highlighted'
-        : 'fa-regular fa-sun color-text-lighter'}
+        ? 'fa-solid fa-sun color-text-gold-emphasis highlighted'
+        : 'fa-regular fa-sun color-text-lightest'}
 
       {@const title = localize(ctx.attunement.title)}
       <i class={[iconClass, 'item-state-indicator']} data-tooltip={title}></i>
     {:else if entry.system.equipped}
       <i
-        class="fa-solid fa-hand-fist equip-icon color-icon-theme item-state-indicator"
+        class="fa-solid fa-hand-fist equip-icon color-text-lightest item-state-indicator"
         data-tooltip={localize('DND5E.Equipped')}
       ></i>
     {/if}

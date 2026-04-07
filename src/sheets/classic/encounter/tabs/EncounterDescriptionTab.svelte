@@ -17,7 +17,6 @@
             editable: context.editable,
           }}
           documentUuid={context.actor.uuid}
-          manageSecrets={context.document.isOwner}
         />
       </article>
     {/key}

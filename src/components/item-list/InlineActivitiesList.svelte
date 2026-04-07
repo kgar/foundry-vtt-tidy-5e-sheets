@@ -22,8 +22,6 @@
 
   let { item = null, activities = [] }: Props = $props();
 
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
   const gridTemplateColumns: TidyTableColumns = [
     {
       name: 'Name',
@@ -40,7 +38,7 @@
   ];
 
   function rollActivity(activity: Activity5e, event: MouseEvent) {
-    activity.use({ event });
+    activity.use({ event }, { options: { sheet: item?.sheet } });
   }
 
   function getActivityUsageLabel(activity: Activity5e) {

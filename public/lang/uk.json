@@ -624,10 +624,6 @@
         "OptionDeleteFlags.Tooltip": "Під час перенесення з користувацьких даних прапорців Tidy до офіційних системних даних, прапорці залишаються на місці за замовчуванням. Позначте цю опцію, щоб прибрати ці прапорці.",
         "ButtonMigration.Text": "Перенести",
         "MigrateCompendia.SelectionDialogTitle": "Оберіть збірники для перенесення",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "Перенесення: Клас чарів до класу джерела",
-            "sectionTitle": "Клас чарів до класу джерела"
-        },
         "NpcExhaustion": {
             "sectionTitle": "Виснаження НІП",
             "selectionDialogTitle": "Перенесення: Виснаження НІП до системи"
@@ -777,9 +773,9 @@
     "TIDY5E.Utilities.IdentifyAll": "Ідентифікувати всі предмети",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Призначити чари класам",
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Клац пропустити кидок і миттєво перезарядити) ",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Ідентифікатор класу походження",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Тут з'являється ідентифікатор класу джерела чарів. Щоб призначити ідентифікатор, який не належить персонажу, введіть ідентифікатор класу у цьому текстовому полі.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Показати тільки непризначені",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Ідентифікатор класу походження",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Тут з'являється ідентифікатор класу джерела чарів. Щоб призначити ідентифікатор, який не належить персонажу, введіть ідентифікатор класу у цьому текстовому полі.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Показати тільки непризначені",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Перемкнути блокування аркуша",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Якщо аркуш Tidy є поточним активним вікном в інтерфейсі, ця комбінація клавіш перемикає блокування аркуша.",
     "TIDY5E.LocalizationTestKey": "Клавіша перевірки локалізації",

@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -13,7 +13,7 @@
     ctx: SheetPinActivityContext;
   }
 
-  let { ctx }: Props = $props();
+  const { ctx }: Props = $props();
 
   let isEditing = $state(false);
 
@@ -26,7 +26,7 @@
       : ctx.document.img,
   );
 
-  let { usesDocument, value, maxText } = $derived.by(() => {
+  const { usesDocument, value, maxText } = $derived.by(() => {
     const uses = ctx.document.uses;
 
     return {
@@ -58,14 +58,13 @@
     }
   }
 
-  let context = $derived(getCharacterSheetContext());
+  let context = $derived(getSheetContext());
 
-  let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-  let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+  const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
 
   function getType() {
     if (isSpell) {
-      let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
+      const spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
       if (
         spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE &&
@@ -80,10 +79,20 @@
     }
     return 'none';
   }
-  let pinType = $derived(getType());
 
-  let localize = FoundryAdapter.localize;
+  let pinType = $derived(getType());
 </script>
+
+{#snippet pinName()}
+  <button
+    type="button"
+    class="button button-borderless font-label-medium pin-name truncate flex1"
+    data-action="showDocument"
+    data-uuid={ctx.document.sheet.uuid}
+  >
+    {coalesce(ctx.alias, ctx.document.name)}
+  </button>
+{/snippet}
 
 <div
   role="button"
@@ -105,7 +114,9 @@
       role="button"
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
-      onclick={(event) => context.editable && ctx.document.use({ event })}
+      onclick={(event) =>
+        context.editable &&
+        ctx.document.use({ event, options: { sheet: context.sheet } })}
       data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
@@ -155,9 +166,7 @@
         title="{ctx.document.name} | {ctx.document.item.name}"
       >
         {#if context.unlocked}
-          <span class="font-label-medium pin-name truncate flex1">
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
           <button
             class="button button-borderless button-icon-only flexshrink edit-name-button"
             onclick={(ev) => {
@@ -168,9 +177,7 @@
             <i class="fa-solid fa-pencil"></i>
           </button>
         {:else}
-          <span class="font-label-medium pin-name truncate">
-            {coalesce(ctx.alias, ctx.document.name)}
-          </span>
+          {@render pinName()}
         {/if}
       </div>
       <div class="pin-context {ctx.resource}">
@@ -206,7 +213,8 @@
   {#if context.unlocked && !isEditing}
     <a
       class="button button-icon-only button-borderless"
-      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-activity-id]')}
+      data-action="showContextMenu"
+      data-target-selector="[data-activity-id]"
     >
       <i class="fas fa-ellipsis-vertical"></i>
     </a>

@@ -2,9 +2,8 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { CONSTANTS } from 'src/constants';
   import type { Actor5e } from 'src/types/types';
-  import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
-  import { getCharacterSheetContext, getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -32,16 +31,6 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  function onOccupantClick(
-    event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
-  ) {
-    if (context.unlocked) {
-      EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
-      return;
-    }
-    occupant.sheet.render(true);
-  }
-
   async function onSlotClick(ev: Event) {
     if (
       !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
@@ -54,14 +43,17 @@
       return;
     }
 
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters: {
-        locked: {
-          documentClass: 'Actor',
-          types: new Set(['character', 'npc', 'vehicle', 'group']),
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            documentClass: 'Actor',
+            types: new Set(['character', 'npc', 'vehicle', 'group']),
+          },
         },
       },
-    });
+      context.sheet._detachOptions(),
+    );
 
     if (result) {
       context.actor.sheet._onDropActorAddToFacility(
@@ -74,6 +66,20 @@
 
   let hoveredFacilityOccupant = getContext<Ref<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
+  );
+
+  const linkAttributes = $derived(
+    context.editable && context.unlocked
+      ? {
+          'data-action': 'showContextMenu',
+          'data-target-selector': '[data-actor-uuid]',
+        }
+      : context.editable && !context.unlocked
+        ? {
+            'data-action': 'showDocument',
+            'data-uuid': occupant.uuid,
+          }
+        : {},
   );
 
   let localize = FoundryAdapter.localize;
@@ -101,7 +107,7 @@
       (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
     onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
-    <a class="item-image-link" onclick={(ev) => context.editable && onOccupantClick(ev)}>
+    <a class="item-image-link" {...linkAttributes}>
       {#if occupant}
         <img class="item-image" src={imageSrc} alt={name} />
       {:else}
@@ -115,8 +121,10 @@
   </li>
 {:else}
   <li class="slot member-slot {type} empty" data-index={index}>
-    <a onclick={(ev) => context.editable && onSlotClick(ev)}
-      class="button button-tertiary button-icon-only">
+    <a
+      onclick={(ev) => context.editable && onSlotClick(ev)}
+      class="button button-tertiary button-icon-only"
+    >
       <i class={iconClass}></i>
     </a>
   </li>

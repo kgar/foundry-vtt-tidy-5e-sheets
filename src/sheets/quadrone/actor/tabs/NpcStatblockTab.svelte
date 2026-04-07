@@ -231,11 +231,11 @@
                 aria-label={localize('DND5E.FlagsTitle')}
                 data-tooltip
                 onclick={() =>
-                  new SpecialTraitsApplication({
-                    document: context.actor,
-                  }).render({
-                    force: true,
-                  })}
+                  context.sheet._renderChild(
+                    new SpecialTraitsApplication({
+                      document: context.actor,
+                    }),
+                  )}
               >
                 <i class="fa-solid fa-star"></i>
                 {localize('DND5E.FlagsTitle')}

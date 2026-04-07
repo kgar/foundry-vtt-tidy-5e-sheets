@@ -276,10 +276,6 @@
         "ButtonMigration.Text": "Migruj",
         "OptionDeleteFlags.Tooltip": "Podczas migracji z niestandardowych flag Tidy do oficjalnych danych systemowych, flagi pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
         "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione",
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Klasa czaru do klasy źródłowej",
-            "selectionDialogTitle": "Migracja: Klasa czaru do klasy źródłowej"
-        },
         "NpcExhaustion": {
             "selectionDialogTitle": "Migracaj: Wyczerpanie NPC do systemu",
             "sectionTitle": "Wyczerpanie NPC"
@@ -627,10 +623,10 @@
     "TIDY5E.Settings.ColorPickerAtWill": {
         "name": "Natychmiastowe"
     },
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identyfikator klasy źródłowej",
     "TIDY5E.Utilities.Tools": "Narzędzia",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Przypisz czary do klas",
     "TIDY5E.WorldSettings.VehicleExhaustion": {
         "Header": "Wyczerpanie pojazdu",

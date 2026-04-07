@@ -67,7 +67,7 @@ function getContextMenuOptions(
       {
         name: 'DND5E.ContextMenuActionEdit',
         icon: '<i class="fas fa-pen-to-square fa-fw"></i>',
-        callback: async () => await activity.sheet.render({ force: true }),
+        callback: async () => await app._renderChild(activity.sheet),
         condition: () => configurable,
       },
       {
@@ -85,7 +85,7 @@ function getContextMenuOptions(
       {
         name: 'DND5E.ContextMenuActionDelete',
         icon: '<i class="fas fa-trash fa-fw"></i>',
-        callback: async () => await activity.deleteDialog(),
+        callback: async () => await activity.deleteDialog({ sheet: app }),
         condition: () => configurable,
       }
     );
@@ -93,7 +93,7 @@ function getContextMenuOptions(
     entries.push({
       name: 'DND5E.ContextMenuActionView',
       icon: '<i class="fas fa-eye fa-fw"></i>',
-      callback: async () => await activity.sheet.render({ force: true }),
+      callback: async () => await app._renderChild(activity.sheet),
       condition: () => configurable,
     });
   }

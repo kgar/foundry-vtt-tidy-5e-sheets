@@ -17,7 +17,7 @@
   > = $props();
 </script>
 
-{#if rowDocument.type === CONSTANTS.SHEET_TYPE_NPC}
+{#if rowDocument.system.isNPC}
   <span class="cr-value font-default-medium color-text-default"
     >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
   >

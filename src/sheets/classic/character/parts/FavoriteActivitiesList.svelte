@@ -101,7 +101,12 @@
         <TidyTableCell primary={true}>
           <a
             class="item-table-image-button"
-            onclick={(event) => context.editable && activity.use({ event })}
+            onclick={(event) =>
+              context.editable &&
+              activity.use(
+                { event },
+                { options: { sheet: context.actor.sheet } },
+              )}
           >
             <img src={activity.img} />
             <i class="fa fa-dice-d20 roll-indicator"></i>

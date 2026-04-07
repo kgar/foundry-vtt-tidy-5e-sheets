@@ -5,7 +5,6 @@
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeterQuadrone from './FacilityOrderProgressMeterQuadrone.svelte';
   import {
-    getCharacterSheetContext,
     getCharacterSheetQuadroneContext,
   } from 'src/sheets/sheet-context.svelte';
 
@@ -26,11 +25,6 @@
   function onMouseLeaveCraft(event: Event, item: Item5e) {
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
   }
-
-  async function editCraftingItem(itemUuid: string) {
-    const item = await fromUuid(itemUuid);
-    item.sheet.render(true);
-  }
 </script>
 
 {#if chosen.progress.max || chosen.executing}
@@ -40,9 +34,12 @@
     </div>
     <div class="craft-and-meter theme-dark">
       {#if chosen.craft}
+        {@const itemAttributes = context.editable ? {
+          'data-action': 'editDocument',
+          'data-uuid': chosen.craft.uuid
+        } : {}}
         <a
-          onclick={() =>
-            context.editable && editCraftingItem(chosen.craft.uuid)}
+          {...itemAttributes}
           data-info-card={'item'}
           data-info-card-entity-uuid={chosen.craft.uuid}
         >

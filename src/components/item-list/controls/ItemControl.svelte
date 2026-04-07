@@ -5,6 +5,7 @@
     import type { ClassValue } from 'svelte/elements';
 
   interface Props {
+    attributes?: Record<string, any>;
     iconCssClass?: ClassValue;
     iconSrc?: string | undefined;
     title?: string | undefined;
@@ -20,6 +21,7 @@
   }
 
   let {
+    attributes = {},
     iconCssClass = undefined,
     iconSrc = undefined,
     title = undefined,
@@ -37,6 +39,7 @@
   {onclick}
   title={title !== undefined ? localize(title) : ''}
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+  {...attributes}
 >
   {#if iconCssClass}
     <i class={iconCssClass}></i>

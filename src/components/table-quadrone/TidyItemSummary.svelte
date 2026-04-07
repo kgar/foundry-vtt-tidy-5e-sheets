@@ -82,7 +82,9 @@
         )}
       </div>
     {/if}
-    {@html chatData.description}
+    <div data-target="system.description.value" data-uuid={item.uuid}>
+      {@html chatData.description}
+    </div>
     {#if !identified}
       <span class="color-text-lightest">
         {localize('DND5E.Unidentified.Notice')}

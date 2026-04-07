@@ -10,7 +10,7 @@
 </script>
 
 {#if rowDocument.system.details.xp}
-  {#if rowDocument.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+  {#if rowDocument.system.isCharacter}
     <div
       class="meter meter-small progress xp"
       style="--bar-percentage: {rowDocument.system.details.xp.pct}%;"
@@ -18,9 +18,12 @@
     <span class="font-label-medium color-text-default"
       >{rowDocument.system.details.xp.value}</span
     >
-  {:else}
+  {:else if rowDocument.system.details.xp.value}
+
     <span class="font-label-large color-text-default"
       >{rowDocument.system.details.xp.value.toLocaleString()}</span
     >
+  {:else}
+    <span class="color-text-disabled">—</span>
   {/if}
 {/if}

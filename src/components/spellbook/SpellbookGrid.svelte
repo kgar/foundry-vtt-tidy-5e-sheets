@@ -44,7 +44,7 @@
     ActorItemRuntime.getActorItemSectionCommands({
       document: context.actor,
       section,
-      unlocked: true
+      unlocked: true,
     }),
   );
 
@@ -103,7 +103,7 @@
             class:hidden
             aria-hidden={hidden}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            onclick={(event) => FoundryAdapter.actorTryUseItem(item, event)}
+            onclick={(event) => context.actor.sheet.tryUseItem(item, event)}
             oncontextmenu={(event) =>
               FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
             onmousedown={(event) =>

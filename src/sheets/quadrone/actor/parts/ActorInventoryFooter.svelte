@@ -135,10 +135,11 @@
         class="button button-icon-only currency-conversion flexshrink"
         class:disabled={!context.editable}
         onclick={() =>
-          context.owner &&
-          new dnd5e.applications.CurrencyManager({
-            document: context.document,
-          }).render(true)}
+          context.sheet._renderChild(
+            new dnd5e.applications.CurrencyManager({
+              document: context.document,
+            }),
+          )}
         data-tooltip="DND5E.CurrencyManager.Title"
       >
         <i class="fas fa-database"></i>

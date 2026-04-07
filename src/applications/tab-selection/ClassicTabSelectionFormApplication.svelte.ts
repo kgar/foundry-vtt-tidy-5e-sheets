@@ -69,13 +69,13 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
   }
 
   getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
-    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (actor.system.isCharacter) {
       return CharacterSheetClassicRuntime.getAllRegisteredTabs();
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
+    } else if (actor.system.isNPC) {
       return NpcSheetClassicRuntime.getAllRegisteredTabs();
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
+    } else if (actor.system.isVehicle) {
       return VehicleSheetClassicRuntime.getAllRegisteredTabs();
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+    } else if (actor.system.isGroup) {
       return GroupSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_ENCOUNTER) {
       return EncounterSheetClassicRuntime.getAllRegisteredTabs();
@@ -91,13 +91,13 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
   }
 
   getDefaultTabIds(actor: Actor5e): string[] {
-    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (actor.system.isCharacter) {
       return settings.value.defaultCharacterSheetTabs;
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
+    } else if (actor.system.isNPC) {
       return settings.value.defaultNpcSheetTabs;
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
+    } else if (actor.system.isVehicle) {
       return settings.value.defaultVehicleSheetTabs;
-    } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+    } else if (actor.system.isGroup) {
       return settings.value.defaultGroupSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_ENCOUNTER) {
       return settings.value.defaultGroupSheetTabs;

@@ -1,6 +1,6 @@
 import type { Actor5e, GroupableSelectOption } from 'src/types/types';
 
-type CurrencyItemConfig = {
+export type CurrencyItemConfig = {
   label: string;
   abbreviation: string;
   conversion: number;
@@ -2759,31 +2759,15 @@ export type CONFIG = {
       mar: string;
     };
     weaponMasteries: {
-      cleave: {
-        label: string;
-      };
-      graze: {
-        label: string;
-      };
-      nick: {
-        label: string;
-      };
-      push: {
-        label: string;
-      };
-      sap: {
-        label: string;
-      };
-      slow: {
-        label: string;
-      };
-      topple: {
-        label: string;
-      };
-      vex: {
-        label: string;
-      };
-    };
+      cleave: WeaponMasteryConfig;
+      graze: WeaponMasteryConfig;
+      nick: WeaponMasteryConfig;
+      push: WeaponMasteryConfig;
+      sap: WeaponMasteryConfig;
+      slow: WeaponMasteryConfig;
+      topple: WeaponMasteryConfig;
+      vex: WeaponMasteryConfig;
+    } & Record<string, WeaponMasteryConfig>;
     weaponProficienciesMap: {
       simpleM: string;
       simpleR: string;
@@ -3527,6 +3511,7 @@ export type CONFIG = {
       sp: CurrencyItemConfig;
       cp: CurrencyItemConfig;
     } & Record<string, CurrencyItemConfig>;
+    defaultCurrency: string,
     dieSteps: Array<number>;
     damageScalingModes: {
       whole: {
@@ -3835,7 +3820,10 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
-        recoverPeriods: Array<string>;
+        label: string;
+        icon: string;
+        activationPeriods: string[];
+        recoverPeriods: string[];
         recoverSpellSlotTypes: {};
       };
       long: {
@@ -3844,10 +3832,17 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
+        exhaustionDelta: number;
+        label: string;
+        icon: string;
+        newDay: boolean;
+        activationPeriods: string[];
         recoverHitDice: boolean;
         recoverHitPoints: boolean;
         recoverPeriods: Array<string>;
         recoverSpellSlotTypes: {};
+        recoverTemp: boolean;
+        recoverTempMax: boolean;
       };
     };
     senses: {
@@ -4424,6 +4419,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4432,6 +4428,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4440,6 +4437,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4448,6 +4446,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         configKey: string;
       };
@@ -5578,4 +5577,8 @@ type ChatMessage5e = {
 
 type RequestOptions5e = {
   event?: Event;
+}
+type WeaponMasteryConfig = {
+  label: string;
+  reference: string | undefined;
 }

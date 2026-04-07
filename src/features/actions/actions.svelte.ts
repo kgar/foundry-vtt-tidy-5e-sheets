@@ -503,11 +503,11 @@ export function actorUsesActionFeature(actor: Actor5e) {
   }
 
   const defaultTabIds =
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    actor.system.isCharacter
       ? settings.value.defaultCharacterSheetTabs
-      : actor.type === CONSTANTS.SHEET_TYPE_NPC
+      : actor.system.isNPC
         ? settings.value.defaultNpcSheetTabs
-        : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
+        : actor.system.isVehicle
           ? settings.value.defaultVehicleSheetTabs
           : [];
 

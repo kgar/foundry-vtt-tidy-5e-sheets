@@ -108,27 +108,30 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
       openTabConfiguration: async function (this: Tidy5eItemSheetQuadrone) {
-        new SheetTabConfigurationQuadroneApplication({
-          document: this.document,
-        }).render({ force: true });
+        this._renderChild(
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+          }),
+        );
       },
       showIcon: async function (this: Tidy5eItemSheetQuadrone) {
         const title =
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+        
+        this._renderChild(new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        }));
       },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        await new ThemeSettingsQuadroneApplication({
-          document: this.document,
-        }).render({
-          force: true,
-        });
+        this._renderChild(
+          new ThemeSettingsQuadroneApplication({
+            document: this.document,
+          }),
+        );
       },
     },
     dragDrop: [
@@ -472,6 +475,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       // Spell getSheetData
       canPrepare: undefined,
       spellcastingMethods: [],
+
+      ...this._getSourceItemContext(),
 
       ...documentSheetContext,
     };
@@ -856,6 +861,42 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     return undefined;
   }
 
+  _getSourceItemContext(): {
+    sourceItemOptions: { text: string; value: string }[];
+    sourceItemLocked: boolean;
+  } {
+    const actor = this.document.actor;
+
+    if (!actor) {
+      return {
+        sourceItemLocked: true,
+        sourceItemOptions: [],
+      };
+    }
+
+    const sourceItemValue = this.document.system.sourceItem;
+    const sourceItem = actor.identifiedItems.get(sourceItemValue)?.first();
+    const sourceItemLocked =
+      sourceItem && sourceItem.type !== CONSTANTS.ITEM_TYPE_CLASS;
+
+    return {
+      sourceItemLocked,
+      sourceItemOptions: sourceItemLocked
+        ? [
+            {
+              text: sourceItem.name,
+              value: sourceItemValue,
+            },
+          ]
+        : Object.entries<Item5e>(actor.spellcastingClasses).map(
+            ([identifier, item]) => ({
+              text: item.name,
+              value: `${item.type}:${identifier}`,
+            }),
+          ),
+    };
+  }
+
   static ShouldShowAc(item: Item5e) {
     return (
       item.system.armor?.value &&
@@ -900,7 +941,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       dragged.classList.contains('advancement-item') &&
       !isNil(dragged.dataset.id)
     ) {
-      dragData = this.item.advancement.byId[dragged.dataset.id]?.toDragData();
+      dragData = this.item.system.advancement.get(dragged.dataset.id)?.toDragData();
     }
 
     if (!dragData) return;
@@ -1085,7 +1126,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         CONFIG.DND5E.advancementTypes[a.constructor.typeName]?.validItemTypes ??
         a.metadata.validItemTypes;
       return (
-        !this.item.advancement.byId[a.id] &&
+        !this.item.system.advancement.get(a.id) &&
         validItemTypes.has(this.item.type) &&
         a.constructor.availableForItem(this.item)
       );
@@ -1097,7 +1138,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         advancements =
           await dnd5e.applications.advancement.AdvancementMigrationDialog.createDialog(
             this.item,
-            advancements
+            advancements,
+            { sheet: this }
           );
       } catch (err) {
         return false;
@@ -1115,13 +1157,16 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           this.item.id,
           advancements
         );
-      if (manager.steps.length) return manager.render(true);
+      if (manager.steps.length) return this._renderChild(manager);
     }
 
     // If no advancements need to be applied, just add them to the item
-    const advancementArray = this.item.system.toObject().advancement;
-    advancementArray.push(...advancements.map((a: any) => a.toObject()));
-    this.item.update({ 'system.advancement': advancementArray });
+   this.item.update({
+      "system.advancement": advancements.reduce((obj: any, a: any) => {
+        obj[a.id] = a.toObject();
+        return obj;
+      }, {})
+    });
   }
 
   /* -------------------------------------------- */
@@ -1131,7 +1176,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   addActivity() {
     return dnd5e.documents.activity.UtilityActivity.createDialog(
       {},
-      { parent: this.item }
+      { parent: this.item },
+      { sheet: this }
     );
   }
 
@@ -1170,14 +1216,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     let { type: datasetType, ...restDataSet } = args.data ?? {};
 
     if (args.tabId === CONSTANTS.TAB_EFFECTS) {
-      return await ActiveEffect.implementation.create(
+      return await ActiveEffect.implementation.createDialog(
         {
           name: game.i18n.localize('DND5E.EffectNew'),
           icon: 'icons/svg/aura.svg',
           type: datasetType,
           ...restDataSet,
         },
-        { parent: this.item, renderSheet: true }
+        { parent: this.item, renderSheet: true },
+        { sheet: this }
       );
     }
 
@@ -1186,6 +1233,30 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     }
 
     return undefined;
+  }
+
+  /* -------------------------------------------- */
+  /*  Event and Lifecycle                         */
+  /* -------------------------------------------- */  
+
+  _renderChild(app: any, options = {}) {
+    if (game.release.generation < 14) {
+      return app.render({ force: true, ...options });
+    }
+
+    if (this.parent) {
+      return this.parent.renderChild(app, options);
+    }
+
+    if (this.window?.windowId) {
+      return app.render({
+        force: true,
+        window: { detached: true, windowId: this.window.windowId },
+        ...options,
+      });
+    }
+
+    return app.render({ force: true, ...options });
   }
 
   /* -------------------------------------------- */
