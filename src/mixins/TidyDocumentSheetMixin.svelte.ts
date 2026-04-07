@@ -152,13 +152,28 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /** @override */
-    _onRevealSecret(event: any) {
-      if ( super._onRevealSecret(event) ) return;
-      const target = event.target.closest("[data-target]")?.dataset.target;
-      if ( !target ) return;
-      const content = foundry.utils.getProperty(this.document, target);
+    async _onRevealSecret(event: any) {
+      if (super._onRevealSecret(event)) {
+        return;
+      }
+
+      const { target, uuid } =
+        event.target.closest('[data-target]')?.dataset ?? {};
+
+      if (!target) {
+        return;
+      }
+
+      const doc = uuid ? await fromUuid(uuid) : this.document;
+
+      if (!doc) {
+        return;
+      }
+
+      const content = foundry.utils.getProperty(doc, target);
       const modified = event.target.toggleRevealed(content);
-      this.document.update({ [target]: modified });
+
+      doc.update({ [target]: modified });
     }
 
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {
@@ -458,6 +473,13 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
     /*  Sheet Mode Management                       */
     /* -------------------------------------------- */
+
+    /**
+     * Is the sheet in edit mode?
+     */
+     get isEditMode() {
+      return this._mode === CONSTANTS.SHEET_MODE_EDIT;
+    }
 
     /**
      * Applies the current sheet mode as a class to the sheet element.

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -134,7 +133,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -575,8 +573,8 @@
       </div>
 
       {#if context.enriched.bastion}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
-          <div data-field="system.bastion.description" class="user-select-text">
+        <div class="editor">
+          <div data-target="system.bastion.description" class="user-select-text">
             {@html context.enriched.bastion}
           </div>
         </div>

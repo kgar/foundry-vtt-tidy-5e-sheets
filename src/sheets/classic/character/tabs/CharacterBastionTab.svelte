@@ -16,7 +16,6 @@
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -467,12 +466,11 @@
           documentUuid={context.document.uuid}
           content={context.actor.system.bastion.description}
           editorOptions={{ toggled: false }}
-          manageSecrets={true}
           field="system.bastion.description"
           enriched={context.bastion.description}
         ></SheetEditorV2>
       {:else}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div data-field="system.bastion.description" class="user-select-text">
             {@html context.bastion.description}
           </div>

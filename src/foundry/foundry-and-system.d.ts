@@ -81,6 +81,7 @@ declare global {
         MappingField: typeof MappingField;
       };
       item: any;
+      spellcasting: any;
     };
   } & Record<string, any>;
   var Folder: any;

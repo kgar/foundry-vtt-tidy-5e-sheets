@@ -6,7 +6,6 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
@@ -76,7 +75,7 @@
 
     {#await enrichedPromise then enriched}
       <div class="editor">
-        <div data-field="{baseField}.value" data-target="{baseField}.value" class="user-select-text">
+        <div data-target="{baseField}.value" class="user-select-text">
           {@html enriched}
         </div>
       </div>

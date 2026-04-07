@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { type DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
@@ -178,12 +177,9 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
         {#await enrichedPromise then enriched}
-          <div
-            class="editor"
-            use:manageSecrets={{ document: context.document }}
-          >
+          <div class="editor">
             <div
-              data-field={selected
+              data-target={selected
                 ? `${TidyFlags.documentJournal.prop}.${selected.id}.value`
                 : ''}
               class="user-select-text"
