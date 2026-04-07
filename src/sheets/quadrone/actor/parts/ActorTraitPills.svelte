@@ -94,7 +94,6 @@
           {@render pillContents(value)}
         </a>
       {:else if !!value.attributes?.['data-action']}
-        <!-- TODO: Somehow get the data-action stuff here instead of up there on attributes. Probably going to be some kind of action / actionArgs props -->
         <a
           role="button"
           tabindex="0"
