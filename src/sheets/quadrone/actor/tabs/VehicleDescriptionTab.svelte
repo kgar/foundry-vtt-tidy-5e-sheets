@@ -69,7 +69,7 @@
     {#key context.enriched.biography}
       <div class="editor" use:manageSecrets={{ document: context.actor }}>
         <div
-          data-field="system.details.biography.value"
+          data-target="system.details.biography.value"
           class="user-select-text"
         >
           {@html context.enriched.biography}

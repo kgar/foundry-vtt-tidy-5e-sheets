@@ -267,7 +267,7 @@
         <ExpandableContainer {expanded}>
           {#key enriched}
             <div class="editor" use:manageSecrets={{ document: context.actor }}>
-              <div data-field={field} class="user-select-text">
+              <div data-target={field} class="user-select-text">
                 {@html enriched}
               </div>
             </div>

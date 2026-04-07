@@ -24,7 +24,7 @@
     ></SheetEditorV2>
   {:else}
     <div class="editor" use:manageSecrets={{ document }}>
-      <div data-field={itemDescription.field} class="user-select-text">
+      <div data-target={itemDescription.field} class="user-select-text">
         {@html itemDescription.enriched}
       </div>
     </div>

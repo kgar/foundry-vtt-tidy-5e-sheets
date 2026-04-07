@@ -76,7 +76,7 @@
 
     {#await enrichedPromise then enriched}
       <div class="editor">
-        <div data-field="{baseField}.value" data-target="{baseField}.value" class="user-select-text">
+        <div data-target="{baseField}.value" class="user-select-text">
           {@html enriched}
         </div>
       </div>

@@ -183,7 +183,7 @@
             use:manageSecrets={{ document: context.document }}
           >
             <div
-              data-field={selected
+              data-target={selected
                 ? `${TidyFlags.documentJournal.prop}.${selected.id}.value`
                 : ''}
               class="user-select-text"

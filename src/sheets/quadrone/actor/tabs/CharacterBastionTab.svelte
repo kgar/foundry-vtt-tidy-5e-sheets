@@ -576,7 +576,7 @@
 
       {#if context.enriched.bastion}
         <div class="editor" use:manageSecrets={{ document: context.document }}>
-          <div data-field="system.bastion.description" class="user-select-text">
+          <div data-target="system.bastion.description" class="user-select-text">
             {@html context.enriched.bastion}
           </div>
         </div>

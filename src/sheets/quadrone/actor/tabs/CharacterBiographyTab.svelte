@@ -257,7 +257,7 @@
       </div>
       <ExpandableContainer {expanded}>
         <div class={['editor']}>
-          <div data-field={field} data-target={field} class="user-select-text">
+          <div data-target={field} class="user-select-text">
             {@html enriched}
           </div>
         </div>
