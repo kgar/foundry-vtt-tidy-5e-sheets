@@ -2,12 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    getCharacterSheetContext,
-    getCharacterSheetQuadroneContext,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e } from 'src/types/types';
-  import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
 
   interface Props {
@@ -29,15 +25,19 @@
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 
-  function onRosterMemberClicked(
-    event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
-  ): any {
-    if (context.unlocked) {
-      EventHelper.triggerContextMenu(event, '[data-actor-uuid]');
-      return;
-    }
-    occupant.sheet.render(true);
-  }
+  const linkAttributes = $derived(
+    context.unlocked
+      ? {
+          'data-action': 'showContextMenu',
+          'data-target-selector': '[data-actor-uuid]',
+        }
+      : context.editable
+        ? {
+            'data-action': 'showDocument',
+            'data-uuid': occupant.uuid,
+          }
+        : {},
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -63,7 +63,7 @@
     (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
   onmouseleave={() => (hoveredFacilityOccupant.value = '')}
 >
-  <a onclick={(ev) => context.editable && onRosterMemberClicked(ev)}>
+  <a {...linkAttributes}>
     {#if occupant}
       <img src={occupant.img} alt={name} />
     {:else}

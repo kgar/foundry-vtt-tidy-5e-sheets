@@ -73,22 +73,20 @@
         (member.actor.system.attributes.death.failure >= 3 &&
           member.actor.system.attributes.death.success < 3))}
 
-    <div
+    <a
       class="actor-container flexrow"
       style:--t5e-theme-color-default={member.accentColor}
       style:--t5e-theme-color-highlight={member.highlightColor}
       style:--t5e-member-color-hover={member.highlightColor}
       role="button"
       data-keyboard-focus
+      data-action="showDocument"
+      data-uuid={member.actor.uuid}
+      onmousedown={(event) =>
+        FoundryAdapter.editOnMiddleClick(event, member.actor)}
       tabindex={0}
-      onclick={() => member.actor.sheet.render(true)}
-      onkeydown={(e) =>
-        e.key === 'Enter' || e.key === ' '
-          ? member.actor.sheet.render(true)
-          : null}
       onmouseenter={() => (hoveredMember = member.actor.uuid)}
       onmouseleave={() => (hoveredMember = null)}
-      data-uuid={member.actor.uuid}
       {@attach dropzoneClass('hovered', '.actor-image')}
     >
       <div class={['actor-image-container flexshrink']}>
@@ -128,7 +126,7 @@
           {member.actor.name}
         </h4>
         {#if member.canObserve}
-          {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+          {#if member.actor.system.isCharacter || member.actor.system.isNPC}
             <div class="separated-list">
               <span class="actor-currency">
                 <span class="font-label-medium color-text-default flexshrink"
@@ -140,7 +138,7 @@
               </span>
             </div>
             <ActorEncumbranceBar actor={member.actor} />
-          {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+          {:else if member.actor.system.isVehicle}
             <div class="separated-list">
               <span class="actor-cargo separated-list">
                 <span class="font-body-medium color-text-lighter"
@@ -160,7 +158,7 @@
           {/if}
         {/if}
       </div>
-    </div>
+    </a>
   {/each}
 </aside>
 <div class="tab-right-column">

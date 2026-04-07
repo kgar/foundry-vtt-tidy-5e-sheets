@@ -133,7 +133,7 @@ export class Container {
       pack: container.pack,
       types: Inventory.getInventoryTypes(),
       keepId: true,
-    });
+    }, { sheet: container.sheet });
   }
 
   static createInventoryItem(container: Item5e, type: string) {

@@ -126,6 +126,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     const important = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
+    const gear: Item5e[] = (await this.actor.items.filter(
+      (i: Item5e) => i.system.quantity && i.system.properties?.has('gear'),
+    ));
+
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       background: background
@@ -169,6 +173,21 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         ),
       },
       features: [],
+      gear: gear.map<ActorTraitContext>((item: Item5e) => {
+        const { name, uuid } = item.system.gearPresentationData();
+        return {
+          label: name,
+          key: uuid,
+          value: item.system.quantity > 1 ? item.system.quantity : undefined,
+          attributes: {
+            'data-item-id': item.id,
+            'data-gear': '',
+            'data-tidy-draggable': '',
+            'data-action': 'showDocument',
+            'data-uuid': uuid
+          },
+        };
+      }),
       habitats: [],
       important,
       includeSpellbookInStatblockTab:
@@ -290,7 +309,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
   static isImportantNpc(actor: Actor5e) {
     return (
-      (actor.type === CONSTANTS.SHEET_TYPE_NPC &&
+      (actor.system.isNPC &&
         !foundry.utils.isEmpty(actor.classes)) ||
       actor.system.traits.important
     );
@@ -532,7 +551,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       ctx.subtitle = [
         linked
           ? linked.name
-          : this.actor.classes[item.system.sourceClass]?.name,
+          : this.actor.identifiedItems.get(item.system.sourceItem)?.first()
+              ?.name,
         vsmcr,
       ].filterJoin(' &bull; ');
     }
@@ -613,6 +633,34 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     }
 
     return traits;
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag & Drop                                 */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+  ) {
+    const target = event.currentTarget;
+    if (target?.matches('[data-item-id][data-gear]')) {
+      const itemId = target.getAttribute('data-item-id');
+      const item = await this.actor.items.get(itemId)?.system.asGear?.();
+      if (item) {
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify({
+            data: item.isEmbedded
+              ? item.toObject()
+              : game.items.fromCompendium(item),
+            type: 'Item',
+          }),
+        );
+        return;
+      }
+    }
+    return super._onDragStart(event);
   }
 
   /* -------------------------------------------- */

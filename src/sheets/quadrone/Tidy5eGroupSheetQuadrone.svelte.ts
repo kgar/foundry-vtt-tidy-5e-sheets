@@ -287,23 +287,23 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
           : undefined,
         inspirationSource:
-          actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+          actor.system.isCharacter
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
         portrait: await this._preparePortrait(actor),
-        gold: FoundryAdapter.formatNumber(this.getGpSummary(actor)),
-        goldAbbreviation: CONFIG.DND5E.currencies.gp?.abbreviation ?? '',
+        gold: FoundryAdapter.formatNumber(this.getDefaultCurrencySummary(actor)),
+        goldAbbreviation: FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
       };
 
       section.members.push(groupMemberContext);
       membersContext.all.set(actor.uuid, groupMemberContext);
-      if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+      if (actor.system.isCharacter) {
         membersContext.character.push(actor);
       }
 
       const prepareCreatureInformation =
         canObserve &&
-        (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER ||
+        (actor.system.isCharacter ||
           Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
 
       if (prepareCreatureInformation) {
@@ -326,7 +326,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
       const prepareSpeed =
         prepareCreatureInformation ||
-        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE;
+        actor.system.isVehicle;
 
       if (prepareSpeed) {
         // Speeds
@@ -446,12 +446,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   award() {
-    new dnd5e.applications.Award({
+    this._renderChild(new dnd5e.applications.Award({
       award: {
         savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
       },
       origin: this.actor,
-    }).render({ force: true });
+    }));
   }
 
   onRollSkill(options: Partial<GroupSkillRollProcessConfiguration>) {

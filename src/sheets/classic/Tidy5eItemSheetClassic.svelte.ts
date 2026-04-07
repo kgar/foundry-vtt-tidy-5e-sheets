@@ -78,11 +78,14 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+
+        const app = new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        });
+
+        this._renderChild(app);
       },
     },
     dragDrop: [
@@ -797,7 +800,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       dragged.classList.contains('advancement-item') &&
       !isNil(dragged.dataset.id)
     ) {
-      dragData = this.item.advancement.byId[dragged.dataset.id]?.toDragData();
+      dragData = this.item.system.advancement.get(dragged.dataset.id)?.toDragData();
     }
 
     if (!dragData) return;
@@ -970,7 +973,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
         CONFIG.DND5E.advancementTypes[a.constructor.typeName]?.validItemTypes ??
         a.metadata.validItemTypes;
       return (
-        !this.item.advancement.byId[a.id] &&
+        !this.item.system.advancement.get(a.id) &&
         validItemTypes.has(this.item.type) &&
         a.constructor.availableForItem(this.item)
       );
@@ -982,7 +985,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
         advancements =
           await dnd5e.applications.advancement.AdvancementMigrationDialog.createDialog(
             this.item,
-            advancements
+            advancements,
+            { sheet: this }
           );
       } catch (err) {
         return false;
@@ -1004,9 +1008,12 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
     }
 
     // If no advancements need to be applied, just add them to the item
-    const advancementArray = this.item.system.toObject().advancement;
-    advancementArray.push(...advancements.map((a: any) => a.toObject()));
-    this.item.update({ 'system.advancement': advancementArray });
+    this.item.update({
+      "system.advancement": advancements.reduce((obj: any, a: any) => {
+        obj[a.id] = a.toObject();
+        return obj;
+      }, {})
+    });
   }
 
   async toggleAdvancementLock() {
@@ -1023,7 +1030,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       {},
       {
         parent: this.item,
-      }
+      },
+      { sheet: this }
     );
   }
 
@@ -1066,7 +1074,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       return;
     }
 
-    const advancement = this.item.advancement.byId[id];
+    const advancement = this.item.system.advancement.get(id);
     let manager;
     if (['edit', 'delete', 'duplicate'].includes(action) && !advancement)
       return;
@@ -1074,7 +1082,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       case 'add':
         return dnd5e.documents.advancement.Advancement.createDialog(
           {},
-          { parent: this.item }
+          { parent: this.item },
+          { sheet: this }
         );
       case 'edit':
         return new advancement.constructor.metadata.apps.config(

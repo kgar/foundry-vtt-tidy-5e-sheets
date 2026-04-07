@@ -609,10 +609,6 @@
             "sectionTitle": "Vínculos, Ideais e Falhas de PdM",
             "selectionDialogTitle": "Migração: Vínculos, Ideais e Falhas de PdMs para Sistema"
         },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe da Magia para Origem da Magia",
-            "selectionDialogTitle": "Migração: Classe da Magia para Origem da Magia"
-        },
         "NpcExhaustion": {
             "sectionTitle": "Exaustão de PnJ",
             "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
@@ -757,9 +753,9 @@
         "text": "Tem certeza que quer usar o padrão?"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Clique para pular a rolagem e recarregar instantaneamente) ",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de Classe de Origem",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "O identificador da classe de origem da magia aparece aqui. Para atribuir um identificador que o personagem não possui, insira o identificador de classe neste campo de texto.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Exibir Apenas Não-Atribuídos",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identificador de Classe de Origem",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "O identificador da classe de origem da magia aparece aqui. Para atribuir um identificador que o personagem não possui, insira o identificador de classe neste campo de texto.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Exibir Apenas Não-Atribuídos",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Alternar Bloqueio da Ficha",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se uma ficha do Tidy for, no momento, a janela ativa na UI, esse atalho alterna o bloqueio da ficha.",
     "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave",
@@ -825,7 +821,7 @@
     },
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostrar descrição no chat",
     "TIDY5E.ContextMenuActionView": "Visualizar",
-    "TIDY5E.Utilities.SpellPips": "Magias",
+    "TIDY5E.Utilities.SpellPips": "Marcador de Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",
     "TIDY5E.RollRecharge.Label": "Recarregar",
     "TIDY5E.ConfigureTab.Title": "Configurar {tabName}",

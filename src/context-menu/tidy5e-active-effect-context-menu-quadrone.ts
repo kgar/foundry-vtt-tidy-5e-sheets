@@ -19,7 +19,7 @@ export function getActiveEffectContextOptionsQuadrone(
   }
 
   if (
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+    actor.system.isCharacter &&
     !FoundryAdapter.allowCharacterEffectsManagement(actor)
   ) {
     return [];
@@ -56,7 +56,7 @@ export function getActiveEffectContextOptionsQuadrone(
     {
       name: 'DND5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: () => effect.sheet.render(true),
+      callback: () => app._renderChild(effect.sheet),
       group: 'common',
     },
     {
@@ -92,7 +92,7 @@ export function getActiveEffectContextOptionsQuadrone(
     {
       name: 'DND5E.ContextMenuActionDelete',
       icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
-      callback: () => effect.deleteDialog(),
+      callback: () => effect.deleteDialog({ sheet: actor?.sheet }),
       condition: () =>
         !isInFavorites && canEditEffect(effect) && !isConcentrationEffect,
       group: 'be-careful',

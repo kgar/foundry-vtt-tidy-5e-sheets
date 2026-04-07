@@ -135,10 +135,8 @@
                   'pill interactive wrapped',
                   { disabled: facilityIsDisabled },
                 ]}
-                onclick={async () =>
-                  (await fromUuid(context.system.craft.item))?.sheet.render({
-                    force: true,
-                  })}
+                data-action="showDocument"
+                data-uuid={context.system.craft.item}
               >
                 {#if !isNil(context.system.craft.item, '')}
                   {#await fromUuid(context.system.craft.item) then item}

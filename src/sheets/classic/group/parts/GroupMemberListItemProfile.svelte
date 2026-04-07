@@ -30,6 +30,7 @@
           }),
         },
         uuid: member.uuid,
+        sheet: member.sheet
       })}
     tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >

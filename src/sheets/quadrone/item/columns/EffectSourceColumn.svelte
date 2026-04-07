@@ -10,12 +10,7 @@
 </script>
 
 {#if rowContext.effect.source}
-  <a
-    onclick={() =>
-      rowContext.effect.source?.sheet.render({
-        force: true,
-      })}
-  >
+  <a data-action="showDocument" data-uuid={rowContext.effect.source?.uuid}>
     {rowContext.effect.source.name ?? ''}
   </a>
 {:else}

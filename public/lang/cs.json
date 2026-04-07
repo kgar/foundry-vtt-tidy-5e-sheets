@@ -450,7 +450,7 @@
         "SelectionTab.Title": "Výběr záložky",
         "VisibilityTab.Title": "Viditelnost záložky"
     },
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identifikátor zdrojového povolání",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identifikátor zdrojového povolání",
     "TIDY5E.Settings.Migrations": {
         "CcssToTidy": {
             "deleteFlags": "Odstranění dotčených příznaků CCSS",
@@ -528,10 +528,6 @@
         "name": "Migrace",
         "MigrateCompendia.TotalEntriesLabel": "Celkový počet záznamů",
         "OptionOverwrite.Text": "Přepis",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "Migrace: Kouzla povolání do zdrojového povolání",
-            "sectionTitle": "Kouzla povolání do zdrojového povolání"
-        },
         "chatNotification": "K dispozici je migrace na nové deníky Tidy 5e. Dostupné migrace nalezneš v Nastavení deníků Tidy 5e.",
         "Journal": {
             "explanation1": "V rámci přepracování uživatelského rozhraní aplikace Deníků Tidy 5e byl deník upraven tak, aby mohl obsahovat libovolný počet záznamů. Z tohoto důvodu je nutné provést migraci ze staré struktury deníku do nové rozšiřitelné struktury. Stará data deníku nebudou v přepracované aplikaci Deníků Tidy 5e viditelná."
@@ -653,8 +649,8 @@
         "enableAll": "Použít pro všechny deníky"
     },
     "TIDY5E.Utilities.Tools": "Nástroje",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Zobrazit pouze nepřiřazené",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Zobrazit pouze nepřiřazené",
     "TIDY5E.HitDC": "Zásah / SO",
     "TIDY5E.Inventory.Weight.Tooltip": "Váha: {weight} {weightUnit}",
     "TIDY5E.AttackMod": "Oprava útoku",

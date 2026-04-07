@@ -28,8 +28,7 @@
     context.item.actor?.system.spells.pact?.level?.ordinalString(),
   );
   const isPactSpell = $derived(
-    context.item.system.method ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_PACT,
+    context.item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT,
   );
   const pactCastableLevelText = $derived(
     isPactSpell && !isNil(actorPactLevelOrdinal)
@@ -54,8 +53,8 @@
 
     if (linkedItem) {
       result.push(linkedItemPill);
-    } else if (context.item.actor) {
-      result.push(sourceClassPill);
+    } else if (context.item.system.sourceItem && context.item.actor) {
+      result.push(sourceItemPill);
     }
 
     return result;
@@ -116,13 +115,15 @@
   </li>
 {/snippet}
 
-{#snippet sourceClassPill()}
+{#snippet sourceItemPill()}
   <li class="pill">
     <span class="centered text-normal">
-      {localize('TYPES.Item.class')}
+      {localize('DND5E.SourceItem.Label')}
     </span>
     <span class="hyphens-auto centered">
-      {context.item.actor?.classes?.[context.item.system.sourceClass]?.name}
+      {context.item.actor?.identifiedItems
+        ?.get(context.item.system.sourceItem)
+        ?.first()?.name}
     </span>
   </li>
 {/snippet}
@@ -141,11 +142,7 @@
     {#if !context.unlocked}
       <div class="common-fields">
         {#if spellSchoolConfig}
-          <div
-            class="school"
-            aria-label={context.labels.school}
-            data-tooltip
-          >
+          <div class="school" aria-label={context.labels.school} data-tooltip>
             <Dnd5eIcon src={spellSchoolConfig.icon} />
           </div>
         {/if}

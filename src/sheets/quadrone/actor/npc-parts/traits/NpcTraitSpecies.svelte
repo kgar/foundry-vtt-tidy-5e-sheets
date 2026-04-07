@@ -13,15 +13,6 @@
   let speciesItem = $derived(
     species ? context.actor.items.get(species.id) : null,
   );
-
-  function openSheet(mode: number) {
-    if (species) {
-      context.actor.items.get(species.id).sheet.render({
-        force: true,
-        mode: mode,
-      });
-    }
-  }
 </script>
 
 <!-- Species -->
@@ -53,12 +44,10 @@
         })}
         data-keyboard-focus
         class="list-values trait-item"
-        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        data-action="showDocument"
+        data-uuid={speciesItem?.uuid}
         onmousedown={(event) =>
           FoundryAdapter.editOnMiddleClick(event, speciesItem)}
-        onkeydown={(e) =>
-          (e.key === 'Enter' || e.key === ' ') &&
-          openSheet(CONSTANTS.SHEET_MODE_PLAY)}
       >
         <!-- svelte-ignore a11y_missing_attribute -->
         <span
@@ -77,11 +66,12 @@
       {#if context.unlocked}
         <div class="list-controls">
           <button
-            aria-label="Edit {localize('TYPES.Item.race')}"
+            aria-label={localize('DND5E.ItemEdit')}
+            data-tooltip=""
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip={localize('DND5E.ItemEdit')}
-            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+            data-action="editDocument"
+            data-uuid={speciesItem?.uuid}
           >
             <i class="fa-solid fa-edit"></i>
           </button>
@@ -89,8 +79,8 @@
             aria-label="{localize('TYPES.Item.race')} Context Menu"
             type="button"
             class="button button-borderless button-icon-only"
-            onclick={(ev) =>
-              EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            data-action="showContextMenu"
+            data-target-selector="[data-item-id]"
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </button>
@@ -106,11 +96,8 @@
         data-tooltip={localize('TIDY5E.CompendiumBrowser', {
           name: localize('TYPES.Item.race'),
         })}
-        onclick={(ev) =>
-          context.actor.sheet.findItem({
-            event: ev,
-            type: 'race',
-          })}
+        data-action="findItem"
+        data-item-type="race"
       >
         <i class="fa-solid fa-book-atlas"></i>
         {localize('DND5E.Species.Add')}

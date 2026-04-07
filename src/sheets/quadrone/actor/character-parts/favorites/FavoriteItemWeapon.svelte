@@ -5,22 +5,25 @@
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
-  let { favorite }: Props = $props();
+  const { favorite }: Props = $props();
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     CONFIG.DND5E.itemActionTypes[
       favorite.item?.system?.activities?.contents?.[0]?.actionType
     ],
   );
 
-  let modifier = $derived(favorite.item?.labels?.modifier);
+  const modifier = $derived(favorite.item?.labels?.modifier);
 
-  let range = $derived(favorite.item?.system?.range);
+  const range = $derived(favorite.item?.system?.range);
+
+  const context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
 <div
@@ -38,8 +41,7 @@
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={async (ev) =>
-      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item?.name || ''}
     {subtitle}
   />

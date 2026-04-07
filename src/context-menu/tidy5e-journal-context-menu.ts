@@ -20,9 +20,9 @@ export function configureActorJournalContextMenu(
       name: 'TIDY5E.ContextMenuActionView',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       callback: () => {
-        new JournalEntryApplication(id, 'view', {
+        app._renderChild(new JournalEntryApplication(id, 'view', {
           document: app.document,
-        }).render({ force: true });
+        }));
       },
       group: 'common',
     },
@@ -33,9 +33,9 @@ export function configureActorJournalContextMenu(
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {
-        new JournalEntryApplication(id, 'edit', {
+        app._renderChild(new JournalEntryApplication(id, 'edit', {
           document: app.document,
-        }).render({ force: true });
+        }));
       },
       group: 'common',
     },

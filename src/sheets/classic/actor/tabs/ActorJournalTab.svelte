@@ -4,7 +4,6 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -41,7 +40,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -76,7 +74,7 @@
         </a>
       </div>
       {#key context.notes1EnrichedHtml}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div
             data-field={TidyFlags.notes1.members.value.prop}
             class="user-select-text"
@@ -111,7 +109,7 @@
         </a>
       </div>
       {#key context.notes2EnrichedHtml}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div
             data-field={TidyFlags.notes2.members.value.prop}
             class="user-select-text"
@@ -146,7 +144,7 @@
         </a>
       </div>
       {#key context.notes3EnrichedHtml}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div
             data-field={TidyFlags.notes3.members.value.prop}
             class="user-select-text"
@@ -181,7 +179,7 @@
         </a>
       </div>
       {#key context.notes4EnrichedHtml}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div
             data-field={TidyFlags.notes4.members.value.prop}
             class="user-select-text"
@@ -216,7 +214,7 @@
         </a>
       </div>
       {#key context.notesEnrichedHtml}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
+        <div class="editor">
           <div
             data-field={TidyFlags.notes.members.value.prop}
             class="user-select-text"

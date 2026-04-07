@@ -573,10 +573,6 @@
         },
         "MigrateCompendia.CompendiumLabel": "Kompendium",
         "UnlinkedExplanation": "Diese Migration bietet die Möglichkeit, nicht verknüpfte Token-Dokumente in der aktuellen Szene zu migrieren. Sie können die Migration bei Bedarf auch für weitere Szenen durchführen.",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
         "MigrateCompendia.Title": "Kompendien migrieren",
         "CcssToTidy": {
             "overwriteTooltip": "Aktivieren Sie diese Option, um vorhandene Tidy-Abschnittsflags zu überschreiben. Wenn diese Option deaktiviert ist, erhalten nur leere Tidy-Flags migrierte CCSS-Daten.",
@@ -670,10 +666,10 @@
     "TIDY5E.SpellSourceIdentifierLabelHint": "Der Akteur er diesen Zauber hat, verfügt nicht über die hier angegebene Ursprungsklasse.",
     "TIDY5E.Utilities.Tools": "Werkzeuge",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Alle Gegenstände als nicht identifiziert markieren",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Zauber zu Klassen zuweisen",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.ReminderToBackUp": "Denken Sie immer daran, Ihre Welt zu sichern.",
     "TIDY5E.Commands.HideLegendaryToolbar": "Legendäre Symbolleiste ausblenden",
     "TIDY5E.UseDefaultDialog": {

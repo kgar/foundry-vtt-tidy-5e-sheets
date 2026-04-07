@@ -40,11 +40,8 @@
       { video: member.portrait.isVideo },
     ]}
     style="position: relative;"
-    onclick={() => member.actor.sheet.render(true)}
-    onkeydown={(e) =>
-      e.key === 'Enter' || e.key === ' '
-        ? member.actor.sheet.render(true)
-        : null}
+    data-action="showDocument"
+    data-uuid={member.actor.uuid}
     onmouseenter={() => (emphasizedActorRef.value = member)}
     onmouseleave={() => (emphasizedActorRef.value = undefined)}
   >
@@ -76,11 +73,8 @@
     role="button"
     data-keyboard-focus
     tabindex={0}
-    onclick={() => member.actor.sheet.render(true)}
-    onkeydown={(e) =>
-      e.key === 'Enter' || e.key === ' '
-        ? member.actor.sheet.render(true)
-        : null}
+    data-action="showDocument"
+    data-uuid={member.actor.uuid}
     onmouseenter={() => (emphasizedActorRef.value = member)}
     onmouseleave={() => (emphasizedActorRef.value = undefined)}
   >
@@ -88,7 +82,7 @@
       {member.actor.name}
     </h4>
     {#if member.canObserve}
-      {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+      {#if member.actor.system.isCharacter}
         {@const classes = Object.values<Item5e>(member.actor.classes)}
         {#if classes.length > 0}
           <div class="separated-list">
@@ -107,11 +101,7 @@
             {/each}
           </div>
         {/if}
-      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-        {@const formattedCr = dnd5e.utils.formatCR(
-          member.actor.system.details.cr,
-        )}
-
+      {:else if member.actor.system.isNPC}
         {@const size =
           CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
           member.actor.system.traits.size}
@@ -134,16 +124,21 @@
             </div>
           {/each}
 
-          <span class="cr">
-            <span class="font-label-medium color-text-gold-emphasis"
-              >{localize('DND5E.AbbreviationCR')}</span
-            >
-            <span class="font-data-medium color-text-default"
-              >{formattedCr}</span
-            >
-          </span>
+          {#if member.actor.system.details.cr}
+            {@const formattedCr = dnd5e.utils.formatCR(
+              member.actor.system.details.cr,
+            )}
+            <span class="cr">
+              <span class="font-label-medium color-text-gold-emphasis"
+                >{localize('DND5E.AbbreviationCR')}</span
+              >
+              <span class="font-data-medium color-text-default"
+                >{formattedCr}</span
+              >
+            </span>
+            <div class="divider-dot"></div>
+          {/if}
 
-          <div class="divider-dot"></div>
           <span class="size">
             <span class="font-label-medium color-text-gold-emphasis"
               >{size}</span
@@ -159,7 +154,7 @@
             </span>
           {/if}
         </span>
-      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+      {:else if member.actor.system.isVehicle}
         {@const vehicleType =
           CONFIG.DND5E.vehicleTypes[member.actor.system.details.type] ??
           member.actor.system.details.type}

@@ -251,7 +251,7 @@ export class SheetSections {
         game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
       const method = config?.key ?? key;
       const order = level === 0 ? 0 : (config?.order ?? 1000);
-      const usesSlots = config?.slots && level;
+      const usesSlots = config?.slots && (level !== 0);
 
       const spells = foundry.utils.getProperty(
         context.actor.system.spells,
@@ -309,7 +309,11 @@ export class SheetSections {
       }
 
       const spellcasting = CONFIG.DND5E.spellcasting[method];
-      const level = spell.system.level || 0;
+      const level =
+        spellcasting instanceof
+        dnd5e.dataModels.spellcasting.SingleLevelSpellcasting
+          ? null
+          : spell.system.level || 0;
       method = spellcasting?.getSpellSlotKey?.(level) ?? method;
       let key: string = method;
 
@@ -552,7 +556,7 @@ export class SheetSections {
 
       return sections.map(({ ...section }) => {
         // Filter Spellbook by Class Filter, if needed
-        section.items = SpellUtils.tryFilterByClass(
+        section.items = SpellUtils.tryFilterBySourceItemClass(
           document,
           section.items,
           spellClassFilter
@@ -883,7 +887,7 @@ export class SheetSections {
   static getSectionLabel(item: Item5e) {
     let value = Inventory.isItemInventoryType(item)
       ? 'DND5E.Inventory'
-      : item.parent?.type === CONSTANTS.SHEET_TYPE_NPC &&
+      : item.parent?.system.isNPC &&
         item.type === CONSTANTS.ITEM_TYPE_FEAT
       ? 'TIDY5E.StatblockTabName'
       : item.type === CONSTANTS.ITEM_TYPE_FEAT
@@ -896,7 +900,7 @@ export class SheetSections {
   }
 
   static getActionSectionLabel(item: Item5e) {
-    return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    return item.parent?.system.isCharacter
       ? FoundryAdapter.localize('Sheet')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }

@@ -44,7 +44,7 @@
   });
 
   function rollActivity(activity: Activity5e, event: MouseEvent) {
-    activity.use({ event });
+    activity.use({ event }, { options: { sheet: context.sheet } });
   }
 
   let rowActions = $derived(

@@ -15,8 +15,10 @@
   > = $props();
 </script>
 
-{#if rowContext.type === 'member'}
-  <span class="cr-value font-label-large color-text-default"
-    >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
+{#if rowContext.type === 'member' && rowDocument.system.details.cr}
+  {@const formattedCr = FoundryAdapter.formatCr(rowDocument.system.details.cr)}
+  <span class="cr-value font-label-large color-text-default">{formattedCr}</span
   >
+{:else}
+  <span class="color-text-disabled">—</span>
 {/if}

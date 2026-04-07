@@ -26,7 +26,7 @@
 
   let xpPool = $derived(context.system.details.xp.value);
 
-  let totalGold = $derived.by(() => context.sheet.getGpSummary(context.actor));
+  let totalCurrency = $derived.by(() => context.sheet.getDefaultCurrencySummary(context.actor));
 </script>
 
 {#snippet speedSenseSummary(
@@ -88,7 +88,7 @@
       >{context.actor.system.level}</span
     >
   </span>
-  {#if totalGold !== null}
+  {#if totalCurrency !== null}
     <div class="divider-dot"></div>
     <span
       class="money"
@@ -96,9 +96,9 @@
       tabindex="0"
       onclick={() => context.sheet.selectTab(CONSTANTS.TAB_ACTOR_INVENTORY)}
     >
-      <i class="currency gp"></i>
+      <i class="currency {context.defaultCurrency.key}"></i>
       <span class="color-text-default font-data-medium"
-        >{FoundryAdapter.formatNumber(Math.round(totalGold))}</span
+        >{FoundryAdapter.formatNumber(Math.round(totalCurrency))}</span
       >
     </span>
   {/if}

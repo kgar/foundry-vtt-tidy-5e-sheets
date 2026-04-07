@@ -1,5 +1,10 @@
 ## kgar To Do
 
+### Foundry 14 Remaining To Dos
+
+- [ ] Related #1604 - Formula Inputs are cool and accomplish the task of temporarily giving more room to type. We can make a similar thing with svelte. You can see Formula Inputs in Foundry 14 on items with the magical bonus field, for example.
+- [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
+
 ### Origin Sections Implementation
 
 - [ ] Clean up the code and reduce redundancy
