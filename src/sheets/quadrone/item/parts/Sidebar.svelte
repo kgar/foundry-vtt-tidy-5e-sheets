@@ -91,7 +91,9 @@
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
-    unidentified && !FoundryAdapter.isInGmEditMode(context.document) ? 'disabled' : undefined,
+    unidentified && !FoundryAdapter.isInGmEditMode(context.document)
+      ? 'disabled'
+      : undefined,
     !unidentified && !isNil(rarity, '') ? 'rarity' : undefined,
     !unidentified && 'rarity' in context.system
       ? coalesce(rarity?.slugify(), 'none')
@@ -220,7 +222,8 @@
             field="system.rarity"
             class={['item-rarity-selector', 'capitalize', itemColorClasses]}
             value={context.source.rarity}
-            disabled={!context.editable && !FoundryAdapter.isInGmEditMode(context.document)}
+            disabled={!context.editable &&
+              !FoundryAdapter.isInGmEditMode(context.document)}
             blankValue=""
           >
             <option class="none" value="">{localize('DND5E.None')}</option>
@@ -505,10 +508,9 @@
     {@const actionSectionLabel = SheetSections.getActionSectionLabel(
       context.item,
     )}
-    {@const sectionType =
-      context.item.parent?.system.isCharacter
-        ? 'Sheet'
-        : 'TIDY5E.Section.Label'}
+    {@const sectionType = context.item.parent?.system.isCharacter
+      ? 'Sheet'
+      : 'TIDY5E.Section.Label'}
     <div>
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">
@@ -516,28 +518,21 @@
         <a
           role="button"
           tabindex="0"
-          data-tooltip="TIDY5E.Section.SectionSelectorChooseSectionTooltip"
+          aria-label={localize(
+            'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+          )}
+          data-tooltip=""
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           onclick={() =>
-            new SectionSelectorApplication({
-              flag: TidyFlags.section.prop,
-              sectionType: localize(sectionType),
-              callingDocument: context.item,
-              document: context.item,
-            }).render(true)}
-          onkeydown={(ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-              ev.preventDefault();
-              ev.stopPropagation();
+            context.sheet._renderChild(
               new SectionSelectorApplication({
                 flag: TidyFlags.section.prop,
                 sectionType: localize(sectionType),
                 callingDocument: context.item,
                 document: context.item,
-              }).render(true);
-            }
-          }}
+              }),
+            )}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -554,24 +549,14 @@
           class:disabled={!context.editable}
           data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
           onclick={() =>
-            new SectionSelectorApplication({
-              flag: TidyFlags.actionSection.prop,
-              sectionType: localize('TIDY5E.Section.ActionLabel'),
-              callingDocument: context.item,
-              document: context.item,
-            }).render(true)}
-          onkeydown={(ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-              ev.preventDefault();
-              ev.stopPropagation();
+            context.sheet._renderChild(
               new SectionSelectorApplication({
                 flag: TidyFlags.actionSection.prop,
-                sectionType: localize(sectionType),
+                sectionType: localize('TIDY5E.Section.ActionLabel'),
                 callingDocument: context.item,
                 document: context.item,
-              }).render(true);
-            }
-          }}
+              }),
+            )}
         >
           <span class="text-normal">
             {actionSectionLabel}

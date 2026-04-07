@@ -3,7 +3,6 @@
   import ContentEditableFormField from '../../../../components/inputs/ContentEditableFormField.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -85,7 +84,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -174,7 +172,7 @@
         {#key context.appearanceEnrichedHtml}
           <div
             class="editor"
-            use:manageSecrets={{ document: context.document }}
+           
           >
             <div
               data-field="system.details.appearance"
@@ -206,7 +204,7 @@
         {#key context.biographyEnrichedHtml}
           <div
             class="editor"
-            use:manageSecrets={{ document: context.document }}
+           
           >
             <div
               data-field="system.details.biography.value"
@@ -238,7 +236,7 @@
       </a>
     </div>
     {#key enrichedHTML}
-      <div class="editor" use:manageSecrets={{ document: context.document }}>
+      <div class="editor">
         <div data-field={target} class="user-select-text">
           {@html enrichedHTML}
         </div>

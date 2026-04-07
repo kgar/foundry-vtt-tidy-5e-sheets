@@ -43,8 +43,7 @@
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={async (ev) =>
-      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item.name}
     {subtitle}
   />

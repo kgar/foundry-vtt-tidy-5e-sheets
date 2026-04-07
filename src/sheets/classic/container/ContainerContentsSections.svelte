@@ -84,7 +84,7 @@
         component: ItemDeleteControl,
         getProps: (item: Item5e) => ({
           item,
-          deleteFn: () => item.deleteDialog(),
+          deleteFn: () => item.deleteDialog({ sheet: sheetDocument?.sheet }),
         }),
       });
     }

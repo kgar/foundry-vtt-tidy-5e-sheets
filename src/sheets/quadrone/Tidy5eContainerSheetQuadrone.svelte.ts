@@ -129,9 +129,11 @@ export class Tidy5eContainerSheetQuadrone
       openTabConfiguration: async function (
         this: Tidy5eContainerSheetQuadrone
       ) {
-        new SheetTabConfigurationQuadroneApplication({
-          document: this.document,
-        }).render({ force: true });
+        this._renderChild(
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+          }),
+        );
       },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
@@ -139,18 +141,16 @@ export class Tidy5eContainerSheetQuadrone
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+        this._renderChild(new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        }));
       },
       themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
-        await new ThemeSettingsQuadroneApplication({
+        this._renderChild(new ThemeSettingsQuadroneApplication({
           document: this.document,
-        }).render({
-          force: true,
-        });
+        }));
       },
     },
     dragDrop: [
@@ -755,6 +755,26 @@ export class Tidy5eContainerSheetQuadrone
       default:
         return [];
     }
+  }
+
+  _renderChild(app: any, options = {}) {
+    if (game.release.generation < 14) {
+      return app.render({ force: true, ...options });
+    }
+
+    if (this.parent) {
+      return this.parent.renderChild(app, options);
+    }
+
+    if (this.window?.windowId) {
+      return app.render({
+        force: true,
+        window: { detached: true, windowId: this.window.windowId },
+        ...options,
+      });
+    }
+
+    return app.render({ force: true, ...options });
   }
 
   /* -------------------------------------------- */

@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -127,7 +126,6 @@
   }
 </script>
 
-
 <div class="tab-content">
   {#if editing}
     {#key contentToEdit}
@@ -142,7 +140,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -188,7 +185,8 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span
+            >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -256,16 +254,11 @@
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
       <ExpandableContainer {expanded}>
-        {#key enriched}
-          <div
-            class={['editor']}
-            use:manageSecrets={{ document: context.actor }}
-          >
-            <div data-field={field} class="user-select-text">
-              {@html enriched}
-            </div>
+        <div class={['editor']}>
+          <div data-target={field} class="user-select-text">
+            {@html enriched}
           </div>
-        {/key}
+        </div>
       </ExpandableContainer>
     </article>
   {/if}

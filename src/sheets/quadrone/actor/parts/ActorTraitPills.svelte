@@ -93,6 +93,16 @@
         >
           {@render pillContents(value)}
         </a>
+      {:else if !!value.attributes?.['data-action']}
+        <a
+          role="button"
+          tabindex="0"
+          aria-label={value.label}
+          data-keyboard-focus
+          class="button button-borderless"
+        >
+          {@render pillContents(value)}
+        </a>
       {:else}
         {@render pillContents(value)}
       {/if}

@@ -60,7 +60,7 @@
         parent: actor,
         pack: actor.pack,
         types: custom.creationItemTypes,
-      });
+      }, { sheet: actor.sheet });
     }
   }
 

@@ -164,6 +164,7 @@ export function Tidy5eActorSheetQuadroneBase<
         frame: true,
       },
       actions: {
+        findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         restoreTransformation: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
@@ -172,9 +173,9 @@ export function Tidy5eActorSheetQuadroneBase<
         openTabConfiguration: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
-          new SheetTabConfigurationQuadroneApplication({
+          this._renderChild(new SheetTabConfigurationQuadroneApplication({
             document: this.document,
-          }).render({ force: true });
+          }));
         },
         rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
           this.actor.initiateRest({ type: target.dataset.type });
@@ -182,18 +183,16 @@ export function Tidy5eActorSheetQuadroneBase<
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
-          new foundry.applications.apps.ImagePopout({
+          this._renderChild(new foundry.applications.apps.ImagePopout({
             src,
             uuid: this.actor.uuid,
             window: { title: this.actor.name },
-          }).render({ force: true });
+          }));
         },
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          await new ThemeSettingsQuadroneApplication({
+          await this._renderChild(new ThemeSettingsQuadroneApplication({
             document: this.document,
-          }).render({
-            force: true,
-          });
+          }));
         },
       },
       dragDrop: [
@@ -1236,7 +1235,8 @@ export function Tidy5eActorSheetQuadroneBase<
             parent: this.actor,
             pack: this.actor.pack,
             types,
-          }
+          }, 
+          { sheet: this }
         );
 
         Hooks.off('renderDialog', dialogV1HookId);
@@ -1281,6 +1281,21 @@ export function Tidy5eActorSheetQuadroneBase<
             await item.getChatData({ secrets: this.actor.isOwner })
           );
         }
+      }
+    }
+
+    /** @override */
+    _openDocumentSheet(doc: any, options = {}) {
+      // Actor sheets are too large to render as children of the group sheet window.
+      // If the group sheet is detached, open the actor sheet in its own detached window.
+      if (doc instanceof foundry.documents.Actor) {
+        const { windowId } = this.window ?? {};
+        const windowOptions = windowId
+          ? { window: { detached: true, windowId } }
+          : {};
+        doc?.sheet?.render({ force: true, ...windowOptions, ...options });
+      } else if ( doc?.sheet ) { 
+        this._renderChild(doc.sheet, options);
       }
     }
 
@@ -1844,7 +1859,7 @@ export function Tidy5eActorSheetQuadroneBase<
           );
 
         if (manager.steps.length) {
-          manager.render(true);
+          this._renderChild(manager);
           return false;
         }
       }
@@ -1966,10 +1981,39 @@ export function Tidy5eActorSheetQuadroneBase<
     /**
      * Handle finding an available item of a given type.
      */
+    static async #findItem(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const { classIdentifier, facilityType, itemType: type } = target.dataset;
+
+      return this.findItem({
+        event,
+        type,
+        facilityType,
+        classIdentifier,
+      });
+    }
+
+    /**
+     * Handle finding an available item of a given type.
+     */
     async findItem(args: {
+      /** Any triggering event. Passed along to item creation. */
       event: Event;
-      type: string;
+      /** The item type, like "class", "race", "weapon", etc. */
+      type?: string;
+      /** 
+       * A class identifier such as "cleric" or "barbarian". 
+       * This constrains the compendium to subclasses of a specific class. 
+       */
       classIdentifier?: string;
+      /** The type of facility, e.g., "special" or "basic" */
       facilityType?: string;
     }) {
       const { event, classIdentifier, facilityType, type } = args;
@@ -2002,7 +2046,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       let result = await dnd5e.applications.CompendiumBrowser.selectOne({
         filters,
-      });
+      }, this._detachOptions());
 
       if (result) {
         this._onDropItemCreate(
@@ -2011,6 +2055,21 @@ export function Tidy5eActorSheetQuadroneBase<
           'copy'
         );
       }
+    }
+
+    async tryUseItem(item: Item5e, event: Event) {
+      const config = { legacy: false, event };
+
+      const suppressItemUse =
+        TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
+
+      if (suppressItemUse) {
+        return;
+      }
+
+      return await item.use(config, {
+        options: { sheet: item.parent?.sheet ?? item.container?.sheet },
+      });
     }
 
     /* -------------------------------------------- */

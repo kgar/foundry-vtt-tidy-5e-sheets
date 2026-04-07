@@ -15,7 +15,7 @@
     document,
   }: Props = $props();
 
-  let sectionItemOpenStates = $state(itemDescriptions.map((_, i) => i === 0));
+  let sectionItemOpenStates = $derived(itemDescriptions.map((_, i) => i === 0));
   let itemDescriptionToEdit = $state<ItemDescription>();
 
   function handleEdit(detail: {
@@ -45,7 +45,6 @@
     documentUuid={document.uuid}
     content={itemDescriptionToEdit.content}
     editorOptions={{ toggled: false }}
-    manageSecrets={true}
     field={itemDescriptionToEdit.field}
     enriched={itemDescriptionToEdit.enriched}
     onSave={() => (editing = false)}

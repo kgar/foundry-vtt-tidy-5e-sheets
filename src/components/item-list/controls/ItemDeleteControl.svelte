@@ -11,19 +11,25 @@
     [key: string]: any;
   }
 
-  let {
-    item,
-    onDelete = () => true,
-    deleteFn = () => FoundryAdapter.onActorItemDelete(item.actor, item),
-    ...rest
-  }: Props = $props();
+  let { item, onDelete = () => true, ...rest }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  const canDelete = $derived(onDelete());
+
+  const attributes = $derived(
+    canDelete
+      ? {
+          'data-action': 'deleteDocument',
+          'data-uuid': item.uuid,
+        }
+      : {},
+  );
 </script>
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
   class={rest.class ?? ''}
-  onclick={() => onDelete() && deleteFn()}
   title={localize('DND5E.ItemDelete')}
+  attributes={attributes}
 />

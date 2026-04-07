@@ -26,9 +26,9 @@
         entries={context.specialTraits}
         configurationTooltip={localize('DND5E.SpecialTraits')}
         onconfig={() =>
-          new SpecialTraitsApplication({ document: context.actor }).render({
-            force: true,
-          })}
+          context.sheet._renderChild(
+            new SpecialTraitsApplication({ document: context.actor }),
+          )}
         icon="fa-solid fa-star"
       />
     {/snippet}
