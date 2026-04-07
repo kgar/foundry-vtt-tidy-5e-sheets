@@ -18,7 +18,7 @@
   );
 
   let totalGold = $derived.by(() =>
-    FoundryAdapter.formatNumber(context.totalGold),
+    FoundryAdapter.formatNumber(context.totalCurrency),
   );
 
   let totalXp = $derived.by(() => FoundryAdapter.formatNumber(context.totalXp));
@@ -69,7 +69,7 @@
   {#if totalGold !== null}
     <div class="divider-dot"></div>
     <span class="money">
-      <i class="currency gp"></i>
+      <i class="currency {context.defaultCurrency.key}"></i>
       <span class="color-text-default font-data-medium">{totalGold}</span>
     </span>
   {/if}

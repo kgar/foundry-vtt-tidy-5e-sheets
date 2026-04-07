@@ -24,6 +24,7 @@ import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type { CurrencyItemConfig } from './config.types';
 
 const quadroneSheetRegex = /Tidy.*Quadrone/;
 export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
@@ -96,7 +97,7 @@ export const FoundryAdapter = {
 
     const effectData = {
       name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
-      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
+      img: isActor ? 'icons/svg/aura.svg' : parent.img,
       origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
       disabled: effectType === 'inactive',
@@ -110,6 +111,13 @@ export const FoundryAdapter = {
       )
     ) {
       return;
+    }
+
+    if (parent.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      return ActiveEffect.implementation.createDialog(effectData, {
+        parent: parent,
+        renderSheet: true,
+      }, { sheet: parent?.sheet });
     }
 
     return ActiveEffect.implementation.create(effectData, {
@@ -243,23 +251,17 @@ export const FoundryAdapter = {
       FoundryAdapter.editOnMouseEvent(event, entityWithSheet)
     );
   },
-  editOnMouseEvent(
-    event: MouseEvent,
-    entityWithSheet: {
-      sheet: {
-        render: (force: boolean, options?: any) => void;
-        isEditable: boolean;
-      };
-    }
-  ) {
-    if (!entityWithSheet.sheet.isEditable) {
+  editOnMouseEvent(event: MouseEvent, doc: any) {
+    if (!doc.sheet.isEditable) {
       return;
     }
 
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    entityWithSheet.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT });
+    const options = { mode: CONSTANTS.SHEET_MODE_EDIT };
+
+    doc.sheet._renderChild(doc.sheet, options);
   },
   createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
@@ -332,13 +334,13 @@ export const FoundryAdapter = {
           delta
         );
       if (manager.steps.length) {
-        if (delta > 0) return manager.render(true);
+        if (delta > 0) return actor.sheet._renderChild(manager);
         try {
           const shouldRemoveAdvancements =
             await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
-              item
+              item, { sheet: actor.sheet }
             );
-          if (shouldRemoveAdvancements) return manager.render(true);
+          if (shouldRemoveAdvancements) return actor.sheet._renderChild(manager);
         } catch (err) {
           return;
         }
@@ -502,11 +504,13 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const sourceClass = spell.system.sourceClass;
+    const identifier = spell.system.sourceItem?.substring(
+      spell.system.sourceItem?.indexOf(':') + 1,
+    );
 
     const classImage =
-      sourceClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[sourceClass]
+      identifier && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[identifier]
         : undefined;
 
     return classImage ?? spell.img;
@@ -735,7 +739,7 @@ export const FoundryAdapter = {
   },
   showLimitedSheet(actor: any): boolean {
     const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
-    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (actor.system.isCharacter) {
       return showLimitedSheet && !settings.value.showExpandedLimitedView;
     }
     return showLimitedSheet;
@@ -782,8 +786,8 @@ export const FoundryAdapter = {
       keyPath,
     };
 
-    return new dnd5e.applications.shared.CreatureTypeConfig(options).render(
-      true
+    return document.sheet._renderChild(
+      new dnd5e.applications.shared.CreatureTypeConfig(options),
     );
   },
   playDiceSound() {
@@ -832,12 +836,13 @@ export const FoundryAdapter = {
   createAdvancementSelectionDialog(item: any) {
     return dnd5e.documents.advancement.Advancement.createDialog(
       {},
-      { parent: item }
+      { parent: item },
+      { sheet: item.sheet }
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
-    return advancement?.deleteDialog();
+    const advancement = item.system.advancement.get(advancementItemId);
+    return advancement?.deleteDialog({ sheet: item?.sheet });
   },
   modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
     let manager =
@@ -848,136 +853,121 @@ export const FoundryAdapter = {
       );
 
     if (manager.steps.length) {
-      manager.render(true);
+      item.sheet._renderChild(manager);
     }
   },
   editAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
+    const advancement = item.system.advancement.get(advancementItemId);
 
-    return new advancement.constructor.metadata.apps.config(advancement).render(
-      true
+    return item.sheet._renderChild(
+      new advancement.constructor.metadata.apps.config(advancement),
     );
   },
   async renderSheetFromUuid(uuid: string) {
-    (await fromUuid(uuid))?.sheet?.render(true);
+    const doc = await fromUuid(uuid);
+    const parent = doc?.parent ?? doc?.container;
+    if (parent) {
+      parent.sheet._renderChild(doc);
+    } else {
+      doc?.sheet?.render(true);
+    }
   },
   renderImagePopout(args: {
     src: string;
     uuid: string;
     window?: { title: string };
+    sheet?: any;
   }) {
-    return new foundry.applications.apps.ImagePopout(args).render({
-      force: true,
-    });
+    const app = new foundry.applications.apps.ImagePopout(args);
+    return args.sheet
+      ? args.sheet._renderChild(app)
+      : app.render({
+          force: true,
+        });
   },
   renderArmorConfig(document: any) {
-    return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
-      true
+    document.sheet._renderChild(
+      new dnd5e.applications.actor.ArmorClassConfig({ document }),
     );
   },
   renderInitiativeConfig(document: any) {
-    return new dnd5e.applications.actor.InitiativeConfig({
+    return document.sheet._renderChild(new dnd5e.applications.actor.InitiativeConfig({
       document,
-    }).render(true);
+    }));
   },
   renderAbilityConfig(document: any, key: any) {
-    return new dnd5e.applications.actor.AbilityConfig({
-      document,
-      key,
-    }).render(true);
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.AbilityConfig({
+        document,
+        key,
+      }),
+    );
   },
   renderDeathConfig(document: any) {
-    return new dnd5e.applications.actor.DeathConfig({ document }).render(true);
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.DeathConfig({ document }),
+    );
   },
   renderLanguagesConfig(actor: Actor5e) {
-    new dnd5e.applications.actor.LanguagesConfig({
-      document: actor,
-    }).render({ force: true });
+    actor.sheet._renderChild(
+      new dnd5e.applications.actor.LanguagesConfig({
+        document: actor,
+      }),
+    );
   },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
-    return new dnd5e.applications.shared.MovementSensesConfig({
+    return document.sheet._renderChild(new dnd5e.applications.shared.MovementSensesConfig({
       document,
       type,
-    }).render(true);
+    }));
   },
   renderHitPointsDialog(document: any) {
-    return new dnd5e.applications.actor.HitPointsConfig({ document }).render(
-      true
-    );
+    return document.sheet._renderChild(new dnd5e.applications.actor.HitPointsConfig({ document }));
   },
   renderHitDiceConfig(document: any) {
-    return new dnd5e.applications.actor.HitDiceConfig({ document }).render(
-      true
-    );
+    return document.sheet._renderChild(new dnd5e.applications.actor.HitDiceConfig({ document }));
   },
   renderActorSheetFlags(actor: any) {
-    return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
+    return actor.sheet._renderChild(new dnd5e.applications.actor.ActorSheetFlags(actor));
   },
   renderToolsConfig(document: any) {
-    return new dnd5e.applications.actor.ToolsConfig({
-      document,
-      trait: 'tool',
-    }).render(true);
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.ToolsConfig({
+        document,
+        trait: 'tool',
+      }),
+    );
   },
   renderTraitsConfig(document: any, trait: string) {
-    return new dnd5e.applications.actor.TraitsConfig({
-      document,
-      trait,
-    }).render(true);
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.TraitsConfig({
+        document,
+        trait,
+      }),
+    );
   },
   renderWeaponsConfig(actor: any) {
-    return new dnd5e.applications.actor.WeaponsConfig({
-      document: actor,
-      trait: 'weapon',
-    }).render({ force: true });
+    return actor.sheet._renderChild(
+      new dnd5e.applications.actor.WeaponsConfig({
+        document: actor,
+        trait: 'weapon',
+      }),
+    );
   },
   renderSkillToolConfig(document: any, trait: 'skills' | 'tool', key: string) {
-    return new dnd5e.applications.actor.SkillToolConfig({
+    return document.sheet._renderChild(new dnd5e.applications.actor.SkillToolConfig({
       document,
       trait,
       key,
-    }).render(true);
+    }));
   },
   renderSourceConfig(document: any, keyPath: string) {
-    return new dnd5e.applications.shared.SourceConfig(
+    return document.sheet._renderChild(new dnd5e.applications.shared.SourceConfig(
       { document: document },
       {
         keyPath,
       }
-    ).render(true);
-  },
-  async onActorItemDelete(actor: Actor5e, item: Item5e) {
-    // If item has advancement, handle it separately
-    if (
-      actor?.system.metadata?.supportsAdvancement &&
-      !game.settings.get('dnd5e', 'disableAdvancements')
-    ) {
-      const manager =
-        dnd5e.applications.advancement.AdvancementManager.forDeletedItem(
-          actor,
-          item.id
-        );
-
-      if (manager.steps.length) {
-        try {
-          const shouldRemoveAdvancements =
-            await dnd5e.applications.advancement.AdvancementConfirmationDialog.forDelete(
-              item
-            );
-
-          if (shouldRemoveAdvancements) {
-            return manager.render(true);
-          }
-
-          return item.delete({ shouldRemoveAdvancements });
-        } catch (err) {
-          // This dialog throws an exception when you click cancel. We'll ignore it.
-          return;
-        }
-      }
-    }
-
-    return item.deleteDialog();
+    ));
   },
   getActivationTypeLabel(activationType: string) {
     return activationType === 'other'
@@ -992,18 +982,6 @@ export const FoundryAdapter = {
   },
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
-  },
-  async actorTryUseItem(item: Item5e, event: Event) {
-    const config = { legacy: false, event };
-
-    const suppressItemUse =
-      TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
-
-    if (suppressItemUse) {
-      return;
-    }
-
-    return await item.use(config);
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
@@ -1128,11 +1106,11 @@ export const FoundryAdapter = {
   },
   useClassicControls(document: any) {
     return (
-      (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+      (document.system.isCharacter &&
         settings.value.useClassicControlsForCharacter) ||
-      (document.type === CONSTANTS.SHEET_TYPE_NPC &&
+      (document.system.isNPC &&
         settings.value.useClassicControlsForNpc) ||
-      (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
+      (document.system.isVehicle &&
         settings.value.useClassicControlsForVehicle) ||
       // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
       settings.value.useClassicControlsForCharacter
@@ -1199,25 +1177,27 @@ export const FoundryAdapter = {
     );
   },
   openSpellSlotsConfig(document: any) {
-    new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);
+    return document.sheet._renderChild(new dnd5e.applications.actor.SpellSlotsConfig({ document }));
   },
   openSummonConfig(item: Item5e) {
-    new dnd5e.applications.item.SummoningConfig(item).render(true);
+    item.sheet._renderChild(new dnd5e.applications.item.SummoningConfig(item));
   },
   openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm') {
-    new dnd5e.applications.actor.DamagesConfig({ document, trait }).render(
-      true
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.DamagesConfig({ document, trait }),
     );
   },
   openConcentrationConfig(document: any) {
-    new dnd5e.applications.actor.ConcentrationConfig({
+    return document.sheet._renderChild(new dnd5e.applications.actor.ConcentrationConfig({
       document: document,
-    }).render(true);
+    }));
   },
   openStartingEquipmentConfig(item: Item5e) {
-    new dnd5e.applications.item.StartingEquipmentConfig({
-      document: item,
-    }).render(true);
+    item.sheet._renderChild(
+      new dnd5e.applications.item.StartingEquipmentConfig({
+        document: item,
+      }),
+    );
   },
   isConcentrationEffect(effect: ActiveEffect5e, app: any) {
     return (
@@ -1431,7 +1411,7 @@ export const FoundryAdapter = {
   },
   getFilteredClass(actor: Actor5e): Item5e | undefined {
     const classSpellbookFilter = actor.sheet.classSpellbookFilter;
-    return actor.classes?.[classSpellbookFilter];
+    return actor.identifiedItems.get(classSpellbookFilter)?.first();
   },
   getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
     const currentFilteredClass =
@@ -1679,5 +1659,16 @@ export const FoundryAdapter = {
     }
 
     return result;
+  },
+  getDefaultCurrencyConfig(): CurrencyItemConfig & { key: string } {
+    return CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency]
+      ? {
+          ...CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency],
+          key: CONFIG.DND5E.defaultCurrency,
+        }
+      : {
+          ...CONFIG.DND5E.currencies.gp,
+          key: 'gp',
+        };
   },
 };

@@ -48,7 +48,6 @@
         }}
         documentUuid={context.item.uuid}
         onSave={() => stopEditing()}
-        manageSecrets={context.document.isOwner}
       />
     </article>
   {/key}

@@ -164,6 +164,7 @@ export function Tidy5eActorSheetQuadroneBase<
         frame: true,
       },
       actions: {
+        findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         restoreTransformation: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
@@ -172,25 +173,26 @@ export function Tidy5eActorSheetQuadroneBase<
         openTabConfiguration: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
-          new SheetTabConfigurationQuadroneApplication({
+          this._renderChild(new SheetTabConfigurationQuadroneApplication({
             document: this.document,
-          }).render({ force: true });
+          }));
+        },
+        rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
+          this.actor.initiateRest({ type: target.dataset.type });
         },
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
-          new foundry.applications.apps.ImagePopout({
+          this._renderChild(new foundry.applications.apps.ImagePopout({
             src,
             uuid: this.actor.uuid,
             window: { title: this.actor.name },
-          }).render({ force: true });
+          }));
         },
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          await new ThemeSettingsQuadroneApplication({
+          await this._renderChild(new ThemeSettingsQuadroneApplication({
             document: this.document,
-          }).render({
-            force: true,
-          });
+          }));
         },
       },
       dragDrop: [
@@ -671,7 +673,7 @@ export function Tidy5eActorSheetQuadroneBase<
                 const type = CONFIG.DND5E.itemProperties[p]?.label;
                 return {
                   icon: p,
-                  label: game.i18n.format('DND5E.DamagePhysicalBypassesShort', {
+                  label: game.i18n.format('DND5E.DAMAGE.PhysicalBypasses.DescriptionShort', {
                     type,
                   }),
                 };
@@ -693,7 +695,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // If petrified, display "All Damage" instead of all damage types separately
       if (this.document.hasConditionEffect('petrification')) {
-        traits.dr = [{ label: game.i18n.localize('DND5E.DamageAll') }];
+        traits.dr = [{ label: game.i18n.localize('DND5E.DAMAGE.All') }];
       }
 
       // Prepare damage modifications
@@ -726,7 +728,7 @@ export function Tidy5eActorSheetQuadroneBase<
                   return {
                     icon: p,
                     label: game.i18n.format(
-                      'DND5E.DamagePhysicalBypassesShort',
+                      'DND5E.DAMAGE.PhysicalBypasses.DescriptionShort',
                       { type }
                     ),
                   };
@@ -824,7 +826,9 @@ export function Tidy5eActorSheetQuadroneBase<
         if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
         return src ?? 'int';
       };
+
       return Object.entries(context.system[property] ?? {})
+        .filter(([key]) => key in CONFIG.DND5E[property])
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
@@ -954,7 +958,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const senses = Object.entries(CONFIG.DND5E.senses).reduce<
         ActorSpeedSenseEntryContext[]
       >((acc, [key, label]) => {
-        const value = senseConfig[key];
+        const value = senseConfig.ranges[key];
 
         if (!value || value === 0) {
           return acc;
@@ -1231,7 +1235,8 @@ export function Tidy5eActorSheetQuadroneBase<
             parent: this.actor,
             pack: this.actor.pack,
             types,
-          }
+          }, 
+          { sheet: this }
         );
 
         Hooks.off('renderDialog', dialogV1HookId);
@@ -1276,6 +1281,21 @@ export function Tidy5eActorSheetQuadroneBase<
             await item.getChatData({ secrets: this.actor.isOwner })
           );
         }
+      }
+    }
+
+    /** @override */
+    _openDocumentSheet(doc: any, options = {}) {
+      // Actor sheets are too large to render as children of the group sheet window.
+      // If the group sheet is detached, open the actor sheet in its own detached window.
+      if (doc instanceof foundry.documents.Actor) {
+        const { windowId } = this.window ?? {};
+        const windowOptions = windowId
+          ? { window: { detached: true, windowId } }
+          : {};
+        doc?.sheet?.render({ force: true, ...windowOptions, ...options });
+      } else if ( doc?.sheet ) { 
+        this._renderChild(doc.sheet, options);
       }
     }
 
@@ -1397,14 +1417,13 @@ export function Tidy5eActorSheetQuadroneBase<
       if (allowed === false) return;
 
       // Sheet Pins
-      const doc = await fromUuid(data.uuid);
-
+      const sheetPinDoc = await fromUuid(data.uuid);
       if (
-        doc.actor === this.actor &&
+        sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.getRelativeUUID(doc);
-        return await this._onDropPin(event, { id: relativeUuid, doc });
+        let relativeUuid = SheetPinsProvider.getRelativeUUID(sheetPinDoc);
+        return await this._onDropPin(event, { id: relativeUuid, doc: sheetPinDoc });
       }
 
       // Dropped Documents
@@ -1698,7 +1717,7 @@ export function Tidy5eActorSheetQuadroneBase<
     ) {
       behavior ??= (event as any)._behavior;
       const itemsWithoutAdvancement = items.filter(
-        (i) => !i.system.advancement?.length
+        (i) => !i.system.advancement?.size
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
@@ -1716,8 +1735,16 @@ export function Tidy5eActorSheetQuadroneBase<
       const containers = new Set(
         items.filter((i) => i.type === 'container').map((i) => i._id)
       );
-
       items = items.filter((i) => !containers.has(i.system.container));
+
+      // Transform physical items from NPCs to their gear versions
+      items = await Promise.all(
+        items.map((i) =>
+          i.actor?.system.isNPC && i.actor !== this.actor && i.system.asGear
+            ? i.system.asGear()
+            : i,
+        ),
+      );
 
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
@@ -1772,8 +1799,8 @@ export function Tidy5eActorSheetQuadroneBase<
       if (
         itemData.type === 'spell' &&
         (isOnInventoryTab ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
+          this.actor.system.isVehicle ||
+          this.actor.system.isGroup)
       ) {
         const options: Record<string, unknown> = {};
 
@@ -1793,7 +1820,7 @@ export function Tidy5eActorSheetQuadroneBase<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {});
+      const stacked = this._onDropStackConsumables(event, itemData, {});
 
       if (stacked) {
         return false;
@@ -1802,7 +1829,7 @@ export function Tidy5eActorSheetQuadroneBase<
       // Bypass normal creation flow for any items with advancement
       if (
         this.actor.system.metadata?.supportsAdvancement &&
-        itemData.system.advancement?.length &&
+        !foundry.utils.isEmpty(itemData.system.advancement) &&
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule
@@ -1832,7 +1859,7 @@ export function Tidy5eActorSheetQuadroneBase<
           );
 
         if (manager.steps.length) {
-          manager.render(true);
+          this._renderChild(manager);
           return false;
         }
       }
@@ -1844,6 +1871,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
      */
     _onDropStackConsumables(
+      _event: Event,
       itemData: any,
       { container = null } = {}
     ): Promise<Item5e> | null {
@@ -1953,10 +1981,39 @@ export function Tidy5eActorSheetQuadroneBase<
     /**
      * Handle finding an available item of a given type.
      */
+    static async #findItem(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const { classIdentifier, facilityType, itemType: type } = target.dataset;
+
+      return this.findItem({
+        event,
+        type,
+        facilityType,
+        classIdentifier,
+      });
+    }
+
+    /**
+     * Handle finding an available item of a given type.
+     */
     async findItem(args: {
+      /** Any triggering event. Passed along to item creation. */
       event: Event;
-      type: string;
+      /** The item type, like "class", "race", "weapon", etc. */
+      type?: string;
+      /** 
+       * A class identifier such as "cleric" or "barbarian". 
+       * This constrains the compendium to subclasses of a specific class. 
+       */
       classIdentifier?: string;
+      /** The type of facility, e.g., "special" or "basic" */
       facilityType?: string;
     }) {
       const { event, classIdentifier, facilityType, type } = args;
@@ -1989,7 +2046,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       let result = await dnd5e.applications.CompendiumBrowser.selectOne({
         filters,
-      });
+      }, this._detachOptions());
 
       if (result) {
         this._onDropItemCreate(
@@ -1998,6 +2055,21 @@ export function Tidy5eActorSheetQuadroneBase<
           'copy'
         );
       }
+    }
+
+    async tryUseItem(item: Item5e, event: Event) {
+      const config = { legacy: false, event };
+
+      const suppressItemUse =
+        TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
+
+      if (suppressItemUse) {
+        return;
+      }
+
+      return await item.use(config, {
+        options: { sheet: item.parent?.sheet ?? item.container?.sheet },
+      });
     }
 
     /* -------------------------------------------- */

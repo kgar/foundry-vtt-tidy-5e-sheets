@@ -74,7 +74,7 @@
                 document: context.actor,
                 effectId: effect.id,
                 parentId: effect.parentId,
-              }).deleteDialog(),
+              }).deleteDialog({ sheet: context.actor.sheet }),
             title: localize('DND5E.EffectDelete'),
             iconCssClass: 'fas fa-trash',
           }),

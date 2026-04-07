@@ -45,10 +45,10 @@
       return;
     }
 
-    new foundry.applications.apps.ImagePopout({
+    context.sheet._renderChild(new foundry.applications.apps.ImagePopout({
       src: placeholder.img,
       title: placeholder.name,
-    }).render(true);
+    }));
   }
 
   const localize = FoundryAdapter.localize;

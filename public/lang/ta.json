@@ -233,10 +233,6 @@
             "sectionTitle": "NPC பிணைப்புகள், இலட்சியங்கள் மற்றும் குறைபாடுகள்",
             "selectionDialogTitle": "இடம்பெயர்வு: NPC பிணைப்புகள், இலட்சியங்கள் மற்றும் அமைப்புக்கு குறைபாடுகள்"
         },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "மூல வகுப்பிற்கு எழுத்துப்பிழை வகுப்பு",
-            "selectionDialogTitle": "இடம்பெயர்வு: மூல வகுப்பிற்கு எழுத்துப்பிழை வகுப்பு"
-        },
         "NpcExhaustion": {
             "sectionTitle": "NPC சோர்வு",
             "selectionDialogTitle": "இடம்பெயர்வு: அமைப்புக்கு NPC சோர்வு"
@@ -330,7 +326,7 @@
         "SectionSelectorSaveNewSection": "புதிய பகுதியைச் சேமிக்கவும்",
         "SectionSelectorChooseTabSectionTooltip": "{tabName} பிரிவைத் தேர்ந்தெடுக்கவும்"
     },
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "ஒதுக்கப்படாததை மட்டும் காட்டு",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "ஒதுக்கப்படாததை மட்டும் காட்டு",
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "கையேடு",
     "TIDY5E.SortMenu.OptionPrepared": "தயாரிக்கப்பட்டது",
@@ -772,8 +768,8 @@
         "text": "இயல்புநிலையைப் பயன்படுத்த விரும்புகிறீர்களா?"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (சிப்ட்+ரோலைத் தவிர்க்கவும், உடனடியாக ரீசார்ச் செய்யவும்) ",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "மூல வகுப்பு அடையாளங்காட்டி",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "எழுத்துப்பிழையின் மூல வகுப்பு அடையாளங்காட்டி இங்கே தோன்றும். எழுத்து சொந்தமில்லாத ஒரு அடையாளங்காட்டியை ஒதுக்க, இந்த உரை புலத்தில் வகுப்பு அடையாளங்காட்டியை உள்ளிடவும்.",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "மூல வகுப்பு அடையாளங்காட்டி",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "எழுத்துப்பிழையின் மூல வகுப்பு அடையாளங்காட்டி இங்கே தோன்றும். எழுத்து சொந்தமில்லாத ஒரு அடையாளங்காட்டியை ஒதுக்க, இந்த உரை புலத்தில் வகுப்பு அடையாளங்காட்டியை உள்ளிடவும்.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "தாள் பூட்டை மாற்றவும்",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "ஒரு நேர்த்தியான தாள் இடைமுகம் இன் தற்போதைய செயலில் உள்ள சாளரமாக இருந்தால், இந்த விசைப்பலகையை தாள் பூட்டை மாற்றுகிறது.",
     "TIDY5E.Facilities.Hirelings.Label": "வேட்டைக்காரர்கள்",

@@ -130,7 +130,7 @@ export class SpellUtils {
     );
   }
 
-  static tryFilterByClass(
+  static tryFilterBySourceItemClass(
     actor: Actor5e,
     spells: any[],
     selectedClassFilter?: string,
@@ -143,7 +143,7 @@ export class SpellUtils {
 
     return spells.filter(
       (spell) =>
-        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
+        spell.system.sourceItem?.trim() === selectedClassFilter?.trim(),
     );
   }
 }

@@ -80,7 +80,7 @@
             class="inline-icon-button"
             title={localize('DND5E.ACTIVITY.Action.Delete')}
             onclick={() =>
-              context.system.activities?.get(activity.id)?.deleteDialog()}
+              context.system.activities?.get(activity.id)?.deleteDialog({ sheet: context.item?.sheet })}
             tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-trash"></i>

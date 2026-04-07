@@ -13,13 +13,14 @@ import { SheetSections } from 'src/features/sections/SheetSections';
  */
 export function getGroupMemberContextOptionsQuadrone(
   group: Actor5e,
-  actor: Actor5e
+  actor: Actor5e,
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
       name: 'DND5E.Group.Action.View',
       icon: `<i class="fa-solid fa-eye fa-fw"></i>`,
-      callback: async () => (await fromUuid(actor.uuid))?.sheet.render(true),
+      callback: async () =>
+        group.sheet._openDocumentSheet(await fromUuid(actor.uuid)),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
       group: 'common',
@@ -30,14 +31,16 @@ export function getGroupMemberContextOptionsQuadrone(
       condition: () => group.isOwner,
       group: 'customize',
       callback: () =>
-        new SectionSelectorApplication({
-          flag: `${TidyFlags.sections.prop}.${actor.id}`,
-          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-          callingDocument: group,
-          document: group,
-          getKnownCustomSections:
-            SheetSections.getKnownCustomGroupMemberSections,
-        }).render(true),
+        group.sheet._renderChild(
+          new SectionSelectorApplication({
+            flag: `${TidyFlags.sections.prop}.${actor.id}`,
+            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            callingDocument: group,
+            document: group,
+            getKnownCustomSections:
+              SheetSections.getKnownCustomGroupMemberSections,
+          }),
+        ),
     },
     {
       name: 'DND5E.Group.Action.Remove',

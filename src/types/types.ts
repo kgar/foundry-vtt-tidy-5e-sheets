@@ -41,7 +41,7 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
-import type { TravelPaceConfig } from 'src/foundry/config.types';
+import type { CurrencyItemConfig, TravelPaceConfig } from 'src/foundry/config.types';
 import type { ComponentWithProps } from 'src/utils/component';
 import type { CustomTraitEntry } from 'src/api';
 
@@ -763,7 +763,11 @@ export type SpecialTraits = {
   sections: SpecialTraitSection[];
 };
 
+// TODO: Try to eliminate this because it's already being 
 export type DocumentSheetV2Context = {
+  /** The game world's default currency when a single currency is needed. */
+  defaultCurrency: CurrencyItemConfig & { key: string };
+  /** The document which the sheet represents. */
   document: any;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
@@ -1041,6 +1045,7 @@ export type GroupableSelectOption = {
 
 /* Quadrone Types */
 export type DocumentSheetQuadroneContext<TDocument> = {
+  defaultCurrency: CurrencyItemConfig & { key: string };
   document: TDocument;
   editable: boolean;
   fields: any;
@@ -1083,6 +1088,8 @@ export type ActorTraitContext<TValue = unknown> = {
   parenthetical?: string;
   /** An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. */
   onClick?: (params: RegisteredCustomTraitOnClickParams) => void;
+  /** HTML attributes to apply to the trait UI element. */
+  attributes?: Record<string, string>;
 };
 
 export type ActorItemQuadroneContext = {
@@ -1376,6 +1383,7 @@ export type NpcSheetQuadroneContext = {
     trait: string;
   };
   features: FeatureSection[];
+  gear: ActorTraitContext[];
   habitats: { label: string }[];
   important: boolean;
   includeSpellbookInStatblockTab: boolean;
@@ -1613,7 +1621,7 @@ export type EncounterSheetQuadroneContext = {
   };
   members: EncounterMembersQuadroneContext;
   skills: GroupSkill[];
-  totalGold: number;
+  totalCurrency: number;
   totalXp: number;
   traits: EncounterTraits;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;

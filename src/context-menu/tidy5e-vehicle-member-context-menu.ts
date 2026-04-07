@@ -77,7 +77,7 @@ function getVehicleItemMemberOptions(
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       callback: async () => {
         const actor = await fromUuid(memberUuid);
-        actor?.sheet.render(true);
+        app._openDocumentSheet(actor);
       },
       condition: () =>
         !empty &&

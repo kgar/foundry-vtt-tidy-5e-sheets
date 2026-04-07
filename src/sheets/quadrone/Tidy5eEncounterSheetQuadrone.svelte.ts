@@ -177,7 +177,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           ),
         },
       },
-      totalGold: this.getGpSummary(this.actor),
+      totalCurrency: this.getDefaultCurrencySummary(this.actor),
       totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
       ...(await this._prepareMemberDependentContext(actorContext)),
@@ -467,13 +467,13 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   }
 
   async award() {
-    new dnd5e.applications.Award({
+    this._renderChild(new dnd5e.applications.Award({
       award: {
         currency: { ...this.actor.system.currency },
         savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
         xp: await this.actor.system.getXPValue(),
       },
-    }).render({ force: true });
+    }));
   }
 
   async _browseAddNpc() {
@@ -484,7 +484,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
         },
       },
-    });
+    }, this._detachOptions());
 
     if (result) {
       const actor = await fromUuid(result);

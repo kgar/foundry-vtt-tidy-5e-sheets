@@ -319,7 +319,13 @@
         onclick={() => switchSectionOrganization()}
       >
         <i class="fas fa-arrow-right-arrow-left"></i>
-        {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION ? localize('TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action') : localize('TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin')}
+        {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION
+          ? localize(
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+            )
+          : localize(
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+            )}
       </button>
       <button
         type="button"
@@ -337,34 +343,44 @@
         }}
       >
         <i class="fas fa-thumbtack"></i>
-        {localize(showSheetPins ? 'TIDY5E.Utilities.HideSheetPins' : 'TIDY5E.Utilities.ShowSheetPins')}
+        {localize(
+          showSheetPins
+            ? 'TIDY5E.Utilities.HideSheetPins'
+            : 'TIDY5E.Utilities.ShowSheetPins',
+        )}
       </button>
     </div>
     <div class="sheet-footer-right footer-content-right">
       {#if context.editable}
         <button
           type="button"
-          aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+          aria-label={localize('TIDY5E.ConfigureTab.Title', {
+            tabName: tabName,
+          })}
           class="button button-borderless button-icon-only"
           onclick={() =>
             context.editable &&
-            new ConfigureSectionsApplication({
-              document: context.document,
-              settings: {
-                tabId,
-                sections: sections,
-                optionsGroups: tabOptionGroups,
-                formTitle: localize('TIDY5E.ConfigureTab.Title', {
-                  tabName: tabName,
-                }),
-              },
-              window: {
-                title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
-              },
-            }).render({ force: true })}
+            context.sheet._renderChild(
+              new ConfigureSectionsApplication({
+                document: context.document,
+                settings: {
+                  tabId,
+                  sections: sections,
+                  optionsGroups: tabOptionGroups,
+                  formTitle: localize('TIDY5E.ConfigureTab.Title', {
+                    tabName: tabName,
+                  }),
+                },
+                window: {
+                  title: localize('TIDY5E.ConfigureTab.Title', {
+                    tabName: tabName,
+                  }),
+                },
+              }),
+            )}
         >
           <i class="fas fa-gear"></i>
-        </button>  
+        </button>
       {/if}
     </div>
   </div>

@@ -76,7 +76,18 @@
     config={{ id: `${appId}-mastery`, value: context.source.mastery }}
     choices={context.config.weaponMasteries}
     labelAttr="label"
-  />
+  >
+    {#snippet children()}
+      {@const reference =
+        CONFIG.DND5E.weaponMasteries[context.source.mastery]?.reference}
+
+      {#if reference}
+        {#await foundry.applications.ux.TextEditor.enrichHTML(`@UUID[${reference}]`) then html}
+          {@html html}
+        {/await}
+      {/if}
+    {/snippet}
+  </FormGroup>
 
   <!-- Weapon Properties -->
   <div class="form-group stacked weapon-properties checkbox-grid">
@@ -147,7 +158,6 @@
           value: context.source.magicalBonus,
           disabled: !context.unlocked,
           placeholder: '0',
-          step: 1,
         }}
       />
     </FormGroup>
@@ -288,11 +298,11 @@
   </div>
 
   <FieldDamage
+    denominationOptions={context.denominationOptions.base}
+    fields={context.fields.damage.fields.base.fields}
     prefix="system.damage.base."
     source={context.source.damage.base}
     system={context.system.damage.base}
-    fields={context.fields.damage.fields.base.fields}
-    denominationOptions={context.denominationOptions.base}
     types={context.damageTypes}
   />
 </fieldset>
@@ -306,11 +316,11 @@
 
     <FieldDamage
       denominationOptions={context.denominationOptions.base}
-      source={context.source.damage.versatile}
       fields={context.fields.damage.fields.versatile.fields}
-      system={context.system.damage.versatile}
-      prefix="system.damage.versatile."
       numberPlaceholder={context.source.damage.base.number}
+      prefix="system.damage.versatile."
+      source={context.source.damage.versatile}
+      system={context.system.damage.versatile}
     />
   </fieldset>
 {/if}

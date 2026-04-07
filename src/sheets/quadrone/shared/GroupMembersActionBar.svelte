@@ -50,20 +50,24 @@
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
       onclick={() =>
         context.editable &&
-        new ConfigureSectionsApplication({
-          document: context.document,
-          settings: {
-            tabId,
-            sections: sections,
-            optionsGroups: tabOptionGroups,
-            formTitle: localize('TIDY5E.ConfigureTab.Title', {
-              tabName: tabName,
-            }),
-          },
-          window: {
-            title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
-          },
-        }).render({ force: true })}
+        context.sheet._renderChild(
+          new ConfigureSectionsApplication({
+            document: context.document,
+            settings: {
+              tabId,
+              sections: sections,
+              optionsGroups: tabOptionGroups,
+              formTitle: localize('TIDY5E.ConfigureTab.Title', {
+                tabName: tabName,
+              }),
+            },
+            window: {
+              title: localize('TIDY5E.ConfigureTab.Title', {
+                tabName: tabName,
+              }),
+            },
+          }),
+        )}
     >
       <i class="fas fa-gear"></i>
     </a>

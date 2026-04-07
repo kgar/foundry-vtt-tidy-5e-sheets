@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { getContext, onMount, tick } from 'svelte';
 
   type EditorOptions =
     any /*foundry.applications.elements.HTMLProseMirrorElement.ProseMirrorInputConfig*/;
@@ -10,7 +10,6 @@
     enriched?: string | null;
     editorOptions?: EditorOptions;
     documentUuid: string;
-    manageSecrets?: boolean;
     onSave?: () => void;
     [key: string]: any;
   }
@@ -21,14 +20,14 @@
     enriched = null,
     editorOptions = {},
     documentUuid,
-    manageSecrets = false,
     onSave,
+    host,
     ...rest
   }: Props = $props();
 
-  let proseMirrorContainerEl: HTMLElement;
+  let proseMirrorContainerEl = $state<HTMLElement | undefined>();
 
-  let actualEditorOptions = $derived(
+  let actualEditorOptions: EditorOptions = $derived(
     foundry.utils.mergeObject(
       {
         name: field,
@@ -46,72 +45,11 @@
   );
 
   function onEditorActivation(node: HTMLElement) {
-    node.addEventListener('click', (ev: MouseEvent) => {
-      if (
-        ev.target instanceof HTMLElement &&
-        ev.target.closest('[data-action="save"]')
-      ) {
-        handleSave();
-      }
-    });
-    node.addEventListener('keydown', (event) => {
-      if (
-        game.keyboard.isModifierActive(foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS.CONTROL) &&
-        event.key === 's'
-      ) {
-        handleSave();
-      }
+    node.addEventListener('save', async () => {
+      await tick();
+      onSave?.();
     });
   }
-
-  function handleSave() {
-    onSave?.();
-    bindSecretUi();
-  }
-
-  function bindSecretUi() {
-    if (!manageSecrets || !actualEditorOptions.toggled) {
-      return;
-    }
-
-    const secret = new foundry.applications.ux.HTMLSecret({
-      parentSelector: `prose-mirror`,
-      callbacks: {
-        content: (_secret: HTMLElement) => content,
-        update: (secret: HTMLElement, content: string) => {
-          secret.closest<HTMLElement & { value: string }>(
-            'prose-mirror',
-          )!.value = content;
-        },
-      },
-    });
-
-    queueMicrotask(() => {
-      secret.bind(proseMirrorContainerEl);
-    });
-  }
-
-  // Create Editor element and put it in the contents element.
-  onMount(() => {
-    const element =
-      foundry.applications.elements.HTMLProseMirrorElement.create(
-        actualEditorOptions,
-      );
-
-    proseMirrorContainerEl.innerHTML = element.outerHTML;
-
-    proseMirrorContainerEl.firstChild?.addEventListener(
-      'plugins',
-      (event: any) => {
-        event.detail['highlightDocumentMatches'] =
-          ProseMirror.ProseMirrorHighlightMatchesPlugin.build(
-            ProseMirror.defaultSchema,
-          );
-      },
-    );
-
-    bindSecretUi();
-  });
 </script>
 
 <div
@@ -119,4 +57,15 @@
   class={rest.class ?? ''}
   bind:this={proseMirrorContainerEl}
   use:onEditorActivation
-></div>
+>
+  <prose-mirror
+    name={actualEditorOptions.name}
+    value={actualEditorOptions.value}
+    document-uuid={actualEditorOptions.documentUuid}
+    height={actualEditorOptions.height}
+    toggled={actualEditorOptions.toggled}
+    enriched={actualEditorOptions.enriched}
+    editable={actualEditorOptions.editable}
+    compact={actualEditorOptions.compact}
+  ></prose-mirror>
+</div>

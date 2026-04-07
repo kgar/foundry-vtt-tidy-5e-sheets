@@ -3,7 +3,6 @@
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   let context = $derived(getVehicleSheetContext());
 
@@ -24,15 +23,11 @@
               documentUuid={context.document.uuid}
               content={context.system.biography.value}
               editorOptions={{ toggled: false }}
-              manageSecrets={true}
               field="system.details.biography.value"
               enriched={context.biographyHTML}
             ></SheetEditorV2>
           {:else}
-            <div
-              class="editor"
-              use:manageSecrets={{ document: context.document }}
-            >
+            <div class="editor">
               <div
                 data-field="system.details.biography.value"
                 class="user-select-text"

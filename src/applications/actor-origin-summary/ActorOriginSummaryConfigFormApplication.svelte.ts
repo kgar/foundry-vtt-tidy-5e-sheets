@@ -94,10 +94,10 @@ export default class ActorOriginSummaryConfigFormApplication extends DocumentShe
       alignment: this.document.system.details.alignment,
       dimensions: this.document.system.traits.dimensions,
 
-      isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+      isCharacter: this.document.system.isCharacter,
       canEditBackground: !this.document.system.details.background?.name,
-      isNpc: this.document.type === CONSTANTS.SHEET_TYPE_NPC,
-      isVehicle: this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE,
+      isNpc: this.document.system.isNPC,
+      isVehicle: this.document.system.isVehicle,
     } satisfies ActorOriginSummaryContext;
   }
 

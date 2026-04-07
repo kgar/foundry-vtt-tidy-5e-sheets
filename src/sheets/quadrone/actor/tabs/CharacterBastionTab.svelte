@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -72,17 +71,20 @@
         ? CONSTANTS.FACILITY_TYPE_SPECIAL
         : CONSTANTS.FACILITY_TYPE_BASIC;
 
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters: {
-        locked: {
-          types: new Set(['facility']),
-          additional: {
-            type: { [type]: 1, [otherType]: -1 },
-            level: { max: context.actor.system.details.level },
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            types: new Set(['facility']),
+            additional: {
+              type: { [type]: 1, [otherType]: -1 },
+              level: { max: context.actor.system.details.level },
+            },
           },
         },
       },
-    });
+      context.sheet._detachOptions(),
+    );
 
     if (result) {
       context.actor.sheet._onDropItemCreate(await fromUuid(result), ev, 'copy');
@@ -91,7 +93,15 @@
 
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = context.actor.items.get(chosen.id);
-    return facility?.use({ legacy: false, chooseActivity: true, event });
+    return facility?.use(
+      {
+        legacy: false,
+        chooseActivity: true,
+        event,
+        options: { sheet: context.sheet },
+      },
+      {},
+    );
   }
 
   let localize = FoundryAdapter.localize;
@@ -123,7 +133,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -198,8 +207,10 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-header-details"
-                  onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-                  onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                  onmouseenter={(ev) =>
+                    onMouseEnterFacility(ev, chosen.facility)}
+                  onmouseleave={(ev) =>
+                    onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   onclick={(ev) => context.editable && useFacility(ev, chosen)}
@@ -226,9 +237,8 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-menu highlight-on-hover"
-                  aria-label="TODO: Add label"
-                  onclick={(ev) =>
-                    EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+                  data-action="showContextMenu"
+                  data-target-selector="[data-item-id]"
                   onkeydown={onKeydown}
                   role="button"
                   data-keyboard-focus
@@ -388,8 +398,10 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-header-details"
-                  onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-                  onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                  onmouseenter={(ev) =>
+                    onMouseEnterFacility(ev, chosen.facility)}
+                  onmouseleave={(ev) =>
+                    onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   onclick={(ev) => context.editable && useFacility(ev, chosen)}
@@ -414,9 +426,8 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-menu highlight-on-hover"
-                  aria-label="TODO: Add label"
-                  onclick={(ev) =>
-                    EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+                  data-action="showContextMenu"
+                  data-target-selector="[data-item-id]"
                   onkeydown={onKeydown}
                   role="button"
                   data-keyboard-focus
@@ -562,8 +573,8 @@
       </div>
 
       {#if context.enriched.bastion}
-        <div class="editor" use:manageSecrets={{ document: context.document }}>
-          <div data-field="system.bastion.description" class="user-select-text">
+        <div class="editor">
+          <div data-target="system.bastion.description" class="user-select-text">
             {@html context.enriched.bastion}
           </div>
         </div>

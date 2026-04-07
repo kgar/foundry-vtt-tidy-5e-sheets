@@ -94,17 +94,41 @@
   <FormGroup
     label="DND5E.Shape"
     labelFor="{appId}-target-template-type"
-    document={context.document}
-    field={context.fields.target.fields.template.fields.type}
-    config={{
-      id: `${appId}-target-template-type`,
-      value: context.source.target.template.type,
-      hint: false,
-      blank: false,
-    }}
-    choices={context.config.areaTargetOptions}
-    labelAttr="label"
-  />
+    groupClasses="split-group"
+  >
+    <!-- Shape  -->
+    <FormGroup
+      label="DND5E.Type"
+      labelFor="{appId}-target-template-type"
+      document={context.document}
+      field={context.fields.target.fields.template.fields.type}
+      config={{
+        id: `${appId}-target-template-type`,
+        value: context.source.target.template.type,
+        hint: false,
+        blank: false,
+      }}
+      choices={context.config.areaTargetOptions}
+      labelAttr="label"
+      groupClasses="label-top"
+    />
+
+    <!-- Stationary -->
+    {#if context.source.target.template.type === 'radius'}
+      <FormGroup
+        labelFor="{appId}-target-template-stationary"
+        document={context.document}
+        field={context.fields.target.fields.template.fields.stationary}
+        config={{
+          id: `${appId}-target-template-stationary`,
+          value: context.source.target.template.stationary,
+          hint: false,
+        }}
+        labelAttr="label"
+        groupClasses="flex0"
+      />
+    {/if}
+  </FormGroup>
 
   <!-- Dimensions -->
   {#if context.system.target.template.type && context.dimensions}

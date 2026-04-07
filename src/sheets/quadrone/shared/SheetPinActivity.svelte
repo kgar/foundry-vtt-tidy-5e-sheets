@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -58,7 +58,7 @@
     }
   }
 
-  const context = $derived(getCharacterSheetContext());
+  let context = $derived(getSheetContext());
 
   const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
 
@@ -116,7 +116,9 @@
       role="button"
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
-      onclick={(event) => context.editable && ctx.document.use({ event })}
+      onclick={(event) =>
+        context.editable &&
+        ctx.document.use({ event, options: { sheet: context.sheet } })}
       data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
@@ -213,7 +215,8 @@
   {#if context.unlocked && !isEditing}
     <a
       class="button button-icon-only button-borderless"
-      onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-activity-id]')}
+      data-action="showContextMenu"
+      data-target-selector="[data-activity-id]"
     >
       <i class="fas fa-ellipsis-vertical"></i>
     </a>

@@ -195,12 +195,24 @@
     entries={context.habitats}
     configurationTooltip={localize('DND5E.Habitat.Configuration.Title')}
     onconfig={() =>
-      new dnd5e.applications.actor.HabitatConfig({
-        document: context.actor,
-      }).render({ force: true })}
+      context.sheet._renderChild(
+        new dnd5e.applications.actor.HabitatConfig({
+          document: context.actor,
+        }),
+      )}
     icon="fa-solid fa-mountain-sun"
     traitClass="traits-habitats"
     pillClass="trait-habitat"
+  />
+
+  <!-- Gear -->
+  <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
+    label={localize('DND5E.Gear.Label')}
+    entries={context.gear}
+    icon="fa-solid fa-axe"
+    traitClass="traits-gear"
+    pillClass="trait-gear"
   />
 
   <!-- Treasure -->
@@ -210,9 +222,11 @@
     entries={context.treasures}
     configurationTooltip={localize('DND5E.Treasure.Configuration.Title')}
     onconfig={() =>
-      new dnd5e.applications.actor.TreasureConfig({
-        document: context.actor,
-      }).render({ force: true })}
+      context.sheet._renderChild(
+        new dnd5e.applications.actor.TreasureConfig({
+          document: context.actor,
+        }),
+      )}
     icon="fa-solid fa-gem"
     traitClass="traits-treasures"
     pillClass="trait-treasure"
@@ -228,9 +242,9 @@
       entries={context.specialTraits}
       configurationTooltip={localize('DND5E.SpecialTraits')}
       onconfig={() =>
-        new SpecialTraitsApplication({ document: context.actor }).render({
-          force: true,
-        })}
+        context.sheet._renderChild(
+          new SpecialTraitsApplication({ document: context.actor }),
+        )}
       icon="fa-solid fa-star"
       traitClass="traits-specials"
       pillClass="trait-special"

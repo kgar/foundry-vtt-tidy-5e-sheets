@@ -5,27 +5,30 @@
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
-  let { favorite }: Props = $props();
+  const { favorite }: Props = $props();
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [
       favorite.item.labels.components.vsm,
       favorite.item.labels.activation,
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
-  let modifier = $derived(favorite.item.labels.modifier);
+  const modifier = $derived(favorite.item.labels.modifier);
 
-  let range = $derived(favorite.item.system.range);
+  const range = $derived(favorite.item.system.range);
 
-  let save = $derived(
+  const save = $derived(
     getSaveData(favorite.item.system.activities.getByType('save')[0]?.save),
   );
+
+  const context = $derived(getCharacterSheetQuadroneContext());
 
   function getSaveData(save: any) {
     if (foundry.utils.getType(save?.ability) === 'Set')
@@ -60,8 +63,7 @@
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={async (ev) =>
-      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item.name}
     {subtitle}
   />

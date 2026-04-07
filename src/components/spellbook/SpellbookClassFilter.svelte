@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
@@ -7,12 +7,12 @@
 
   let context = $derived(getCharacterSheetContext());
 
-  let allClasses: DropdownListOption[] = $derived([
+  let classNamesAndTypedIdentifiers: DropdownListOption[] = $derived([
     { text: 'DND5E.Spellbook', value: '' },
     ...Object.entries(context.actor.spellcastingClasses).map(
-      ([key, value]: [string, Item5e]) => ({
+      ([identifier, value]: [string, Item5e]) => ({
         text: value.name,
-        value: key,
+        value: `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`,
       }),
     ),
   ]);
@@ -33,7 +33,7 @@
   }}
   disabled={!context.editable}
 >
-  {#each allClasses as option}
+  {#each classNamesAndTypedIdentifiers as option}
     <option
       value={option.value}
       selected={option.value === (selectedClassFilter ?? undefined)}

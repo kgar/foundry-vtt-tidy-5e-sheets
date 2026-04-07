@@ -62,7 +62,9 @@
     <HorizontalLineSeparator />
   {/if}
 
-  {@html chatData.description}
+  <div data-target="system.description.value" data-uuid={item.uuid}>
+    {@html chatData.description}
+  </div>
 
   {#if itemSummaryCommands.length}
     <HorizontalLineSeparator />

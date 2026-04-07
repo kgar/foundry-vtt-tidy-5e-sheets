@@ -21,13 +21,14 @@ import type { ActionItemInclusionMode } from 'src/types/types';
 export function getItemContextOptionsQuadrone(
   app: any,
   item: Item5e,
-  element: HTMLElement
+  element: HTMLElement,
 ): ContextMenuEntry[] {
+  const compendiumLocked = game.packs.get(item.pack)?.locked;
   const itemParent = item.actor ? item.actor : item.parent;
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
   const isCharacter =
-    itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+    itemParentIsActor && itemParent.system.isCharacter;
 
   const isInFavorites = !!element.closest('.favorites');
 
@@ -40,7 +41,7 @@ export function getItemContextOptionsQuadrone(
     icon: '<i class="fas fa-eye fa-fw"></i>',
     group: 'common',
     callback: () =>
-      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_PLAY }),
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
   });
 
   options.push({
@@ -49,7 +50,7 @@ export function getItemContextOptionsQuadrone(
     condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
     callback: () =>
-      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT }),
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
   });
 
   if (
@@ -150,9 +151,31 @@ export function getItemContextOptionsQuadrone(
   }
 
   options.push({
+    name: item.system.properties?.has('gear')
+      ? 'DND5E.Gear.Action.Remove'
+      : 'DND5E.Gear.Action.Add',
+    icon: '<i class="fa-solid fa-axe fa-fw"></i>',
+    condition: () =>
+      !!itemParent?.system.isNPC &&
+      item.isOwner &&
+      !compendiumLocked &&
+      !!CONFIG.Item.dataModels[item.type]?.schema.has('quantity'),
+    callback: () => {
+      const properties = item.system.toObject().properties;
+      item.update({
+        'system.properties': item.system.properties.has('gear')
+          ? properties.filter((i: string) => i !== 'gear')
+          : [...properties, 'gear'],
+      });
+    },
+    group: 'common',
+  });
+
+  options.push({
     name: 'DND5E.DisplayCard',
     icon: '<i class="fas fa-message-arrow-up-right"></i>',
     group: 'common',
+    condition: () => item.actor,
     callback: () => item.displayCard(),
   });
 
@@ -175,7 +198,7 @@ export function getItemContextOptionsQuadrone(
 
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
         item,
-        options
+        options,
       );
       if (scroll) {
         dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
@@ -193,7 +216,7 @@ export function getItemContextOptionsQuadrone(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
-    callback: () => item.system.linkedActivity.sheet.render(true),
+    callback: () => item.sheet._renderChild(item.system.linkedActivity.sheet),
   });
 
   options.push({
@@ -222,7 +245,7 @@ export function getItemContextOptionsQuadrone(
             name: item.name,
           }),
         },
-        { save: true }
+        { save: true },
       ),
   });
 
@@ -252,7 +275,7 @@ export function getItemContextOptionsQuadrone(
 
   if (itemParent) {
     const inspirationSourceItem = itemParent.items.get(
-      TidyFlags.inspirationSource.get(itemParent)
+      TidyFlags.inspirationSource.get(itemParent),
     );
 
     const itemInspirationSourceAvailable =
@@ -301,33 +324,33 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
-      new SectionSelectorApplication({
+      app._renderChild(new SectionSelectorApplication({
         flag: TidyFlags.section.prop,
         sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
         callingDocument: itemParent ?? item,
         document: item,
-      }).render(true),
+      }))
   });
 
   let actionSectionContextName =
-    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    itemParent?.system.isCharacter
       ? FoundryAdapter.localize(
           'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-          { tabName: FoundryAdapter.localize('Sheet') }
+          { tabName: FoundryAdapter.localize('Sheet') },
         )
-      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
-      ? FoundryAdapter.localize(
-          'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-          { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') }
-        )
-      : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
+      : itemParent?.system.isNPC
+        ? FoundryAdapter.localize(
+            'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+            { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
+          )
+        : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
 
   let actionSectionConfigTitle =
-    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    itemParent?.system.isCharacter
       ? FoundryAdapter.localize('Sheet')
-      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
-      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
-      : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
+      : itemParent?.system.isNPC
+        ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+        : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
 
   options.push({
     name: actionSectionContextName,
@@ -339,12 +362,14 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
-      new SectionSelectorApplication({
-        flag: TidyFlags.actionSection.prop,
-        sectionType: actionSectionConfigTitle,
-        callingDocument: itemParent ?? item,
-        document: item,
-      }).render(true),
+      app._renderChild(
+        new SectionSelectorApplication({
+          flag: TidyFlags.actionSection.prop,
+          sectionType: actionSectionConfigTitle,
+          callingDocument: itemParent ?? item,
+          document: item,
+        }),
+      )
   });
 
   options.push({
@@ -353,6 +378,7 @@ export function getItemContextOptionsQuadrone(
     callback: () => SheetPinsProvider.pin(item, 'item'),
     condition: () =>
       item.isOwner &&
+      item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
       !SheetPinsProvider.isPinned(item),
@@ -365,6 +391,7 @@ export function getItemContextOptionsQuadrone(
     callback: () => SheetPinsProvider.unpin(item),
     condition: () =>
       item.isOwner &&
+      item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
       SheetPinsProvider.isPinned(item),
@@ -411,9 +438,7 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'be-careful',
     callback: () =>
-      itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
-        ? FoundryAdapter.onActorItemDelete(itemParent, item)
-        : item.deleteDialog(),
+      item.deleteDialog({ sheet: app }),
   });
 
   return options;

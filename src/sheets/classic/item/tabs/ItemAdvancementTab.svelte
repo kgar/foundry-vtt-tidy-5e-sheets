@@ -33,7 +33,7 @@
     }
 
     const dragData =
-      context.item.advancement.byId[advancement.id]?.toDragData();
+      context.item.system.advancement.get(advancement.id)?.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 </script>

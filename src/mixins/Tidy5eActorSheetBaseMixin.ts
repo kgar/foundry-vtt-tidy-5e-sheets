@@ -55,8 +55,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           },
         },
         action: {
-          openTabSelection: async function (this: { actor?: Actor5e }) {
-            new ClassicTabSelectionFormApplication(this.actor).render(true);
+          openTabSelection: async function (this: Tidy5eActorSheetBase) {
+            this._renderChild(new ClassicTabSelectionFormApplication(this.actor));
           },
         },
       },
@@ -225,7 +225,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
       const itemsWithoutAdvancement = items.filter(
-        (i) => !i.system.advancement?.length
+        (i) => !i.system.advancement?.size
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
@@ -308,8 +308,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       if (
         itemData.type === 'spell' &&
         (isOnInventoryTab ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
+          this.actor.system.isVehicle ||
+          this.actor.system.isGroup)
       ) {
         const options: Record<string, unknown> = {};
 
@@ -335,7 +335,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       // Bypass normal creation flow for any items with advancement
       if (
         this.actor.system.metadata?.supportsAdvancement &&
-        itemData.system.advancement?.length &&
+        !foundry.utils.isEmpty(itemData.system.advancement) &&
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule
@@ -368,7 +368,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
             itemData
           );
         if (manager.steps.length) {
-          manager.render(true);
+          this._renderChild(manager);
           return false;
         }
       }
@@ -429,46 +429,25 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
     /* -------------------------------------------- */
 
     /**
-     * Handle header control button clicks to render the Prototype Token configuration sheet.
-     * @this {ActorSheetV2}
-     * @param {PointerEvent} event
-     */
-    static async #onConfigureToken(
-      this: { position: ApplicationPosition; token?: any; actor?: Actor5e },
-      event: PointerEvent
-    ) {
-      event.preventDefault();
-      const renderOptions = {
-        left: Math.max(this.position.left - 560 - 10, 10),
-        top: this.position.top,
-      };
-      if (this.token) {
-        return this.token.sheet.render(true, renderOptions);
-      } else {
-        new CONFIG.Token.prototypeSheetClass(
-          this.actor.prototypeToken,
-          renderOptions
-        ).render(true);
-      }
-    }
-
-    /* -------------------------------------------- */
-
-    /**
      * Handle header control button clicks to display actor portrait artwork.
      * @this {ActorSheetV2}
      * @param {PointerEvent} event
      */
-    static async #onShowPortraitArtwork(
+    static #onShowPortraitArtwork(
       this: { actor?: Actor5e },
-      event: PointerEvent
+      event: PointerEvent,
     ) {
       const { img, name, uuid } = this.actor;
-      new foundry.applications.apps.ImagePopout({
+      
+      const app = new foundry.applications.apps.ImagePopout({
         src: img,
         title: name,
         uuid: uuid,
-      }).render(true);
+      });
+
+      return this.actor
+        ? this.actor.sheet._renderChild(app)
+        : app.render({ force: true });
     }
 
     /* -------------------------------------------- */
@@ -479,15 +458,15 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      * @param {PointerEvent} event
      */
     static async #onShowTokenArtwork(
-      this: { actor?: Actor5e },
+      this: Tidy5eActorSheetBase,
       event: PointerEvent
     ) {
       const { prototypeToken, name, uuid } = this.actor;
-      new foundry.applications.apps.ImagePopout({
+      this._renderChild(new foundry.applications.apps.ImagePopout({
         src: prototypeToken.texture.src,
         title: name,
         uuid: uuid,
-      }).render(true);
+      }));
     }
   }
 

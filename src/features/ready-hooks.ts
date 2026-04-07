@@ -21,7 +21,7 @@ function assignDroppedSpellsToClassFilter() {
 
     if (!isNil(parent.sheet?.classSpellbookFilter, '')) {
       item.update({
-        [`system.sourceClass`]: parent.sheet.classSpellbookFilter,
+        [`system.sourceItem`]: parent.sheet.classSpellbookFilter,
       });
     }
   });

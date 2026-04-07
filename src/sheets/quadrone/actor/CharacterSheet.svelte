@@ -134,26 +134,19 @@
                 ]}
                 data-tidy-sheet-part="sheet-header-actions-container"
               >
-                <button
-                  type="button"
-                  class="button button-icon-only short-rest button-gold"
-                  data-tooltip="DND5E.REST.Short.Label"
-                  aria-label={localize('DND5E.REST.Short.Label')}
-                  onclick={() => context.actor.shortRest()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-utensils"></i>
-                </button>
-                <button
-                  type="button"
-                  class="button button-icon-only long-rest button-gold"
-                  data-tooltip="DND5E.REST.Long.Label"
-                  aria-label={localize('DND5E.REST.Long.Label')}
-                  onclick={() => context.actor.longRest()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-campground"></i>
-                </button>
+                {#each Object.entries(context.config.restTypes) as [key, rest]}
+                  <button
+                    type="button"
+                    class="button button-icon-only short-rest button-gold"
+                    data-tooltip=""
+                    aria-label={localize(rest.label)}
+                    data-action="rest"
+                    data-type={key}
+                    disabled={!context.editable}
+                  >
+                    <i class={rest.icon}></i>
+                  </button>
+                {/each}
               </div>
             {/if}
           </div>
@@ -633,7 +626,11 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only button-death-saves"
-                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    aria-label={localize(
+                      context.showDeathSaves
+                        ? 'DND5E.DeathSaveHide'
+                        : 'DND5E.DeathSaveShow',
+                    )}
                     data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}

@@ -141,7 +141,7 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       fields,
     }));
 
-    if (this.document.type === CONSTANTS.SHEET_TYPE_NPC) {
+    if (this.document.system.isNPC) {
       flags.sections.unshift({
         label: game.i18n.localize('DND5E.NPC.Label'),
         fields: [
