@@ -801,7 +801,8 @@ export const FoundryAdapter = {
     for (let i = 0; i < term.length; i++) {
       let type = term[i].constructor.name;
       switch (type) {
-        case 'Die': {
+        case 'Die':
+        case 'BasicDie': {
           averageString += Math.floor(
             (term[i].faces * term[i].number + term[i].number) / 2
           );
