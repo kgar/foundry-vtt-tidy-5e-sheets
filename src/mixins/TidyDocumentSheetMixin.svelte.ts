@@ -475,6 +475,13 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
 
     /**
+     * Is the sheet in edit mode?
+     */
+     get isEditMode() {
+      return this._mode === CONSTANTS.SHEET_MODE_EDIT;
+    }
+
+    /**
      * Applies the current sheet mode as a class to the sheet element.
      */
     _applySheetModeClass(element: HTMLElement) {
