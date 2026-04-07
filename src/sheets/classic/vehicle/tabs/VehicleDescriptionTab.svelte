@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
@@ -24,7 +23,6 @@
         }}
         documentUuid={context.actor.uuid}
         onSave={() => stopEditing()}
-        manageSecrets={context.actor.isOwner}
       />
     </article>
   {:else if context.editable}
@@ -33,7 +31,7 @@
         <i class="fa-solid fa-feather"></i>
       </a>
       {#key context.biographyHTML}
-        <div class="editor" use:manageSecrets={{ document: context.actor }}>
+        <div class="editor">
           <div
             data-field="system.details.biography.value"
             class="user-select-text"

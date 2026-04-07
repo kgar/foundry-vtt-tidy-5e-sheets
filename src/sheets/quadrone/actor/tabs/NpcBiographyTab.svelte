@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { TidyFlags } from 'src/api';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
@@ -151,7 +150,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -266,7 +264,7 @@
         </div>
         <ExpandableContainer {expanded}>
           {#key enriched}
-            <div class="editor" use:manageSecrets={{ document: context.actor }}>
+            <div class="editor">
               <div data-target={field} class="user-select-text">
                 {@html enriched}
               </div>

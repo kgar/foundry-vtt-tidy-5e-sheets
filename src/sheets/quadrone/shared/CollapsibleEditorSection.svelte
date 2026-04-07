@@ -3,7 +3,6 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
 
   interface Props {
     expanded: boolean;
@@ -53,7 +52,7 @@
   <!-- Body -->
   <ExpandableContainer {expanded}>
     {#key itemDescription.enriched}
-      <div class="editor" use:manageSecrets={{ document }}>
+      <div class="editor">
         <div data-target={itemDescription.field} class="user-select-text">
           {@html itemDescription.enriched}
         </div>

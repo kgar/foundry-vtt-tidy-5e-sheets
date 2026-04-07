@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -39,7 +38,6 @@
           }}
           documentUuid={context.actor.uuid}
           onSave={() => stopEditing()}
-          manageSecrets={context.actor.isOwner}
         />
       </article>
     {/key}
@@ -67,7 +65,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key context.enriched.biography}
-      <div class="editor" use:manageSecrets={{ document: context.actor }}>
+      <div class="editor">
         <div
           data-target="system.details.biography.value"
           class="user-select-text"
