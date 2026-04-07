@@ -81,12 +81,16 @@
               label: skill.name,
               members: context.members.skilled,
             })}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL}
         >
-          <span
-            class="skill-ability font-label-medium color-text-gold-emphasis"
+          <button
+            type="button"
+            data-action="showContextMenu"
+            data-target-selector="[data-context-menu]"
+            class="button button-borderless skill-ability font-label-medium"
           >
             {skill.ability}
-          </span>
+          </button>
           <button
             type="button"
             class="button button-borderless use-ability-roll-button skill"

@@ -1,11 +1,16 @@
 import type { CONSTANTS } from 'src/constants';
 
+export type ContextMenuCallbackArgs = {
+  event: PointerEvent,
+  target: HTMLElement
+}
+
 export type ContextMenuEntry = {
   name?: string;
   icon?: string;
   group?: string;
-  callback?: ($entryElement: any) => void;
-  condition?: ($entryElement: any) => void;
+  callback?: (args: ContextMenuCallbackArgs) => void;
+  condition?: (target: HTMLElement) => void;
 };
 
 /**
