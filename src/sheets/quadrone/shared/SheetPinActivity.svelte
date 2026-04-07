@@ -87,10 +87,8 @@
   <button
     type="button"
     class="button button-borderless font-label-medium pin-name truncate flex1"
-    onclick={() =>
-      ctx.document.sheet.render({
-        force: true,
-      })}
+    data-action="showDocument"
+    data-uuid={ctx.document.sheet.uuid}
   >
     {coalesce(ctx.alias, ctx.document.name)}
   </button>
