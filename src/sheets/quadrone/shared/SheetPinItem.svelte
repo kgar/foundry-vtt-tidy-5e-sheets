@@ -178,13 +178,8 @@
   <button
     type="button"
     class="button button-borderless font-label-medium pin-name truncate flex1"
-    onclick={() =>
-      ctx.document.sheet.render({
-        force: true,
-        mode: context.unlocked
-          ? CONSTANTS.SHEET_MODE_EDIT
-          : CONSTANTS.SHEET_MODE_PLAY,
-      })}
+    data-action={context.unlocked ? 'editDocument' : 'showDocument'}
+    data-uuid={ctx.document.uuid}
   >
     {coalesce(ctx.alias, ctx.document.name)}
   </button>
