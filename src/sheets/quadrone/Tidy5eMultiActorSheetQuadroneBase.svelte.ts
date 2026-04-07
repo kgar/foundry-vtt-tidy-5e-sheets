@@ -444,7 +444,16 @@ export function Tidy5eMultiActorSheetQuadroneBase<
                 value: '∞',
                 sign: '+',
               },
-              save: -Infinity,
+              saveHigh: {
+                total: -Infinity,
+                value: '∞',
+                sign: '-',
+              },
+              saveLow: {
+                total: Infinity,
+                value: '∞',
+                sign: '+',
+              },
               score: -Infinity,
               identifiers: new Map<string, GroupMemberAbilityContext>(),
             },
@@ -493,6 +502,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
 
           const modData = getModifierData(ability.mod);
           const saveData = getModifierData(ability.save.value);
+          const scoreData = getModifierData(ability.value);
 
           if (ability.mod > groupAbility.high.total) {
             groupAbility.high = {
@@ -508,6 +518,20 @@ export function Tidy5eMultiActorSheetQuadroneBase<
             };
           }
 
+          if (ability.save.value > groupAbility.saveHigh.total) {
+            groupAbility.saveHigh = {
+              total: ability.save.value,
+              ...saveData,
+            };
+          }
+
+          if (ability.save.value < groupAbility.saveLow.total) {
+            groupAbility.saveLow = {
+              total: ability.mod,
+              ...saveData,
+            };
+          }
+
           groupAbility.identifiers.set(actor.uuid, {
             mod: ability.mod,
             modSign: modData.sign,
@@ -517,14 +541,11 @@ export function Tidy5eMultiActorSheetQuadroneBase<
             saveSign: saveData.sign,
             saveValue: saveData.value,
             score: ability.value,
+            scoreValue: scoreData.value,
+            scoreSign: scoreData.sign
           });
 
           groupAbility.proficient ||= ability.proficient > 0;
-
-          groupAbility.save = Math.max(
-            groupAbility.save,
-            ability.save.value,
-          );
         },
       );
     }

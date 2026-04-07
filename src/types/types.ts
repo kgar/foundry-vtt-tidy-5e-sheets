@@ -1489,6 +1489,8 @@ export type GroupMemberAbilityContext = {
   /** Absolute value of save as a string. */
   saveValue: string;
   score: number;
+  scoreValue: string;
+  scoreSign: string;
 };
 
 export type GroupAbility = {
@@ -1497,7 +1499,8 @@ export type GroupAbility = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
-  save: number;
+  saveHigh: GroupSkillModContext;
+  saveLow: GroupSkillModContext;
 } & MeasurableEmphasizable<GroupMemberAbilityContext>;
 
 export type GroupTraitBase<TValue = string> = {

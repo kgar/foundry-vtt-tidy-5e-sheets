@@ -562,7 +562,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     return false;
   }
 
-  onRollSavingThrow(options: { ability: string }) {
+  onRollSavingThrow(options: { ability: string; event: Event }) {
     // TODO: Supply hook for overriding
 
     this.rollSavingThrow(options);
