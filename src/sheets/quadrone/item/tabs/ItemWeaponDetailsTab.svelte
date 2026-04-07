@@ -76,7 +76,18 @@
     config={{ id: `${appId}-mastery`, value: context.source.mastery }}
     choices={context.config.weaponMasteries}
     labelAttr="label"
-  />
+  >
+    {#snippet children()}
+      {@const reference =
+        CONFIG.DND5E.weaponMasteries[context.source.mastery]?.reference}
+
+      {#if reference}
+        {#await foundry.applications.ux.TextEditor.enrichHTML(`@UUID[${reference}]`) then html}
+          {@html html}
+        {/await}
+      {/if}
+    {/snippet}
+  </FormGroup>
 
   <!-- Weapon Properties -->
   <div class="form-group stacked weapon-properties checkbox-grid">

@@ -2759,31 +2759,15 @@ export type CONFIG = {
       mar: string;
     };
     weaponMasteries: {
-      cleave: {
-        label: string;
-      };
-      graze: {
-        label: string;
-      };
-      nick: {
-        label: string;
-      };
-      push: {
-        label: string;
-      };
-      sap: {
-        label: string;
-      };
-      slow: {
-        label: string;
-      };
-      topple: {
-        label: string;
-      };
-      vex: {
-        label: string;
-      };
-    };
+      cleave: WeaponMasteryConfig;
+      graze: WeaponMasteryConfig;
+      nick: WeaponMasteryConfig;
+      push: WeaponMasteryConfig;
+      sap: WeaponMasteryConfig;
+      slow: WeaponMasteryConfig;
+      topple: WeaponMasteryConfig;
+      vex: WeaponMasteryConfig;
+    } & Record<string, WeaponMasteryConfig>;
     weaponProficienciesMap: {
       simpleM: string;
       simpleR: string;
@@ -5575,3 +5559,8 @@ type WeightUnitConfig = {
   conversion: number;
   type: string;
 };
+
+type WeaponMasteryConfig = {
+  label: string;
+  reference: string | undefined;
+}

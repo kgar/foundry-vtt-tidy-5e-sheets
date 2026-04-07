@@ -851,6 +851,7 @@
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
   "TIDY5E.Reset": "Reset",
+  "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
   "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Assigned Crew",
