@@ -859,13 +859,13 @@ export const FoundryAdapter = {
       );
 
     if (manager.steps.length) {
-      (item.actor ?? item).sheet._renderChild(manager);
+      item.sheet._renderChild(manager);
     }
   },
   editAdvancement(advancementItemId: string, item: Item5e) {
     const advancement = item.system.advancement.get(advancementItemId);
 
-    return (item.actor ?? item).sheet._renderChild(
+    return item.sheet._renderChild(
       new advancement.constructor.metadata.apps.config(advancement),
     );
   },
