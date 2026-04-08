@@ -280,7 +280,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         actor.system.attributes.movement
       ).forEach(([key, speed]) => {
         const movementType = CONFIG.DND5E.movementTypes[key];
-        if (typeof speed !== 'number' || speed <= 0 || !movementType) {
+        if (typeof speed !== 'number' || speed <= 0 || !movementType || movementType.hidden) {
           return;
         }
 
