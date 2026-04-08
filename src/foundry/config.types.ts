@@ -3636,7 +3636,7 @@ export type CONFIG = {
       }
     >;
     movementTypes: {
-      [k in 'walk' | 'burrow' | 'climb' | 'fly' | 'swim']: MovementTypeConfig;
+      [k in 'walk' | 'burrow' | 'climb' | 'fly' | 'swim' | 'jump']: MovementTypeConfig;
     } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
@@ -5555,6 +5555,7 @@ type MovementTypeConfig = {
   label: string;
   walkFallback?: boolean;
   travel?: string;
+  hidden?: boolean;
 };
 
 type WeightUnitConfig = {
