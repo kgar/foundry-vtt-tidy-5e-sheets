@@ -269,21 +269,6 @@ Hooks.once('setup', async () => {
 });
 
 function registerCustomTidyRollRequests() {
-  CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_TOOL_KEY] ??= async (
-    actor,
-    request,
-    config,
-    { event } = {}
-  ) => {
-    const data = {};
-    foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
-      actorUuid: actor.uuid,
-      requestId: request.id,
-    });
-    const [roll] = (await actor.rollToolCheck({ ...config, event }, {}, { data })) ?? [];
-    return roll?.parent ?? null;
-  };
-
   CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_ABILITY_KEY] ??= async (
     actor,
     request,

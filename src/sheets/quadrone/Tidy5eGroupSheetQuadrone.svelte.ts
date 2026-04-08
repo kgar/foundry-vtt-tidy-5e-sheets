@@ -13,7 +13,6 @@ import type {
   GroupTraits,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
-  SkillToolRollProcessConfiguration,
   TravelPaceConfigEntry,
 } from 'src/types/types';
 import type {
@@ -471,53 +470,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     }
 
     this.actor.rollSkill(options);
-  }
-
-  onRollTool(options: SkillToolRollProcessConfiguration) {
-    // TODO: Supply hook for overriding
-
-    this.rollTool(options);
-  }
-
-  async rollTool(config: Partial<SkillToolRollProcessConfiguration>) {
-    if (!config.tool) return;
-    const toolConfig = CONFIG.DND5E.tools[config.tool];
-    const ability = config.ability ?? toolConfig?.ability ?? '';
-    const toolLabel = dnd5e.documents.Trait.getBaseItem(toolConfig?.id ?? '', {
-      indexOnly: true,
-    }).name;
-
-    const abilityLabel = CONFIG.DND5E.abilities[ability]?.label ?? '';
-
-    await foundry.documents.ChatMessage.implementation.create({
-      flavor: FoundryAdapter.localize('DND5E.SkillPromptTitle', {
-        skill: toolLabel,
-        ability: abilityLabel,
-      }),
-      speaker: ChatMessage.getSpeaker({
-        actor: this.actor,
-        alias: this.actor.name,
-      }),
-      system: {
-        button: {
-          icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize('DND5E.SkillRoll', {
-            skill: toolLabel,
-            ability: abilityLabel,
-          }),
-        },
-        data: { ...config },
-        handler: CONSTANTS.ROLL_REQUEST_TOOL_KEY,
-        targets: this.actor.system.members.flatMap(
-          ({ actor }: { actor: Actor5e }) => {
-            if (actor.system.tools) return { actor: actor.uuid };
-            return [];
-          },
-        ),
-      },
-      type: 'request',
-    });
-    return false;
   }
 
   onRollAbility(options: { ability: string; event: Event }) {
