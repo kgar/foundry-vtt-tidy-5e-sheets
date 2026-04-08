@@ -6,7 +6,7 @@ import { TidyHooks } from 'src/api';
 
 export function configureSkillRollContextMenu(
   element: HTMLElement,
-  app: Tidy5eGroupSheetQuadrone | Tidy5eEncounterSheetQuadrone,
+  app: { document: any },
 ) {
   const skillKey = element.closest<HTMLElement>('[data-key]')?.dataset.key;
 
@@ -30,7 +30,7 @@ export function configureSkillRollContextMenu(
  * @returns           Context menu options.
  */
 export function getSkillRollContextOptions(
-  app: Tidy5eGroupSheetQuadrone | Tidy5eEncounterSheetQuadrone,
+  app: { document: any },
   skillKey: string,
 ): ContextMenuEntry[] {
   const skill = CONFIG.DND5E.skills[skillKey ?? ''];
@@ -46,11 +46,11 @@ export function getSkillRollContextOptions(
             skill: skill.label,
           }),
           icon: skill.ability === abilityKey ? defaultIconHtml : undefined,
-          callback: (args) =>
+          callback: (_target, event) =>
             app.document.rollSkill({
               skill: skillKey,
               ability: abilityKey,
-              event: args?.event,
+              event: event,
             }),
           group: skill.ability === abilityKey ? 'primary' : 'secondary',
         }) satisfies ContextMenuEntry,

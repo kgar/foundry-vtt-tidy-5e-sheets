@@ -46,11 +46,11 @@ function getGroupMemberContextOptions(
             skill: skill.label,
           }),
           icon: skill.ability === abilityKey ? defaultIconHtml : undefined,
-          callback: (args) =>
+          callback: (_target, event) =>
             app.onRollSkill({
               skill: skillKey,
               ability: abilityKey,
-              event: args?.event,
+              event: event,
             }),
           group: skill.ability === abilityKey ? 'primary' : 'secondary',
         }) satisfies ContextMenuEntry,

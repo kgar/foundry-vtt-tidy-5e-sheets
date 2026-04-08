@@ -1,15 +1,12 @@
 import type { CONSTANTS } from 'src/constants';
 
-export type ContextMenuCallbackArgs = {
-  event: PointerEvent,
-  target: HTMLElement
-}
+export type ContextMenuEntryCallback = (target: HTMLElement, event?: PointerEvent /* generation < 14 ; drop the ? when >= 14 */) => void;
 
 export type ContextMenuEntry = {
   name?: string;
   icon?: string;
   group?: string;
-  callback?: (args: ContextMenuCallbackArgs) => void;
+  callback?: ContextMenuEntryCallback;
   condition?: (target: HTMLElement) => void;
 };
 
