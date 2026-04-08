@@ -7,6 +7,7 @@ export type ContextMenuEntry = {
   icon?: string;
   group?: string;
   callback?: ContextMenuEntryCallback;
+  classes?: string;
   condition?: (target: HTMLElement) => void;
 };
 

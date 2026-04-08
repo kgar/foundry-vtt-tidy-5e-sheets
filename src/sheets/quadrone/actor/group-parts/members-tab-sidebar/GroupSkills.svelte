@@ -85,8 +85,8 @@
         >
           <button
             type="button"
-            data-action="showContextMenu"
-            data-target-selector="[data-context-menu]"
+            data-action={FoundryAdapter.userIsGm() ? "showContextMenu" : undefined}
+            data-target-selector={FoundryAdapter.userIsGm() ? "[data-context-menu]" : undefined}
             class="button button-borderless skill-ability font-label-medium"
           >
             {skill.ability}
@@ -94,8 +94,9 @@
           <button
             type="button"
             class="button button-borderless use-ability-roll-button skill"
-            onclick={(event) =>
-              context.sheet.onRollSkill({ skill: skill.key, event })}
+            onclick={(event) => {
+              FoundryAdapter.userIsGm() ? context.sheet.onRollSkill({ skill: skill.key, event }) : undefined;
+            }}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
             disabled={!context.owner}
           >

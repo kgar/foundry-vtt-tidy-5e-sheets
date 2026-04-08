@@ -35,8 +35,6 @@ function getGroupMemberContextOptions(
 ): ContextMenuEntry[] {
   const skill = CONFIG.DND5E.skills[skillKey ?? ''];
 
-  const defaultIconHtml = `<i class="fa-solid fa-chess-queen color-text-gold-emphasis" aria-label=${FoundryAdapter.localize('DND5E.Default')} data-tooltip=""></i>`;
-
   const options: ContextMenuEntry[] = Object.entries(CONFIG.DND5E.abilities)
     .map(
       ([abilityKey, ability]) =>
@@ -45,13 +43,13 @@ function getGroupMemberContextOptions(
             ability: ability.label,
             skill: skill.label,
           }),
-          icon: skill.ability === abilityKey ? defaultIconHtml : undefined,
           callback: (_target, event) =>
             app.onRollSkill({
               skill: skillKey,
               ability: abilityKey,
               event: event,
             }),
+          classes: skill.ability === abilityKey ? undefined : 'color-text-lighter',
           group: skill.ability === abilityKey ? 'primary' : 'secondary',
         }) satisfies ContextMenuEntry,
     )
