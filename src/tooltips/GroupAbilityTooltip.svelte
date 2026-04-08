@@ -42,8 +42,6 @@
     ),
   );
 
-  $inspect(ability);
-
   export async function tryShow(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     hoveredAbility: GroupAbility,
