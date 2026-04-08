@@ -1479,12 +1479,17 @@ export const FoundryAdapter = {
       ];
     return Object.entries(CONFIG.DND5E.movementTypes).reduce<
       Record<string, MovementInfo>
-    >((obj, [k, config]) => {
-      const value = movement[k];
-      if (value)
-        obj[k] = { label: config.label, value, unit: units.abbreviation };
-      return obj;
-    }, {} satisfies Record<string, MovementInfo>);
+    >(
+      (obj, [k, config]) => {
+        if (!config.hidden) {
+          const value = movement[k];
+          if (value)
+            obj[k] = { label: config.label, value, unit: units.abbreviation };
+        }
+        return obj;
+      },
+      {} satisfies Record<string, MovementInfo>,
+    );
   },
   getSensesInfo(senses: any): Record<string, SenseInfo> {
     const units =
