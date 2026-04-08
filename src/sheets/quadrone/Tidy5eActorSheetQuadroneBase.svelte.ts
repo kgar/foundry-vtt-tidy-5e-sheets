@@ -859,10 +859,11 @@ export function Tidy5eActorSheetQuadroneBase<
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
         .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, config]) => {
-          if (excludeSpeed(key)) {
+          if (excludeSpeed(key) || config.hidden) {
             return acc;
           }
-          if(systemMovement[key] === 0) {
+          
+          if (systemMovement[key] === 0) {
             return acc;
           }
 
