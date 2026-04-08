@@ -23,12 +23,6 @@ export function configureGroupSkillRollContextMenu(
   );
 }
 
-/**
- * Prepare an array of context menu options which are available for a member of a group.
- * @param group    The group for which the context menu is activated.
- * @param actor    The actor for whom the context menu is activate.
- * @returns        Context menu options.
- */
 function getGroupMemberContextOptions(
   app: Tidy5eGroupSheetQuadrone | Tidy5eEncounterSheetQuadrone,
   skillKey: string,
