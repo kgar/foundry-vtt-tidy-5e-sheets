@@ -251,6 +251,93 @@
       }
     }
 
+    /* NPC Habitat and Treasure Blocks */
+    .habitat-treasure {
+      margin-top: var(--t5e-size-1x);
+      padding: 0 var(--t5e-size-1x) var(--t5e-size-halfx);
+      border-block-start: 0.0625rem solid var(--t5e-color-gold);
+      background-color: var(--t5e-component-card-lighter);
+      display: table;
+
+      p {
+        margin: var(--t5e-size-1x) 0;
+      }
+    }
+
+    /* Big Quotes */
+    .quote-lg {
+      --t5e-quote-color: var(--t5e-theme-color-default);
+      --size: 50%;
+      --side-gutter: 10%;
+      --vert-gutter: 1rem;
+      --edge: 1rem;
+      --overlap: calc(-0.6 * var(--edge));
+      --w: var(--t5e-size-halfx);
+      --octogon: polygon(
+        0 70%,
+        15% 100%,
+        85% 100%,
+        100% 70%,
+        100% 30%,
+        85% 0,
+        15% 0,
+        0 30%,
+        var(--w) calc(30% + var(--w) / 2),
+        15% var(--w),
+        85% var(--w),
+        calc(100% - var(--w)) calc(30% + var(--w) / 2),
+        calc(100% - var(--w)) calc(70% - var(--w) / 2),
+        85% calc(100% - var(--w)),
+        15% calc(100% - var(--w)),
+        var(--w) calc(70% - var(--w) / 2),
+        var(--w) calc(30% + var(--w) / 2),
+        0 30%
+      );
+
+      position: relative;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      justify-self: center;
+
+      inline-size: var(--size);
+      margin: var(--edge);
+      border: calc(2 * var(--w)) solid var(--t5e-quote-color);
+      border-radius: 2em;
+
+      font-size: small;
+      font-size-adjust: cap-height 0.66;
+      text-wrap: pretty;
+
+      box-sizing: border-box;
+      color: var(--t5e-color-text-default);
+      background: var(--t5e-component-card-darker);
+
+      break-inside: avoid;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: var(--overlap);
+        background: var(--t5e-quote-color);
+        clip-path: var(--octogon);
+      }
+
+      > p {
+        margin: 0 var(--side-gutter);
+        &:first-of-type { margin-block-start: var(--vert-gutter); }
+        &:last-of-type { margin-block-end: var(--vert-gutter); }
+      }
+
+      .quote-author {
+        margin-inline-start: calc(10% + var(--side-gutter));
+        text-wrap: pretty;
+        text-indent: 1em;
+        text-align: end;
+        justify-self: end;
+      }
+    }
+
     hr {
       margin-top: calc(var(--t5e-size-1x) + var(--t5e-size-halfx));
       background-image: linear-gradient(to right,
@@ -498,6 +585,11 @@
             var(--t5e-color-palette-gold-56) 30%,
             var(--t5e-color-palette-gold-56) 70%,
             transparent 95%);
+      }
+
+      .quote-lg {
+        --t5e-quote-color: var(--t5e-color-gold);
+        border-color: var(--t5e-quote-color);
       }
 
       .secret {
