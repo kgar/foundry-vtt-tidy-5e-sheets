@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
+  GroupAbility,
   GroupMemberQuadroneContext,
   GroupMemberSection,
   GroupMembersQuadroneContext,
@@ -159,6 +160,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   async _prepareMemberDependentContext(
     actorContext: ActorSheetQuadroneContext
   ): Promise<{
+    abilities: GroupAbility[];
     members: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
@@ -216,6 +218,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       skilled: [],
     };
 
+    let abilities = this._getMemberGroupAbilityMap();
     let skills = this._getMemberGroupSkillMap();
 
     let languages = new Map<string, MeasurableGroupTrait<number>>();
@@ -307,6 +310,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
 
       if (prepareCreatureInformation) {
+        // Abilities
+        this._prepareMemberAbilities(actor, abilities);
+
         // Skills
         skilled.get(actor.type)?.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
@@ -352,6 +358,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       }, [])
     );
 
+    let groupAbilities = [...abilities.values()];
     let groupSkills = [...skills.values()].toSorted((a, b) =>
       a.name.localeCompare(b.name, game.i18n.lang)
     );
@@ -359,6 +366,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     membersContext.sections = [...sections.values()];
 
     return {
+      abilities: groupAbilities,
       members: membersContext,
       skills: groupSkills,
       traits: {
@@ -464,6 +472,100 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     this.actor.rollSkill(options);
   }
 
+  onRollAbility(options: { ability: string; event: Event }) {
+    if (
+      TidyHooks.tidy5eSheetsPrePromptGroupAbilityRoll(this, options) === false
+    ) {
+      return;
+    }
+
+    this.rollAbility(options);
+  }
+
+  async rollAbility(config: { ability: string }) {
+    if (!config.ability) {
+      return;
+    }
+
+    const abilityConfig = CONFIG.DND5E.abilities[config.ability];
+
+    const abilityLabel = abilityConfig?.label ?? '';
+
+    await foundry.documents.ChatMessage.implementation.create({
+      flavor: FoundryAdapter.localize('DND5E.AbilityPromptTitle', {
+        ability: abilityLabel,
+      }),
+      speaker: ChatMessage.getSpeaker({
+        actor: this.actor,
+        alias: this.actor.name,
+      }),
+      system: {
+        button: {
+          icon: 'fa-solid fa-dice-d20',
+          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, { ability: abilityLabel }),
+        },
+        data: { ...config },
+        handler: CONSTANTS.ROLL_REQUEST_ABILITY_KEY,
+        targets: this.actor.system.members.flatMap(
+          ({ actor }: { actor: Actor5e }) => {
+            if (actor.system.abilities) return { actor: actor.uuid };
+            return [];
+          },
+        ),
+      },
+      type: 'request',
+    });
+    return false;
+  }
+
+  onRollSavingThrow(options: { ability: string; event: Event }) {
+    if (
+      TidyHooks.tidy5eSheetsPrePromptGroupSavingThrowRoll(this, options) === false
+    ) {
+      return;
+    }
+
+    this.rollSavingThrow(options);
+  }
+
+  async rollSavingThrow(config: { ability: string }) {
+    if (!config.ability) {
+      return;
+    }
+
+    const abilityConfig = CONFIG.DND5E.abilities[config.ability];
+
+    const abilityLabel = abilityConfig?.label ?? '';
+
+    await foundry.documents.ChatMessage.implementation.create({
+      flavor: FoundryAdapter.localize('DND5E.SavePromptTitle', {
+        ability: abilityLabel,
+      }),
+      speaker: ChatMessage.getSpeaker({
+        actor: this.actor,
+        alias: this.actor.name,
+      }),
+      system: {
+        button: {
+          icon: 'fa-solid fa-dice-d20',
+          label: FoundryAdapter.localize('DND5E.SavingThrowRoll', {
+            ability: abilityLabel,
+          }),
+        },
+        data: { ...config },
+        handler: CONSTANTS.ROLL_REQUEST_SAVE_KEY,
+        targets: this.actor.system.members.flatMap(
+          ({ actor }: { actor: Actor5e }) => {
+            if (actor.system.abilities) return { actor: actor.uuid };
+            return [];
+          },
+        ),
+      },
+      type: 'request',
+    });
+    return false;
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
@@ -495,8 +597,3 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     return await super.close(options);
   }
 }
-
-type SupportedActorType =
-  | typeof CONSTANTS.SHEET_TYPE_CHARACTER
-  | typeof CONSTANTS.SHEET_TYPE_NPC
-  | typeof CONSTANTS.SHEET_TYPE_VEHICLE;

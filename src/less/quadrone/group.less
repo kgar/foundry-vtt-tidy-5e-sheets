@@ -143,22 +143,29 @@
   }
 
   /* Sidebar skills */
-  .skill-list .skill-list-item {
-    &.member-proficient .skill-ability {
+  .skill-list .skill-list-item,
+  .ability-list .ability-list-item {
+    .skill-ability {
+      color: var(--t5e-color-text-gold-emphasis);
+    }
+
+    &.member-proficient :is(.skill-ability, .ability) {
       color: var(--t5e-member-color-hover);
     }
 
     &.member-unproficient {
 
       .skill-ability,
-      .skill {
+      .skill,
+      .ability {
         opacity: 0.5;
       }
 
     }
 
-    .skill {
+    .skill, .ability {
       flex: 1 1 auto;
+      max-width: unset;
     }
   }
 
@@ -399,14 +406,16 @@
       }
 
       .skill-measure,
-      .skill-measure-header {
+      .skill-measure-header,
+      .ability-measure,
+      .ability-measure-header {
         width: 2.5rem;
         justify-content: flex-end;
         text-align: right;
         margin-left: var(--t5e-size-1x);
       }
 
-      .skill-measure-header {
+      .skill-measure-header, .ability-measure-header {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -515,7 +524,7 @@
   }
 
   &.theme-light {
-    .skill-list .skill-list-item {
+    .skill-list .skill-list-item, .ability-list .ability-list-item {
       &.member-proficient .skill-ability {
         color: var(--t5e-member-color-background);
         text-shadow: 0 0 0.25rem oklch(from var(--t5e-member-color-hover) l c h / 0.5);

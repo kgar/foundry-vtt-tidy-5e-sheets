@@ -1,12 +1,13 @@
-import { CONSTANTS } from 'src/constants';
 import type { CharacterFavoriteType } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
+import { getSkillRollContextOptions } from './tidy5e-skill-roll-context-menu';
 
 export function configureKeyedFavoriteContextMenu(
   element: HTMLElement,
-  app: Tidy5eCharacterSheetQuadrone
+  app: Tidy5eCharacterSheetQuadrone & { document: any }
 ) {
   if (app.actor.system.isGroup) {
     return;
@@ -44,6 +45,11 @@ export function configureKeyedFavoriteContextMenu(
 
   let hasFavorite = app.actor.system.hasFavorite?.(favorite.id) ?? false;
 
+  let skillRolls: ContextMenuEntry[] = [];
+  if (type === 'skill' && key) {
+    skillRolls = getSkillRollContextOptions(app, key);
+  }
+
   ui.context.menuItems = [
     {
       name: 'TIDY5E.ContextMenuActionEdit',
@@ -64,5 +70,6 @@ export function configureKeyedFavoriteContextMenu(
       },
       condition: () => !FoundryAdapter.isLockedInCompendium(app.actor),
     },
+    ...skillRolls
   ];
 }

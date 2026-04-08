@@ -1,5 +1,7 @@
+const moduleId = 'tidy5e-sheet';
+
 export const CONSTANTS = {
-  MODULE_ID: 'tidy5e-sheet',
+  MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
   SYSTEM_FLAG_ADVANCEMENT_ORIGIN: 'advancementOrigin',
   SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN: 'flags.dnd5e.advancementOrigin',
@@ -117,12 +119,14 @@ export const CONSTANTS = {
   CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER: 'encounter-member',
   CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER: 'encounter-placeholder',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
-  CONTEXT_MENU_TYPE_VEHICLE_MEMBER: 'vehicle-member',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
+  CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL: 'group-skill-roll',
+  CONTEXT_MENU_TYPE_VEHICLE_MEMBER: 'vehicle-member',
   CONTEXT_MENU_TYPE_KEYED_FAVORITE: 'keyed-favorite',
   CONTEXT_MENU_TYPE_ITEMS: 'items',
   CONTEXT_MENU_TYPE_ITEM_ADVANCEMENT: 'item-advancement',
   CONTEXT_MENU_TYPE_SECTION: 'section',
+  CONTEXT_MENU_TYPE_SKILL_ROLL: 'skill-roll',
   CHARACTER_FEAT_SECTION_BACKGROUND: 'background',
   CHARACTER_FEAT_SECTION_CLASSES: 'classes',
   CHARACTER_FEAT_SECTION_ACTIVE: 'active',
@@ -148,6 +152,8 @@ export const CONSTANTS = {
   PROFICIENCY_PROFICIENT: 1,
   PROFICIENCY_EXPERTISE: 2,
   RENDER_CONTEXT_UPDATE_USER: 'updateUser',
+  ROLL_REQUEST_ABILITY_KEY: `${moduleId}.ability`,
+  ROLL_REQUEST_SAVE_KEY: `${moduleId}.save`,
   SECTION_ORGANIZATION_ACTION: 'action',
   SECTION_ORGANIZATION_ORIGIN: 'origin',
   TAB_OPTION_CLASS: 'tab-option',
@@ -242,6 +248,12 @@ export const CONSTANTS = {
   /** The attribute which indicates a particular part of a sheet. */
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
+    /** The container for one ability's information and potentially interactive elements. */
+    ABILITY_CONTAINER: 'abilities-container',
+
+    /** A repeating list of ability information and potentially interactive elements. */
+    ABILITIES_LIST: 'abilities-list',
+        
     /** An interactable control that can open configuration settings for a target ability. */
     ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
 

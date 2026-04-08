@@ -5451,6 +5451,10 @@ export type CONFIG = {
       liter: VolumeUnitConfig;
     } & Record<string, VolumeUnitConfig>;
     ENCOUNTER_DIFFICULTY: [low: number, medium: number, high: number][];
+    requests: {
+      rest: RequestCallback5e;
+      skill: RequestCallback5e;
+    } & Record<string, RequestCallback5e>;
   };
   ux: any;
 };
@@ -5561,6 +5565,20 @@ type WeightUnitConfig = {
   type: string;
 };
 
+type RequestCallback5e = (
+  actor: Actor5e,
+  request: ChatMessage5e,
+  config: Record<string, any>,
+  options: RequestOptions5e,
+) => Promise<ChatMessage5e>;
+
+type ChatMessage5e = {
+  // TODO: Fill out these types maybe one day...
+} & Record<string, any>;
+
+type RequestOptions5e = {
+  event?: Event;
+}
 type WeaponMasteryConfig = {
   label: string;
   reference: string | undefined;

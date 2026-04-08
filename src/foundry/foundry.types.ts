@@ -1,11 +1,14 @@
 import type { CONSTANTS } from 'src/constants';
 
+export type ContextMenuEntryCallback = (target: HTMLElement, event?: PointerEvent /* generation < 14 ; drop the ? when >= 14 */) => void;
+
 export type ContextMenuEntry = {
   name?: string;
   icon?: string;
   group?: string;
-  callback?: ($entryElement: any) => void;
-  condition?: ($entryElement: any) => void;
+  callback?: ContextMenuEntryCallback;
+  classes?: string;
+  condition?: (target: HTMLElement) => void;
 };
 
 /**

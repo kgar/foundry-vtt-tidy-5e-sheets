@@ -1,9 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { formatAsModifier, getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
+  import { getModifierData } from 'src/utils/formatting';
   import type { Actor5e } from 'src/types/types';
   import type { PortraitShape } from 'src/theme/theme-quadrone.types';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -18,7 +18,7 @@
 
   let tooltip: HTMLElement;
 
-  type GroupSkill = {
+  type GroupAbility = {
     key: string;
     label: string;
     members: {
@@ -28,29 +28,29 @@
     }[];
   };
 
-  let skill: GroupSkill = $state({
+  let ability: GroupAbility = $state({
     key: '',
     label: '',
     members: [],
   });
 
   let highestScore = $derived(
-    skill.members.reduce(
+    ability.members.reduce(
       (prev, curr) =>
-        Math.max(prev, curr.actor.system.skills[skill.key]?.total),
+        Math.max(prev, curr.actor.system.abilities?.[ability.key]?.mod),
       0,
     ),
   );
 
   export async function tryShow(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-    hoveredSkill: GroupSkill,
+    hoveredAbility: GroupAbility,
   ): Promise<any> {
-    if (!hoveredSkill.members.length) {
+    if (!hoveredAbility.members.length) {
       return;
     }
 
-    skill = hoveredSkill;
+    ability = hoveredAbility;
 
     const target = event?.currentTarget;
 
@@ -62,55 +62,67 @@
 
 <div class="hidden">
   <div bind:this={tooltip} class="document-list-summary-tooltip">
-    <h3 class="font-title-medium color-text-default">{skill.label}</h3>
+    <h3 class="font-title-medium color-text-default">{ability.label}</h3>
     <hr />
-    <ul>
-      <li class="group-skill-grid group-tooltip-header">
+    <ul class="group-ability-grid">
+      <li class="group-tooltip-header">
         <div class=""></div>
         <div class=""></div>
         <div class="text-align-right font-label-small color-text-lightest">
           {localize('DND5E.AbilityModifierShort')}
         </div>
         <div class="text-align-right font-label-small color-text-lightest">
-          {localize('DND5E.Passive')}
+          <!-- (Score) -->
+        </div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.SavingThrowShort')}
         </div>
         <div class="text-align-right font-label-small color-text-lightest">
           {localize('TIDY5E.AbbrProficiency')}
         </div>
       </li>
-      {#each skill.members as member}
-        {@const score = member.actor.system.skills[skill.key]?.total}
-        {@const modifier = getModifierData(score)}
-        <li class="group-skill-grid">
-          <!-- TODO add token shape to class list  -->
+      {#each ability.members as member}
+        {@const modScore = member.actor.system.abilities?.[ability.key]?.mod}
+        {@const mod = getModifierData(modScore)}
+        {@const saveScore =
+          member.actor.system.abilities?.[ability.key]?.save.value}
+        {@const save = getModifierData(saveScore)}
+
+        <li>
           <div
-            class={['item-image', member.portrait?.shape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE]}
+            class={[
+              'item-image',
+              member.portrait?.shape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+            ]}
             style="background-image: url('{member.actor.img}')"
           ></div>
           <div class="item-name truncate">{member.actor.name}</div>
           <div class="text-align-right">
-            {#if score === highestScore}
+            {#if modScore === highestScore}
               <i
                 class="fa-solid fa-award color-text-gold-emphasis highlighted"
                 style:color={member.highlightColor}
               ></i>
             {/if}
-            <span class="font-body-medium color-text-lighter"
-              >{modifier.sign}</span
+            <span class="font-body-medium color-text-lighter">{mod.sign}</span>
+            <span class="font-label-medium color-text-default">{mod.value}</span
             >
+          </div>
+          <div class="text-align-right">
+            <span class="font-label-medium color-text-lightest" style="margin-left: 6px;"
+              >({member.actor.system.abilities[ability.key]?.value})</span
+            >
+          </div>
+          <div class="text-align-right">
+            <span class="font-body-medium color-text-lighter">{save.sign}</span>
             <span class="font-label-medium color-text-default"
-              >{modifier.value}</span
+              >{save.value}</span
             >
           </div>
-          <div class="text-align-right">
-            <span class="font-label-medium color-text-lighter"
-              >{member.actor.system.skills[skill.key]?.passive}</span
-            >
-          </div>
-          <div class="text-align-right">
+          <div class="proficiency-pip-container">
             <i
               class="{FoundryAdapter.getProficiencyIconClass(
-                member.actor.system.skills[skill.key]?.proficient,
+                member.actor.system.abilities[ability.key]?.proficient,
               )} fa-fw"
             ></i>
           </div>

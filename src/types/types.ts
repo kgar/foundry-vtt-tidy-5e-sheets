@@ -1101,7 +1101,7 @@ export type ActorItemQuadroneContext = {
   subtitle?: string;
   totalWeight?: number;
   // TODO: Merge more universal item context here before PR
-}
+};
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   actor: { sheet: TSheet } & Record<string, any>;
@@ -1363,9 +1363,7 @@ export type CharacterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
-export type ActionItemInclusionMode =
-  | 'usable-and-flag'
-  | 'flag-only';
+export type ActionItemInclusionMode = 'usable-and-flag' | 'flag-only';
 
 export type NpcSheetQuadroneContext = {
   background?: ActorTraitItemContext;
@@ -1456,9 +1454,11 @@ export type MeasurableEmphasizable<TValue> = {
   identifiers: Map<string, TValue>;
 };
 
+// TODO: are these even being used? If not, trash em. Else, make separate one for abilities
 export type GroupSkillModContext = {
   total: number;
   sign: string;
+  /** Absolute value of total as a string. */
   value: string;
 };
 
@@ -1477,6 +1477,32 @@ export type GroupSkill = {
   passive: number;
   reference: string | undefined;
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
+
+export type GroupMemberAbilityContext = {
+  mod: number;
+  modSign: string;
+  /** Absolute value of mod as a string. */
+  modValue: string;
+  proficient: number;
+  save: number;
+  saveSign: string;
+  /** Absolute value of save as a string. */
+  saveValue: string;
+  score: number;
+  /** Absolute value of an ability score as a string. */
+  scoreValue: string;
+  scoreSign: string;
+};
+
+export type GroupAbility = {
+  name: string;
+  key: string;
+  proficient: boolean;
+  high: GroupSkillModContext;
+  low: GroupSkillModContext;
+  saveHigh: GroupSkillModContext;
+  saveLow: GroupSkillModContext;
+} & MeasurableEmphasizable<GroupMemberAbilityContext>;
 
 export type GroupTraitBase<TValue = string> = {
   /** Optional key for traits that leverage keys. */
@@ -1517,7 +1543,21 @@ export type GroupSkillRollProcessConfiguration = {
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
 };
 
+export type SkillToolRollProcessConfiguration = {
+  ability: string;
+  bonus: string;
+  item: Item5e;
+  skill: string;
+  tool: string;
+  page: TravelPaceConfig;
+} & D20RollProcessConfiguration;
+
+type D20RollProcessConfiguration = {
+  // TODO: Type this out if it's actually needed at some point.
+};
+
 export type GroupSheetQuadroneContext = {
+  abilities: GroupAbility[];
   enriched: {
     description: {
       full: string;

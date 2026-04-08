@@ -21,10 +21,10 @@
     showFiligree?: boolean;
   };
 
-  let { 
-    defaultExpansionState = true, 
-    showFiligree = true, 
-    showProficiency = true 
+  let {
+    defaultExpansionState = true,
+    showFiligree = true,
+    showProficiency = true,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -103,11 +103,15 @@
               />
             </SelectQuadrone>
           {:else}
-            <span
-              class="skill-ability font-label-medium color-text-gold-emphasis"
+            <button
+              type="button"
+              class="button button-borderless skill-ability font-label-medium color-text-gold-emphasis"
+              data-action="showContextMenu"
+              data-target-selector="[data-context-menu]"
+              data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_SKILL_ROLL}
             >
               {skill.abbreviation}
-            </span>
+            </button>
           {/if}
           <button
             type="button"

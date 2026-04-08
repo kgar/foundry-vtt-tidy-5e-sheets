@@ -267,6 +267,62 @@ export class TidyHooks {
   }
 
   /**
+   * The group skill roll context menu has established its options and is about to show.
+   * @param group             The affected group document instance.
+   * @param skill             The key for the corresponding skill. Use it to look up the skill in CONFIG.DND5E.
+   * @param contextOptions    The menu items for this group member.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.tidy5eSheetsGetGroupSkillRollContextOptions', (group, skill, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetGroupSkillRollContextOptions(
+    group: Group5e,
+    skill: string,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getGroupMemberContextOptions',
+      group,
+      skill,
+      contextOptions
+    );
+  }
+  
+  /**
+   * The actor skill roll context menu has established its options and is about to show.
+   * @param actor             The affected actor.
+   * @param skill             The key for the corresponding skill. Use it to look up the skill in CONFIG.DND5E.
+   * @param contextOptions    The menu items for this actor.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.tidy5eSheetsGetSkillRollContextOptions', (actor, skill, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetSkillRollContextOptions(
+    actor: Actor5e,
+    skill: string,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getGroupMemberContextOptions',
+      actor,
+      skill,
+      contextOptions
+    );
+  }
+
+  /**
    * The vehicle member context menu has established its options and is about to show.
    * This can be for a member with a UUID or an empty slot where a member can go.
    * @param vehicle           The affected group document instance.
@@ -474,6 +530,32 @@ export class TidyHooks {
     context: any
   ): void {
     Hooks.callAll('tidy5e-sheet.prepareSheetContext', document, app, context);
+  }
+
+  /**
+   * A group ability prompt is about to execute.
+   * @param app The sheet application instance.
+   * @param options Options related to the eventual ability roll.
+   * @returns `true` to allow the prompt to continue, `false` to prevent it.
+   */
+  static tidy5eSheetsPrePromptGroupAbilityRoll(
+    app: any,
+    options: { ability: string, event: Event }
+  ) {
+    return Hooks.call('tidy5e-sheet.prePromptGroupAbilityRoll', app, options);
+  }
+
+  /**
+   * A group saving throw prompt is about to execute.
+   * @param app The sheet application instance.
+   * @param options Options related to the eventual saving throw roll.
+   * @returns `true` to allow the prompt to continue, `false` to prevent it.
+   */
+  static tidy5eSheetsPrePromptGroupSavingThrowRoll(
+    app: any,
+    options: { ability: string, event: Event }
+  ) {
+    return Hooks.call('tidy5e-sheet.prePromptGroupSavingThrowRoll', app, options);
   }
 
   /**

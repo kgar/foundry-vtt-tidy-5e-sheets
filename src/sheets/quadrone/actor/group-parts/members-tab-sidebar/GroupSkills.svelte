@@ -57,7 +57,6 @@
     class="skill-list unlist use-ability-list"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
   >
-    <!-- TODO: Prepare data and iterate! -->
     {#each context.skills as skill}
       {#if expanded || skill.proficient}
         {@const memberSkill = skill.identifiers.get(
@@ -74,7 +73,7 @@
             },
           ]}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
-          data-tooltip-direction="UP"
+          data-tooltip-direction="RIGHT"
           data-key={skill.key}
           onmouseover={(ev) =>
             tooltip?.tryShow(ev, {
@@ -82,17 +81,22 @@
               label: skill.name,
               members: context.members.skilled,
             })}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL}
         >
-          <span
-            class="skill-ability font-label-medium color-text-gold-emphasis"
+          <button
+            type="button"
+            data-action={FoundryAdapter.userIsGm() ? "showContextMenu" : undefined}
+            data-target-selector={FoundryAdapter.userIsGm() ? "[data-context-menu]" : undefined}
+            class="button button-borderless skill-ability font-label-medium"
           >
             {skill.ability}
-          </span>
+          </button>
           <button
             type="button"
             class="button button-borderless use-ability-roll-button skill"
-            onclick={(event) =>
-              context.sheet.onRollSkill({ skill: skill.key, event })}
+            onclick={(event) => {
+              FoundryAdapter.userIsGm() ? context.sheet.onRollSkill({ skill: skill.key, event }) : undefined;
+            }}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
             disabled={!context.owner}
           >
