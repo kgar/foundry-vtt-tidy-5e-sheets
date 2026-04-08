@@ -502,7 +502,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       system: {
         button: {
           icon: 'fa-solid fa-dice-d20',
-          label: `TODO: Roll that ${abilityLabel} test`,
+          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, { ability: abilityLabel }),
         },
         data: { ...config },
         handler: CONSTANTS.ROLL_REQUEST_ABILITY_KEY,
