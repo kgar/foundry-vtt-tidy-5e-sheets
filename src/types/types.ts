@@ -1489,6 +1489,7 @@ export type GroupMemberAbilityContext = {
   /** Absolute value of save as a string. */
   saveValue: string;
   score: number;
+  /** Absolute value of an ability score as a string. */
   scoreValue: string;
   scoreSign: string;
 };
