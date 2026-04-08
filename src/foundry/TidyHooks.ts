@@ -533,6 +533,32 @@ export class TidyHooks {
   }
 
   /**
+   * A group ability prompt is about to execute.
+   * @param app The sheet application instance.
+   * @param options Options related to the eventual ability roll.
+   * @returns `true` to allow the prompt to continue, `false` to prevent it.
+   */
+  static tidy5eSheetsPrePromptGroupAbilityRoll(
+    app: any,
+    options: { ability: string, event: Event }
+  ) {
+    return Hooks.call('tidy5e-sheet.prePromptGroupAbilityRoll', app, options);
+  }
+
+  /**
+   * A group saving throw prompt is about to execute.
+   * @param app The sheet application instance.
+   * @param options Options related to the eventual saving throw roll.
+   * @returns `true` to allow the prompt to continue, `false` to prevent it.
+   */
+  static tidy5eSheetsPrePromptGroupSavingThrowRoll(
+    app: any,
+    options: { ability: string, event: Event }
+  ) {
+    return Hooks.call('tidy5e-sheet.prePromptGroupSavingThrowRoll', app, options);
+  }
+
+  /**
    * A group skill prompt is about to execute.
    * @param app The sheet application instance.
    * @param options Options related to the eventual skill roll.

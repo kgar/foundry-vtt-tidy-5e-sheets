@@ -473,7 +473,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   onRollAbility(options: { ability: string; event: Event }) {
-    // TODO: Supply hook for overriding
+    if (
+      TidyHooks.tidy5eSheetsPrePromptGroupAbilityRoll(this, options) === false
+    ) {
+      return;
+    }
 
     this.rollAbility(options);
   }
@@ -515,7 +519,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   onRollSavingThrow(options: { ability: string; event: Event }) {
-    // TODO: Supply hook for overriding
+    if (
+      TidyHooks.tidy5eSheetsPrePromptGroupSavingThrowRoll(this, options) === false
+    ) {
+      return;
+    }
 
     this.rollSavingThrow(options);
   }
