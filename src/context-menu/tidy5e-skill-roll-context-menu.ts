@@ -1,7 +1,5 @@
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
-import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import { TidyHooks } from 'src/api';
 
 export function configureSkillRollContextMenu(
@@ -25,7 +23,7 @@ export function configureSkillRollContextMenu(
 
 /**
  * Prepare an array of context menu options which are available for a member of a group.
- * @param group       The group for which the context menu is activated.
+ * @param aoo         The calling application.
  * @param skillKey    The skill key that corresponds to CONFIG.DND5E.skills.
  * @returns           Context menu options.
  */

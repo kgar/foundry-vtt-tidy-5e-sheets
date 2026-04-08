@@ -23,6 +23,12 @@ export function configureGroupSkillRollContextMenu(
   );
 }
 
+/**
+ * Prepare an array of context entries for group skills rolls.
+ * @param app         The calling application.
+ * @param skillKey    The skill key that corresponds to CONFIG.DND5E.skills.
+ * @returns           Context menu options.
+ */
 function getGroupMemberContextOptions(
   app: Tidy5eGroupSheetQuadrone | Tidy5eEncounterSheetQuadrone,
   skillKey: string,
