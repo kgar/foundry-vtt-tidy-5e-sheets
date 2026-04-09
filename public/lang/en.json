@@ -976,6 +976,7 @@
   "TIDY5E.ConfigureTab.Title": "Configure {tabName}",
   "TIDY5E.DisplayOptions.Title": "Display Options",
   "TIDY5E.DisplayOptionsGlobalDefault.Title": "Global Default Display Options",
+  "TIDY5E.DisplayOptionsActor.Title": "Actor Display Options",
   "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Show container row",
   "TIDY5E.ItemSheet.PactLevelCastLabel": "Cast at {ordinal}",
   "TIDY5E.ItemSheet.FeatureOriginLabel": "Feature Origin",
