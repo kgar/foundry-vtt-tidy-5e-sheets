@@ -4,6 +4,8 @@
   import { onMount, untrack, type Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
 
+  // TODO: There has to be a better way than all this, and perhaps a more performant approach?
+
   type Props = {
     expanded?: boolean;
     children?: Snippet;
