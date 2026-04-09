@@ -115,7 +115,7 @@ export function TidyExtensibleDocumentSheetMixin<
     #focusedInputSelector: string | undefined = '';
 
     async _onChangeForm(formConfig: unknown, event: any) {
-      if ( foundry.utils.isElementInstanceOf(event.target, foundry.applications.elements.HTMLSecretBlockElement) ) {
+      if ( FoundryAdapter.isElementInstanceOf(event.target, foundry.applications.elements.HTMLSecretBlockElement) ) {
         return this._onRevealSecret(event);
       }
 
