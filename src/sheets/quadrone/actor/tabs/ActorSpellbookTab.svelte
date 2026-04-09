@@ -21,6 +21,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+    import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context =
     $derived(
@@ -94,6 +95,19 @@
       settings: [
         SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
       ],
+    },
+    {
+      title: 'TIDY5E.DisplayOptionsActor.Title',
+      settings: [
+        {
+          type: 'boolean',
+          label: 'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+          checked: TidyFlags.includeRitualsInCanCast.get(context.actor),
+          prop: TidyFlags.includeRitualsInCanCast.prop,
+          doc: context.actor,
+          default: false
+        }
+      ]
     },
     {
       title: 'TIDY5E.Utilities.Tools',
