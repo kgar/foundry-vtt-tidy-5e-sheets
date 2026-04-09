@@ -1677,4 +1677,21 @@ export const FoundryAdapter = {
           key: 'gp',
         };
   },
+  // TODO: inline when >= V14
+  isElementInstanceOf(element: HTMLElement, tagOrClass: any) {
+    if (game.release.generation < 14) {
+      if (typeof tagOrClass === 'string') {
+        return element.tagName === tagOrClass.toUpperCase();
+      }
+
+      let proto = element.constructor;
+      do {
+        if (proto.name === tagOrClass.name) return true;
+        proto = Object.getPrototypeOf(proto);
+      } while (proto);
+      return false;
+    }
+
+    return foundry.utils.isElementInstanceOf(element, tagOrClass);
+  },
 };
