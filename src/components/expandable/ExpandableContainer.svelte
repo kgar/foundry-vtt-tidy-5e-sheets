@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { usePerformanceMode } from 'src/settings/settings.svelte';
   import { EventHelper } from 'src/utils/events';
   import { onMount, untrack, type Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
+
+  // TODO: There has to be a better way than all this, and perhaps a more performant approach?
 
   type Props = {
     expanded?: boolean;
@@ -22,19 +25,36 @@
     ...rest
   }: Props = $props();
 
+  // svelte-ignore state_referenced_locally
   let overflowYHidden = $state(!expanded);
   let expandableContainer: HTMLElement;
 
+  // svelte-ignore state_referenced_locally
   let renderContents = $state<boolean>(expanded);
 
+  const usesTransitions = !usePerformanceMode();
+
+  $effect(() => {
+    if (usesTransitions) {
+      return;
+    }
+
+    expanded;
+    onStart();
+    onEnd();
+  });
+
   onMount(() => {
+    if (!usesTransitions) {
+      return;
+    }
     const controller = new AbortController();
 
     expandableContainer.addEventListener(
       'transitionstart',
       (ev) => {
         if (ev.target === expandableContainer) {
-          overflowYHidden = true;
+          onStart();
         }
       },
       {
@@ -47,8 +67,7 @@
       'transitionend',
       (ev) => {
         if (ev.target === expandableContainer) {
-          overflowYHidden = !expanded;
-          renderContents = expanded;
+          onEnd();
         }
       },
       {
@@ -66,7 +85,16 @@
     if (expanded) {
       renderContents = true;
     }
-  })
+  });
+
+  function onStart() {
+    overflowYHidden = true;
+  }
+
+  function onEnd() {
+    overflowYHidden = !expanded;
+    renderContents = expanded;
+  }
 </script>
 
 <div

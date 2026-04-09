@@ -2158,11 +2158,16 @@ export let SettingsProvider: ReturnType<typeof createSettings>;
 
 export type Tidy5eSheetsPerformanceClassToggles = [string, boolean][];
 
-export function getTidyPerformanceSettings(): Tidy5eSheetsPerformanceClassToggles {
-  const performanceModeEnabled =
+export function usePerformanceMode(): boolean {
+  return (
     (SettingsProvider.settings.debug.get() &&
       SettingsProvider.settings.performanceMode.get()) ||
-    foundryCoreSettings.value.performanceMode === 0;
+    foundryCoreSettings.value.performanceMode === 0
+  );
+}
+
+export function getTidyPerformanceSettings(): Tidy5eSheetsPerformanceClassToggles {
+  const performanceModeEnabled = usePerformanceMode();
 
   return [
     ['disable-shadows', performanceModeEnabled],
