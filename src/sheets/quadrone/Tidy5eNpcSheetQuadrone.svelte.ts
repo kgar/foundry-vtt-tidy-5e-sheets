@@ -10,6 +10,7 @@ import type {
   NpcItemQuadroneContext,
   NpcSheetQuadroneContext,
   NpcSpellcastingContext,
+  SpellbookSection,
   SpellcastingClassContext,
   TidyItemSectionBase,
 } from 'src/types/types';
@@ -528,6 +529,24 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         section
       );
     });
+
+    if (context.includeSpellbookInStatblockTab) {
+      const featuresAndSpells: Record<
+        string,
+        FeatureSection | SpellbookSection
+      > = featureSections;
+      context.spellbook.forEach((section) => {
+        const addSpells = !!featuresAndSpells[section.key];
+        
+        const addedOrUpdated = (featuresAndSpells[section.key] ??= {
+          ...section,
+        });
+        
+        if (addSpells) {
+          addedOrUpdated.items.push(...section.items);
+        }
+      });
+    }
 
     context.features = Object.values(featureSections);
 

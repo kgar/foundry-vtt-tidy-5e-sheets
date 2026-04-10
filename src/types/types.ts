@@ -1380,7 +1380,7 @@ export type NpcSheetQuadroneContext = {
     publicBiography: string;
     trait: string;
   };
-  features: FeatureSection[];
+  features: (FeatureSection | SpellbookSection)[];
   gear: ActorTraitContext[];
   habitats: { label: string }[];
   important: boolean;
