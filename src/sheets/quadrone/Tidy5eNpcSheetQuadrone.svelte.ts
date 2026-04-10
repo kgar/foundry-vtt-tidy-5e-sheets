@@ -387,7 +387,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     const featureSections = Object.entries(
       CONFIG.DND5E.activityActivationTypes
-    ).reduce<Record<string, FeatureSection>>((obj, [id, config], i) => {
+    ).reduce<Record<string, FeatureSection | SpellbookSection>>((obj, [id, config], i) => {
       const label = config.header ?? config.label;
 
       if (!!config.passive) {
@@ -531,14 +531,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     });
 
     if (context.includeSpellbookInStatblockTab) {
-      const featuresAndSpells: Record<
-        string,
-        FeatureSection | SpellbookSection
-      > = featureSections;
       context.spellbook.forEach((section) => {
-        const addSpells = !!featuresAndSpells[section.key];
+        const addSpells = !!featureSections[section.key];
         
-        const addedOrUpdated = (featuresAndSpells[section.key] ??= {
+        const addedOrUpdated = (featureSections[section.key] ??= {
           ...section,
         });
         
