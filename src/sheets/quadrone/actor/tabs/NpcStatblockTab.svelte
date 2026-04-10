@@ -155,13 +155,8 @@
   });
 
   let sections = $derived.by(() => {
-    let sectionsToConfigure: (FeatureSection | SpellbookSection)[] =
-      context.includeSpellbookInStatblockTab
-        ? [...context.features, ...context.spellbook]
-        : context.features;
-
     return SheetSections.configureStatblock(
-      sectionsToConfigure,
+      context.features,
       context,
       tabId,
       UserSheetPreferencesService.getByType(context.actor.type),
