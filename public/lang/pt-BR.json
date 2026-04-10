@@ -1001,5 +1001,9 @@
         "name": "Aba Ficha de Personagem: Incluir Itens Utilizáveis Automaticamente",
         "hint": "Inclui automaticamente todos os itens, magias e características atualmente utilizáveis na aba da ficha."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Ocultar Fixados da Ficha"
+    "TIDY5E.Utilities.HideSheetPins": "Ocultar Fixados da Ficha",
+    "TIDY5E.AbilityRoll": "Rolar Teste de {ability}",
+    "TIDY5E.AbbrProficiency": "Prof",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
+    "TIDY5E.DisplayOptionsActor.Title": "Opções de Exibição do Ator"
 }

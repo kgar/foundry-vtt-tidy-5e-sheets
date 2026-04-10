@@ -172,7 +172,7 @@
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
         "name": "Zobrazovat dovednosti vždy?",
-        "hint": "Odstraní přepínací tlačítko viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
+        "hint": "Odstraní přepínač viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Zobrazovat záložku kouzel?",
@@ -1010,5 +1010,9 @@
         "name": "Záložka deníku postavy: Automaticky včetně použitelných položek",
         "hint": "Automaticky včetně všech aktuálně použitelných položek, kouzla a schopností v záložce deníku."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Skrýt špendlíky deníku"
+    "TIDY5E.Utilities.HideSheetPins": "Skrýt špendlíky deníku",
+    "TIDY5E.AbilityRoll": "Ověření vlastnosti {ability}",
+    "TIDY5E.AbbrProficiency": "ZD",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrovství se zbraní: {mastery}",
+    "TIDY5E.DisplayOptionsActor.Title": "Možnosti zobrazení aktéra"
 }
