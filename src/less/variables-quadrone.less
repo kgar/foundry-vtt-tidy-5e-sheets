@@ -140,8 +140,11 @@
 
   /* Theme ------------ */
   --t5e-theme-color-default: var(--t5e-color-red);
-  --t5e-theme-header-color: var(--t5e-theme-color-default);
-  --t5e-primary-accent-color: var(--t5e-theme-color-default);
+  --t5e-theme-color-foreground: var(--t5e-color-palette-white);
+  --t5e-theme-color-foreground-diminished: var(--t5e-color-palette-grey-85);
+  --t5e-theme-color-foreground-disabled: var(--t5e-color-palette-grey-60);
+  --t5e-theme-color-header: var(--t5e-theme-color-default);
+  --t5e-primary-accent-color: var(--t5e-theme-color-default); // TODO: Deprecate with classic.
   --t5e-theme-color-darkest: oklch(from var(--t5e-theme-color-default) calc(l * 0.75) calc(c * 1.2) h);
   --t5e-theme-color-darker: oklch(from var(--t5e-theme-color-default) calc(l * 0.85) calc(c * 1.2) h);
   --t5e-theme-color-lighter: oklch(from var(--t5e-theme-color-default) calc(l * 1.2) calc(c * 1.15) h);
@@ -202,7 +205,7 @@
   --t5e-enricher-background: rgba(0, 0, 0, 0.05);
 
   /* Filters */
-  --t5e-filter-drop-shadow-token: drop-shadow(0 0 8px var(--dnd5e-color-black));
+  --t5e-filter-drop-shadow-token: drop-shadow(0 0 0.375rem var(--t5e-color-palette-grey-0));
 
   /* Transitions */
   --t5e-transition-speed: 150ms;
@@ -230,7 +233,7 @@
   --t5e-component-toggle-toggled-background: var(--t5e-theme-color-default);
   --t5e-component-toggle-toggled-background-hover: var(--t5e-theme-color-lighter);
   --t5e-component-toggle-toggled-border: var(--t5e-theme-color-darker);
-  --t5e-component-toggle-toggled-text: var(--t5e-color-text-oninverse-default);
+  --t5e-component-toggle-toggled-text: var(--t5e-theme-color-foreground);
 
   /* Fields */
   --t5e-component-field-border: var(--t5e-color-gold);
@@ -405,7 +408,7 @@
 
     /* Toggles */
     --t5e-component-toggle-toggled-border: var(--t5e-component-field-border);
-    --t5e-component-toggle-toggled-text: var(--t5e-color-palette-grey-100);
+    --t5e-component-toggle-toggled-text: var(--t5e-theme-color-foreground);
 
     /* Table */
     --t5e-table-header-background-container: var(--t5e-color-palette-grey-34);

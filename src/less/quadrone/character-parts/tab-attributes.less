@@ -1,0 +1,83 @@
+/* Character sheet attributes tab */
+.tidy-tab-contents.attributes {
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+    gap: var(--t5e-size-6x);
+  }
+
+  .attributes-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--t5e-size-6x);
+    padding-bottom: var(--t5e-size-8x);
+  }
+
+  .skills {
+    grid-area: skills;
+    height: fit-content;
+  }
+
+  .filigree-card .use-ability-header .skill-expand-button {
+    gap: 0.375rem;
+  }
+
+
+  .saving-throws {
+    grid-area: saves;
+    height: fit-content;
+  }
+
+  .character-traits {
+    grid-area: traits;
+    height: fit-content;
+  }
+
+  .traits.list {
+    .list-entry {
+      padding: var(--t5e-size-1x) 0;
+      border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
+    }
+  }
+
+  .tools {
+    grid-area: tools;
+    height: fit-content;
+  }
+
+  .skill-expand-button.view-only {
+    pointer-events: none;
+  }
+
+  .use-ability-list li {
+    width: auto;
+  }
+
+  @container tab-content (width < 40rem) {
+    .columns {
+      grid-template-rows: auto 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'skills saves'
+        'skills tools'
+        'traits traits';
+
+    }
+
+    .attributes-column {
+      display: contents;
+    }
+  }
+
+  @container tab-content (width < 30rem) {
+    .columns {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'skills'
+        'saves'
+        'tools'
+        'traits';
+      gap: var(--t5e-size-4x);
+    }
+  }
+}

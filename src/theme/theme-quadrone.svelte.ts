@@ -57,9 +57,12 @@ export class ThemeQuadrone {
   ): ThemeSettingsV3 {
     const defaults = {
       accentColor: '',
+      useBasicTheme: false,
       useHeaderBackground: true,
       headerColor: '',
       actorHeaderBackground: '',
+      sheetAccentColor: '',
+      headerBackgroundColor: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: {},

@@ -341,7 +341,7 @@
         )}
       </button>
     </div>
-    <div class="sheet-footer-right footer-content-right">
+    <div class="sheet-footer-right footer-content-right flexshrink">
       {#if context.editable}
         <button
           type="button"

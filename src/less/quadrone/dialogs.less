@@ -76,16 +76,20 @@
     .settings-header {
       margin-bottom: var(--t5e-size-1x);
     }
+
     .settings-description {
       margin-bottom: var(--t5e-size-3x);
     }
+
     .settings-actions {
       gap: var(--t5e-size-2x);
       margin-bottom: var(--t5e-size-4x);
     }
+
     .title-underlined {
       margin-bottom: var(--t5e-size-2x);
     }
+
     .tidy-table-header-row .tidy-table-header-cell {
       padding-top: var(--t5e-size-1x);
       padding-bottom: var(--t5e-size-1x);
@@ -96,16 +100,20 @@
   // Theme Settings
   &.tidy-theme-settings {
 
+    .color-picker-container {
+      position: relative;
+    }
+
     .color-picker-preview {
-      --size: 1.5rem;
+      --size: var(--t5e-field-size-default);
       --bg-color: var(--t5e-component-field-background);
       flex: 0 0 var(--size);
       width: var(--size);
       height: var(--size);
       background-color: var(--bg-color);
-      border-radius: 50%;
       cursor: pointer;
       border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+      border-radius: var(--t5e-size-halfx);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -113,15 +121,19 @@
 
       i {
         font-size: var(--font-size-12);
-        color: var(--t5e-color-text-disabled);
+        color: var(--t5e-color-icon-default);
         transition: color var(--t5e-transition-default);
       }
 
-      &:hover {
+      &:hover,
+      &:focus-within,
+      &:active {
         box-shadow: var(--t5e-drop-shadow-field-hover);
+        border-color: var(--t5e-component-field-border-hover);
+        --bg-color: var(--t5e-component-field-background-hover);
 
         i {
-          color: var(--t5e-color-text-default);
+          color: var(--t5e-color-icon-default);
         }
       }
 
@@ -137,6 +149,17 @@
 
         }
       }
+    }
+
+    .hidden-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      flex: 0;
+      padding: 0;
+      border: 0;
     }
   }
 

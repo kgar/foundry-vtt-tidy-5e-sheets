@@ -1,51 +1,8 @@
 /* Styles common to Document sheets */
-.tidy5e-sheet:where(.quadrone) {
+.tidy5e-sheet.application:where(.quadrone) {
   font-smooth: always;
 
-  /* ---------------------------------- */
-  /*  Badges                            */
-  /* ---------------------------------- */
 
-  .badge {
-    background: transparent no-repeat center / contain;
-    font-family: var(--t5e-font-roboto-condensed);
-    font-weight: bold;
-    color: var(--t5e-color-text-default);
-    display: grid;
-    place-content: center;
-    font-size: var(--font-size-30);
-
-    .config-button {
-      color: inherit;
-      font-size: inherit;
-    }
-  }
-
-  /* AC */
-  .ac-badge {
-    width: 4.25rem;
-    height: 4.25rem;
-    min-width: 4.25rem;
-    text-align: center;
-    line-height: 3.875rem;
-    @ac-badge : '../../systems/dnd5e/ui/ac-badge.webp';
-    background-image: url('@{ac-badge}');
-    display: block;
-    place-content: unset;
-    font-size: var(--font-size-23);
-    margin-top: -1.3125rem;
-    filter: drop-shadow(0 0 0.375rem var(--color-shadow-dark));
-  }
-
-  /* Level */
-  .level-badge {
-    font-size: var(--font-size-32);
-    width: 4.875rem;
-    height: 4.875rem;
-    @badge_level_dark : '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
-    background-image: url('@{badge_level_dark}');
-    text-align: center;
-  }
 }
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {

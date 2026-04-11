@@ -212,9 +212,8 @@ export function Tidy5eActorSheetQuadroneBase<
     /** @inheritdoc */
     get title() {
       if (!this.actor.isToken) return this.actor.name;
-      return `[${game.i18n.localize(TokenDocument.metadata.label)}] ${
-        this.actor.name
-      }`;
+      return `[${game.i18n.localize(TokenDocument.metadata.label)}] ${this.actor.name
+        }`;
     }
 
     selectTab(tabId: string) {
@@ -382,16 +381,16 @@ export function Tidy5eActorSheetQuadroneBase<
       const ctx = (context.itemContext[item.id] ??= {});
 
       ctx.containerName = this.actor.items.get(item.system.container)?.name;
-      
+
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         ctx.containerCapacity = await item.system.computeCapacity();
-        
+
         ctx.containerContents = await Container.getContainerContents(item, {
           hasActor: true,
           unlocked: context.unlocked,
         });
       }
-      
+
       if (item.system.activities) {
         ctx.activities = Activities.getVisibleActivities(
           item,
@@ -400,7 +399,7 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       ctx.linkedUses = Activities.getLinkedUses(item);
-      
+
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
     }
 
@@ -411,7 +410,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
       const showToken =
         actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-          true || themeSettings.portraitShape === 'token';
+        true || themeSettings.portraitShape === 'token';
       const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
       const isRandom = !!effectiveToken?.randomImg;
       const rawSrc = showToken
@@ -545,12 +544,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
           const spellcasting = cls.system.spellcasting
             ? {
-                dc: cls.system.spellcasting.save,
-                ability: (
-                  CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
-                    ?.abbreviation ?? cls.system.spellcasting.ability
-                )?.toLocaleUpperCase(),
-              }
+              dc: cls.system.spellcasting.save,
+              ability: (
+                CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
+                  ?.abbreviation ?? cls.system.spellcasting.ability
+              )?.toLocaleUpperCase(),
+            }
             : undefined;
 
           const subclass = subclasses.findSplice(
@@ -863,7 +862,6 @@ export function Tidy5eActorSheetQuadroneBase<
           if (excludeSpeed(key) || config.hidden) {
             return acc;
           }
-          
           if (systemMovement[key] === 0) {
             return acc;
           }
@@ -892,8 +890,8 @@ export function Tidy5eActorSheetQuadroneBase<
           left.key === CONSTANTS.MOVEMENT_WALK
             ? -1
             : right.key === CONSTANTS.MOVEMENT_WALK
-            ? 1
-            : +(right.value ?? 0) - +(left.value ?? 0)
+              ? 1
+              : +(right.value ?? 0) - +(left.value ?? 0)
         );
 
       if (speeds.length === 0) {
@@ -937,10 +935,10 @@ export function Tidy5eActorSheetQuadroneBase<
         const label = hasAll
           ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
           : new Intl.ListFormat(game.i18n.lang).format(
-              [...systemMovement.ignoredDifficultTerrain]
-                .map((t: string) => getTerrainLabel(t))
-                .filter((l): l is string => !!l)
-            );
+            [...systemMovement.ignoredDifficultTerrain]
+              .map((t: string) => getTerrainLabel(t))
+              .filter((l): l is string => !!l)
+          );
 
         speeds.push({
           key: 'ignoredDifficultTerrain',
@@ -994,8 +992,8 @@ export function Tidy5eActorSheetQuadroneBase<
         left.key === 'darkvision'
           ? -1
           : right.key === 'darkvision'
-          ? 1
-          : +right.value - +left.value
+            ? 1
+            : +right.value - +left.value
       );
     }
 
@@ -1127,25 +1125,38 @@ export function Tidy5eActorSheetQuadroneBase<
     _updateFrame(options: ApplicationRenderOptions) {
       super._updateFrame(options);
 
-      const themeSettings =
-        this._context.data?.themeSettings ??
-        ThemeQuadrone.getSheetThemeSettings({
-          doc: this.actor,
-        });
-
+      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+        doc: this.actor,
+      });
       this._applySheetThemeClasses(themeSettings);
     }
 
+    // Cache theme class state
+    _lastThemeClasses?: { isBasic: boolean; isParchment: boolean; isDark: boolean };
+
     _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
-      this.element.classList.toggle(
-        'sheet-parchment',
-        !themeSettings.useHeaderBackground
-      );
+      const isBasic = !!themeSettings.useBasicTheme;
+      const isParchment = !themeSettings.useHeaderBackground || isBasic;
+      const isDark = !!themeSettings.useHeaderBackground || isBasic;
+
+      // Skip when values haven't changed
+      if (
+        this._lastThemeClasses?.isBasic === isBasic &&
+        this._lastThemeClasses?.isParchment === isParchment &&
+        this._lastThemeClasses?.isDark === isDark
+      ) {
+        return;
+      }
+
+      this._lastThemeClasses = { isBasic, isParchment, isDark };
+
+      this.element.classList.toggle('theme-parchment', isParchment);
+      this.element.classList.toggle('theme-basic', isBasic);
 
       for (const node of this.element.querySelectorAll(
         '.window-header, .sheet-header'
       )) {
-        node.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+        node.classList.toggle('theme-dark', isDark);
       }
     }
 
@@ -1179,10 +1190,7 @@ export function Tidy5eActorSheetQuadroneBase<
     onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
       const themeSettings =
         settingsOverride ??
-        ThemeQuadrone.getSheetThemeSettings({
-          doc: this.actor,
-        });
-
+        ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
       this._applySheetThemeClasses(themeSettings);
     }
 
@@ -1530,8 +1538,8 @@ export function Tidy5eActorSheetQuadroneBase<
         data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
           ? 'item'
           : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
-          ? 'activity'
-          : undefined;
+            ? 'activity'
+            : undefined;
 
       if (!pinType) {
         return;
@@ -1908,7 +1916,7 @@ export function Tidy5eActorSheetQuadroneBase<
         // Ensure that this item isn't violating the singleton rule
         const dataModel =
           CONFIG.Item.dataModels[
-            itemData.type as keyof typeof CONFIG.Item.dataModels
+          itemData.type as keyof typeof CONFIG.Item.dataModels
           ];
         const singleton = dataModel?.metadata.singleton ?? false;
         if (singleton && this.actor.itemTypes[itemData.type].length) {

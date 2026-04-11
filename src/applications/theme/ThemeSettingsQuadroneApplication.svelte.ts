@@ -11,7 +11,7 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import { mount } from 'svelte';
+import { mount, type Component } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -26,9 +26,12 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 export type ThemeSettingsContext = {
   value: {
     accentColor: string;
+    useBasicTheme: boolean;
     useHeaderBackground: boolean;
     headerColor: string;
     actorHeaderBackground: string;
+    sheetAccentColor: string;
+    headerBackgroundColor: string;
     itemSidebarBackground: string;
     portraitShape: PortraitShape | undefined;
     rarityColors: ThemeColorSettingConfigEntry[];
@@ -46,9 +49,12 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _settings: ThemeSettingsContext = $state({
     value: {
       accentColor: '',
+      useBasicTheme: false,
       useHeaderBackground: true,
       headerColor: '',
       actorHeaderBackground: '',
+      sheetAccentColor: '',
+      headerBackgroundColor: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: [],
@@ -99,8 +105,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   get title() {
     return this.document
       ? FoundryAdapter.localize(`TIDY5E.ThemeSettings.Sheet.title`, {
-          userName: this.document.name,
-        })
+        userName: this.document.name,
+      })
       : FoundryAdapter.localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel');
   }
 
@@ -110,14 +116,21 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       ? this._mapSettings(ThemeQuadrone.getWorldThemeSettings())
       : undefined;
 
-    const component = mount(ThemeSettingsQuadrone, {
-      target: node,
-      props: {
-        app: this,
-        settings: this._settings,
-        placeholders,
+    const component = mount(
+      ThemeSettingsQuadrone as unknown as Component<{
+        app: ThemeSettingsQuadroneApplication;
+        settings: ThemeSettingsContext;
+        placeholders: ThemeSettingsContext | undefined;
+      }>,
+      {
+        target: node,
+        props: {
+          app: this,
+          settings: this._settings,
+          placeholders,
+        },
       },
-    });
+    );
 
     return component;
   }
@@ -136,12 +149,12 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       structuredClone(
         this.document
           ? ThemeQuadrone.getSheetThemeSettings({
-              doc: this.document,
-              applyWorldThemeSetting: false,
-              alternateDefaults: {
-                useHeaderBackground: worldSettings.useHeaderBackground,
-              },
-            })
+            doc: this.document,
+            applyWorldThemeSetting: false,
+            alternateDefaults: {
+              useHeaderBackground: worldSettings.useHeaderBackground,
+            },
+          })
           : worldSettings
       );
 
@@ -154,9 +167,12 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {
       value: {
         accentColor: themeSettings.accentColor,
+        useBasicTheme: themeSettings.useBasicTheme,
         useHeaderBackground: themeSettings.useHeaderBackground,
         headerColor: themeSettings.headerColor,
         actorHeaderBackground: themeSettings.actorHeaderBackground,
+        sheetAccentColor: themeSettings.sheetAccentColor,
+        headerBackgroundColor: themeSettings.headerBackgroundColor,
         itemSidebarBackground: themeSettings.itemSidebarBackground,
         portraitShape: themeSettings.portraitShape,
         rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
@@ -205,9 +221,12 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV3 {
     return {
       accentColor: context.value.accentColor ?? '',
+      useBasicTheme: context.value.useBasicTheme,
       useHeaderBackground: context.value.useHeaderBackground,
       headerColor: context.value.headerColor,
       actorHeaderBackground: context.value.actorHeaderBackground,
+      sheetAccentColor: context.value.sheetAccentColor,
+      headerBackgroundColor: context.value.headerBackgroundColor,
       itemSidebarBackground: context.value.itemSidebarBackground,
       portraitShape: context.value.portraitShape,
       rarityColors: context.value.rarityColors

@@ -111,11 +111,11 @@
     }
   }
 
-  &:not(.sheet-parchment) {
+  &:not(.theme-parchment) {
     background: var(--t5e-theme-header-color, var(--t5e-theme-color-default));
   }
 
-  &.sheet-parchment {
+  &.theme-parchment {
     background: var(--t5e-component-card-darker);
     @banner-npc-dark : '../../systems/dnd5e/ui/official/banner-npc-dark.webp';
     --t5e-sheet-header-bg: url('@{banner-npc-dark}');
@@ -292,10 +292,12 @@
     display: flex;
     align-items: center;
 
-    >i, .title>i {
+    >i,
+    .title>i {
       font-size: var(--font-size-12);
       color: var(--t5e-color-text-default);
     }
+
     >i {
       margin-inline-end: var(--t5e-size-1x);
     }
@@ -594,6 +596,7 @@
       align-self: flex-end;
       padding-block-start: 0.375rem;
     }
+
     .footer-concentration-button i[data-label="icon-concentration"] {
       display: none;
     }
@@ -604,6 +607,7 @@
       i[data-label="icon-concentrating"] {
         display: none;
       }
+
       i[data-label="icon-concentration"] {
         display: block;
       }
@@ -663,7 +667,7 @@
           flex-direction: row;
           flex-wrap: wrap;
 
-          &:not(.collapse-spellcasting-cards) > * {
+          &:not(.collapse-spellcasting-cards)>* {
             width: auto;
             flex: 1 1 auto;
             min-width: 20rem;
@@ -1342,7 +1346,7 @@
     padding-inline-end: 0;
   }
 
-  .main-content > .tidy-tab {
+  .main-content>.tidy-tab {
     --padding-vertical: var(--t5e-size-3x);
     --padding-horizontal: var(--t5e-size-4x);
     flex: 1;
@@ -1353,7 +1357,7 @@
     &.inventory {
       padding-top: 0;
     }
-      
+
     &:has(.tab-content) {
       padding-right: 0;
       padding-top: 0;
@@ -1364,7 +1368,7 @@
       padding-top: var(--padding-vertical);
       padding-right: var(--padding-horizontal);
     }
-    
+
     .tab-content {
       display: flex;
       flex-direction: column;

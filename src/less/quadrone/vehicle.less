@@ -107,6 +107,52 @@
     transform: rotate(90deg) translateY(1px);
   }
 
+  .abilities-container {
+    margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
+  }
+
+  .abilities-container-inner {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .initiative-container {
+    text-align: center;
+    align-items: center;
+
+    .ability-labels {
+      bottom: 0.4375rem;
+    }
+
+    .initiative-bonus {
+      margin-right: 0.25rem;
+
+      >* {
+        letter-spacing: -6%;
+      }
+    }
+  }
+
+  /* Smallest abilities that kick in with 2+ custom abilities */
+  .abilities-container.ability-collapsed {
+
+    .abilities-container-inner {
+
+      .bonus-container,
+      .initiative-container .bonus-container.initiative.score {
+        aspect-ratio: 1 / 1;
+      }
+
+      .initiative-container {
+
+        .initiative-bonus {
+          // margin-top: 0;
+        }
+      }
+    }
+
+  }
+
   /* TABS */
   /* ----- */
   .tidy-tab {

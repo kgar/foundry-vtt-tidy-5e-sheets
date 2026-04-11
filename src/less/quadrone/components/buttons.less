@@ -4,7 +4,6 @@
   --button-padding-block-end: 0.5rem;
   --button-padding-inline-start: 0.75rem;
   --button-padding-inline-end: 0.75rem;
-  --icon-fill: var(--t5e-color-icon-button);
 
   /* Default button styles */
   --button-background: var(--t5e-component-field-background);
@@ -17,7 +16,6 @@
   --button-icon-hover: var(--t5e-color-icon-default);
   --button-shadow: var(--t5e-drop-shadow-field);
   --button-focus: 0 0 0 0.125rem var(--t5e-theme-color-default);
-
 
   display: inline-flex;
   width: unset;
@@ -43,7 +41,7 @@
   transition: all var(--t5e-transition-default);
 
   :where(i) {
-    color: var(--icon-fill);
+    color: var(--button-icon);
     transition: color var(--t5e-transition-default);
     margin: 0;
     font-size: var(--font-size-12);
@@ -52,7 +50,7 @@
 
   &:hover {
     :where(i) {
-      color: var(--button-icon);
+      color: var(--button-icon-hover);
     }
   }
 
@@ -131,28 +129,24 @@
     &.active,
     &:active,
     &.include {
-      --button-text: var(--t5e-color-palette-white);
-      --button-icon: var(--t5e-color-icon-button);
-      --button-icon-hover: var(--t5e-color-icon-default);
+      --button-text: var(--t5e-theme-color-foreground);
+      --button-icon: var(--t5e-theme-color-foreground);
+      --button-icon-hover: var(--t5e-theme-color-foreground);
       --button-background: var(--t5e-theme-color-default);
       --button-background-hover: var(--t5e-theme-color-lighter);
       --button-border: var(--t5e-theme-color-darker);
       --button-border-hover: var(--t5e-theme-color-darker);
-      --icon-fill: var(--t5e-color-icon-oninverse-default);
-      color: var(--t5e-component-toggle-toggled-text);
       background: var(--t5e-component-toggle-toggled-background);
 
       :where(i) {
-        --icon-fill: var(--t5e-color-icon-lighter);
-        color: var(--icon-fill);
+        color: var(--button-icon);
       }
 
       &:hover {
         background-color: var(--t5e-component-toggle-toggled-background-hover);
 
         :where(i) {
-          --icon-fill: var(--t5e-color-icon-light);
-          color: var(--icon-fill);
+          color: var(--button-icon);
         }
       }
     }
@@ -171,22 +165,14 @@
     --button-background: var(--t5e-theme-color-default);
     --button-background-hover: var(--t5e-theme-color-lighter);
     --button-border: var(--t5e-theme-color-darker);
-    --button-text: var(--t5e-color-palette-white);
-    --button-icon: var(--t5e-color-palette-white);
-
-    --icon-fill: var(--t5e-color-palette-white);
-
-    :where(i) {
-      --icon-fill: var(--t5e-color-palette-white);
-      // color: var(--icon-fill);
-    }
+    --button-text: var(--t5e-theme-color-foreground);
+    --button-icon: var(--t5e-theme-color-foreground);
 
     &:hover:not(:disabled) {
       background-color: var(--button-background-hover);
 
       :where(i) {
-        --icon-fill: var(--t5e-color-icon-oninverse-default);
-        color: var(--t5e-color-icon-oninverse-default);
+        color: var(--button-icon);
       }
     }
   }
@@ -341,11 +327,11 @@
     outline: none;
   }
 
-  &.unbutton{ 
+  &.unbutton {
+
     &:active,
     &:focus,
-    &:hover
-    &:active:hover {
+    &:hover &:active:hover {
       outline: none;
       border: 0;
       background: none;
@@ -500,7 +486,7 @@ a.button.icon {
   flex: 0 0 var(--button-size);
   width: var(--button-size);
   font-weight: 600;
-  
+
   &:is(.fab, .fa-brands) {
     font-family: var(--fa-style-family-brands);
     font-weight: 400;
@@ -527,30 +513,26 @@ a.button.icon {
   }
 
   :is(button, .button) {
-    i {
-      --icon-fill: var(--t5e-color-icon-button);
-    }
+    // i {
+    //   --icon-fill: var(--t5e-color-icon-button);
+    // }
 
     &.exclude {
       background: transparent;
     }
 
-    &:hover:not(:disabled) {
-      i {
-        color: var(--t5e-color-icon-default);
-      }
-    }
+    // &:hover:not(:disabled) {
+    //   i {
+    //     color: var(--icon-fill);
+    //   }
+    // }
 
 
     &.button-toggle,
     &.button-primary {
       --button-border: var(--t5e-component-field-border);
 
-      i {
-        --icon-fill: var(--t5e-color-icon-light);
-      }
-
-      &:hover {
+      &:hover:not(:disabled) {
         --button-border-hover: var(--t5e-component-field-border-hover);
       }
     }
@@ -567,7 +549,7 @@ a.button.icon {
 
     &.disabled,
     &:disabled {
-      --icon-fill: var(--t5e-color-icon-disabled);
+      --button-icon: var(--t5e-color-icon-disabled);
     }
 
     &:focus-within:not(.button-toggle):not(:disabled) {

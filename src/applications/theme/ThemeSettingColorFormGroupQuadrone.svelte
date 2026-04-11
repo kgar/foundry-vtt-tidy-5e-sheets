@@ -50,7 +50,7 @@
 <div class="form-group">
   <!-- TODO: hightouch to backtrack on eyedropper  -->
   <label for={inputId}>{label}</label>
-  <div class="form-fields">
+  <div class="form-fields color-picker-container">
     <label
       for="{inputId}-picker"
       class="color-picker-preview"
@@ -64,8 +64,7 @@
       type="text"
       id="{inputId}-picker"
       {value}
-      class="coloris"
-      style="width: 0; flex: 0; padding: 0; border: 0"
+      class="coloris hidden-input"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
@@ -89,16 +88,17 @@
       </button>
     {/if}
 
-    <button
-      type="button"
-      title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
-      class="button button-borderless button-icon-only"
-      onclick={() => {
-        value = '';
-      }}
-      disabled={isNil(value, '')}
-    >
-      <i class="fa-solid fa-xmark"></i>
-    </button>
+    {#if !isNil(value, '')}
+      <button
+        type="button"
+        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
+        class="button button-borderless button-icon-only"
+        onclick={() => {
+          value = '';
+        }}
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    {/if}
   </div>
 </div>

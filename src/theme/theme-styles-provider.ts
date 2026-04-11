@@ -6,6 +6,13 @@ import type {
   ThemeQuadroneStyleRule,
 } from './theme-quadrone.types';
 import { formatResourcePathForCss } from 'src/utils/path';
+import { THEME_CLASS_DARK, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
+import { debug } from 'src/utils/logging';
+
+const FOREGROUND_BASES = {
+  diminished: { darkTheme: 'rgb(207, 210, 218)', lightTheme: 'rgb(102, 102, 102)' }, // grey-85, grey-40
+  disabled: { darkTheme: 'rgb(153, 153, 153)', lightTheme: 'rgb(153, 153, 153)' }, // grey-60, grey-60
+};
 
 export class ThemeStylesProvider {
   static create(
@@ -28,7 +35,13 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
-      ...this.getHeaderColorDeclarations(
+      ...this.getHeaderBackgroundColorDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
+      ...this.getSheetAccentColorDeclarations(
         selectorPrefix,
         settings,
         doc,
@@ -68,8 +81,65 @@ export class ThemeStylesProvider {
       return [];
     }
 
+    const accentColorResult = getColorWithContrast(settings.accentColor);
+
+    debug('Accent color check', accentColorResult);
+
     const identifierRule = this.getDeclarationKeyRule(
       'accentColor',
+      doc,
+      idOverride
+    );
+
+    // Pick base diminished/disabled colors matching the foreground polarity
+    const isDarkTheme = accentColorResult.themeClass === THEME_CLASS_DARK;
+    const diminishedColor = isDarkTheme ? FOREGROUND_BASES.diminished.darkTheme : FOREGROUND_BASES.diminished.lightTheme;
+    const disabledColor = isDarkTheme ? FOREGROUND_BASES.disabled.darkTheme : FOREGROUND_BASES.disabled.lightTheme;
+
+    const ruleset: ThemeQuadroneStyleRule[] = [
+      identifierRule,
+      {
+        property: '--t5e-theme-color-default',
+        value: settings.accentColor,
+      },
+      // APCA-computed foreground colors for text/icons on accent-colored backgrounds
+      {
+        property: '--t5e-theme-color-foreground',
+        value: accentColorResult.foregroundColor,
+      },
+      {
+        property: '--t5e-theme-color-foreground-diminished',
+        value: getForegroundAtContrast(settings.accentColor, diminishedColor, 'headline'),
+      },
+      {
+        property: '--t5e-theme-color-foreground-disabled',
+        value: getForegroundAtContrast(settings.accentColor, disabledColor, 'minimum'),
+      },
+    ];
+
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: selectorPrefix,
+        ruleset,
+      },
+    ];
+  }
+
+  static getHeaderBackgroundColorDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV3,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    debug('Header background color check', getColorWithContrast(settings.headerBackgroundColor));
+
+    if (isNil(settings.headerBackgroundColor, '')) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'headerBackgroundColor',
       doc,
       idOverride
     );
@@ -80,8 +150,40 @@ export class ThemeStylesProvider {
         ruleset: [
           identifierRule,
           {
-            property: '--t5e-theme-color-default',
-            value: settings.accentColor,
+            property: '--t5e-theme-color-header',
+            value: settings.headerBackgroundColor,
+          },
+        ],
+      },
+    ];
+  }
+
+  static getSheetAccentColorDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV3,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    debug('Sheet accent color check', getColorWithContrast(settings.sheetAccentColor));
+
+    if (isNil(settings.sheetAccentColor, '')) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'sheetAccentColor',
+      doc,
+      idOverride
+    );
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: selectorPrefix,
+        ruleset: [
+          identifierRule,
+          {
+            property: '--t5e-sheet-accent-color-default',
+            value: settings.sheetAccentColor,
           },
         ],
       },
@@ -94,6 +196,7 @@ export class ThemeStylesProvider {
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
+    debug('Actor header background color check', getColorWithContrast(settings.actorHeaderBackground));
     if (
       !settings.useHeaderBackground ||
       isNil(settings.actorHeaderBackground, '')
@@ -273,8 +376,8 @@ export class ThemeStylesProvider {
     return idOverride
       ? `#${idOverride}`
       : doc
-      ? `#${doc.sheet.id}`
-      : '.tidy5e-sheet.application.quadrone';
+        ? `#${doc.sheet.id}`
+        : '.tidy5e-sheet.application.quadrone';
   }
 
   static readonly worldSettingIdentifierKey = '--tidy5e-sheet-world-setting';

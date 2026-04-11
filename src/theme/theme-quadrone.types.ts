@@ -8,6 +8,8 @@ export type ThemeColorSetting = {
 export type ThemeSettingsV2Old = {
   accentColor: string;
   actorHeaderBackground: string;
+  headerBackgroundColor: string;
+  sheetAccentColor: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
@@ -17,9 +19,12 @@ export type ThemeSettingsV2Old = {
 
 export type ThemeSettingsV3 = {
   accentColor: string;
+  useBasicTheme: boolean;
   useHeaderBackground: boolean;
   headerColor: string;
   actorHeaderBackground: string;
+  headerBackgroundColor: string;
+  sheetAccentColor: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;

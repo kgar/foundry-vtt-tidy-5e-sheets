@@ -142,7 +142,7 @@
     .shield {
       @badge_ac_dark: '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
       --t5e-shield-image: url('@{badge_ac_dark}');
-      
+
       .ac-label {
         display: none;
       }
@@ -156,6 +156,35 @@
       position: absolute;
       bottom: -0.875rem;
       right: -0.5rem;
+    }
+  }
+
+  .shield {
+    background-image: var(--t5e-shield-image);
+    background-position: top center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 4.25rem;
+    color: var(--t5e-color-text-light);
+    font-weight: bold;
+    font-size: 1.25rem;
+    position: relative;
+    width: 4rem;
+    transition: height var(--t5e-transition-default), width var(--t5e-transition-default);
+    margin-top: 0.125rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ac-value {
+      font-size: var(--font-size-28);
+      letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+      margin: 0;
+    }
+
+    .ac-label {
+      margin: -0.125rem 0 0.125rem;
     }
   }
 
@@ -225,7 +254,7 @@
   /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
   .ability-smaller() {
 
-    .ac-container .shield{
+    .ac-container .shield {
       width: 100%;
       height: auto;
       min-height: 3.25rem;
@@ -289,14 +318,21 @@
         margin-top: -0.125rem;
       }
 
-      .button-config {  
+      .button-config {
         bottom: -0.625rem;
         right: calc(50% - 0.875rem);
       }
     }
-    
 
-    .ability-labels  {
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .ac-container .shield,
+    .initiative-container .initiative.score {
+      padding-top: 0;
+    }
+
+
+    .ability-labels {
       bottom: 0.5625rem;
 
       .divider {
@@ -319,7 +355,7 @@
       .initiative.score {
         padding-top: 0.25rem;
         margin-top: 0;
-      
+
         .button-config {
           bottom: -1rem;
         }
@@ -347,14 +383,12 @@
       margin-top: var(--t5e-size-1x);
     }
   }
-    
-  .sheet-header .abilities-container.ability-smaller 
-  .abilities-container-inner {
+
+  .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
     .ability-smaller();
   }
 
-  .sheet-header .abilities-container.ability-collapsed 
-  .abilities-container-inner {
+  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
     .collapse-abilities();
   }
 
@@ -443,14 +477,14 @@
   }
 
   @container tab-content (width < 40rem) {
-    .tidy-tab-contents.attributes .columns {
-      grid-template-rows: auto 1fr;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-areas:
-        'skills saves'
-        'skills tools'
-        'traits traits';
-    }
+    // .tidy-tab-contents.attributes .columns {
+    //   grid-template-rows: auto 1fr;
+    //   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    //   grid-template-areas:
+    //     'skills saves'
+    //     'skills tools'
+    //     'traits traits';
+    // }
 
     .saving-throws .use-ability-list {
       flex-direction: column;
@@ -461,60 +495,38 @@
       }
     }
 
-    .tidy-tab-contents.attributes .attributes-column {
-      display: contents;
-    }
+    // .tidy-tab-contents.attributes .attributes-column {
+    //   display: contents;
+    // }
   }
 
-  @container tab-content (width < 30rem) {
-    .tidy-tab-contents.attributes .columns {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas:
-        'skills'
-        'saves'
-        'tools'
-        'traits';
-      gap: var(--t5e-size-4x);
-    }
-  }
+  // @container tab-content (width < 30rem) {
+  //   .tidy-tab-contents.attributes .columns {
+  //     grid-template-columns: minmax(0, 1fr);
+  //     grid-template-areas:
+  //       'skills'
+  //       'saves'
+  //       'tools'
+  //       'traits';
+  //     gap: var(--t5e-size-4x);
+  //   }
+  // }
+
+  @import './character-parts/tab-attributes.less';
 
   @import './character-parts/tab-bastion.less';
 
-  &.theme-light.sheet-parchment {
+  &.theme-light.theme-parchment {
     .sheet-header {
       .level-block {
         @badge_level_light: '../../modules/tidy5e-sheet/images/badge_level_light.webp';
         --t5e-level-image: url('@{badge_level_light}');
       }
-      
+
       .ac-container {
         .shield {
           @badge_ac_light: '../../modules/tidy5e-sheet/images/badge_ac_light.webp';
           --t5e-shield-image: url('@{badge_ac_light}');
-        }
-      }
-    }
-  }
-
-
-  &.theme-dark,
-  .theme-dark {
-
-    .tidy-tab.bastion {
-      .facility:not(.empty) {
-        background: linear-gradient(145deg,
-            rgba(27, 29, 35, 0.95) 10%,
-            rgba(27, 29, 35, 0.1) 170%),
-          var(--underlay) 40%, #2c3e50;
-        background-blend-mode: normal, normal;
-        background-size: cover, cover;
-
-        &.basic {
-          background-blend-mode: normal, luminosity;
-        }
-
-        .facility-header :is(.facility-image, .facility-image svg) {
-          --icon-fill: var(--t5e-component-field-background);
         }
       }
     }

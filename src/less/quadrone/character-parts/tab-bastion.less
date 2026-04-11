@@ -24,7 +24,9 @@
       0 0 0.375rem var(--t5e-theme-color-highlight);
   }
 
-  .facility-panels, .roster, .description {
+  .facility-panels,
+  .roster,
+  .description {
     margin-block-end: var(--bastion-row-gap);
   }
 
@@ -440,6 +442,29 @@
         'special'
         'basic';
       grid-template-columns: 1fr;
+    }
+  }
+}
+
+&.theme-dark,
+.theme-dark {
+
+  .tidy-tab.bastion {
+    .facility:not(.empty) {
+      background: linear-gradient(145deg,
+          rgba(27, 29, 35, 0.95) 10%,
+          rgba(27, 29, 35, 0.1) 170%),
+        var(--underlay) 40%, #2c3e50;
+      background-blend-mode: normal, normal;
+      background-size: cover, cover;
+
+      &.basic {
+        background-blend-mode: normal, luminosity;
+      }
+
+      .facility-header :is(.facility-image, .facility-image svg) {
+        --icon-fill: var(--t5e-component-field-background);
+      }
     }
   }
 }

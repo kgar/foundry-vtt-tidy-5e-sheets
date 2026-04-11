@@ -615,6 +615,9 @@
   "TIDY5E.Settings.ColorPickerPrimaryAccent": {
     "name": "Primary Accent"
   },
+  "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+    "name": "Header Background Color"
+  },
   "TIDY5E.Settings.ColorPickerEquipped": {
     "name": "Equipped"
   },
@@ -844,12 +847,14 @@
       "title": "Accent Color",
       "hint": "Customize the accent color of the sheet including buttons, table headers, and other UI elements."
     },
+    "UseBoringTheme.title": "Disable all theming",
+    "UseBoringTheme.hint": "Use colorless parchment styles only.",
     "UseHeaderBackground.title": "Use Header Background",
     "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
-    "HeaderColor": {
-      "title": "Header Background Color",
+    "HeaderBackgroundColor": {
+      "title": "Actor Header Color",
       "hint": "Use a different color than the sheet accent color for the sheet header."
     },
     "PortraitShape": {
