@@ -506,7 +506,7 @@ export function Tidy5eActorSheetClassicV2Base<
             type: 'disjunction',
           });
           data.selected.physical = game.i18n.format(
-            'DND5E.DAMAGE.PhysicalBypasses.Description',
+            'DND5E.DAMAGE.PhysicalBypass.Description',
             {
               damageTypes: damageTypesFormatter.format(
                 physical.map((t) =>

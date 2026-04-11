@@ -673,7 +673,7 @@ export function Tidy5eActorSheetQuadroneBase<
                 const type = CONFIG.DND5E.itemProperties[p]?.label;
                 return {
                   icon: p,
-                  label: game.i18n.format('DND5E.DAMAGE.PhysicalBypasses.DescriptionShort', {
+                  label: game.i18n.format('DND5E.DAMAGE.PhysicalBypass.DescriptionShort', {
                     type,
                   }),
                 };
@@ -728,7 +728,7 @@ export function Tidy5eActorSheetQuadroneBase<
                   return {
                     icon: p,
                     label: game.i18n.format(
-                      'DND5E.DAMAGE.PhysicalBypasses.DescriptionShort',
+                      'DND5E.DAMAGE.PhysicalBypass.DescriptionShort',
                       { type }
                     ),
                   };
