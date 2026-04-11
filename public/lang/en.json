@@ -1018,6 +1018,7 @@
   "TIDY5E.Drakkenheim": {
     "Contamination": {
       "rollSave": "Roll Contamination Save",
+      "rollDeepHazeSave": "Roll Deep Haze Save",
       "rollMutation": "Roll for Mutation",
       "rolledMutation": "{name} rolled for a mutation with a contamination level of {level}.",
       "clear": "Clear Contamination",

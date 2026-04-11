@@ -6,7 +6,7 @@
   } from 'src/types/types';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, tick } from 'svelte';
 
   const context =
     $derived(
@@ -24,11 +24,13 @@
 
   const actorName = $derived(FoundryAdapter.getProperty<string>(context.actor, 'name'));
 
-  let levels = Array.fromRange(6, 1);
-
   let version = $derived(
     getContext<string>(DRAKKENHEIM_CORE_CONSTANTS.SVELTE_CONTEXT.VERSION),
   );
+
+  let levels = Array.fromRange(DRAKKENHEIM_CORE_CONSTANTS.MAX_CONTAMINATION_LEVEL, 1);
+  let levelButtons = $state<(HTMLButtonElement | undefined)[]>([]);
+  let flashLevel = $state<number | null>(null);
 
   let enrichedPromises = levels.map((level) =>
     foundry.applications.ux.TextEditor.enrichHTML(
@@ -51,10 +53,10 @@
     });
   }
 
-  async function rollContaminationSave(): Promise<void> {
+  async function rollContaminationSave(dc: number): Promise<void> {
     const roll = new Roll('1d20');
     await roll.evaluate();
-    const success = roll.total >= 10;
+    const success = roll.total >= dc;
     const resultKey = success
       ? 'DRAKKENHEIM.CONTAMINATION.roll'
       : 'DRAKKENHEIM.CONTAMINATION.rollIncrease';
@@ -62,6 +64,22 @@
       speaker: ChatMessage.getSpeaker({ actor: context.actor }),
       flavor: `${localize(resultKey, { name: actorName })}`,
     });
+    if (!success && contaminationLevel < DRAKKENHEIM_CORE_CONSTANTS.MAX_CONTAMINATION_LEVEL) {
+      const nextLevel = contaminationLevel + 1;
+      await context.actor.update({
+        [DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP]: nextLevel,
+      });
+      flashLevel = nextLevel;
+      await tick();
+      levelButtons[nextLevel - 1]?.focus({ preventScroll: true });
+    }
+  }
+
+  function onContaminationFlashEnd(ev: AnimationEvent): void {
+    if (ev.animationName !== 't5e-contamination-level-gained') {
+      return;
+    }
+    flashLevel = null;
   }
 
   async function clearContamination(): Promise<void> {
@@ -75,20 +93,21 @@
 <div class="tab-content">
   <div class="contamination-actions flexrow">
     <button type="button" 
-      onclick={rollContaminationSave}
+      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC)}
       class="button button-icon-only button-secondary">
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
+    </button>
+    <button type="button" 
+      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC)}
+      class="button button-icon-only button-secondary">
+      <i class="fa-solid fa-dice-d20"></i>
+      {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
     </button>
     <button type="button" onclick={rollMutation}
       class="button button-icon-only button-secondary">
       <i class="fa-solid fa-bacteria"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollMutation')}
-    </button>
-    <button type="button" onclick={clearContamination}
-    class="button button-icon-only button-secondary">
-      <i class="fa-solid fa-syringe"></i>
-      {localize('TIDY5E.Drakkenheim.Contamination.clear')}
     </button>
   </div>
   <div class="contamination-title title-underlined">
@@ -114,26 +133,38 @@
     <button
       type="button"
       tabindex={0}
-      class:active={0 === contaminationLevel} 
-      class="symptom level-0" 
+      class:active={0 === contaminationLevel}
+      class="symptom level-0"
       onclick={() => clearContamination()}
       onkeydown={(ev) => clearContamination()}
     >
     <span class="level-icon">
       <i class="fa-solid fa-heart"></i>
     </span>
-    {localize('TIDY5E.Drakkenheim.Contamination.none')}
+    <span class="level-label"> 
+      {localize('TIDY5E.Drakkenheim.Contamination.none')}
+    </span>
+    {#if contaminationLevel > 0}
+      <div onclick={clearContamination}
+      class="button button-icon-only button-secondary clear-contamination">
+        <i class="fa-solid fa-syringe"></i>
+        {localize('TIDY5E.Drakkenheim.Contamination.clear')}
+      </div>
+    {/if}
   </button>
     {#each enrichedPromises as promise, i}
       {@const level = i + 1}
       <button
         type="button"
         tabindex={0}
-        class:active={level <= contaminationLevel} 
-        class="symptom" 
+        bind:this={levelButtons[i]}
+        class:active={level <= contaminationLevel}
+        class:contamination-level-gained={flashLevel === level}
+        class="symptom"
         onclick={() => onContaminationLevelChanged(level)}
         onkeydown={(ev) => onContaminationLevelChanged(level)}
-        >
+        onanimationend={onContaminationFlashEnd}
+      >
         <span class="level-icon">
           <i class="fa-solid fa-meteor"></i>
           <span class="level-number">{level}</span>
