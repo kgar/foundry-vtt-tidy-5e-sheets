@@ -286,6 +286,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
           [CONSTANTS.ITEM_TYPE_WEAPON]: vehicleItemColumns,
+          [CONSTANTS.ITEM_TYPE_SPELL]: standardSpellColumns,
           [CONSTANTS.ITEM_TYPE_EQUIPMENT]: vehicleItemColumns,
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },

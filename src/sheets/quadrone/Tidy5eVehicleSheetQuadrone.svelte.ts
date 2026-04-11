@@ -31,8 +31,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
-import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
+import { isNil } from 'src/utils/data';
 
 const localize = FoundryAdapter.localize;
 
@@ -389,8 +389,11 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
     const statblockRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
-      { canEquip: false, hasActionsTab: false }
+      { canEquip: false, hasActionsTab: false },
     );
+
+    const statblockSpellRowActions =
+      TableRowActionsRuntime.getSpellRowActions(context);
 
     const statblock: Record<string, InventorySection> = {
       [CONSTANTS.ITEM_TYPE_FEAT]: {
@@ -403,6 +406,17 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         },
         key: CONSTANTS.ITEM_TYPE_FEAT,
         rowActions: statblockRowActions,
+        sectionActions: [],
+        show: true,
+      },
+      [CONSTANTS.ITEM_TYPE_SPELL]: {
+        type: CONSTANTS.SECTION_TYPE_INVENTORY,
+        items: [],
+        canCreate: true,
+        label: 'TYPES.Item.spellPl',
+        dataset: {},
+        key: CONSTANTS.ITEM_TYPE_SPELL,
+        rowActions: statblockSpellRowActions,
         sectionActions: [],
         show: true,
       },
@@ -450,6 +464,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     const statblockTypes = [
       CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_SPELL,
       CONSTANTS.ITEM_TYPE_WEAPON,
       CONSTANTS.ITEM_TYPE_EQUIPMENT,
     ];
@@ -465,6 +480,20 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           canCreate: true,
           rowActions: inventoryRowActions,
         });
+      } else if (
+        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+        item.system.linkedActivity
+      ) {
+        Inventory.applyInventoryItemToSection(
+          statblock,
+          item,
+          statblockTypes,
+          {
+            canCreate: false,
+            rowActions: statblockSpellRowActions,
+          },
+          CONSTANTS.ITEM_TYPE_SPELL,
+        );
       } else {
         Inventory.applyInventoryItemToSection(
           statblock,
@@ -536,6 +565,24 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           max: item.system.crew.max,
         },
       };
+    }
+
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const linked = item.system.linkedActivity?.item;
+
+      const vsmcr = game.i18n.getListFormatter({ style: 'narrow' }).format(
+        item.labels.components.all
+          .filter((a: any) => !isNil(a?.abbr)) // a valid use case with Default Sheets is to exclude Abbreviation. Quadrone's design doesn't account for that, so we will exclude any components that don't supply an abbreviation.
+          .map((a: any) => a.abbr),
+      );
+
+      ctx.subtitle = [
+        linked
+          ? linked.name
+          : this.actor.identifiedItems.get(item.system.sourceItem)?.first()
+              ?.name,
+        vsmcr,
+      ].filterJoin(' &bull; ');
     }
   }
 
