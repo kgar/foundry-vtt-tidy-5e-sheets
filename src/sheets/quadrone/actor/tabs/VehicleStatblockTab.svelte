@@ -22,6 +22,12 @@
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   const localize = FoundryAdapter.localize;
 
@@ -31,14 +37,43 @@
 
   let searchCriteria = $state('');
 
+  const loweredSearchCriteria = $derived(
+    searchCriteria.toLocaleLowerCase().trim(),
+  );
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   const itemToggleMap = $derived(inlineToggleService.map);
 
-  // const searchResults = createSearchResultsState();
-  // setSearchResultsContext(searchResults);
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
+
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: sections.filter(
+        (s) => s.type === CONSTANTS.SECTION_TYPE_INVENTORY,
+      ),
+      tabId,
+    });
+
+    const draftAnimalSections = sections.filter(
+      (s) => s.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
+    );
+
+    for (const section of draftAnimalSections) {
+      for (const member of section.members) {
+        if (
+          member.actor.name.toLocaleLowerCase().includes(loweredSearchCriteria)
+        ) {
+          searchResults.uuids.add(member.actor.uuid);
+        }
+      }
+    }
+  });
 
   // TODO: set up action bar so we can configure pins
   let tabOptionGroups: SectionOptionGroup[] = $derived([
@@ -172,12 +207,7 @@
   }
 </script>
 
-<!-- <ItemsActionBar
-  bind:searchCriteria
-  sections={features}
-  {tabId}
-  {tabOptionGroups}
-/> -->
+<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
 <div class="tab-content">
   {#if showSheetPins}
@@ -375,57 +405,62 @@
               {/if}
             {:else}
               {#each section.members as member}
-                <TidyTableRow
-                  rowContainerAttributes={{
-                    ['data-context-menu']:
-                      CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-                    ['data-uuid']: member.actor.uuid,
-                  }}
-                >
-                  {#snippet children()}
-                    <div class="highlight"></div>
-                    <a
-                      class={[
-                        'tidy-table-row-use-button',
-                        { disabled: !context.editable },
-                      ]}
-                    >
-                      <img
-                        class="item-image"
-                        alt={member.actor.name}
-                        src={member.actor.img}
-                      />
-                      <span class="roll-prompt">
-                        <i class="fa fa-dice-d20"></i>
-                      </span>
-                    </a>
-
-                    <TidyTableCell primary={true} class="item-label text-cell">
+                {#if !searchResults.uuids || searchResults.uuids.has(member.actor.uuid)}
+                  <TidyTableRow
+                    rowContainerAttributes={{
+                      ['data-context-menu']:
+                        CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                      ['data-uuid']: member.actor.uuid,
+                    }}
+                  >
+                    {#snippet children()}
+                      <div class="highlight"></div>
                       <a
-                        class="item-name"
-                        role="button"
-                        data-keyboard-focus
-                        tabindex="0"
-                        data-action="showDocument"
-                        data-uuid={member.actor.uuid}
+                        class={[
+                          'tidy-table-row-use-button',
+                          { disabled: !context.editable },
+                        ]}
                       >
-                        <span class="cell-text">
-                          <span class="cell-name">{member.actor.name}</span>
-                          <span class="cell-context">{member.subtitle}</span>
+                        <img
+                          class="item-image"
+                          alt={member.actor.name}
+                          src={member.actor.img}
+                        />
+                        <span class="roll-prompt">
+                          <i class="fa fa-dice-d20"></i>
                         </span>
                       </a>
-                    </TidyTableCell>
 
-                    <TidyTableCustomCells
-                      {columns}
-                      {context}
-                      ctx={member}
-                      entry={member.actor}
-                      {hiddenColumns}
-                      {section}
-                    />
-                  {/snippet}
-                </TidyTableRow>
+                      <TidyTableCell
+                        primary={true}
+                        class="item-label text-cell"
+                      >
+                        <a
+                          class="item-name"
+                          role="button"
+                          data-keyboard-focus
+                          tabindex="0"
+                          data-action="showDocument"
+                          data-uuid={member.actor.uuid}
+                        >
+                          <span class="cell-text">
+                            <span class="cell-name">{member.actor.name}</span>
+                            <span class="cell-context">{member.subtitle}</span>
+                          </span>
+                        </a>
+                      </TidyTableCell>
+
+                      <TidyTableCustomCells
+                        {columns}
+                        {context}
+                        ctx={member}
+                        entry={member.actor}
+                        {hiddenColumns}
+                        {section}
+                      />
+                    {/snippet}
+                  </TidyTableRow>
+                {/if}
               {/each}
             {/if}
           {/snippet}
