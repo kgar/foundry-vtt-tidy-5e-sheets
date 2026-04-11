@@ -1038,5 +1038,8 @@
             "clear": "Éliminer la contamination",
             "none": "Aucune contamination ni symptômes."
         }
-    }
+    },
+    "TIDY5E.AbilityRoll": "Lancer un test de {ability}",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Maîtrise d'arme : {mastery}",
+    "TIDY5E.DisplayOptionsActor.Title": "Options d'affichage des acteurs"
 }
