@@ -7,6 +7,8 @@ export const DRAKKENHEIM_CORE_CONSTANTS = {
   CONTAMINATION_LEVEL_FLAG_PROP: `flags.drakkenheim.contamination`,
   VERSION_MODERN: 'modern',
   VERSION_LEGACY: 'legacy',
+  MAX_CONTAMINATION_LEVEL: 6,
+  CONTAMINATION_SAVE_DC: 10,
   SVELTE_CONTEXT: {
     VERSION: 'drakkenheimVersion'
   }

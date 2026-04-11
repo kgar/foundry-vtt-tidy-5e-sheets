@@ -1,3 +1,22 @@
+@keyframes t5e-contamination-level-gained {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  20% {
+    filter: brightness(1.35);
+  }
+  40% {
+    filter: brightness(1);
+  }
+  60% {
+    filter: brightness(1.35);
+  }
+  80% {
+    filter: brightness(1);
+  }
+}
+
 /* -------------------------------------- */
 /* Quadrone Styles                        */
 /* -------------------------------------- */
@@ -191,6 +210,11 @@
           .level-number {
             opacity: 1;
           }
+        }
+
+        &.contamination-level-gained {
+          /* 5 × 0.4s = 2s total; each iteration is one double-pulse keyframe */
+          animation: t5e-contamination-level-gained 0.4s ease-in-out 5;
         }
 
         &:last-child {
@@ -434,6 +458,10 @@
           .level-number {
             opacity: 1;
           }
+        }
+
+        &.contamination-level-gained {
+          animation: t5e-contamination-level-gained 1s ease-in-out 2;
         }
 
         &:last-child {
