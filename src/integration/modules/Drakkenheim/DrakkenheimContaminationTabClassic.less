@@ -109,32 +109,42 @@
         font-weight: var(--font-weight-default);
         color: var(--dod-color-symptom-text);
 
-        &.level-0.active {
-          background: var(--dod-color-symptom-level0-background-active);
-
-          .level-icon {
-            background: var(--dod-color-symptom-level0-icon-background-active);
-            i {
-              color: var(--dod-color-symptom-level0-icon-color-active);
-            }
+        &.level-0 {
+          .level-label {
+            flex: 1;
+          }
+          .clear-contamination {
+            flex: 0 1 fit-content;
+            padding: 0 var(--t5e-size-2x);
           }
 
-          &:hover,
-          &:focus-within,
-          &:active:not(:disabled) {
-            background: var(--dod-color-symptom-level0-background-hover);
-
+          &.active {
+            background: var(--dod-color-symptom-level0-background-active);
+  
             .level-icon {
-              background: var(--dod-color-symptom-level0-icon-background-hover);
+              background: var(--dod-color-symptom-level0-icon-background-active);
               i {
-                color: var(--dod-color-symptom-level0-icon-color-hover);
+                color: var(--dod-color-symptom-level0-icon-color-active);
+              }
+            }
+  
+            &:hover,
+            &:focus-within,
+            &:active:not(:disabled) {
+              background: var(--dod-color-symptom-level0-background-hover);
+  
+              .level-icon {
+                background: var(--dod-color-symptom-level0-icon-background-hover);
+                i {
+                  color: var(--dod-color-symptom-level0-icon-color-hover);
+                }
               }
             }
           }
-        }
-
-        &.level-0:not(.active) {
-          color: var(--dod-color-symptom-text-inactive);
+  
+          &:not(.active) {
+            color: var(--dod-color-symptom-text-inactive);
+          }
         }
 
         .level-icon {
@@ -213,8 +223,8 @@
         }
 
         &.contamination-level-gained {
-          /* 5 × 0.4s = 2s total; each iteration is one double-pulse keyframe */
-          animation: t5e-contamination-level-gained 0.4s ease-in-out 5;
+          animation: t5e-contamination-level-gained .8s cubic-bezier(0.68, 0, 0.265, 1.55) 3;
+     
         }
 
         &:last-child {

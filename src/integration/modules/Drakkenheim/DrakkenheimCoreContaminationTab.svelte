@@ -53,10 +53,10 @@
     });
   }
 
-  async function rollContaminationSave(): Promise<void> {
+  async function rollContaminationSave(dc: number): Promise<void> {
     const roll = new Roll('1d20');
     await roll.evaluate();
-    const success = roll.total >= DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC;
+    const success = roll.total >= dc;
     const resultKey = success
       ? 'DRAKKENHEIM.CONTAMINATION.roll'
       : 'DRAKKENHEIM.CONTAMINATION.rollIncrease';
@@ -93,20 +93,21 @@
 <div class="tab-content">
   <div class="contamination-actions flexrow">
     <button type="button" 
-      onclick={rollContaminationSave}
+      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC)}
       class="button button-icon-only button-secondary">
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
+    </button>
+    <button type="button" 
+      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC)}
+      class="button button-icon-only button-secondary">
+      <i class="fa-solid fa-dice-d20"></i>
+      {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
     </button>
     <button type="button" onclick={rollMutation}
       class="button button-icon-only button-secondary">
       <i class="fa-solid fa-bacteria"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollMutation')}
-    </button>
-    <button type="button" onclick={clearContamination}
-    class="button button-icon-only button-secondary">
-      <i class="fa-solid fa-syringe"></i>
-      {localize('TIDY5E.Drakkenheim.Contamination.clear')}
     </button>
   </div>
   <div class="contamination-title title-underlined">
@@ -140,7 +141,16 @@
     <span class="level-icon">
       <i class="fa-solid fa-heart"></i>
     </span>
-    {localize('TIDY5E.Drakkenheim.Contamination.none')}
+    <span class="level-label"> 
+      {localize('TIDY5E.Drakkenheim.Contamination.none')}
+    </span>
+    {#if contaminationLevel > 0}
+      <div onclick={clearContamination}
+      class="button button-icon-only button-secondary clear-contamination">
+        <i class="fa-solid fa-syringe"></i>
+        {localize('TIDY5E.Drakkenheim.Contamination.clear')}
+      </div>
+    {/if}
   </button>
     {#each enrichedPromises as promise, i}
       {@const level = i + 1}
