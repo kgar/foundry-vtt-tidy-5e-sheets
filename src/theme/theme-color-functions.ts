@@ -264,21 +264,32 @@ export function getColorWithContrast(
 export function getForegroundAtContrast(
   backgroundColor: string,
   foregroundColor: string,
-  targetLevel: ContrastLevel
+  targetLevel: ContrastLevel,
+  preserveChroma?: boolean,
 ): string {
   const targetLc = getMinContrastLc(targetLevel);
 
   try {
-    console.log('getForegroundAtContrast', backgroundColor, foregroundColor, targetLevel);
     if (!chroma.valid(backgroundColor) || !chroma.valid(foregroundColor)) {
       return foregroundColor;
     }
     const currentContrast = getContrastAPCA(foregroundColor, backgroundColor);
-    console.log('adjustColorForContrast',adjustColorForContrast(foregroundColor, backgroundColor, targetLc, true));
     if (currentContrast >= targetLc) {
       return chroma(foregroundColor).css('rgb');
     }
-    return adjustColorForContrast(foregroundColor, backgroundColor, targetLc, true);
+
+    let adjusted = adjustColorForContrast(foregroundColor, backgroundColor, targetLc, true);
+
+    if (preserveChroma) {
+      // Override to keep saturation for colors like highlights
+      const [, originalChroma, originalHue] = chroma(foregroundColor).oklch();
+      const [adjustedL] = chroma(adjusted).oklch();
+      adjusted = chroma
+        .oklch(adjustedL, originalChroma, Number.isNaN(originalHue) ? 0 : originalHue)
+        .css('rgb');
+    }
+
+    return adjusted;
   } catch {
     return foregroundColor;
   }

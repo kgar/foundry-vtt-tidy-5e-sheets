@@ -118,15 +118,6 @@
       margin-top: auto;
     }
 
-    .ability-proficiency-indicator {
-      width: 0.375rem;
-      border-radius: 100%;
-      background-color: var(--t5e-color-gold);
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-
     .button-config {
       position: absolute;
       top: -0.125rem;
@@ -467,8 +458,6 @@
 
       .ability-roll-button {
         margin-bottom: -2.125rem;
-        padding-top: 0.125rem;
-        padding-bottom: 1.75rem;
       }
 
       .bonus-container .ability-score-input {
@@ -592,37 +581,66 @@
     .collapse-abilities();
   }
 
-  &.theme-basic .sheet-header .abilities-container .abilities-container-inner {
-    justify-content: space-between;
-    .collapse-abilities();
+  &.theme-basic .sheet-header .abilities-container { 
 
-    .ability:has(.proficient),
-    .ac-container,
-    .initiative-container {
-      background: var(--ability-collapsed-bg);
-      outline: 0.0625rem solid var(--ability-collapsed-outline);
-    }
-
-
-    .ac-container .shield {
-      aspect-ratio: 1/1.125;
-      max-width: 4rem;
-
-      .ac-label {
-        display: flex;
-        justify-content: center;
+    .ability.has-proficiency {
+      .button-config {
+        --button-icon: var(--t5e-color-text-gold-emphasis);
       }
     }
 
-    .initiative.score {
-      max-height: 4rem;
+    .concentration-roll-button {
+      margin-left: 0.375rem;
+      margin-right: 0.375rem;
     }
 
-    >* {
-      max-width: 6rem;
+    .abilities-container-inner {
+      justify-content: space-between;
 
-      .bonus-container {
-        gap: 0.1875rem;
+      .collapse-abilities();
+
+      .ability-proficiency-indicator {
+        width: var(--t5e-size-2x);
+        height: var(--t5e-size-2x);
+        border-radius: 100%;
+        background-color: var(--t5e-color-text-gold-emphasis);
+        position: absolute;
+        right: -0.5rem;
+
+        &.config-button-visible {
+          display: none;
+          // right: auto;
+          // right: -1.5rem;
+        } 
+      }
+      .ability:has(.proficient),
+      .ac-container,
+      .initiative-container {
+        background: var(--ability-collapsed-bg);
+        outline: 0.0625rem solid var(--ability-collapsed-outline);
+      }
+
+
+      .ac-container .shield {
+        aspect-ratio: 1/1.125;
+        max-width: 4rem;
+
+        .ac-label {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      .initiative.score {
+        max-height: 4rem;
+      }
+
+      >* {
+        max-width: 6rem;
+
+        .bonus-container {
+          gap: 0.1875rem;
+        }
       }
     }
   }

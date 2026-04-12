@@ -63,7 +63,7 @@
   }
 </script>
 
-<div class={['ability', ability.key]} data-tidy-sheet-part="ability-container">
+<div class={['ability', ability.key, { 'has-proficiency': ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT }]} data-tidy-sheet-part="ability-container">
   <div class="ability-bonus-container">
     <div
       class={[
@@ -137,6 +137,9 @@
       data-tidy-sheet-part="ability-score"
     >
       <span class="font-title-small color-text-default">{ability.value}</span>
+      {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
+        <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
+      {/if}
     </label>
     {#if unlocked}
       <button

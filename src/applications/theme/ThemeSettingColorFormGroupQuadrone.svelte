@@ -48,7 +48,6 @@
 </script>
 
 <div class="form-group">
-  <!-- TODO: hightouch to backtrack on eyedropper  -->
   <label for={inputId}>{label}</label>
   <div class="form-fields color-picker-container">
     <label
@@ -80,6 +79,7 @@
 
     {#if eyeDropperEnabled}
       <button
+        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionPickColor')}
         type="button"
         class="button button-borderless button-icon-only eye-dropper"
         onclick={() => activateEyeDropper()}
@@ -92,12 +92,12 @@
       <button
         type="button"
         title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
-        class="button button-borderless button-icon-only"
+        class="button button-secondary button-icon-only"
         onclick={() => {
           value = '';
         }}
       >
-        <i class="fa-solid fa-xmark"></i>
+        <i class="fa-solid fa-trash"></i>
       </button>
     {/if}
   </div>

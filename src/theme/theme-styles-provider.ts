@@ -117,7 +117,7 @@ export class ThemeStylesProvider {
       },
       {
         property: TIDY_CSS_VARIABLES.themeColorHighlight,
-        value: getForegroundAtContrast(cardColor, settings.accentColor, 'minimum'),
+        value: getForegroundAtContrast(cardColor, settings.accentColor, 'minimum', true),
       },
       {
         property: TIDY_CSS_VARIABLES.themeForeground,
@@ -132,19 +132,6 @@ export class ThemeStylesProvider {
         value: getForegroundAtContrast(accentBackground, themeForegroundDisabledBase, 'minimum'),
       },
     ];
-
-    const textGoldBase = getCSSVariable(TIDY_CSS_VARIABLES.textGold, accentVariant);
-    const textGoldEmphasisBase = getCSSVariable(TIDY_CSS_VARIABLES.textGoldEmphasis, accentVariant);
-    ruleset.push(
-      {
-        property: TIDY_CSS_VARIABLES.textGold,
-        value: getForegroundAtContrast(accentBackground, textGoldBase, 'body'),
-      },
-      {
-        property: TIDY_CSS_VARIABLES.textGoldEmphasis,
-        value: getForegroundAtContrast(accentBackground, textGoldEmphasisBase, 'body-high-contrast'),
-      }
-    );
 
     return [
       {

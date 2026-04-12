@@ -125,7 +125,7 @@
       key="accent-color"
       bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
-      placeholder={placeholders?.value.accentColor}
+      placeholder="rgb(116, 27, 43)"
     />
     <p class="hint">
       {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
