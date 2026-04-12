@@ -985,7 +985,8 @@
             "rollMutation": "Role para Mutação",
             "rolledMutation": "{name} rolou para uma mutação com um nível de contaminação de {level}.",
             "clear": "Limpar Contaminação",
-            "none": "Sem contaminação ou sintomas."
+            "none": "Sem contaminação ou sintomas.",
+            "rollDeepHazeSave": "Rolar Salvaguarda Contra Deep Haze"
         }
     },
     "TIDY5E.SectionOrganization": "Organização da Seção",

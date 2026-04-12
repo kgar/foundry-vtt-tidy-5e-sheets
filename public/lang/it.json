@@ -1038,7 +1038,12 @@
             "rollMutation": "Tira per Mutazione",
             "rolledMutation": "{name} ha ottenuto una mutazione con un livello di contaminazione di {level}.",
             "clear": "Elimina Contaminazione",
-            "none": "Nessuna contaminazione o sintomi."
+            "none": "Nessuna contaminazione o sintomi.",
+            "rollDeepHazeSave": "Tiro Salvezza Nebbia Profonda"
         }
-    }
+    },
+    "TIDY5E.AbilityRoll": "Tira Check {ability}",
+    "TIDY5E.AbbrProficiency": "Comp",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Padronanza Armi: {mastery}",
+    "TIDY5E.DisplayOptionsActor.Title": "Opzioni Visualizzazione Personaggio"
 }
