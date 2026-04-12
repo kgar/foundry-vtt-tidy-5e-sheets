@@ -261,7 +261,11 @@ export const FoundryAdapter = {
 
     const options = { mode: CONSTANTS.SHEET_MODE_EDIT };
 
-    doc.sheet._renderChild(doc.sheet, options);
+    if (doc.parent?.sheet._renderChild) {
+      doc.parent.sheet._renderChild(doc.sheet, options);
+    } else {
+      doc.sheet.render({ force: true }, options);
+    }
   },
   createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
