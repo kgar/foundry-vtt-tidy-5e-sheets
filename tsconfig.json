@@ -1,13 +1,15 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    },
     "inlineSources": true,
     "module": "ES2022",
     "target": "ES2024",
     "allowJs": true,
     "noImplicitAny": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "isolatedModules": true,
     "types": ["svelte", "node"],
