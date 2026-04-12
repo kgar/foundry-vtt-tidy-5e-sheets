@@ -114,46 +114,71 @@ function adjustColorForContrast(
 ): string {
   try {
     const chromaColor = chroma(colorToAdjust);
-    const refLightness = chroma(referenceColor).get('lch.l');
     let [l, c, h] = chromaColor.lch();
 
-    // Move lightness away from the reference to increase contrast
-    const goLighter = l >= refLightness;
-    let minL = goLighter ? l : 0;
-    let maxL = goLighter ? 100 : l;
-    let adjustedColor = chromaColor;
-    let iterations = 0;
-    const maxIterations = 20;
-
-    while (iterations < maxIterations) {
-      const midL = (minL + maxL) / 2;
-      const testColor = Number.isNaN(h)
-        ? chroma.lch(midL, c, 0)
-        : chroma.lch(midL, c, h);
-
-      const contrastLc = adjustingForeground
+    const measure = (testColor: chroma.Color) =>
+      adjustingForeground
         ? getContrastAPCA(testColor.hex(), referenceColor)
         : getContrastAPCA(referenceColor, testColor.hex());
 
-      if (Math.abs(contrastLc - minContrastLc) < 1) {
-        adjustedColor = testColor;
-        break;
+    // Search both directions and keep whichever reaches the target. Avoids the
+    // dead-end where the starting color is at an extreme (e.g. white can't go
+    // lighter) and a single fixed direction has zero headroom.
+    const searchInDirection = (goLighter: boolean): { color: chroma.Color; lc: number } => {
+      let minL = goLighter ? l : 0;
+      let maxL = goLighter ? 100 : l;
+      let bestColor = chromaColor;
+      let bestLc = measure(chromaColor);
+
+      for (let i = 0; i < 20; i++) {
+        const midL = (minL + maxL) / 2;
+        const testColor = Number.isNaN(h)
+          ? chroma.lch(midL, c, 0)
+          : chroma.lch(midL, c, h);
+        const contrastLc = measure(testColor);
+
+        if (contrastLc > bestLc) {
+          bestColor = testColor;
+          bestLc = contrastLc;
+        }
+
+        if (Math.abs(contrastLc - minContrastLc) < 1) {
+          break;
+        }
+
+        if (contrastLc < minContrastLc) {
+          if (goLighter) minL = midL; else maxL = midL;
+        } else {
+          if (goLighter) maxL = midL; else minL = midL;
+        }
       }
 
-      if (contrastLc < minContrastLc) {
-        if (goLighter) minL = midL; else maxL = midL;
-      } else {
-        if (goLighter) maxL = midL; else minL = midL;
-      }
+      return { color: bestColor, lc: bestLc };
+    };
 
-      adjustedColor = testColor;
-      iterations++;
+    const lighter = searchInDirection(true);
+    const darker = searchInDirection(false);
+    const lighterMeets = lighter.lc >= minContrastLc;
+    const darkerMeets = darker.lc >= minContrastLc;
+
+    let adjustedColor: chroma.Color;
+    if (lighterMeets && darkerMeets) {
+      // Both directions work — pick the one closer to the original lightness
+      // to minimize visual shift.
+      adjustedColor =
+        Math.abs(lighter.color.lch()[0] - l) <= Math.abs(darker.color.lch()[0] - l)
+          ? lighter.color
+          : darker.color;
+    } else if (lighterMeets) {
+      adjustedColor = lighter.color;
+    } else if (darkerMeets) {
+      adjustedColor = darker.color;
+    } else {
+      adjustedColor = lighter.lc >= darker.lc ? lighter.color : darker.color;
     }
 
     // Reduce chroma as a fallback if lightness alone wasn't enough
-    const finalContrast = adjustingForeground
-      ? getContrastAPCA(adjustedColor.hex(), referenceColor)
-      : getContrastAPCA(referenceColor, adjustedColor.hex());
+    const finalContrast = measure(adjustedColor);
     if (finalContrast < minContrastLc) {
       const reducedChroma = Math.max(0, c * 0.5);
       const [adjustedL] = adjustedColor.lch();
@@ -244,15 +269,15 @@ export function getForegroundAtContrast(
   const targetLc = getMinContrastLc(targetLevel);
 
   try {
+    console.log('getForegroundAtContrast', backgroundColor, foregroundColor, targetLevel);
     if (!chroma.valid(backgroundColor) || !chroma.valid(foregroundColor)) {
       return foregroundColor;
     }
-
     const currentContrast = getContrastAPCA(foregroundColor, backgroundColor);
+    console.log('adjustColorForContrast',adjustColorForContrast(foregroundColor, backgroundColor, targetLc, true));
     if (currentContrast >= targetLc) {
       return chroma(foregroundColor).css('rgb');
     }
-
     return adjustColorForContrast(foregroundColor, backgroundColor, targetLc, true);
   } catch {
     return foregroundColor;

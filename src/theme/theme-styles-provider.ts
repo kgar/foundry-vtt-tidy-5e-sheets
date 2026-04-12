@@ -6,13 +6,21 @@ import type {
   ThemeQuadroneStyleRule,
 } from './theme-quadrone.types';
 import { formatResourcePathForCss } from 'src/utils/path';
-import { THEME_CLASS_DARK, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
+import { THEME_CLASS_DARK, THEME_CLASS_LIGHT, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
+import { getCSSVariable } from './theme-palette-tokens';
 import { debug } from 'src/utils/logging';
 
-const FOREGROUND_BASES = {
-  diminished: { darkTheme: 'rgb(207, 210, 218)', lightTheme: 'rgb(102, 102, 102)' }, // grey-85, grey-40
-  disabled: { darkTheme: 'rgb(153, 153, 153)', lightTheme: 'rgb(153, 153, 153)' }, // grey-60, grey-60
-};
+const TIDY_CSS_VARIABLES = {
+  themeColor: '--t5e-theme-color-default',
+  themeColorHighlight: '--t5e-theme-color-highlight',
+  themeHeaderColor: '--t5e-theme-color-header',
+  cardColor: '--t5e-component-card-default',
+  themeForeground: '--t5e-theme-color-foreground',
+  themeForegroundDiminished: '--t5e-theme-color-foreground-diminished',
+  themeForegroundDisabled: '--t5e-theme-color-foreground-disabled',
+  textGold: '--t5e-color-text-gold',
+  textGoldEmphasis: '--t5e-color-text-gold-emphasis',
+} as const;
 
 export class ThemeStylesProvider {
   static create(
@@ -91,31 +99,52 @@ export class ThemeStylesProvider {
       idOverride
     );
 
-    // Pick base diminished/disabled colors matching the foreground polarity
-    const isDarkTheme = accentColorResult.themeClass === THEME_CLASS_DARK;
-    const diminishedColor = isDarkTheme ? FOREGROUND_BASES.diminished.darkTheme : FOREGROUND_BASES.diminished.lightTheme;
-    const disabledColor = isDarkTheme ? FOREGROUND_BASES.disabled.darkTheme : FOREGROUND_BASES.disabled.lightTheme;
+    // Pull base foreground colors straight from the live CSS so module/world
+    // overrides flow through without TS-side hardcoding.
+    const accentBackground = settings.accentColor;
+    const accentVariant = accentColorResult.themeClass === THEME_CLASS_DARK ? THEME_CLASS_DARK : THEME_CLASS_LIGHT;
+    const cardColor = getCSSVariable(TIDY_CSS_VARIABLES.cardColor, accentVariant);
+
+    const themeForegroundBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForeground, accentVariant);
+    const themeForegroundDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDiminished, accentVariant);
+    const themeForegroundDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDisabled, accentVariant);
 
     const ruleset: ThemeQuadroneStyleRule[] = [
       identifierRule,
       {
-        property: '--t5e-theme-color-default',
-        value: settings.accentColor,
-      },
-      // APCA-computed foreground colors for text/icons on accent-colored backgrounds
-      {
-        property: '--t5e-theme-color-foreground',
-        value: accentColorResult.foregroundColor,
+        property: TIDY_CSS_VARIABLES.themeColor,
+        value: accentBackground,
       },
       {
-        property: '--t5e-theme-color-foreground-diminished',
-        value: getForegroundAtContrast(settings.accentColor, diminishedColor, 'headline'),
+        property: TIDY_CSS_VARIABLES.themeColorHighlight,
+        value: getForegroundAtContrast(cardColor, settings.accentColor, 'minimum'),
       },
       {
-        property: '--t5e-theme-color-foreground-disabled',
-        value: getForegroundAtContrast(settings.accentColor, disabledColor, 'minimum'),
+        property: TIDY_CSS_VARIABLES.themeForeground,
+        value: getForegroundAtContrast(accentBackground, themeForegroundBase, 'body'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.themeForegroundDiminished,
+        value: getForegroundAtContrast(accentBackground, themeForegroundDiminishedBase, 'headline'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.themeForegroundDisabled,
+        value: getForegroundAtContrast(accentBackground, themeForegroundDisabledBase, 'minimum'),
       },
     ];
+
+    const textGoldBase = getCSSVariable(TIDY_CSS_VARIABLES.textGold, accentVariant);
+    const textGoldEmphasisBase = getCSSVariable(TIDY_CSS_VARIABLES.textGoldEmphasis, accentVariant);
+    ruleset.push(
+      {
+        property: TIDY_CSS_VARIABLES.textGold,
+        value: getForegroundAtContrast(accentBackground, textGoldBase, 'body'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.textGoldEmphasis,
+        value: getForegroundAtContrast(accentBackground, textGoldEmphasisBase, 'body-high-contrast'),
+      }
+    );
 
     return [
       {
@@ -150,7 +179,7 @@ export class ThemeStylesProvider {
         ruleset: [
           identifierRule,
           {
-            property: '--t5e-theme-color-header',
+            property: TIDY_CSS_VARIABLES.themeHeaderColor,
             value: settings.headerBackgroundColor,
           },
         ],
@@ -282,7 +311,7 @@ export class ThemeStylesProvider {
         ruleset: [
           identifierRule,
           {
-            property: '--t5e-theme-header-color',
+            property: TIDY_CSS_VARIABLES.themeHeaderColor,
             value: settings.headerColor,
           },
         ],

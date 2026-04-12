@@ -16,13 +16,19 @@
 
     .tidy-table-header-row {
       --t5e-method-color: transparent;
+      --t5e-theme-color-foreground: var(--t5e-component-card-foreground);
+      --t5e-theme-color-foreground-disabled: var(--t5e-component-card-foreground-disabled);
+      --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
+
 
       border-radius: 0.125rem;
       border-width: 0 0 0.0625rem 0;
       border-style: solid;
       border-image: var(--t5e-table-row-border-image);
+      box-shadow: none;
       color: var(--t5e-color-text-lighter);
       padding-bottom: 0.125rem;
+
     }
   }
 
@@ -976,7 +982,7 @@
   }
 
   &:where(.theme-dark) {
-    c .tidy-table-header-row {
+    .tidy-table-header-row {
       --t5e-table-header-border-color: rgba(255, 255, 255, 0.16);
 
       &:hover {

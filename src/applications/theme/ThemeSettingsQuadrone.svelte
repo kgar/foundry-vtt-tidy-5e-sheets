@@ -217,6 +217,9 @@
           id="{idPrefix}-use-boring-theme"
           type="checkbox"
           bind:checked={context.value.useBasicTheme}
+          onchange={() => {
+            context.value.useHeaderBackground = !context.value.useBasicTheme;
+          }}
         />
       </div>
       <p class="hint">

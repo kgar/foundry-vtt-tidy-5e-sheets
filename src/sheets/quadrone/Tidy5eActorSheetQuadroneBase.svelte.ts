@@ -62,6 +62,7 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
+import { getThemeV2 } from 'src/theme/theme';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1128,27 +1129,15 @@ export function Tidy5eActorSheetQuadroneBase<
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({
         doc: this.actor,
       });
+      console.log('themeSettings', themeSettings);
       this._applySheetThemeClasses(themeSettings);
     }
 
-    // Cache theme class state
-    _lastThemeClasses?: { isBasic: boolean; isParchment: boolean; isDark: boolean };
-
     _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
-      const isBasic = !!themeSettings.useBasicTheme;
+      const isBasic = themeSettings.useBasicTheme;
       const isParchment = !themeSettings.useHeaderBackground || isBasic;
-      const isDark = !!themeSettings.useHeaderBackground || isBasic;
-
-      // Skip when values haven't changed
-      if (
-        this._lastThemeClasses?.isBasic === isBasic &&
-        this._lastThemeClasses?.isParchment === isParchment &&
-        this._lastThemeClasses?.isDark === isDark
-      ) {
-        return;
-      }
-
-      this._lastThemeClasses = { isBasic, isParchment, isDark };
+      const foundryThemeIsDark = getThemeV2(this.actor) === 'dark';
+      const isDark = themeSettings.useHeaderBackground || foundryThemeIsDark;
 
       this.element.classList.toggle('theme-parchment', isParchment);
       this.element.classList.toggle('theme-basic', isBasic);
