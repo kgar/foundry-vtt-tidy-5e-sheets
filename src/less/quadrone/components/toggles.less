@@ -56,7 +56,7 @@
 
     &[aria-checked='true'] {
       border-color: var(--t5e-component-toggle-toggled-border, transparent);
-      background-color: var(--t5e-theme-color-attention);
+      background-color: oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h);
 
       &::before,
       .thumb-icon {
