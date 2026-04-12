@@ -1741,6 +1741,7 @@ export type VehicleSheetQuadroneContext = {
   quality: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
+  spellComponentLabels: Record<string, string>;
   statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {

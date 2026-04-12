@@ -247,6 +247,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       utilities: {},
       ...actorContext,
+      spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
     };
 
     context.useActionsFeature = actorUsesActionFeature(this.actor);
