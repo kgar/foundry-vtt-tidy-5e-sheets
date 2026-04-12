@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
@@ -51,28 +51,35 @@
   setSearchResultsContext(searchResults);
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
-      itemContext: context.itemContext,
-      sections: sections.filter(
-        (s) => s.type === CONSTANTS.SECTION_TYPE_INVENTORY,
-      ),
-      tabId,
-    });
+    context;
+    searchCriteria;
 
-    const draftAnimalSections = sections.filter(
-      (s) => s.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
-    );
+    untrack(() => {
+      searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+        criteria: searchCriteria,
+        itemContext: context.itemContext,
+        sections: sections.filter(
+          (s) => s.type === CONSTANTS.SECTION_TYPE_INVENTORY,
+        ),
+        tabId,
+      });
 
-    for (const section of draftAnimalSections) {
-      for (const member of section.members) {
-        if (
-          member.actor.name.toLocaleLowerCase().includes(loweredSearchCriteria)
-        ) {
-          searchResults.uuids.add(member.actor.uuid);
+      const draftAnimalSections = sections.filter(
+        (s) => s.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
+      );
+
+      for (const section of draftAnimalSections) {
+        for (const member of section.members) {
+          if (
+            member.actor.name
+              .toLocaleLowerCase()
+              .includes(loweredSearchCriteria)
+          ) {
+            searchResults.uuids.add(member.actor.uuid);
+          }
         }
       }
-    }
+    });
   });
 
   // TODO: set up action bar so we can configure pins
@@ -347,124 +354,129 @@
           </TidyItemTable>
         {/if}
       {:else if section.type === 'draft'}
-        {@const columns = new ColumnsLoadout(
-          VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
-            sheetType: context.document.type,
-            tabId: tabId,
-            sectionKey: section.key,
-            rowActions: section.rowActions,
-            section: section,
-            sheetDocument: context.document,
-          }),
-        )}
-        {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth,
-          columns,
-        )}
-        <TidyTable
-          key={section.key}
-          data-custom-section={section.custom ? true : null}
-        >
-          {#snippet header(expanded)}
-            <TidyTableHeaderRow class="theme-dark">
-              <TidyTableHeaderCell primary={true} class="header-label-cell">
-                <h3>
-                  {localize(section.label)}
-                </h3>
-                <span class="table-header-count">{section.members.length}</span>
-              </TidyTableHeaderCell>
-
-              <TidyTableCustomHeaderCells
-                {columns}
-                {context}
-                {hiddenColumns}
-                {section}
-                {expanded}
-              />
-            </TidyTableHeaderRow>
-          {/snippet}
-
-          {#snippet body()}
-            {#if section.members.length === 0}
-              {#if !hideEmptyStates}
-                <div class="inventory-empty empty-state-container">
-                  <button
-                    onclick={() =>
-                      context.document.sheet.browseAddActor('draft')}
-                    type="button"
-                    class="button button-tertiary"
-                    title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-                    aria-label={localize(
-                      'TIDY5E.Vehicle.DraftAnimals.EmptyState',
-                    )}
+        {#if section.show}
+          {@const columns = new ColumnsLoadout(
+            VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
+              sheetType: context.document.type,
+              tabId: tabId,
+              sectionKey: section.key,
+              rowActions: section.rowActions,
+              section: section,
+              sheetDocument: context.document,
+            }),
+          )}
+          {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
+            sectionsInlineWidth,
+            columns,
+          )}
+          <TidyTable
+            key={section.key}
+            data-custom-section={section.custom ? true : null}
+          >
+            {#snippet header(expanded)}
+              <TidyTableHeaderRow class="theme-dark">
+                <TidyTableHeaderCell primary={true} class="header-label-cell">
+                  <h3>
+                    {localize(section.label)}
+                  </h3>
+                  <span class="table-header-count"
+                    >{section.members.length}</span
                   >
-                    <i class="fas fa-plus"></i>
-                    {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-                  </button>
-                </div>
-              {/if}
-            {:else}
-              {#each section.members as member}
-                {#if !searchResults.uuids || searchResults.uuids.has(member.actor.uuid)}
-                  <TidyTableRow
-                    rowContainerAttributes={{
-                      ['data-context-menu']:
-                        CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-                      ['data-uuid']: member.actor.uuid,
-                    }}
-                  >
-                    {#snippet children()}
-                      <div class="highlight"></div>
-                      <a
-                        class={[
-                          'tidy-table-row-use-button',
-                          { disabled: !context.editable },
-                        ]}
-                      >
-                        <img
-                          class="item-image"
-                          alt={member.actor.name}
-                          src={member.actor.img}
-                        />
-                        <span class="roll-prompt">
-                          <i class="fa fa-dice-d20"></i>
-                        </span>
-                      </a>
+                </TidyTableHeaderCell>
 
-                      <TidyTableCell
-                        primary={true}
-                        class="item-label text-cell"
-                      >
+                <TidyTableCustomHeaderCells
+                  {columns}
+                  {context}
+                  {hiddenColumns}
+                  {section}
+                  {expanded}
+                />
+              </TidyTableHeaderRow>
+            {/snippet}
+
+            {#snippet body()}
+              {#if section.members.length === 0}
+                {#if !hideEmptyStates}
+                  <div class="inventory-empty empty-state-container">
+                    <button
+                      onclick={() =>
+                        context.document.sheet.browseAddActor('draft')}
+                      type="button"
+                      class="button button-tertiary"
+                      title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                      aria-label={localize(
+                        'TIDY5E.Vehicle.DraftAnimals.EmptyState',
+                      )}
+                    >
+                      <i class="fas fa-plus"></i>
+                      {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                    </button>
+                  </div>
+                {/if}
+              {:else}
+                {#each section.members as member}
+                  {#if !searchResults.uuids || searchResults.uuids.has(member.actor.uuid)}
+                    <TidyTableRow
+                      rowContainerAttributes={{
+                        ['data-context-menu']:
+                          CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                        ['data-uuid']: member.actor.uuid,
+                      }}
+                    >
+                      {#snippet children()}
+                        <div class="highlight"></div>
                         <a
-                          class="item-name"
-                          role="button"
-                          data-keyboard-focus
-                          tabindex="0"
-                          data-action="showDocument"
-                          data-uuid={member.actor.uuid}
+                          class={[
+                            'tidy-table-row-use-button',
+                            { disabled: !context.editable },
+                          ]}
                         >
-                          <span class="cell-text">
-                            <span class="cell-name">{member.actor.name}</span>
-                            <span class="cell-context">{member.subtitle}</span>
+                          <img
+                            class="item-image"
+                            alt={member.actor.name}
+                            src={member.actor.img}
+                          />
+                          <span class="roll-prompt">
+                            <i class="fa fa-dice-d20"></i>
                           </span>
                         </a>
-                      </TidyTableCell>
 
-                      <TidyTableCustomCells
-                        {columns}
-                        {context}
-                        ctx={member}
-                        entry={member.actor}
-                        {hiddenColumns}
-                        {section}
-                      />
-                    {/snippet}
-                  </TidyTableRow>
-                {/if}
-              {/each}
-            {/if}
-          {/snippet}
-        </TidyTable>
+                        <TidyTableCell
+                          primary={true}
+                          class="item-label text-cell"
+                        >
+                          <a
+                            class="item-name"
+                            role="button"
+                            data-keyboard-focus
+                            tabindex="0"
+                            data-action="showDocument"
+                            data-uuid={member.actor.uuid}
+                          >
+                            <span class="cell-text">
+                              <span class="cell-name">{member.actor.name}</span>
+                              <span class="cell-context">{member.subtitle}</span
+                              >
+                            </span>
+                          </a>
+                        </TidyTableCell>
+
+                        <TidyTableCustomCells
+                          {columns}
+                          {context}
+                          ctx={member}
+                          entry={member.actor}
+                          {hiddenColumns}
+                          {section}
+                        />
+                      {/snippet}
+                    </TidyTableRow>
+                  {/if}
+                {/each}
+              {/if}
+            {/snippet}
+          </TidyTable>
+        {/if}
       {/if}
     {/each}
   </div>

@@ -7,6 +7,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  DraftAnimalContext,
   DraftAnimalSection,
   InventorySection,
   PassengerMemberContext,
@@ -326,7 +327,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
             actor,
             subtitle: this._getSubtitle(actor),
             quantity: 1,
-          };
+            name: actor.name,
+          } satisfies DraftAnimalContext;
         })
       ),
       rowActions: TableRowActionsRuntime.getDraftAnimalRowActions(context),
