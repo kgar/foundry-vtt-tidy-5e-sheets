@@ -12,12 +12,16 @@ import { debug } from 'src/utils/logging';
 
 const TIDY_CSS_VARIABLES = {
   themeColor: '--t5e-theme-color-default',
+  themeColorDarker: '--t5e-theme-color-darker',
   themeColorHighlight: '--t5e-theme-color-highlight',
   themeHeaderColor: '--t5e-theme-color-header',
   cardColor: '--t5e-component-card-default',
   themeForeground: '--t5e-theme-color-foreground',
   themeForegroundDiminished: '--t5e-theme-color-foreground-diminished',
-  themeForegroundDisabled: '--t5e-theme-color-foreground-disabled',
+  themeForegroundDisabled: '--t5e-theme-color-foreground-disabled',  
+  themeForegroundDarker: '--t5e-theme-color-foreground-darker',
+  themeForegroundDarkerDiminished: '--t5e-theme-color-foreground-darker-diminished',
+  themeForegroundDarkerDisabled: '--t5e-theme-color-foreground-darker-disabled',
   textGold: '--t5e-color-text-gold',
   textGoldEmphasis: '--t5e-color-text-gold-emphasis',
 } as const;
@@ -103,11 +107,17 @@ export class ThemeStylesProvider {
     // overrides flow through without TS-side hardcoding.
     const accentBackground = settings.accentColor;
     const accentVariant = accentColorResult.themeClass === THEME_CLASS_DARK ? THEME_CLASS_DARK : THEME_CLASS_LIGHT;
-    const cardColor = getCSSVariable(TIDY_CSS_VARIABLES.cardColor, accentVariant);
+    const accentOverrides = { [TIDY_CSS_VARIABLES.themeColor]: accentBackground };
+    const accentBackgroundDarker = getCSSVariable(TIDY_CSS_VARIABLES.themeColorDarker, accentVariant, true, accentOverrides);
+    const cardColor = getCSSVariable(TIDY_CSS_VARIABLES.cardColor, accentVariant, true);
 
-    const themeForegroundBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForeground, accentVariant);
-    const themeForegroundDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDiminished, accentVariant);
-    const themeForegroundDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDisabled, accentVariant);
+    const themeForegroundBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForeground, accentVariant, true);
+    const themeForegroundDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDiminished, accentVariant, true);
+    const themeForegroundDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDisabled, accentVariant, true);
+
+    const themeForegroundDarkerBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarker, accentVariant, true);
+    const themeForegroundDarkerDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDiminished, accentVariant, true);
+    const themeForegroundDarkerDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDisabled, accentVariant, true);
 
     const ruleset: ThemeQuadroneStyleRule[] = [
       identifierRule,
@@ -130,6 +140,18 @@ export class ThemeStylesProvider {
       {
         property: TIDY_CSS_VARIABLES.themeForegroundDisabled,
         value: getForegroundAtContrast(accentBackground, themeForegroundDisabledBase, 'minimum'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.themeForegroundDarker,
+        value: getForegroundAtContrast(accentBackgroundDarker, themeForegroundDarkerBase, 'body'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.themeForegroundDarkerDiminished,
+        value: getForegroundAtContrast(accentBackgroundDarker, themeForegroundDarkerDiminishedBase, 'headline'),
+      },
+      {
+        property: TIDY_CSS_VARIABLES.themeForegroundDarkerDisabled,
+        value: getForegroundAtContrast(accentBackgroundDarker, themeForegroundDarkerDisabledBase, 'minimum'),
       },
     ];
 

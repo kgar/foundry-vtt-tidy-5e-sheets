@@ -1129,7 +1129,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({
         doc: this.actor,
       });
-      console.log('themeSettings', themeSettings);
+      
       this._applySheetThemeClasses(themeSettings);
     }
 

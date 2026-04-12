@@ -19,6 +19,9 @@
       --t5e-theme-color-foreground: var(--t5e-component-card-foreground);
       --t5e-theme-color-foreground-disabled: var(--t5e-component-card-foreground-disabled);
       --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
+      --t5e-theme-color-foreground-darker: var(--t5e-component-card-foreground-darker);
+      --t5e-theme-color-foreground-darker-disabled: var(--t5e-component-card-foreground-disabled);
+      --t5e-theme-color-foreground-darker-diminished: var(--t5e-component-card-foreground-diminished);
 
 
       border-radius: 0.125rem;
@@ -143,11 +146,24 @@
       }
 
       h3 {
-        color: inherit;
+        color: var(--t5e-theme-color-foreground-darker);
+        // color: inherit;
+      }
+
+      .button.expand-button {
+        i {
+          
+        color: var(--t5e-theme-color-foreground-darker-diminished);
+        }
+        &:hover, &:active, &:focus-within {
+          i {
+            color: var(--t5e-theme-color-foreground-darker);
+          }
+        }
       }
 
       .table-header-count {
-        color: var(--t5e-theme-color-foreground-diminished);
+        color: var(--t5e-theme-color-foreground-darker-diminished);
         margin-inline-start: 0.25rem;
       }
     }

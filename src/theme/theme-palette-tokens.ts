@@ -1,4 +1,5 @@
 import { THEME_CLASS_DARK, THEME_CLASS_LIGHT } from './theme-color-functions';
+import { debug } from 'src/utils/logging';
 
 type ThemeVariant = typeof THEME_CLASS_LIGHT | typeof THEME_CLASS_DARK;
 
@@ -25,11 +26,43 @@ function getCSSVariableImp(variant: ThemeVariant): HTMLElement {
  */
 export function getCSSVariable(
   variableName: string,
-  variant: ThemeVariant = THEME_CLASS_LIGHT
+  variant: ThemeVariant = THEME_CLASS_LIGHT,
+  resolveColor: boolean = false,
+  overrides?: Record<string, string>
 ): string {
   const name = variableName.startsWith('--') ? variableName : `--${variableName}`;
   const imp = getCSSVariableImp(variant);
+
+  if (overrides) {
+    for (const [prop, val] of Object.entries(overrides)) {
+      imp.style.setProperty(prop, val);
+    }
+  }
+
   const value = getComputedStyle(imp).getPropertyValue(name).trim();
+
+  if (resolveColor && value) {
+    imp.style.backgroundColor = value;
+    const resolved = getComputedStyle(imp).backgroundColor;
+    imp.style.backgroundColor = '';
+
+    if (overrides) {
+      for (const prop of Object.keys(overrides)) {
+        imp.style.removeProperty(prop);
+      }
+    }
+
+    debug(`getCSSVariable: ${variableName} = ${resolved} (resolved from ${value})`);
+    return resolved;
+  }
+
+  if (overrides) {
+    for (const prop of Object.keys(overrides)) {
+      imp.style.removeProperty(prop);
+    }
+  }
+
+  debug(`getCSSVariable: ${variableName} = ${value}`);
   return value;
 }
 
