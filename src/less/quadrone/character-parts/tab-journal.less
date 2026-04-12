@@ -1,0 +1,58 @@
+.tidy-tab.journal {
+  gap: var(--t5e-size-3x);
+
+  .tab-content {
+    flex-direction: row;
+    gap: var(--t5e-size-3x);
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  .title {
+    margin-top: -0.25rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &.active {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .journal-entry-selector {
+    flex: 0;
+    flex-basis: 12rem;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--padding-vertical);
+    padding-top: var(--padding-vertical);
+  }
+
+  .tidy-vertical-tab-strip {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: var(--t5e-size-2x);
+
+    .add {
+      flex: 1;
+    }
+  }
+
+  .journal-entry-viewer {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: var(--t5e-size-12x); 
+    padding-top: var(--padding-vertical);
+  }
+
+  .title-container {
+
+    .title {
+      flex: 1;
+    }
+  }
+}

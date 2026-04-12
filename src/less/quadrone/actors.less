@@ -446,6 +446,7 @@
 
   .sheet-footer {
     gap: var(--t5e-size-2x);
+    padding-left: var(--padding-horizontal);
     padding-right: var(--padding-horizontal);
     padding-bottom: var(--padding-vertical);
 
@@ -1351,7 +1352,6 @@
     --padding-horizontal: var(--t5e-size-4x);
     flex: 1;
     overflow-y: auto;
-    padding-left: var(--padding-horizontal);
     position: relative;
 
     &.inventory {
@@ -1367,6 +1367,7 @@
     .action-bar {
       padding-top: var(--padding-vertical);
       padding-right: var(--padding-horizontal);
+      padding-left: var(--padding-horizontal);
     }
 
     .tab-content {
@@ -1377,6 +1378,7 @@
       padding-top: var(--padding-vertical);
       padding-right: var(--padding-horizontal);
       padding-bottom: var(--padding-vertical);
+      padding-left: var(--padding-horizontal);
       row-gap: var(--t5e-size-3x);
     }
   }
@@ -1422,61 +1424,6 @@
       padding-bottom: var(--t5e-size-2x);
     }
   }
-
-  .tidy-tab.journal {
-    gap: var(--t5e-size-3x);
-
-    .title {
-      margin-top: -0.25rem;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    &.active {
-      display: flex;
-      flex-direction: row;
-    }
-
-    .journal-entry-selector {
-      flex: 0;
-      flex-basis: 12rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .tidy-vertical-tab-strip {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .tab-content {
-      flex-direction: row;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: var(--t5e-size-2x);
-
-      .add {
-        flex: 1;
-      }
-    }
-
-    .journal-entry-viewer {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .title-container {
-
-      .title {
-        flex: 1;
-      }
-    }
-  }
-
-
-
 
   .actor-warnings-control::before {
     color: var(--t5e-color-palette-orange-70);
@@ -1541,6 +1488,7 @@
 
   @import './character-parts/tab-effects.less';
   @import './character-parts/tab-biography.less';
+  @import './character-parts/tab-journal.less';
 
   /* Member Slots */
 
