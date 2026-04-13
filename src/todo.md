@@ -1,5 +1,7 @@
 ## kgar To Do
 
+- [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
+
 ### Foundry 14 Remaining To Dos
 
 - [ ] Related #1604 - Formula Inputs are cool and accomplish the task of temporarily giving more room to type. We can make a similar thing with svelte. You can see Formula Inputs in Foundry 14 on items with the magical bonus field, for example.

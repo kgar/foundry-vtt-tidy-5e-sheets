@@ -294,7 +294,14 @@
   <div class="tidy-table-container" bind:this={sectionsContainer}>
     {#each sections as section (section.key)}
       {#if section.type === 'inventory'}
-        {#if section.show}
+        <!-- 
+            Only hide empty tables at the component rendering level, so that 
+            the derived hidden state doesn't propagate to the section config window. 
+          -->
+        {@const emptyAndShouldHide =
+          section.key === CONSTANTS.ITEM_TYPE_SPELL &&
+          section.items.length === 0}
+        {#if section.show && !emptyAndShouldHide}
           {@const columns = new ColumnsLoadout(
             ItemColumnRuntime.getConfiguredColumnSpecifications({
               sheetType: context.document.type,
