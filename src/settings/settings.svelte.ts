@@ -2106,19 +2106,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('referenceTooltipCreatureType');
         }
       },
-      referenceTooltipMastery: {
-        options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipMastery.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipMastery.hint',
-          scope: 'user',
-          config: true,
-          default: true,
-          type: Boolean
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipMastery');
-        }
-      },
       referenceTooltipSkill: {
         options: {
           name: 'TIDY5E.Settings.ReferenceTooltipSkill.name',
@@ -2143,6 +2130,19 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('referenceTooltipTool');
+        }
+      },
+      referenceTooltipMastery: {
+        options: {
+          name: 'TIDY5E.Settings.ReferenceTooltipMastery.name',
+          hint: 'TIDY5E.Settings.ReferenceTooltipMastery.hint',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipMastery');
         }
       },
 
