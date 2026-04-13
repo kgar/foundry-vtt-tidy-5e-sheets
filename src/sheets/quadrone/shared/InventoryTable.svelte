@@ -123,7 +123,7 @@
   {/snippet}
 
   {#snippet afterFirstCell(entry, ctx)}
-    {@const mastered = actor.system.traits?.weaponProf?.mastery?.value?.has(
+    {@const mastered = actor?.system.traits?.weaponProf?.mastery?.value?.has(
       entry.system.type?.baseItem ?? '',
     )}
     
