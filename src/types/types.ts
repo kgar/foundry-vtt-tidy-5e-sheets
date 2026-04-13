@@ -353,7 +353,13 @@ export type ActivityItemContext = {
     ability: string;
   } | null;
   toHit: number | null;
+  spell?: ActivityItemSpellContext;
+  type: string;
 };
+
+export type ActivityItemSpellContext = {
+  uuid?: string;
+}
 
 // TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {

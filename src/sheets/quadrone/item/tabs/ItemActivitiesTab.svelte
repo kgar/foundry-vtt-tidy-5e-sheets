@@ -98,10 +98,18 @@
       {#each context.activities as ctx (ctx.id)}
         <TidyActivityTableRow {ctx}>
           {#snippet children()}
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
+              role="button"
+              tabindex="0"
               class={['tidy-table-row-use-button']}
+              aria-label={ctx.activity.name}
               onclick={(ev) =>
                 ctx.activity.use({ event: ev, options: { sheet: context.sheet } })}
+              onkeydown={(ev) =>
+                ev.key === 'Enter' ||
+                (ev.key === ' ' &&
+                  ctx.activity.use({ event: ev, options: { sheet: context.sheet } }))}
               data-has-roll-modes
             >
               <img class="item-image" alt="" src={ctx.activity.img} />
@@ -123,6 +131,12 @@
                 </i>
               </span> -->
               </span>
+              {#if ctx.type === CONSTANTS.ACTIVITY_TYPE_CAST && !ctx.spell?.uuid}
+                <span data-tooltip={localize('TIDY5E.Utilities.CastActivityMissingSpell')} class="cast-activity-missing-spell-indicator">
+                  <i class="fa-solid fa-link-simple-slash"></i>
+                  <!-- TODO: Update to link-broken for FA 7.2.0-->
+                </span>
+              {/if}
             </TidyTableCell>
 
             <TidyTableCustomCells
