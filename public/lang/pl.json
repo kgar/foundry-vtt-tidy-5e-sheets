@@ -1008,5 +1008,10 @@
         "name": "Zakładka karty postaci: Automatycznie uwzględniaj używalne przedmioty",
         "hint": "Automatycznie uwzględniaj w zakładce Karta wszystkie aktualnie używalne przedmioty, zaklęcia i zdolności."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Ukryj przypięcia karty"
+    "TIDY5E.Utilities.HideSheetPins": "Ukryj przypięcia karty",
+    "TIDY5E.AbilityRoll": "Test {ability}",
+    "TIDY5E.AbbrProficiency": "Prof.",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrzostwo broni: {mastery}",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Z tą czynnością nie wiąże się żadne zaklęcie.",
+    "TIDY5E.DisplayOptionsActor.Title": "Opcje wyświetlania aktorów"
 }
