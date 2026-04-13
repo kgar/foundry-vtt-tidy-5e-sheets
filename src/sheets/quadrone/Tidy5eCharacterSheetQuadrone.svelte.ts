@@ -367,7 +367,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         );
       });
 
-      context.sheetTabSections = actionSections;
+      context.sheetTabSections = SheetSections.configureActionsQuadrone(
+        actionSections,
+        CONSTANTS.TAB_ACTOR_ACTIONS,
+        UserSheetPreferencesService.getByType(this.actor.type),
+        TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+      );
     }
   }
 
