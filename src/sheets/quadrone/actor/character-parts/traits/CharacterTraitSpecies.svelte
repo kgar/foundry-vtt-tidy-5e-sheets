@@ -148,6 +148,7 @@
             FoundryAdapter.renderCreatureTypeConfig(context.actor);
         }
       }}
+      data-reference-tooltip={context.creatureType?.reference}
     >
       {#if species}
         <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right"></i>

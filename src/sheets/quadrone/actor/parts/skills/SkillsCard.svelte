@@ -14,6 +14,7 @@
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
   import SkillsCardHeader from './SkillsCardHeader.svelte';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
 
   type Props = {
     defaultExpansionState?: boolean;
@@ -47,13 +48,15 @@
   );
 
   let references = $derived(
-    context.skills.reduce<Record<string, string>>((prev, skill) => {
-      const ref = CONFIG.DND5E.skills[skill.key]?.reference;
-      if (!isNil(ref, '')) {
-        prev[skill.key] = ref;
-      }
-      return prev;
-    }, {}),
+    SettingsProvider.settings.referenceTooltipSkill.get()
+      ? context.skills.reduce<Record<string, string>>((prev, skill) => {
+          const ref = CONFIG.DND5E.skills[skill.key]?.reference;
+          if (!isNil(ref, '')) {
+            prev[skill.key] = ref;
+          }
+          return prev;
+        }, {})
+      : {},
   );
 </script>
 

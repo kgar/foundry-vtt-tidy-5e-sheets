@@ -12,7 +12,7 @@ import {
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { settings, systemSettings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider, systemSettings } from 'src/settings/settings.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -1001,15 +1001,19 @@ export function Tidy5eActorSheetQuadroneBase<
     _getCreatureType(): CreatureTypeContext {
       const { details } = this.actor.system;
 
+      const creatureType = CONFIG.DND5E.creatureTypes[details.type.value];
+
       return {
         icon:
-          CONFIG.DND5E.creatureTypes[details.type.value]?.icon ??
+          creatureType?.icon ??
           'icons/svg/mystery-man.svg',
         title:
           details.type.value === 'custom'
             ? details.type.custom
-            : CONFIG.DND5E.creatureTypes[details.type.value]?.label,
-        reference: CONFIG.DND5E.creatureTypes[details.type.value]?.reference,
+            : creatureType?.label,
+        reference: SettingsProvider.settings.referenceTooltipCreatureType.get() 
+          ? creatureType?.reference 
+          : undefined,
         subtitle: details.type.subtype,
       };
     }

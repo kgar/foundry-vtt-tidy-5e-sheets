@@ -747,14 +747,21 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         let reference;
 
         if (type === 'tool') {
-          reference = dnd5e.documents.Trait.getBaseItemUUID(
-            CONFIG.DND5E.tools[id]?.id ?? '',
-          );
+          if (SettingsProvider.settings.referenceTooltipTool.get()) {
+            reference = dnd5e.documents.Trait.getBaseItemUUID(
+              CONFIG.DND5E.tools[id]?.id ?? '',
+            );
+          }
+          
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
           }));
         } else if (type === 'skill') {
-          ({ icon: img, label: name, reference } = CONFIG.DND5E.skills[id]);
+          if (SettingsProvider.settings.referenceTooltipSkill.get()) {
+            reference = CONFIG.DND5E.skills[id]?.reference;
+          }
+
+          ({ icon: img, label: name } = CONFIG.DND5E.skills[id]);
         }
 
         entries.push({

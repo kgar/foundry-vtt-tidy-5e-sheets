@@ -12,16 +12,14 @@
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
 
   type Props = {
     showFiligree?: boolean;
     showProficiency?: boolean;
   };
 
-  let { 
-    showFiligree = true, 
-    showProficiency = true
-  }: Props = $props();
+  let { showFiligree = true, showProficiency = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -33,15 +31,17 @@
     );
 
   let references = $derived(
-    context.tools.reduce<Record<string, string>>((prev, tool) => {
-      const id = CONFIG.DND5E.tools[tool.key]?.id;
+    SettingsProvider.settings.referenceTooltipTool.get()
+      ? context.tools.reduce<Record<string, string>>((prev, tool) => {
+          const id = CONFIG.DND5E.tools[tool.key]?.id;
 
-      if (!isNil(id, '')) {
-        prev[tool.key] = dnd5e.documents.Trait.getBaseItemUUID(id);
-      }
+          if (!isNil(id, '')) {
+            prev[tool.key] = dnd5e.documents.Trait.getBaseItemUUID(id);
+          }
 
-      return prev;
-    }, {}),
+          return prev;
+        }, {})
+      : {},
   );
 </script>
 

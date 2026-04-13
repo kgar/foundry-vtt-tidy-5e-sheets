@@ -7,6 +7,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
