@@ -261,8 +261,14 @@ export const FoundryAdapter = {
 
     const options = { mode: CONSTANTS.SHEET_MODE_EDIT };
 
-    if (doc.parent?.sheet._renderChild) {
-      doc.parent.sheet._renderChild(doc.sheet, options);
+    const renderChild =  
+      // items
+      doc.parent?.sheet?._renderChild ?? 
+      // activities, effects
+      doc.parent?.parent?.sheet?._renderChild;
+
+    if (renderChild) {
+      renderChild.call(doc, doc.sheet, options);
     } else {
       doc.sheet.render({ force: true }, options);
     }

@@ -1244,8 +1244,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       return app.render({ force: true, ...options });
     }
 
-    if (this.parent) {
-      return this.parent.renderChild(app, options);
+    if (this.parent?.sheet?.renderChild) {
+      return this.parent.sheet.renderChild(app, options);
     }
 
     if (this.window?.windowId) {
