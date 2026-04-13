@@ -909,6 +909,7 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
+  "TIDY5E.Utilities.CastActivityMissingSpell": "No spell is attached to this activity.",
   "TIDY5E.Utilities.ShowSheetPins": "Show Sheet Pins",
   "TIDY5E.Utilities.HideSheetPins": "Hide Sheet Pins",
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",

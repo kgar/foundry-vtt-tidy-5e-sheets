@@ -505,6 +505,17 @@ export class SheetSections {
       // Apply visibility from configuration
       section.show = sectionConfig?.[section.key]?.show !== false;
 
+      console.log('section', section);
+
+      // Hide empty spell section since they can only come from activities.
+      if (
+        section.type === CONSTANTS.SECTION_TYPE_INVENTORY &&
+        section.key === CONSTANTS.ITEM_TYPE_SPELL &&
+        section.items.length === 0
+      ) {
+        section.show = false;
+      }
+
       return section;
     });
   }

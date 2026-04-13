@@ -36,12 +36,23 @@
 </script>
 
 <div
+  role="meter"
+  aria-valuenow={hpValue}
+  aria-valuemin="0"
+  aria-valuemax={effectiveMaxHp}
+  aria-valuetext={hpValue.toString()}
   class="hp-column-content"
   onmouseenter={(ev) => getHpTooltip?.()?.tryShow(ev, rowDocument)}
 >
   <div
     class="meter meter-small progress hit-points"
-    style="--bar-percentage: {hpPct.toFixed(0)}%; --bar-adjusted: {tempHpValue.toFixed(0)}%; --bar-adjusted-background: var(--t5e-color-hp-temp); --bar-adjusted-content: '';"
+    style=
+    {tempHpValue > 0
+      ? `--bar-percentage: ${hpPct.toFixed(0)}%;` +
+        ` --bar-adjusted: ${tempHpValue.toFixed(0)}%;` +
+        ` --bar-adjusted-background: var(--t5e-color-hp-temp);` +
+        ` --bar-adjusted-content: '';`
+      : `--bar-percentage: ${hpPct.toFixed(0)}%;`}
   ></div>
   <div class="flexrow">
     <span class="font-data-medium color-text-default value">{hpValue}</span>
