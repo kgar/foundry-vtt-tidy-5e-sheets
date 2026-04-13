@@ -69,6 +69,11 @@ export class Activities {
             activationAbbr
           )}`
         : activity.labels.activation,
+      spell: activity.spell
+        ? {
+            uuid: activity.spell.uuid,
+          }
+        : undefined,
       save: activity.save
         ? {
             ability: activity.save.ability?.size
@@ -80,6 +85,7 @@ export class Activities {
           }
         : null,
       toHit: isNaN(toHit) ? null : toHit,
+      type: activity.type,
     };
   }
 

@@ -4,6 +4,7 @@
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
+    VehicleSheetQuadroneContext,
   } from 'src/types/types';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
@@ -11,7 +12,9 @@
   let context =
     $derived(
       getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+        | CharacterSheetQuadroneContext
+        | NpcSheetQuadroneContext
+        | VehicleSheetQuadroneContext
       >(),
     );
 </script>

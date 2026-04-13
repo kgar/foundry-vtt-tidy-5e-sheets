@@ -41,9 +41,10 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
-import type { CurrencyItemConfig, TravelPaceConfig } from 'src/foundry/config.types';
-import type { ComponentWithProps } from 'src/utils/component';
-import type { CustomTraitEntry } from 'src/api';
+import type {
+  CurrencyItemConfig,
+  TravelPaceConfig,
+} from 'src/foundry/config.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -352,7 +353,13 @@ export type ActivityItemContext = {
     ability: string;
   } | null;
   toHit: number | null;
+  spell?: ActivityItemSpellContext;
+  type: string;
 };
+
+export type ActivityItemSpellContext = {
+  uuid?: string;
+}
 
 // TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {
@@ -763,7 +770,7 @@ export type SpecialTraits = {
   sections: SpecialTraitSection[];
 };
 
-// TODO: Try to eliminate this because it's already being 
+// TODO: Try to eliminate this because it's already being
 export type DocumentSheetV2Context = {
   /** The game world's default currency when a single currency is needed. */
   defaultCurrency: CurrencyItemConfig & { key: string };
@@ -1671,6 +1678,8 @@ export type DraftAnimalContext = {
   actor: Actor5e;
   subtitle: string;
   quantity: number;
+  /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
+  name: string;
 };
 
 export type DraftAnimalSection = {
@@ -1738,6 +1747,7 @@ export type VehicleSheetQuadroneContext = {
   quality: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
+  spellComponentLabels: Record<string, string>;
   statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {

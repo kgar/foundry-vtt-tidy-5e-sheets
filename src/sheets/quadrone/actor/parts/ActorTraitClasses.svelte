@@ -38,19 +38,32 @@
     </div>
 
     <div class="list-content">
-      <div class="list-values trait-item empty-state-container empty-classes">
         <button
-          aria-label="Add {localize('TYPES.Item.class')}"
+          aria-label={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.class'),
+          })}
           type="button"
-          class="button button-tertiary"
-          data-tooltip="DND5E.ClassAdd"
+          class="button button-primary"
+          data-tooltip
           data-action="findItem"
           data-item-type="class"
         >
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.ClassAdd')}
         </button>
-      </div>
+        <button
+          aria-label={localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.class'),
+          })}
+          type="button"
+          class="button button-secondary"
+          onclick={(ev) =>
+            FoundryAdapter.createItem({ type: 'class' }, context.actor)}
+        >
+          {localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.class'),
+          })}
+        </button>
     </div>
   </div>
 {:else}
