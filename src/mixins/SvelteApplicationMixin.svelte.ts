@@ -510,11 +510,10 @@ export function SvelteApplicationMixin<
         return app.render({ force: true, ...options });
       }
 
-      if (this.parent) {
-        return this.parent.renderChild(app, options);
-      }
-      
-      return this.renderChild(app, options);
+      return (
+        this.parent?.sheet?.renderChild?.(app, options) ??
+        this.renderChild(app, options)
+      );
     }
   }
 
