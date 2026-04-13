@@ -264,12 +264,15 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     context.statblock.forEach((section) => {
       if (section.type === CONSTANTS.SECTION_TYPE_INVENTORY) {
-        section.sectionActions = SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
+        section.sectionActions =
+          section.key !== CONSTANTS.ITEM_TYPE_SPELL
+            ? SectionActions.getStandardItemHeaderActions(
+                this.actor,
+                this.actor.isOwner,
+                context.unlocked,
+                section,
+              )
+            : [];;
       } else {
         section.sectionActions =
           SectionActions.getVehicleMemberHeaderActions(section);
