@@ -1006,5 +1006,6 @@
     "TIDY5E.AbilityRoll": "Rolar Teste de {ability}",
     "TIDY5E.AbbrProficiency": "Prof",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
-    "TIDY5E.DisplayOptionsActor.Title": "Opções de Exibição do Ator"
+    "TIDY5E.DisplayOptionsActor.Title": "Opções de Exibição do Ator",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Nenhuma magia está anexada a esta atividade."
 }
