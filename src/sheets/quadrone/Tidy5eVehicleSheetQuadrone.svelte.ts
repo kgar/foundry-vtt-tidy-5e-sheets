@@ -272,7 +272,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
                 context.unlocked,
                 section,
               )
-            : [];;
+            : [];
       } else {
         section.sectionActions =
           SectionActions.getVehicleMemberHeaderActions(section);
