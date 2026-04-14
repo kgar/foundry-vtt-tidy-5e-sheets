@@ -371,7 +371,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         actionSections,
         CONSTANTS.TAB_ACTOR_ACTIONS,
         UserSheetPreferencesService.getByType(this.actor.type),
-        TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+        TidyFlags.sectionConfig.get(context.actor)?.[
+          CONSTANTS.TAB_ACTOR_ACTIONS
+        ],
       );
     }
   }
@@ -1159,6 +1161,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         label: 'DND5E.FACILITY.AvailableFacility.basic.build',
       });
     }
+
+    context.facilities.basic.chosen = context.facilities.basic.chosen.sort(
+      (a, b) => a.facility.sort - b.facility.sort,
+    );
+    context.facilities.special.chosen = context.facilities.special.chosen.sort(
+      (a, b) => a.facility.sort - b.facility.sort,
+    );
   }
 
   /**
@@ -1288,7 +1297,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return;
     }
 
-    // Sorting Favorites
+    // Facilities
+    if (event.currentTarget.matches('[data-item-id][data-facility-id]')) {
+      super._onDragItem(event);
+      return;
+    }
+
+    // Favorites
     const favoriteEl = event.target.closest('[data-favorite-id]');
     const favoriteId = favoriteEl?.getAttribute('data-favorite-id');
     const favorite = this.actor.system.favorites.find(
@@ -1314,6 +1329,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return;
     }
 
+    // Favorite-ables
     const { key } =
       event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
 
@@ -1327,20 +1343,25 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     } else if (isSlots) {
       type = 'slots';
     }
-    if (!type) return super._onDragStart(event);
 
-    // Add another deferred deactivation to catch the second pointerenter event that seems to be fired on Firefox.
-    requestAnimationFrame(() => game.tooltip.deactivate());
-    game.tooltip.deactivate();
+    if (type) {
+      // Add another deferred deactivation to catch the second pointerenter event that seems to be fired on Firefox.
+      requestAnimationFrame(() => game.tooltip.deactivate());
+      game.tooltip.deactivate();
 
-    const dragData: Record<string, any> = {
-      dnd5e: { action: 'favorite', type },
-    };
+      const dragData: Record<string, any> = {
+        dnd5e: { action: 'favorite', type },
+      };
 
-    dragData.dnd5e.id = key;
+      dragData.dnd5e.id = key;
 
-    event.dataTransfer.setData('application/json', JSON.stringify(dragData));
-    event.dataTransfer.effectAllowed = 'link';
+      event.dataTransfer.setData('application/json', JSON.stringify(dragData));
+      event.dataTransfer.effectAllowed = 'link';
+
+      return;
+    }
+
+    super._onDragStart(event);
   }
 
   async _onDrop(
