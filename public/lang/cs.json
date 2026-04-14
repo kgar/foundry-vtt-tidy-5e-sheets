@@ -994,7 +994,8 @@
             "rollMutation": "Hod na mutaci",
             "rolledMutation": "{name} hodil na mutaci s úrovní kontaminace {level}.",
             "clear": "Vyčistit kontaminaci",
-            "none": "Žádná kontaminace ani symptomy."
+            "none": "Žádná kontaminace ani symptomy.",
+            "rollDeepHazeSave": "Záchrana proti Hlubokému oparu"
         }
     },
     "TIDY5E.SectionOrganization": "Organizace sekcí",
@@ -1014,5 +1015,6 @@
     "TIDY5E.AbilityRoll": "Ověření vlastnosti {ability}",
     "TIDY5E.AbbrProficiency": "ZD",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrovství se zbraní: {mastery}",
-    "TIDY5E.DisplayOptionsActor.Title": "Možnosti zobrazení aktéra"
+    "TIDY5E.DisplayOptionsActor.Title": "Možnosti zobrazení aktéra",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "S touto aktivitou není spojeno žádné kouzlo."
 }
