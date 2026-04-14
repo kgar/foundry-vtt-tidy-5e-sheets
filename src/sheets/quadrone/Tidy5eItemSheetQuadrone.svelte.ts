@@ -390,7 +390,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         this.document.isArmor && this.document.system.type.value !== 'shield',
 
       // Advancement
-      advancement: this._getItemAdvancement(
+      advancement: await this._getItemAdvancement(
         this.document,
         documentSheetContext.unlocked
       ),
@@ -641,7 +641,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   /**
    * Get the display object used to show the advancement tab.
    */
-  _getItemAdvancement(item: Item5e, unlocked: boolean): AdvancementsContext {
+  async _getItemAdvancement(
+    item: Item5e,
+    unlocked: boolean,
+  ): Promise<AdvancementsContext> {
     if (!item.system.advancement) {
       return {};
     }
@@ -650,10 +653,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     const configMode = !item.parent;
     const legacyDisplay = this.options.legacyDisplay;
     const maxLevel = !configMode
-      ? item.system.levels ??
+      ? (item.system.levels ??
         item.class?.system.levels ??
         item.parent.system.details?.level ??
-        -1
+        -1)
       : -1;
 
     // Improperly configured advancements
@@ -675,14 +678,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
     // All other advancements by level
     for (let [level, advancements] of Object.entries<any>(
-      item.advancement.byLevel
+      item.advancement.byLevel,
     )) {
       if (!configMode) {
         advancements = advancements.filter((a: any) => a.appliesToClass);
       }
 
-      const items: AdvancementItemContext[] = advancements.map(
-        (advancement: any) => ({
+      const items: AdvancementItemContext[] = await Promise.all(
+        advancements.map(async (advancement: any) => ({
           id: advancement.id,
           order: advancement.sortingValueForLevel(level),
           title: advancement.titleForLevel(level, {
@@ -691,7 +694,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           }),
           icon: advancement.icon,
           classRestriction: advancement.classRestriction,
-          summary: advancement.summaryForLevel(level, {
+          summary: await advancement.summaryForLevel(level, {
             configMode,
             legacyDisplay,
           }),
@@ -699,22 +702,26 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           tags: this._getItemAdvancementTags(advancement, unlocked),
           value: advancement.valueForLevel?.(level),
           classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
-            ' '
+            ' ',
           ),
-        })
+        })),
       );
-      if (!items.length) continue;
+
+      if (!items.length) {
+        continue;
+      }
+
       advancement[level] = {
         items: items.sort(
           (a: AdvancementItemContext, b: AdvancementItemContext) =>
-            a.order.localeCompare(b.order, game.i18n.lang)
+            a.order.localeCompare(b.order, game.i18n.lang),
         ),
         configured:
           level > maxLevel
             ? false
             : items.some((a: AdvancementItemContext) => !a.configured)
-            ? CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
-            : CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
+              ? CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
+              : CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       };
     }
     return advancement;
