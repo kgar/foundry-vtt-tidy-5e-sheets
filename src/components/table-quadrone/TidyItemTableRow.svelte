@@ -86,18 +86,6 @@
     TidyHooks.tidy5eSheetsItemHoverOff(event, item);
   }
 
-  function handleDragStart(event: DragEvent) {
-    onMouseLeave(event);
-
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
-    const dragData = item.toDragData();
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-  }
-
   const config = $derived(
     item.type === CONSTANTS.ITEM_TYPE_SPELL
       ? FoundryAdapter.getSpellMethodConfig(item)
@@ -152,7 +140,6 @@
   onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
-  ondragstart={handleDragStart}
 >
   {@render children?.({ toggleSummary, expanded })}
 

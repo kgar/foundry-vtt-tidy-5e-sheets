@@ -462,6 +462,35 @@ export class Tidy5eContainerSheetQuadrone
   #dropBehavior: DropEffectValue | null = null;
 
   /** @inheritDoc */
+  async _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+  ) {
+    const el = event.currentTarget;
+
+    if (event.target.classList.contains('content-link')) {
+      return;
+    }
+
+    // Items - Tidy tables
+    if (el.matches('[data-item-id] > [data-tidy-table-row]')) {
+      const { itemId } = event.currentTarget.closest<HTMLElement>("[data-item-id]")?.dataset ?? {};
+
+      const item = await this.item.system.getContainedItem(itemId);
+
+      TidyHooks.tidy5eSheetsItemHoverOff(event, item);
+
+      if (item) {
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify(item.toDragData()),
+        );
+      }
+
+      return;
+    }
+  }
+
+  /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): Promise<unknown> {
