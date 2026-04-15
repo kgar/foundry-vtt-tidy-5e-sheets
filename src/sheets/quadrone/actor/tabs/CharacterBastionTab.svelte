@@ -256,7 +256,6 @@
                 <div
                   class="facility-occupants"
                   data-prop="system.hirelings"
-                  {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -281,7 +280,6 @@
                 <div
                   class="facility-occupants"
                   data-prop="system.defenders"
-                  {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}

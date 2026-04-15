@@ -97,6 +97,7 @@
     class:unlocked={context.unlocked}
     class="slot member-slot {type} {imageTypeClassName} occupant-with-menu"
     data-actor-uuid={uuid}
+    data-tidy-draggable
     data-tooltip={name}
     data-facility-id={facilityId}
     data-facility-name={facilityName}
