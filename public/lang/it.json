@@ -1045,5 +1045,6 @@
     "TIDY5E.AbilityRoll": "Tira Check {ability}",
     "TIDY5E.AbbrProficiency": "Comp",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Padronanza Armi: {mastery}",
-    "TIDY5E.DisplayOptionsActor.Title": "Opzioni Visualizzazione Personaggio"
+    "TIDY5E.DisplayOptionsActor.Title": "Opzioni Visualizzazione Personaggio",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "A questa attività non è associato alcun incantesimo."
 }
