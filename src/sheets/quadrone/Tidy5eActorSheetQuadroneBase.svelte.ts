@@ -1426,8 +1426,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
-
-
       if (item) {
         event.dataTransfer?.setData(
           'text/plain',
