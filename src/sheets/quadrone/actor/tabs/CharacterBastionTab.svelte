@@ -192,16 +192,20 @@
               : context.config.facilities.orders.repair.icon}
 
             <li
-              class="facility special"
+              class={[
+                'facility',
+                'special',
+                {
+                  disabled: chosen.disabled,
+                  ['no-events']: chosen.disabled && !FoundryAdapter.userIsGm(),
+                  building: chosen.building,
+                },
+              ]}
+              data-tidy-draggable
               data-item-id={chosen.id}
               data-facility-id={chosen.id}
-              class:disabled={chosen.disabled}
-              class:no-events={chosen.disabled && !FoundryAdapter.userIsGm()}
-              class:building={chosen.building}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
               style="--underlay: url('{bgImg}')"
-              data-info-card={'item'}
-              data-info-card-entity-uuid={chosen.facility.uuid}
             >
               <div class="facility-header">
                 <!-- svelte-ignore a11y_missing_attribute -->
@@ -252,7 +256,6 @@
                 <div
                   class="facility-occupants"
                   data-prop="system.hirelings"
-                  {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -277,7 +280,6 @@
                 <div
                   class="facility-occupants"
                   data-prop="system.defenders"
-                  {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
@@ -574,7 +576,10 @@
 
       {#if context.enriched.bastion}
         <div class="editor">
-          <div data-target="system.bastion.description" class="user-select-text">
+          <div
+            data-target="system.bastion.description"
+            class="user-select-text"
+          >
             {@html context.enriched.bastion}
           </div>
         </div>

@@ -1360,6 +1360,10 @@ export function Tidy5eActorSheetQuadroneBase<
       const el = event.currentTarget;
       if (event.target.classList.contains('content-link')) return;
 
+      // Add another deferred deactivation to catch the second pointerenter event that seems to be fired on Firefox.
+      requestAnimationFrame(() => game.tooltip.deactivate());
+      game.tooltip.deactivate();
+
       if (el.dataset.effectId && el.dataset.parentId) {
         const effect = this.actor.items
           .get(el.dataset.parentId)
@@ -1398,12 +1402,36 @@ export function Tidy5eActorSheetQuadroneBase<
         if (activity)
           event.dataTransfer?.setData(
             'text/plain',
-            JSON.stringify(activity.toDragData())
+            JSON.stringify(activity.toDragData()),
           );
         return;
       }
 
+      // Items - Tidy tables
+      if (el.matches('[data-item-id] > [data-tidy-table-row]')) {
+        return this._onDragItem(event);
+      }
+
       super._onDragStart(event);
+    }
+
+    _onDragItem(
+      event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    ) {
+      const { itemId } =
+        event.target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+
+      // TODO: inventorySource is a thing with the default sheets, to allow for toggling inventory sources. They use that here.
+      const item = this.document.items.get(itemId);
+
+      TidyHooks.tidy5eSheetsItemHoverOff(event, item);
+
+      if (item) {
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify(item.toDragData()),
+        );
+      }
     }
 
     async _onDrop(
