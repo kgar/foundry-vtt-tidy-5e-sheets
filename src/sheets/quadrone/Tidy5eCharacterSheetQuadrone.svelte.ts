@@ -1707,7 +1707,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     }
   }
 
-  async _onSortFacilityOccupants(
+  _onSortFacilityOccupants(
     facility: Item5e,
     prop: string,
     sourceIndex: number,
