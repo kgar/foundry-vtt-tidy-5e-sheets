@@ -1677,15 +1677,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       );
     }
 
-    const isDroppingSomewhereNew =
-      sourceFacilityUuid !== targetFacility.uuid || sourceProp !== targetProp;
-
     const { value, max } = foundry.utils.getProperty(
       targetFacility,
       targetProp,
     );
-
     const roomIsAvailable = value.length < max;
+    const isDroppingSomewhereNew =
+      sourceFacilityUuid !== targetFacility.uuid || sourceProp !== targetProp;
     const canCreate =
       roomIsAvailable &&
       (behavior === 'copy' || (behavior === 'move' && isDroppingSomewhereNew));
