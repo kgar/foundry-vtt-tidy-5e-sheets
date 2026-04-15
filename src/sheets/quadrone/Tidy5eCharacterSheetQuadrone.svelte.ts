@@ -42,9 +42,7 @@ import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentShee
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { Inventory } from 'src/features/sections/Inventory';
-import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -64,6 +62,7 @@ import {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
+import { arrayTransfer } from 'src/utils/array';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -1274,6 +1273,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
+  _allowedDropBehaviors(
+    event: DragEvent,
+    data?: Record<string, any>,
+  ): Set<DropEffectValue> {
+    if (data?.action === 'occupant') {
+      return new Set<DropEffectValue>(['move', 'copy']);
+    }
+
+    return super._allowedDropBehaviors(event, data);
+  }
+
   /** @override */
   _defaultDropBehavior(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
@@ -1285,6 +1295,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         event.target.closest('.favorites'))
     ) {
       return 'link';
+    }
+
+    if (data.action === 'occupant') {
+      return 'move';
     }
 
     return super._defaultDropBehavior(event, data);
@@ -1300,6 +1314,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     // Facilities
     if (event.currentTarget.matches('[data-item-id][data-facility-id]')) {
       super._onDragItem(event);
+      return;
+    }
+
+    // Facility Occupants
+    if (event.currentTarget.matches('[data-actor-uuid][data-facility-id]')) {
+      this._onDragFacilityOccupant(event);
       return;
     }
 
@@ -1364,13 +1384,37 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     super._onDragStart(event);
   }
 
+  _onDragFacilityOccupant(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+  ) {
+    const {
+      actorUuid,
+      facilityId,
+      prop,
+      index: indexValue,
+    } = event.currentTarget.dataset ?? {};
+    const index = parseInt(indexValue ?? '');
+    const item = this.document.items.get(facilityId);
+
+    if (!item || !actorUuid || !prop || isNaN(index)) {
+      return;
+    }
+
+    event.dataTransfer?.setData(
+      'application/json',
+      JSON.stringify({
+        action: 'occupant',
+        actorUuid: actorUuid,
+        facilityUuid: item.uuid,
+        prop: prop,
+        index: index,
+      } satisfies FacilityOccupantDragData),
+    );
+  }
+
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ) {
-    if (!event.target.closest('.favorites')) {
-      return await super._onDrop(event);
-    }
-
     const dragData =
       event.dataTransfer!.getData('application/json') ||
       event.dataTransfer!.getData('text/plain');
@@ -1384,22 +1428,33 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     try {
       data = JSON.parse(dragData);
     } catch (e) {
-      console.error(e);
-      return;
-    }
-    const { action, type, id } = data.dnd5e ?? {};
-
-    // Add to Favorites
-    if (action === 'favorite') {
-      return await this._onDropFavorite(event, { type, id });
+      error(
+        `An error occurred while handling a drop to character ${this.document.name} - ${this.document.uuid}`,
+        false,
+        e,
+      );
+      return await super._onDrop(event);
     }
 
-    // Handle Activity drop
-    if (data.type === 'Activity') {
-      const activity = await fromUuid(data.uuid);
-      if (activity) {
-        return await this._onDropActivity(event, activity);
+    if (event.target.closest('.favorites')) {
+      const { action, type, id } = data.dnd5e ?? {};
+
+      // Add to Favorites
+      if (action === 'favorite') {
+        return await this._onDropFavorite(event, { type, id });
       }
+
+      // Handle Activity drop
+      if (data.type === 'Activity') {
+        const activity = await fromUuid(data.uuid);
+        if (activity) {
+          return await this._onDropActivity(event, activity);
+        }
+      }
+    }
+
+    if (data.action === 'occupant') {
+      return this._onDropOccupant(event, data);
     }
 
     return await super._onDrop(event);
@@ -1415,9 +1470,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     }
 
     const facilityId =
-      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset?.[
-        'facilityId'
-      ];
+      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
 
     const facility = this.actor.items.get(facilityId);
 
@@ -1425,10 +1478,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return;
     }
 
-    const propDataset =
-      event.target.closest<HTMLElement>('[data-prop]')?.dataset;
-
-    const prop = propDataset?.['prop'];
+    const { prop } =
+      event.target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
 
     if (!prop) {
       return;
@@ -1580,6 +1631,108 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 
+  /** 
+   * Handles dropping a facility occupant into a facility group. 
+   * Accounts for sorting, copying, and moving to a new group in
+   * the same or a new facility.
+   */
+  async _onDropOccupant(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: FacilityOccupantDragData,
+  ) {
+    const behavior = this._dropBehavior(event);
+
+    const target = event.target;
+
+    const {
+      prop: sourceProp,
+      index: sourceIndex,
+      actorUuid,
+      facilityUuid: sourceFacilityUuid,
+    } = data;
+
+    const sourceFacility = await fromUuid(sourceFacilityUuid);
+
+    const { facilityId: targetFacilityId } =
+      target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
+    const targetFacility = this.document.items.get(targetFacilityId);
+
+    const { prop: targetProp, index: targetIndexValue } =
+      target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
+
+    const targetIndex = parseInt(targetIndexValue ?? '');
+
+    if (!targetProp) {
+      return;
+    }
+
+    // Sort
+    if (
+      behavior === 'move' &&
+      sourceFacilityUuid === targetFacility.uuid &&
+      sourceProp === targetProp &&
+      !isNaN(targetIndex)
+    ) {
+      return await this._onSortFacilityOccupants(
+        targetFacility,
+        targetProp,
+        sourceIndex,
+        targetIndex,
+      );
+    }
+
+    const isDroppingSomewhereNew =
+      sourceFacilityUuid !== targetFacility.uuid || sourceProp !== targetProp;
+
+    const { value, max } = foundry.utils.getProperty(
+      targetFacility,
+      targetProp,
+    );
+
+    const roomIsAvailable = value.length < max;
+    const canCreate =
+      roomIsAvailable &&
+      (behavior === 'copy' || (behavior === 'move' && isDroppingSomewhereNew));
+
+    // Add the occupant
+    if (canCreate) {
+      await this._onDropActorAddToFacility(
+        targetFacility,
+        targetProp,
+        actorUuid,
+      );
+
+      // Remove from source facility if moving somewhere new
+      if (behavior === 'move') {
+        await Tidy5eCharacterSheetQuadrone._onOccupantDelete(
+          sourceFacility,
+          sourceProp,
+          sourceIndex,
+        );
+      }
+    }
+  }
+
+  async _onSortFacilityOccupants(
+    facility: Item5e,
+    prop: string,
+    sourceIndex: number,
+    targetIndex: number,
+  ) {
+    const { value } = foundry.utils.getProperty(facility, prop);
+
+    arrayTransfer({
+      arrFrom: value,
+      arrTo: value,
+      arrFromIndex: sourceIndex,
+      arrToIndex: targetIndex,
+    });
+
+    return facility.update({
+      [`${prop}.value`]: value,
+    });
+  }
+
   deleteOccupant(facilityId: string, prop: string, index: number) {
     const facility = this.actor.items.get(facilityId);
 
@@ -1587,10 +1740,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return;
     }
 
+    Tidy5eCharacterSheetQuadrone._onOccupantDelete(facility, prop, index);
+  }
+
+  /** Neutral, universal logic for deleting an occupant from an arbitrary facility. */
+  static _onOccupantDelete(facility: Item5e, prop: string, index: number) {
     let { value } = foundry.utils.getProperty(facility, prop);
-
     value = value.filter((_: any, i: number) => i !== index);
-
     return facility.update({ [`${prop}.value`]: value });
   }
 
@@ -1604,3 +1760,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return enableAutoInclusion ? 'usable-and-flag' : 'flag-only';
   }
 }
+
+type FacilityOccupantDragData = {
+  action: string;
+  actorUuid: string;
+  facilityUuid: string;
+  prop: string;
+  index: number;
+};
