@@ -1631,8 +1631,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 
-  /** 
-   * Handles dropping a facility occupant into a facility group. 
+  /**
+   * Handles dropping a facility occupant into a facility group.
    * Accounts for sorting, copying, and moving to a new group in
    * the same or a new facility.
    */
@@ -1641,7 +1641,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     data: FacilityOccupantDragData,
   ) {
     const behavior = this._dropBehavior(event);
-
     const target = event.target;
 
     const {
@@ -1650,16 +1649,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       actorUuid,
       facilityUuid: sourceFacilityUuid,
     } = data;
-
     const sourceFacility = await fromUuid(sourceFacilityUuid);
 
     const { facilityId: targetFacilityId } =
       target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
     const targetFacility = this.document.items.get(targetFacilityId);
-
     const { prop: targetProp, index: targetIndexValue } =
       target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
-
     const targetIndex = parseInt(targetIndexValue ?? '');
 
     if (!targetProp) {
