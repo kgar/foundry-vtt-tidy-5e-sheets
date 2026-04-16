@@ -10,6 +10,7 @@ import type {
   EffectCategory,
 } from 'src/types/types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
@@ -32,7 +33,9 @@ export class ConditionsAndEffects {
       const { disabled, img: existingImg } = existing ?? {};
       arr.push({
         name,
-        reference,
+        reference: SettingsProvider.settings.referenceTooltipCondition.get() 
+          ? reference 
+          : undefined,
         id: k,
         icon: existingImg ?? img,
         disabled: existing ? disabled : true,

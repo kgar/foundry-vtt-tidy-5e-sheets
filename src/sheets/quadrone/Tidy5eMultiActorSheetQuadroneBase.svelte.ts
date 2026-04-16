@@ -32,6 +32,7 @@ import type { AbilityData, SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -484,7 +485,9 @@ export function Tidy5eMultiActorSheetQuadroneBase<
               name: skill.label,
               passive: -Infinity,
               proficient: false,
-              reference: skill.reference,
+              reference: SettingsProvider.settings.referenceTooltipSkill.get() 
+                ? skill.reference 
+                : undefined,
             },
           ],
         ),

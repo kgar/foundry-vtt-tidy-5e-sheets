@@ -89,7 +89,7 @@ export type Tidy5eSetting = {
     /**
      * The scope the Setting is stored in, either World or Client
      */
-    scope: 'world' | 'client';
+    scope: 'world' | 'client' | 'user';
     /**
      * Indicates if this Setting should render in the Config application
      */
@@ -2078,6 +2078,67 @@ export function createSettings() {
             'characterSheetTabAutomaticallyIncludeUsableItems',
           );
         },
+      },
+
+      referenceTooltipCondition: {
+        options: {
+          name: 'TIDY5E.Settings.ShowTooltipCondition.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipCondition');
+        }
+      },
+      referenceTooltipCreatureType: {
+        options: {
+          name: 'TIDY5E.Settings.ShowTooltipCreatureType.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipCreatureType');
+        }
+      },
+      referenceTooltipSkill: {
+        options: {
+          name: 'TIDY5E.Settings.ShowTooltipSkill.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipSkill');
+        }
+      },
+      referenceTooltipTool: {
+        options: {
+          name: 'TIDY5E.Settings.ShowTooltipTool.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipTool');
+        }
+      },
+      referenceTooltipMastery: {
+        options: {
+          name: 'TIDY5E.Settings.ShowTooltipMastery.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipMastery');
+        }
       },
 
       // Development and Troubleshooting

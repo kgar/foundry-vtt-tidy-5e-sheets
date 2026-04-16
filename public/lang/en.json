@@ -801,6 +801,21 @@
     "hint": "World custom sections which can be configured for various purposes. Global Custom Sections will always be included in the Section Selector.",
     "AddSection": "Add Section"
   },
+  "TIDY5E.Settings.ShowTooltipCondition": {
+    "name": "Show system Condition tooltips"
+  },
+  "TIDY5E.Settings.ShowTooltipCreatureType": {
+    "name": "Show system Creature Type tooltips"
+  },
+  "TIDY5E.Settings.ShowTooltipMastery": {
+    "name": "Show system Weapon Mastery tooltips"
+  },
+  "TIDY5E.Settings.ShowTooltipSkill": {
+    "name": "Show system Skill tooltips"
+  },
+  "TIDY5E.Settings.ShowTooltipTool": {
+    "name": "Show system Tool tooltips"
+  },
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",
     "hint": "Prints debug messages to the console."

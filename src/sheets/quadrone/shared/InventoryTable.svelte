@@ -14,6 +14,7 @@
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import { isNil } from 'src/utils/data';
   import { CONSTANTS } from 'src/constants';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
 
   type Props = {
     containingDocument: any;
@@ -126,9 +127,13 @@
     {@const mastered = actor?.system.traits?.weaponProf?.mastery?.value?.has(
       entry.system.type?.baseItem ?? '',
     )}
-    
+
     {#if mastered}
       {@const mastery = CONFIG.DND5E.weaponMasteries[entry.system.mastery]}
+      {@const reference =
+        SettingsProvider.settings.referenceTooltipMastery.get()
+          ? mastery?.reference
+          : undefined}
       {@const tooltip = !isNil(mastery?.label, '')
         ? FoundryAdapter.localize('TIDY5E.Weapon.Mastery.LabelWithMastery', {
             mastery: mastery.label,
@@ -137,8 +142,8 @@
 
       <i
         class="fa-solid fa-circle-star color-text-gold-emphasis highlighted mastery item-state-indicator"
-        data-tooltip={!mastery?.reference ? tooltip : null}
-        data-reference-tooltip={mastery?.reference}
+        data-tooltip={!reference ? tooltip : null}
+        data-reference-tooltip={reference}
       ></i>
     {/if}
 
