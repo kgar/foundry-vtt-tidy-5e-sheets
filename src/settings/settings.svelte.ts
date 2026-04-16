@@ -2082,8 +2082,7 @@ export function createSettings() {
 
       referenceTooltipCondition: {
         options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipCondition.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipCondition.hint',
+          name: 'TIDY5E.Settings.ShowTooltipCondition.name',
           scope: 'user',
           config: true,
           default: true,
@@ -2095,8 +2094,7 @@ export function createSettings() {
       },
       referenceTooltipCreatureType: {
         options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipCreatureType.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipCreatureType.hint',
+          name: 'TIDY5E.Settings.ShowTooltipCreatureType.name',
           scope: 'user',
           config: true,
           default: true,
@@ -2108,8 +2106,7 @@ export function createSettings() {
       },
       referenceTooltipSkill: {
         options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipSkill.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipSkill.hint',
+          name: 'TIDY5E.Settings.ShowTooltipSkill.name',
           scope: 'user',
           config: true,
           default: true,
@@ -2121,8 +2118,7 @@ export function createSettings() {
       },
       referenceTooltipTool: {
         options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipTool.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipTool.hint',
+          name: 'TIDY5E.Settings.ShowTooltipTool.name',
           scope: 'user',
           config: true,
           default: true,
@@ -2134,8 +2130,7 @@ export function createSettings() {
       },
       referenceTooltipMastery: {
         options: {
-          name: 'TIDY5E.Settings.ReferenceTooltipMastery.name',
-          hint: 'TIDY5E.Settings.ReferenceTooltipMastery.hint',
+          name: 'TIDY5E.Settings.ShowTooltipMastery.name',
           scope: 'user',
           config: true,
           default: true,
