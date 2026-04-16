@@ -18,6 +18,7 @@
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -31,6 +32,9 @@
         CharacterSheetQuadroneContext | ItemSheetQuadroneContext
       >(),
     );
+
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+
 
   let sections = $derived(context.effects);
 
@@ -60,7 +64,7 @@
     <TidyTable key={section.key}>
       {#snippet header()}
         <TidyTableHeaderRow
-          class="theme-dark {section.type === 'suppressed' || section.disabled
+          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type === 'suppressed' || section.disabled
             ? 'diminished'
             : ''}"
         >

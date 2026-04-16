@@ -302,7 +302,8 @@
   }
 
   /* Smallest abilities when sheet is extremely narrow and has custom abilities present. */
-  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
+  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner
+  &.theme-basic .sheet-header .abilities-container .abilities-container-inner {
     .ac-container {
       padding-top: 0;
 
@@ -324,7 +325,7 @@
       }
 
       .button-config {
-        bottom: -0.625rem;
+        top: 72%;
         right: calc(50% - 0.875rem);
       }
     }
@@ -359,8 +360,8 @@
       gap: 0;
 
       .initiative.score {
-        min-height: 3.5rem;
-        padding-top: 0.25rem;
+        // min-height: 3.5rem;
+        // padding-top: 0.25rem;
         margin-top: 0;
 
         .button-config {

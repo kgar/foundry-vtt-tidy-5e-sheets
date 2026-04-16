@@ -249,7 +249,7 @@
   }
 
   .ability-roll-button {
-    margin-bottom: -2.1875rem;
+    margin-bottom: -2.25rem;
     padding: 0 .75rem 2rem;
   }
 
@@ -396,8 +396,53 @@
     }
   }
 
+  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
+    --collapse-font-medium: 1.4375rem;
+
+    .ability-bonus-container {
+      min-width: 3.25rem;
+      max-width: 3.75rem;
+    }
+
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .ac-container .shield,
+    .initiative-container .initiative.score {
+      width: 100%;
+      height: auto;
+      min-width: auto;
+    }
+
+    .ability {
+      .button-config {
+        right: -0.625rem;
+        top: -0.125rem;
+      }
+    }
+
+    .bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+    .initiative-container .initiative.score {
+      margin: 0.125rem 0;
+      min-height: 3.75rem;
+
+      .button-config {
+        right: -0.25rem;
+      }
+    }
+  }
+
   /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
-  .abilities-size-smallest() {
+  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner,
+  &.theme-basic .sheet-header .abilities-container .abilities-container-inner {
     --collapse-font-large: 1.5rem;
     --collapse-font-medium: 1.4375rem;
 
@@ -538,60 +583,6 @@
     }
   }
 
-
-  /* Smaller abilities when sheet is smaller */
-  .abilities-size-smaller() {
-    --collapse-font-medium: 1.4375rem;
-
-    .ability-bonus-container {
-      min-width: 3.25rem;
-      max-width: 3.75rem;
-    }
-
-    .ability .bonus-container,
-    .ability .bonus-container.proficient,
-    .ac-container .shield,
-    .initiative-container .initiative.score {
-      width: 100%;
-      height: auto;
-      min-width: auto;
-    }
-
-    .ability {
-      .button-config {
-        right: -0.625rem;
-        top: -0.125rem;
-      }
-    }
-
-    .bonus-container,
-    .initiative-bonus {
-
-      .modifier,
-      .bonus {
-        font-size: var(--collapse-font-medium);
-        margin-left: 0;
-      }
-    }
-
-    .initiative-container .initiative.score {
-      margin: 0.125rem 0;
-      min-height: 3.75rem;
-
-      .button-config {
-        right: -0.25rem;
-      }
-    }
-  }
-
-  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
-    .abilities-size-smaller();
-  }
-
-  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
-    .abilities-size-smallest();
-  }
-
   &.theme-basic {
     &.theme-light {
       .sheet-header .abilities-container { 
@@ -619,8 +610,6 @@
   
       .abilities-container-inner {
         justify-content: space-between;
-  
-        .abilities-size-smallest();
   
         .ability-proficiency-indicator {
           width: var(--t5e-size-2x);

@@ -401,8 +401,13 @@
         <h4>{localize('DND5E.Action')}</h4>
         <ul class="pills stacked">
           {#each sidebarActivations as activation}
-            <li class="pill">
-              {activation?.toString().replace(/NaN/g, '—')}
+            {@const activationText =
+              activation?.toString().replace(/NaN/g, '—') ?? ''}
+            <li class="pill activation-pill">
+              {activationText
+                ? activationText.charAt(0).toUpperCase() +
+                  activationText.slice(1)
+                : ''}
             </li>
           {/each}
         </ul>

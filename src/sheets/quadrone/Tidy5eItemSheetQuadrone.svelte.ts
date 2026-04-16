@@ -45,6 +45,9 @@ import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import { getThemeV2 } from 'src/theme/theme';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
@@ -154,6 +157,38 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     ],
     submitOnClose: true,
   };
+
+  _updateFrame(options: TidyDocumentSheetRenderOptions = {}) {
+    super._updateFrame(options);
+
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.document,
+    });
+    this._applySheetThemeClasses(themeSettings);
+  }
+
+  _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+    const isBasic = themeSettings.useBasicTheme;
+    const isParchment = !themeSettings.useHeaderBackground || isBasic;
+    const foundryThemeIsDark = getThemeV2(this.document) === 'dark';
+    const isDark = themeSettings.useHeaderBackground || foundryThemeIsDark;
+
+    this.element.classList.toggle('theme-parchment', isParchment);
+    this.element.classList.toggle('theme-basic', isBasic);
+
+    for (const node of this.element.querySelectorAll(
+      '.window-header, .sheet-header',
+    )) {
+      node.classList.toggle('theme-dark', isDark);
+    }
+  }
+
+  onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+    const themeSettings =
+      settingsOverride ??
+      ThemeQuadrone.getSheetThemeSettings({ doc: this.document });
+    this._applySheetThemeClasses(themeSettings);
+  }
 
   selectTab(tabId: string) {
     this.onTabSelected(tabId);

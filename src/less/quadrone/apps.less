@@ -92,16 +92,27 @@
     }
 
     button.header-control {
-      color: var(--t5e-theme-color-foreground-darker);
+      color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
       &:hover {
-        color: var(--t5e-color-icon-default);
+        color: var(--t5e-theme-color-foreground);
         border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
       }
 
       // TODO: Figure out how to make the header UUID control use a copy cursor.
+    }
+  }
+
+  &.theme-basic {
+    .window-header {
+      button.header-control {
+        color: var(--t5e-text-icon-lighter);
+        &:hover {
+          color: var(--t5e-color-icon-default);
+        }
+      }
     }
   }
 
