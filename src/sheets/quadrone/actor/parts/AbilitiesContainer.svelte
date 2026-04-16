@@ -43,7 +43,7 @@
   );
 
   let responsiveClasses: ClassValue = $derived({
-    'ability-smaller':
+    'abilities-size-smaller':
       widthRems >= abilityCollapsedRems && widthRems < abilitySmallerRems,
     'ability-collapsed': widthRems < abilityCollapsedRems,
   });

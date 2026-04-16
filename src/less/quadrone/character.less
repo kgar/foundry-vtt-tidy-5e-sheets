@@ -252,7 +252,7 @@
   }
 
   /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
-  .ability-smaller() {
+  .abilities-size-smaller() {
 
     .ac-container .shield {
       width: 100%;
@@ -298,9 +298,9 @@
   }
 
   /* Smallest abilities when sheet is extremely narrow and has custom abilities present. */
-  .collapse-abilities() {
+  .abilities-size-smallest() {
 
-    .ability-smaller();
+    .abilities-size-smaller();
 
     .ac-container {
       gap: 0.4375rem;
@@ -384,12 +384,12 @@
     }
   }
 
-  .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
-    .ability-smaller();
+  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
+    .abilities-size-smaller();
   }
 
   .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
-    .collapse-abilities();
+    .abilities-size-smallest();
   }
 
   @container character-sheet (width > 50rem) {
