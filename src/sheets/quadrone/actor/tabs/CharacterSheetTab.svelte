@@ -304,42 +304,44 @@
 
   <div class="sheet-footer sheet-tab-footer flexrow">
     <div class="sheet-footer-left flexrow">
-      <button
-        type="button"
-        class="button button-borderless button-small"
-        onclick={() => switchSectionOrganization()}
-      >
-        <i class="fas fa-arrow-right-arrow-left"></i>
-        {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION
-          ? localize(
-              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
-            )
-          : localize(
-              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
-            )}
-      </button>
-      <button
-        type="button"
-        class="button button-small button-borderless"
-        onclick={async () => {
-          showSheetPins = !showSheetPins;
-          await UserSheetPreferencesService.setDocumentTypeTabPreference(
-            context.document.type,
-            tabId,
-            'showSheetPins',
-            showSheetPins,
-          );
-          await tick();
-          tabContent?.scrollTo({ top: 0 });
-        }}
-      >
-        <i class="fas fa-thumbtack"></i>
-        {localize(
-          showSheetPins
-            ? 'TIDY5E.Utilities.HideSheetPins'
-            : 'TIDY5E.Utilities.ShowSheetPins',
-        )}
-      </button>
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless button-small"
+          onclick={() => switchSectionOrganization()}
+        >
+          <i class="fas fa-arrow-right-arrow-left"></i>
+          {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION
+            ? localize(
+                'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+              )
+            : localize(
+                'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+              )}
+        </button>
+        <button
+          type="button"
+          class="button button-small button-borderless"
+          onclick={async () => {
+            showSheetPins = !showSheetPins;
+            await UserSheetPreferencesService.setDocumentTypeTabPreference(
+              context.document.type,
+              tabId,
+              'showSheetPins',
+              showSheetPins,
+            );
+            await tick();
+            tabContent?.scrollTo({ top: 0 });
+          }}
+        >
+          <i class="fas fa-thumbtack"></i>
+          {localize(
+            showSheetPins
+              ? 'TIDY5E.Utilities.HideSheetPins'
+              : 'TIDY5E.Utilities.ShowSheetPins',
+          )}
+        </button>
+      {/if}
     </div>
     <div class="sheet-footer-right footer-content-right flexshrink">
       {#if context.editable}

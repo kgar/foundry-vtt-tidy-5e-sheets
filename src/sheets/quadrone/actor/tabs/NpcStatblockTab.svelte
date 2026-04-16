@@ -205,7 +205,7 @@
 
   {#if context.unlocked || context.background || context.species || context.classes.length > 0}
     <div class="tidy-table character-traits">
-      <div class="tidy-table-header-row theme-dark">
+      <div class="tidy-table-header-row">
         <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
       </div>
       <div class="list traits">

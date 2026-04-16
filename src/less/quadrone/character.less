@@ -251,9 +251,14 @@
     }
   }
 
-  /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
-  .abilities-size-smaller() {
+  .sheet-header:has(.abilities-container.ability-collapsed) {
+    .level-container {
+      margin-top: var(--t5e-size-1x);
+    }
+  }
 
+  /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
+  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
     .ac-container .shield {
       width: 100%;
       height: auto;
@@ -265,7 +270,6 @@
       padding-top: 0;
 
       .shield {
-        margin-top: 0.25rem;
         min-height: 3.625rem;
       }
 
@@ -298,15 +302,16 @@
   }
 
   /* Smallest abilities when sheet is extremely narrow and has custom abilities present. */
-  .abilities-size-smallest() {
-
-    .abilities-size-smaller();
-
+  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
     .ac-container {
-      gap: 0.4375rem;
+      padding-top: 0;
 
       .shield {
         margin-top: 0;
+        height: auto;
+        min-height: 3.25rem;
+        min-width: auto;
+        width: 100%;
 
         .ac-value {
           font-size: var(--collapse-font-medium);
@@ -350,9 +355,11 @@
     }
 
     .initiative-container {
+      max-width: 3.25rem;
       gap: 0;
 
       .initiative.score {
+        min-height: 3.5rem;
         padding-top: 0.25rem;
         margin-top: 0;
 
@@ -367,29 +374,15 @@
     }
 
     .concentration {
+      overflow: hidden;
       padding: 0 0.25rem;
 
       .concentration-roll-button {
-        margin-bottom: -1rem;
+        margin: 0.5rem 0 -1rem 0;
         padding-bottom: 1rem;
-        margin-top: 0.5rem;
         overflow: hidden;
       }
     }
-  }
-
-  .sheet-header:has(.abilities-container.ability-collapsed) {
-    .level-container {
-      margin-top: var(--t5e-size-1x);
-    }
-  }
-
-  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
-    .abilities-size-smaller();
-  }
-
-  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
-    .abilities-size-smallest();
   }
 
   @container character-sheet (width > 50rem) {
