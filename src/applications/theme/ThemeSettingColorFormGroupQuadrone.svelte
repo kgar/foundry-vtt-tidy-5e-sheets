@@ -2,6 +2,7 @@
   import { settingValueToHexaString } from 'src/theme/theme';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
+  import chroma from 'chroma-js';
 
   interface Props {
     key: string;
@@ -9,6 +10,7 @@
     value: string;
     placeholder?: string;
     colorSelected?: () => void;
+    disableDelete?: boolean;
   }
 
   let {
@@ -17,6 +19,7 @@
     key,
     colorSelected,
     placeholder = '#FFFFFF',
+    disableDelete = false,
   }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -75,6 +78,11 @@
       class="theme-color-textbox"
       {placeholder}
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
+      onblur={() => {
+        if (disableDelete && (isNil(value, '') || !chroma.valid(value))) {
+          onColorSelected(placeholder);
+        }
+      }}
     />
 
     {#if eyeDropperEnabled}
@@ -88,7 +96,7 @@
       </button>
     {/if}
 
-    {#if !isNil(value, '')}
+    {#if !isNil(value, '') && !disableDelete}
       <button
         type="button"
         title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}

@@ -126,10 +126,8 @@
       bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
       placeholder="rgb(116, 27, 43)"
+      disableDelete
     />
-    <p class="hint">
-      {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
-    </p>
 
     {#if !context.value.useBasicTheme}
 
@@ -210,7 +208,7 @@
 
     <div class="form-group">
       <label for="{idPrefix}-use-boring-theme">
-        {localize('TIDY5E.ThemeSettings.UseBoringTheme.title')}
+        {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
       </label>
       <div class="form-fields">
         <input
@@ -223,7 +221,7 @@
         />
       </div>
       <p class="hint">
-        {localize('TIDY5E.ThemeSettings.UseBoringTheme.hint')}
+        {localize('TIDY5E.ThemeSettings.UseBasicTheme.hint')}
       </p>
     </div>
 

@@ -91,9 +91,8 @@
     ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
   );
   // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
-  const themedHeaders = $derived(
-    !ThemeQuadrone.getSheetThemeSettings({ doc: sheetDocument }).useBasicTheme,
-  );
+  
+  const isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 </script>
 
 <TidyTable
@@ -103,7 +102,7 @@
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
-      class={[{ 'theme-dark': themedHeaders }, headerRowClasses]}
+      class={[!isBasicTheme ? 'theme-dark' : '', headerRowClasses]}
       {...headerRowAttributes}
     >
       <TidyTableHeaderCell primary={true} class="header-label-cell">

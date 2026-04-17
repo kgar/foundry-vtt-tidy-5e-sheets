@@ -39,6 +39,7 @@
 
   .abilities-container-inner {
     position: relative;
+    display: flex;
     min-height: 6.625rem;
     gap: var(--t5e-size-1x);
     margin: var(--t5e-size-2x) 0 0 var(--header-padding);
@@ -331,7 +332,7 @@
     }
   }
 
-  .abilities-container:not(.ability-collapsed) .initiative.score.double-digit {
+  .abilities-container:not(.abilities-size-compact) .initiative.score.double-digit {
     padding-top: var(--t5e-size-2x);
 
     .initiative-roll-button {
@@ -359,10 +360,7 @@
 
   .ability-roll-button,
   .initiative-roll-button {
-    color: var(--t5e-color-text-gold-emphasis);
-    font: var(--t5e-font-label-medium);
     height: auto;
-    line-height: normal;
     min-height: auto;
     text-transform: uppercase;
     transition: all var(--t5e-transition-default);
@@ -396,7 +394,7 @@
     }
   }
 
-  .sheet-header .abilities-container.abilities-size-smaller .abilities-container-inner {
+  .abilities-size-small {
     --collapse-font-medium: 1.4375rem;
 
     .ability-bonus-container {
@@ -441,14 +439,14 @@
   }
 
   /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
-  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner,
-  &.theme-basic .sheet-header .abilities-container .abilities-container-inner {
+  .abilities-container.abilities-size-compact,
+  &.theme-basic .abilities-container {
     --collapse-font-large: 1.5rem;
     --collapse-font-medium: 1.4375rem;
 
     gap: var(--t5e-size-halfx);
 
-    >* {
+    .abilities-container-inner >* {
       background: var(--ability-collapsed-bg);
       border: 0.0625rem solid var(--ability-collapsed-outline);
       border-radius: var(--t5e-size-1x);
@@ -514,10 +512,10 @@
       .bonus-container .ability-score-input {
         background: var(--t5e-component-field-background-hover);
         border: 0.0625rem solid var(--t5e-component-field-border-hover);
-        height: calc(100% - 1.5rem);
-        left: 0.125rem;
-        right: 0.125rem;
-        top: 1.375rem;
+        left: 0;
+        right: 0;
+        top: 0.875rem;
+        height: 1.875rem;
       }
 
       .button-config {
@@ -526,8 +524,7 @@
       }
 
       .editing-score-label {
-        margin: 0 0.25rem;
-        top: calc(100%);
+        top: calc(110%);
       }
     }
 
@@ -585,17 +582,16 @@
 
   &.theme-basic {
     &.theme-light {
-      .sheet-header .abilities-container { 
-        &.ability-collapsed .abilities-container-inner >* {
+        .abilities-size-compact .abilities-container-inner >* {
           --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
         }
-      }
     }
     .sheet-header .abilities-container { 
-      &.ability-collapsed .abilities-container-inner >* {
+      &.abilities-size-compact .abilities-container-inner >* {
         --ability-collapsed-bg: var(--t5e-component-card-darker);
         --ability-collapsed-outline: var(--t5e-component-card-lighter);
       }
+      .ability-roll-button {margin-bottom: -2.125rem;}
   
       .ability.has-proficiency {
         .button-config {
@@ -629,7 +625,6 @@
   
   
         .ac-container .shield {
-          aspect-ratio: 1/1.125;
           max-width: 4rem;
   
           .ac-label {
@@ -655,7 +650,7 @@
 
   &:not(.theme-basic) {
     .sheet-header .abilities-container { 
-      &.ability-collapsed .abilities-container-inner {
+      &.abilities-size-compact .abilities-container-inner {
         .ability:has(.proficient),
         .ac-container,
         .initiative-container {

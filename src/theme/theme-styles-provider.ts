@@ -119,6 +119,8 @@ export class ThemeStylesProvider {
     const themeForegroundDarkerDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDiminished, accentVariant, true);
     const themeForegroundDarkerDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDisabled, accentVariant, true);
 
+    console.log('themeForegroundBase', themeForegroundBase);
+    console.log('accentBackground', accentBackground);
     const ruleset: ThemeQuadroneStyleRule[] = [
       identifierRule,
       {
@@ -181,6 +183,54 @@ export class ThemeStylesProvider {
       doc,
       idOverride
     );
+
+    // // Pull base foreground colors straight from the live CSS so module/world
+    // // overrides flow through without TS-side hardcoding.
+    // const accentBackground = settings.accentColor;
+    // const accentVariant = accentColorResult.themeClass === THEME_CLASS_DARK ? THEME_CLASS_DARK : THEME_CLASS_LIGHT;
+    // const cardColor = getCSSVariable(TIDY_CSS_VARIABLES.cardColor, accentVariant);
+
+    // const themeForegroundBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForeground, accentVariant);
+    // const themeForegroundDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDiminished, accentVariant);
+    // const themeForegroundDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDisabled, accentVariant);
+
+    // const ruleset: ThemeQuadroneStyleRule[] = [
+    //   identifierRule,
+    //   {
+    //     property: TIDY_CSS_VARIABLES.themeColor,
+    //     value: accentBackground,
+    //   },
+    //   {
+    //     property: TIDY_CSS_VARIABLES.themeColorHighlight,
+    //     value: getForegroundAtContrast(cardColor, settings.accentColor, 'minimum'),
+    //   },
+    //   {
+    //     property: TIDY_CSS_VARIABLES.themeForeground,
+    //     value: getForegroundAtContrast(accentBackground, themeForegroundBase, 'body'),
+    //   },
+    //   {
+    //     property: TIDY_CSS_VARIABLES.themeForegroundDiminished,
+    //     value: getForegroundAtContrast(accentBackground, themeForegroundDiminishedBase, 'headline'),
+    //   },
+    //   {
+    //     property: TIDY_CSS_VARIABLES.themeForegroundDisabled,
+    //     value: getForegroundAtContrast(accentBackground, themeForegroundDisabledBase, 'minimum'),
+    //   },
+    // ];
+
+    // // const textGoldBase = getCSSVariable(TIDY_CSS_VARIABLES.textGold, accentVariant);
+    // // const textGoldEmphasisBase = getCSSVariable(TIDY_CSS_VARIABLES.textGoldEmphasis, accentVariant);
+    // // ruleset.push(
+    // //   {
+    // //     property: TIDY_CSS_VARIABLES.textGold,
+    // //     value: getForegroundAtContrast(accentBackground, textGoldBase, 'body'),
+    // //   },
+    // //   {
+    // //     property: TIDY_CSS_VARIABLES.textGoldEmphasis,
+    // //     value: getForegroundAtContrast(accentBackground, textGoldEmphasisBase, 'body-high-contrast'),
+    // //   }
+    // // );
+
     return [
       {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,

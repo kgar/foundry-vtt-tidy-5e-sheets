@@ -86,6 +86,9 @@
         {disabled}
       >
         {ability.abbr}
+        <!--
+                <span class="ability-abbr">{ability.abbr}</span>
+        <span class="ability-label-container"><span class="ability-modifier">{mod.sign}</span><span class="ability-value">{mod.value}</span></span>-->
       </button>
       <div class={['flexrow']}>
         <span

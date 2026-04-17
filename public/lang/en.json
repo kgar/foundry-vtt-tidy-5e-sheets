@@ -865,8 +865,7 @@
       "option.token": "Token"
     },
     "RarityColors.title": "Rarity Colors",
-    "SheetTheme.title": "Sheet Theme",
-    "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
+    "SheetTheme.title": "Sheet Theme Color",
     "SpellcastingMethodColors.title": "Spellcasting Method Colors"
   },
   "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
