@@ -105,6 +105,11 @@
       "path": "lang/zh_Hans.json"
     },
     {
+      "lang": "ta",
+      "name": "தமிழ்",
+      "path": "lang/ta.json"
+    },
+    {
       "lang": "pt",
       "name": "Português",
       "path": "lang/pt.json"
