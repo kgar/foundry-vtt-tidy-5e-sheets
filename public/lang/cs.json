@@ -1016,5 +1016,20 @@
     "TIDY5E.AbbrProficiency": "ZD",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrovství se zbraní: {mastery}",
     "TIDY5E.DisplayOptionsActor.Title": "Možnosti zobrazení aktéra",
-    "TIDY5E.Utilities.CastActivityMissingSpell": "S touto aktivitou není spojeno žádné kouzlo."
+    "TIDY5E.Utilities.CastActivityMissingSpell": "S touto aktivitou není spojeno žádné kouzlo.",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "Zobrazit systémové popisky stavů"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "Zobrazit systémové popisky typů bytostí"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "Zobrazit systémové popisky mistrovství zbraní"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "Zobrazit systémové popisky dovedností"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "Zobrazit systémové popisky nástrojů"
+    }
 }
