@@ -31,7 +31,6 @@ Tidy runs on community feedback! If you like something you see, reach out in the
 ### **kgar**  • 📜 The Keeper of Sheets, Head Modron 👨‍💻 development, ✨ some design
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
-[!["Patreon](/readme-assets/patreon-logo.svg)](https://www.patreon.com/iamkgar)
 
 ### **hightouch** • Rogue Modron ✨ design, 👨‍💻 some development
 
