@@ -147,6 +147,7 @@
         >
           {#snippet children({ toggleSummary, expanded })}
             {@render beforeImage?.(entry, ctx)}
+            <!--svelte-ignore a11y_missing_attribute-->
             <a
               class={[
                 'tidy-table-row-use-button',
@@ -163,12 +164,16 @@
 
             {@render afterImage?.(entry, ctx)}
             <TidyTableCell primary={true} class="item-label text-cell">
+              <!--svelte-ignore a11y_missing_attribute-->
               <a
                 class="item-name"
                 role="button"
                 data-keyboard-focus
                 tabindex="0"
                 onclick={(ev) => toggleSummary()}
+                onkeydown={(ev) =>
+                  ev.key === 'Enter' ||
+                  (ev.key === ' ' && toggleSummary())}
               >
                 <span class="cell-text">
                   <span class="cell-name">{entry.name}</span>

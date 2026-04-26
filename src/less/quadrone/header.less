@@ -458,10 +458,8 @@
     margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
   }
 
-  /* ---------------------------------- */
-  /*  Badges                            */
-  /* ---------------------------------- */
-
+  /*  BADGES
+  /* ------------------------------------------------------------ */
   .badge {
     background: transparent no-repeat center / contain;
     font-family: var(--t5e-font-roboto-condensed);
@@ -1742,6 +1740,15 @@
           margin-right: 0.25rem;
         }
       }
+    }
+  }
+  &:where(.npc) {
+    .sheet-header {
+      padding-right: var(--t5e-size-3x);
+    }
+
+    .abilities-container-inner {
+      max-width: 80rem;
     }
   }
 
