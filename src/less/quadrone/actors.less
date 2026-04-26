@@ -291,6 +291,7 @@
   h3.font-title-small {
     display: flex;
     align-items: center;
+    min-height: var(--t5e-field-size-default);
 
     >i,
     .title>i {
@@ -740,13 +741,10 @@
     align-items: flex-start;
     gap: var(--t5e-size-2x);
 
-    .character-traits-title {
-      padding-top: var(--t5e-size-1x);
-    }
-
     .button {
       flex: 0;
       text-wrap: nowrap;
+      margin-bottom: -0.25rem;
     }
   }
 
@@ -1598,10 +1596,6 @@
 
     .traits.list .pill:is(.physical-bypass) {
       border-color: var(--t5e-color-palette-orange-70);
-    }
-
-    .trait-pill i {
-      color: var(--t5e-color-text-gold-emphasis);
     }
   }
 }

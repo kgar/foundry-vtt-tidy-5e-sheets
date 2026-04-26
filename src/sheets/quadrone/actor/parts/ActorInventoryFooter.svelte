@@ -80,7 +80,7 @@
         onfocus={(ev) => attunementSummaryTooltip?.tryShow(ev)}
       >
         <i
-          class={`fa-sun ${attuned ? 'fas highlighted' : 'far color-text-lighter'}`}
+          class={`fa-sun ${attuned ? 'fas highlighted color-icon-theme-highlight' : 'far color-text-lighter'}`}
         ></i>
         <span class="value font-data-medium"
           >{context.system.attributes.attunement.value}</span

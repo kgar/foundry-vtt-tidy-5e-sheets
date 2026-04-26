@@ -1596,6 +1596,11 @@ export const FoundryAdapter = {
         break;
     }
 
+    if (item.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.always.value) {
+      classes.push('fa-book-bookmark');
+    }
+
     return classes;
   },
   getRollModeState(ev: Event) {
