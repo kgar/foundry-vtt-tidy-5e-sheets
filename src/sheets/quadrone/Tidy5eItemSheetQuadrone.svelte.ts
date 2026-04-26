@@ -24,7 +24,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
-import type { ActiveEffect5e, GroupableSelectOption } from 'src/types/types';
+import type { ActiveEffect5e, ActiveEffectContext, GroupableSelectOption, SectionCommand } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -34,12 +34,13 @@ import {
   TidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -292,18 +293,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
-    const defaultEffectCategories =
-      dnd5e.applications.components.EffectsElement.prepareCategories(
-        this.document.effects,
-        { parent: this.item }
-      );
-
-    const enhancedEffectsCategories =
-      await ConditionsAndEffects.getEffectsForItem(
-        documentSheetContext,
-        defaultEffectCategories
-      );
-
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
@@ -395,7 +384,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         documentSheetContext.unlocked
       ),
 
-      effects: enhancedEffectsCategories,
+      effects: await this._getEffectsSections(),
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -637,6 +626,58 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   }
 
   /* -------------------------------------------- */
+ 
+  async _getEffectsSections() {
+    const effectMap: Record<string, ActiveEffectContext> = {};
+    const riders = [];
+    const riderIds = new Set(this.item.getFlag("dnd5e", "riders.effect") ?? []);
+    let effects = dnd5e.applications.components.EffectsElement.prepareCategories(this.item.effects, { parent: this.item });
+    for ( const category of Object.values(effects) ) {
+      category.effects = await (category as any).effects.reduce(async (arr, effect) => {
+        effect.updateDuration();
+        const { id, name, img, disabled, duration } = effect;
+        const source = await effect.getSource();
+        arr = await arr;
+        const ctx = effectMap[id] = { 
+          id, name, img, disabled, duration, source, parent,
+          durationParts: duration.remaining ? duration.label.split(", ") : [],
+          hasTooltip: true,
+          riders: []
+        };
+        if ( riderIds.has(id) ) riders.push(ctx);
+        else arr.push(ctx);
+        return arr;
+      }, []);
+    }
+    const origins = (this.item.system.activities?.getByType("enchant") ?? [])
+      .flatMap(a => a.effects)
+      .reduce((obj, effects) => {
+        const { _id, riders } = effects;
+        for ( const id of riders.effect ) {
+          obj[id] ??= [];
+          obj[id].push(_id);
+        }
+        return obj;
+      }, {});
+    riders.forEach(r => {
+      for ( const origin of origins[r.id] ?? [] ) {
+        if ( origin in effectMap ) effectMap[origin].riders.push(r);
+      }
+    });
+
+    return Object.entries(effects).map(([key, value]) => ({
+      ...value,
+      canCreate: context.editable && !value.isEnchantment && !value.disabled,
+      dataset: {}, // TODO: put things that help with effect creation via _addDocument here
+      show: !value.hidden,
+      rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+      sectionActions: [],
+      key,
+    }));
+  }
+ 
+  /* -------------------------------------------- */
+
 
   /**
    * Get the display object used to show the advancement tab.

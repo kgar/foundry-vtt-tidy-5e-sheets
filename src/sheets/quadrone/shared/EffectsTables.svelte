@@ -33,6 +33,8 @@
 
   let sections = $derived(context.effects);
 
+  $inspect(sections);
+
   const localize = FoundryAdapter.localize;
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
