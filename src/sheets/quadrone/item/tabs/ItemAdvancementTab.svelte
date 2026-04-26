@@ -19,10 +19,12 @@
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { isNil } from 'src/utils/data';
   import { CONSTANTS } from 'src/constants';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   let localize = FoundryAdapter.localize;
 
-  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
+  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());  
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   let advancements = $derived(Object.entries(context.advancement));
 
@@ -135,7 +137,7 @@
 {#each advancements as [key, section]}
   <TidyTable {key}>
     {#snippet header()}
-      <TidyTableHeaderRow class="theme-dark">
+      <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
         <TidyTableHeaderCell primary={true} class="header-label-cell">
           <h3>
             {#if key === CONSTANTS.ADVANCEMENT_LEVEL_ZERO}

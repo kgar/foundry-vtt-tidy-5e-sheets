@@ -27,10 +27,11 @@
   import { setContext } from 'svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getGroupSheetQuadroneContext());
-
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
@@ -128,7 +129,7 @@
 
         <TidyTable key={section.key} data-custom-section={section.custom}>
           {#snippet header()}
-            <TidyTableHeaderRow class="theme-dark">
+            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}

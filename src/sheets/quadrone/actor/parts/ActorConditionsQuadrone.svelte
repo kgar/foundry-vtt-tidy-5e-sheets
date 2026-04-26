@@ -8,6 +8,7 @@
 
   interface Props {
     conditions: Dnd5eActorCondition[];
+    isBasicTheme: boolean;
   }
 
   let { conditions }: Props = $props();
@@ -17,7 +18,7 @@
 
 <TidyTable key="conditions">
   {#snippet header()}
-    <TidyTableHeaderRow class="theme-dark">
+    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true}>
         <h3>{localize('DND5E.Conditions')}</h3>
       </TidyTableHeaderCell>
