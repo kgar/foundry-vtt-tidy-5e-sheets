@@ -55,7 +55,7 @@
 
     <ul style="margin-block-start: 1rem;" class="unlist flex-column small-gap">
       {#each activeEffect.changes as change}
-        {@const modeLabel = ActiveEffectsHelper.findMode(change.mode)}
+        {@const modeLabel = ActiveEffectsHelper.findMode(change)}
         <li>
           <div>
             <strong class="break-word">{change.key}</strong>

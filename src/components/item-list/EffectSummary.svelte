@@ -48,7 +48,7 @@
       </thead>
       <tbody>
         {#each activeEffect.changes as change}
-          {@const modeLabel = ActiveEffectsHelper.findMode(change.mode)}
+          {@const modeLabel = ActiveEffectsHelper.findMode(change)}
 
           <tr>
             <td
