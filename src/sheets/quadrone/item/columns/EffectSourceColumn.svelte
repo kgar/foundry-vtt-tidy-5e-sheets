@@ -10,7 +10,7 @@
 </script>
 
 {#if rowContext.source}
-  <a data-action="showDocument" data-uuid={rowContext.effect.source?.uuid}>
+  <a data-action="showDocument" data-uuid={rowContext.source?.uuid}>
     {rowContext.source.name ?? ''}
   </a>
 {:else}
