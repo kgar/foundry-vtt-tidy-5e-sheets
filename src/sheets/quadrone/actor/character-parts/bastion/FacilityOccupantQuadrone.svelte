@@ -69,12 +69,12 @@
   );
 
   const linkAttributes = $derived(
-    context.editable && context.unlocked
+    context.unlocked
       ? {
           'data-action': 'showContextMenu',
           'data-target-selector': '[data-actor-uuid]',
         }
-      : context.editable && !context.unlocked
+      : context.editable && occupant
         ? {
             'data-action': 'showDocument',
             'data-uuid': occupant.uuid,
