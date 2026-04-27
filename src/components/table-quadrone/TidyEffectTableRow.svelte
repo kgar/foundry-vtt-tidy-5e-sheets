@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type OnItemToggledFn } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
-  import type { ActiveEffectContext, EffectSummaryData } from 'src/types/types';
+  import type { EffectSummaryData, ActiveEffectContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TidyEffectSummary from './TidyEffectSummary.svelte';

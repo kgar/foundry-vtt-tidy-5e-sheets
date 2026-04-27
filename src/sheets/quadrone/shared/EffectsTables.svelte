@@ -117,7 +117,7 @@
                 {columns}
                 {context}
                 ctx={effectContext}
-                entry={effectContext.effect.effect /* TODO: stop. get some help. */}
+                entry={effectContext.effect.effect}
                 {hiddenColumns}
                 {section}
               />

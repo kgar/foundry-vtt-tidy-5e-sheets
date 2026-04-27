@@ -81,6 +81,7 @@ export class ConditionsAndEffects {
             hasTooltip: source instanceof dnd5e.documents.Item5e,
             uuid: effect.uuid,
             effect: effect,
+            riders: []
           });
           return arr;
         },
@@ -168,6 +169,7 @@ export class ConditionsAndEffects {
               hasTooltip: source instanceof dnd5e.documents.Item5e,
               uuid: effect.uuid,
               effect: effect,
+              riders: []
             });
             return arr;
           },
@@ -221,6 +223,7 @@ export class ConditionsAndEffects {
               hasTooltip: true,
               uuid: effect.uuid,
               effect: effect,
+              riders: []
             });
             return arr;
           },

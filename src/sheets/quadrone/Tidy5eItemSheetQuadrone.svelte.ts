@@ -24,7 +24,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
-import type { ActiveEffect5e, ActiveEffectContext, GroupableSelectOption, SectionCommand } from 'src/types/types';
+import type { ActiveEffect5e, ActiveEffectSection, GroupableSelectOption, ActiveEffectContext } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -40,7 +40,6 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -618,6 +617,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
     await this.item.system.getSheetData?.(context);
 
+    context.effects.forEach((s) => {
+      s.rowActions = TableRowActionsRuntime.getEffectsRowActions(context);
+    });
+
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
@@ -629,51 +632,80 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
  
   async _getEffectsSections() {
     const effectMap: Record<string, ActiveEffectContext> = {};
-    const riders = [];
-    const riderIds = new Set(this.item.getFlag("dnd5e", "riders.effect") ?? []);
-    let effects = dnd5e.applications.components.EffectsElement.prepareCategories(this.item.effects, { parent: this.item });
-    for ( const category of Object.values(effects) ) {
-      category.effects = await (category as any).effects.reduce(async (arr, effect) => {
-        effect.updateDuration();
-        const { id, name, img, disabled, duration } = effect;
-        const source = await effect.getSource();
-        arr = await arr;
-        const ctx = effectMap[id] = { 
-          id, name, img, disabled, duration, source, parent,
-          durationParts: duration.remaining ? duration.label.split(", ") : [],
-          hasTooltip: true,
-          riders: []
-        };
-        if ( riderIds.has(id) ) riders.push(ctx);
-        else arr.push(ctx);
-        return arr;
-      }, []);
+    const riders: ActiveEffectContext[] = [];
+    const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);
+    let defaultEffects: Record<string, ActiveEffect5e> =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.item.effects,
+        { parent: this.item },
+      );
+    
+    let effects: Record<string, ActiveEffectSection> = {};
+    
+    for (const [key, category] of Object.entries(defaultEffects)) {
+      effects[key] = {
+        ...category,
+        effects: await category.effects.reduce(
+          async (arr: ActiveEffectContext[], effect: ActiveEffect5e) => {
+            effect.updateDuration();
+            const { id, name, img, disabled, duration } = effect;
+            const source = await effect.getSource();
+            arr = await arr;
+            const ctx: ActiveEffectContext = (effectMap[id] = {
+              id,
+              uuid: effect.uuid,
+              name,
+              img,
+              disabled,
+              duration,
+              source,
+              parent,
+              durationParts: duration.remaining
+                ? duration.label.split(', ')
+                : [],
+              hasTooltip: true,
+              effect: effect,
+              riders: [],
+            });
+            if (riderIds.has(id)) riders.push(ctx);
+            else arr.push(ctx);
+            return arr;
+          },
+          [],
+        ),
+      };
     }
-    const origins = (this.item.system.activities?.getByType("enchant") ?? [])
-      .flatMap(a => a.effects)
-      .reduce((obj, effects) => {
-        const { _id, riders } = effects;
-        for ( const id of riders.effect ) {
+
+    const origins = (this.item.system.activities?.getByType('enchant') ?? [])
+      .flatMap((a: any) => a.effects)
+      .reduce((obj: Record<string, string[]>, effect: ActiveEffect5e) => {
+        const { _id, riders } = effect;
+        for (const id of riders.effect) {
           obj[id] ??= [];
           obj[id].push(_id);
         }
         return obj;
       }, {});
-    riders.forEach(r => {
-      for ( const origin of origins[r.id] ?? [] ) {
-        if ( origin in effectMap ) effectMap[origin].riders.push(r);
+
+    riders.forEach((r) => {
+      for (const origin of origins[r.id] ?? []) {
+        if (origin in effectMap) effectMap[origin].riders.push(r);
       }
     });
 
-    return Object.entries(effects).map(([key, value]) => ({
-      ...value,
-      canCreate: context.editable && !value.isEnchantment && !value.disabled,
-      dataset: {}, // TODO: put things that help with effect creation via _addDocument here
-      show: !value.hidden,
-      rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
-      sectionActions: [],
-      key,
-    }));
+    return Object.entries(effects).map(
+      ([key, value]) =>
+        ({
+          ...value,
+          canCreate:
+            this.isEditable && !value.isEnchantment && !value.disabled,
+          dataset: {}, // TODO: put things that help with effect creation via _addDocument here
+          show: !value.hidden,
+          rowActions: [],
+          sectionActions: [],
+          key,
+        }) satisfies ActiveEffectSection,
+    );
   }
  
   /* -------------------------------------------- */
