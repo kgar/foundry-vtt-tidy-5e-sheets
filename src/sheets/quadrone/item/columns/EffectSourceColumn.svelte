@@ -9,9 +9,9 @@
   }: ColumnCellProps<ActiveEffect5e, ActiveEffectContext> = $props();
 </script>
 
-{#if rowContext.effect.source}
+{#if rowContext.source}
   <a data-action="showDocument" data-uuid={rowContext.effect.source?.uuid}>
-    {rowContext.effect.source.name ?? ''}
+    {rowContext.source.name ?? ''}
   </a>
 {:else}
   <span class="color-text-disabled"> &mdash; </span>

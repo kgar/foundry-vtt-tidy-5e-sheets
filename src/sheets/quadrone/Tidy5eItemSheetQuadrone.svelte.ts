@@ -383,7 +383,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         documentSheetContext.unlocked
       ),
 
-      effects: await this._getEffectsSections(documentSheetContext),
+      effects: await this._getEffectsSections(),
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -630,7 +630,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   /* -------------------------------------------- */
  
-  async _getEffectsSections(context: DocumentSheetV2Context) {
+  async _getEffectsSections() {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
     const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);
