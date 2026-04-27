@@ -24,7 +24,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
-import type { ActiveEffect5e, ActiveEffectSection, GroupableSelectOption, ActiveEffectContext } from 'src/types/types';
+import type { ActiveEffect5e, ActiveEffectSection, GroupableSelectOption, ActiveEffectContext, DocumentSheetV2Context } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -383,7 +383,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         documentSheetContext.unlocked
       ),
 
-      effects: await this._getEffectsSections(),
+      effects: await this._getEffectsSections(documentSheetContext),
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -630,7 +630,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   /* -------------------------------------------- */
  
-  async _getEffectsSections() {
+  async _getEffectsSections(context: DocumentSheetV2Context) {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
     const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);
@@ -700,7 +700,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           canCreate:
             this.isEditable && !value.isEnchantment && !value.disabled,
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
-          show: !value.hidden,
+          show: !value.hidden || !!value.effects.length,
           rowActions: [],
           sectionActions: [],
           key,
