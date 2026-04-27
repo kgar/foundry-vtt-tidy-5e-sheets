@@ -31,7 +31,7 @@
           'data-action': 'showContextMenu',
           'data-target-selector': '[data-actor-uuid]',
         }
-      : context.editable
+      : context.editable && occupant
         ? {
             'data-action': 'showDocument',
             'data-uuid': occupant.uuid,
