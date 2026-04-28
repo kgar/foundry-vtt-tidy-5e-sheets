@@ -15,7 +15,7 @@ export class ActiveEffectsHelper {
       error(
         'An error occurred while checking if a field has an active effect applied',
         false,
-        e
+        e,
       );
       debug('Active effect error troubleshooting info', { document, field });
       return false;
@@ -39,7 +39,7 @@ export class ActiveEffectsHelper {
 
     Array.from<string>(activeEffect.statuses)
       .map(
-        (x: string) => CONFIG.statusEffects.find((y) => y.id === x)?.name ?? x
+        (x: string) => CONFIG.statusEffects.find((y) => y.id === x)?.name ?? x,
       )
       .forEach((e) => {
         result.push(e);
@@ -48,15 +48,18 @@ export class ActiveEffectsHelper {
     return result;
   }
 
-  static findMode(mode: number, fallback = '—') {
-    const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
-      ([_, value]) => value === mode
-    );
-
-    if (!entry) {
-      return fallback;
+  static findMode(change: any, fallback = '—') {
+    if (game.release.generation >= 14) {
+      const key = `EFFECT.CHANGES.TYPES.${change.type}`;
+      return change.type ? FoundryAdapter.localize(key) : fallback;
     }
 
-    return FoundryAdapter.localize(`EFFECT.MODE_${entry[0]}`);
+    const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
+      ([_, value]) => value === change.mode,
+    );
+
+    return entry
+      ? FoundryAdapter.localize(`EFFECT.MODE_${entry[0]}`)
+      : fallback;
   }
 }

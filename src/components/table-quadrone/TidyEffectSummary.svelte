@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffect5e, EffectSummaryData } from 'src/types/types';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   interface Props {
@@ -15,6 +14,19 @@
   let pills = $derived.by(() =>
     ActiveEffectsHelper.getActiveEffectPills(activeEffect),
   );
+
+  let locKeys =
+    game.release.generation >= 14
+      ? {
+          key: 'EFFECT.FIELDS.changes.element.key.label',
+          mode: 'EFFECT.FIELDS.changes.element.type.label',
+          value: 'EFFECT.FIELDS.changes.element.value.label',
+        }
+      : {
+          key: 'EFFECT.ChangeKey',
+          mode: 'EFFECT.ChangeMode',
+          value: 'EFFECT.ChangeValue',
+        };
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -35,19 +47,19 @@
       <thead>
         <tr>
           <th>
-            {localize('EFFECT.ChangeKey')}
+            {localize(locKeys.key)}
           </th>
           <th>
-            {localize('EFFECT.ChangeMode')}
+            {localize(locKeys.mode)}
           </th>
           <th>
-            {localize('EFFECT.ChangeValue')}
+            {localize(locKeys.value)}
           </th>
         </tr>
       </thead>
       <tbody>
         {#each activeEffect.changes as change}
-          {@const modeLabel = ActiveEffectsHelper.findMode(change.mode)}
+          {@const modeLabel = ActiveEffectsHelper.findMode(change)}
 
           <tr>
             <td

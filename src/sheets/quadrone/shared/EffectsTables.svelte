@@ -7,6 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActiveEffectContext,
+    ActiveEffectSection,
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -84,45 +85,71 @@
             effect,
           }),
         )}
-
         {#each effectEntries as effectContext}
-          <TidyEffectTableRow effectContext={effectContext.effect}>
-            {#snippet children({ toggleSummary, expanded })}
-              <span class="tidy-table-row-use-button disabled">
-                <img
-                  class="item-image"
-                  src={effectContext.effect.img ??
-                    effectContext.effect.effect.icon}
-                  alt={effectContext.effect.name ?? ''}
-                />
-              </span>
-              <TidyTableCell primary={true}>
-                <a class="item-name" onclick={(ev) => toggleSummary()}>
-                  <span class="cell-text">
-                    <span class="cell-name">{effectContext.effect.name}</span>
-                  </span>
-                  <span class="row-detail-expand-indicator">
-                    <i
-                      class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded
-                    >
-                    </i>
-                  </span>
-                </a>
-              </TidyTableCell>
-
-              <TidyTableCustomCells
-                {columns}
-                {context}
-                ctx={effectContext}
-                entry={effectContext.effect.effect /* TODO: stop. get some help. */}
-                {hiddenColumns}
-                {section}
-              />
-            {/snippet}
-          </TidyEffectTableRow>
+          {@render EffectRow(
+            effectContext.effect,
+            columns,
+            hiddenColumns,
+            section,
+          )}
+          {#each effectContext.effect.riders as rider}
+            {@render EffectRow(rider, columns, hiddenColumns, section, true)}
+          {/each}
         {/each}
       {/snippet}
     </TidyTable>
   {/if}
 {/each}
+
+{#snippet EffectRow(
+  ctx: ActiveEffectContext,
+  columns: ColumnsLoadout,
+  hiddenColumns: Set<string>,
+  section: ActiveEffectSection,
+  isRider?: boolean,
+)}
+  <TidyEffectTableRow effectContext={ctx}>
+    {#snippet children({ toggleSummary, expanded })}
+      {#if isRider}
+        <span class="inline-activity-arrow">
+          <i class="fa-solid fa-turn-up fa-fw fa-rotate-90 color-text-disabled"></i>
+        </span>
+      {/if}
+      <span class="tidy-table-row-use-button disabled">
+        <img
+          class="item-image"
+          src={ctx.effect.img ?? ctx.effect.icon}
+          alt={ctx.effect.name ?? ''}
+        />
+      </span>
+      <TidyTableCell primary={true}>
+        <a class="item-name" onclick={(ev) => toggleSummary()}>
+          <span class="cell-text">
+            <span class="cell-name">{ctx.effect.name}</span>
+          </span>
+          <span class="row-detail-expand-indicator">
+            <i class="fa-solid fa-angle-right expand-indicator" class:expanded>
+            </i>
+          </span>
+        </a>
+      </TidyTableCell>
+
+      <TidyTableCustomCells
+        {columns}
+        {context}
+        {ctx}
+        entry={ctx}
+        {hiddenColumns}
+        {section}
+      />
+    {/snippet}
+  </TidyEffectTableRow>
+{/snippet}
+
+<!-- TODO: hightouch, remove these temp styles whenever you apply the official ones -->
+<style lang="less">
+  .inline-activity-arrow {
+    padding-inline: 0.25rem;
+    align-self: center;
+  }
+</style>

@@ -10,5 +10,5 @@
 </script>
 
 <span class="truncate">
-  {rowContext.effect.effect.duration.label ?? ''}
+  {rowContext.effect.duration.label ?? ''}
 </span>

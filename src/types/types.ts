@@ -1007,11 +1007,12 @@ export type ActiveEffectContext = {
   duration: number;
   source: any;
   parent: any;
-  parentId: string;
+  parentId?: string;
   durationParts: string | string[];
   hasTooltip: boolean;
   uuid: string;
   effect: ActiveEffect5e;
+  riders: ActiveEffectContext[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
