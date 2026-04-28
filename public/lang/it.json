@@ -1046,5 +1046,20 @@
     "TIDY5E.AbbrProficiency": "Comp",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Padronanza Armi: {mastery}",
     "TIDY5E.DisplayOptionsActor.Title": "Opzioni Visualizzazione Personaggio",
-    "TIDY5E.Utilities.CastActivityMissingSpell": "A questa attività non è associato alcun incantesimo."
+    "TIDY5E.Utilities.CastActivityMissingSpell": "A questa attività non è associato alcun incantesimo.",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "Visualizza suggerimenti di sistema sulla Condizione"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "Visualizza suggerimenti di sistema sul Tipo Creatura"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "Visualizza suggerimenti di sistema su Padronanza Armi"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "Visualizza suggerimenti di sistema sulle Abilità"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "Visualizza suggerimenti di sistema sugli Strumenti"
+    }
 }
