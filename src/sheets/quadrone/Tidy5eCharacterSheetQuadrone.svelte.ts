@@ -1476,7 +1476,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return await super._onDropActor(event, document);
     }
 
-    const facilityId =
+    const { facilityId } =
       event.target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
 
     const facility = this.actor.items.get(facilityId);
