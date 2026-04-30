@@ -17,6 +17,7 @@
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -43,21 +44,11 @@
     rowActions: tableActions,
   });
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   let columns = $derived(
     new ColumnsLoadout(
@@ -77,7 +68,7 @@
   );
 </script>
 
-<div bind:this={sectionsContainer}>
+<div {@attach observeResize(onResize)}>
   <TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES}>
     {#snippet header()}
       <TidyTableHeaderRow class="theme-dark">
@@ -105,11 +96,17 @@
               class={['tidy-table-row-use-button']}
               aria-label={ctx.activity.name}
               onclick={(ev) =>
-                ctx.activity.use({ event: ev, options: { sheet: context.sheet } })}
+                ctx.activity.use({
+                  event: ev,
+                  options: { sheet: context.sheet },
+                })}
               onkeydown={(ev) =>
                 ev.key === 'Enter' ||
                 (ev.key === ' ' &&
-                  ctx.activity.use({ event: ev, options: { sheet: context.sheet } }))}
+                  ctx.activity.use({
+                    event: ev,
+                    options: { sheet: context.sheet },
+                  }))}
               data-has-roll-modes
             >
               <img class="item-image" alt="" src={ctx.activity.img} />
@@ -132,7 +129,12 @@
               </span> -->
               </span>
               {#if ctx.type === CONSTANTS.ACTIVITY_TYPE_CAST && !ctx.spell?.uuid}
-                <span data-tooltip={localize('TIDY5E.Utilities.CastActivityMissingSpell')} class="cast-activity-missing-spell-indicator">
+                <span
+                  data-tooltip={localize(
+                    'TIDY5E.Utilities.CastActivityMissingSpell',
+                  )}
+                  class="cast-activity-missing-spell-indicator"
+                >
                   <i class="fa-solid fa-link-simple-slash"></i>
                   <!-- TODO: Update to link-broken for FA 7.2.0-->
                 </span>

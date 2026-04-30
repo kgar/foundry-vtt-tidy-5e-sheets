@@ -15,6 +15,7 @@
   import SpellTable from './SpellTable.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import FeatureTable from './FeatureTable.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   interface Props {
     sections: (FeatureSection | SpellbookSection)[];
@@ -42,28 +43,18 @@
 
   const localize = FoundryAdapter.localize;
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
-
   let totalItemCount = $derived(
     sections.reduce((count, s) => count + s.items.length, 0),
   );
 </script>
 
-<div class="tidy-table-container" bind:this={sectionsContainer}>
+<div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#if totalItemCount === 0}
     <div class="features-empty empty-state-container">
       <button

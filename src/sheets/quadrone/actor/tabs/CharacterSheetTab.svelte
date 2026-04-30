@@ -27,6 +27,7 @@
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';
   import { ConfigureSectionsApplication } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -148,21 +149,11 @@
     sections.some((section) => section.items.length > 0),
   );
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   let itemToggleMap = $derived(inlineToggleService.map);
 
@@ -201,7 +192,7 @@
 
   <div
     class="tidy-table-container"
-    bind:this={sectionsContainer}
+    {@attach observeResize(onResize)}
     data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
   >
     {#if !hasAtLeastOneItem}

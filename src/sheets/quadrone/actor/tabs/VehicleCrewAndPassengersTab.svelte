@@ -14,25 +14,17 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   const noCrew = $derived(
     !context.crew.assigned.members.length &&
@@ -164,7 +156,7 @@
     </div>
   </div>
 
-  <div class="tidy-table-container" bind:this={sectionsContainer}>
+  <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {@render CrewPassengerTable(
       context.crew.unassigned,
       false,
@@ -192,7 +184,9 @@
       UnassignedNoPassengerView,
     )}
 
-    {#snippet UnassignedNoPassengerView(section: CrewSection | PassengerSection)}
+    {#snippet UnassignedNoPassengerView(
+      section: CrewSection | PassengerSection,
+    )}
       <div class="inventory-empty empty-state-container">
         <button
           type="button"
@@ -254,7 +248,8 @@
             <TidyTableRow
               rowContainerAttributes={{
                 ['data-assigned-item-id']: assignedItemId,
-                ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                ['data-context-menu']:
+                  CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
                 ['data-uuid']: member.actor.uuid,
                 ['data-quantity']: member.quantity,
               }}

@@ -16,10 +16,14 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SpellTable from './SpellTable.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   interface Props {
     sections: SpellbookSection[];
-    itemContext: Record<string, CharacterItemQuadroneContext | NpcItemQuadroneContext>;
+    itemContext: Record<
+      string,
+      CharacterItemQuadroneContext | NpcItemQuadroneContext
+    >;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: Actor5e | Item5e;
@@ -48,21 +52,11 @@
 
   const localize = FoundryAdapter.localize;
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   let totalSpellCount = $derived(
     sections.reduce((count, s) => count + s.items.length, 0),
@@ -71,7 +65,7 @@
   let hasSlots = $derived(sections.some((section) => section.slots));
 </script>
 
-<div class="tidy-table-container" bind:this={sectionsContainer}>
+<div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#if totalSpellCount === 0 && context.editable && !hasSlots}
     <div class="spellbook-empty empty-state-container">
       <button
