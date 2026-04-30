@@ -1041,5 +1041,21 @@
     },
     "TIDY5E.AbilityRoll": "Lancer un test de {ability}",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Maîtrise d'arme : {mastery}",
-    "TIDY5E.DisplayOptionsActor.Title": "Options d'affichage des acteurs"
+    "TIDY5E.DisplayOptionsActor.Title": "Options d'affichage des acteurs",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "Afficher les infobulles d'états"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "Afficher les infobulles de Type de créature"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "Afficher les infobulles de maîtrise des armes"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "Afficher les infobulles des compétences"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "Afficher les infobulles d'outil"
+    },
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Cette activité n'est associée à aucun sort."
 }
