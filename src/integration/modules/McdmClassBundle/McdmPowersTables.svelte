@@ -21,6 +21,7 @@
   import type { PowersSection } from './McdmClassBundle';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   interface Props {
     sections: PowersSection[];
@@ -31,21 +32,11 @@
 
   let { sections, searchCriteria, context, tabId }: Props = $props();
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -125,7 +116,7 @@
   );
 </script>
 
-<div class="tidy-table-container" bind:this={sectionsContainer}>
+<div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#each sections as section}
     {#if section.show}
       <TidyTable
@@ -181,8 +172,7 @@
                     { disabled: !context.editable },
                   ]}
                   onclick={(ev) =>
-                    context.editable &&
-                    context.sheet.tryUseItem(item, ev)}
+                    context.editable && context.sheet.tryUseItem(item, ev)}
                 >
                   <img class="item-image" alt={item.name} src={item.img} />
                   <span class="roll-prompt">

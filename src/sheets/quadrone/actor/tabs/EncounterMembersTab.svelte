@@ -19,6 +19,7 @@
   import { setContext } from 'svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -32,7 +33,6 @@
     TableRowActionsRuntime.getEncounterMemberRowActions(context),
   );
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
@@ -46,14 +46,6 @@
       'showSheetPins',
     ) ?? true,
   );
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-    return () => {
-      observer.disconnect();
-    };
-  });
 </script>
 
 <MembersTabSidebar />
@@ -61,7 +53,7 @@
 <GroupMemberHpTooltip bind:this={hpTooltip} sheetDocument={context.document} />
 
 <div class="tab-right-column">
-  <div class="tab-content" bind:this={sectionsContainer}>
+  <div class="tab-content" {@attach observeResize(onResize)}>
     {#if showSheetPins}
       <SheetPins />
     {/if}

@@ -6,6 +6,7 @@
     ActorSheetQuadroneContext,
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context =
     $derived(
@@ -14,25 +15,15 @@
       >(),
     );
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 </script>
 
 <div class="tab-content">
-  <div bind:this={sectionsContainer} class="tidy-table-container">
+  <div {@attach observeResize(onResize)} class="tidy-table-container">
     <EffectsTables inlineWidth={sectionsInlineWidth} />
 
     {#if 'conditions' in context}

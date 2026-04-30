@@ -17,6 +17,7 @@
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let combatants = $derived(context.combatants);
@@ -26,20 +27,11 @@
     TableRowActionsRuntime.getEncounterCombatRowActions(context),
   );
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-    return () => {
-      observer.disconnect();
-    };
-  });
 </script>
 
 <aside class="sidebar expanded flexcol">
@@ -134,10 +126,7 @@
 </aside>
 
 <div class="tab-right-column">
-  <section
-    class="tab-content"
-    bind:this={sectionsContainer}
-  >
+  <section class="tab-content" {@attach observeResize(onResize)}>
     {#if combatants.length}
       {@const columns = new ColumnsLoadout(
         EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
@@ -151,10 +140,11 @@
         }),
       )}
       {@const visibleItemCount = combatants.length}
-      {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
-        sectionsInlineWidth,
-        columns,
-      )}
+      {@const hiddenColumns =
+        EncounterMemberColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth,
+          columns,
+        )}
 
       <TidyTable key="npcs">
         {#snippet header()}

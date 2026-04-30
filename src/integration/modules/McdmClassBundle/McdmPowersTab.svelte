@@ -23,12 +23,12 @@
   import type { Item5e } from 'src/types/item.types';
   import type { PowersSection } from './McdmClassBundle';
   import SectionActions from 'src/features/sections/SectionActions';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const localize = FoundryAdapter.localize;
 
-  let sectionsContainer: HTMLElement;
   let dynamicColumnWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
@@ -38,15 +38,6 @@
       (entry.borderBoxSize[0].inlineSize - labelWidth) /
       (Object.keys(strainTypes).length ?? 3);
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   const strainTypes = CONFIG.MCDM.strainTypes;
 
@@ -186,7 +177,7 @@
         {localize('MCDMCB.TALENT.STRAIN.Max')}
       </div>
     </div>
-    <div class="tidy-strain-container" bind:this={sectionsContainer}>
+    <div class="tidy-strain-container" {@attach observeResize(onResize)}>
       <TidyTable key="strain-table">
         {#snippet header(expanded)}
           <TidyTableHeaderRow class={['theme-dark']}>
@@ -242,7 +233,9 @@
                       }}
                     />
                     <label
-                      class={currentStrain[strainKey] >= level ? 'selected' : ''}
+                      class={currentStrain[strainKey] >= level
+                        ? 'selected'
+                        : ''}
                       for="{strainKey}-{level}"
                       >{strainType.effects[level].label}</label
                     >
@@ -256,7 +249,12 @@
     </div>
   {/if}
   <ItemsActionBar bind:searchCriteria sections={powerSections} {tabId} />
-  <McdmPowersTables sections={powerSections} {searchCriteria} {context} {tabId} />
+  <McdmPowersTables
+    sections={powerSections}
+    {searchCriteria}
+    {context}
+    {tabId}
+  />
   <div class={['sheet-footer flexrow']}>
     <div></div>
     {#if context.editable}

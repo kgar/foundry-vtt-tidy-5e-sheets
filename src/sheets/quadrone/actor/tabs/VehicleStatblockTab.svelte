@@ -28,6 +28,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   const localize = FoundryAdapter.localize;
 
@@ -109,21 +110,11 @@
     ),
   );
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-
-    return () => {
-      observer.disconnect();
-    };
-  });
 
   let totalItemCount = $derived(
     sections.reduce((count, s) => {
@@ -291,7 +282,7 @@
     </div>
   {/if}
 
-  <div class="tidy-table-container" bind:this={sectionsContainer}>
+  <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each sections as section (section.key)}
       {#if section.type === 'inventory'}
         <!-- 

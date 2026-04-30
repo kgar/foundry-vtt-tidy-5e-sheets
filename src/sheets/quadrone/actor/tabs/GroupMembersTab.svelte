@@ -27,6 +27,7 @@
   import { setContext } from 'svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -35,7 +36,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
@@ -76,14 +76,6 @@
   ]);
 
   $effect(() => {
-    const observer = new ResizeObserver(([entry]) => onResize(entry));
-    observer.observe(sectionsContainer);
-    return () => {
-      observer.disconnect();
-    };
-  });
-
-  $effect(() => {
     searchResults.uuids = !isNil(searchCriteria)
       ? new Set(
           context.system.members
@@ -108,7 +100,7 @@
     {tabOptionGroups}
   />
 
-  <div class="tab-content" bind:this={sectionsContainer}>
+  <div class="tab-content" {@attach observeResize(onResize)}>
     {#if showSheetPins}
       <SheetPins />
     {/if}
