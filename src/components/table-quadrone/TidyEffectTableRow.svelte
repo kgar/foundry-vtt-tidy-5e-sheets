@@ -38,18 +38,6 @@
     onEffectToggled?.(effectContext.effect.id, expanded, location);
   }
 
-  function handleDragStart(event: DragEvent) {
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
-    const dragData = effectContext.effect.toDragData?.();
-    if (dragData) {
-      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-    }
-  }
-
   let emptySummaryData: EffectSummaryData = {
     description: {
       value: '',
@@ -93,7 +81,6 @@
     FoundryAdapter.editOnMouseEvent(event, effectContext.effect)}
   onmousedown={(event) =>
     FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
-  ondragstart={handleDragStart}
   {...attributes}
 >
   {@render children?.({ toggleSummary, expanded: expanded })}
