@@ -1,30 +1,13 @@
 ## kgar To Do
 
+- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
-- [x] Handle dragstart for activities on item sheets
-- [x] Handle dragstart for activities on actor sheets?
-- [ ] Handle dragstart for effects
-  - [ ] Actor Base sheet
-  - [ ] Item sheet
 - [ ] Find and purge any outstanding drag handlers / task out their replacements
-
-### Foundry 14 Remaining To Dos
-
-- [ ] Related #1604 - Formula Inputs are cool and accomplish the task of temporarily giving more room to type. We can make a similar thing with svelte. You can see Formula Inputs in Foundry 14 on items with the magical bonus field, for example.
 - [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
-
-### Origin Sections Implementation
-
-- [ ] Clean up the code and reduce redundancy
-- [ ] Review with hightouch to determine next steps
-
-### Short List
-
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
   - [ ] Sortable with the others? Or fixed to the top?
 - [ ] Possibly fix usability complaint for Loyalty Score setup: <https://discord.com/channels/@me/1243307347682529423/1451341294881341480>
-- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
@@ -34,9 +17,6 @@
   - [ ] Give the same treatment ot Configure Header Controls
 - [ ] For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
-- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
-  - [ ] Identify all resize observers which can be removed.
-  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
 - [ ] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events?
 - [ ] Character Sheet - Sheet tab upgrade
   - [ ] Add preference / flag: "Auto-populate Items"
@@ -288,3 +268,12 @@ Manual
         - [x] Item table row conditional rowClass
   - [x] Decide what to do about contained items and whether they should surface their parent container
   - [x] Handle Contained Items with "Paradigm 5"
+- [x] Handle dragstart for activities on item sheets
+- [x] Handle dragstart for activities on actor sheets?
+- [x] Handle dragstart for effects
+  - [x] Actor Base sheet
+  - [x] Item sheet
+- [x] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
+  - [x] Identify all resize observers which can be removed.
+  - [x] ~~Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.~~
+  - [x] Reduce ResizeObservers down to just 1 globally managed singleton.
