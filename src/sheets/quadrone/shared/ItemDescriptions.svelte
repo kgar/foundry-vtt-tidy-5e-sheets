@@ -15,8 +15,19 @@
     document,
   }: Props = $props();
 
-  let sectionItemOpenStates = $derived(itemDescriptions.map((_, i) => i === 0));
+  let sectionItemOpenStates = $state<boolean[]>(getOpenStates());
   let itemDescriptionToEdit = $state<ItemDescription>();
+
+  $effect(() => {
+    if (sectionItemOpenStates.length !== itemDescriptions.length) {
+      ui.notifications.info('getting open states');
+      sectionItemOpenStates = getOpenStates();
+    }
+  });
+
+  function getOpenStates() {
+    return itemDescriptions.map((_, i) => i === 0);
+  }
 
   function handleEdit(detail: {
     document: any;
