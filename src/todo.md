@@ -17,13 +17,6 @@
   - [ ] Give the same treatment ot Configure Header Controls
 - [ ] For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
-- [ ] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events?
-- [ ] Character Sheet - Sheet tab upgrade
-  - [ ] Add preference / flag: "Auto-populate Items"
-  - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
-  - [ ] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
-- [ ] Implement "Auto-populate Items" unchecked
-- [ ] Implement "Organize Items by Origin Sections" and alternating column loadout
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
@@ -32,7 +25,6 @@
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [x] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
@@ -41,13 +33,9 @@
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 - [ ] Extract and share: TidyTableRowUseButton
-- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
-- [ ] PC and NPC Sheets
-  - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
 
@@ -277,3 +265,15 @@ Manual
   - [x] Identify all resize observers which can be removed.
   - [x] ~~Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.~~
   - [x] Reduce ResizeObservers down to just 1 globally managed singleton.
+- [x] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events? Update: better yet, enjoy transition events only once, at time of expanded state change. Additionally, separate expanded state change from the application of expanded class so that we can control when the transition occurs 🔥
+- [x] Character Sheet - Sheet tab upgrade
+  - [x] Add preference / flag: "Auto-populate Items"
+  - [x] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
+  - [x] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
+- [x] Implement "Auto-populate Items" unchecked
+- [x] Implement "Organize Items by Origin Sections" and alternating column loadout
+- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
+- [x] PC and NPC Sheets
+  - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
+- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [x] Tools card header - has cursor hover style without interactivity
