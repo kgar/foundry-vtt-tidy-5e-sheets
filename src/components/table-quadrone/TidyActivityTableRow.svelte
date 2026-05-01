@@ -41,18 +41,6 @@
     onActivityToggled?.(ctx.id, expanded, location);
   }
 
-  function handleDragStart(event: DragEvent) {
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
-    const dragData = ctx.activity.toDragData?.();
-    if (dragData) {
-      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-    }
-  }
-
   let configurable = $derived(Activities.isConfigurable(ctx.activity));
 </script>
 
@@ -78,7 +66,6 @@
     ctx.activity &&
     FoundryAdapter.editOnMouseEvent(event, ctx.activity)}
   onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
-  ondragstart={handleDragStart}
   {...attributes}
 >
   {@render children?.({ toggleSummary, expanded: expanded })}

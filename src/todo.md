@@ -1,8 +1,8 @@
 ## kgar To Do
 
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
-- [ ] Handle dragstart for activities on item sheets
-- [ ] Handle dragstart for activities on actor sheets?
+- [x] Handle dragstart for activities on item sheets
+- [x] Handle dragstart for activities on actor sheets?
 - [ ] Handle dragstart for effects
   - [ ] Actor Base sheet
   - [ ] Item sheet
