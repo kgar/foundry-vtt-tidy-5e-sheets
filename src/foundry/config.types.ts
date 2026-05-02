@@ -3511,7 +3511,7 @@ export type CONFIG = {
       sp: CurrencyItemConfig;
       cp: CurrencyItemConfig;
     } & Record<string, CurrencyItemConfig>;
-    defaultCurrency: string,
+    defaultCurrency: string;
     dieSteps: Array<number>;
     damageScalingModes: {
       whole: {
@@ -3636,7 +3636,13 @@ export type CONFIG = {
       }
     >;
     movementTypes: {
-      [k in 'walk' | 'burrow' | 'climb' | 'fly' | 'swim' | 'jump']: MovementTypeConfig;
+      [k in
+        | 'walk'
+        | 'burrow'
+        | 'climb'
+        | 'fly'
+        | 'swim'
+        | 'jump']: MovementTypeConfig;
     } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
@@ -4600,32 +4606,18 @@ export type CONFIG = {
       summon: ActivityType;
       utility: ActivityType;
     } & Record<string, ActivityType>;
-    advancementTypes: {
-      AbilityScoreImprovement: {
-        validItemTypes: {};
-      };
-      HitPoints: {
-        validItemTypes: {};
-      };
-      ItemChoice: {
-        validItemTypes: {};
-      };
-      ItemGrant: {
-        validItemTypes: {};
-      };
-      ScaleValue: {
-        validItemTypes: {};
-      };
-      Size: {
-        validItemTypes: {};
-      };
-      Subclass: {
-        validItemTypes: {};
-      };
-      Trait: {
-        validItemTypes: {};
-      };
-    };
+    advancementTypes: Record<
+      | 'AbilityScoreImprovement'
+      | 'HitPoints'
+      | 'ItemChoice'
+      | 'ItemGrant'
+      | 'ScaleValue'
+      | 'Size'
+      | 'Subclass'
+      | 'Trait'
+      | (string & {}),
+      { validItemTypes: Set<string> }
+    >;
     defaultArtwork: {
       Item: {
         background: string;
@@ -5578,8 +5570,8 @@ type ChatMessage5e = {
 
 type RequestOptions5e = {
   event?: Event;
-}
+};
 type WeaponMasteryConfig = {
   label: string;
   reference: string | undefined;
-}
+};

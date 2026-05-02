@@ -75,10 +75,6 @@
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={firstClass?.item?.id}
       data-tidy-draggable
-      ondragstart={(ev) => {
-        const dragData = firstClass.item.toDragData();
-        ev.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-      }}
     >
       <div class="list-label">
         <h4 class="font-weight-label">
@@ -99,10 +95,6 @@
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={cls?.item?.id}
       data-tidy-draggable
-      ondragstart={(ev) => {
-        const dragData = cls.item.toDragData();
-        ev.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-      }}
     >
       <div class="list-label"></div>
       {@render classContent(cls)}
@@ -291,10 +283,6 @@
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
     data-item-id={subclass.id}
     data-tidy-draggable
-    ondragstart={(ev) => {
-      const dragData = subclass.toDragData();
-      ev.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-    }}
   >
     <div class="list-label"></div>
     <div class="list-content">

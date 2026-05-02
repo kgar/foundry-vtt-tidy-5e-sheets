@@ -1,7 +1,7 @@
 <script lang="ts">
   import { usePerformanceMode } from 'src/settings/settings.svelte';
   import { EventHelper } from 'src/utils/events';
-  import { onMount, untrack, type Snippet } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
 
   // TODO: There has to be a better way than all this, and perhaps a more performant approach?
@@ -25,60 +25,37 @@
     ...rest
   }: Props = $props();
 
-  // svelte-ignore state_referenced_locally
+  let showExpandedClass = $state(expanded);
   let overflowYHidden = $state(!expanded);
+  let renderContents = $state(expanded);
   let expandableContainer: HTMLElement;
-
-  // svelte-ignore state_referenced_locally
-  let renderContents = $state<boolean>(expanded);
 
   const usesTransitions = !usePerformanceMode();
 
   $effect(() => {
-    if (usesTransitions) {
-      return;
-    }
-
-    expanded;
-    onStart();
-    onEnd();
-  });
-
-  onMount(() => {
     if (!usesTransitions) {
+      showExpandedClass = expanded;
+      onStart();
+      onEnd();
       return;
     }
-    const controller = new AbortController();
 
     expandableContainer.addEventListener(
       'transitionstart',
-      (ev) => {
-        if (ev.target === expandableContainer) {
-          onStart();
-        }
+      () => {
+        onStart();
       },
-      {
-        signal: controller.signal,
-        passive: true,
-      },
+      { once: true },
     );
-
     expandableContainer.addEventListener(
       'transitionend',
-      (ev) => {
-        if (ev.target === expandableContainer) {
-          onEnd();
-        }
+      () => {
+        onEnd();
       },
-      {
-        signal: controller.signal,
-        passive: true,
-      },
+      { once: true },
     );
 
-    return () => {
-      controller.abort();
-    };
+    showExpandedClass = expanded;
   });
 
   $effect(() => {
@@ -103,7 +80,7 @@
     'expandable',
     cssClass,
     {
-      expanded,
+      expanded: showExpandedClass,
       'overflow-y-hidden': overflowYHidden,
     },
   ]}

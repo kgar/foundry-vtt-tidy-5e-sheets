@@ -1,30 +1,17 @@
 ## kgar To Do
 
+- [ ] Extract and share: TidyTableRowUseButton
+  - [ ] Convert to sheet action
+- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
+- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
+- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
+- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
-- [ ] Handle dragstart for activities on item sheets
-- [ ] Handle dragstart for activities on actor sheets?
-- [ ] Handle dragstart for effects
-  - [ ] Actor Base sheet
-  - [ ] Item sheet
-- [ ] Find and purge any outstanding drag handlers / task out their replacements
-
-### Foundry 14 Remaining To Dos
-
-- [ ] Related #1604 - Formula Inputs are cool and accomplish the task of temporarily giving more room to type. We can make a similar thing with svelte. You can see Formula Inputs in Foundry 14 on items with the magical bonus field, for example.
 - [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
-
-### Origin Sections Implementation
-
-- [ ] Clean up the code and reduce redundancy
-- [ ] Review with hightouch to determine next steps
-
-### Short List
-
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
   - [ ] Sortable with the others? Or fixed to the top?
 - [ ] Possibly fix usability complaint for Loyalty Score setup: <https://discord.com/channels/@me/1243307347682529423/1451341294881341480>
-- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
@@ -33,26 +20,13 @@
   - [ ] Change "Use Default" button to "Use Default for All"
   - [ ] Give the same treatment ot Configure Header Controls
 - [ ] For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
-- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
-- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
-  - [ ] Identify all resize observers which can be removed.
-  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
-- [ ] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events?
-- [ ] Character Sheet - Sheet tab upgrade
-  - [ ] Add preference / flag: "Auto-populate Items"
-  - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
-  - [ ] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
-- [ ] Implement "Auto-populate Items" unchecked
-- [ ] Implement "Organize Items by Origin Sections" and alternating column loadout
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
-- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 - [ ] Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [x] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
@@ -60,21 +34,11 @@
 - [ ] Group Sheet - Plan and task Bastions tab
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
-- [ ] Extract and share: TidyTableRowUseButton
-- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
-- [ ] PC and NPC Sheets
-  - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
-- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
-
-### (Almost) Everything after the short list
-
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
-- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 - [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
@@ -288,3 +252,26 @@ Manual
         - [x] Item table row conditional rowClass
   - [x] Decide what to do about contained items and whether they should surface their parent container
   - [x] Handle Contained Items with "Paradigm 5"
+- [x] Handle dragstart for activities on item sheets
+- [x] Handle dragstart for activities on actor sheets?
+- [x] Handle dragstart for effects
+  - [x] Actor Base sheet
+  - [x] Item sheet
+- [x] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
+  - [x] Identify all resize observers which can be removed.
+  - [x] ~~Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.~~
+  - [x] Reduce ResizeObservers down to just 1 globally managed singleton.
+- [x] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events? Update: better yet, enjoy transition events only once, at time of expanded state change. Additionally, separate expanded state change from the application of expanded class so that we can control when the transition occurs 🔥
+- [x] Character Sheet - Sheet tab upgrade
+  - [x] Add preference / flag: "Auto-populate Items"
+  - [x] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
+  - [x] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
+- [x] Implement "Auto-populate Items" unchecked
+- [x] Implement "Organize Items by Origin Sections" and alternating column loadout
+- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
+- [x] PC and NPC Sheets
+  - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
+- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [x] Tools card header - has cursor hover style without interactivity
+- [x] Find and purge any outstanding drag handlers / task out their replacements
+- [x] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.

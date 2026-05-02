@@ -1368,20 +1368,58 @@ export function Tidy5eActorSheetQuadroneBase<
       requestAnimationFrame(() => game.tooltip.deactivate());
       game.tooltip.deactivate();
 
-      if (el.dataset.effectId && el.dataset.parentId) {
-        const effect = this.actor.items
-          .get(el.dataset.parentId)
-          ?.effects.get(el.dataset.effectId);
-        if (effect)
-          event.dataTransfer?.setData(
-            'text/plain',
-            JSON.stringify(effect.toDragData())
-          );
-        return;
+      if (el.closest('[data-effect-id]')) {
+        return this._onDragEffect(event);
       }
 
       if (el.dataset.tidyJournalId) {
-        const journalSortDragData = {
+        return this._onDragJournal(event);
+      }
+
+      if (el.dataset.activityId) {
+        return this._onDragActivity(event);
+      }
+
+      if (el.matches('[data-item-id] > [data-tidy-table-row], [data-item-id]')) {
+        return this._onDragItem(event);
+      }
+
+      super._onDragStart(event);
+    }
+
+    /**
+     * Handling beginning a drag-drop operation on an Active Effect.
+     * @param event  The originating drag event.
+     * @protected
+     */
+    _onDragEffect(
+      event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    ) {
+      const { effectId, parentId } =
+        event.currentTarget.closest<HTMLElement>('[data-effect-id]')?.dataset ??
+        {};
+      const collection =
+        this.actor.items.get(parentId)?.effects ?? this.actor.effects;
+      const effect = collection.get(effectId);
+
+      if (effect) {
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify(effect.toDragData()),
+        );
+      }
+    }
+
+    /**
+     * Handling beginning a drag-drop operation on a Tidy Journal Entry.
+     * @param event The originating drag event.
+     * @returns 
+     */
+    _onDragJournal(
+      event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    ) {
+      const el = event.currentTarget;
+      const journalSortDragData = {
           tidyJournalId: el.dataset.tidyJournalId,
           uuid: event.target.closest<HTMLElement>('[data-document-uuid]')
             ?.dataset.documentUuid,
@@ -1393,32 +1431,33 @@ export function Tidy5eActorSheetQuadroneBase<
           JSON.stringify(journalSortDragData)
         );
         return;
-      }
-
-      if (el.dataset.activityId) {
-        const itemDataset =
-          event.target.closest<HTMLElement>('[data-item-id]')?.dataset;
-        const activityDataset =
-          event.target.closest<HTMLElement>('[data-activity-id]')?.dataset;
-        const activity = this.actor.items
-          .get(itemDataset?.itemId)
-          ?.system.activities?.get(activityDataset?.activityId);
-        if (activity)
-          event.dataTransfer?.setData(
-            'text/plain',
-            JSON.stringify(activity.toDragData()),
-          );
-        return;
-      }
-
-      // Items - Tidy tables
-      if (el.matches('[data-item-id] > [data-tidy-table-row]')) {
-        return this._onDragItem(event);
-      }
-
-      super._onDragStart(event);
     }
 
+    /**
+     * Handling beginning a drag-drop operation on an Activity.
+     * @param event The originating drag event.
+     */
+    _onDragActivity(
+      event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    ) {
+      const itemDataset =
+        event.target.closest<HTMLElement>('[data-item-id]')?.dataset;
+      const activityDataset =
+        event.target.closest<HTMLElement>('[data-activity-id]')?.dataset;
+      const activity = this.actor.items
+        .get(itemDataset?.itemId)
+        ?.system.activities?.get(activityDataset?.activityId);
+      if (activity)
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify(activity.toDragData()),
+        );
+    }
+
+    /**
+     * Handling beginning a drag-drop operation on an Item.
+     * @param event The originating drag event.
+     */
     _onDragItem(
       event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
     ) {

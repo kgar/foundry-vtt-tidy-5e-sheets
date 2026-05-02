@@ -34,7 +34,8 @@
       {itemDescription.label}
       {#if showIndicator}
         <!-- Expand Indicator, if there's nonblank content -->
-        <i class="fas fa-angle-right fa-fw expand-indicator" class:expanded></i>
+        <i class={['fas fa-angle-right fa-fw expand-indicator', { expanded }]}
+        ></i>
       {/if}
     </a>
     {#if !disabled}

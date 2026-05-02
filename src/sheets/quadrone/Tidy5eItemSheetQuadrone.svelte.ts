@@ -24,7 +24,13 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
-import type { ActiveEffect5e, ActiveEffectSection, GroupableSelectOption, ActiveEffectContext, DocumentSheetV2Context } from 'src/types/types';
+import type {
+  ActiveEffect5e,
+  ActiveEffectSection,
+  GroupableSelectOption,
+  ActiveEffectContext,
+  DocumentSheetV2Context,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -49,7 +55,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   SvelteApplicationMixin<
     DocumentSheetApplicationConfiguration | undefined,
     ItemSheetQuadroneContext
-  >(foundry.applications.sheets.ItemSheetV2)
+  >(foundry.applications.sheets.ItemSheetV2),
 ) {
   currentTabId: string = '';
   sectionExpansionTracker: ExpansionTracker;
@@ -60,7 +66,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
@@ -119,12 +125,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        
-        this._renderChild(new foundry.applications.apps.ImagePopout({
-          src: this.item.img,
-          uuid: this.item.uuid,
-          window: { title },
-        }));
+
+        this._renderChild(
+          new foundry.applications.apps.ImagePopout({
+            src: this.item.img,
+            uuid: this.item.uuid,
+            window: { title },
+          }),
+        );
       },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
         this._renderChild(
@@ -178,7 +186,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       onOpen: (target) =>
         dnd5e.documents.advancement.Advancement.onContextMenu(
           this.item,
-          target
+          target,
         ),
       jQuery: false,
       layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
@@ -204,7 +212,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   }
 
   async _prepareContext(
-    options: TidyDocumentSheetRenderOptions
+    options: TidyDocumentSheetRenderOptions,
   ): Promise<ItemSheetQuadroneContext> {
     if (options?.soft && this._context?.data) {
       return this._context.data;
@@ -226,15 +234,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     const enriched = {
       description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.value,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.unidentified?.description,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.document.system.description.chat,
-        enrichmentOptions
+        enrichmentOptions,
       ),
     };
 
@@ -300,11 +308,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         ?.map(Activities.getActivityItemContext)
         .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
-        `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
+        `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),
       config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
-        ([value, label]) => ({ value, label })
+        ([value, label]) => ({ value, label }),
       ),
       currentTabId: this.currentTabId,
       customContent: [],
@@ -315,17 +323,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       dimensions: target?.template?.dimensions,
       durationUnits: [
         ...Object.entries(CONFIG.DND5E.specialTimePeriods).map(
-          ([value, label]) => ({ value, label })
+          ([value, label]) => ({ value, label }),
         ),
         ...Object.entries(CONFIG.DND5E.scalarTimePeriods).map(
           ([value, label]) => {
             return { value, label, group: 'DND5E.DurationTime' };
-          }
+          },
         ),
         ...Object.entries(CONFIG.DND5E.permanentTimePeriods).map(
           ([value, label]) => {
             return { value, label, group: 'DND5E.DurationPermanent' };
-          }
+          },
         ),
       ],
       enriched,
@@ -334,7 +342,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       itemDescriptions,
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
-        this.item?.system?.hp?.max
+        this.item?.system?.hp?.max,
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       labels: this.document.labels,
@@ -360,7 +368,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       title: this.title,
       rollData: rollData,
       unitsOptions: Object.entries(CONFIG.DND5E.movementUnits).map(
-        ([value, { label }]) => ({ value, label })
+        ([value, { label }]) => ({ value, label }),
       ),
 
       // Item Type, Status, and Details
@@ -380,7 +388,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       // Advancement
       advancement: await this._getItemAdvancement(
         this.document,
-        documentSheetContext.unlocked
+        documentSheetContext.unlocked,
       ),
 
       effects: await this._getEffectsSections(),
@@ -403,7 +411,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           // @ts-ignore
           ([value, { label, group }]) => {
             return { value, label, group: group ?? '' };
-          }
+          },
         ),
         { value: '', label: 'DND5E.NoneActionLabel' },
       ],
@@ -416,7 +424,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
       equipmentTypes: [
         ...Object.entries(CONFIG.DND5E.miscEquipmentTypes).map(
-          ([value, label]) => ({ value, label })
+          ([value, label]) => ({ value, label }),
         ),
         ...Object.entries(CONFIG.DND5E.armorTypes).map(([value, label]) => ({
           value,
@@ -454,7 +462,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
             this.item.system.schema.fields.uses.fields.recovery.element.fields,
           prefix: `system.uses.recovery.${index}.`,
           source: systemSource.uses.recovery[index] ?? data,
-        })
+        }),
       ),
 
       damageTypes: [],
@@ -476,7 +484,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     context.properties = {
       active: [],
       object: Object.fromEntries(
-        (this.document.system.properties ?? []).map((p: string) => [p, true])
+        (this.document.system.properties ?? []).map((p: string) => [p, true]),
       ),
       options: (this.document.system.validProperties ?? []).reduce(
         (arr: ItemSheetContext['properties']['options'], k: any) => {
@@ -491,13 +499,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           });
           return arr;
         },
-        []
+        [],
       ),
     };
 
     if (this.item.type !== 'spell') {
       context.properties.options.sort((a, b) =>
-        a.label.localeCompare(b.label, game.i18n.lang)
+        a.label.localeCompare(b.label, game.i18n.lang),
       );
     }
 
@@ -517,7 +525,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       ([value, config]) => {
         const group = CONFIG.DND5E.spellcasting[config.type ?? '']?.label ?? '';
         return { group, value, label: config.label };
-      }
+      },
     );
     const { progression } = this.item.system.spellcasting ?? {};
     if (progression && !(progression in CONFIG.DND5E.spellProgression)) {
@@ -530,7 +538,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     context.spellProgression.sort(
       (a, b) =>
         (a.group ?? '')?.localeCompare(b.group ?? '', game.i18n.lang) ||
-        a.label.localeCompare(b.label, game.i18n.lang)
+        a.label.localeCompare(b.label, game.i18n.lang),
     );
 
     if (game.user.isGM || this.item.system.identified !== false) {
@@ -538,7 +546,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         ...(this.item.system.cardProperties ?? []),
         // @ts-expect-error
         ...Object.values(this.item.labels.activations?.[0] ?? {}),
-        ...(this.item.system.equippableItemCardProperties ?? [])
+        ...(this.item.system.equippableItemCardProperties ?? []),
       );
     }
 
@@ -547,7 +555,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
     if (this.item.type === 'facility') {
       context.orders = Object.entries(
-        CONFIG.DND5E.facilities.orders
+        CONFIG.DND5E.facilities.orders,
       ).reduce<ItemFacilityOrdersContext>(
         (obj, [value, config]) => {
           const { label, basic, hidden } = config;
@@ -577,7 +585,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
           return obj;
         },
-        { available: [], executable: [] }
+        { available: [], executable: [] },
       );
     }
 
@@ -629,7 +637,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   }
 
   /* -------------------------------------------- */
- 
+
   async _getEffectsSections() {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
@@ -639,9 +647,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         this.item.effects,
         { parent: this.item },
       );
-    
+
     let effects: Record<string, ActiveEffectSection> = {};
-    
+
     for (const [key, category] of Object.entries(defaultEffects)) {
       effects[key] = {
         ...category,
@@ -697,8 +705,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       ([key, value]) =>
         ({
           ...value,
-          canCreate:
-            this.isEditable && !value.isEnchantment && !value.disabled,
+          canCreate: this.isEditable && !value.isEnchantment && !value.disabled,
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
           rowActions: [],
@@ -707,9 +714,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         }) satisfies ActiveEffectSection,
     );
   }
- 
-  /* -------------------------------------------- */
 
+  /* -------------------------------------------- */
 
   /**
    * Get the display object used to show the advancement tab.
@@ -807,7 +813,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
    */
   _getItemAdvancementTags(
     advancement: any,
-    unlocked: boolean
+    unlocked: boolean,
   ): AdvancementItemContext['tags'] {
     if (this.item.isEmbedded && !unlocked) {
       return [];
@@ -844,7 +850,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
    * @protected
    */
   async _getItemBaseTypes(
-    context: ItemSheetQuadroneContext
+    context: ItemSheetQuadroneContext,
   ): Promise<Record<string, any>> {
     const baseIds =
       this.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
@@ -853,15 +859,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
             ...CONFIG.DND5E.shieldIds,
           }
         : this.item.type === CONSTANTS.ITEM_TYPE_TOOL
-        ? Object.entries(CONFIG.DND5E.tools).reduce<Record<string, string>>(
-            (acc, [key, tool]) => {
-              acc[key] = tool.id;
-              return acc;
-            },
-            {}
-          )
-        : // @ts-expect-error
-          CONFIG.DND5E[`${this.item.type}Ids`];
+          ? Object.entries(CONFIG.DND5E.tools).reduce<Record<string, string>>(
+              (acc, [key, tool]) => {
+                acc[key] = tool.id;
+                return acc;
+              },
+              {},
+            )
+          : // @ts-expect-error
+            CONFIG.DND5E[`${this.item.type}Ids`];
 
     if (baseIds === undefined) {
       return {};
@@ -878,8 +884,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     if (foundry.utils.isEmpty(items)) return {};
     return Object.fromEntries(
       Object.entries(items).sort((lhs, rhs) =>
-        lhs[1].localeCompare(rhs[1], game.i18n.lang)
-      )
+        lhs[1].localeCompare(rhs[1], game.i18n.lang),
+      ),
     );
   }
 
@@ -899,7 +905,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       case 'equipment':
       case 'weapon':
         return game.i18n.localize(
-          this.item.system.equipped ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+          this.item.system.equipped ? 'DND5E.Equipped' : 'DND5E.Unequipped',
         );
       case 'feat':
       case 'consumable':
@@ -930,7 +936,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         segments.push(
           FoundryAdapter.localize('EDITOR.DND5E.Inline.AttackLong', {
             formula: toHit,
-          })
+          }),
         );
 
         return segments.join(', ');
@@ -999,15 +1005,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   /* -------------------------------------------- */
 
-  /** @inheritDoc */
+  /**
+   * Handle beginning drag events on the sheet.
+   * @param {DragEvent} event  The initiating drag start event.
+   * @protected
+   */
   _onDragStart(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ) {
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
     const dragged = event.currentTarget;
 
     // Create drag data
@@ -1017,11 +1022,25 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     if (dragged.dataset.effectId) {
       const effect = this.item.effects.get(dragged.dataset.effectId);
       dragData = effect.toDragData();
-    } else if (
+    }
+
+    // Activity
+    else if (dragged.closest('[data-activity-id]')) {
+      const { activityId } =
+        event.target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
+      const activity = this.item.system.activities?.get(activityId);
+      dragData = activity.toDragData();
+    }
+
+    // Advacement
+    else if (
       dragged.classList.contains('advancement-item') &&
-      !isNil(dragged.dataset.id)
+      dragged.closest('[data-id]')
     ) {
-      dragData = this.item.system.advancement.get(dragged.dataset.id)?.toDragData();
+      const { id } = dragged.closest<HTMLElement>('[data-id]')!.dataset ?? {};
+      dragData = this.item.system.advancement
+        .get(id)
+        ?.toDragData();
     }
 
     if (!dragData) return;
@@ -1034,13 +1053,14 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   /** @inheritDoc */
   async _onDrop(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ) {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
     if (allowed === false) return;
+    event.stopPropagation();
 
     switch (data.type) {
       case 'ActiveEffect':
@@ -1065,7 +1085,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
    */
   async _onDropActiveEffect(
     event: DragEvent,
-    data: any
+    data: any,
   ): Promise<ActiveEffect5e | boolean> {
     const effect = await ActiveEffect.implementation.fromDropData(data);
     if (
@@ -1073,8 +1093,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       !effect ||
       this.item.uuid === effect.parent?.uuid ||
       this.item.uuid === effect.origin
-    )
+    ) {
       return false;
+    }
+
     const effectData = effect.toObject();
     const options: Record<string, any> = {
       parent: this.item,
@@ -1109,43 +1131,44 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data, uuid }: any
+    { data, uuid }: any,
   ) {
     const { _id: id, type } = data;
-
-    const droppedActivityDocument = await fromUuid(uuid);
+    const source = this.item.system.activities.get(id);
+    const config = CONFIG.DND5E.activityTypes[type] ?? {};
 
     // Reordering
-    if (this.item.uuid === droppedActivityDocument.item?.uuid) {
-      const source = this.item.system.activities.get(id);
+    if (source) {
       const targetId = event.target.closest<HTMLElement>(
-        '.activity[data-activity-id]'
+        '.activity[data-activity-id]',
       )?.dataset.activityId;
+
       const target = this.item.system.activities.get(targetId);
-      if (!target || target === source) return;
+
+      if (!target || target === source) {
+        return;
+      }
+
       const siblings = this.item.system.activities.filter(
-        (a: any) => a._id !== id
+        (a: any) => a._id !== id,
       );
-      const sortUpdates = foundry.utils.performIntegerSort(
-        source,
-        {
-          target,
-          siblings,
-        }
-      );
+
+      const sortUpdates = foundry.utils.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+
       const updateData = Object.fromEntries(
         sortUpdates.map(({ target, update }: { target: any; update: any }) => {
           return [target._id, { sort: update.sort }];
-        })
+        }),
       );
+
       this.item.update({ 'system.activities': updateData });
     } else if (
-      droppedActivityDocument?.constructor.availableForItem(this.item) === false
+      config?.configurable !== false &&
+      config.documentClass.availableForItem(this.item)
     ) {
-      return;
-    }
-    // Copying
-    else {
       delete data._id;
       this.item.createActivity(type, data, { renderSheet: false });
     }
@@ -1154,38 +1177,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   /* -------------------------------------------- */
 
   /**
-   * Handle dropping another item onto this item.
-   * @param {DragEvent} event  The drag event.
-   * @param {object} data      The dropped data.
-   */
-  async _onDropItem(event: DragEvent, data: object) {
-    const item = await Item.implementation.fromDropData(data);
-
-    if (item?.type === 'spell' && this.item.system.activities) {
-      this._onDropSpell(event, item);
-    } else {
-      this._onDropAdvancement(event, data);
-    }
-  }
-
-  /**
-   * Handle creating a "Cast" activity when dropping a spell.
-   * @param {DragEvent} event  The drag event.
-   * @param {Item5e} item      The dropped item.
-   */
-  _onDropSpell(event: DragEvent, item: Item5e) {
-    this.item.createActivity(CONSTANTS.ACTIVITY_TYPE_CAST, {
-      spell: { uuid: item.uuid },
-    });
-  }
-
-  /**
    * Handle the dropping of an advancement or item with advancements onto the advancements tab.
    * @param {DragEvent} event                  The concluding DragEvent which contains drop data.
    * @param {object} data                      The data transfer extracted from the event.
    * @returns {Promise}
    */
-  async _onDropAdvancement(event: DragEvent, data: any) {
+  async _onDropAdvancement(event: DragEvent, data: any): Promise<any> {
     if (!this.item.system.advancement) return;
 
     let advancements;
@@ -1202,12 +1199,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     }
     advancements = advancements.filter((a) => {
       const validItemTypes =
-        // @ts-expect-error
         CONFIG.DND5E.advancementTypes[a.constructor.typeName]?.validItemTypes ??
         a.metadata.validItemTypes;
       return (
         !this.item.system.advancement.get(a.id) &&
-        validItemTypes.has(this.item.type) &&
+        validItemTypes?.has(this.item.type) &&
         a.constructor.availableForItem(this.item)
       );
     });
@@ -1219,14 +1215,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           await dnd5e.applications.advancement.AdvancementMigrationDialog.createDialog(
             this.item,
             advancements,
-            { sheet: this }
+            { sheet: this },
           );
       } catch (err) {
         return false;
       }
     }
 
-    if (!advancements.length) return false;
+    if (!advancements.length) {
+      return false;
+    }
+
     if (
       this.item.actor?.system.metadata?.supportsAdvancement &&
       !game.settings.get('dnd5e', 'disableAdvancements')
@@ -1235,17 +1234,48 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         dnd5e.applications.advancement.AdvancementManager.forNewAdvancement(
           this.item.actor,
           this.item.id,
-          advancements
+          advancements,
         );
-      if (manager.steps.length) return this._renderChild(manager);
+
+      if (manager.steps.length) {
+        return this._renderChild(manager);
+      }
     }
 
     // If no advancements need to be applied, just add them to the item
-   this.item.update({
-      "system.advancement": advancements.reduce((obj: any, a: any) => {
+    this.item.update({
+      'system.advancement': advancements.reduce((obj: any, a: any) => {
         obj[a.id] = a.toObject();
         return obj;
-      }, {})
+      }, {}),
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle dropping another item onto this item.
+   * @param {DragEvent} event  The drag event.
+   * @param {object} data      The dropped data.
+   */
+  async _onDropItem(event: DragEvent, data: object) {
+    const item = await Item.implementation.fromDropData(data);
+
+    if (item?.type === CONSTANTS.ITEM_TYPE_SPELL && this.item.system.activities) {
+      this._onDropSpell(event, item);
+    } else {
+      this._onDropAdvancement(event, data);
+    }
+  }
+
+  /**
+   * Handle creating a "Cast" activity when dropping a spell.
+   * @param {DragEvent} event  The drag event.
+   * @param {Item5e} item      The dropped item.
+   */
+  _onDropSpell(_event: DragEvent, item: Item5e) {
+    this.item.createActivity(CONSTANTS.ACTIVITY_TYPE_CAST, {
+      spell: { uuid: item.uuid },
     });
   }
 
@@ -1257,7 +1287,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     return dnd5e.documents.activity.UtilityActivity.createDialog(
       {},
       { parent: this.item },
-      { sheet: this }
+      { sheet: this },
     );
   }
 
@@ -1304,7 +1334,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           ...restDataSet,
         },
         { parent: this.item, renderSheet: true },
-        { sheet: this }
+        { sheet: this },
       );
     }
 
@@ -1317,7 +1347,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   /* -------------------------------------------- */
   /*  Event and Lifecycle                         */
-  /* -------------------------------------------- */  
+  /* -------------------------------------------- */
 
   _renderChild(app: any, options = {}) {
     if (game.release.generation < 14) {
