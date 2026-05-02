@@ -969,7 +969,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
     }
     advancements = advancements.filter((a) => {
       const validItemTypes =
-        // @ts-expect-error
         CONFIG.DND5E.advancementTypes[a.constructor.typeName]?.validItemTypes ??
         a.metadata.validItemTypes;
       return (
