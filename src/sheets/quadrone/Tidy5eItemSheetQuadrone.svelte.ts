@@ -1035,10 +1035,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     // Advacement
     else if (
       dragged.classList.contains('advancement-item') &&
-      !isNil(dragged.dataset.id)
+      dragged.closest('[data-id]')
     ) {
+      const { id } = dragged.closest<HTMLElement>('[data-id]')!.dataset ?? {};
       dragData = this.item.system.advancement
-        .get(dragged.dataset.id)
+        .get(id)
         ?.toDragData();
     }
 

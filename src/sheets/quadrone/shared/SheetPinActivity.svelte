@@ -50,14 +50,6 @@
     return false;
   }
 
-  function onDragStart(event: DragEvent) {
-    const dragData = ctx.document.toDragData?.();
-
-    if (dragData) {
-      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-    }
-  }
-
   let context = $derived(getSheetContext());
 
   const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
@@ -107,7 +99,6 @@
   data-configurable="true"
   data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
-  ondragstart={onDragStart}
 >
   <div class="pin-document-image">
     <a

@@ -1380,7 +1380,7 @@ export function Tidy5eActorSheetQuadroneBase<
         return this._onDragActivity(event);
       }
 
-      if (el.matches('[data-item-id] > [data-tidy-table-row]')) {
+      if (el.matches('[data-item-id] > [data-tidy-table-row], [data-item-id]')) {
         return this._onDragItem(event);
       }
 

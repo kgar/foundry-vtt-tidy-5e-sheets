@@ -29,18 +29,6 @@
   }: Props = $props();
 
   let doc = $derived(item.system.advancement?.get(advancement.id));
-
-  function handleDragStart(event: DragEvent) {
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
-    const dragData = doc?.toDragData?.();
-    if (dragData) {
-      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-    }
-  }
 </script>
 
 <TidyTableRow
@@ -61,7 +49,6 @@
     doc &&
     FoundryAdapter.editOnMouseEvent(event, doc)}
   onmousedown={(event) => doc && FoundryAdapter.editOnMiddleClick(event, doc)}
-  ondragstart={handleDragStart}
   {...attributes}
 >
   {@render children?.()}
