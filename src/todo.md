@@ -1,8 +1,12 @@
 ## kgar To Do
 
+- [ ] Extract and share: TidyTableRowUseButton
+  - [ ] Convert to sheet action
+- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
+- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
+- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
-- [ ] Find and purge any outstanding drag handlers / task out their replacements
 - [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
@@ -16,11 +20,9 @@
   - [ ] Change "Use Default" button to "Use Default for All"
   - [ ] Give the same treatment ot Configure Header Controls
 - [ ] For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
-- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
-- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 - [ ] Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
@@ -32,17 +34,11 @@
 - [ ] Group Sheet - Plan and task Bastions tab
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
-- [ ] Extract and share: TidyTableRowUseButton
 - [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
-
-### (Almost) Everything after the short list
-
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
-- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 - [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
@@ -277,3 +273,5 @@ Manual
   - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [x] Tools card header - has cursor hover style without interactivity
+- [x] Find and purge any outstanding drag handlers / task out their replacements
+- [x] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
