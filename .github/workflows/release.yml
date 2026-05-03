@@ -114,7 +114,7 @@ jobs:
                   'description': notes,
                   'fields': [
                       {'name': 'Core Compatibility', 'value': compat_min if compat_min == compat_max else f'{compat_min} - {compat_max}', 'inline': True},
-                      {'name': 'D&D 5e Compatibility', 'value': dnd5e_min if dnd5e_min == dnd5e_max else f'{dnd5e_min} - {dnd5e_max}'}
+                      {'name': 'D&D 5e Compatibility', 'value': dnd5e_min if dnd5e_min == dnd5e_max else f'{dnd5e_min} - {dnd5e_max}'},
                       {'name': 'Foundry Package', 'value': f'[Install from Foundry]({foundry_url})', 'inline': True}
                   ],
                   'color': 3250562 # Keeper Of Sheets Green
