@@ -57,3 +57,77 @@ jobs:
           package-token: ${{ secrets.PACKAGE_TOKEN }}
           manifest-url: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.json
           notes-url: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}
+
+      # Read module metadata for later steps
+      - name: Read module metadata
+        id: module
+        run: |
+          echo "title=$(jq -r '.title' module.json)" >> $GITHUB_OUTPUT
+          echo "compat_min=$(jq -r '.compatibility.minimum' module.json)" >> $GITHUB_OUTPUT
+          echo "compat_verified=$(jq -r '.compatibility.verified' module.json)" >> $GITHUB_OUTPUT
+          echo "dnd5e_min=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.minimum' module.json)" >> $GITHUB_OUTPUT
+          echo "dnd5e_max=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.maximum // empty' module.json)" >> $GITHUB_OUTPUT
+          COMPAT_MAX=$(jq -r '.compatibility.maximum // empty' module.json)
+          echo "compat_max=$COMPAT_MAX" >> $GITHUB_OUTPUT
+
+      # Post release notification to Discord
+      - name: Post to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+          MODULE_TITLE: ${{ steps.module.outputs.title }}
+          VERSION: ${{ github.event.release.tag_name }}
+          COMPAT_MIN: ${{ steps.module.outputs.compat_min }}
+          COMPAT_MAX: ${{ steps.module.outputs.compat_max }}
+          DND5E_MIN: ${{ steps.module.outputs.dnd5e_min }}
+          DND5E_MAX: ${{ steps.module.outputs.dnd5e_max }}
+          RELEASE_PAGE: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}
+        run: |
+          python3 -c "
+          import json, os, sys
+
+          # Read curated release notes from file, fall back to release body
+          notes = ''
+          if os.path.isfile('release_notes.txt') and os.path.getsize('release_notes.txt') > 0:
+              with open('release_notes.txt', 'r', encoding='utf-8') as f:
+                  notes = f.read().strip()
+          if not notes:
+              notes = os.environ.get('RELEASE_BODY', 'New release available!')
+
+          # Truncate to 2000 characters
+          if len(notes) > 2000:
+              notes = notes[:1997] + '...'
+
+          title = os.environ.get('MODULE_TITLE', 'Tidy 5e Sheets') + ' v' + os.environ.get('VERSION', '')
+          compat_min = os.environ.get('COMPAT_MIN', '')
+          compat_max = os.environ.get('COMPAT_MAX', '')
+          dnd5e_min = os.environ.get('DND5E_MIN', '')
+          dnd5e_max = os.environ.get('DND5E_MAX', '')
+          release_page = os.environ.get('RELEASE_PAGE', '')
+          foundry_url = os.environ.get('FOUNDRY_URL', 'https://foundryvtt.com/packages/tidy5e-sheet')
+
+          payload = json.dumps({
+              # 'content': '<@&1384920094597185556> <@&1447730718464806973>', # Idea for future: server role pings for interested parties
+              'embeds': [{
+                  'title': title,
+                  'url': release_page,
+                  'description': notes,
+                  'fields': [
+                      {'name': 'Core Compatibility', 'value': compat_min if compat_min == compat_max else f'{compat_min} - {compat_max}', 'inline': True},
+                      {'name': 'D&D 5e Compatibility', 'value': dnd5e_min if dnd5e_min == dnd5e_max else f'{dnd5e_min} - {dnd5e_max}'}
+                      {'name': 'Foundry Package', 'value': f'[Install from Foundry]({foundry_url})', 'inline': True}
+                  ],
+                  'color': 3250562 # Keeper Of Sheets Green
+              }]
+          })
+
+          print('JSON Payload:')
+          print(json.dumps(json.loads(payload), indent=2))
+
+          with open('/tmp/discord_payload.json', 'w') as f:
+              f.write(payload)
+          "
+
+          curl -sS -H "Content-Type: application/json" \
+              -d @/tmp/discord_payload.json \
+              $DISCORD_WEBHOOK
