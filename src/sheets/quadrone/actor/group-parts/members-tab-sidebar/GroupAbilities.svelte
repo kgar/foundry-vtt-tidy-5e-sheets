@@ -99,18 +99,18 @@
             members: Array.from(context.members.all.values()),
           })}
       >
-        <!-- TODO: To sheet action ;) ; and TODO: other group rolls to sheet actions -->
         <button
           type="button"
-          class="button button-borderless use-ability-roll-button ability"
-          onclick={(event) =>
-            view === 'abilities'
-              ? context.sheet.onRollAbility({ ability: ability.key, event })
-              : context.sheet.onRollSavingThrow({
-                  ability: ability.key,
-                  event,
-                })}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_ROLLER}
+          class={[
+            'button button-borderless use-ability-roll-button ability',
+            { 'saving-throw': view === 'saves' },
+          ]}
+          data-action="roll"
+          data-type="ability"
+          data-ability={ability.key}
+          data-tidy-sheet-part={view === 'abilities'
+            ? CONSTANTS.SHEET_PARTS.ABILITY_ROLLER
+            : CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
           disabled={!context.owner}
         >
           {ability.name}

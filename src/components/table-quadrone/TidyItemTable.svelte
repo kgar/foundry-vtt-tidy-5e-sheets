@@ -146,8 +146,7 @@
                 'tidy-table-row-use-button',
                 { disabled: !context.editable },
               ]}
-              onclick={(ev) =>
-                context.editable && context.actor.sheet.tryUseItem(entry, ev)}
+              data-action="use"
               data-has-roll-modes
             >
               <img class="item-image" alt={entry.name} src={entry.img} />

@@ -462,24 +462,38 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     }));
   }
 
+  _rollAbilityCheck(args: { ability: string, event: Event }) {
+    return this.onRollAbility(args);
+  }
+
+  _rollSavingThrow(args: { ability: string, event: Event }) {
+    return this.onRollSavingThrow(args);
+  }
+
+  _rollSkill(args: { event: Event, skill: string }) {
+    return this.onRollSkill(args);
+  }
+
   onRollSkill(options: Partial<GroupSkillRollProcessConfiguration>) {
     if (
+      !FoundryAdapter.userIsGm() ||
       TidyHooks.tidy5eSheetsPrePromptGroupSkillRoll(this, options) === false
     ) {
       return;
     }
 
-    this.actor.rollSkill(options);
+    return this.actor.rollSkill(options);
   }
 
   onRollAbility(options: { ability: string; event: Event }) {
     if (
+      !FoundryAdapter.userIsGm() ||
       TidyHooks.tidy5eSheetsPrePromptGroupAbilityRoll(this, options) === false
     ) {
       return;
     }
 
-    this.rollAbility(options);
+    return this.rollAbility(options);
   }
 
   async rollAbility(config: { ability: string }) {
@@ -520,6 +534,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
   onRollSavingThrow(options: { ability: string; event: Event }) {
     if (
+      !FoundryAdapter.userIsGm() ||
       TidyHooks.tidy5eSheetsPrePromptGroupSavingThrowRoll(this, options) === false
     ) {
       return;

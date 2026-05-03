@@ -111,10 +111,10 @@
           <button
             type="button"
             class="button button-borderless use-ability-roll-button"
-            onclick={(event) =>
-              context.actor.rollToolCheck({ tool: tool.key, event })}
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
+            data-action="roll"
+            data-type="tool"
             data-key={tool.key}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
             data-has-roll-modes
