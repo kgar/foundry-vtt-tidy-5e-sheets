@@ -9,11 +9,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  // type Props = {
-  //   onRollAbility?: (event: MouseEvent, key: string, value: number) => void;
-  // }
-  // let { onRollAbility }: Props = $props();
-
   let size = $derived<string | undefined>(
     context.config.actorSizes[context.system.traits.size]?.label,
   );
@@ -122,11 +117,6 @@
         <span class="color-text-default font-data-medium">{entry.levels}</span>
         <!-- TODO: Add button to roll a save request to chat here (enricher?) -->
         {#if entry.spellcasting?.ability}
-          <!-- <button 
-            type="button"
-            onclick={(ev) => entry.spellcasting && onRollAbility?.(ev, entry.spellcasting.ability, entry.spellcasting.dc)}
-            class="ability-roll-button label color-text-lighter font-label-medium dc"
-            > -->
           <span class="color-text-lighter font-label-medium dc"
             >{entry.spellcasting.ability}
             {localize('DND5E.AbbreviationDC')}</span
@@ -134,7 +124,6 @@
           <span class="color-text-default font-data-medium"
             >{entry.spellcasting.dc}</span
           >
-          <!-- </button> -->
         {/if}
       </span>
       {#if i < context.classes.length - 1}

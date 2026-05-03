@@ -181,8 +181,8 @@
             <button
               type="button"
               class="button-borderless initiative-roll-button"
-              onclick={(event) =>
-                context.actor.rollInitiativeDialog({ event: event })}
+              data-action="roll"
+              data-type="initiative"
               data-has-roll-modes
             >
               {localize('DND5E.InitiativeAbbr')}
@@ -228,10 +228,6 @@
               })}
             onConfigClicked={(id) =>
               FoundryAdapter.renderAbilityConfig(context.actor, id)}
-            onRollAbility={(event, key) =>
-              context.actor.rollAbilityCheck({ ability: key, event })}
-            onRollSave={(event, key) =>
-              context.actor.rollSavingThrow({ ability: key, event })}
             disabled={!context.owner}
           />
         {/each}

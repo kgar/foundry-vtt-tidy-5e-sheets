@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
@@ -11,8 +10,6 @@
   }
 
   let { favorite }: Props = $props();
-
-  let context = $derived(getCharacterSheetQuadroneContext());
 
   let quantity = $derived(favorite.item.system.quantity);
 
@@ -43,10 +40,9 @@
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
-    {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
+    data-action="use"
     name={favorite.item.name}
     {subtitle}
   />

@@ -5,7 +5,6 @@
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -22,8 +21,6 @@
   const modifier = $derived(favorite.item?.labels?.modifier);
 
   const range = $derived(favorite.item?.system?.range);
-
-  const context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
 <div
@@ -38,10 +35,9 @@
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
-    {favorite}
+    data-action="use"
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
     name={favorite.item?.name || ''}
     {subtitle}
   />

@@ -94,9 +94,9 @@
           <button
             type="button"
             class="button button-borderless use-ability-roll-button skill"
-            onclick={(event) => {
-              FoundryAdapter.userIsGm() ? context.sheet.onRollSkill({ skill: skill.key, event }) : undefined;
-            }}
+            data-key={skill.key}
+            data-action="roll"
+            data-type="skill"
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
             disabled={!context.owner}
           >

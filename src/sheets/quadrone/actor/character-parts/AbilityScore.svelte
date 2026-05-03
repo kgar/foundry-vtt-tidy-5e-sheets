@@ -11,18 +11,9 @@
     disabled: boolean;
     onScoreChanged?: (newValue: number) => Promise<void>;
     onConfigClicked?: (key: string) => void;
-    onRollAbility?: (event: MouseEvent, key: string) => void;
-    onRollSave?: (event: MouseEvent, key: string) => void;
   };
-  let {
-    ability,
-    unlocked,
-    disabled,
-    onScoreChanged,
-    onConfigClicked,
-    onRollAbility,
-    onRollSave,
-  }: Props = $props();
+  let { ability, unlocked, disabled, onScoreChanged, onConfigClicked }: Props =
+    $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -83,7 +74,9 @@
     >
       <button
         type="button"
-        onclick={(ev) => onRollAbility?.(ev, ability.key)}
+        data-action="roll"
+        data-type="ability"
+        data-ability={ability.key}
         data-tooltip={localize('DND5E.AbilityPromptTitle', {
           ability: ability.label,
         })}
@@ -168,9 +161,12 @@
       data-tooltip
       class={[
         'button-borderless ability-save flexrow',
+        'saving-throw',
         { invisible: editingScore },
       ]}
-      onclick={(ev) => onRollSave?.(ev, ability.key)}
+      data-action="roll"
+      data-type="ability"
+      data-ability={ability.key}
       data-tidy-sheet-part="ability-save-roller"
       data-has-roll-modes
       {disabled}

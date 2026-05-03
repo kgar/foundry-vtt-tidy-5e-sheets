@@ -56,7 +56,7 @@ import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
-import { debug } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
@@ -180,6 +180,7 @@ export function Tidy5eActorSheetQuadroneBase<
         rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
           this.actor.initiateRest({ type: target.dataset.type });
         },
+        roll: Tidy5eActorSheetQuadroneBase.#roll,
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
@@ -2130,7 +2131,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     async tryUseItem(item: Item5e, event: Event) {
-      const config = { legacy: false, event };
+      const config = { event };
 
       const suppressItemUse =
         TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
@@ -2143,6 +2144,116 @@ export function Tidy5eActorSheetQuadroneBase<
         options: { sheet: item.parent?.sheet ?? item.container?.sheet },
       });
     }
+
+    /**
+     * Handle known rolls.
+     * @param this the sheet instance
+     * @param event the triggering event
+     * @param target the target of the triggering event
+     * @returns
+     */
+    static async #roll(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (
+        this._roll(event, target) === false ||
+        !this.isEditable
+      ) {
+        return;
+      }
+
+      switch (target.dataset.type) {
+        case 'ability':
+          const ability =
+            target.closest<HTMLElement>('[data-ability]')?.dataset.ability;
+
+          if (!ability) {
+            warn(
+              'Invalid ability roll. data-ability attribute value not found.',
+            );
+            return;
+          }
+
+          if (ability === 'concentration') {
+            return this.actor.rollConcentration({ event, legacy: false });
+          } else if (target.classList.contains('saving-throw')) {
+            return this._rollSavingThrow({ ability, event });
+          } else {
+            return this._rollAbilityCheck({ ability, event });
+          }
+        case 'deathSave':
+          return this.actor.rollDeathSave(
+            { event, legacy: false },
+            {
+              options: {
+                default: {
+                  rollMode: SettingsProvider.settings.defaultDeathSaveRoll.get(),
+                },
+              },
+            },
+          );
+        case 'initiative':
+          return this.actor.rollInitiativeDialog({ event });
+        case 'skill':
+          const skill = target.closest<HTMLElement>('[data-key]')?.dataset.key;
+          if (!skill) {
+            warn('Invalid skill roll. data-key attribute value not found.');
+            return;
+          }
+          return this._rollSkill({ event, skill });
+        case 'tool':
+          const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
+          if (!tool) {
+            warn('Invalid tool roll. data-key attribute value not found.');
+            return;
+          }
+          return this.actor.rollToolCheck({
+            event,
+            tool,
+          });
+      }
+    }
+
+    /**
+     * Perform the base actor ability check roll.
+     * Allows for overriding for alternate handling.
+     * @param options the options for making the roll
+     * @returns
+     */
+    _rollAbilityCheck(options: { ability: string; event: Event }) {
+      return this.actor.rollAbilityCheck(options);
+    }
+
+    /**
+     * Perform the base actor saving throw.
+     * Allows for overriding for alternate handling.
+     * @param options the options for making the roll
+     * @returns
+     */
+    _rollSavingThrow(args: { ability: string; event: Event }) {
+      return this.actor.rollSavingThrow(args);
+    }
+
+    /**
+     * Perform the base actor skill roll.
+     * Allows for overriding for alternate handling.
+     * @param options the options for making the roll
+     * @returns
+     */
+    _rollSkill(args: { event: Event; skill: string }) {
+      return this.actor.rollSkill(args);
+    }
+
+    /**
+     * Handle rolling from the sheet.
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     * @returns {any}               Return `false` to prevent default behavior.
+     * @protected
+     */
+    _roll(event: Event, target: HTMLElement): boolean | void {}
 
     /* -------------------------------------------- */
     /* SheetTabCacheable

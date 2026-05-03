@@ -41,7 +41,6 @@
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
-    {favorite}
     img={favorite.img}
     title={favorite.name}
     name={favorite.name}

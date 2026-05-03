@@ -95,11 +95,7 @@
               tabindex="0"
               class={['tidy-table-row-use-button']}
               aria-label={ctx.activity.name}
-              onclick={(ev) =>
-                ctx.activity.use({
-                  event: ev,
-                  options: { sheet: context.sheet },
-                })}
+              data-action="activity-use"
               onkeydown={(ev) =>
                 ev.key === 'Enter' ||
                 (ev.key === ' ' &&

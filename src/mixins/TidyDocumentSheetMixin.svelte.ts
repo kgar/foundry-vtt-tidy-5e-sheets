@@ -39,6 +39,7 @@ import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import type { Item5e } from 'src/types/item.types';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -84,6 +85,8 @@ export function TidyExtensibleDocumentSheetMixin<
         editImage: TidyDocumentSheet.#editImage,
         showContextMenu: TidyDocumentSheet.#showContextMenu,
         showDocument: TidyDocumentSheet.#showDocument,
+        use: TidyDocumentSheet.#useItem,
+        'activity-use': TidyDocumentSheet.#useActivity,
       },
     };
 
@@ -432,10 +435,10 @@ export function TidyExtensibleDocumentSheetMixin<
       await doc.update({ [field]: valueToSave });
     }
 
-    getItem(id: string) {
-      if (this.document.type === 'container')
-        return this.document.system.getContainedItem(id);
-      return this.document.items.get(id);
+    getItem(id?: string) {
+      return this.document.type === 'container'
+        ? this.document.system.getContainedItem(id)
+        : this.actor?.items.get(id);
     }
 
     /**
@@ -1038,6 +1041,52 @@ export function TidyExtensibleDocumentSheetMixin<
       if (doc?.sheet) {
         this._renderChild(doc.sheet, options);
       }
+    }
+
+    static async #useItem(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (target.ariaDisabled === 'true' || !this.isEditable) {
+        return;
+      }
+
+      const { itemId } =
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+      const item = await this.getItem(itemId);
+      
+      if (!item) {
+        return;
+      }
+
+      this.tryUseItem(item, event);
+    }
+
+    async tryUseItem(item: Item5e, event: Event) {
+      item.use({ event }, { options: { sheet: this } });
+    }
+
+    static async #useActivity(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (target.ariaDisabled === 'true' || !this.isEditable) {
+        return;
+      }
+
+      const { itemId } =
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+      const { activityId } =
+        target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
+      const item = await this.getItem(itemId);
+      
+      if (!item) {
+        return;
+      }
+      const activity = item.system.activities?.get(activityId);
+      await activity.use({ event, options: { sheet: this } });
     }
 
     /* -------------------------------------------- */

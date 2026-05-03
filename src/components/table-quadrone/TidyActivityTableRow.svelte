@@ -47,6 +47,7 @@
 <TidyTableRow
   rowContainerAttributes={{
     ['data-activity-id']: ctx?.id,
+    ['data-item-id']: ctx?.activity.item?.id,
     ['data-configurable']: configurable,
   }}
   rowContainerClass="activity"

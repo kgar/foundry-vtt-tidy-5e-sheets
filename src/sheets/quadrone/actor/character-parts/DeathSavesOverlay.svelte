@@ -63,20 +63,8 @@
     aria-label={localize('DND5E.DeathSaveRoll')}
     data-tooltip=""
     type="button"
-    onclick={(event) =>
-      context.actor.rollDeathSave(
-        {
-          event: event,
-          legacy: false,
-        },
-        {
-          options: {
-            default: {
-              rollMode: settings.value.defaultDeathSaveRoll,
-            },
-          },
-        },
-      )}
+    data-action="roll"
+    data-type="deathSave"
     oncontextmenu={(ev) => {
       ev.preventDefault();
       (async () => {

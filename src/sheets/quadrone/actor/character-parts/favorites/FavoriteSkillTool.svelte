@@ -26,18 +26,6 @@
     }),
   );
 
-  async function handleOnUse(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
-    _favorite: SkillToolFavoriteContextEntry,
-  ) {
-    if (favorite.type === 'skill') {
-      await context.actor.rollSkill({ skill: favorite.key, event });
-      return;
-    }
-
-    await context.actor.rollToolCheck({ tool: favorite.key, event });
-  }
-
   let trait: 'skills' | 'tool' = $derived(
     favorite.type === 'skill' ? 'skills' : 'tool',
   );
@@ -45,7 +33,7 @@
 
 <div
   class="list-entry favorite"
-  data-favorite-type="tool"
+  data-favorite-type={favorite.type}
   data-reference-tooltip={favorite.reference}
   data-item-id={favorite.id}
   data-tidy-draggable
@@ -63,10 +51,11 @@
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
-    {favorite}
     img={favorite.img}
     title={favorite.name}
-    onUse={handleOnUse}
+    data-action="roll"
+    data-type={favorite.type}
+    data-key={favorite.key}
     name={favorite.name}
     {subtitle}
     useTooltip={false}

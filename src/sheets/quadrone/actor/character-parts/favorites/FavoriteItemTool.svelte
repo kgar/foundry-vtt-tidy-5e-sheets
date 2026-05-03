@@ -34,10 +34,9 @@
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
-    {favorite}
     img={favorite.item.img}
     title={favorite.item.name}
-    onUse={(ev) => context.sheet.tryUseItem(favorite.item, ev)}
+    data-action="use"
     name={favorite.item.name}
     {subtitle}
   />

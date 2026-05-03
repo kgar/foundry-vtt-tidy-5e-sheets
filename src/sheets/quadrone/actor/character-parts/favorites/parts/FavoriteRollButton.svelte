@@ -6,41 +6,27 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { FavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  interface Props {
-    favorite: TFavorite;
+  type Props = {
     img: string | undefined;
-    onUse?: (
-      event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
-      favorite: TFavorite,
-    ) => Promise<any>;
     title: string;
     name: string;
     subtitle: string;
     useTooltip?: boolean;
-  }
+  } & HTMLAttributes<HTMLElement>;
 
   let {
-    favorite,
     img,
-    onUse,
     title,
     name,
     subtitle,
     useTooltip = true,
+    class: cssClass,
+    ...attributes
   }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
-
-  function handleClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
-  ) {
-    if (!context.editable) {
-      return;
-    }
-
-    onUse?.(event, favorite);
-  }
 
   let theSubtitle = $state<HTMLElement>();
   let showSubtitle = $derived(!isNil(subtitle, ''));
@@ -68,8 +54,8 @@
 <!-- We're not using a button here as firefox has a bug with dragging buttons -->
 <div
   role="button"
-  class="button button-borderless favorite-button"
-  onclick={handleClick}
+  class={['button button-borderless favorite-button', cssClass]}
+  {...attributes}
   onkeydown={handleKeyDown}
   tabindex="0"
   data-tooltip={tooltip}
@@ -85,7 +71,7 @@
   >
     <img src={img} alt={title} class="item-image" />
     <span class="roll-prompt">
-      {#if onUse}
+      {#if attributes['data-action']}
         <i class="fa fa-dice-d20"></i>
       {/if}
     </span>
