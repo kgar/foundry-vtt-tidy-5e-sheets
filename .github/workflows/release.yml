@@ -62,12 +62,12 @@ jobs:
       - name: Read module metadata
         id: module
         run: |
-          echo "title=$(jq -r '.title' module.json)" >> $GITHUB_OUTPUT
-          echo "compat_min=$(jq -r '.compatibility.minimum' module.json)" >> $GITHUB_OUTPUT
-          echo "compat_verified=$(jq -r '.compatibility.verified' module.json)" >> $GITHUB_OUTPUT
-          echo "dnd5e_min=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.minimum' module.json)" >> $GITHUB_OUTPUT
-          echo "dnd5e_max=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.maximum // empty' module.json)" >> $GITHUB_OUTPUT
-          COMPAT_MAX=$(jq -r '.compatibility.maximum // empty' module.json)
+          echo "title=$(jq -r '.title' ./public/module.json)" >> $GITHUB_OUTPUT
+          echo "compat_min=$(jq -r '.compatibility.minimum' ./public/module.json)" >> $GITHUB_OUTPUT
+          echo "compat_verified=$(jq -r '.compatibility.verified' ./public/module.json)" >> $GITHUB_OUTPUT
+          echo "dnd5e_min=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.minimum' ./public/module.json)" >> $GITHUB_OUTPUT
+          echo "dnd5e_max=$(jq -r '.relationships.systems[] | select(.id=="dnd5e") | .compatibility.maximum // empty' ./public/module.json)" >> $GITHUB_OUTPUT
+          COMPAT_MAX=$(jq -r '.compatibility.maximum // empty' ./public/module.json)
           echo "compat_max=$COMPAT_MAX" >> $GITHUB_OUTPUT
 
       # Post release notification to Discord
