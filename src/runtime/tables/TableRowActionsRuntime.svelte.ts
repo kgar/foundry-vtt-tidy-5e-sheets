@@ -322,7 +322,7 @@ class TableRowActionsRuntime {
     result.push({
       component: EffectToggleButton,
       props: (args) => ({
-        effect: args.data,
+        effect: args.data.effect,
         doc: context.document,
       }),
       condition: (args) =>
