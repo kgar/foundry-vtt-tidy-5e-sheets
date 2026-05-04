@@ -9,6 +9,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
+  import { coalesce } from 'src/utils/formatting';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
@@ -125,7 +126,10 @@
       key="accent-color"
       bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
-      placeholder="rgb(116, 27, 43)"
+      placeholder={coalesce(
+        placeholders?.value.accentColor,
+        ThemeQuadrone.DEFAULT_ACCENT_COLOR,
+      )}
       disableDelete
     />
 

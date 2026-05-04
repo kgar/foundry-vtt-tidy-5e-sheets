@@ -48,7 +48,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   _settings: ThemeSettingsContext = $state({
     value: {
-      accentColor: '',
+      accentColor: ThemeQuadrone.DEFAULT_ACCENT_COLOR,
       useBasicTheme: false,
       useHeaderBackground: true,
       headerColor: '',
