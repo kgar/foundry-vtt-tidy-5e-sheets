@@ -104,7 +104,7 @@
   "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
   "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
-  "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here.",
+  "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here. Save anything to the <i class=\"fa-solid fa-sidebar\"></i> <strong>Sidebar</strong> to use later. Update settings for each tab using the <i class=\"fa-solid fa-gear\"></i> <strong>Configuration</strong> button in each tab. Update sheet theme settings by opening the sheet's <i class=\"fa-solid fa-ellipsis-vertical\"></i> <strong>Overflow</strong> menu using the <a class='tidy-link-theme' data-action='themeSettings'><i class=\"fa-solid fa-swatchbook\"></i> <strong>Tidy Theme Settings</strong></a> button within.",
 
   "TIDY5E.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
   "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",

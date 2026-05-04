@@ -197,7 +197,7 @@
   >
     {#if !hasAtLeastOneItem}
       <div class="empty-state-container empty-state-description">
-        {localize('TIDY5E.SheetLock.Empty.Hint')}
+        {@html localize('TIDY5E.SheetLock.Empty.Hint')}
       </div>
     {:else}
       {#each sections as section}
