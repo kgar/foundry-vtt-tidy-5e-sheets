@@ -17,7 +17,6 @@
   import type {
     Actor5e,
     CharacterSheetQuadroneContext,
-    FeatureSection,
     NpcSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';

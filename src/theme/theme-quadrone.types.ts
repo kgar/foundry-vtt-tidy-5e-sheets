@@ -9,7 +9,6 @@ export type ThemeSettingsV2Old = {
   accentColor: string;
   actorHeaderBackground: string;
   headerBackgroundColor: string;
-  sheetAccentColor: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
@@ -24,7 +23,6 @@ export type ThemeSettingsV3 = {
   headerColor: string;
   actorHeaderBackground: string;
   headerBackgroundColor: string;
-  sheetAccentColor: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;

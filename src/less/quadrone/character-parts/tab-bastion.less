@@ -1,5 +1,11 @@
 .tidy-tab.bastion {
   --bastion-row-gap: var(--t5e-size-6x);
+  --bastion-facility-background: linear-gradient(145deg,
+    rgba(248, 244, 241, 0.85) 10%,
+    rgba(248, 244, 241, 0.1) 160%),
+    var(--underlay) 40%,
+    var(--t5e-component-card-ondefault-default);
+
   container-name: bastion-tab;
   container-type: inline-size;
 
@@ -69,10 +75,7 @@
   .facility:not(.empty) {
     border-radius: var(--t5e-component-card-radius);
     padding: 0.75rem 0.5rem;
-    background: linear-gradient(145deg,
-        rgba(248, 244, 241, 0.85) 10%,
-        rgba(248, 244, 241, 0.1) 160%),
-      var(--underlay) 40%, #f8f4f1;
+    background: var(--bastion-facility-background);
     background-blend-mode: normal, multiply;
     background-size: cover, cover;
     box-shadow: var(--t5e-drop-shadow-pill);
@@ -451,7 +454,7 @@
 
   .tidy-tab.bastion {
     .facility:not(.empty) {
-      background: linear-gradient(145deg,
+      --bastion-facility-background: linear-gradient(145deg,
           rgba(27, 29, 35, 0.95) 10%,
           rgba(27, 29, 35, 0.1) 170%),
         var(--underlay) 40%, #2c3e50;

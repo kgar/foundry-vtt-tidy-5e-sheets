@@ -211,12 +211,12 @@
     {/if}
 
     <div class="form-group">
-      <label for="{idPrefix}-use-boring-theme">
+      <label for="{idPrefix}-use-basic-theme">
         {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
       </label>
       <div class="form-fields">
         <input
-          id="{idPrefix}-use-boring-theme"
+          id="{idPrefix}-use-basic-theme"
           type="checkbox"
           bind:checked={context.value.useBasicTheme}
           onchange={() => {

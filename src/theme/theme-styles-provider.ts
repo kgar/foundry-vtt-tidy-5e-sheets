@@ -53,12 +53,6 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
-      ...this.getSheetAccentColorDeclarations(
-        selectorPrefix,
-        settings,
-        doc,
-        idOverride
-      ),
       ...this.getItemSidebarBackgroundDeclarations(
         selectorPrefix,
         settings,
@@ -245,39 +239,7 @@ export class ThemeStylesProvider {
       },
     ];
   }
-
-  static getSheetAccentColorDeclarations(
-    selectorPrefix: string,
-    settings: ThemeSettingsV3,
-    doc: any | undefined,
-    idOverride?: string
-  ): ThemeQuadroneStyleDeclaration[] {
-    debug('Sheet accent color check', getColorWithContrast(settings.sheetAccentColor));
-
-    if (isNil(settings.sheetAccentColor, '')) {
-      return [];
-    }
-
-    const identifierRule = this.getDeclarationKeyRule(
-      'sheetAccentColor',
-      doc,
-      idOverride
-    );
-    return [
-      {
-        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
-        selector: selectorPrefix,
-        ruleset: [
-          identifierRule,
-          {
-            property: '--t5e-sheet-accent-color-default',
-            value: settings.sheetAccentColor,
-          },
-        ],
-      },
-    ];
-  }
-
+  
   static getActorHeaderBackgroundDeclarations(
     selectorPrefix: string,
     settings: ThemeSettingsV3,

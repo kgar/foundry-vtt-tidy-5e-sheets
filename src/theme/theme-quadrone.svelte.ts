@@ -62,7 +62,6 @@ export class ThemeQuadrone {
       useHeaderBackground: true,
       headerColor: '',
       actorHeaderBackground: '',
-      sheetAccentColor: '',
       headerBackgroundColor: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
