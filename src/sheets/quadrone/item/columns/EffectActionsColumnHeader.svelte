@@ -16,11 +16,16 @@
 </script>
 
 {#if section.canCreate}
+  <!--svelte-ignore a11y_missing_attribute-->
   <a
     class="tidy-table-button"
     aria-label={localize('DND5E.EffectCreate')}
     data-tooltip
     onclick={() => onAddClicked(section)}
+    onkeydown={(ev) => ev.key === 'Enter' || (ev.key === ' ' && onAddClicked(section))}
+    role="button"
+    tabindex="0"
+    data-keyboard-focus
   >
     <i class="fas fa-plus"></i>
   </a>

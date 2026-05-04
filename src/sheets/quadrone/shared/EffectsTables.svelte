@@ -127,7 +127,14 @@
         />
       </span>
       <TidyTableCell primary={true}>
-        <a class="item-name" onclick={(ev) => toggleSummary()}>
+        <!--svelte-ignore a11y_missing_attribute-->
+        <a 
+          class="item-name" 
+          onclick={(ev) => toggleSummary()}
+          onkeydown={(ev) => ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
+          role="button"
+          tabindex="0"
+          data-keyboard-focus>
           <span class="cell-text">
             <span class="cell-name">{ctx.effect.name}</span>
           </span>

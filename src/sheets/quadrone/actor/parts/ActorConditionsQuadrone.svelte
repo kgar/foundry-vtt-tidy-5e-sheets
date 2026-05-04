@@ -11,7 +11,7 @@
     isBasicTheme: boolean;
   }
 
-  let { conditions }: Props = $props();
+  let { conditions, isBasicTheme }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
