@@ -109,8 +109,8 @@
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="initiative"
               >
                 <i class="fas fa-cog"></i>
               </button>
@@ -142,8 +142,6 @@
               context.actor.update({
                 [`system.abilities.${ability.key}.value`]: score,
               })}
-            onConfigClicked={(id) =>
-              FoundryAdapter.renderAbilityConfig(context.actor, id)}
             disabled={!context.owner}
           />
         {/each}
@@ -200,7 +198,8 @@
             data-tooltip="DND5E.ArmorConfig"
             type="button"
             class="button button-borderless button-icon-only button-config"
-            onclick={(ev) => FoundryAdapter.renderArmorConfig(context.actor)}
+            data-action="showConfiguration"
+            data-config="armorClass"
           >
             <i class="fas fa-cog"></i>
           </button>

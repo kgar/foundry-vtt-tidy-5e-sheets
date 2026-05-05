@@ -41,7 +41,7 @@
       onclick={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        FoundryAdapter.renderHitPointsDialog(context.actor);
+        FoundryAdapter.renderHitPointsConfig(context.actor);
       }}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >

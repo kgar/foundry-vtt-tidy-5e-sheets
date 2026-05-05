@@ -932,14 +932,11 @@ export const FoundryAdapter = {
       type,
     }));
   },
-  renderHitPointsDialog(document: any) {
+  renderHitPointsConfig(document: any) {
     return document.sheet._renderChild(new dnd5e.applications.actor.HitPointsConfig({ document }));
   },
   renderHitDiceConfig(document: any) {
     return document.sheet._renderChild(new dnd5e.applications.actor.HitDiceConfig({ document }));
-  },
-  renderActorSheetFlags(actor: any) {
-    return actor.sheet._renderChild(new dnd5e.applications.actor.ActorSheetFlags(actor));
   },
   renderToolsConfig(document: any) {
     return document.sheet._renderChild(
@@ -949,11 +946,12 @@ export const FoundryAdapter = {
       }),
     );
   },
-  renderTraitsConfig(document: any, trait: string) {
+  renderTraitsConfig(document: any, trait: string, config?: Record<string, any>) {
     return document.sheet._renderChild(
       new dnd5e.applications.actor.TraitsConfig({
         document,
         trait,
+        ...config
       }),
     );
   },
@@ -971,6 +969,13 @@ export const FoundryAdapter = {
       trait,
       key,
     }));
+  },
+  renderSkillsConfig(document: any) {
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.SkillsConfig({
+        document,
+      }),
+    );
   },
   renderSourceConfig(document: any, keyPath: string) {
     return document.sheet._renderChild(new dnd5e.applications.shared.SourceConfig(
@@ -1190,10 +1195,7 @@ export const FoundryAdapter = {
   openSpellSlotsConfig(document: any) {
     return document.sheet._renderChild(new dnd5e.applications.actor.SpellSlotsConfig({ document }));
   },
-  openSummonConfig(item: Item5e) {
-    item.sheet._renderChild(new dnd5e.applications.item.SummoningConfig(item));
-  },
-  openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm') {
+  openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm' | (string & {})) {
     return document.sheet._renderChild(
       new dnd5e.applications.actor.DamagesConfig({ document, trait }),
     );

@@ -12,7 +12,9 @@
   let context =
     $derived(
       getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext | VehicleSheetQuadroneContext
+        | CharacterSheetQuadroneContext
+        | NpcSheetQuadroneContext
+        | VehicleSheetQuadroneContext
       >(),
     );
 
@@ -77,10 +79,7 @@
       }}
       disabled={!context.editable}
     >
-      <div
-        class="value"
-        aria-label={localize('DND5E.HitPointsCurrent')}
-      >
+      <div class="value" aria-label={localize('DND5E.HitPointsCurrent')}>
         {hpValue}
       </div>
       <div class="separator">/</div>
@@ -130,9 +129,7 @@
           hpOverlayOpen = true;
         }}
       >
-        <span class="modifier font-label-large color-text-lighter"
-          >+</span
-        >
+        <span class="modifier font-label-large color-text-lighter">+</span>
         <span
           class="value font-data-large color-text-default"
           data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
@@ -160,8 +157,8 @@
     {/if}
   {:else if context.editable}
     <button
-      onclick={() =>
-        FoundryAdapter.renderHitPointsDialog(context.actor)}
+      data-action="showConfiguration"
+      data-config="hitPoints"
       aria-label={localize('DND5E.HitPointsConfig')}
       data-tooltip="DND5E.HitPointsConfig"
       type="button"
@@ -239,8 +236,8 @@
         <i class="fas fa-times"></i>
       </button>
       <button
-        onclick={() =>
-          FoundryAdapter.renderHitPointsDialog(context.actor)}
+        data-action="showConfiguration"
+        data-config="hitPoints"
         aria-label={localize('DND5E.HitPointsConfig')}
         data-tooltip="DND5E.HitPointsConfig"
         type="button"
