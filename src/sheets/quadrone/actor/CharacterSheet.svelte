@@ -15,6 +15,7 @@
   import { untrack } from 'svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
+  import DeathSavesOverlay from './character-parts/DeathSavesOverlay.svelte';
   import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -26,6 +27,7 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let sidebarExpanded = $state(true);
+  let headerCollapsed = $state(false);
 
   // When the user changes tabs, check their preference on the new tab and apply expanded state.
   $effect(() => {
@@ -97,7 +99,8 @@
 </script>
 
 <header class="sheet-header flexcol">
-  <div class="sheet-header-content flexrow">
+  <div class={['sheet-header-content flexrow', { 'header-collapsed': headerCollapsed }]}>
+    <div class="header-collapsible">
     <div class="actor-details-container flexcol">
       <div
         class="actor-context-row flexrow {context.enableXp ? 'show-xp' : ''}"
@@ -322,6 +325,7 @@
           {/if}
         </div>
       </AbilitiesContainer>
+    </div>
     </div>
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
@@ -646,6 +650,20 @@
               </div>
             {/if}
           {/if}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="header-collapse-toggle button button-borderless button-icon-only"
+        onclick={() => (headerCollapsed = !headerCollapsed)}
+        aria-label={headerCollapsed ? localize('JOURNAL.ViewExpand') : localize('JOURNAL.ViewCollapse')}
+        data-tooltip={headerCollapsed ? localize('JOURNAL.ViewExpand') : localize('JOURNAL.ViewCollapse')}
+      >
+        <i class={headerCollapsed ? 'fas fa-chevron-down' : 'fas fa-chevron-up'}></i>
+      </button>
+      <div class={['death-saves-mobile-accordion', { active: context.showDeathSaves }]}>
+        <div class="death-saves-mobile-inner">
+          {#if context.showDeathSaves} <DeathSavesOverlay /> {/if}
         </div>
       </div>
     </div>
