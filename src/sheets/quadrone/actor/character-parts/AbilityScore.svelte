@@ -10,10 +10,13 @@
     unlocked: boolean;
     disabled: boolean;
     onScoreChanged?: (newValue: number) => Promise<void>;
-    onConfigClicked?: (key: string) => void;
   };
-  let { ability, unlocked, disabled, onScoreChanged, onConfigClicked }: Props =
-    $props();
+  let {
+    ability,
+    unlocked,
+    disabled,
+    onScoreChanged,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -147,7 +150,9 @@
           { invisible: editingScore },
         ]}
         data-tooltip
-        onclick={(ev) => onConfigClicked?.(ability.key)}
+        data-action="showConfiguration"
+        data-config="ability"
+        data-ability={ability.key}
         data-tidy-sheet-part="ability-configuration-control"
       >
         <i class="fas fa-cog"></i>

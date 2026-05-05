@@ -25,7 +25,8 @@
       id="{appId}-starting-equipment-configure"
       title={localize('DND5E.StartingEquipment.Action.Configure')}
       aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
-      onclick={() => FoundryAdapter.openStartingEquipmentConfig(context.item)}
+      data-action="showConfiguration"
+      data-config="starting-equipment"
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-gear"></i>

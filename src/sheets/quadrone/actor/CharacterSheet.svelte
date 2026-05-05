@@ -203,8 +203,8 @@
                 data-tooltip="DND5E.ArmorConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
-                onclick={(ev) =>
-                  FoundryAdapter.renderArmorConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="armorClass"
               >
                 <i class="fas fa-cog"></i>
               </button>
@@ -228,8 +228,6 @@
               context.actor.update({
                 [`system.abilities.${ability.key}.value`]: score,
               })}
-            onConfigClicked={(id) =>
-              FoundryAdapter.renderAbilityConfig(context.actor, id)}
             disabled={!context.owner}
           />
         {/each}
@@ -251,8 +249,8 @@
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="initiative"
               >
                 <i class="fas fa-cog"></i>
               </button>
@@ -296,8 +294,9 @@
                       data-tooltip
                       type="button"
                       class="button button-borderless button-icon-only button-config"
-                      onclick={() =>
-                        FoundryAdapter.openConcentrationConfig(context.actor)}
+                      data-action="showConfiguration"
+                      data-type="ability"
+                      data-ability="concentration"
                     >
                       <i class="fas fa-cog"></i>
                     </button>
@@ -441,8 +440,8 @@
             /> -->
           {:else if context.editable}
             <button
-              onclick={() =>
-                FoundryAdapter.renderHitPointsDialog(context.actor)}
+              data-action="showConfiguration"
+              data-config="hitPoints"
               aria-label={localize('DND5E.HitPointsConfig')}
               data-tooltip="DND5E.HitPointsConfig"
               type="button"
@@ -520,8 +519,8 @@
                 <i class="fas fa-times"></i>
               </button>
               <button
-                onclick={() =>
-                  FoundryAdapter.renderHitPointsDialog(context.actor)}
+                data-action="showConfiguration"
+                data-config="hitPoints"
                 aria-label={localize('DND5E.HitPointsConfig')}
                 data-tooltip="DND5E.HitPointsConfig"
                 type="button"
@@ -550,46 +549,50 @@
               }}
             />
           {:else}
-            <button
-              aria-label={localize('DND5E.HitDiceConfig')}
-              type="button"
-              class="unbutton hd-row"
-              onclick={() => FoundryAdapter.renderHitDiceConfig(context.actor)}
-              data-tooltip="DND5E.HitDiceConfig"
-            >
-              <div
-                class="meter progress hit-die view-only"
-                style="--bar-percentage: {hdPct}%"
+            <div class="hd-row-container">
+              <button
+                aria-label={localize('DND5E.HitDiceConfig')}
+                type="button"
+                class="unbutton hd-row"
+                data-action="showConfiguration"
+                data-config="hitDice"
+                data-tooltip="DND5E.HitDiceConfig"
               >
-                <span class="label">
-                  <div
-                    class="value"
-                    data-tooltip="TIDY5E.HitDice.Current.Label"
-                  >
-                    {context.system.attributes.hd.value}
-                  </div>
-                  <div class="separator">/</div>
-                  <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
-                    {context.system.attributes.hd.max}
-                  </div>
-                  <div class="hd-label" data-tooltip="DND5E.HitDice">
-                    {localize('TIDY5E.HitDice.Abbreviation')}
-                  </div>
-                </span>
-                {#if context.unlocked}
-                  <button
-                    onclick={() =>
-                      FoundryAdapter.renderHitDiceConfig(context.actor)}
-                    aria-label={localize('DND5E.HitDiceConfig')}
-                    data-tooltip="DND5E.HitDiceConfig"
-                    type="button"
-                    class="button button-borderless button-icon-only button-config"
-                  >
-                    <i class="fas fa-cog"></i>
-                  </button>
-                {/if}
-              </div>
-            </button>
+                <div
+                  class="meter progress hit-die view-only"
+                  style="--bar-percentage: {hdPct}%"
+                >
+                  <span class="label">
+                    <div
+                      class="value"
+                      data-tooltip="TIDY5E.HitDice.Current.Label"
+                    >
+                      {context.system.attributes.hd.value}
+                    </div>
+                    <div class="separator">/</div>
+                    <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
+                      {context.system.attributes.hd.max}
+                    </div>
+                    <div class="hd-label" data-tooltip="DND5E.HitDice">
+                      {localize('TIDY5E.HitDice.Abbreviation')}
+                    </div>
+                  </span>
+                </div>
+              </button>
+              {#if context.unlocked}
+                <button
+                  data-action="showConfiguration"
+                  data-config="hitDice"
+                  aria-label={localize('DND5E.HitDiceConfig')}
+                  data-tooltip="DND5E.HitDiceConfig"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {/if}
+            </div>
+
             {#if context.editable || exhaustionLevel > 0}
               <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
                 <button
@@ -613,8 +616,8 @@
                     data-tooltip="DND5E.DeathSaveConfigure"
                     type="button"
                     class="button button-borderless button-icon-only button-config"
-                    onclick={(ev) =>
-                      FoundryAdapter.renderDeathConfig(context.actor)}
+                    data-action="showConfiguration"
+                    data-config="death"
                   >
                     <i class="fas fa-cog"></i>
                   </button>

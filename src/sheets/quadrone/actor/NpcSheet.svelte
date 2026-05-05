@@ -193,8 +193,8 @@
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="initiative"
               >
                 <i class="fas fa-cog"></i>
               </button>
@@ -226,8 +226,6 @@
               context.actor.update({
                 [`system.abilities.${ability.key}.value`]: score,
               })}
-            onConfigClicked={(id) =>
-              FoundryAdapter.renderAbilityConfig(context.actor, id)}
             disabled={!context.owner}
           />
         {/each}
@@ -344,8 +342,8 @@
                     data-tooltip="DND5E.DeathSaveConfigure"
                     type="button"
                     class="button button-borderless button-icon-only button-config"
-                    onclick={(ev) =>
-                      FoundryAdapter.renderDeathConfig(context.actor)}
+                    data-action="showConfiguration"
+                    data-config="death"
                   >
                     <i class="fas fa-cog"></i>
                   </button>
@@ -353,7 +351,11 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only"
-                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    aria-label={localize(
+                      context.showDeathSaves
+                        ? 'DND5E.DeathSaveHide'
+                        : 'DND5E.DeathSaveShow',
+                    )}
                     data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}
@@ -371,19 +373,6 @@
                   </button>
                 {/if}
               </div>
-
-              <!-- {#if context.unlocked}
-                <button
-                  aria-label="Configure NPC"
-                  data-tooltip="DND5E.DeathSaveConfigure"
-                  type="button"
-                  class="button button-borderless button-icon-only button-config"
-                  onclick={(ev) =>
-                    FoundryAdapter.renderDeathConfig(context.actor)}
-                >
-                  <i class="fas fa-cog"></i>
-                </button>
-              {/if} -->
             {/if}
           </div>
         {/if}
@@ -406,7 +395,8 @@
             data-tooltip="DND5E.ArmorConfig"
             type="button"
             class="button button-borderless button-icon-only button-config"
-            onclick={(ev) => FoundryAdapter.renderArmorConfig(context.actor)}
+            data-action="showConfiguration"
+            data-config="armorClass"
           >
             <i class="fas fa-cog"></i>
           </button>

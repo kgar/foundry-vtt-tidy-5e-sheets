@@ -134,15 +134,8 @@
         description: localize('DND5E.CreatureType'),
       })}
       data-keyboard-focus
-      onclick={() => {
-        if (species) FoundryAdapter.renderCreatureTypeConfig(context.actor);
-      }}
-      onkeydown={(e) => {
-        if (species) {
-          (e.key === 'Enter' || e.key === ' ') &&
-            FoundryAdapter.renderCreatureTypeConfig(context.actor);
-        }
-      }}
+      data-action={species ? 'showConfiguration' : undefined}
+      data-config="creatureType"
       data-reference-tooltip={context.creatureType?.reference}
     >
       {#if species}
@@ -166,7 +159,8 @@
           type="button"
           class="button button-borderless button-icon-only"
           data-tooltip
-          onclick={() => FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+          data-action="showConfiguration"
+          data-config="creatureType"
         >
           <i class="fa-solid fa-edit"></i>
         </button>
