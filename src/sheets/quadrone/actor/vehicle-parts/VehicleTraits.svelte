@@ -357,11 +357,8 @@
           class={[
             'button button-borderless button-icon-only button-config flexshrink',
           ]}
-          onclick={() =>
-            FoundryAdapter.renderMovementSensesConfig(
-              context.actor,
-              'movement',
-            )}
+          data-action="showConfiguration"
+          data-config="movement"
           data-tidy-sheet-part="ability-configuration-control"
         >
           <i class="fas fa-cog"></i>
@@ -407,11 +404,8 @@
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip
-          onclick={() =>
-            FoundryAdapter.renderMovementSensesConfig(
-              context.actor,
-              'movement',
-            )}
+          data-action="showConfiguration"
+          data-config="movement"
         >
           <i class="fa-solid fa-cog"></i>
         </button>
@@ -605,7 +599,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Resistances')}
     entries={context.traits.dr}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'dr',
+    }}
     icon="fa-solid fa-shield-halved"
     traitClass="traits-resistances"
     pillClass="positive trait-resistance"
@@ -620,7 +617,10 @@
     configButtonLocation="label"
     label={localize('DND5E.TraitDIPlural.other')}
     entries={context.traits.di}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'di',
+    }}
     icon="fa-solid fa-shield"
     traitClass="traits-damage-immunities"
     pillClass="positive trait-damage-immunity"
@@ -635,7 +635,10 @@
     configButtonLocation="label"
     label={localize('DND5E.TraitCIPlural.other')}
     entries={context.traits.ci}
-    onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'ci',
+    }}
     icon="fa-solid fa-shield-virus"
     traitClass="traits-condition-immunities"
     pillClass="positive trait-condition-immunity"
@@ -646,7 +649,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Vulnerabilities')}
     entries={context.traits.dv}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'dv',
+    }}
     icon="fa-solid fa-heart-crack"
     traitClass="traits-vulnerabilities"
     pillClass="negative trait-vulnerability"

@@ -61,9 +61,8 @@
         {#if context.unlocked}
           <a
             class="button button-borderless button-icon-only"
-            onclick={() =>
-              FoundryAdapter.renderCreatureTypeConfig(context.item)}
-          >
+            data-action="showConfiguration"
+            data-config="type"          >
             <i class="fa-solid fa-cog"></i>
           </a>
         {/if}
@@ -76,11 +75,11 @@
           </span>
         </li>
         {#if showSubtype}
-        <li>
-          <span class="pill" data-tooltip={localize('DND5E.Subtype')}>
-            {context.system.type.subtype}
-          </span>
-        </li>
+          <li>
+            <span class="pill" data-tooltip={localize('DND5E.Subtype')}>
+              {context.system.type.subtype}
+            </span>
+          </li>
         {/if}
       </ul>
     </div>
@@ -90,11 +89,8 @@
         {#if context.unlocked}
           <a
             class="button button-borderless button-icon-only"
-            onclick={() =>
-              FoundryAdapter.renderMovementSensesConfig(
-                context.item,
-                'movement',
-              )}
+            data-action="showConfiguration"
+            data-config="movement"
           >
             <i class="fa-solid fa-cog"></i>
           </a>
@@ -138,8 +134,8 @@
         {#if context.unlocked}
           <a
             class="button button-borderless button-icon-only"
-            onclick={() =>
-              FoundryAdapter.renderMovementSensesConfig(context.item, 'senses')}
+            data-action="showConfiguration"
+            data-config="senses"
           >
             <i class="fa-solid fa-cog"></i>
           </a>

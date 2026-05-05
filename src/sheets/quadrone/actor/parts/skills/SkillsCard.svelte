@@ -143,12 +143,9 @@
               aria-label={localize('DND5E.SkillConfigure')}
               type="button"
               class="button button-borderless button-icon-only"
-              onclick={(ev) =>
-                FoundryAdapter.renderSkillToolConfig(
-                  context.actor,
-                  'skills',
-                  skill.key,
-                )}
+              data-action="showConfiguration"
+              data-config="skill"
+              data-key={skill.key}
             >
               <i class="fa-solid fa-cog"></i>
             </button>
