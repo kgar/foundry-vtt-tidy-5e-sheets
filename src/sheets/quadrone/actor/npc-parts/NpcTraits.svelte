@@ -58,8 +58,8 @@
             </span>
             {#if context.unlocked}
               <button
-                onclick={() =>
-                  FoundryAdapter.renderHitDiceConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="hitDice"
                 aria-label={localize('DND5E.HitDiceConfig')}
                 data-tooltip="DND5E.HitDiceConfig"
                 type="button"
@@ -79,8 +79,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Speed')}
     entries={context.speeds}
-    onconfig={() =>
-      FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-config': 'movement',
+    }}
     icon="fa-solid fa-rabbit-running"
     traitClass="traits-speeds"
     pillClass="trait-speed"
@@ -91,8 +93,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Senses')}
     entries={context.senses}
-    onconfig={() =>
-      FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-config': 'senses',
+    }}
     icon="fa-solid fa-eye"
     traitClass="traits-senses"
     pillClass="trait-sense"
@@ -111,7 +115,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Resistances')}
     entries={context.traits.dr}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'dr',
+    }}
     icon="fa-solid fa-shield-halved"
     traitClass="traits-resistances"
     pillClass="positive trait-resistance"
@@ -126,7 +133,10 @@
     configButtonLocation="label"
     label={localize('DND5E.TraitDIPlural.other')}
     entries={context.traits.di}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'di',
+    }}
     icon="fa-solid fa-shield"
     traitClass="traits-damage-immunities"
     pillClass="positive trait-damage-immunity"
@@ -141,7 +151,10 @@
     configButtonLocation="label"
     label={localize('DND5E.TraitCIPlural.other')}
     entries={context.traits.ci}
-    onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'ci',
+    }}
     icon="fa-solid fa-shield-virus"
     traitClass="traits-condition-immunities"
     pillClass="positive trait-condition-immunity"
@@ -152,7 +165,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Vulnerabilities')}
     entries={context.traits.dv}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'dv',
+    }}
     icon="fa-solid fa-heart-crack"
     traitClass="traits-vulnerabilities"
     pillClass="negative trait-vulnerability"
@@ -167,7 +183,10 @@
     configButtonLocation="label"
     label={localize('DND5E.DamageModification.Label')}
     entries={context.traits.dm}
-    onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'dm',
+    }}
     icon="fa-solid fa-heart-circle-plus"
     traitClass="traits-damage-modification"
     pillClass="trait-damage-modification"
@@ -182,7 +201,10 @@
     configButtonLocation="label"
     label={localize('DND5E.Languages')}
     entries={context.traits.languages}
-    onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-trait': 'languages',
+    }}
     icon="fa-solid fa-comments"
     traitClass="traits-languages"
     pillClass="trait-language"
@@ -194,12 +216,10 @@
     label={localize('DND5E.Habitat.Configuration.Label')}
     entries={context.habitats}
     configurationTooltip={localize('DND5E.Habitat.Configuration.Title')}
-    onconfig={() =>
-      context.sheet._renderChild(
-        new dnd5e.applications.actor.HabitatConfig({
-          document: context.actor,
-        }),
-      )}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-config': 'habitat',
+    }}
     icon="fa-solid fa-mountain-sun"
     traitClass="traits-habitats"
     pillClass="trait-habitat"
@@ -221,12 +241,10 @@
     label={localize('DND5E.Treasure.Configuration.Label')}
     entries={context.treasures}
     configurationTooltip={localize('DND5E.Treasure.Configuration.Title')}
-    onconfig={() =>
-      context.sheet._renderChild(
-        new dnd5e.applications.actor.TreasureConfig({
-          document: context.actor,
-        }),
-      )}
+    configAttributes={{
+      'data-action': 'showConfiguration',
+      'data-config': 'treasure',
+    }}
     icon="fa-solid fa-gem"
     traitClass="traits-treasures"
     pillClass="trait-treasure"

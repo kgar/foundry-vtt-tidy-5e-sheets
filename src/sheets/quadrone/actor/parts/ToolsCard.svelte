@@ -50,10 +50,12 @@
   <div class="use-ability-header flexrow">
     <button
       type="button"
-      class="button button-borderless skill-expand-button"
-      class:view-only={!context.unlocked}
-      onclick={() =>
-        context.unlocked && FoundryAdapter.renderToolsConfig(context.actor)}
+      class={[
+        'button button-borderless skill-expand-button',
+        { 'view-only': !context.unlocked },
+      ]}
+      data-action={context.unlocked ? 'showConfiguration' : undefined}
+      data-trait="tool"
     >
       <i
         class={[
@@ -134,12 +136,9 @@
             <button
               type="button"
               class="button button-borderless button-icon-only"
-              onclick={(ev) =>
-                FoundryAdapter.renderSkillToolConfig(
-                  context.actor,
-                  'tool',
-                  tool.key,
-                )}
+              data-action="showConfiguration"
+              data-config="tool"
+              data-key={tool.key}
             >
               <i class="fa-solid fa-cog"></i>
             </button>

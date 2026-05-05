@@ -152,8 +152,9 @@
                 data-tooltip
                 type="button"
                 class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.openConcentrationConfig(context.actor)}
+                data-action="showConfiguration"
+                data-config="ability"
+                data-ability="concentration"
               >
                 <i class="fas fa-cog"></i>
               </button>
