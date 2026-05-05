@@ -1,0 +1,694 @@
+.tidy5e-sheet.application:where(.quadrone) {
+  .abilities-container {
+    --ability-collapsed-bg: rgba(0, 0, 0, 0.24);
+    --ability-collapsed-bg-highlight: rgba(0, 0, 0, 0.56);
+    --ability-collapsed-outline: oklch(from var(--t5e-color-gold) calc(l * 0.70) calc(c * .56) h);
+    --ability-collapsed-outline-highlight: oklch(from var(--t5e-color-palette-gold-62) calc(l * 0.92) calc(c * .8) h);
+    container-name: abilities;
+    container-type: inline-size;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    .bonus {
+      margin-right: 0.125rem;
+      margin-left: 0.125rem;
+    }
+
+    .save {
+      margin-right: var(--t5e-size-1x);
+    }
+
+    .icon i {
+      font-size: var(--font-size-11);
+      color: var(--t5e-color-gold);
+    }
+  }
+
+  .abilities-container-inner {
+    position: relative;
+    display: flex;
+    min-height: 6.625rem;
+    gap: var(--t5e-size-1x);
+    margin: var(--t5e-size-2x) 0 0 var(--header-padding);
+    align-items: stretch;
+    flex-wrap: nowrap;
+  }
+
+  &.abilities-overflow .abilities-container-inner {
+    gap: 0;
+    max-width: 100%;
+
+    .initiative {
+      width: 3.25rem;
+      flex-grow: 0;
+    }
+  }
+
+  .shield {
+    background-image: var(--t5e-shield-image);
+    background-position: top center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 4.25rem;
+    color: var(--t5e-color-text-light);
+    font-weight: bold;
+    font-size: 1.25rem;
+    position: relative;
+    width: 4rem;
+    transition: height var(--t5e-transition-default), width var(--t5e-transition-default);
+    margin-top: 0.125rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ac-value {
+      font-size: var(--font-size-28);
+      letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+      margin: 0;
+    }
+
+    .ac-label {
+      margin: -0.125rem 0 0.125rem;
+    }
+  }
+
+  .ability {
+    max-width: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    > * {
+      display: flex;
+      position: relative;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ability-bonus-container {
+      min-width: 3.625rem;
+      max-width: 4rem;
+    }
+
+    .ability-score-container {
+      position: relative;
+      flex-direction: row;
+      height: 2rem;
+      margin-top: -0.75rem;
+    }
+
+    .ability-score {
+      margin-top: auto;
+    }
+
+    .button-config {
+      position: absolute;
+      top: -0.125rem;
+      right: -0.25rem;
+    }
+
+    .ability-bonus-container {
+      aspect-ratio: 1/1.125;
+      background: var(--t5e-ability-image) top center / auto no-repeat;
+      background-size: contain;
+      padding-top: var(--t5e-size-halfx);
+      position: relative;
+      text-align: center;
+      width: 100%;
+      min-width: 3.625rem;
+      max-width: 4rem;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &.proficient {
+        background: var(--t5e-ability-proficient-image) top center / auto no-repeat;
+        background-size: contain;
+      }
+
+      &:has(.ability-score-input:focus) :where(.modifier, .value) {
+        visibility: hidden;
+      }
+
+      .ability-score-input {
+        position: absolute;
+        background: none;
+        font: var(--t5e-font-data-xlarge);
+        opacity: 0;
+        text-align: center;
+        margin-top: 0.5rem;
+
+        &.editing-score {
+          opacity: 1;
+        }
+      }
+
+      .editing-score-label {
+        font: var(--t5e-font-label-medium);
+        position: absolute;
+        top: calc(100% + 0.125rem);
+      }
+    }
+
+    &:has(.button-config) {
+      .ability-score {
+        cursor: pointer;
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+          text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+        }
+      }
+    }
+
+    .ability-score {
+      background: var(--t5e-ability-image) top center / auto no-repeat;
+      background-size: contain;
+      height: 2rem;
+      margin-top: auto;
+      position: relative;
+      width: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: initial;
+    }
+
+    .ability-save-container {
+      .ability-save {
+        width: 100%;
+        justify-content: center;
+
+        > * {
+          flex: 0;
+        }
+      }
+    }
+
+    .ability-roll-button:active {
+      border: none;
+    }
+
+    .ability-labels {
+      bottom: 0.5rem;
+    }
+
+    .ability-save {
+      border: none;
+      gap: 0.0625rem;
+      height: 1.75rem;
+      padding: 0;
+      align-items: center;
+      text-shadow: var(--header-shadow);
+
+      .icon {
+        margin-bottom: var(--t5e-size-halfx);
+      }
+
+      i {
+        color: var(--t5e-color-text-gold-emphasis);
+        font-size: var(--font-size-13);
+        line-height: var(--font-size-13);
+      }
+
+      .modifier,
+      .value {
+        font-size: var(--font-size-14);
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      }
+    }
+  }
+
+  .ability.has-proficiency {
+    .ability-bonus-container {
+      background: var(--t5e-ability-proficient-image) top center / auto no-repeat;
+      background-size: contain;
+    }
+
+    .ability-score {
+      background: var(--t5e-score-proficient-image) top center / auto no-repeat;
+      background-size: contain;
+    }
+  }
+
+  .ability .ability-roll-button {
+    flex-direction: column;
+    gap: 0.125rem;
+    /* padding-top: 0.125rem; */
+  }
+
+  .ability-label-container {
+    margin-top: -0.3125rem;
+    margin-left: -0.0625rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .initiative-score-container {
+    background: var(--t5e-initiative-image) top center / auto no-repeat;
+    background-size: contain;
+    border-radius: var(--t5e-size-1x);
+    height: 3.75rem;
+    margin-top: 0.3125rem;
+    padding-top: var(--t5e-size-halfx);
+    width: 3.25rem;
+    position: relative;
+    flex-grow: 0;
+    justify-content: center;
+
+    .ability-roll-button {
+      display: flex;
+      align-items: center;
+      flex-direction: column-reverse;
+      gap: 0;
+      padding-top: 0.125rem;
+    }
+
+    .modifier {
+      color: var(--t5e-color-text-lightest);
+      font-size: 1.5rem;
+      letter-spacing: var(--t5e-font-letter-spacing-large);
+      line-height: 1.5rem;
+    }
+
+    .bonus {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: var(--t5e-font-letter-spacing-large);
+      line-height: 1.5rem;
+    }
+
+    .button-config {
+      position: absolute;
+      bottom: -0.75rem;
+      right: -0.625rem;
+      top: auto;
+    }
+  }
+
+  .ability.initiative,
+  .loyalty-container {
+    width: 3rem;
+    max-width: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.325rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ability-labels {
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+    margin-top: 0.1875rem;
+    left: 0;
+    right: 0;
+    bottom: 0.4375rem;
+
+    .label {
+      color: var(--t5e-color-text-lightest);
+      text-transform: none;
+    }
+
+    .divider {
+      background-color: var(--t5e-color-gold);
+      opacity: 0.5;
+      width: calc(100% - 1rem);
+      height: 0.0625rem;
+      margin: 0.3125rem 0;
+      transform: translateY(0px);
+    }
+  }
+
+  .abilities-container:not(.abilities-size-compact) .initiative-score-container.double-digit {
+
+    .modifier,
+    .bonus {
+      font: var(--t5e-font-label-large);
+    }
+  }
+
+  .ability-roll-button {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    text-transform: uppercase;
+    transition: all var(--t5e-transition-default);
+
+    ~ div span {
+      transition: all var(--t5e-transition-default);
+    }
+
+    + div:not(:has(.ability-score-input)) {
+      pointer-events: none;
+    }
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus-within {
+      color: var(--t5e-color-text-gold-light);
+
+      ~ * {
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      }
+    }
+
+    &:active,
+    &:focus,
+    &:focus-within {
+      border: none;
+      background: none;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .abilities-size-small {
+    --collapse-font-medium: 1.4375rem;
+
+    .ability-bonus-container {
+      min-width: 3.25rem;
+    }
+
+    .ability .ability-bonus-container,
+    .ability .ability-bonus-container.proficient,
+    .ac-container .shield,
+    .ability .initiative-score-container {
+      width: 100%;
+      height: auto;
+      min-width: auto;
+    }
+
+    .ability {
+      .button-config {
+        right: -0.625rem;
+        top: -0.125rem;
+      }
+    }
+
+    .ability-bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+    .initiative-score-container {
+      .button-config {
+        top: auto;
+        right: -0.25rem;
+      }
+    }
+  }
+
+  .abilities-container.abilities-size-compact {
+
+    .ability-bonus-container,
+    .ac-container .shield,
+    .ability.initiative .initiative-score-container {
+      aspect-ratio: 1/1.125;
+    }
+
+    .ability-label-container {
+      margin-top: 0rem;
+    }
+  }
+
+  /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
+  .abilities-container.abilities-size-compact,
+  &.theme-basic .abilities-container {
+    --collapse-font-large: 1.5rem;
+    --collapse-font-medium: 1.4375rem;
+
+    .abilities-container-inner > * {
+      background: var(--ability-collapsed-bg);
+      border: 0.0625rem solid var(--ability-collapsed-outline);
+      border-radius: var(--t5e-size-1x);
+      max-width: initial;
+      width: auto;
+      min-width: 2.5rem;
+      position: relative;
+    }
+
+    .ability .ability-bonus-container,
+    .ability .ability-bonus-container.proficient,
+    .ac-container .shield,
+    .ability.initiative .initiative-score-container {
+      background: none;
+      height: auto;
+      min-width: auto;
+      width: 100%;
+    }
+
+    .ability.has-proficiency {
+      .button-config {
+        --button-icon: var(--t5e-color-text-gold-emphasis);
+      }
+    }
+
+    .ability.initiative {
+      .initiative-score-container {
+        .button-config {
+          top: auto;
+          bottom: -1.25rem;
+          right: calc(50% - 0.875rem);
+        }
+      }
+    }
+
+    .ability-labels {
+      bottom: 0.5rem;
+    }
+
+    .ability-roll-button {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .ability-bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+    .ability {
+      .ability-score {
+        margin-top: -0.25rem;
+      }
+
+      .ability-bonus-container .ability-score-input {
+        background: var(--t5e-component-field-background-hover);
+        border: 0.0625rem solid var(--t5e-component-field-border-hover);
+        bottom: 0.375rem;
+        height: 1.875rem;
+      }
+
+      .button-config {
+        right: -0.625rem;
+        top: -0.125rem;
+      }
+
+      .editing-score-label {
+        top: calc(110%);
+      }
+    }
+
+    .ability-score-container {
+      align-items: center;
+      display: flex;
+      height: 2rem;
+      justify-content: center;
+      margin: -0.125rem auto 0;
+      position: relative;
+      width: 100%;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0.5rem;
+        right: 0.5rem;
+        background: var(--t5e-color-gold);
+        height: 0.0625rem;
+        opacity: 0.5;
+        transform: translateY(0px);
+      }
+
+      &::before {
+        top: 0;
+      }
+
+      &::after {
+        bottom: 0;
+      }
+
+      .button-config {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        margin: 0 -0.25rem 0 -0.5rem;
+      }
+    }
+
+    .ability-save-container {
+      height: 1.75rem;
+    }
+
+    .ability .ability-score {
+      background: none;
+      margin: 0;
+
+      span {
+        font: var(--t5e-font-label-large);
+        color: var(--t5e-color-text-lighter);
+      }
+    }
+
+    .ability.has-proficiency .ability-score span {
+      color: var(--t5e-color-text-default);
+    }
+  }
+
+  &.theme-basic {
+    &.theme-light {
+      .abilities-size-compact .abilities-container-inner > * {
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
+      }
+
+      .abilities-container {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.5);
+        --ability-collapsed-bg-highlight: var(--t5e-component-card-lighter);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
+        --ability-collapsed-outline-highlight: var(--t5e-color-palette-gold-56);
+      }
+    }
+
+    .ability-bonus-container,
+    .ac-container .shield,
+    .ability.initiative .initiative-score-container {
+      aspect-ratio: unset;
+      padding-bottom: 0.25rem;
+    }
+
+    .sheet-header .abilities-container {
+      &.abilities-size-compact .abilities-container-inner > * {
+        --ability-collapsed-bg: var(--t5e-component-card-darker);
+        --ability-collapsed-outline: var(--t5e-component-card-lighter);
+      }
+
+      .concentration-roll-button {
+        margin-left: 0.375rem;
+        margin-right: 0.375rem;
+      }
+
+      .ability-label-container {
+        margin-top: 0.125rem;
+      }
+
+      &.abilities-size-small {
+        .initiative-score-container {
+          .button-config {
+            top: auto;
+            bottom: -1.5rem;
+            right: calc(50% - 0.875rem);
+          }
+        }
+      }
+
+      &.abilities-size-compact {
+        .ability-label-container {
+          margin-top: 0;
+        }
+      }
+
+      .ability .ability-roll-button {
+        gap: 0;
+        margin-top: 0.125rem;
+      }
+
+      .ac-container .shield {
+        margin-top: 0.375rem;
+      }
+
+      .ability.initiative .ability-roll-button {
+        margin-top: 0.1875rem;
+      }
+
+      .abilities-container-inner {
+        justify-content: space-between;
+
+        .ability-proficiency-indicator {
+          width: var(--t5e-size-2x);
+          height: var(--t5e-size-2x);
+          border-radius: 100%;
+          background-color: var(--t5e-theme-color-lighter);
+          position: absolute;
+          margin-top: 0.0625rem;
+          right: -0.375rem;
+
+          &.config-button-visible {
+            display: none;
+          }
+        }
+
+        .ability:has(.proficient) .ability-score {
+          margin-left: -0.375rem;
+        }
+
+        .ac-container .shield {
+          max-width: 4rem;
+
+          .ac-label {
+            display: flex;
+            justify-content: center;
+          }
+        }
+
+        .initiative-score-container {
+          max-height: 4rem;
+        }
+
+        > * {
+          max-width: 6rem;
+        }
+      }
+    }
+  }
+
+  &:not(.theme-basic) {
+    .sheet-header .abilities-container {
+      &.abilities-size-compact .abilities-container-inner {
+
+        .ability:has(.proficient),
+        .ac-container,
+        .ability.initiative {
+          --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.5);
+          --ability-collapsed-bg-highlight: var(--t5e-component-card-lighter);
+          --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
+          --ability-collapsed-outline-highlight: var(--t5e-color-palette-gold-56);
+        }
+      }
+    }
+  }
+}

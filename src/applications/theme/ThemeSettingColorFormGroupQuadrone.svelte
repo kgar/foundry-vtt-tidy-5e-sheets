@@ -2,6 +2,7 @@
   import { settingValueToHexaString } from 'src/theme/theme';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
+  import chroma from 'chroma-js';
 
   interface Props {
     key: string;
@@ -9,6 +10,7 @@
     value: string;
     placeholder?: string;
     colorSelected?: () => void;
+    disableDelete?: boolean;
   }
 
   let {
@@ -17,6 +19,7 @@
     key,
     colorSelected,
     placeholder = '#FFFFFF',
+    disableDelete = false,
   }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -48,9 +51,8 @@
 </script>
 
 <div class="form-group">
-  <!-- TODO: hightouch to backtrack on eyedropper  -->
   <label for={inputId}>{label}</label>
-  <div class="form-fields">
+  <div class="form-fields color-picker-container">
     <label
       for="{inputId}-picker"
       class="color-picker-preview"
@@ -64,8 +66,7 @@
       type="text"
       id="{inputId}-picker"
       {value}
-      class="coloris"
-      style="width: 0; flex: 0; padding: 0; border: 0"
+      class="coloris hidden-input"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
@@ -77,10 +78,16 @@
       class="theme-color-textbox"
       {placeholder}
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
+      onblur={() => {
+        if (disableDelete && (isNil(value, '') || !chroma.valid(value))) {
+          onColorSelected(placeholder);
+        }
+      }}
     />
 
     {#if eyeDropperEnabled}
       <button
+        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionPickColor')}
         type="button"
         class="button button-borderless button-icon-only eye-dropper"
         onclick={() => activateEyeDropper()}
@@ -89,16 +96,17 @@
       </button>
     {/if}
 
-    <button
-      type="button"
-      title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
-      class="button button-borderless button-icon-only"
-      onclick={() => {
-        value = '';
-      }}
-      disabled={isNil(value, '')}
-    >
-      <i class="fa-solid fa-xmark"></i>
-    </button>
+    {#if !isNil(value, '') && !disableDelete}
+      <button
+        type="button"
+        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
+        class="button button-secondary button-icon-only"
+        onclick={() => {
+          value = '';
+        }}
+      >
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    {/if}
   </div>
 </div>

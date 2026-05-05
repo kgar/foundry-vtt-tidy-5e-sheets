@@ -231,17 +231,20 @@
             disabled={!context.owner}
           />
         {/each}
-        <div class="initiative-container flexcol">
-          <div class="initiative score" data-tooltip="DND5E.Initiative">
+        <div class="ability initiative flexcol">
+          <div class="initiative-score-container" data-tooltip="DND5E.Initiative">
             <button
               type="button"
-              class="initiative-roll-button"
+              class="ability-roll-button button-borderless"
               data-action="roll"
               data-type="initiative"
               disabled={!context.owner}
               data-has-roll-modes
             >
-              {localize('DND5E.InitiativeAbbr')}
+              <span class="ability-abbr color-text-gold">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-label-container initiative-bonus">
+                <span class="modifier color-text-lightest">{ini.sign}</span><span class="bonus color-text-default">{ini.value}</span>
+              </span>
             </button>
             {#if context.unlocked}
               <button
@@ -255,14 +258,6 @@
                 <i class="fas fa-cog"></i>
               </button>
             {/if}
-            <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest">
-                {ini.sign}
-              </span>
-              <span class="bonus color-text-default">
-                {ini.value}
-              </span>
-            </div>
           </div>
           <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
           {#if context.saves.concentration}

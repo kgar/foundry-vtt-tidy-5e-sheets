@@ -29,6 +29,7 @@ import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
@@ -1226,7 +1227,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    element.querySelector('.window-header').classList.add('theme-dark');
+    // Frame renders before _renderHTML populates _context; read theme from the document.
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
+    if (themeSettings.useHeaderBackground) {
+      element.querySelector('.window-header')?.classList.add('theme-dark');
+    }
 
     return element;
   }

@@ -17,6 +17,8 @@
     context.system.details.alignment,
   );
 
+  let isBasicTheme = $derived(context.themeSettings.useBasicTheme);
+
   let species = $derived.by<string | undefined>(() => {
     if (context.system.details.race?.name) {
       return context.system.details.race.name;
@@ -66,13 +68,13 @@
         ['hide-under-600'],
       )}
     {/each}
-    {#if size}
+    {#if size && !isBasicTheme}
       <span class="size">
         <span class="font-label-medium color-text-gold">{size}</span>
       </span>
       <div class="divider-dot"></div>
     {/if}
-    {#if context.creatureType?.title}
+    {#if context.creatureType?.title && !isBasicTheme}
       <span class="creature-type">
         <span class="font-label-medium color-text-gold">
           {context.creatureType.title}
@@ -89,7 +91,7 @@
       </span>
       <div class="divider-dot {context.enableXp ? '' : 'hide-under-600'}"></div>
     {/if}
-    {#if alignment}
+    {#if alignment && !isBasicTheme}
     <span
       class="alignment {context.speeds.secondary.length > 0
         ? context.enableXp

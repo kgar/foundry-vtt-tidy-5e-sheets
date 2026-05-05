@@ -1,5 +1,11 @@
 .tidy-tab.bastion {
   --bastion-row-gap: var(--t5e-size-6x);
+  --bastion-facility-background: linear-gradient(145deg,
+    rgba(248, 244, 241, 0.85) 10%,
+    rgba(248, 244, 241, 0.1) 160%),
+    var(--underlay) 40%,
+    var(--t5e-component-card-ondefault-default);
+
   container-name: bastion-tab;
   container-type: inline-size;
 
@@ -24,7 +30,9 @@
       0 0 0.375rem var(--t5e-theme-color-highlight);
   }
 
-  .facility-panels, .roster, .description {
+  .facility-panels,
+  .roster,
+  .description {
     margin-block-end: var(--bastion-row-gap);
   }
 
@@ -67,10 +75,7 @@
   .facility:not(.empty) {
     border-radius: var(--t5e-component-card-radius);
     padding: 0.75rem 0.5rem;
-    background: linear-gradient(145deg,
-        rgba(248, 244, 241, 0.85) 10%,
-        rgba(248, 244, 241, 0.1) 160%),
-      var(--underlay) 40%, #f8f4f1;
+    background: var(--bastion-facility-background);
     background-blend-mode: normal, multiply;
     background-size: cover, cover;
     box-shadow: var(--t5e-drop-shadow-pill);
@@ -440,6 +445,29 @@
         'special'
         'basic';
       grid-template-columns: 1fr;
+    }
+  }
+}
+
+&.theme-dark,
+.theme-dark {
+
+  .tidy-tab.bastion {
+    .facility:not(.empty) {
+      --bastion-facility-background: linear-gradient(145deg,
+          rgba(27, 29, 35, 0.95) 10%,
+          rgba(27, 29, 35, 0.1) 170%),
+        var(--underlay) 40%, #2c3e50;
+      background-blend-mode: normal, normal;
+      background-size: cover, cover;
+
+      &.basic {
+        background-blend-mode: normal, luminosity;
+      }
+
+      .facility-header :is(.facility-image, .facility-image svg) {
+        --icon-fill: var(--t5e-component-field-background);
+      }
     }
   }
 }

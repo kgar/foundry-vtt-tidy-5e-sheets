@@ -9,6 +9,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
+  import { coalesce } from 'src/utils/formatting';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
@@ -29,24 +30,29 @@
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 
-  let portraitShapeDefaultValue =
-    placeholders?.value?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE;
-
-  let portraitShapeDefaultLabel = localize(
-    'TIDY5E.UseSpecificDefaultValue.Label',
-    {
-      value: localize(
-        `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
-      ),
-    },
+  let portraitShapeDefaultValue = $derived(
+    placeholders?.value?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
   );
 
-  let methodColorPlaceholders = createColorPlaceholderMap(
-    placeholders?.value.spellPreparationMethodColors,
+  let portraitShapeDefaultLabel = $derived(
+    localize(
+      'TIDY5E.UseSpecificDefaultValue.Label',
+      {
+        value: localize(
+          `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
+        ),
+      },
+    ),
   );
 
-  let rarityColorPlaceholders = createColorPlaceholderMap(
-    placeholders?.value.rarityColors,
+  let methodColorPlaceholders = $derived.by(() =>
+    createColorPlaceholderMap(
+      placeholders?.value?.spellPreparationMethodColors,
+    ),
+  );
+
+  let rarityColorPlaceholders = $derived.by(() =>
+    createColorPlaceholderMap(placeholders?.value?.rarityColors),
   );
 
   function createColorPlaceholderMap(colors?: ThemeColorSettingConfigEntry[]) {
@@ -116,90 +122,112 @@
       {localize('TIDY5E.ThemeSettings.SheetTheme.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
-
     <ThemeSettingColorFormGroupQuadrone
       key="accent-color"
       bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
-      placeholder={placeholders?.value.accentColor}
+      placeholder={coalesce(
+        placeholders?.value.accentColor,
+        ThemeQuadrone.DEFAULT_ACCENT_COLOR,
+      )}
+      disableDelete
     />
-    <p class="hint">
-      {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
-    </p>
 
-    {#if !app.document?.documentName || app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
-      <div class="form-group">
-        <label for="{idPrefix}-actor-portrait-shape">
-          {localize('TIDY5E.ThemeSettings.PortraitShape.title', {
-            type: localize(CONSTANTS.DOCUMENT_NAME_ACTOR),
-          })}
-        </label>
-        <div class="form-fields">
-          <select
-            id="{idPrefix}-actor-portrait-shape"
-            bind:value={context.value.portraitShape}
-          >
-            <option value={undefined}>{portraitShapeDefaultLabel}</option>
-            {#each portraitShapes as shape}
-              <option value={shape}
-                >{localize(
-                  `TIDY5E.ThemeSettings.PortraitShape.option.${shape}`,
-                )}</option
-              >
-            {/each}
-          </select>
-        </div>
-      </div>
-    {/if}
+    {#if !context.value.useBasicTheme}
 
-    {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
-      <div class="form-group">
-        <label for="{idPrefix}-use-header-background">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
-        </label>
-        <div class="form-fields">
-          <input
-            id="{idPrefix}-use-header-background"
-            type="checkbox"
-            bind:checked={context.value.useHeaderBackground}
-          />
-        </div>
-        <p class="hint">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
-        </p>
-      </div>
-
-      {#if context.value.useHeaderBackground}
+      {#if !app.document?.documentName || app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
         <div class="form-group">
-          <label for="{idPrefix}-actor-header-background">
-            {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+          <label for="{idPrefix}-actor-portrait-shape">
+            {localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+              type: localize(CONSTANTS.DOCUMENT_NAME_ACTOR),
+            })}
+          </label>
+          <div class="form-fields">
+            <select
+              id="{idPrefix}-actor-portrait-shape"
+              bind:value={context.value.portraitShape}
+            >
+              <option value={undefined}>{portraitShapeDefaultLabel}</option>
+              {#each portraitShapes as shape}
+                <option value={shape}
+                  >{localize(
+                    `TIDY5E.ThemeSettings.PortraitShape.option.${shape}`,
+                  )}</option
+                >
+              {/each}
+            </select>
+          </div>
+        </div>
+      {/if}
+
+      {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
+        <div class="form-group">
+          <label for="{idPrefix}-use-header-background">
+            {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
           </label>
           <div class="form-fields">
             <input
-              id="{idPrefix}-actor-header-background"
-              type="text"
-              bind:value={context.value.actorHeaderBackground}
-              placeholder={placeholders?.value.actorHeaderBackground}
-            />
-            <ImagePickerButton
-              current={context.value.actorHeaderBackground}
-              onimagepicked={(image) =>
-                (context.value.actorHeaderBackground = image)}
+              id="{idPrefix}-use-header-background"
+              type="checkbox"
+              bind:checked={context.value.useHeaderBackground}
             />
           </div>
+          <p class="hint">
+            {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
+          </p>
         </div>
-        
-        <ThemeSettingColorFormGroupQuadrone
-          key="header-color"
-          bind:value={context.value.headerColor}
-          label={localize('TIDY5E.ThemeSettings.HeaderColor.title')}
-          placeholder={placeholders?.value.headerColor}
-        />
-        <p class="hint">
-          {localize('TIDY5E.ThemeSettings.HeaderColor.hint')}
-        </p>
+
+        {#if context.value.useHeaderBackground}
+          <div class="form-group">
+            <label for="{idPrefix}-actor-header-background">
+              {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+            </label>
+            <div class="form-fields">
+              <input
+                id="{idPrefix}-actor-header-background"
+                type="text"
+                bind:value={context.value.actorHeaderBackground}
+                placeholder={placeholders?.value.actorHeaderBackground}
+              />
+              <ImagePickerButton
+                current={context.value.actorHeaderBackground}
+                onimagepicked={(image) =>
+                  (context.value.actorHeaderBackground = image)}
+              />
+            </div>
+          </div>
+
+          <ThemeSettingColorFormGroupQuadrone
+            key="sheet-accent-color"
+            bind:value={context.value.headerBackgroundColor}
+            label={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.title')}
+            placeholder={placeholders?.value.headerBackgroundColor}
+          />
+          <p class="hint">
+            {localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
+          </p>
+        {/if}
       {/if}
     {/if}
+
+    <div class="form-group">
+      <label for="{idPrefix}-use-basic-theme">
+        {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
+      </label>
+      <div class="form-fields">
+        <input
+          id="{idPrefix}-use-basic-theme"
+          type="checkbox"
+          bind:checked={context.value.useBasicTheme}
+          onchange={() => {
+            context.value.useHeaderBackground = !context.value.useBasicTheme;
+          }}
+        />
+      </div>
+      <p class="hint">
+        {localize('TIDY5E.ThemeSettings.UseBasicTheme.hint')}
+      </p>
+    </div>
 
     <!-- TODO: Add item sidebar background setting -->
     <!-- {#if settings.value.truesight}

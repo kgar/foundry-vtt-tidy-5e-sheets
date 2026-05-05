@@ -5,7 +5,7 @@
 
 .sheet-pin {
   border-radius: 0.3125rem;
-  border: 1px solid var(--t5e-component-card-lighter);
+  border: 0.0625rem solid var(--t5e-component-card-lighter);
   background-color: var(--t5e-component-card-darker);
   box-shadow: var(--t5e-drop-shadow-field);
   display: flex;
@@ -157,5 +157,11 @@
 &.theme-dark {
   .sheet-pin:hover {
     box-shadow: 0 0 4px 0 var(--t5e-theme-color-highlight);
+  }
+}
+
+&.theme-light {
+  .sheet-pin {
+    border-color: rgba(0, 0, 0, 0.16);
   }
 }

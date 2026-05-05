@@ -13,7 +13,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-right: var(--t5e-size-2x);
     margin-top: 0.4375rem;
     gap: 0;
 
@@ -35,6 +34,29 @@
 
       &:focus {
         border: 1px solid red;
+      }
+    }
+  }
+
+  .ability.initiative {
+    position: relative;
+    max-width: 4rem;
+  }
+
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-small {
+    .initiative-score-container {
+      height: 3.75rem;
+    }
+  }
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-compact {
+    .initiative-score-container {
+      margin-top: 0;
+      padding-top: 0;
+
+      .ability-roll-button {
+        gap: 0.125rem;
       }
     }
   }
@@ -84,6 +106,7 @@
         padding-right: 0.5rem;
       }
     }
+
     .npc-score-tracker {
 
       .card-header h3 {
@@ -158,7 +181,7 @@
 
   .spellbook-footer {
     .info {
-      > * {
+      >* {
         display: flex;
         align-items: center;
         flex-direction: row;

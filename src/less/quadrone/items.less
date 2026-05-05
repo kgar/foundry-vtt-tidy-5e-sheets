@@ -604,4 +604,30 @@
       box-shadow: var(--t5e-drop-shadow-field);
     }
   }
+
+  &.theme-basic {
+    .sidebar .pills .pill:not(.interactive) {
+      border: none;
+      background: none;
+      text-align: left;
+      justify-content: flex-start;
+      font: var(--t5e-font-body-medium);
+      padding-left: 0.625rem;
+      padding-top: 0.125rem;
+      padding-bottom: 0.125rem;
+      min-height: auto;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0.25rem;
+        width: 0.25rem;
+        height: 0.25rem;
+        border-radius: 100%;
+        opacity: 1;
+        background: var(--t5e-color-text-disabled);
+        margin-inline: var(--t5e-size-2x);
+      }
+    }
+  }
 }

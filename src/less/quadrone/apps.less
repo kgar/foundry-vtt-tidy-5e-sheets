@@ -32,6 +32,7 @@
     .window-header {
       margin-top: 0.0625rem;
     }
+
     .window-title {
       color: var(--t5e-color-text-default);
       font: var(--t5e-font-label-medium);
@@ -47,6 +48,7 @@
   /* Font Color */
   &:not(.minimized) {
     --color-light-text-heading: var(--t5e-color-text-lighter);
+
     .window-title {
       margin-bottom: 0.125rem;
     }
@@ -65,7 +67,7 @@
   .window-header {
     align-items: center;
     border: none;
-    padding-inline-start: var(--t5e-size-4x);
+    padding-inline-start: var(--t5e-size-2x);
 
     h1 {
       color: var(--t5e-color-text-lighter);
@@ -82,16 +84,27 @@
     }
 
     button.header-control {
-      color: var(--t5e-color-icon-button);
+      color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
       &:hover {
-        color: var(--t5e-color-icon-default);
+        color: var(--t5e-theme-color-foreground);
         border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
       }
 
       // TODO: Figure out how to make the header UUID control use a copy cursor.
+    }
+  }
+
+  &.theme-basic {
+    .window-header {
+      button.header-control {
+        color: var(--t5e-text-icon-lighter);
+        &:hover {
+          color: var(--t5e-color-icon-default);
+        }
+      }
     }
   }
 
@@ -335,8 +348,6 @@
           min-width: 5.25rem;
         }
       }
-
-      // box-shadow: var(--t5e-drop-shadow-field);
 
       li {
         .pm-dropdown {
@@ -737,23 +748,23 @@
   }
 
   :where(.method-atwill) {
-    --t5e-method-color: var(--t5e-color-spellcasting-atwill);
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-atwill));
   }
 
   :where(.method-pact) {
-    --t5e-method-color: var(--t5e-color-spellcasting-pact);
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-pact));
   }
 
   :where(.method-innate) {
-    --t5e-method-color: var(--t5e-color-spellcasting-innate);
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-innate));
   }
 
   :where(.method-ritual) {
-    --t5e-method-color: var(--t5e-color-spellcasting-ritual);
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-ritual));
   }
 
   :where(.method-spell) {
-    --t5e-method-color: var(--t5e-color-spellcasting-spell);
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-spell));
   }
 
   :where(.diminished) {

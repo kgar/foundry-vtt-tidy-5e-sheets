@@ -4,8 +4,70 @@
       rgba(143, 123, 78, 0.25) 20%,
       rgba(143, 123, 78, 0.25) 80%,
       rgba(143, 123, 78, 0) 100%) 0 0 1 0;
-
   --t5e-table-header-row-height: var(--t5e-size-6x);
+  --t5e-table-header-background-left: var(--t5e-theme-color-darkest);
+  --t5e-table-header-background-right: var(--t5e-theme-color-default);
+  --t5e-table-header-border-color: rgba(0, 0, 0, 0.16);
+
+  &.theme-basic {
+    --t5e-table-header-background-left: transparent;
+    --t5e-table-header-background-right: transparent;
+    --t5e-theme-basic: transparent;
+
+    .tidy-table-header-row {
+      --t5e-method-color: transparent;
+      --t5e-theme-color-foreground: var(--t5e-component-card-foreground);
+      --t5e-theme-color-foreground-disabled: var(--t5e-component-card-foreground-disabled);
+      --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
+      --t5e-theme-color-foreground-darker: var(--t5e-component-card-foreground-darker);
+      --t5e-theme-color-foreground-darker-disabled: var(--t5e-component-card-foreground-disabled);
+      --t5e-theme-color-foreground-darker-diminished: var(--t5e-component-card-foreground-diminished);
+
+
+      border-radius: 0;
+      border-width: 0 0 0.0625rem 0;
+      border-bottom: 0.0625rem solid var(--t5e-component-card-default);
+      box-shadow: none;
+      color: var(--t5e-color-text-lighter);
+      padding-bottom: 0.125rem;
+  
+
+      .header-label-cell {
+        overflow: visible;
+
+        .expand-button {
+          margin-left: -0.25rem;
+        }
+  
+        h3 {
+          color: var(--t5e-component-card-foreground);
+        }
+      }
+
+      &.diminished {
+        color: var(--t5e-color-text-lightest);
+        .header-label-cell h3 {
+          color: var(--t5e-color-text-lightest);
+        }
+      }
+
+      &:hover {
+        border-bottom-color: var(--t5e-theme-color-lighter);
+        .tidy-table-header-cell, .table-header-count {
+          color: var(--t5e-theme-color-foreground);
+        }
+        .header-label-cell h3 {
+          color: var(--t5e-text-color-default);
+        }
+      }
+    }
+
+    &.theme-light {
+      .tidy-table-header-row {
+        border-bottom-color: rgba(0, 0, 0, 0.16);
+      }
+    }
+  }
 
   .tidy-table-container {
     display: flex;
@@ -31,27 +93,19 @@
   }
 
   .tidy-table-header-row {
-    --t5e-table-header-background-left: var(--t5e-theme-color-darkest);
-    --t5e-table-header-background-right: var(--t5e-theme-color-default);
-    --t5e-table-header-border-color: rgba(0, 0, 0, 0.16);
 
     background: linear-gradient(to right,
         var(--t5e-table-header-background-left),
         var(--t5e-table-header-background-right));
     border-radius: var(--t5e-size-halfx);
     box-shadow: 0 0 0.0625rem inset var(--t5e-table-header-border-color);
-    color: var(--t5e-color-text-default);
+    color: var(--t5e-theme-color-foreground);
     max-height: var(--t5e-table-header-row-height);
     min-height: var(--t5e-table-header-row-height);
 
     &.spell-method {
       --t5e-table-header-background-left: oklch(from var(--t5e-method-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
       --t5e-table-header-background-right: var(--t5e-method-color, var(--t5e-theme-color-darker));
-    }
-
-    &.diminished {
-      --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
-      --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);
     }
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
@@ -74,12 +128,12 @@
       box-shadow: none;
 
       i {
-        color: var(--t5e-color-icon-disabled);
+        color: var(--t5e-theme-color-foreground-diminished);
         transition: transform var(--t5e-transition-default);
       }
 
       &.expanded i {
-        color: var(--t5e-color-icon-diminished);
+        color: var(--t5e-theme-color-foreground-diminished);
         transform: rotate(90deg);
         padding: 0 0 var(--t5e-size-halfx);
       }
@@ -89,7 +143,7 @@
         border: none;
 
         i {
-          color: var(--t5e-color-text-default);
+          color: var(--t5e-theme-color-foreground);
         }
       }
     }
@@ -99,7 +153,7 @@
 
       .button.expand-button {
         i {
-          color: var(--t5e-color-icon-default);
+          color: var(--t5e-theme-color-foreground);
         }
       }
     }
@@ -120,11 +174,24 @@
       }
 
       h3 {
-        color: var(--t5e-color-text-default);
+        color: var(--t5e-theme-color-foreground-darker);
+        // color: inherit;
+      }
+
+      .button.expand-button {
+        i {
+          
+        color: var(--t5e-theme-color-foreground-darker-diminished);
+        }
+        &:hover, &:active, &:focus-within {
+          i {
+            color: var(--t5e-theme-color-foreground-darker);
+          }
+        }
       }
 
       .table-header-count {
-        color: var(--t5e-color-text-lightest);
+        color: var(--t5e-theme-color-foreground-darker-diminished);
         margin-inline-start: 0.25rem;
       }
     }
@@ -156,6 +223,17 @@
       &:hover i {
         background: rgba(0, 0, 0, 0.48);
       }
+    }
+  }
+
+  &:not(.theme-basic) {
+    .tidy-table-header-row {
+      &.diminished {
+        --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
+        --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);
+        color: var(--t5e-color-text-oninverse-default);
+      }
+  
     }
   }
 
@@ -218,19 +296,9 @@
     }
 
     &.rarity {
-
-      &.common {
-        // TODO: Add method for hiding common rarity colors.
-        // --t5e-item-color: var(--t5e-color-text-gold-emphasis);
-      }
-
-      &.diminished {
-        // --t5e-item-color: var(--t5e-color-palette-grey-40);
-      }
-
       .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-color-palette-grey-100) l c h / 0.24) 0%, transparent 42%), 
-                    linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 42%);
+        background: linear-gradient(to right, oklch(from var(--t5e-color-palette-grey-100) l c h / 0.24) 0%, transparent 42%),
+          linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 42%);
       }
 
       .tidy-table-row-use-button {
@@ -791,6 +859,7 @@
     padding-inline-start: 1rem;
     padding-block-start: 0.25rem;
   }
+
   .tidy-table-row~.expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
@@ -958,7 +1027,7 @@
   }
 
   &:where(.theme-dark) {
-    c .tidy-table-header-row {
+    .tidy-table-header-row {
       --t5e-table-header-border-color: rgba(255, 255, 255, 0.16);
 
       &:hover {
@@ -967,7 +1036,6 @@
     }
 
     .tidy-table-row {
-      // --t5e-item-row-background: rgba(255, 255, 255, 0.08);
 
       .item-image {
         &[src$=".svg"] {

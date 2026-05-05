@@ -1,8 +1,20 @@
+&.theme-basic {
+  .collapsible-editor {
+    header {
+      padding-bottom: 0.125rem;
+
+      &:hover {
+        border-bottom-color: var(--t5e-theme-color-lighter);
+      }
+    }
+  }
+}
 .collapsible-editor {
   header {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-bottom: var(--t5e-size-1x);
 
     &:hover {
       .edit i {

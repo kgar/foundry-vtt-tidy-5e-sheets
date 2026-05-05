@@ -1,4 +1,4 @@
-.gold-header-underline {
+&:not(.theme-basic) .gold-header-underline {
   display: flex;
   align-items: center;
   flex-basis: 100%;
@@ -17,6 +17,24 @@
   }
 }
 
+&.theme-basic {
+  &.theme-light {
+    .gold-header-underline,
+    header:has(.gold-header-underline) {
+      border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.16);
+    }
+  }
+  .gold-header-underline {
+    border-bottom: 0.0625rem solid var(--t5e-component-card-default);
+  
+    svg {
+      display: none;
+    }
+  }
+  header:has(.gold-header-underline) {
+    border-bottom: 0.0625rem solid var(--t5e-component-card-default);
+  }
+}
 
 .filigree-card {
   background: var(--t5e-component-card-default);
