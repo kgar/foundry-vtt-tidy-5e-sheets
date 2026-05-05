@@ -140,6 +140,7 @@
         font: var(--t5e-font-data-xlarge);
         opacity: 0;
         text-align: center;
+        margin-top: 0.5rem;
 
         &.editing-score {
           opacity: 1;
@@ -455,6 +456,12 @@
       width: 100%;
     }
 
+    .ability.has-proficiency {
+      .button-config {
+        --button-icon: var(--t5e-color-text-gold-emphasis);
+      }
+    }
+
     .ability.initiative {
       .initiative-score-container {
         .button-config {
@@ -492,7 +499,7 @@
       .ability-bonus-container .ability-score-input {
         background: var(--t5e-component-field-background-hover);
         border: 0.0625rem solid var(--t5e-component-field-border-hover);
-        bottom: -0.25rem;
+        bottom: 0.375rem;
         height: 1.875rem;
       }
 
@@ -588,12 +595,6 @@
       &.abilities-size-compact .abilities-container-inner > * {
         --ability-collapsed-bg: var(--t5e-component-card-darker);
         --ability-collapsed-outline: var(--t5e-component-card-lighter);
-      }
-
-      .ability.has-proficiency {
-        .button-config {
-          --button-icon: var(--t5e-color-text-gold-emphasis);
-        }
       }
 
       .concentration-roll-button {

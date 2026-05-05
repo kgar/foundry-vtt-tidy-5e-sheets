@@ -170,10 +170,10 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="initiative-container flexcol">
+        <div class="ability initiative flexcol">
           <div
             class={[
-              'initiative-score-container bonus-container',
+              'initiative-score-container',
               Number(ini.value) >= 10 ? 'double-digit' : '',
             ]}
             data-tooltip="DND5E.Initiative"
@@ -185,7 +185,7 @@
               data-type="initiative"
               data-has-roll-modes
             >
-              <span class="ability-abbr">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-abbr color-text-gold">{localize('DND5E.InitiativeAbbr')}</span>
               <span class="ability-label-container initiative-bonus">
                 <span class="modifier color-text-lightest">
                   {ini.sign}

@@ -38,6 +38,29 @@
     }
   }
 
+  .ability.initiative {
+    position: relative;
+    max-width: 4rem;
+  }
+
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-small {
+    .initiative-score-container {
+      height: 3.75rem;
+    }
+  }
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-compact {
+    .initiative-score-container {
+      margin-top: 0;
+      padding-top: 0;
+
+      .ability-roll-button {
+        gap: 0.125rem;
+      }
+    }
+  }
+
   .loyalty-container {
     padding-top: 0.25rem;
 

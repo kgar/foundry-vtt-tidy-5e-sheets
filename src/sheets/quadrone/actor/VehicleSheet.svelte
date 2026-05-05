@@ -89,9 +89,9 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="initiative-container flexcol">
+        <div class="ability initiative flexcol">
           <div
-            class="initiative-score-container bonus-container"
+            class="initiative-score-container"
             data-tooltip="DND5E.Initiative"
           >
             <button
