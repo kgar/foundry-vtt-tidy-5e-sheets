@@ -259,10 +259,10 @@
       label={localize('DND5E.SpecialTraits')}
       entries={context.specialTraits}
       configurationTooltip={localize('DND5E.SpecialTraits')}
-      onconfig={() =>
-        context.sheet._renderChild(
-          new SpecialTraitsApplication({ document: context.actor }),
-        )}
+      configAttributes={{
+        'data-action': 'showConfiguration',
+        'data-config': 'special-traits',
+      }}
       icon="fa-solid fa-star"
       traitClass="traits-specials"
       pillClass="trait-special"
