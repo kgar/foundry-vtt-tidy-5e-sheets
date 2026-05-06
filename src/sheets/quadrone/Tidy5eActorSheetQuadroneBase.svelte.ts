@@ -2281,14 +2281,17 @@ export function Tidy5eActorSheetQuadroneBase<
           case 'weapon':
             return FoundryAdapter.renderWeaponsConfig(this.actor);
           default:
-            return FoundryAdapter.renderTraitsConfig(this.actor, trait, { width: 400 });
+            return FoundryAdapter.renderTraitsConfig(this.actor, trait, {
+              width: 400,
+            });
         }
       }
 
       switch (target.dataset.config) {
         case 'ability':
-          const ability = target.closest<HTMLElement>('[data-ability]')?.dataset.ability;
-          
+          const ability =
+            target.closest<HTMLElement>('[data-ability]')?.dataset.ability;
+
           if (ability === 'concentration') {
             return FoundryAdapter.openConcentrationConfig(this.actor);
           }
@@ -2314,12 +2317,19 @@ export function Tidy5eActorSheetQuadroneBase<
           return FoundryAdapter.renderInitiativeConfig(this.actor);
         case 'movement':
         case 'senses':
-          return FoundryAdapter.renderMovementSensesConfig(this.actor, target.dataset.config);
+          return FoundryAdapter.renderMovementSensesConfig(
+            this.actor,
+            target.dataset.config,
+          );
         case 'skill':
           const skill = target.closest<HTMLElement>('[data-key]')?.dataset.key;
-          
-          if (skill) { 
-            return FoundryAdapter.renderSkillToolConfig(this.actor, 'skills', skill);
+
+          if (skill) {
+            return FoundryAdapter.renderSkillToolConfig(
+              this.actor,
+              'skills',
+              skill,
+            );
           }
         case 'skills':
           return FoundryAdapter.renderSkillsConfig(this.actor);
@@ -2329,12 +2339,12 @@ export function Tidy5eActorSheetQuadroneBase<
           );
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
-          
+
           if (tool) {
             return FoundryAdapter.renderSkillToolConfig(
               this.actor,
               'tool',
-              tool
+              tool,
             );
           }
         case 'source':

@@ -1007,9 +1007,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     switch ( target.dataset.config ) {
       case "movement":
       case "senses":
-        return FoundryAdapter.renderMovementSensesConfig(this, target.dataset.config);
+        return FoundryAdapter.renderMovementSensesConfig(this.item, target.dataset.config);
       case "source":
-        return FoundryAdapter.renderSourceConfig(this, "system.source");
+        return FoundryAdapter.renderSourceConfig(this.item, "system.source");
       case "starting-equipment":
         return FoundryAdapter.openStartingEquipmentConfig(this.item);
       case "type":
