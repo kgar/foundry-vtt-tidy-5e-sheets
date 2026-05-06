@@ -94,10 +94,7 @@ export class ThemeStylesProvider {
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
-    if (
-      !settings.useHeaderBackground ||
-      isNil(settings.actorHeaderBackground, '')
-    ) {
+    if (isNil(settings.actorHeaderBackground, '')) {
       return [];
     }
 
