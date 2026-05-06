@@ -62,7 +62,8 @@
           <a
             class="button button-borderless button-icon-only"
             data-action="showConfiguration"
-            data-config="type"          >
+            data-config="type"
+          >
             <i class="fa-solid fa-cog"></i>
           </a>
         {/if}

@@ -31,12 +31,12 @@
       </h4>
       {#if context.unlocked}
         <button
-          aria-label={localize('DND5E.CreatureType.Add')}
+          aria-label={localize('DND5E.CreatureTypeTitle')}
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip
           data-action="showConfiguration"
-          data-config="type"
+          data-config="creatureType"
         >
           <i class="fa-solid fa-cog"></i>
         </button>

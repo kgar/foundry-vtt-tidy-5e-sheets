@@ -295,7 +295,7 @@
                       type="button"
                       class="button button-borderless button-icon-only button-config"
                       data-action="showConfiguration"
-                      data-type="ability"
+                      data-config="ability"
                       data-ability="concentration"
                     >
                       <i class="fas fa-cog"></i>
