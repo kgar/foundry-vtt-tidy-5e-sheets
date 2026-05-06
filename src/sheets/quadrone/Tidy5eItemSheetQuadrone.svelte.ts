@@ -1011,7 +1011,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       case "source":
         return FoundryAdapter.renderSourceConfig(this, "system.source");
       case "starting-equipment":
-        return FoundryAdapter.openStartingEquipmentConfig(this);
+        return FoundryAdapter.openStartingEquipmentConfig(this.item);
       case "type":
         return this._renderChild(
           new dnd5e.applications.shared.CreatureTypeConfig({
