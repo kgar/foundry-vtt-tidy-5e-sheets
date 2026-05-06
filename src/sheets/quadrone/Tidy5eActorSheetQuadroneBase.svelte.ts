@@ -62,6 +62,7 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
+import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -2320,6 +2321,12 @@ export function Tidy5eActorSheetQuadroneBase<
           if (skill) { 
             return FoundryAdapter.renderSkillToolConfig(this.actor, 'skills', skill);
           }
+        case 'skills':
+          return FoundryAdapter.renderSkillsConfig(this.actor);
+        case 'special-traits':
+          return this._renderChild(
+            new SpecialTraitsApplication({ document: this.actor }),
+          );
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
           
@@ -2330,8 +2337,6 @@ export function Tidy5eActorSheetQuadroneBase<
               tool
             );
           }
-        case 'skills':
-          return FoundryAdapter.renderSkillsConfig(this.actor);
         case 'source':
           return FoundryAdapter.renderSourceConfig(this.actor, 'system.source');
         case 'spellSlots':
