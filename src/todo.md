@@ -1,6 +1,5 @@
 ## kgar To Do
 
-- [ ] Extract and share the currency transfer button
 - [ ] review system sheets for forms handling. Are they using forms? Is there any way to prevent unwanted changes to an actor during submission?
 - [ ] Extract and share: TidyTableRowUseButton
   - [ ] Convert to sheet action
