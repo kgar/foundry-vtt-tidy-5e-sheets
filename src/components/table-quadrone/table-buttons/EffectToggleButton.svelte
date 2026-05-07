@@ -29,18 +29,12 @@
     'actor' in context &&
       FoundryAdapter.isConcentrationEffect(effect, context.actor.sheet),
   );
-
-  function endConcentration() {
-    if ('actor' in context) {
-      return context.actor.endConcentration();
-    }
-  }
 </script>
 
 {#if isConcentration}
   <a
     class="tidy-table-button"
-    onclick={() => endConcentration()}
+    data-action="toggle"
     data-tooltip={'DND5E.ConcentrationBreak'}
   >
     <Dnd5eIcon src={`systems/dnd5e/icons/svg/break-concentration.svg`} />
@@ -52,8 +46,7 @@
       { disabled: !context.editable },
     ]}
     data-tooltip={title}
-    onclick={() =>
-      context.owner && effect.update({ disabled: !effect.disabled })}
+    data-action="toggle"
   >
     <i
       class={[

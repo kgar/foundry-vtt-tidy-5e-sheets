@@ -80,6 +80,7 @@ export function TidyExtensibleDocumentSheetMixin<
       },
       actions: {
         //changeMode: PrimarySheet5e.#changeMode,
+        currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
@@ -87,6 +88,7 @@ export function TidyExtensibleDocumentSheetMixin<
         showDocument: TidyDocumentSheet.#showDocument,
         use: TidyDocumentSheet.#useItem,
         'activity-use': TidyDocumentSheet.#useActivity,
+        toggle: TidyDocumentSheet.#toggle,
       },
     };
 
@@ -921,6 +923,16 @@ export function TidyExtensibleDocumentSheetMixin<
       data?: Record<string, any>;
     }): Promise<any> {}
 
+    static async #currency(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      return new dnd5e.applications.CurrencyManager({
+        document: this.document,
+      }).render({ force: true });    
+    }
+
     /**
      * Handle removing an document.
      * @this {PrimarySheet5e}
@@ -1087,6 +1099,38 @@ export function TidyExtensibleDocumentSheetMixin<
       }
       const activity = item.system.activities?.get(activityId);
       await activity.use({ event, options: { sheet: this } });
+    }
+
+    /* -------------------------------------------- */
+    
+    static async #toggle(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      // Effects
+      const { effectId, parentId } =
+        target.closest<HTMLElement>('[data-effect-id]')?.dataset ?? {};
+      if (effectId) {
+        const effect = FoundryAdapter.getEffect({
+          document: this.document,
+          effectId,
+          parentId,
+        });
+        const isConcentrationEffect =
+          this.document instanceof dnd5e.documents.Actor5e &&
+          this._concentration?.effects.has(effect);
+
+        // Concentration Break
+        if (isConcentrationEffect) {
+          return this.document.endConcentration(effect);
+        }
+
+        // Active Effect
+        return effect.update({ disabled: !effect.disabled });
+      }
+
+      // todo etc.
     }
 
     /* -------------------------------------------- */

@@ -63,15 +63,11 @@
         <span>{localize('DND5E.Currency')}</span>
         {#if context.editable}
           <a
-            class="button button-icon-only currency-conversion"
-            class:disabled={!context.editable}
-            onclick={() =>
-              context.owner &&
-              context.sheet._renderChild(
-                new dnd5e.applications.CurrencyManager({
-                  document: context.document,
-                }),
-              )}
+            class={[
+              'button button-icon-only currency-conversion',
+              { disabled: !context.editable },
+            ]}
+            data-action="currency"
             data-tooltip="DND5E.CurrencyManager.Title"
           >
             <i class="fas fa-database"></i>
