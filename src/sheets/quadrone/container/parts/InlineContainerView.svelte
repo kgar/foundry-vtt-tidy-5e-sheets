@@ -84,35 +84,7 @@
     ),
   );
 
-  // Check if container has any currency to transfer
   let hasCurrency = $derived(currencies.some((c) => c.value > 0));
-
-  // Transfer all currency from container to parent actor
-  async function transferCurrencyToParent() {
-    if (!sheetDocument || !hasCurrency) return;
-
-    const currencyKeys = Object.keys(CONFIG.DND5E.currencies);
-
-    // Build update objects for both documents
-    const containerUpdate: Record<string, number> = {};
-    const actorUpdate: Record<string, number> = {};
-
-    for (const key of currencyKeys) {
-      const containerValue = container.system.currency[key] ?? 0;
-      const actorValue = sheetDocument.system.currency[key] ?? 0;
-
-      if (containerValue > 0) {
-        containerUpdate[`system.currency.${key}`] = 0;
-        actorUpdate[`system.currency.${key}`] = actorValue + containerValue;
-      }
-    }
-
-    // Update both documents
-    await Promise.all([
-      container.update(containerUpdate),
-      sheetDocument.update(actorUpdate),
-    ]);
-  }
 </script>
 
 <ExpandableContainer
@@ -120,7 +92,7 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
   deferRendering
 >
-  <div class="inline-content-view full-height">
+  <div class="inline-content-view full-height" data-item-id={container.id}>
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"
       data-tidy-container-id={container.id}
@@ -166,12 +138,12 @@
           </span>
         </label>
       {/each}
-      {#if editable && hasCurrency}
-        <a
-          role="button"
+      {#if editable && hasCurrency && container.actor}
+        <button
+          type="button"
           tabindex="0"
           class="button button-secondary transfer-currency flexshrink"
-          onclick={transferCurrencyToParent}
+          data-action="transfer-currency"
           title={FoundryAdapter.localize(
             'DND5E.CurrencyManager.Transfer.Label',
           )}
@@ -181,7 +153,7 @@
         >
           <i class="fas fa-person-arrow-up-from-line"></i>
           {FoundryAdapter.localize('DND5E.CurrencyManager.Transfer.Label')}
-        </a>
+        </button>
       {/if}
     </div>
   </div>
