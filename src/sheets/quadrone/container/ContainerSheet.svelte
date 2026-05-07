@@ -10,6 +10,7 @@
   import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
   import ItemName from '../item/parts/header/ItemName.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
 
   const context = $derived(getContainerSheetQuadroneContext());
 
@@ -41,9 +42,6 @@
       ? '∞'
       : FoundryAdapter.formatNumber(context.capacity.max.toNearest(0.01)),
   );
-
-  let currencies = $derived(context.currencies);
-  let hasCurrency = $derived(currencies.some((c) => c.value > 0));
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -98,22 +96,10 @@
             </span>
           </label>
         {/each}
-        {#if hasCurrency && context.item.actor}
-          <button
-            data-item-id={context.item.id}
-            type="button"
-            tabindex="0"
-            class="button button-secondary transfer-currency flex1"
-            data-action="transfer-currency"
-            aria-label={FoundryAdapter.localize(
-              'DND5E.CurrencyManager.Transfer.Label',
-            )}
-            data-tooltip=""
-          >
-            <i class="fas fa-person-arrow-up-from-line"></i>
-            {FoundryAdapter.localize('DND5E.CurrencyManager.Transfer.Label')}
-          </button>
-        {/if}
+        <TransferCurrencyButton
+          container={context.item}
+          currencies={context.currencies}
+        />
       </div>
     </div>
   {/snippet}

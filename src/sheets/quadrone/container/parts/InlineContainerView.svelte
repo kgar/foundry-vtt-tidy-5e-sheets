@@ -13,6 +13,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
+  import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
 
   interface Props {
     container: Item5e;
@@ -138,23 +139,11 @@
           </span>
         </label>
       {/each}
-      {#if editable && hasCurrency && container.actor}
-        <button
-          type="button"
-          tabindex="0"
-          class="button button-secondary transfer-currency flexshrink"
-          data-action="transfer-currency"
-          title={FoundryAdapter.localize(
-            'DND5E.CurrencyManager.Transfer.Label',
-          )}
-          data-tooltip={FoundryAdapter.localize(
-            'TIDY5E.Containers.TransferCurrencyToParent.Tooltip',
-          )}
-        >
-          <i class="fas fa-person-arrow-up-from-line"></i>
-          {FoundryAdapter.localize('DND5E.CurrencyManager.Transfer.Label')}
-        </button>
-      {/if}
+      <TransferCurrencyButton
+        {container}
+        currencies={containerContents.currencies}
+        class="flexshrink"
+      />
     </div>
   </div>
 </ExpandableContainer>
