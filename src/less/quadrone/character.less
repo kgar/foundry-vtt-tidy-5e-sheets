@@ -3,6 +3,8 @@
     min-width: 43.75rem;
   }
 
+  /* HEADER STYLES
+  /* ------------------------------------------------------------ */
   .sheet-header {
 
     .show-xp {
@@ -59,7 +61,7 @@
       }
 
       .ac-value {
-        margin: -0.3125rem 0 0;
+        margin: -0.25rem 0 0;
       }
     }
 
@@ -224,6 +226,8 @@
     bottom: 0.3125rem;
   }
 
+  /* Limited sheet styles
+  /* ------------------------------------------------------------ */
   .limited-sheet {
     &.sheet-header {
       .actor-vitals-container {
@@ -249,7 +253,8 @@
     }
   }
 
-  /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
+  /* Smaller header styles for mid-size sheet
+  /* ------------------------------------------------------------ */
   .abilities-size-small {
     .ac-container {
       max-width: 4rem;
@@ -268,8 +273,6 @@
     }
 
     .ability {
-      // max-width: 3.25rem;
-
       .initiative-score-container {
         min-height: 3.5rem;
         margin-top: 0.25rem;
@@ -286,7 +289,8 @@
     }
   }
 
-  /* Smallest abilities when sheet is extremely narrow and has custom abilities present. */
+  /* Smallest abilities and basic theme overlaps
+  /* ------------------------------------------------------------ */
   .abilities-size-compact,
   &.theme-basic .abilities-container {
     .ac-container {
@@ -380,7 +384,28 @@
       }
     }
   }
+  
 
+  /* Parchment theme styles
+  /* ------------------------------------------------------------ */
+  &.theme-light.theme-parchment {
+    .sheet-header {
+      .level-block {
+        @badge_level_light: '../../modules/tidy5e-sheet/images/badge_level_light.webp';
+        --t5e-level-image: url('@{badge_level_light}');
+      }
+
+      .ac-container {
+        .shield {
+          @badge_ac_light: '../../modules/tidy5e-sheet/images/badge_ac_light.webp';
+          --t5e-shield-image: url('@{badge_ac_light}');
+        }
+      }
+    }
+  }
+
+  /* TABS
+  /* ------------------------------------------------------------ */
   .tidy-tab-contents {
 
     &.attributes {
@@ -455,20 +480,4 @@
   @import './character-parts/tab-attributes.less';
 
   @import './character-parts/tab-bastion.less';
-
-  &.theme-light.theme-parchment {
-    .sheet-header {
-      .level-block {
-        @badge_level_light: '../../modules/tidy5e-sheet/images/badge_level_light.webp';
-        --t5e-level-image: url('@{badge_level_light}');
-      }
-
-      .ac-container {
-        .shield {
-          @badge_ac_light: '../../modules/tidy5e-sheet/images/badge_ac_light.webp';
-          --t5e-shield-image: url('@{badge_ac_light}');
-        }
-      }
-    }
-  }
 }

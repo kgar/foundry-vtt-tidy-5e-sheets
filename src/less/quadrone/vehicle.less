@@ -8,25 +8,8 @@
     align-items: center;
     padding-left: 0.5rem;
   }
-
-  &.theme-basic .abilities-container,
-  .abilities-container.abilities-size-small {
-    .initiative-score-container {
-      height: 3.75rem;
-    }
-  }
-  &.theme-basic .abilities-container,
-  .abilities-container.abilities-size-compact {
-    .initiative-score-container {
-      margin-top: 0;
-      padding-top: 0;
-
-      .ability-roll-button {
-        gap: 0.125rem;
-      }
-    }
-  }
-
+  /* VEHICLE SIDEBAR
+  /* ------------------------------------------------------------ */
   .sidebar {
     gap: var(--t5e-size-2x);
 
@@ -125,6 +108,8 @@
     transform: rotate(90deg) translateY(1px);
   }
 
+  /* HEADER OVERRIDES
+  /* ------------------------------------------------------------ */
   .abilities-container {
     margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
   }
@@ -151,7 +136,8 @@
     }
   }
 
-  /* Smallest abilities that kick in with 2+ custom abilities */
+  /* Smallest abilities when sheet is mid-size and has custom abilities present.
+  /* ------------------------------------------------------------ */
   .abilities-container.abilities-size-compact {
 
     .abilities-container-inner {
@@ -164,8 +150,29 @@
 
   }
 
-  /* TABS */
-  /* ----- */
+  /* Basic theme overrides
+  /* ------------------------------------------------------------ */
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-small {
+    .initiative-score-container {
+      height: 3.75rem;
+    }
+  }
+  &.theme-basic .abilities-container,
+  .abilities-container.abilities-size-compact {
+    .initiative-score-container {
+      margin-top: 0;
+      padding-top: 0;
+
+      .ability-roll-button {
+        gap: 0.125rem;
+      }
+    }
+  }
+
+
+  /* TABS
+  /* ------------------------------------------------------------ */
   .tidy-tab {
     &.statblock {
       &:has(.character-traits) {
@@ -309,8 +316,12 @@
     }
   }
 
+  /* Dark theme styles
+  /* ------------------------------------------------------------ */
   &.theme-dark {}
 
+  /* Light theme styles
+  /* ------------------------------------------------------------ */
   &.theme-light {
 
     .crew-warning {

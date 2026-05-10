@@ -2,6 +2,11 @@
   @banner-npc: '../../modules/tidy5e-sheet/images/banner-npc.jpg';
   --t5e-background-image: url('@{banner-npc}');
 
+
+  .actor-context-row {
+    margin-top: var(--t5e-size-2x);
+  }
+
   .challenge-rating {
     border: 0.125rem solid var(--t5e-color-palette-gold-62);
     border-radius: 0.1875rem;
@@ -43,6 +48,8 @@
     max-width: 4rem;
   }
 
+  /* Basic theme overrides
+  /* ------------------------------------------------------------ */
   &.theme-basic .abilities-container,
   .abilities-container.abilities-size-small {
     .initiative-score-container {
@@ -138,9 +145,8 @@
     }
   }
 
-  /* TABS */
-  /* ----- */
-
+  /* TABS
+  /* ------------------------------------------------------------ */
   .tidy-tab {
     &.statblock {
       &:has(.character-traits) {
