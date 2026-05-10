@@ -1,0 +1,92 @@
+/* Styles common to Document sheets */
+.tidy5e-sheet.application:where(.quadrone) {
+  font-smooth: always;
+}
+
+.tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
+
+  /* generic trait-like lists */
+  /* 👋 hightouch - I wasn't sure where to put this; temp styles to help me dev, until you're ready to implement */
+  :where(.list) {
+    display: flex;
+    flex-direction: column;
+
+    :where(.list-entry) {
+      display: flex;
+
+      .list-label {
+        align-content: center;
+        flex: 1;
+        height: 1.75rem;
+        padding-bottom: 0.0625rem;
+      }
+
+      :where(.list-content) {
+        flex: 2;
+        display: flex;
+
+        .list-values {
+          flex: 1;
+          display: flex;
+          align-items: center;
+
+          select {
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+
+  .tidy-tab .empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    &:not(.empty-classes) {
+      flex: 1;
+
+      .button {
+        padding: var(--t5e-size-6x) var(--t5e-size-12x);
+      }
+    }
+
+    &.empty-state-description {
+      align-items: center;
+      border: 0.0625rem dashed var(--t5e-component-field-border);
+      border-radius: var(--t5e-component-card-radius);
+      color: var(--t5e-color-text-lighter);
+      display: inline;
+      flex: 0 1 fit-content;
+      gap: 0.25rem;
+      justify-content: center;
+      line-height: 1.125rem;
+      min-height: 3rem;
+      padding: var(--t5e-size-3x);
+      text-align: center;
+      transition: color var(--t5e-transition-default);
+
+      a:hover,
+      a:focus-within a:active {
+        text-shadow: 0 0 0.375rem var(--t5e-theme-color-highlight);
+        border-bottom: 0.0625rem solid var(--t5e-theme-color-highlight);
+
+        i {
+          color: var(--t5e-theme-color-highlight);
+        }
+      }
+
+      i {
+        width: 1.125rem;
+      }
+
+      &:hover {
+        color: var(--t5e-color-text-default);
+      }
+    }
+  }
+
+  .view-only {
+    cursor: auto;
+  }
+}
