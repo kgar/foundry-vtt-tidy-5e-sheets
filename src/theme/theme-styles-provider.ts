@@ -7,18 +7,20 @@ import type {
 } from './theme-quadrone.types';
 import { formatResourcePathForCss } from 'src/utils/path';
 import { THEME_CLASS_DARK, THEME_CLASS_LIGHT, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
-import { getCSSVariable } from './theme-palette-tokens';
+import {
+  BASE_CARD_COLOR,
+  BASE_THEME_FOREGROUNDS,
+  deriveDarkerAccent,
+} from './theme-palette-tokens';
 import { debug } from 'src/utils/logging';
 
 const TIDY_CSS_VARIABLES = {
   themeColor: '--t5e-theme-color-default',
-  themeColorDarker: '--t5e-theme-color-darker',
   themeColorHighlight: '--t5e-theme-color-highlight',
   themeHeaderColor: '--t5e-theme-color-header',
-  cardColor: '--t5e-component-card-default',
   themeForeground: '--t5e-theme-color-foreground',
   themeForegroundDiminished: '--t5e-theme-color-foreground-diminished',
-  themeForegroundDisabled: '--t5e-theme-color-foreground-disabled',  
+  themeForegroundDisabled: '--t5e-theme-color-foreground-disabled',
   themeForegroundDarker: '--t5e-theme-color-foreground-darker',
   themeForegroundDarkerDiminished: '--t5e-theme-color-foreground-darker-diminished',
   themeForegroundDarkerDisabled: '--t5e-theme-color-foreground-darker-disabled',
@@ -97,21 +99,18 @@ export class ThemeStylesProvider {
       idOverride
     );
 
-    // Pull base foreground colors straight from the live CSS so module/world
-    // overrides flow through without TS-side hardcoding.
     const accentBackground = settings.accentColor;
     const accentVariant = accentColorResult.themeClass === THEME_CLASS_DARK ? THEME_CLASS_DARK : THEME_CLASS_LIGHT;
-    const accentOverrides = { [TIDY_CSS_VARIABLES.themeColor]: accentBackground };
-    const accentBackgroundDarker = getCSSVariable(TIDY_CSS_VARIABLES.themeColorDarker, accentVariant, true, accentOverrides);
-    const cardColor = getCSSVariable(TIDY_CSS_VARIABLES.cardColor, accentVariant, true);
+    const accentBackgroundDarker = deriveDarkerAccent(accentBackground);
+    const cardColor = BASE_CARD_COLOR[accentVariant];
 
-    const themeForegroundBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForeground, accentVariant, true);
-    const themeForegroundDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDiminished, accentVariant, true);
-    const themeForegroundDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDisabled, accentVariant, true);
+    const themeForegroundBase = BASE_THEME_FOREGROUNDS.foreground;
+    const themeForegroundDiminishedBase = BASE_THEME_FOREGROUNDS.foregroundDiminished;
+    const themeForegroundDisabledBase = BASE_THEME_FOREGROUNDS.foregroundDisabled;
 
-    const themeForegroundDarkerBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarker, accentVariant, true);
-    const themeForegroundDarkerDiminishedBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDiminished, accentVariant, true);
-    const themeForegroundDarkerDisabledBase = getCSSVariable(TIDY_CSS_VARIABLES.themeForegroundDarkerDisabled, accentVariant, true);
+    const themeForegroundDarkerBase = BASE_THEME_FOREGROUNDS.foregroundDarker;
+    const themeForegroundDarkerDiminishedBase = BASE_THEME_FOREGROUNDS.foregroundDarkerDiminished;
+    const themeForegroundDarkerDisabledBase = BASE_THEME_FOREGROUNDS.foregroundDarkerDisabled;
 
     const ruleset: ThemeQuadroneStyleRule[] = [
       identifierRule,

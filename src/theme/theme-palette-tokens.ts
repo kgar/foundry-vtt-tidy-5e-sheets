@@ -1,75 +1,35 @@
+import chroma from 'chroma-js';
 import { THEME_CLASS_DARK, THEME_CLASS_LIGHT } from './theme-color-functions';
-import { debug } from 'src/utils/logging';
 
 type ThemeVariant = typeof THEME_CLASS_LIGHT | typeof THEME_CLASS_DARK;
 
-const imps: Partial<Record<ThemeVariant, HTMLElement>> = {};
+// Manual copy of our theme tokens for APCA contrast adjustment. 
+// Manually synced with variables-quadrone 🥲
 
-function getCSSVariableImp(variant: ThemeVariant): HTMLElement {
-  let imp = imps[variant];
-  if (imp?.isConnected) {
-    return imp;
-  }
+// Foregrounds are not overridden in .theme-dark
+export const BASE_THEME_FOREGROUNDS = {
+  foreground: 'rgb(255, 255, 255)', // grey-100
+  foregroundDiminished: 'rgb(178, 178, 178)', // grey-70
+  foregroundDisabled: 'rgb(122, 122, 122)', // grey-48
+  foregroundDarker: 'rgb(255, 255, 255)', // grey-100
+  foregroundDarkerDiminished: 'rgb(178, 178, 178)', // grey-70
+  foregroundDarkerDisabled: 'rgb(122, 122, 122)', // grey-48
+} as const;
 
-  imp = document.createElement('div');
-  imp.className = `tidy5e-sheet quadrone ${variant}`;
-  imp.setAttribute('aria-hidden', 'true');
-  imp.style.cssText =
-    'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none;';
-  document.body.appendChild(imp);
-  imps[variant] = imp;
-  return imp;
-}
+// Card colors ARE overridden in .theme-dark and we need both.
+export const BASE_CARD_COLOR: Record<ThemeVariant, string> = {
+  [THEME_CLASS_LIGHT]: 'rgb(248, 244, 241)',
+  [THEME_CLASS_DARK]: 'rgb(40, 42, 48)',
+};
 
-/**
- * Get CSS variables from the live sheet.
- */
-export function getCSSVariable(
-  variableName: string,
-  variant: ThemeVariant = THEME_CLASS_LIGHT,
-  resolveColor: boolean = false,
-  overrides?: Record<string, string>
-): string {
-  const name = variableName.startsWith('--') ? variableName : `--${variableName}`;
-  const imp = getCSSVariableImp(variant);
-
-  if (overrides) {
-    for (const [prop, val] of Object.entries(overrides)) {
-      imp.style.setProperty(prop, val);
-    }
-  }
-
-  const value = getComputedStyle(imp).getPropertyValue(name).trim();
-
-  if (resolveColor && value) {
-    imp.style.backgroundColor = value;
-    const resolved = getComputedStyle(imp).backgroundColor;
-    imp.style.backgroundColor = '';
-
-    if (overrides) {
-      for (const prop of Object.keys(overrides)) {
-        imp.style.removeProperty(prop);
-      }
-    }
-
-    debug(`getCSSVariable: ${variableName} = ${resolved} (resolved from ${value})`);
-    return resolved;
-  }
-
-  if (overrides) {
-    for (const prop of Object.keys(overrides)) {
-      imp.style.removeProperty(prop);
-    }
-  }
-
-  debug(`getCSSVariable: ${variableName} = ${value}`);
-  return value;
-}
-
-/** Drop any cached probe elements — call when the DOM is being torn down. */
-export function banishCSSVariableImps(): void {
-  for (const variant of Object.keys(imps) as ThemeVariant[]) {
-    imps[variant]?.remove();
-    delete imps[variant];
+// Replicates theme color CSS adjustments in variables-quadrone
+export function deriveDarkerAccent(accent: string): string {
+  try {
+    const [l, c, h] = chroma(accent).oklch();
+    return chroma
+      .oklch(l * 0.85, c * 1.2, Number.isNaN(h) ? 0 : h)
+      .css('rgb');
+  } catch {
+    return accent;
   }
 }
