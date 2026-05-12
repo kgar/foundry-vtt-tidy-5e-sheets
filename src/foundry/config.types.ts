@@ -1828,7 +1828,7 @@ export type CONFIG = {
         style?: string;
       }>;
     };
-    'Roboto Condensed': {
+    'Roboto Cndnsd': {
       editor: boolean;
       fonts: Array<{
         urls: Array<string>;

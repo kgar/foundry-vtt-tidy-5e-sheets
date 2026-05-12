@@ -56,7 +56,7 @@
     >
       <button
         type="button"
-        class="inline-transparent-button highlight-on-hover ff-title fs-lg"
+        class="inline-transparent-button highlight-on-hover"
         onclick={() => member.sheet.render(true)}
         disabled={!ctx.canObserve}
         tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}

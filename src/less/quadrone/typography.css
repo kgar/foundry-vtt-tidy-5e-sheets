@@ -1,55 +1,23 @@
+/* VF: one face per style; weight axis maps CSS font-weight 100–900 */
+@font-face {
+  font-family: 'Roboto Cndnsd';
+  font-style: normal;
+  font-weight: 100 900;
+  src:
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype-variations'),
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Cndnsd';
+  font-style: italic;
+  font-weight: 100 900;
+  src:
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype-variations'),
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
 .tidy5e-sheet.quadrone.application {
-
-  /* FONTS
-  ------------------------------------------------------------ */
-  @font-face {
-    font-family: 'Modesto Condensed';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
-  }
-
-  @font-face {
-    font-family: 'Modesto Condensed';
-    font-style: normal;
-    font-weight: 700;
-    src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
-  }
-
-  @font-face {
-    font-family: 'Roboto Condensed';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
-  }
-
-  @font-face {
-    font-family: 'Roboto Condensed';
-    font-style: italic;
-    font-weight: 400;
-    src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
-  }
-
-  @font-face {
-    font-family: 'Roboto Condensed';
-    font-style: normal;
-    font-weight: 500;
-    src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
-  }
-
-  @font-face {
-    font-family: 'Roboto Condensed';
-    font-style: italic;
-    font-weight: 500;
-    src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
-  }
-
-  @font-face {
-    font-family: 'Roboto Condensed';
-    font-style: normal;
-    font-weight: 700;
-    src: url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
-  }
 
   /* TEXT COLORS
   ------------------------------------------------------------ */
@@ -206,6 +174,11 @@
 
   /* HELPERS
   ------------------------------------------------------------ */
+  /* Selectable Text */
+  .user-select-text * {
+    user-select: text;
+  }
+
   .truncate {
     white-space: nowrap;
     overflow: hidden;

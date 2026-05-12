@@ -350,11 +350,6 @@ export class ThemeStylesProvider {
             },
           ],
         },
-        // {
-        //   identifier: `${identifierRule.property}: "${identifierRule.value}"`,
-        //   selector: `${selectorPrefix} .tidy-table-header-row.spell-method`,
-        //   ruleset: [identifierRule, { property: cssVariable, value: value }],
-        // },
       ];
     });
   }

@@ -129,7 +129,7 @@
       columnWidth: '3.75rem',
     },
     actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + actionColumnButtonCount}) + var(--t5e-size-halfx))`,
+      columnWidth: `calc((var(--t5e-icon-size-6x) * ${1 + actionColumnButtonCount}) + var(--t5e-size-halfx))`,
     },
   });
 </script>

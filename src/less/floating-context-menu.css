@@ -1,11 +1,8 @@
 /* Quadrone Sheet Context Menu */
-// todo: hightouch, please make this context menu awesome 🙏
 body #context-menu.tidy5e-sheet.quadrone {
   --icon-width: var(--t5e-size-4x);
   --icon-fill: var(--t5e-color-icon-button);
   --t5e-warning-accent-color: var(--t5e-color-palette-red-60);
-
-
   z-index: var(--z-index-tooltip);
   background: var(--t5e-component-card-darker);
   border-radius: 0.3125rem;
@@ -40,21 +37,16 @@ body #context-menu.tidy5e-sheet.quadrone {
         border-block-start: 0.0625rem solid var(--t5e-component-card-lighter);
         border-bottom: none;
       }
-
-      &:first-child::before {
-        // display: none;
-      }
     }
 
     i {
       color: var(--icon-fill);
     }
+
     .color-text-lighter {
       color: var(--t5e-color-text-lighter);
     }
   }
-
-
 
   a,
   li.context-item {
@@ -74,7 +66,6 @@ body #context-menu.tidy5e-sheet.quadrone {
     text-wrap: wrap;
     transition: all var(--t5e-transition-default);
     white-space: nowrap;
-
 
     &.active {
       color: var(--t5e-attunement-required-color);
@@ -252,7 +243,7 @@ body #context-menu.tidy5e-sheet.classic {
       }
     }
 
-    &>.button:first-child {
+    & > .button:first-child {
       border-radius: 0.1875rem 0.1875rem 0 0;
     }
   }

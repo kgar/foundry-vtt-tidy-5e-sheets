@@ -158,8 +158,8 @@
             /* generation < 14 */
             'Font Awesome 6 Pro';
           padding: 0 0 0.0625rem;
-          min-height: var(--t5e-table-button-width);
-          width: var(--t5e-table-button-width);
+          min-height: var(--t5e-icon-size-6x);
+          width: var(--t5e-icon-size-6x);
           display: flex;
           align-items: center;
           border-radius: 100%;

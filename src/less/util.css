@@ -1,6 +1,7 @@
 /* Module-wide utilities */
 .tidy5e-sheet {
-  // TODO: Find the right home for the equip-icon style
+
+  /* TODO: Find the right home for the equip-icon */
   .equip-icon {
     transform: rotate(-90deg) scaleX(-1);
   }
@@ -10,7 +11,6 @@
   }
 
   /* Height */
-
   .full-height {
     height: 100%;
   }
@@ -52,33 +52,7 @@
 }
 
 /* Quadrone utilities */
-/* TODO: Move to layout file and figure out where backgrounds go */
-
 .tidy5e-sheet.application:where(.quadrone) {
-  /* Background color ------------------ */
-  .background-default-light {
-    background-color: var(--t5e-component-card-ondefault-default);
-  }
-  .background-default-darker {
-    background-color: var(--t5e-component-card-ondefault-darker);
-  }
-  .background-default-lighter {
-    background-color: var(--t5e-component-card-ondefault-lighter);
-  }
-  .background-darker-default {
-    background-color: var(--t5e-component-card-oninverse-default);
-  }
-  .background-darker-darker {
-    background-color: var(--t5e-component-card-oninverse-darker);
-  }
-  .background-darker-lighter {
-    background-color: var(--t5e-component-card-oninverse-lighter);
-  }
-
-  /* Selectable Text */
-  .user-select-text * {
-    user-select: text;
-  }
 
   /* Visibility */
   .invisible {
@@ -93,7 +67,8 @@
 
 /* Container Queries */
 .tidy5e-sheet.application.quadrone {
-  // TODO: Discuss with hightouch the best way to deal with these low-specificity utility classes.
+
+  /* TODO: Discuss with hightouch the best way to deal with these utility classes. */
   @container (width < 3.125rem) {
     .hide-under-50 {
       display: none !important;

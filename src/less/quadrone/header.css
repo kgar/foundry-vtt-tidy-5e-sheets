@@ -28,6 +28,8 @@
     --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg');
     --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_dark.webp');
     --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp');
+    --t5e-inspiration-image-single: url('../../modules/tidy5e-sheet/images/badge_inspiration_single_dark.webp');
+    --t5e-inspiration-image-stacked: url('../../modules/tidy5e-sheet/images/badge_inspiration_stacked_dark.webp');
     --t5e-badge-border-color: var(--t5e-color-gold);
     --t5e-badge-text-color: var(--t5e-color-text-oninverse-default);
     --header-padding: 1rem;

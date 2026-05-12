@@ -22,7 +22,12 @@
   }
 </script>
 
-<a data-tooltip={title} onclick={toggleEquipped} class="tidy-table-button">
+<!-- svelte-ignore a11y_missing_attribute -->
+<a aria-label={title} role="button" tabindex="0" data-tooltip={title} onclick={toggleEquipped} class="tidy-table-button" onkeydown={(ev) => {
+  if (ev.key === 'Enter' || ev.key === ' ') {
+    toggleEquipped();
+  }
+}}>
   {#if equipped}
     <i class="fa-solid fa-hand-fist equip-icon color-text-default"></i>
   {:else}
