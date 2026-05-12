@@ -1549,6 +1549,7 @@
 
         .shield {
           position: absolute;
+          height: 4.25rem;
           width: 3.5rem;
           left: -0.5rem;
           bottom: -0.375rem;

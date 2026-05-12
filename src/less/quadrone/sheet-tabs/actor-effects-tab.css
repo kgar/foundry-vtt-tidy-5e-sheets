@@ -1,0 +1,19 @@
+.tidy5e-sheet.application:where(.quadrone.actor) {
+  .tidy-tab.effects {
+    i.enabled {
+      color: var(--t5e-theme-color-darker);
+    }
+  }
+
+  &.theme-dark {
+    .tidy-tab.effects {
+      i.enabled {
+        color: var(--t5e-theme-color-highlight);
+      }
+
+      i:not(.enabled) {
+        color: var(--t5e-color-text-lighter);
+      }
+    }
+  }
+}

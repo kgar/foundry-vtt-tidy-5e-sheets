@@ -344,6 +344,13 @@
       {/if}
     </div>
     <div class="sheet-footer-right footer-content-right flexshrink">
+      <button 
+        type="button" 
+        aria-label="TIDY5E.SheetLock.Empty.Hint"
+        class="button button-borderless button-icon-only" 
+        data-tooltip="TIDY5E.SheetLock.Empty.Hint">
+        <i class="fas fa-circle-question"></i>
+      </button>
       {#if context.editable}
         <button
           type="button"

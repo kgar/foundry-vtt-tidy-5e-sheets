@@ -1,0 +1,38 @@
+.tidy5e-sheet.application:where(.quadrone.npc) {
+  .tidy-tab.statblock {
+    .empty-state-description {
+      min-height: unset;
+      text-align: left;
+    }
+
+    &:has(.character-traits) {
+      .tidy-table-container {
+        padding-block-end: 0;
+        flex: 0 1 auto;
+      }
+
+      .character-traits {
+        padding-bottom: var(--t5e-size-4x);
+
+        .tidy-table-header-row {
+          h3 {
+            padding: 0 0 0.125rem 0.5rem;
+          }
+        }
+
+        .list-label {
+          padding-left: 0.5rem;
+          flex: 0.75;
+        }
+      }
+
+      .list-entry {
+        border-radius: 0.125rem;
+        border-width: 0 0 0.0625rem 0;
+        border-style: solid;
+        border-image: var(--t5e-table-row-border-image);
+        padding: var(--t5e-size-1x) 0;
+      }
+    }
+  }
+}

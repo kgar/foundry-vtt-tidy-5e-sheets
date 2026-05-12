@@ -1,0 +1,68 @@
+.tidy5e-sheet.application:where(.quadrone.vehicle) {
+  .tidy-tab.statblock {
+    &:has(.character-traits) {
+      .tidy-table-container {
+        padding-block-end: 0;
+        flex: 0 1 auto;
+      }
+
+      .character-traits {
+        padding-bottom: var(--t5e-size-4x);
+
+        .tidy-table-header-row {
+          h3 {
+            padding: 0 0 0.125rem 0.5rem;
+          }
+        }
+
+        .list-label {
+          padding-left: 0.5rem;
+          flex: 0.75;
+        }
+      }
+
+      .list-entry {
+        border-radius: 0.125rem;
+        border-width: 0 0 0.0625rem 0;
+        border-style: solid;
+        border-image: var(--t5e-table-row-border-image);
+        padding: var(--t5e-size-1x) 0;
+      }
+    }
+
+    .tidy-table-cell:has(.meter) {
+      flex-direction: column;
+      padding-block-start: 0.25rem;
+      padding-block-end: 0.25rem;
+    }
+
+    .tidy-table-cell:has(.inline-hp) {
+      padding-block-start: 0.375rem;
+    }
+
+    /* Vehicle Actions Tracker */
+    .npc-score-tracker.vehicle-actions-tracker {
+      position: relative;
+
+      &.tracker-warning {
+        .value {
+          color: var(--t5e-text-warning);
+          font-weight: var(--font-weight-label);
+        }
+
+        h4 {
+          border-color: var(--t5e-text-warning);
+        }
+      }
+    }
+
+    .tidy-table-cell {
+
+      .inline-hp,
+      .inline-uses {
+        margin-bottom: -0.25rem;
+        margin-top: -0.25rem;
+      }
+    }
+  }
+}
