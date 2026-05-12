@@ -255,10 +255,11 @@ export class ThemeQuadrone {
   }
 
   static async updatePortraitShape(doc: any, newShape: PortraitShape) {
-    const settings = this.getSheetThemeSettings({ doc: doc });
-    settings.portraitShape = newShape;
-    await this.saveSheetThemeSettings(doc, settings);
-    await this.syncSystemTokenPortraitSetting(doc, newShape);
+    await doc.update({
+      [`${TidyFlags.sheetThemeSettings.prop}.portraitShape`]: newShape,
+      [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
+        newShape === 'token',
+    });
   }
 
   static async syncSystemTokenPortraitSetting(
