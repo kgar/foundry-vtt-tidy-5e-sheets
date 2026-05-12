@@ -55,8 +55,7 @@
         background: var(--t5e-component-card-darker);
       }
 
-      &.theme-dark,
-      .theme-dark {
+      &.theme-dark {
         .window-header {
           background: var(--t5e-component-card-darker);
         }

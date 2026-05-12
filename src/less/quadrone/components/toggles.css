@@ -183,10 +183,7 @@
     }
   }
 
-  &.dark,
-  &.theme-dark,
-  .dark,
-  .theme-dark {
+  &.theme-dark {
     .field-toggle {
       background-color: var(--t5e-component-field-background);
       border-color: var(--t5e-component-field-border);

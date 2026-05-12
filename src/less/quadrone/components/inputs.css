@@ -1,4 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone) {
+
   /* App V2 Reset */
   /* Normalize field styles */
   input[type='text'],
@@ -533,8 +534,7 @@
     }
   }
 
-  &.theme-dark,
-  .theme-dark {
+  &.theme-dark {
 
     select,
     .input-group,

@@ -990,8 +990,7 @@
     }
   }
 
-  &.theme-dark,
-  .theme-dark {
+  &.theme-dark {
     .tidy-tab.bastion {
       .facility:not(.empty) {
         --bastion-facility-background: linear-gradient(145deg,

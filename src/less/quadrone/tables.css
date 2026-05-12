@@ -336,7 +336,7 @@
       justify-content: center;
       height: 100%;
       min-height: var(--t5e-icon-size-7x);
-      min-width: var(--t5e-icon-size-6x);
+      min-width: var(--t5e-icon-size-5x);
     }
 
     /* Make sure this is last. */
