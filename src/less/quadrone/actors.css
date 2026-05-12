@@ -15,7 +15,7 @@
   .window-content {
     display: flex;
     flex-direction: column;
-    margin-top: -0.75rem;
+    margin-top: -0.25rem;
 
     .tabs-row {
       container-name: sheet-tabs;
@@ -1481,9 +1481,14 @@
       gap: var(--t5e-size-3x);
     }
 
-    .tab-content:not(.journal-empty) {
+    .tab-content {
       padding-bottom: 0;
       padding-top: 0;
+    }
+
+    .tab-content:has(.journal-empty) {
+      padding-bottom: var(--t5e-size-3x);
+      padding-top: var(--t5e-size-3x);
     }
 
     .title {
