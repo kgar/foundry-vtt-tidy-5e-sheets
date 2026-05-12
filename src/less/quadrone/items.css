@@ -337,9 +337,9 @@
     }
 
     .subtitle {
-      color: var(--t5e-color-text-lighter);
+      color: var(--t5e-color-text-gold-emphasis);
       /* title/small */
-      font: var(--t5e-font-title-small);
+      font: var(--t5e-font-body-medium);
 
       .advancement-class-indicator {
         font-size: var(--font-size-14);
@@ -473,6 +473,10 @@
     }
   }
 
+  hr.golden-fade {
+    margin-top: 0;
+  }
+
   .tidy-tabs.item-tabs {
     margin-top: var(--t5e-size-3x);
   }
@@ -481,7 +485,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-2x);
-    padding-top: var(--t5e-size-3x);
+    padding-top: var(--t5e-size-2x);
 
     &:not(:has(.editor)) {
       padding-bottom: var(--t5e-size-8x);
@@ -493,6 +497,7 @@
 
     &.description {
       flex: 1;
+      padding-top: 0;
 
       prose-mirror {
         flex: 1;
