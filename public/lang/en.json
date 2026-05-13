@@ -312,6 +312,19 @@
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
+  "TIDY5E.SheetSettings": {
+    "title": "Sheet Settings",
+    "hint": "Configure the settings for the sheet.",
+    "Group": {
+      "Dialogs": "Dialogs",
+      "Tabs": "Tabs"
+    },
+    "CustomTabs": {
+      "label": "Custom Tabs"
+    },
+    "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs.",
+    "PlaceholderHint": "Settings for {tabId} will live here."
+  },
 
   "TIDY5E.SettingsMenu.WorldThemeSettings": {
     "name": "Theme Settings",

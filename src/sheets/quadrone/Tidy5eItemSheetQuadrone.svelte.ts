@@ -89,6 +89,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       resizable: true,
       controls: [
         {
+          icon: 'fa-solid fa-excavator',
+          label: 'TIDY5E.SheetSettings.title',
+          action: 'sheetSettings',
+          ownership: 'OWNER',
+          visible: function (this: Tidy5eItemSheetQuadrone) {
+            return this.isEditable;
+          },
+        },
+        {
           action: 'openTabConfiguration',
           icon: 'fas fa-file-invoice',
           label: 'TIDY5E.TabConfiguration.MenuOptionText',

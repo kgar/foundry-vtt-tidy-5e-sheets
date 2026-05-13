@@ -47,6 +47,7 @@ import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -143,6 +144,15 @@ export function GetTidy5eActorSheetQuadroneBase<
             position: 'header',
           },
           {
+            icon: 'fa-solid fa-excavator',
+            label: 'TIDY5E.SheetSettings.title',
+            action: 'sheetSettings',
+            ownership: 'OWNER',
+            visible: function (this: Tidy5eActorSheetQuadroneBase) {
+              return this.isEditable;
+            },
+          },
+          {
             action: 'openTabConfiguration',
             icon: 'fas fa-file-invoice',
             label: 'TIDY5E.TabConfiguration.MenuOptionText',
@@ -178,6 +188,13 @@ export function GetTidy5eActorSheetQuadroneBase<
           this._renderChild(new SheetTabConfigurationQuadroneApplication({
             document: this.document,
           }));
+        },
+        sheetSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
+          this._renderChild(
+            new TidySheetSettingsQuadroneApplication({
+              document: this.document,
+            })
+          );
         },
         rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
           this.actor.initiateRest({ type: target.dataset.type });
