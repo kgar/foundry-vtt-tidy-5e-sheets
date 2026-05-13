@@ -28,11 +28,14 @@
     onclick={() => app.useDefault()}
   >
     <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseDefault')}
+    {localize('TIDY5E.UseGlobalDefaults')}
   </button>
   <button
     type="button"
-    class="button button-primary button-large button-save save-changes-btn"
+    class={[
+      'button button-large button-save save-changes-btn',
+      app.hasChanges ? 'button-primary' : 'button-secondary',
+    ]}
     onclick={() => app.save()}
   >
     <i class="fas fa-save"></i>

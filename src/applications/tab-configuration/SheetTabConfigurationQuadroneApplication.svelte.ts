@@ -69,6 +69,13 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       visibilityLevels: [],
     },
   });
+
+  _initialSnapshot = $state('');
+
+  hasChanges = $derived(
+    JSON.stringify($state.snapshot(this._config.entry)) !==
+      this._initialSnapshot
+  );
   _getTabConfig: GetTabConfigFn;
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
@@ -132,6 +139,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     this._config = {
       entry: this._getConfig(),
     };
+    this._resetToGlobalDefaults();
 
     const component = mount(SheetTabConfigurationQuadrone, {
       target: node,
@@ -202,7 +210,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
         ? []
         : curr.selected.map((s) => s.id);
 
-    return await this._setTabConfig(this.document, {
+    const result = await this._setTabConfig(this.document, {
       selected: selected,
       visibilityLevels: this._config.entry.visibilityLevels.reduce(
         (prev, curr) => {
@@ -212,6 +220,23 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
         {} as Record<string, number | null>
       ),
     });
+
+    this._resetToGlobalDefaults();
+
+    return result;
+  }
+
+  _resetToGlobalDefaults() {
+    this._initialSnapshot = JSON.stringify(
+      $state.snapshot(this._config.entry)
+    );
+  }
+
+  undoChanges() {
+    this._config = {
+      entry: this._getConfig(),
+    };
+    this._resetToGlobalDefaults();
   }
 
   async useDefault() {

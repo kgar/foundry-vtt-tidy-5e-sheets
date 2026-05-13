@@ -60,6 +60,13 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     },
   });
 
+  _initialSnapshot = $state('');
+
+  hasChanges = $derived(
+    JSON.stringify($state.snapshot(this._settings.value)) !==
+      this._initialSnapshot
+  );
+
   actorHeaderBackgroundSupportedActorTypes = new Set<string>([
     CONSTANTS.SHEET_TYPE_CHARACTER,
     CONSTANTS.SHEET_TYPE_NPC,
@@ -110,6 +117,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   _createComponent(node: HTMLElement): Record<string, any> {
     this._settings = this._getSettings();
+    this._resetToGlobalDefaults();
     const placeholders = this.document
       ? this._mapSettings(ThemeQuadrone.getWorldThemeSettings(), {
         allowNullBooleans: false,
@@ -206,6 +214,19 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     } else {
       await ThemeQuadrone.saveWorldThemeSettings(changedSettings as ThemeSettingsV3);
     }
+
+    this._resetToGlobalDefaults();
+  }
+
+  _resetToGlobalDefaults() {
+    this._initialSnapshot = JSON.stringify(
+      $state.snapshot(this._settings.value)
+    );
+  }
+
+  undoChanges() {
+    this._settings = this._getSettings();
+    this._resetToGlobalDefaults();
   }
 
   // Only capture settings that have been changed

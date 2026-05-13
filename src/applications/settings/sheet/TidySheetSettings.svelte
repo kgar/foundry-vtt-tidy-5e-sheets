@@ -26,25 +26,28 @@
     id: string;
     title: string;
     iconClass?: string;
+    hasChanges?: boolean;
   };
 
-  let dialogEntries: SidebarEntry[] = [
+  let dialogEntries: SidebarEntry[] = $derived([
     {
       id: DIALOG_TAB_THEME,
       title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
       iconClass: 'fa-solid fa-swatchbook',
+      hasChanges: app.themeChildApp.hasChanges,
     },
     {
       id: DIALOG_TAB_TAB_CONFIG,
       title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
       iconClass: 'fas fa-file-invoice',
+      hasChanges: app.tabConfigChildApp.hasChanges,
     },
     {
       id: DIALOG_TAB_CUSTOM_TABS,
       title: localize('TIDY5E.SheetSettings.CustomTabs.label'),
       iconClass: 'fa-solid fa-table-columns',
     },
-  ];
+  ]);
 
   let sheetEntries: SidebarEntry[] = $derived(
     config.sheetTabs.map((t: TidySheetSettingsTabInfo) => ({
@@ -77,7 +80,7 @@
 </script>
 
 <div class="tidy-sheet-settings">
-  <nav class="settings-nav" role="tablist" aria-orientation="vertical">
+  <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
       <div class="nav-group-header">
         {localize('TIDY5E.SheetSettings.Group.Dialogs')}
@@ -85,7 +88,10 @@
       {#each dialogEntries as entry (entry.id)}
         <button
           type="button"
-          class={['nav-tab', { active: entry.id === selectedId }]}
+          class={[
+            'nav-tab',
+            { active: entry.id === selectedId, 'has-changes': entry.hasChanges },
+          ]}
           role="tab"
           aria-selected={entry.id === selectedId}
           onclick={() => selectTab(entry.id)}
@@ -110,7 +116,10 @@
         {#each sheetEntries as entry (entry.id)}
           <button
             type="button"
-            class={['nav-tab', { active: entry.id === selectedId }]}
+            class={[
+            'nav-tab',
+            { active: entry.id === selectedId, 'has-changes': entry.hasChanges },
+          ]}
             role="tab"
             aria-selected={entry.id === selectedId}
             onclick={() => selectTab(entry.id)}
@@ -123,7 +132,7 @@
         {/each}
       {/if}
     </div>
-  </nav>
+  </div>
 
   <section class="settings-pane" role="tabpanel">
     {#if selectedId === DIALOG_TAB_THEME}
@@ -137,22 +146,4 @@
       />
     {/if}
   </section>
-<!-- 
-  <div class="button-bar">
-    <button
-      type="button"
-      class="button button-secondary button-large cancel-btn"
-      onclick={() => app.cancel()}
-    >
-      {localize('Cancel')}
-    </button>
-    <button
-      type="button"
-      class="button button-primary button-large button-save save-changes-btn"
-      onclick={() => app.save()}
-    >
-      <i class="fas fa-save"></i>
-      {localize('TIDY5E.SaveChanges')}
-    </button>
-  </div> -->
 </div>

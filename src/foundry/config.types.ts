@@ -2541,7 +2541,7 @@ export type CONFIG = {
     content_css: Array<string>;
     plugins: string;
     toolbar: string;
-    save_enablewhendirty: boolean;
+    save_enablewhenhasChanges: boolean;
     table_default_styles: {};
     style_formats: Array<{
       title: string;

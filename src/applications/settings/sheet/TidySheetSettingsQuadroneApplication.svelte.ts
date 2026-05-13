@@ -53,6 +53,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
       document: this.document,
     });
     this.themeChildApp._settings = this.themeChildApp._getSettings();
+    this.themeChildApp._resetToGlobalDefaults();
 
     this.tabConfigChildApp = new SheetTabConfigurationQuadroneApplication({
       document: this.document,
@@ -60,6 +61,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     this.tabConfigChildApp._config = {
       entry: this.tabConfigChildApp._getConfig(),
     };
+    this.tabConfigChildApp._resetToGlobalDefaults();
   }
 
   get themePlaceholders() {

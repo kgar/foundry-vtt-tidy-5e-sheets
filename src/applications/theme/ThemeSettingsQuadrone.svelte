@@ -26,6 +26,7 @@
 
   const localize = FoundryAdapter.localize;
 
+
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
@@ -386,19 +387,23 @@
     onclick={() => app.useDefault()}
   >
     <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseDefault')}
+    {localize('TIDY5E.UseGlobalDefaults')}
   </button>
   <button
     type="button"
-    class="button button-secondary button-large apply-changes-btn"
+    class="button button-secondary button-large undo-changes-btn"
     data-testid="section-config-apply-changes"
-    onclick={() => app.close()}
+    onclick={() => app.undoChanges()}
   >
-    {localize('Cancel')}
+    <i class="fas fa-arrow-rotate-left"></i>
+    {localize('TIDY5E.UndoChanges')}
   </button>
   <button
     type="button"
-    class="button button-primary button-large button-save save-changes-btn"
+    class={[
+      'button button-large button-save save-changes-btn',
+      app.hasChanges ? 'button-primary' : 'button-secondary',
+    ]}
     onclick={() => app.save()}
   >
     <i class="fas fa-save"></i>
