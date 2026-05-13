@@ -885,6 +885,8 @@
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
+  "TIDY5E.UseGlobalDefaults": "Use Global Defaults",
+  "TIDY5E.UndoChanges": "Undo changes",
   "TIDY5E.Reset": "Reset",
   "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
