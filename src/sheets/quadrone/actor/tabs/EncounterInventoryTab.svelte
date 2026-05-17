@@ -68,7 +68,7 @@
       context.sheet._renderChild(
         new TidySheetSettingsQuadroneApplication({
           document: context.document,
-          initialTabId: `sheet:${tabId}`,
+          initialTabId: tabId,
           tabSettings: { [tabId]: settingsTab },
         }),
       );

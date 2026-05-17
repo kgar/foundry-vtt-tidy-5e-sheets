@@ -31,6 +31,7 @@
     );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+    const settingsTab = buildActorInventorySettingsTab(context, tabId);
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -66,20 +67,24 @@
       tabId: tabId,
     });
   });
+
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: tabId,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    );
+  }
 </script>
 
 <InventoryActionBar
   bind:searchCriteria
   sections={inventory}
   {tabId}
-  onConfigureClick={() => {
-    const settingsTab = buildActorInventorySettingsTab(context, tabId);
-    context.sheet._renderChild(new TidySheetSettingsQuadroneApplication({
-      document: context.document,
-      initialTabId: `sheet:${tabId}`,
-      tabSettings: { [tabId]: settingsTab },
-    }));
-  }}
+  onConfigureClick={openTabSettings}
 />
 
 <div class="tab-content">
