@@ -114,21 +114,15 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       ? this._mapSettings(ThemeQuadrone.getWorldThemeSettings())
       : undefined;
 
-    const component = mount(
-      ThemeSettingsQuadrone as unknown as Component<{
-        app: ThemeSettingsQuadroneApplication;
-        settings: ThemeSettingsContext;
-        placeholders: ThemeSettingsContext | undefined;
-      }>,
-      {
+
+      const component = mount(ThemeSettingsQuadrone, {
         target: node,
         props: {
           app: this,
           settings: this._settings,
           placeholders,
         },
-      },
-    );
+      });
 
     return component;
   }
