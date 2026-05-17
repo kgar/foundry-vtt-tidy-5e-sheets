@@ -446,7 +446,7 @@
     /* TODO: Select panel font family doens't work. */
     option {
       background-color: var(--t5e-component-field-background-hover);
-      font-family: 'Roboto Cndnsd', sans-serif;
+      font-family: 'Roboto Condensed', sans-serif;
     }
 
     &:hover,

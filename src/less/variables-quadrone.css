@@ -5,8 +5,8 @@
   /* Font families */
   --t5e-font-modesto-condensed: 'Modesto Condensed', 'Palatino Linotype', serif;
   --t5e-font-family-title: 'Modesto Condensed', 'Palatino Linotype', serif;
-  --t5e-font-roboto-condensed: 'Roboto Cndnsd', Roboto, Arial, sans-serif;
-  --t5e-font-family-default: 'Roboto Cndnsd', Roboto, Arial, sans-serif;
+  --t5e-font-roboto-condensed: 'Roboto Condensed', Roboto, Arial, sans-serif;
+  --t5e-font-family-default: 'Roboto Condensed', Roboto, Arial, sans-serif;
   /* Font sizes */
   --font-size-56: 3.5rem;
   --font-size-46: 2.875rem;

@@ -1,6 +1,6 @@
 /* VF: one face per style; weight axis maps CSS font-weight 100–900 */
 @font-face {
-  font-family: 'Roboto Cndnsd';
+  font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 100 900;
   src:
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-  font-family: 'Roboto Cndnsd';
+  font-family: 'Roboto Condensed';
   font-style: italic;
   font-weight: 100 900;
   src:
