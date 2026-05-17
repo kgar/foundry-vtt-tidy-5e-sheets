@@ -53,8 +53,7 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import {
-  TidySheetSettingsDialogIds,
+import { TidySheetSettingsTabIds,
   TidySheetSettingsQuadroneApplication,
 } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
@@ -98,7 +97,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
         this._renderChild(
           new TidySheetSettingsQuadroneApplication({
             document: this.document,
-            initialTabId: TidySheetSettingsDialogIds.sidebarTabConfig,
+            initialTabId: TidySheetSettingsTabIds.sidebarTabConfig,
           }),
         );
       },

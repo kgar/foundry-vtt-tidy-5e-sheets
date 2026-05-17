@@ -40,21 +40,21 @@
         id: SETTINGS_THEME,
         title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
         iconClass: 'fa-solid fa-swatchbook',
-        hasChanges: app.themeChildApp.hasChanges,
+        hasChanges: app.themeSettingsTab.hasChanges,
       },
       {
         id: SETTINGS_TAB_CONFIG,
         title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
         iconClass: 'fas fa-file-invoice',
-        hasChanges: app.tabConfigChildApp.hasChanges,
+        hasChanges: app.tabDisplaySettingsTab.hasChanges,
       },
-      ...(app.sidebarTabConfigChildApp
+      ...(app.sidebartabDisplaySettingsTab
         ? [
             {
               id: SETTINGS_SIDEBAR_TAB_CONFIG,
               title: localize('TIDY5E.Character.Sidebar.Title'),
               iconClass: 'fas fa-sidebar',
-              hasChanges: app.sidebarTabConfigChildApp.hasChanges,
+              hasChanges: app.sidebartabDisplaySettingsTab.hasChanges,
             },
           ]
         : []),
@@ -62,7 +62,7 @@
   );
 
   let tabConfigOptions: SettingsTab[] = $derived(
-    config.sheetTabs.map((t: TidySheetSettingsTabInfo) => ({
+    config.parentSheetTabs.map((t: TidySheetSettingsTabInfo) => ({
       id: `sheet:${t.id}`,
       title: t.title,
       iconClass: t.iconClass,
@@ -78,25 +78,25 @@
     untrack(() => app.initialTabId ?? SETTINGS_THEME),
   );
 
-  $effect(() => {
-    if (!allAvailableTabs.some((e) => e.id === selectedId)) {
-      selectedId = allAvailableTabs[0]?.id ?? SETTINGS_THEME;
-    }
-  });
+  let activeSelectedId: string = $derived(
+    allAvailableTabs.some((e) => e.id === selectedId)
+      ? selectedId
+      : allAvailableTabs[0]?.id ?? SETTINGS_THEME,
+  );
 
   let selectedEntry: SettingsTab | undefined = $derived(
-    allAvailableTabs.find((e) => e.id === selectedId),
+    allAvailableTabs.find((e) => e.id === activeSelectedId),
   );
 
   let selectedSheetTabId: string | undefined = $derived(
-    selectedId.startsWith('sheet:')
-      ? selectedId.slice('sheet:'.length)
+    activeSelectedId.startsWith('sheet:')
+      ? activeSelectedId.slice('sheet:'.length)
       : undefined,
   );
 
   let configureSectionsApp = $derived(
     selectedSheetTabId
-      ? app.getOrCreateConfigureSectionsChildApp(selectedSheetTabId)
+      ? app.getConfigureSectionsConfigTab(selectedSheetTabId)
       : undefined,
   );
 
@@ -116,10 +116,10 @@
           type="button"
           class={[
             'nav-tab',
-            { active: entry.id === selectedId, 'has-changes': entry.hasChanges },
+            { active: entry.id === activeSelectedId, 'has-changes': entry.hasChanges },
           ]}
           role="tab"
-          aria-selected={entry.id === selectedId}
+          aria-selected={entry.id === activeSelectedId}
           onclick={() => selectTab(entry.id)}
         >
           {#if entry.iconClass}
@@ -143,11 +143,11 @@
           <button
             type="button"
             class={[
-            'nav-tab',
-            { active: entry.id === selectedId, 'has-changes': entry.hasChanges },
-          ]}
+              'nav-tab',
+              { active: entry.id === activeSelectedId, 'has-changes': entry.hasChanges },
+            ]}
             role="tab"
-            aria-selected={entry.id === selectedId}
+            aria-selected={entry.id === activeSelectedId}
             onclick={() => selectTab(entry.id)}
           >
             {#if entry.iconClass}
@@ -161,26 +161,26 @@
   </div>
 
   <section class="settings-pane" role="tabpanel">
-    {#if selectedId === SETTINGS_THEME}
+    {#if activeSelectedId === SETTINGS_THEME}
       <ThemeSettingsQuadrone
-        app={app.themeChildApp}
-        settings={app.themeChildApp._settings}
+        app={app.themeSettingsTab}
+        settings={app.themeSettingsTab._settings}
         placeholders={app.themePlaceholders}
       />
-    {:else if selectedId === SETTINGS_TAB_CONFIG}
+    {:else if activeSelectedId === SETTINGS_TAB_CONFIG}
       <SheetTabConfigurationQuadrone
-        app={app.tabConfigChildApp}
-        config={app.tabConfigChildApp._config}
-        title={app.tabConfigChildApp._inclusionTabTitle}
+        app={app.tabDisplaySettingsTab}
+        config={app.tabDisplaySettingsTab._config}
+        title={app.tabDisplaySettingsTab._inclusionTabTitle}
       />
-    {:else if selectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabConfigChildApp}
+    {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebartabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
-        app={app.sidebarTabConfigChildApp}
-        config={app.sidebarTabConfigChildApp._config}
-        title={app.sidebarTabConfigChildApp._inclusionTabTitle}
+        app={app.sidebartabDisplaySettingsTab}
+        config={app.sidebartabDisplaySettingsTab._config}
+        title={app.sidebartabDisplaySettingsTab._inclusionTabTitle}
       />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
-      <SpecialTraitsPane app={app.getOrCreateSpecialTraitsChildApp()} />
+      <SpecialTraitsPane app={app.getSpecialTraitsConfigTab()} />
     {:else if configureSectionsApp}
       <ConfigureSections
         application={configureSectionsApp}
@@ -191,7 +191,7 @@
     {:else}
       <PlaceholderSettingsPane
         title={selectedEntry?.title ?? ''}
-        tabId={selectedId}
+        tabId={activeSelectedId}
       />
     {/if}
   </section>

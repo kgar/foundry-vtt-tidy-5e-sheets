@@ -75,7 +75,7 @@
       {/each}
     </fieldset>
   {/if}
-  <!-- TODO: make some formal styles for this -->
+  
   <fieldset class="section-config-container">
     <legend>
       {localize('TIDY5E.Section.LabelPl')}

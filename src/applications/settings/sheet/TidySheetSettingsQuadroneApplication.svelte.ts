@@ -7,12 +7,18 @@ import type {
 } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
 import { mount } from 'svelte';
+import { SvelteMap } from 'svelte/reactivity';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
+import {
+  ConfigureSectionsApplication,
+  type SectionOptionGroup,
+} from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
@@ -37,7 +43,7 @@ export type TidySheetSettingsContext = {
 export type ConfigureSectionsInput = {
   tabId: string;
   sections: import('src/types/types').TidySectionBase[];
-  optionsGroups?: import('src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte').SectionOptionGroup[];
+  optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };
 
@@ -61,6 +67,12 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   tabSettings: Record<string, ConfigureSectionsInput>;
   themeSettingsTab!: ThemeSettingsQuadroneApplication;
   tabDisplaySettingsTab!: SheetTabConfigurationQuadroneApplication;
+  sidebarTabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
+  specialTraitsChildApp?: SpecialTraitsApplication;
+  configureSectionsChildAppByTabId = new SvelteMap<
+    string,
+    ConfigureSectionsApplication
+  >();
   themePlaceholders?: ReturnType<
     ThemeSettingsQuadroneApplication['_mapSettings']
   >;
@@ -233,7 +245,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   /*  Character sidebar tab configuration init    */
   /* -------------------------------------------- */
   _initializeSidebarTabConfigForCharacter() {
-    if (this.sidebartabDisplaySettingsTab) {
+    if (this.sidebarTabDisplaySettingsTab) {
       return;
     }
     if (this.document?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
@@ -268,7 +280,52 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     app._config = { entry: app._getConfig() };
     app._resetToGlobalDefaults();
     app.close = async () => {};
-    this.sidebartabDisplaySettingsTab = app;
+    this.sidebarTabDisplaySettingsTab = app;
+  }
+
+
+  
+
+  getSpecialTraitsConfigTab(): SpecialTraitsApplication {
+    if (!this.specialTraitsChildApp) {
+      const app = new SpecialTraitsApplication({
+        document: this.document,
+      });
+      app.close = async () => {};
+      this.specialTraitsChildApp = app;
+    }
+    return this.specialTraitsChildApp;
+  }
+
+  getConfigureSectionsConfigTab(
+    tabId: string
+  ): ConfigureSectionsApplication | undefined {
+    const cached = this.configureSectionsChildAppByTabId.get(tabId);
+    if (cached) {
+      return cached;
+    }
+
+    const input = this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+    if (!input) {
+      return undefined;
+    }
+
+    const app = new ConfigureSectionsApplication({
+      document: this.document,
+      settings: {
+        tabId: input.tabId,
+        sections: input.sections,
+        optionsGroups: input.optionsGroups ?? ([] as SectionOptionGroup[]),
+        formTitle: input.formTitle ?? '',
+      },
+    });
+    // Embedded — never opened as a window. Swallow close() so save/useDefault
+    // don't try to dismiss an unrendered child window.
+    app.close = async () => {};
+    app._seedOptionGroupsFromDocument();
+    app._resetToGlobalDefaults();
+    this.configureSectionsChildAppByTabId.set(tabId, app);
+    return app;
   }
 
   /* -------------------------------------------- */
@@ -333,7 +390,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     try {
       await this.themeSettingsTab.apply();
       await this.tabDisplaySettingsTab.apply();
-      await this.sidebartabDisplaySettingsTab?.apply();
+      await this.sidebarTabDisplaySettingsTab?.apply();
       await this.specialTraitsChildApp?.apply();
       for (const helper of this.configureSectionsChildAppByTabId.values()) {
         await helper.apply();
