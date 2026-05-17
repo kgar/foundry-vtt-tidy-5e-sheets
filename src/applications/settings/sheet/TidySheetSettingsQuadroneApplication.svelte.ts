@@ -16,6 +16,7 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export const TidySheetSettingsTabIds = {
   theme: 'settings:theme',
@@ -30,7 +31,7 @@ export type TidySheetSettingsTabInfo = {
 };
 
 export type TidySheetSettingsContext = {
-  sheetTabs: TidySheetSettingsTabInfo[];
+  parentSheetTabs: TidySheetSettingsTabInfo[];
 };
 
 export type ConfigureSectionsInput = {
@@ -53,11 +54,16 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   TidySheetSettingsContext
 >() {
   _config: TidySheetSettingsContext = $state({
-    sheetTabs: [],
+    parentSheetTabs: [],
   });
 
   initialTabId?: string;
   tabSettings: Record<string, ConfigureSectionsInput>;
+  themeSettingsTab!: ThemeSettingsQuadroneApplication;
+  tabDisplaySettingsTab!: SheetTabConfigurationQuadroneApplication;
+  themePlaceholders?: ReturnType<
+    ThemeSettingsQuadroneApplication['_mapSettings']
+  >;
 
   _runtimes?: Record<string, ActorSheetQuadroneRuntime<any>>;
   _sidebarRuntime?: ActorSheetQuadroneRuntime<any>;
@@ -97,20 +103,33 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
 
     this.initialTabId = `sheet:${options.initialTabId}`;
     this.tabSettings = options.tabSettings ?? {};
+  }
 
-    this.themeChildApp = new ThemeSettingsQuadroneApplication({
-      document: this.document,
-    });
-    this.themeChildApp._settings = this.themeChildApp._getSettings();
-    this.themeChildApp._resetToGlobalDefaults();
+  _initializeSettingsTabs(): void {
+    if (this.themeSettingsTab && this.tabDisplaySettingsTab) {
+      return;
+    }
 
-    this.tabConfigChildApp = new SheetTabConfigurationQuadroneApplication({
-      document: this.document,
-    });
-    this.tabConfigChildApp._config = {
-      entry: this.tabConfigChildApp._getConfig(),
-    };
-    this.tabConfigChildApp._resetToGlobalDefaults();
+    if (!this.themeSettingsTab) {
+      this.themeSettingsTab = new ThemeSettingsQuadroneApplication({
+        document: this.document,
+      });
+      this.themeSettingsTab._settings = this.themeSettingsTab._getSettings();
+      this.themeSettingsTab._resetToGlobalDefaults();
+      this.themePlaceholders = this.document
+        ? this.themeSettingsTab._mapSettings(ThemeQuadrone.getWorldThemeSettings())
+        : undefined;
+    }
+
+    if (!this.tabDisplaySettingsTab) {
+      this.tabDisplaySettingsTab = new SheetTabConfigurationQuadroneApplication({
+        document: this.document,
+      });
+      this.tabDisplaySettingsTab._config = {
+        entry: this.tabDisplaySettingsTab._getConfig(),
+      };
+      this.tabDisplaySettingsTab._resetToGlobalDefaults();
+    }
   }
 
   getSavedTabSettings(tabId: string): boolean {
@@ -125,8 +144,12 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     return !!tab?.settingsTabBuilder;
   }
 
+  
+  /* -------------------------------------------- */
+  /*  Get tabs for the calling sheet
+  /* -------------------------------------------- */
   _createComponent(node: HTMLElement): Record<string, any> {
-    this._config.sheetTabs = this._getSheetTabs();
+    this._initializeSettingsTabs();
 
     return mount(TidySheetSettings, {
       target: node,
@@ -141,7 +164,8 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     _options: ApplicationRenderOptions
   ): Promise<TidySheetSettingsContext> {
     await this._loadRuntimes();
-    this._config.sheetTabs = this._getSheetTabs();
+    this._initializeSettingsTabs();
+    this._config.parentSheetTabs = this._getTabsForParentSheet();
     return this._config;
   }
 
@@ -205,8 +229,11 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     }
   }
 
+  /* -------------------------------------------- */
+  /*  Character sidebar tab configuration init    */
+  /* -------------------------------------------- */
   _initializeSidebarTabConfigForCharacter() {
-    if (this.sidebarTabConfigChildApp) {
+    if (this.sidebartabDisplaySettingsTab) {
       return;
     }
     if (this.document?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
@@ -241,13 +268,13 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     app._config = { entry: app._getConfig() };
     app._resetToGlobalDefaults();
     app.close = async () => {};
-    this.sidebarTabConfigChildApp = app;
+    this.sidebartabDisplaySettingsTab = app;
   }
 
   /* -------------------------------------------- */
-  /*  Get Sheet Tabs                             */
+  /*  Get tabs for the calling sheet
   /* -------------------------------------------- */
-  _getSheetTabs(): TidySheetSettingsTabInfo[] {
+  _getTabsForParentSheet(): TidySheetSettingsTabInfo[] {
     const runtime = this._getRuntime();
     if (!runtime) {
       return [];
@@ -304,9 +331,9 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   /* -------------------------------------------- */
   async save() {
     try {
-      await this.themeChildApp.apply();
-      await this.tabConfigChildApp.apply();
-      await this.sidebarTabConfigChildApp?.apply();
+      await this.themeSettingsTab.apply();
+      await this.tabDisplaySettingsTab.apply();
+      await this.sidebartabDisplaySettingsTab?.apply();
       await this.specialTraitsChildApp?.apply();
       for (const helper of this.configureSectionsChildAppByTabId.values()) {
         await helper.apply();

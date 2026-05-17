@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    TidySheetSettingsDialogIds,
+    TidySheetSettingsTabIds,
     type TidySheetSettingsContext,
     type TidySheetSettingsQuadroneApplication,
     type TidySheetSettingsTabInfo,
@@ -23,9 +23,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  const SETTINGS_THEME = TidySheetSettingsDialogIds.theme;
-  const SETTINGS_TAB_CONFIG = TidySheetSettingsDialogIds.tabConfig;
-  const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsDialogIds.sidebarTabConfig;
+  const SETTINGS_THEME = TidySheetSettingsTabIds.theme;
+  const SETTINGS_TAB_CONFIG = TidySheetSettingsTabIds.tabConfig;
+  const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsTabIds.sidebarTabConfig;
 
   type SettingsTab = {
     id: string;
