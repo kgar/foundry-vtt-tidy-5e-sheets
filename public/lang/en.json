@@ -318,7 +318,7 @@
     "title": "Sheet Settings",
     "hint": "Configure the settings for the sheet.",
     "Group": {
-      "SheetSettings": "{documentName} Sheet Settings",
+      "SheetSettings": "Sheet Settings",
       "Tabs": "Tabs"
     },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."

@@ -108,9 +108,9 @@
 <div class="tidy-sheet-settings">
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
-      <div class="nav-group-header">
-        {localize('TIDY5E.SheetSettings.Group.SheetSettings', { documentName: app.document.name })}
-      </div>
+      <h3 class="nav-group-header">
+        {localize('TIDY5E.SheetSettings.Group.SheetSettings')}
+      </h3>
       {#each dialogEntries as entry (entry.id)}
         <button
           type="button"
@@ -131,9 +131,9 @@
     </div>
 
     <div class="nav-group">
-      <div class="nav-group-header">
+      <h3 class="nav-group-header">
         {localize('TIDY5E.SheetSettings.Group.Tabs')}
-      </div>
+      </h3>
       {#if sheetEntries.length === 0}
         <div class="nav-empty hint">
           {localize('TIDY5E.SheetSettings.NoTabsHint')}
