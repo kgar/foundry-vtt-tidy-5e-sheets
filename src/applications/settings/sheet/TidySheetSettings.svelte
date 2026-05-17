@@ -23,27 +23,27 @@
 
   const localize = FoundryAdapter.localize;
 
-  const DIALOG_TAB_THEME = TidySheetSettingsDialogIds.theme;
-  const DIALOG_TAB_TAB_CONFIG = TidySheetSettingsDialogIds.tabConfig;
-  const DIALOG_TAB_SIDEBAR_TAB_CONFIG = TidySheetSettingsDialogIds.sidebarTabConfig;
+  const SETTINGS_THEME = TidySheetSettingsDialogIds.theme;
+  const SETTINGS_TAB_CONFIG = TidySheetSettingsDialogIds.tabConfig;
+  const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsDialogIds.sidebarTabConfig;
 
-  type SidebarEntry = {
+  type SettingsTab = {
     id: string;
     title: string;
     iconClass?: string;
     hasChanges?: boolean;
   };
 
-  let dialogEntries: SidebarEntry[] = $derived(
+  let sheetConfigOptions: SettingsTab[] = $derived(
     [
       {
-        id: DIALOG_TAB_THEME,
+        id: SETTINGS_THEME,
         title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
         iconClass: 'fa-solid fa-swatchbook',
         hasChanges: app.themeChildApp.hasChanges,
       },
       {
-        id: DIALOG_TAB_TAB_CONFIG,
+        id: SETTINGS_TAB_CONFIG,
         title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
         iconClass: 'fas fa-file-invoice',
         hasChanges: app.tabConfigChildApp.hasChanges,
@@ -51,7 +51,7 @@
       ...(app.sidebarTabConfigChildApp
         ? [
             {
-              id: DIALOG_TAB_SIDEBAR_TAB_CONFIG,
+              id: SETTINGS_SIDEBAR_TAB_CONFIG,
               title: localize('TIDY5E.Character.Sidebar.Title'),
               iconClass: 'fas fa-sidebar',
               hasChanges: app.sidebarTabConfigChildApp.hasChanges,
@@ -61,7 +61,7 @@
     ],
   );
 
-  let sheetEntries: SidebarEntry[] = $derived(
+  let tabConfigOptions: SettingsTab[] = $derived(
     config.sheetTabs.map((t: TidySheetSettingsTabInfo) => ({
       id: `sheet:${t.id}`,
       title: t.title,
@@ -69,23 +69,23 @@
     })),
   );
 
-  let allEntries: SidebarEntry[] = $derived([
-    ...dialogEntries,
-    ...sheetEntries,
+  let allAvailableTabs: SettingsTab[] = $derived([
+    ...sheetConfigOptions,
+    ...tabConfigOptions,
   ]);
 
   let selectedId: string = $state(
-    untrack(() => app.initialTabId ?? DIALOG_TAB_THEME),
+    untrack(() => app.initialTabId ?? SETTINGS_THEME),
   );
 
   $effect(() => {
-    if (!allEntries.some((e) => e.id === selectedId)) {
-      selectedId = allEntries[0]?.id ?? DIALOG_TAB_THEME;
+    if (!allAvailableTabs.some((e) => e.id === selectedId)) {
+      selectedId = allAvailableTabs[0]?.id ?? SETTINGS_THEME;
     }
   });
 
-  let selectedEntry: SidebarEntry | undefined = $derived(
-    allEntries.find((e) => e.id === selectedId),
+  let selectedEntry: SettingsTab | undefined = $derived(
+    allAvailableTabs.find((e) => e.id === selectedId),
   );
 
   let selectedSheetTabId: string | undefined = $derived(
@@ -111,7 +111,7 @@
       <h3 class="nav-group-header">
         {localize('TIDY5E.SheetSettings.Group.SheetSettings')}
       </h3>
-      {#each dialogEntries as entry (entry.id)}
+      {#each sheetConfigOptions as entry (entry.id)}
         <button
           type="button"
           class={[
@@ -134,12 +134,12 @@
       <h3 class="nav-group-header">
         {localize('TIDY5E.SheetSettings.Group.Tabs')}
       </h3>
-      {#if sheetEntries.length === 0}
+      {#if tabConfigOptions.length === 0}
         <div class="nav-empty hint">
           {localize('TIDY5E.SheetSettings.NoTabsHint')}
         </div>
       {:else}
-        {#each sheetEntries as entry (entry.id)}
+        {#each tabConfigOptions as entry (entry.id)}
           <button
             type="button"
             class={[
@@ -161,19 +161,19 @@
   </div>
 
   <section class="settings-pane" role="tabpanel">
-    {#if selectedId === DIALOG_TAB_THEME}
+    {#if selectedId === SETTINGS_THEME}
       <ThemeSettingsQuadrone
         app={app.themeChildApp}
         settings={app.themeChildApp._settings}
         placeholders={app.themePlaceholders}
       />
-    {:else if selectedId === DIALOG_TAB_TAB_CONFIG}
+    {:else if selectedId === SETTINGS_TAB_CONFIG}
       <SheetTabConfigurationQuadrone
         app={app.tabConfigChildApp}
         config={app.tabConfigChildApp._config}
         title={app.tabConfigChildApp._inclusionTabTitle}
       />
-    {:else if selectedId === DIALOG_TAB_SIDEBAR_TAB_CONFIG && app.sidebarTabConfigChildApp}
+    {:else if selectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabConfigChildApp}
       <SheetTabConfigurationQuadrone
         app={app.sidebarTabConfigChildApp}
         config={app.sidebarTabConfigChildApp._config}
