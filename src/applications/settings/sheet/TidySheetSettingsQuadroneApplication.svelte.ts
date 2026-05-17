@@ -33,6 +33,7 @@ export type TidySheetSettingsTabInfo = {
   id: string;
   title: string;
   iconClass?: string;
+  tabHidden?: boolean;
 };
 
 export type TidySheetSettingsContext = {
@@ -352,20 +353,27 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     const allRegisteredTabs = runtime.getAllRegisteredTabs();
     const selectedIds = this._getParentSheetTabIds(runtime);
 
-    return selectedIds
-      .map((id) => allRegisteredTabs.find((t) => t.id === id))
+    const settingsTabs = allRegisteredTabs
       .filter((t): t is NonNullable<typeof t> => !!t)
       .filter(
         (t) =>
           t.id === CONSTANTS.TAB_CHARACTER_ATTRIBUTES ||
           this.getSavedTabSettings(t.id)
-      )
+      );
+
+    return [
+      ...selectedIds
+        .map((id) => settingsTabs.find((t) => t.id === id))
+        .filter((t): t is NonNullable<typeof t> => !!t),
+      ...settingsTabs.filter((t) => !selectedIds.includes(t.id)),
+    ]
       .map((t) => ({
         id: t.id,
         title: FoundryAdapter.localize(
           typeof t.title === 'function' ? t.title() : t.title
         ),
         iconClass: t.iconClass,
+        tabHidden: !selectedIds.includes(t.id),
       }));
   }
 

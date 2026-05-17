@@ -4,8 +4,9 @@ import GroupMembersTab from 'src/sheets/quadrone/actor/tabs/GroupMembersTab.svel
 import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
-import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
-import { systemSettings } from 'src/settings/settings.svelte';
+import { buildGroupMembersSettingsTab } from 'src/sheets/quadrone/actor/tabs/GroupMemberTab.pane';
+// import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
+// import { systemSettings } from 'src/settings/settings.svelte';
 import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
 
 export const GroupSheetQuadroneRuntime =
@@ -20,6 +21,7 @@ export const GroupSheetQuadroneRuntime =
         id: CONSTANTS.TAB_MEMBERS,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-people-group',
+        settingsTabBuilder: buildGroupMembersSettingsTab,
       },
       {
         title: 'DND5E.Inventory',

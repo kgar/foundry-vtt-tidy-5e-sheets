@@ -118,6 +118,11 @@
         background-color: var(--tab-background-color);
       }
     }
+
+    &.tab-hidden {
+      color: var(--t5e-color-text-lighter);
+      font-style: italic;
+    }
   }
 
   .nav-tab-icon {

@@ -32,6 +32,7 @@
     title: string;
     iconClass?: string;
     hasChanges?: boolean;
+    tabHidden?: boolean;
   };
 
   let sheetConfigOptions: SettingsTab[] = $derived(
@@ -66,6 +67,7 @@
       id: `sheet:${t.id}`,
       title: t.title,
       iconClass: t.iconClass,
+      tabHidden: t.tabHidden,
     })),
   );
 
@@ -144,7 +146,11 @@
             type="button"
             class={[
               'nav-tab',
-              { active: entry.id === activeSelectedId, 'has-changes': entry.hasChanges },
+              {
+                active: entry.id === activeSelectedId,
+                'has-changes': entry.hasChanges,
+                'tab-hidden': entry.tabHidden,
+              },
             ]}
             role="tab"
             aria-selected={entry.id === activeSelectedId}
