@@ -31,7 +31,7 @@
     );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-    const settingsTab = buildActorInventorySettingsTab(context, tabId);
+  let settingsTab = $derived(buildActorInventorySettingsTab(context, tabId));
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,

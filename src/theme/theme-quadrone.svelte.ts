@@ -73,6 +73,7 @@ export class ThemeQuadrone {
   }
 
   static getWorldThemeSettings(): ThemeSettingsV3 {
+    console.log('settingsProvider', SettingsProvider);
     return foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       SettingsProvider.settings.worldThemeSettings.get()

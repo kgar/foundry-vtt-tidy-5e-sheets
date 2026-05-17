@@ -1,14 +1,15 @@
 <script lang="ts">
   import {
-    ConfigureSectionsApplication,
     type SectionOptionGroup,
   } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import type {
     GroupSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
+  import { buildGroupMembersSettingsTab } from '../actor/tabs/GroupMemberTab.pane';
   import ExpandCollapseButton from './ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -23,8 +24,6 @@
   let {
     searchCriteria = $bindable(),
     tabId,
-    sections,
-    tabOptionGroups = [],
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -32,8 +31,20 @@
   let context = $derived(getSheetContext<GroupSheetQuadroneContext>());
 
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
+  let settingsTab = $derived(buildGroupMembersSettingsTab(context, tabId));
 
   let tabName = $derived(localize(tab?.title ?? ''));
+
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: tabId,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    );
+  }
 </script>
 
 <section
@@ -45,29 +56,20 @@
   <Search bind:searchCriteria />
 
   {#if context.editable}
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button"
+      tabindex="0"
+      aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
       class="button button-icon-only"
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-      onclick={() =>
-        context.editable &&
-        context.sheet._renderChild(
-          new ConfigureSectionsApplication({
-            document: context.document,
-            settings: {
-              tabId,
-              sections: sections,
-              optionsGroups: tabOptionGroups,
-              formTitle: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-            window: {
-              title: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-          }),
-        )}
+      onclick={openTabSettings}
+      onkeydown={(event) => {
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          openTabSettings();
+        }
+      }}
     >
       <i class="fas fa-gear"></i>
     </a>
