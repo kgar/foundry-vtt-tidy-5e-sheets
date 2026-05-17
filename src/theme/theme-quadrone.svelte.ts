@@ -73,11 +73,15 @@ export class ThemeQuadrone {
   }
 
   static getWorldThemeSettings(): ThemeSettingsV3 {
-    console.log('settingsProvider', SettingsProvider);
-    return foundry.utils.mergeObject(
-      this.getDefaultThemeSettings(),
-      SettingsProvider.settings.worldThemeSettings.get()
-    );
+    // SettingsProvider is assigned in initSettings(); optional chaining covers
+    // circular-import / ordering edge cases. Fall back to raw game setting.
+    const stored =
+      SettingsProvider?.settings?.worldThemeSettings?.get() ??
+      FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
+        'worldThemeSettings'
+      ) ??
+      this.getDefaultThemeSettings();
+    return foundry.utils.mergeObject(this.getDefaultThemeSettings(), stored);
   }
 
   /** Get any settings that have been changed, or null  */
@@ -259,7 +263,10 @@ export class ThemeQuadrone {
   static getActorPortraitShape(doc: any): PortraitShape {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
-      SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
+      SettingsProvider?.settings?.worldThemeSettings?.get()?.portraitShape,
+      FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
+        'worldThemeSettings'
+      )?.portraitShape,
       this.DEFAULT_PORTRAIT_SHAPE
     ) as PortraitShape;
   }
