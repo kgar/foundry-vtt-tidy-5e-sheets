@@ -97,24 +97,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
             return this.isEditable;
           },
         },
-        {
-          action: 'openTabConfiguration',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabConfiguration.MenuOptionText',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eItemSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-        {
-          icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-          action: 'themeSettings',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eItemSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
       ],
     },
     position: {

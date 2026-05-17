@@ -9,12 +9,12 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildCharacterFeaturesSettingsTab } from './CharacterFeaturesTab.pane';
+  import type { FeatureSection } from 'src/types/types';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -29,19 +29,10 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let features = $derived(
-    SheetSections.configureFeatures(
-      context.features,
-      context,
-      tabId,
-      UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
-  );
+  let settingsTab = $derived(buildCharacterFeaturesSettingsTab(context, tabId));
+  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
-  let tabOptionGroups = $derived(
-    buildCharacterFeaturesSettingsTab(context, tabId).optionsGroups ?? [],
-  );
+  let features = $derived(settingsTab.sections as FeatureSection[]);
 
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
@@ -59,6 +50,17 @@
       tabId: tabId,
     });
   });
+
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: `sheet:${tabId}`,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    );
+  }
 </script>
 
 <ItemsActionBar
@@ -66,6 +68,7 @@
   sections={features}
   {tabId}
   {tabOptionGroups}
+  onConfigureClick={openTabSettings}
 />
 
 <div class="tab-content">

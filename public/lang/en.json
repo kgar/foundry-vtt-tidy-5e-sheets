@@ -321,6 +321,10 @@
       "SheetSettings": "Sheet Settings",
       "Tabs": "Tabs"
     },
+    "Sidebar": {
+      "title": "Sidebar",
+      "Hint": "Configure the settings for the sidebar tabs."
+    },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
 
@@ -1006,7 +1010,7 @@
   "TIDY5E.Visible": "Visible",
   "TIDY5E.Hidden": "Hidden",
   "TIDY5E.Options.Title": "Options",
-  "TIDY5E.ConfigureTab.Title": "Configure {tabName}",
+  "TIDY5E.ConfigureTab.Title": "Configure {tabName} Tab",
   "TIDY5E.DisplayOptions.Title": "Display Options",
   "TIDY5E.DisplayOptionsGlobalDefault.Title": "Global Default Display Options",
   "TIDY5E.DisplayOptionsActor.Title": "Actor Display Options",

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
@@ -11,19 +12,30 @@
   } from 'src/features/search/search.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { Container } from 'src/features/containers/Container';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+  import {
+    buildContainerContentsSections,
+    buildContainerContentsSettingsTab,
+  } from './ContainerContentsTab.pane';
+
+  const localize = FoundryAdapter.localize;
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  let settingsTab = $derived(buildContainerContentsSettingsTab(context, tabId));
+  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
   let searchCriteria = $state('');
+
+  let configuredContents = $derived(
+    buildContainerContentsSections(context, tabId),
+  );
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
@@ -32,27 +44,33 @@
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: context.itemContext,
-      sections: context.containerContents.contents,
+      sections: configuredContents,
       tabId: tabId,
     });
   });
 
   let footerEl: HTMLElement | undefined = $state();
 
-  // TODO: Make this a callback to send through to the component for preparing sections properly
-  let configuredContents = $derived(
-    SheetSections.configureInventory(
-      context.containerContents.contents,
-      tabId,
-      UserSheetPreferencesService.getByType(context.item.type),
-      TidyFlags.sectionConfig.get(context.item)?.[
-        CONSTANTS.TAB_CONTAINER_CONTENTS
-      ],
-    ),
-  );
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: `sheet:${tabId}`,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    )
+  }
 </script>
 
-<ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
+<ItemsActionBar
+  bind:searchCriteria
+  sections={configuredContents}
+  {tabId}
+  {tabOptionGroups}
+  onConfigureClick={openTabSettings}
+/>
+
 
 <!-- Tables -->
 <InventoryTables
@@ -69,11 +87,21 @@
 <footer bind:this={footerEl} class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />
+  <!-- svelte-ignore a11y_missing_attribute -->
   <a
+    aria-label={localize('DND5E.ItemCreate')}
+    role="button"
+    tabindex="0"
     data-tooltip="DND5E.ItemCreate"
     class="button button-icon-only button-primary item-create"
     class:disabled={!context.editable}
     onclick={() => Container.promptCreateInventoryItem(context.item)}
+    onkeydown={(event) => {
+      if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        event.preventDefault();
+        Container.promptCreateInventoryItem(context.item);
+      }
+    }}
   >
     <i class="fas fa-plus"></i>
   </a>

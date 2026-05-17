@@ -7,6 +7,7 @@ import VehicleCrewAndPassengersTab from 'src/sheets/quadrone/actor/tabs/VehicleC
 import VehicleDescriptionTab from 'src/sheets/quadrone/actor/tabs/VehicleDescriptionTab.svelte';
 import { CONSTANTS } from 'src/constants';
 import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
+import { buildVehicleStatblockSettingsTab } from 'src/sheets/quadrone/actor/tabs/VehicleStatblockTab.pane';
 
 export const VehicleSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<VehicleSheetQuadroneContext>(
@@ -23,6 +24,7 @@ export const VehicleSheetQuadroneRuntime =
         },
         layout: 'quadrone',
         iconClass: 'fa-solid fa-wreath-laurel',
+        settingsTabBuilder: buildVehicleStatblockSettingsTab,
       },
       {
         id: CONSTANTS.TAB_ACTOR_INVENTORY,

@@ -1,8 +1,5 @@
 <script lang="ts">
-  import {
-    ConfigureSectionsApplication,
-    type SectionOptionGroup,
-  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -69,37 +66,19 @@
   
 
   function openConfigureSections() {
-    if (!context.editable) return;
+    if (!context.editable || !onConfigureClick) return;
 
     const formTitle = localize('TIDY5E.ConfigureTab.Title', {
       tabName: tabName,
     });
 
-    if (onConfigureClick) {
-      onConfigureClick({
-        tabId,
-        tabName,
-        sections,
-        tabOptionGroups,
-        formTitle,
-      });
-      return;
-    }
-
-    context.sheet._renderChild(
-      new ConfigureSectionsApplication({
-        document: context.document,
-        settings: {
-          tabId,
-          sections: sections,
-          optionsGroups: tabOptionGroups,
-          formTitle,
-        },
-        window: {
-          title: formTitle,
-        },
-      }),
-    );
+    onConfigureClick({
+      tabId,
+      tabName,
+      sections,
+      tabOptionGroups,
+      formTitle,
+    });
   }
 </script>
 
@@ -136,7 +115,7 @@
 
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} {methods} />
 
-  {#if context.editable}
+  {#if context.editable && onConfigureClick}
     <!-- svelte-ignore a11y_missing_attribute -->
     <a
       role="button"

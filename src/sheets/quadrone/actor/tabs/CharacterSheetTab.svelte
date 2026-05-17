@@ -44,7 +44,6 @@
   let tabOptionGroups = $derived(buildCharacterSheetSettingsTab(context, tabId).optionsGroups ?? []);
 
   let showSheetPins = $state(true);
-  let groupItemsBySetting = $state(true);
 
   // Sync from persisted preference when context/tab changes; persist on toggle via onclick
   $effect(() => {

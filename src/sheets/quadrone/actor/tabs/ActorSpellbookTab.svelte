@@ -19,6 +19,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { buildActorSpellbookSettingsTab } from './ActorSpellbookTab.pane';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
   let context =
     $derived(
@@ -42,9 +43,8 @@
     SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
 
-  let tabOptionGroups = $derived(
-    buildActorSpellbookSettingsTab(context, tabId).optionsGroups ?? [],
-  );
+  let settingsTab = $derived(buildActorSpellbookSettingsTab(context, tabId));
+  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
@@ -62,6 +62,17 @@
       tabId: tabId,
     });
   });
+
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: `sheet:${tabId}`,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    )
+  }
 </script>
 
 <ItemsActionBar
@@ -69,6 +80,7 @@
   sections={spellbook}
   {tabId}
   {tabOptionGroups}
+  onConfigureClick={openTabSettings}
 />
 
 <div class="tab-content">

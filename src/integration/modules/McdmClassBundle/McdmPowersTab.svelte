@@ -1,29 +1,23 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    SectionCommand,
-    ActorSheetQuadroneContext,
-  } from 'src/types/types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { MCDM_CLASS_BUNDLE_CONSTANTS } from './McdmClassBundleConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemsActionBar from 'src/sheets/quadrone/shared/ItemsActionBar.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import McdmPowersTables from './McdmPowersTables.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { ItemUtils } from 'src/utils/ItemUtils';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/api';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { Item5e } from 'src/types/item.types';
-  import type { PowersSection } from './McdmClassBundle';
-  import SectionActions from 'src/features/sections/SectionActions';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import {
+    buildMcdmPowersSections,
+    buildMcdmPowersSettingsTab,
+  } from './McdmPowersTab.pane';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -44,6 +38,9 @@
   let levels = Array.fromRange(9);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  let settingsTab = $derived(buildMcdmPowersSettingsTab(context, tabId));
+  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
   let searchCriteria = $state('');
 
@@ -86,70 +83,7 @@
     Object.values(currentStrain).reduce((acc, i) => acc + i, 0),
   );
 
-  let powerSections: PowersSection[] = $derived.by(() => {
-    const allPowers: Item5e[] =
-      context.actor.itemTypes[MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE];
-    const customSectionPowers = allPowers.filter((p) =>
-      TidyFlags.section.get(p),
-    );
-    const normalPowers = allPowers.filter(
-      (p) => !customSectionPowers.includes(p),
-    );
-
-    const orderToPowersMap = Object.groupBy<any, any>(
-      normalPowers,
-      (p) => p.system.order,
-    );
-    const customSectionToPowersMap = Object.groupBy<any, any>(
-      customSectionPowers,
-      (p) => TidyFlags.section.get(p),
-    );
-
-    const sheetPreferences = UserSheetPreferencesService.getByType(
-      context.actor.type,
-    );
-    const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-    const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
-    const sectionActions: SectionCommand[] = [];
-    if (context.owner) {
-      sectionActions.push(SectionActions.getCreateItemHeaderSectionAction());
-    }
-
-    const allSections = Object.entries(orderToPowersMap)
-      .map<PowersSection>(([order, powers]) => ({
-        key: `order${order}`,
-        type: 'powers' as 'powers',
-        order: sectionConfig?.[`order${order}`]?.order ?? order,
-        dataset: {
-          ['system.order']: order,
-        },
-        items: ItemUtils.getSortedItems(powers ?? [], sortMode),
-        label: `MCDMCB.TALENT.POWERS.ORDERS.${order}`,
-        canCreate: true,
-        rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-        sectionActions,
-        show: sectionConfig?.[`order${order}`]?.show !== false,
-      }))
-      .concat(
-        Object.entries(customSectionToPowersMap).map(
-          ([sectionKey, powers]) => ({
-            key: sectionKey,
-            type: 'powers' as 'powers',
-            order: sectionConfig?.[sectionKey]?.order ?? 1000,
-            dataset: {
-              [TidyFlags.section.prop]: sectionKey,
-            },
-            items: ItemUtils.getSortedItems(powers ?? [], sortMode),
-            label: sectionKey,
-            canCreate: true,
-            rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-            sectionActions,
-            show: sectionConfig?.[sectionKey]?.show !== false,
-          }),
-        ),
-      );
-    return SheetSections.sortKeyedSections(allSections, sectionConfig);
-  });
+  let powerSections = $derived(buildMcdmPowersSections(context, tabId));
 
   function onChangeStrain(strainType: string, strainLevel: number) {
     context.actor.update({
@@ -162,6 +96,17 @@
     context.actor.sheet._addDocument({
       tabId,
     });
+  }
+
+  function openTabSettings() {
+    context.editable &&
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: `sheet:${tabId}`,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    )
   }
 </script>
 
@@ -248,7 +193,13 @@
       </TidyTable>
     </div>
   {/if}
-  <ItemsActionBar bind:searchCriteria sections={powerSections} {tabId} />
+  <ItemsActionBar
+    bind:searchCriteria
+    sections={powerSections}
+    {tabId}
+    {tabOptionGroups}
+    onConfigureClick={openTabSettings}
+  />
   <McdmPowersTables
     sections={powerSections}
     {searchCriteria}

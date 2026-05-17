@@ -102,18 +102,9 @@ export class Tidy5eContainerSheetQuadrone
       resizable: true,
       controls: [
         {
-          action: 'openTabConfiguration',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabConfiguration.MenuOptionText',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eContainerSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-        {
-          icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-          action: 'themeSettings',
+          icon: 'fa-solid fa-excavator',
+          label: 'TIDY5E.SheetSettings.title',
+          action: 'sheetSettings',
           ownership: 'OWNER',
           visible: function (this: Tidy5eContainerSheetQuadrone) {
             return this.isEditable;

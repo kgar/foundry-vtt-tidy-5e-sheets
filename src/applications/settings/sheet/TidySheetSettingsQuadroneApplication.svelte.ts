@@ -290,7 +290,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
           ),
       },
       title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
-        documentName: FoundryAdapter.localize('TIDY5E.Character.Sidebar.Title'),
+        documentName: FoundryAdapter.localize('TIDY5E.SheetSettings.Sidebar.title'),
       }),
       docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
     });
