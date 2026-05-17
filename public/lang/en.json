@@ -231,7 +231,9 @@
     "VisibilityTab.Title": "Tab Visibility",
     "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
-    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
+    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected.",
+    "options.viewers": "Who can see this tab?",
+    "options.visibility": "Show this tab?"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -316,14 +318,10 @@
     "title": "Sheet Settings",
     "hint": "Configure the settings for the sheet.",
     "Group": {
-      "Dialogs": "Dialogs",
+      "SheetSettings": "{documentName} Sheet Settings",
       "Tabs": "Tabs"
     },
-    "CustomTabs": {
-      "label": "Custom Tabs"
-    },
-    "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs.",
-    "PlaceholderHint": "Settings for {tabId} will live here."
+    "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
 
   "TIDY5E.SettingsMenu.WorldThemeSettings": {

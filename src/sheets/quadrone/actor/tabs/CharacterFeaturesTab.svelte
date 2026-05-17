@@ -14,8 +14,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { buildCharacterFeaturesSettingsTab } from './CharacterFeaturesTab.pane';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -40,14 +39,9 @@
     ),
   );
 
-  let tabOptionGroups: SectionOptionGroup[] = $derived([
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
-  ]);
+  let tabOptionGroups = $derived(
+    buildCharacterFeaturesSettingsTab(context, tabId).optionsGroups ?? [],
+  );
 
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(

@@ -14,6 +14,13 @@
     tabId: string;
     sections: TidySectionBase[];
     tabOptionGroups?: SectionOptionGroup[];
+    onConfigureClick?: (params: {
+      tabId: string;
+      tabName: string;
+      sections: TidySectionBase[];
+      tabOptionGroups: SectionOptionGroup[];
+      formTitle: string;
+    }) => void;
   }
 
   let {
@@ -21,6 +28,7 @@
     tabId,
     sections,
     tabOptionGroups = [],
+    onConfigureClick,
   }: Props = $props();
 
   let context = $derived(getSheetContext<DocumentSheetV2Context>());
@@ -41,4 +49,5 @@
   {tabId}
   {sections}
   tabOptionGroups={allTabOptionGroups}
+  {onConfigureClick}
 />

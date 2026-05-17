@@ -9,19 +9,26 @@ import { CONSTANTS } from 'src/constants';
 import { mount } from 'svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
-import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
-import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
-import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import {
+  ConfigureSectionsApplication,
+  type SectionOptionGroup,
+} from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
+
+export const TidySheetSettingsDialogIds = {
+  theme: 'dialog:theme',
+  tabConfig: 'dialog:tab-config',
+  sidebarTabConfig: 'dialog:sidebar-tab-config',
+  customTabs: 'dialog:custom-tabs',
+} as const;
 
 export type TidySheetSettingsTabInfo = {
   id: string;
@@ -33,8 +40,23 @@ export type TidySheetSettingsContext = {
   sheetTabs: TidySheetSettingsTabInfo[];
 };
 
+export type ConfigureSectionsInput = {
+  tabId: string;
+  sections: import('src/types/types').TidySectionBase[];
+  optionsGroups?: import('src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte').SectionOptionGroup[];
+  formTitle?: string;
+};
+
+export type TidySheetSettingsApplicationConfiguration =
+  DocumentSheetApplicationConfiguration & {
+    initialTabId?: string;
+    tabSettings?: {
+      [tabId: string]: ConfigureSectionsInput;
+    };
+  };
+
 export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
-  DocumentSheetApplicationConfiguration,
+  TidySheetSettingsApplicationConfiguration,
   TidySheetSettingsContext
 >() {
   _config: TidySheetSettingsContext = $state({
@@ -43,11 +65,30 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
 
   themeChildApp!: ThemeSettingsQuadroneApplication;
   tabConfigChildApp!: SheetTabConfigurationQuadroneApplication;
+  sidebarTabConfigChildApp?: SheetTabConfigurationQuadroneApplication;
+  specialTraitsChildApp?: SpecialTraitsApplication;
+  configureSectionsChildAppByTabId = new Map<
+    string,
+    ConfigureSectionsApplication
+  >();
+
+  initialTabId?: string;
+  tabSettings: Record<string, ConfigureSectionsInput>;
+
+  // Runtimes are resolved lazily to avoid a module-init cycle: every actor tab
+  // imports this dialog (for the gear button), and each runtime imports those
+  // same tab components to register them.
+  _runtimes?: Record<string, ActorSheetQuadroneRuntime<any>>;
+  _sidebarRuntime?: ActorSheetQuadroneRuntime<any>;
+  _getActorTabContext?: typeof import('src/applications/tab-configuration/tab-configuration-functions').getActorTabContext;
 
   _persisted = false;
 
-  constructor(options: DocumentSheetApplicationConfiguration) {
+  constructor(options: TidySheetSettingsApplicationConfiguration) {
     super(options);
+
+    this.initialTabId = options.initialTabId;
+    this.tabSettings = options.tabSettings ?? {};
 
     this.themeChildApp = new ThemeSettingsQuadroneApplication({
       document: this.document,
@@ -68,6 +109,76 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     return this.themeChildApp._mapSettings(
       ThemeQuadrone.getWorldThemeSettings()
     );
+  }
+
+  getOrCreateSpecialTraitsChildApp(): SpecialTraitsApplication {
+    if (!this.specialTraitsChildApp) {
+      const app = new SpecialTraitsApplication({
+        document: this.document,
+      });
+      app.close = async () => {};
+      this.specialTraitsChildApp = app;
+    }
+    return this.specialTraitsChildApp;
+  }
+
+  getOrCreateConfigureSectionsChildApp(
+    tabId: string
+  ): ConfigureSectionsApplication | undefined {
+    const cached = this.configureSectionsChildAppByTabId.get(tabId);
+    if (cached) {
+      return cached;
+    }
+
+    const input = this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+    if (!input) {
+      return undefined;
+    }
+
+    const app = new ConfigureSectionsApplication({
+      document: this.document,
+      settings: {
+        tabId: input.tabId,
+        sections: input.sections,
+        optionsGroups: input.optionsGroups ?? ([] as SectionOptionGroup[]),
+        formTitle: input.formTitle ?? '',
+      },
+    });
+    // Embedded — never opened as a window. Swallow close() so save/useDefault
+    // don't try to dismiss an unrendered child window.
+    app.close = async () => {};
+    app._seedOptionGroupsFromDocument();
+    app._resetToGlobalDefaults();
+    this.configureSectionsChildAppByTabId.set(tabId, app);
+    return app;
+  }
+
+  _buildTabSettingsFromRuntime(tabId: string): ConfigureSectionsInput | undefined {
+    const runtime = this._getRuntime();
+    if (!runtime) {
+      return undefined;
+    }
+    const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
+    if (!tab?.settingsTabBuilder) {
+      return undefined;
+    }
+    const sheetContext = this.document?.sheet?._context?.data;
+    if (!sheetContext) {
+      return undefined;
+    }
+    return tab.settingsTabBuilder(sheetContext, tabId);
+  }
+
+  hasTabSettingsForTab(tabId: string): boolean {
+    if (this.tabSettings[tabId]) {
+      return true;
+    }
+    const runtime = this._getRuntime();
+    if (!runtime) {
+      return false;
+    }
+    const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
+    return !!tab?.settingsTabBuilder;
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -115,8 +226,78 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   async _prepareContext(
     _options: ApplicationRenderOptions
   ): Promise<TidySheetSettingsContext> {
+    await this._loadRuntimes();
     this._config.sheetTabs = this._getSheetTabs();
     return this._config;
+  }
+
+  async _loadRuntimes(): Promise<void> {
+    if (this._runtimes) {
+      return;
+    }
+
+    const [character, npc, vehicle, group, encounter, sidebar, tabConfigFns] =
+      await Promise.all([
+        import('src/runtime/actor/CharacterSheetQuadroneRuntime.svelte'),
+        import('src/runtime/actor/NpcSheetQuadroneRuntime.svelte'),
+        import('src/runtime/actor/VehicleSheetQuadroneRuntime.svelte'),
+        import('src/runtime/actor/GroupSheetQuadroneRuntime.svelte'),
+        import('src/runtime/actor/EncounterSheetQuadroneRuntime.svelte'),
+        import('src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte'),
+        import('src/applications/tab-configuration/tab-configuration-functions'),
+      ]);
+
+    this._runtimes = {
+      [CONSTANTS.SHEET_TYPE_CHARACTER]: character.CharacterSheetQuadroneRuntime,
+      [CONSTANTS.SHEET_TYPE_NPC]: npc.NpcSheetQuadroneRuntime,
+      [CONSTANTS.SHEET_TYPE_VEHICLE]: vehicle.VehicleSheetQuadroneRuntime,
+      [CONSTANTS.SHEET_TYPE_GROUP]: group.GroupSheetQuadroneRuntime,
+      [CONSTANTS.SHEET_TYPE_ENCOUNTER]: encounter.EncounterSheetQuadroneRuntime,
+    };
+
+    this._sidebarRuntime = sidebar.CharacterSheetQuadroneSidebarRuntime;
+    this._getActorTabContext = tabConfigFns.getActorTabContext;
+
+    this._initializeSidebarTabConfigChildAppIfApplicable();
+  }
+
+  _initializeSidebarTabConfigChildAppIfApplicable() {
+    if (this.sidebarTabConfigChildApp) {
+      return;
+    }
+    if (this.document?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
+      return;
+    }
+    if (!this._sidebarRuntime || !this._getActorTabContext) {
+      return;
+    }
+
+    const sidebarRuntime = this._sidebarRuntime;
+    const getActorTabContext = this._getActorTabContext;
+
+    const app = new SheetTabConfigurationQuadroneApplication({
+      document: this.document,
+      customTabConfigProvider: {
+        getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+        setTabConfig: TidyFlags.sidebarTabConfiguration.set,
+        getTabContext: (doc, setting) =>
+          getActorTabContext(
+            sidebarRuntime,
+            doc.documentName,
+            setting,
+            true,
+            CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
+          ),
+      },
+      title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
+        documentName: FoundryAdapter.localize('TIDY5E.Character.Sidebar.Title'),
+      }),
+      docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+    });
+    app._config = { entry: app._getConfig() };
+    app._resetToGlobalDefaults();
+    app.close = async () => {};
+    this.sidebarTabConfigChildApp = app;
   }
 
   _getSheetTabs(): TidySheetSettingsTabInfo[] {
@@ -131,6 +312,11 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     return selectedIds
       .map((id) => allRegisteredTabs.find((t) => t.id === id))
       .filter((t): t is NonNullable<typeof t> => !!t)
+      .filter(
+        (t) =>
+          t.id === CONSTANTS.TAB_CHARACTER_ATTRIBUTES ||
+          this.hasTabSettingsForTab(t.id)
+      )
       .map((t) => ({
         id: t.id,
         title: FoundryAdapter.localize(
@@ -163,20 +349,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
       return undefined;
     }
 
-    switch (this.document.type) {
-      case CONSTANTS.SHEET_TYPE_CHARACTER:
-        return CharacterSheetQuadroneRuntime;
-      case CONSTANTS.SHEET_TYPE_NPC:
-        return NpcSheetQuadroneRuntime;
-      case CONSTANTS.SHEET_TYPE_VEHICLE:
-        return VehicleSheetQuadroneRuntime;
-      case CONSTANTS.SHEET_TYPE_GROUP:
-        return GroupSheetQuadroneRuntime;
-      case CONSTANTS.SHEET_TYPE_ENCOUNTER:
-        return EncounterSheetQuadroneRuntime;
-      default:
-        return undefined;
-    }
+    return this._runtimes?.[this.document.type];
   }
 
   /* -------------------------------------------- */
@@ -187,6 +360,11 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     try {
       await this.themeChildApp.apply();
       await this.tabConfigChildApp.apply();
+      await this.sidebarTabConfigChildApp?.apply();
+      await this.specialTraitsChildApp?.apply();
+      for (const helper of this.configureSectionsChildAppByTabId.values()) {
+        await helper.apply();
+      }
       this._persisted = true;
     } catch (e) {
       error('Failed to save sheet settings', false, e);

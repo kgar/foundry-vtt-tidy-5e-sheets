@@ -18,6 +18,8 @@
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+  import { buildActorInventorySettingsTab } from './ActorInventoryTab.pane';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -73,6 +75,7 @@
         (member.actor.system.attributes.death.failure >= 3 &&
           member.actor.system.attributes.death.success < 3))}
 
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
       class="actor-container flexrow"
       style:--t5e-theme-color-default={member.accentColor}
@@ -162,7 +165,21 @@
   {/each}
 </aside>
 <div class="tab-right-column">
-  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+  <InventoryActionBar
+    bind:searchCriteria
+    sections={inventory}
+    {tabId}
+    onConfigureClick={() => {
+      const settingsTab = buildActorInventorySettingsTab(context, tabId);
+      context.sheet._renderChild(
+        new TidySheetSettingsQuadroneApplication({
+          document: context.document,
+          initialTabId: `sheet:${tabId}`,
+          tabSettings: { [tabId]: settingsTab },
+        }),
+      );
+    }}
+  />
   <div class="tab-content">
     {#if showSheetPins}
       <SheetPins />

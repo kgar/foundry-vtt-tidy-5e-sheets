@@ -67,12 +67,38 @@ export type SectionConfigItem = {
   show: boolean;
 };
 
+function snapshotOptionGroupValues(
+  optionsGroups: SectionOptionGroup[]
+): { title: string; values: (boolean | unknown | undefined)[] }[] {
+  return optionsGroups.map((group) => ({
+    title: group.title,
+    values: group.settings.map((setting) => {
+      if (setting.type === 'boolean') {
+        return setting.checked;
+      }
+      if (setting.type === 'radio') {
+        return setting.selected;
+      }
+      return undefined;
+    }),
+  }));
+}
+
 export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   sections = $state<SectionConfigItem[]>([]);
   optionsGroups = $state<SectionOptionGroup[]>([]);
   tabId: string;
   theme: string = $state<string>('');
   formTitle: string;
+
+  _initialSnapshot = $state('');
+
+  hasChanges = $derived(
+    JSON.stringify({
+      sections: $state.snapshot(this.sections),
+      optionsGroups: snapshotOptionGroupValues(this.optionsGroups),
+    }) !== this._initialSnapshot
+  );
 
   constructor({
     settings: { sections, tabId, optionsGroups, formTitle },
@@ -130,6 +156,15 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   async _preRender(...args: any[]) {
     super._preRender(...args);
 
+    this._seedOptionGroupsFromDocument();
+  }
+
+  /**
+   * Seed option-group setting values from the document. Called by _preRender for
+   * the standalone window flow, and by the parent dialog when this app is used
+   * headlessly (no window render).
+   */
+  _seedOptionGroupsFromDocument() {
     for (const group of this.optionsGroups) {
       for (const setting of group.settings) {
         if (setting.type === 'button') {
@@ -162,6 +197,11 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   /* -------------------------------------------- */
 
   async saveChanges() {
+    await this.apply();
+    await this.close();
+  }
+
+  async apply() {
     const thisDocumentData: Record<string, any> = {};
     const documentsToSave: Map<any, Record<string, any>> = new Map([
       [this.document, thisDocumentData],
@@ -203,7 +243,14 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
       await doc.update(toSave);
     }
 
-    this.close();
+    this._resetToGlobalDefaults();
+  }
+
+  _resetToGlobalDefaults() {
+    this._initialSnapshot = JSON.stringify({
+      sections: $state.snapshot(this.sections),
+      optionsGroups: snapshotOptionGroupValues(this.optionsGroups),
+    });
   }
 
   async useDefault() {

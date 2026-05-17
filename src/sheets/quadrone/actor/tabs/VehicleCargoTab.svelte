@@ -17,6 +17,8 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+  import { buildActorInventorySettingsTab } from './ActorInventoryTab.pane';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   const localize = FoundryAdapter.localize;
@@ -59,7 +61,21 @@
   });
 </script>
 
-<InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+<InventoryActionBar
+  bind:searchCriteria
+  sections={cargo}
+  {tabId}
+  onConfigureClick={() => {
+    const settingsTab = buildActorInventorySettingsTab(context, tabId);
+    context.sheet._renderChild(
+      new TidySheetSettingsQuadroneApplication({
+        document: context.document,
+        initialTabId: `sheet:${tabId}`,
+        tabSettings: { [tabId]: settingsTab },
+      }),
+    );
+  }}
+/>
 
 <div class="tab-content">
 

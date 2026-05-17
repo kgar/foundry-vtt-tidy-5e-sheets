@@ -32,6 +32,18 @@ export type RegisteredContent<TContext> = {
   renderScheme?: RenderScheme;
 };
 
+export type SheetSectionConfigurationTab = {
+  tabId: string;
+  sections: TidySectionBase[];
+  optionsGroups?: import('src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte').SectionOptionGroup[];
+  formTitle?: string;
+};
+
+export type SheetSectionConfigurationTabBuilder<TContext> = (
+  context: TContext,
+  tabId: string
+) => SheetSectionConfigurationTab | undefined;
+
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
   layout: SheetLayout;
@@ -47,6 +59,7 @@ export type RegisteredTab<TContext> = {
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
   types?: Set<string>;
+  settingsTabBuilder?: SheetSectionConfigurationTabBuilder<TContext>;
 };
 
 /**

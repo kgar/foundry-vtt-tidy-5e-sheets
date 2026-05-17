@@ -19,6 +19,13 @@ export type SpecialTraitsContext = {
 };
 
 export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetApplicationConfiguration>() {
+  // Special Traits updates live, so it uses different settings options.
+  hasChanges = false;
+
+  async apply() {}
+
+  _resetToGlobalDefaults() {}
+
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {

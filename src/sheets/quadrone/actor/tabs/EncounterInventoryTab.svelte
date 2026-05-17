@@ -15,6 +15,8 @@
   import InventoryTables from '../../shared/InventoryTables.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+  import { buildActorInventorySettingsTab } from './ActorInventoryTab.pane';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -57,7 +59,21 @@
 </script>
 
 <div class="tab-right-column">
-  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+  <InventoryActionBar
+    bind:searchCriteria
+    sections={inventory}
+    {tabId}
+    onConfigureClick={() => {
+      const settingsTab = buildActorInventorySettingsTab(context, tabId);
+      context.sheet._renderChild(
+        new TidySheetSettingsQuadroneApplication({
+          document: context.document,
+          initialTabId: `sheet:${tabId}`,
+          tabSettings: { [tabId]: settingsTab },
+        }),
+      );
+    }}
+  />
   <div class="tab-content">
     {#if showSheetPins}
       <SheetPins />

@@ -53,8 +53,10 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
+import {
+  TidySheetSettingsDialogIds,
+  TidySheetSettingsQuadroneApplication,
+} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import {
   getCharacterSheetTabActionSectionsQuadrone,
@@ -94,26 +96,9 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
         this: Tidy5eCharacterSheetQuadrone,
       ) {
         this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
+          new TidySheetSettingsQuadroneApplication({
             document: this.document,
-            customTabConfigProvider: {
-              getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-              setTabConfig: TidyFlags.sidebarTabConfiguration.set,
-              getTabContext: (doc, setting) => {
-                return getActorTabContext(
-                  CharacterSheetQuadroneSidebarRuntime,
-                  doc.documentName,
-                  setting,
-                  true,
-                  CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-                );
-              },
-            },
-            title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
-              documentName: FoundryAdapter.localize(
-                'TIDY5E.Character.Sidebar.Title',
-              ),
-            }),
+            initialTabId: TidySheetSettingsDialogIds.sidebarTabConfig,
           }),
         );
       },

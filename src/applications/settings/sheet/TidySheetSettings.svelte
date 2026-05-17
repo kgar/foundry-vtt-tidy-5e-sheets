@@ -1,13 +1,18 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    TidySheetSettingsContext,
-    TidySheetSettingsQuadroneApplication,
-    TidySheetSettingsTabInfo,
+  import {
+    TidySheetSettingsDialogIds,
+    type TidySheetSettingsContext,
+    type TidySheetSettingsQuadroneApplication,
+    type TidySheetSettingsTabInfo,
   } from './TidySheetSettingsQuadroneApplication.svelte';
   import PlaceholderSettingsPane from './tabs/PlaceholderSettingsPane.svelte';
-  import ThemeSettingsPane from './tabs/ThemeSettingsPane.svelte';
-  import TabConfigurationPane from './tabs/TabConfigurationPane.svelte';
+  import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
+  import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
+  import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
+  import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { untrack } from 'svelte';
 
   interface Props {
     app: TidySheetSettingsQuadroneApplication;
@@ -18,9 +23,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  const DIALOG_TAB_THEME = 'dialog:theme';
-  const DIALOG_TAB_TAB_CONFIG = 'dialog:tab-config';
-  const DIALOG_TAB_CUSTOM_TABS = 'dialog:custom-tabs';
+  const DIALOG_TAB_THEME = TidySheetSettingsDialogIds.theme;
+  const DIALOG_TAB_TAB_CONFIG = TidySheetSettingsDialogIds.tabConfig;
+  const DIALOG_TAB_SIDEBAR_TAB_CONFIG = TidySheetSettingsDialogIds.sidebarTabConfig;
 
   type SidebarEntry = {
     id: string;
@@ -29,25 +34,32 @@
     hasChanges?: boolean;
   };
 
-  let dialogEntries: SidebarEntry[] = $derived([
-    {
-      id: DIALOG_TAB_THEME,
-      title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
-      iconClass: 'fa-solid fa-swatchbook',
-      hasChanges: app.themeChildApp.hasChanges,
-    },
-    {
-      id: DIALOG_TAB_TAB_CONFIG,
-      title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
-      iconClass: 'fas fa-file-invoice',
-      hasChanges: app.tabConfigChildApp.hasChanges,
-    },
-    {
-      id: DIALOG_TAB_CUSTOM_TABS,
-      title: localize('TIDY5E.SheetSettings.CustomTabs.label'),
-      iconClass: 'fa-solid fa-table-columns',
-    },
-  ]);
+  let dialogEntries: SidebarEntry[] = $derived(
+    [
+      {
+        id: DIALOG_TAB_THEME,
+        title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
+        iconClass: 'fa-solid fa-swatchbook',
+        hasChanges: app.themeChildApp.hasChanges,
+      },
+      {
+        id: DIALOG_TAB_TAB_CONFIG,
+        title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
+        iconClass: 'fas fa-file-invoice',
+        hasChanges: app.tabConfigChildApp.hasChanges,
+      },
+      ...(app.sidebarTabConfigChildApp
+        ? [
+            {
+              id: DIALOG_TAB_SIDEBAR_TAB_CONFIG,
+              title: localize('TIDY5E.Character.Sidebar.Title'),
+              iconClass: 'fas fa-sidebar',
+              hasChanges: app.sidebarTabConfigChildApp.hasChanges,
+            },
+          ]
+        : []),
+    ],
+  );
 
   let sheetEntries: SidebarEntry[] = $derived(
     config.sheetTabs.map((t: TidySheetSettingsTabInfo) => ({
@@ -62,7 +74,9 @@
     ...sheetEntries,
   ]);
 
-  let selectedId: string = $state(DIALOG_TAB_THEME);
+  let selectedId: string = $state(
+    untrack(() => app.initialTabId ?? DIALOG_TAB_THEME),
+  );
 
   $effect(() => {
     if (!allEntries.some((e) => e.id === selectedId)) {
@@ -74,6 +88,18 @@
     allEntries.find((e) => e.id === selectedId),
   );
 
+  let selectedSheetTabId: string | undefined = $derived(
+    selectedId.startsWith('sheet:')
+      ? selectedId.slice('sheet:'.length)
+      : undefined,
+  );
+
+  let configureSectionsApp = $derived(
+    selectedSheetTabId
+      ? app.getOrCreateConfigureSectionsChildApp(selectedSheetTabId)
+      : undefined,
+  );
+
   function selectTab(id: string) {
     selectedId = id;
   }
@@ -83,7 +109,7 @@
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
       <div class="nav-group-header">
-        {localize('TIDY5E.SheetSettings.Group.Dialogs')}
+        {localize('TIDY5E.SheetSettings.Group.SheetSettings', { documentName: app.document.name })}
       </div>
       {#each dialogEntries as entry (entry.id)}
         <button
@@ -136,9 +162,32 @@
 
   <section class="settings-pane" role="tabpanel">
     {#if selectedId === DIALOG_TAB_THEME}
-      <ThemeSettingsPane {app} />
+      <ThemeSettingsQuadrone
+        app={app.themeChildApp}
+        settings={app.themeChildApp._settings}
+        placeholders={app.themePlaceholders}
+      />
     {:else if selectedId === DIALOG_TAB_TAB_CONFIG}
-      <TabConfigurationPane {app} />
+      <SheetTabConfigurationQuadrone
+        app={app.tabConfigChildApp}
+        config={app.tabConfigChildApp._config}
+        title={app.tabConfigChildApp._inclusionTabTitle}
+      />
+    {:else if selectedId === DIALOG_TAB_SIDEBAR_TAB_CONFIG && app.sidebarTabConfigChildApp}
+      <SheetTabConfigurationQuadrone
+        app={app.sidebarTabConfigChildApp}
+        config={app.sidebarTabConfigChildApp._config}
+        title={app.sidebarTabConfigChildApp._inclusionTabTitle}
+      />
+    {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
+      <SpecialTraitsPane app={app.getOrCreateSpecialTraitsChildApp()} />
+    {:else if configureSectionsApp}
+      <ConfigureSections
+        application={configureSectionsApp}
+        title={configureSectionsApp.formTitle}
+        bind:sections={configureSectionsApp.sections}
+        optionGroups={configureSectionsApp.optionsGroups}
+      />
     {:else}
       <PlaceholderSettingsPane
         title={selectedEntry?.title ?? ''}

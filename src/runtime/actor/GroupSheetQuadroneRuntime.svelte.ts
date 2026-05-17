@@ -6,6 +6,7 @@ import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
 import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
 
 export const GroupSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<GroupSheetQuadroneContext>(
@@ -29,6 +30,7 @@ export const GroupSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
+        settingsTabBuilder: buildActorInventorySettingsTab,
       },
       // {
       //   title: 'DND5E.Bastion.Configuration.Name',

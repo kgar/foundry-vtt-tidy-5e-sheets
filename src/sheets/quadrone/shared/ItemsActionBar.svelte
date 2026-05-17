@@ -24,6 +24,13 @@
     tabId: string;
     sections: TidySectionBase[];
     tabOptionGroups?: SectionOptionGroup[];
+    onConfigureClick?: (params: {
+      tabId: string;
+      tabName: string;
+      sections: TidySectionBase[];
+      tabOptionGroups: SectionOptionGroup[];
+      formTitle: string;
+    }) => void;
   }
 
   let {
@@ -31,6 +38,7 @@
     tabId,
     sections,
     tabOptionGroups = [],
+    onConfigureClick,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -58,6 +66,41 @@
     ItemSortRuntime.getDocumentSortMethodsQuadrone(context.document, tabId) ??
       [],
   );
+  
+
+  function openConfigureSections() {
+    if (!context.editable) return;
+
+    const formTitle = localize('TIDY5E.ConfigureTab.Title', {
+      tabName: tabName,
+    });
+
+    if (onConfigureClick) {
+      onConfigureClick({
+        tabId,
+        tabName,
+        sections,
+        tabOptionGroups,
+        formTitle,
+      });
+      return;
+    }
+
+    context.sheet._renderChild(
+      new ConfigureSectionsApplication({
+        document: context.document,
+        settings: {
+          tabId,
+          sections: sections,
+          optionsGroups: tabOptionGroups,
+          formTitle,
+        },
+        window: {
+          title: formTitle,
+        },
+      }),
+    );
+  }
 </script>
 
 <section
@@ -94,29 +137,20 @@
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} {methods} />
 
   {#if context.editable}
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button"
+      tabindex="0"
       class="button button-icon-only"
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-      onclick={() =>
-        context.editable &&
-        context.sheet._renderChild(
-          new ConfigureSectionsApplication({
-            document: context.document,
-            settings: {
-              tabId,
-              sections: sections,
-              optionsGroups: tabOptionGroups,
-              formTitle: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-            window: {
-              title: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-          }),
-        )}
+      onclick={openConfigureSections}
+      onkeydown={(event) => {
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          openConfigureSections();
+        }
+      }}
+ 
     >
       <i class="fas fa-gear"></i>
     </a>
