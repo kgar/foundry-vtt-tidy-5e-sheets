@@ -45,6 +45,7 @@
   }
   
   .tidy-sheet-settings {
+    border-top: 0.0625rem solid var(--t5e-table-row-divider);
     flex: 1;
     display: grid;
     grid-template-areas:
@@ -52,8 +53,11 @@
       'nav    buttons';
     grid-template-columns: 12rem 1fr;
     grid-template-rows: 1fr auto;
-    gap: 0.5rem;
     min-height: 0;
+
+    .settings-pane {
+      padding: var(--t5e-size-2x) var(--t5e-size-4x);
+    }
   }
 
   .settings-nav {
@@ -62,8 +66,8 @@
     flex-direction: column;
     gap: 0.75rem;
     overflow-y: auto;
-    padding: 0 0.25rem 0.5rem 0.25rem;
-    border-right: 0.0625rem solid var(--t5e-tab-strip-border-color);
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-right: 0.0625rem solid var(--t5e-table-row-divider);
     background-color: var(--t5e-header-background);
   }
 
@@ -74,31 +78,45 @@
   }
 
   .nav-group-header {
-    padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+    padding: 0.25rem 0 0.25rem 0.5rem;
   }
 
   .nav-tab {
-    display: flex;
+    --button-padding-inline-start: 0.5rem;
+    --tab-background-color: transparent;
+
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.5rem;
-    background: transparent;
+    background-color: var(--tab-background-color);
     border: 0.0625rem solid transparent;
-    border-radius: 0.25rem;
-    text-align: left;
-    font: inherit;
     color: inherit;
     cursor: pointer;
+    font: inherit;
+    min-height: var(--t5e-field-size-default);
+    padding: 0.25rem 0.25rem;
+    text-align: left;
     width: 100%;
 
+    &:active,
+    &:focus-within,
     &:hover {
-      background-color: var(--t5e-tab-strip-hover-background, rgba(0, 0, 0, 0.05));
+      --tab-background-color: var(--t5e-component-card-lighter);
+      border-color: transparent;
+      background-color: var(--tab-background-color);
     }
 
     &.active {
-      background-color: var(--t5e-tab-strip-active-background, rgba(0, 0, 0, 0.1));
-      border-color: var(--t5e-tab-strip-active-border-color, transparent);
-      font-weight: 600;
+      --tab-background-color: var(--t5e-theme-color-darker);
+      border-color: transparent;
+      background-color: var(--tab-background-color);
+      font-weight: var(--font-weight-label);
+
+      &:active,
+      &:focus-within,
+      &:hover {
+        --tab-background-color: var(--t5e-theme-color-darkest);
+        border-color: transparent;
+        background-color: var(--tab-background-color);
+      }
     }
   }
 
