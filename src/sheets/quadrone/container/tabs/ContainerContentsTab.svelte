@@ -17,7 +17,7 @@
   import {
     buildContainerContentsSections,
     buildContainerContentsSettingsTab,
-  } from './ContainerContentsTab.pane';
+  } from '../settings/ContainerContentsSettingsTab';
 
   const localize = FoundryAdapter.localize;
 

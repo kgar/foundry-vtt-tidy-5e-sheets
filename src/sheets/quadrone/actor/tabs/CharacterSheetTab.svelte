@@ -23,7 +23,7 @@
   import { tick } from 'svelte';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { buildCharacterSheetSettingsTab } from './CharacterSheetTab.pane';
+  import { buildCharacterSheetSettingsTab } from '../settings/CharacterSheetSettingsTab';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 

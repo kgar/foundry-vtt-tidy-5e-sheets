@@ -13,7 +13,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
-  import { buildCharacterFeaturesSettingsTab } from './CharacterFeaturesTab.pane';
+  import { buildCharacterFeaturesSettingsTab } from '../settings/CharacterFeaturesSettingsTab';
   import type { FeatureSection } from 'src/types/types';
 
   let context = $derived(getCharacterSheetQuadroneContext());

@@ -27,7 +27,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
-  import { buildVehicleStatblockSettingsTab } from './VehicleStatblockTab.pane';
+  import { buildVehicleStatblockSettingsTab } from '../settings/VehicleStatblockSettingsTab';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;

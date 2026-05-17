@@ -18,7 +18,7 @@
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { buildActorSpellbookSettingsTab } from './ActorSpellbookTab.pane';
+  import { buildActorSpellbookSettingsTab } from '../settings/ActorSpellbookSettingsTab';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
   let context =

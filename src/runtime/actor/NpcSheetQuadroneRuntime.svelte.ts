@@ -7,8 +7,8 @@ import ActorSpellbookTab from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
 import NpcBiographyTab from 'src/sheets/quadrone/actor/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
-import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.pane';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
+import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/settings/ActorSpellbookSettingsTab';
 
 export const NpcSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(

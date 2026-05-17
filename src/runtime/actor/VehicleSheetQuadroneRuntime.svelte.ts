@@ -6,8 +6,8 @@ import VehicleCargoTab from 'src/sheets/quadrone/actor/tabs/VehicleCargoTab.svel
 import VehicleCrewAndPassengersTab from 'src/sheets/quadrone/actor/tabs/VehicleCrewAndPassengersTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/quadrone/actor/tabs/VehicleDescriptionTab.svelte';
 import { CONSTANTS } from 'src/constants';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
-import { buildVehicleStatblockSettingsTab } from 'src/sheets/quadrone/actor/tabs/VehicleStatblockTab.pane';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
+import { buildVehicleStatblockSettingsTab } from 'src/sheets/quadrone/actor/settings/VehicleStatblockSettingsTab';
 
 export const VehicleSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<VehicleSheetQuadroneContext>(

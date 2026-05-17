@@ -16,7 +16,7 @@
   import {
     buildMcdmPowersSections,
     buildMcdmPowersSettingsTab,
-  } from './McdmPowersTab.pane';
+  } from './settings/McdmPowersSettingsTab';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());

@@ -18,7 +18,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
-  import { buildActorInventorySettingsTab } from './ActorInventoryTab.pane';
+  import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   const localize = FoundryAdapter.localize;

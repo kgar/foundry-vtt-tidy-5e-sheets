@@ -9,7 +9,7 @@
     GroupSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
-  import { buildGroupMembersSettingsTab } from '../actor/tabs/GroupMemberTab.pane';
+  import { buildGroupMembersSettingsTab } from '../actor/settings/GroupMemberSettingsTab';
   import ExpandCollapseButton from './ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

@@ -19,7 +19,7 @@
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
-  import { buildActorInventorySettingsTab } from './ActorInventoryTab.pane';
+  import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;

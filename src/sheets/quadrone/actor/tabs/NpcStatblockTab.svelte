@@ -19,7 +19,7 @@
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
-  import { buildNpcStatblockSettingsTab } from './NpcStatblockTab.pane';
+  import { buildNpcStatblockSettingsTab } from '../settings/NpcStatblockSettingsTab';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;

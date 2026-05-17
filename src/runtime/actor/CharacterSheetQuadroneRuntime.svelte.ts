@@ -11,10 +11,10 @@ import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeatur
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 import CharacterSheetTab from 'src/sheets/quadrone/actor/tabs/CharacterSheetTab.svelte';
-import { buildCharacterSheetSettingsTab } from 'src/sheets/quadrone/actor/tabs/CharacterSheetTab.pane';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
-import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.pane';
-import { buildCharacterFeaturesSettingsTab } from 'src/sheets/quadrone/actor/tabs/CharacterFeaturesTab.pane';
+import { buildCharacterSheetSettingsTab } from 'src/sheets/quadrone/actor/settings/CharacterSheetSettingsTab';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
+import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/settings/ActorSpellbookSettingsTab';
+import { buildCharacterFeaturesSettingsTab } from 'src/sheets/quadrone/actor/settings/CharacterFeaturesSettingsTab';
 
 export const CharacterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(

@@ -13,8 +13,8 @@ import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import SectionActions from 'src/features/sections/SectionActions';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { MCDM_CLASS_BUNDLE_CONSTANTS } from './McdmClassBundleConstants';
-import type { PowersSection } from './McdmClassBundle';
+import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
+import type { PowersSection } from '../McdmClassBundle';
 
 export function buildMcdmPowersSections(
   context: ActorSheetQuadroneContext,

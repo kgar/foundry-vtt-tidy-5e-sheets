@@ -4,10 +4,10 @@ import GroupMembersTab from 'src/sheets/quadrone/actor/tabs/GroupMembersTab.svel
 import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
-import { buildGroupMembersSettingsTab } from 'src/sheets/quadrone/actor/tabs/GroupMemberTab.pane';
+import { buildGroupMembersSettingsTab } from 'src/sheets/quadrone/actor/settings/GroupMemberSettingsTab';
 // import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
 // import { systemSettings } from 'src/settings/settings.svelte';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.pane';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
 
 export const GroupSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<GroupSheetQuadroneContext>(
@@ -19,7 +19,7 @@ export const GroupSheetQuadroneRuntime =
           type: 'svelte',
         },
         id: CONSTANTS.TAB_MEMBERS,
-        layout: 'quadrone',
+        layout: 'quadrone', 
         iconClass: 'fa-solid fa-people-group',
         settingsTabBuilder: buildGroupMembersSettingsTab,
       },
