@@ -7,7 +7,6 @@ import type {
 } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
 import { mount } from 'svelte';
-import { SvelteMap } from 'svelte/reactivity';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
@@ -69,7 +68,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   tabDisplaySettingsTab!: SheetTabConfigurationQuadroneApplication;
   sidebarTabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
   specialTraitsChildApp?: SpecialTraitsApplication;
-  configureSectionsChildAppByTabId = new SvelteMap<
+  configureSectionsChildAppByTabId = new Map<
     string,
     ConfigureSectionsApplication
   >();
@@ -283,9 +282,6 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     this.sidebarTabDisplaySettingsTab = app;
   }
 
-
-  
-
   getSpecialTraitsConfigTab(): SpecialTraitsApplication {
     if (!this.specialTraitsChildApp) {
       const app = new SpecialTraitsApplication({
@@ -295,6 +291,22 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
       this.specialTraitsChildApp = app;
     }
     return this.specialTraitsChildApp;
+  }
+
+  _buildTabSettingsFromRuntime(tabId: string): ConfigureSectionsInput | undefined {
+    const runtime = this._getRuntime();
+    if (!runtime) {
+      return undefined;
+    }
+    const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
+    if (!tab?.settingsTabBuilder) {
+      return undefined;
+    }
+    const sheetContext = this.document?.sheet?._context?.data;
+    if (!sheetContext) {
+      return undefined;
+    }
+    return tab.settingsTabBuilder(sheetContext, tabId);
   }
 
   getConfigureSectionsConfigTab(
