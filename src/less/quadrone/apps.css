@@ -722,10 +722,10 @@
     }
   }
 
-  :where(.spell-method:is(.cannot-prepare, .can-prepare.always)) {
+  :where(.spell-method:is(.cannot-prepare, .can-prepare.always, .method-pact)) {
     --t5e-icon-color: var(--t5e-method-color);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always))) {
+    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always, .method-pact))) {
       --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.5) calc(c * .88) h);
     }
   }
