@@ -68,6 +68,17 @@
                   {/if}
                   {localize(setting.label ?? '')}
                 </button>
+              {:else if setting.type === 'navigationButton'}
+                <button
+                  type="button"
+                  class="button"
+                  onclick={(ev) => setting.onclick(ev, application)}
+                >
+                  {#if !isNil(setting.icon)}
+                    <i class={setting.icon}></i>
+                  {/if}
+                  {localize(setting.label ?? '')}
+                </button>
               {/if}
             {/each}
           </div>

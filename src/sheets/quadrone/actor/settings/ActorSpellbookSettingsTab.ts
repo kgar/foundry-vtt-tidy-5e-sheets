@@ -5,7 +5,8 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SheetSectionConfigurationTab } from 'src/runtime/types';
-import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
+import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import type { Item5e } from 'src/types/item.types';
 import type {
   CharacterSheetQuadroneContext,
   NpcSheetQuadroneContext,
@@ -21,6 +22,10 @@ export function buildActorSpellbookSettingsTab(
     context.actor,
     tabId,
     context.spellbook
+  );
+
+  const actorHasSpells = context.actor.items.some(
+    (item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL
   );
 
   const optionsGroups: SectionOptionGroup[] = [
@@ -87,22 +92,24 @@ export function buildActorSpellbookSettingsTab(
         },
       ],
     },
-    {
-      title: 'TIDY5E.Utilities.Tools',
-      settings: [
-        {
-          type: 'button',
-          icon: 'fa-solid fa-list-check',
-          label: 'TIDY5E.Utilities.AssignSpellsToClasses',
-          onclick: () =>
-            context.sheet._renderChild(
-              new SpellSourceItemAssignmentsFormApplication({
-                document: context.actor,
-              })
-            ),
-        },
-      ],
-    },
+    ...(actorHasSpells
+      ? [
+          {
+            title: 'TIDY5E.Utilities.Tools',
+            settings: [
+              {
+                type: 'navigationButton',
+                icon: 'fa-solid fa-list-check',
+                label: 'TIDY5E.Utilities.AssignSpellsToClasses',
+                onclick: (_ev, app) =>
+                  app.parentSettings?.selectTab(
+                    TidySheetSettingsTabIds.spellAssignments
+                  ),
+              },
+            ],
+          },
+        ] satisfies SectionOptionGroup[]
+      : []),
   ];
 
   const tab = context.tabs.find((t) => t.id === tabId);

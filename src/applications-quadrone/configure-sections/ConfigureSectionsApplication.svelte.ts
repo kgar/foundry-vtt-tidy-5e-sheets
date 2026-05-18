@@ -38,14 +38,31 @@ export type RadioSetting<TValue> = {
   default?: TValue;
 };
 
+export type SettingsTabNavigator = {
+  selectTab(id: string): void;
+};
+
 export type ButtonSetting = {
   type: 'button';
   icon?: string;
   label?: string;
-  onclick: (ev: MouseEvent & { currentTarget: HTMLElement }, doc: any) => void;
+  onclick: (
+    ev: MouseEvent & { currentTarget: HTMLElement },
+    doc: any,
+  ) => void;
 };
 
-export type SectionSetting = BooleanSetting | RadioSetting<any> | ButtonSetting;
+export type ButtonNavigation = {
+  type: 'navigationButton';
+  icon?: string;
+  label?: string;
+  onclick: (
+    ev: MouseEvent & { currentTarget: HTMLElement },
+    application: ConfigureSectionsApplication,
+  ) => void;
+};
+
+export type SectionSetting = BooleanSetting | RadioSetting<any> | ButtonSetting | ButtonNavigation;
 
 export type SectionOptionGroup = {
   title: string;
@@ -90,6 +107,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   tabId: string;
   theme: string = $state<string>('');
   formTitle: string;
+  parentSettings?: SettingsTabNavigator;
 
   _initialSnapshot = $state('');
 
@@ -167,8 +185,11 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   _seedOptionGroupsFromDocument() {
     for (const group of this.optionsGroups) {
       for (const setting of group.settings) {
-        if (setting.type === 'button') {
-          return;
+        if (
+          setting.type === 'button' ||
+          setting.type === 'navigationButton'
+        ) {
+          continue;
         }
 
         const doc = setting.doc ?? this.document;
@@ -209,7 +230,10 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
     for (const group of this.optionsGroups) {
       for (const setting of group.settings) {
-        if (setting.type === 'button') {
+        if (
+          setting.type === 'button' ||
+          setting.type === 'navigationButton'
+        ) {
           continue;
         }
 

@@ -8,11 +8,11 @@
   } from './TidySheetSettingsQuadroneApplication.svelte';
   import PlaceholderSettingsPane from './tabs/PlaceholderSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
+  import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
   import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
   import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
   import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { untrack } from 'svelte';
 
   interface Props {
     app: TidySheetSettingsQuadroneApplication;
@@ -26,6 +26,7 @@
   const SETTINGS_THEME = TidySheetSettingsTabIds.theme;
   const SETTINGS_TAB_CONFIG = TidySheetSettingsTabIds.tabConfig;
   const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsTabIds.sidebarTabConfig;
+  const SETTINGS_SPELL_ASSIGNMENTS = TidySheetSettingsTabIds.spellAssignments;
 
   type SettingsTab = {
     id: string;
@@ -34,6 +35,8 @@
     hasChanges?: boolean;
     tabHidden?: boolean;
   };
+
+  let spellAssignmentsApp = $derived(app.getSpellSourceItemAssignmentsTab());
 
   let sheetConfigOptions: SettingsTab[] = $derived(
     [
@@ -49,6 +52,15 @@
         iconClass: 'fas fa-file-invoice',
         hasChanges: app.tabDisplaySettingsTab.hasChanges,
       },
+      ...(spellAssignmentsApp
+        ? [
+            {
+              id: SETTINGS_SPELL_ASSIGNMENTS,
+              title: localize('TIDY5E.Utilities.AssignSpellsToClasses'),
+              iconClass: 'fa-solid fa-list-check',
+            },
+          ]
+        : []),
       ...(app.sidebartabDisplaySettingsTab
         ? [
             {
@@ -76,8 +88,8 @@
     ...tabConfigOptions,
   ]);
 
-  let selectedId: string = $state(
-    untrack(() => app.initialTabId ?? SETTINGS_THEME),
+  let selectedId: string = $derived(
+    app.currentTabId ?? SETTINGS_THEME,
   );
 
   let activeSelectedId: string = $derived(
@@ -103,7 +115,7 @@
   );
 
   function selectTab(id: string) {
-    selectedId = id;
+    app.selectTab(id);
   }
 </script>
 
@@ -185,6 +197,8 @@
         config={app.sidebartabDisplaySettingsTab._config}
         title={app.sidebartabDisplaySettingsTab._inclusionTabTitle}
       />
+    {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
+      <SpellSourceAssignmentsPane app={spellAssignmentsApp} />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
       <SpecialTraitsPane app={app.getSpecialTraitsConfigTab()} />
     {:else if configureSectionsApp}

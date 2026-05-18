@@ -22,11 +22,14 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
+import type { Item5e } from 'src/types/item.types';
 
 export const TidySheetSettingsTabIds = {
   theme: 'settings:theme',
   tabConfig: 'settings:tab-config',
-  sidebarTabConfig: 'settings:sidebar-tab-config'
+  sidebarTabConfig: 'settings:sidebar-tab-config',
+  spellAssignments: 'settings:spell-assignments',
 } as const;
 
 export type TidySheetSettingsTabInfo = {
@@ -64,11 +67,13 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   });
 
   initialTabId?: string;
+  currentTabId = $state<string | undefined>(undefined);
   tabSettings: Record<string, ConfigureSectionsInput>;
   themeSettingsTab!: ThemeSettingsQuadroneApplication;
   tabDisplaySettingsTab!: SheetTabConfigurationQuadroneApplication;
   sidebarTabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
   specialTraitsChildApp?: SpecialTraitsApplication;
+  spellSourceItemAssignmentsChildApp?: SpellSourceItemAssignmentsFormApplication;
   configureSectionsChildAppByTabId = new Map<
     string,
     ConfigureSectionsApplication
@@ -113,8 +118,49 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
   constructor(options: TidySheetSettingsApplicationConfiguration) {
     super(options);
 
-    this.initialTabId = `sheet:${options.initialTabId}`;
+    const initial = options.initialTabId;
+    if (
+      initial?.startsWith('settings:') ||
+      initial?.startsWith('sheet:')
+    ) {
+      this.initialTabId = initial;
+    } else if (initial) {
+      this.initialTabId = `sheet:${initial}`;
+    }
+    this.currentTabId = this.initialTabId;
     this.tabSettings = options.tabSettings ?? {};
+  }
+
+  selectTab(id: string) {
+    this.currentTabId = id;
+  }
+
+  get actorHasSpells(): boolean {
+    if (this.document?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      return false;
+    }
+
+    return this.document.items.some(
+      (item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL,
+    );
+  }
+
+  getSpellSourceItemAssignmentsTab():
+    | SpellSourceItemAssignmentsFormApplication
+    | undefined {
+    if (!this.actorHasSpells) {
+      return undefined;
+    }
+
+    if (!this.spellSourceItemAssignmentsChildApp) {
+      const app = new SpellSourceItemAssignmentsFormApplication({
+        document: this.document,
+      });
+      app.close = async () => {};
+      this.spellSourceItemAssignmentsChildApp = app;
+    }
+
+    return this.spellSourceItemAssignmentsChildApp;
   }
 
   _initializeSettingsTabs(): void {
@@ -332,6 +378,7 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
         formTitle: input.formTitle ?? '',
       },
     });
+    app.parentSettings = this;
     // Embedded — never opened as a window. Swallow close() so save/useDefault
     // don't try to dismiss an unrendered child window.
     app.close = async () => {};
