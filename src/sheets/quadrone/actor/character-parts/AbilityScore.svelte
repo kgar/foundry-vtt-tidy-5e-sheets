@@ -66,69 +66,54 @@
   }
 </script>
 
-<div class={['ability', ability.key]} data-tidy-sheet-part="ability-container">
-  <div class="ability-bonus-container">
-    <div
-      class={[
-        'bonus-container',
-        { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
-      ]}
-      data-tidy-sheet-part="ability-mod-container"
+<div class={['ability', ability.key, { 'has-proficiency': ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT }]} data-tidy-sheet-part="ability-container">
+  <div
+    class={[
+      'ability-bonus-container',
+      { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
+    ]}
+    data-tidy-sheet-part="ability-mod-container"
+  >
+    <button
+      type="button"
+      data-action="roll"
+      data-type="ability"
+      data-ability={ability.key}
+      data-tooltip={localize('DND5E.AbilityPromptTitle', {
+        ability: ability.label,
+      })}
+      class="button-borderless ability-roll-button"
+      data-tidy-sheet-part="ability-roller"
+      data-has-roll-modes
+      {disabled}
     >
-      <button
-        type="button"
-        data-action="roll"
-        data-type="ability"
-        data-ability={ability.key}
-        data-tooltip={localize('DND5E.AbilityPromptTitle', {
-          ability: ability.label,
-        })}
-        class="button-borderless ability-roll-button label font-label-medium color-text-gold"
-        data-tidy-sheet-part="ability-roller"
-        data-has-roll-modes
-        {disabled}
-      >
-        {ability.abbr}
-      </button>
-      <div class={['flexrow']}>
-        <span
-          class={[
-            'modifier font-label-xlarge color-text-lightest',
-            { invisible: editingScore },
-          ]}
-          data-tidy-sheet-part="ability-mod">{mod.sign}</span
-        >
-        <span
-          class={[
-            'value bonus font-data-xlarge color-text-default',
-            { invisible: editingScore },
-          ]}
-          data-tidy-sheet-part="ability-value">{mod.value}</span
-        >
-        {#if unlocked}
-          <input
-            id={abilityInputId}
-            type="text"
-            value={sourceValue}
-            class={[
-              'ability-score-input',
-              'uninput',
-              { ['editing-score']: editingScore },
-            ]}
-            data-tooltip={ability.label}
-            onchange={onScoreChange}
-            onfocus={(ev) => onScoreInputFocused(ev)}
-            onblur={(ev) => onScoreInputBlurred(ev)}
-            data-tidy-sheet-part="ability-score-input"
-          />
-        {/if}
-      </div>
-      {#if unlocked && editingScore}
-        <span class="editing-score-label font-label-medium color-text-default">
-          {localize('TIDY5E.Ability.EditScore.label')}
-        </span>
-      {/if}
-    </div>
+      <span class="ability-abbr color-text-gold">{ability.abbr}</span>
+      <span class="ability-label-container">
+        <span class="modifier font-label-xlarge color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span><span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+      </span>
+    </button>
+    {#if unlocked}
+      <input
+        id={abilityInputId}
+        type="text"
+        value={sourceValue}
+        class={[
+          'ability-score-input',
+          'uninput',
+          { ['editing-score']: editingScore },
+        ]}
+        data-tooltip={ability.label}
+        onchange={onScoreChange}
+        onfocus={(ev) => onScoreInputFocused(ev)}
+        onblur={(ev) => onScoreInputBlurred(ev)}
+        data-tidy-sheet-part="ability-score-input"
+      />
+    {/if}
+    {#if unlocked && editingScore}
+      <span class="editing-score-label font-label-medium color-text-default">
+        {localize('TIDY5E.Ability.EditScore.label')}
+      </span>
+    {/if}
   </div>
   <div class="ability-score-container">
     <label
@@ -140,6 +125,9 @@
       data-tidy-sheet-part="ability-score"
     >
       <span class="font-title-small color-text-default">{ability.value}</span>
+      {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
+        <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
+      {/if}
     </label>
     {#if unlocked}
       <button

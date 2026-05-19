@@ -21,6 +21,7 @@
   import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -30,6 +31,7 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   const columns = $derived({
     uses: {
@@ -72,7 +74,7 @@
   class="inline-activities-table"
 >
   {#snippet header()}
-    <TidyTableHeaderRow class="theme-dark">
+    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>

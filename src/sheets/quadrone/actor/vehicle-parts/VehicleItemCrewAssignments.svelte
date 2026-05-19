@@ -10,6 +10,7 @@
   import type { Actor5e, VehicleItemQuadroneContext } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   type Props = {
     ctx: VehicleItemQuadroneContext;
@@ -21,6 +22,7 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   function onEmptySlotClicked(
     ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
@@ -36,7 +38,7 @@
 
 <TidyTable key="assigned" toggleable={false}>
   {#snippet header()}
-    <TidyTableHeaderRow class="theme-dark">
+    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>
           {localize('DND5E.VEHICLE.Crew.Label')}

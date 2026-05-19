@@ -7,7 +7,8 @@
     SectionOptionGroup,
   } from './ConfigureSectionsApplication.svelte';
   import { isNil } from 'src/utils/data';
-
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  
   interface Props {
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
@@ -23,6 +24,7 @@
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: application.document }).useBasicTheme ?? false);
 </script>
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
@@ -83,7 +85,7 @@
       bind:items={sections}
       labelProp="label"
       valueProp="key"
-      selectedItemClasses="theme-dark"
+      selectedItemClasses={!isBasicTheme ? 'theme-dark' : ''}
     >
       {#snippet itemTemplate({ item })}
         <span

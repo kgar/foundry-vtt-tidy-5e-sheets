@@ -1577,25 +1577,30 @@ export const FoundryAdapter = {
       classes.push('cannot-prepare', 'fa-solid');
     }
 
-    switch (method) {
-      case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
-        classes.push('fa-book');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
-        classes.push('fa-hand-sparkles');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
-        classes.push('fa-hand-holding-magic');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
-        classes.push('fa-moon');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
-        classes.push('fa-candle-holder');
-        break;
-      default:
-        classes.push('fa-sparkles');
-        break;
+    if (item.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.always.value) {
+      classes.push('fa-book-bookmark');
+    } else {
+      switch (method) {
+        case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
+          classes.push('fa-book');
+          break;
+        case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
+          classes.push('fa-hand-sparkles');
+          break;
+        case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
+          classes.push('fa-hand-holding-magic');
+          break;
+        case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
+          classes.push('fa-moon');
+          break;
+        case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
+          classes.push('fa-candle-holder');
+          break;
+        default:
+          classes.push('fa-sparkles');
+          break;
+      }
     }
 
     return classes;

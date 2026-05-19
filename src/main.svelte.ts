@@ -21,7 +21,6 @@ import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassi
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import { Tidy5eContainerSheetQuadrone } from './sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
-import { Tidy5eItemDebugSheetQuadrone } from './sheets/quadrone/Tidy5eItemDebugSheetQuadrone.svelte';
 import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
@@ -213,19 +212,6 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
     }
   );
-  
-  /* FOR THOSE WITH TRUE SIGHT */
-  if (settings.value.truesight) {
-    documentSheetConfig.registerSheet(
-      Item,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eItemDebugSheetQuadrone,
-      {
-        types: supportedItemTypes,
-        label: 'Tidy 5e Debug Item Sheet (Visual Overhaul)',
-      }
-    );
-  }
 });
 
 Hooks.once('ready', async () => {

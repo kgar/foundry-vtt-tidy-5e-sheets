@@ -25,6 +25,7 @@ export type ThemeableSheetType =
   | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
+  static readonly DEFAULT_ACCENT_COLOR = 'rgb(116, 27, 43)';
   static readonly DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'transparent';
   // a collection of stylesheets currently only used for popped out stylesheets
   private static readonly _externalStylesheets: Set<CSSStyleSheet> = new Set();
@@ -56,10 +57,12 @@ export class ThemeQuadrone {
     alternateDefaults: Partial<ThemeSettingsV3> = {}
   ): ThemeSettingsV3 {
     const defaults = {
-      accentColor: '',
+      accentColor: this.DEFAULT_ACCENT_COLOR,
+      useBasicTheme: false,
       useHeaderBackground: true,
       headerColor: '',
       actorHeaderBackground: '',
+      headerBackgroundColor: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: {},
@@ -252,10 +255,11 @@ export class ThemeQuadrone {
   }
 
   static async updatePortraitShape(doc: any, newShape: PortraitShape) {
-    const settings = this.getSheetThemeSettings({ doc: doc });
-    settings.portraitShape = newShape;
-    await this.saveSheetThemeSettings(doc, settings);
-    await this.syncSystemTokenPortraitSetting(doc, newShape);
+    await doc.update({
+      [`${TidyFlags.sheetThemeSettings.prop}.portraitShape`]: newShape,
+      [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
+        newShape === 'token',
+    });
   }
 
   static async syncSystemTokenPortraitSetting(

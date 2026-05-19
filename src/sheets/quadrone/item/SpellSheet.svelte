@@ -16,6 +16,13 @@
   import type { Snippet } from 'svelte';
   import type { SpellSchool } from 'src/foundry/config.types';
 
+  /** `labels.classes` only (spell list class names); keep distinct from other header label groups. */
+  function spellLabelsToClassNames(classes: unknown): string[] {
+    if (Array.isArray(classes)) return classes.map(String).filter((s) => s.length);
+    if (classes != null && classes !== '') return [String(classes)];
+    return [];
+  }
+
   let context = $derived(getItemSheetContextQuadrone());
 
   const localize = FoundryAdapter.localize;
@@ -76,6 +83,8 @@
 
     return result;
   });
+
+  let spellFromClassNames = $derived(spellLabelsToClassNames(context.labels?.classes));
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -157,8 +166,10 @@
       </div>
     {/if}
   </div>
-  {#if context.labels?.classes}
-    <div class="spell-classes">{context.labels?.classes ?? ''}</div>
+  {#if spellFromClassNames.length}
+    <div class="spell-classes">
+      <span class="spell-class-names">{spellFromClassNames.join(', ')}</span>
+    </div>
   {/if}
 
   <!-- Tab Strip -->

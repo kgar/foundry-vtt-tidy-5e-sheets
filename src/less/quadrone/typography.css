@@ -1,0 +1,204 @@
+/* VF: one face per style; weight axis maps CSS font-weight 100–900 */
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 100 900;
+  src:
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype-variations'),
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: italic;
+  font-weight: 100 900;
+  src:
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype-variations'),
+    url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+.tidy5e-sheet.quadrone.application {
+
+  /* TEXT COLORS
+  ------------------------------------------------------------ */
+  .color-text-default {
+    color: var(--t5e-color-text-default);
+  }
+
+  .color-text-inverse {
+    color: var(--t5e-color-text-oninverse-default);
+  }
+
+  .color-text-gold {
+    color: var(--t5e-color-text-gold);
+  }
+
+  .color-text-gold-emphasis {
+    color: var(--t5e-color-text-gold-emphasis);
+  }
+
+  .color-text-gold-light {
+    color: var(--t5e-color-text-gold-light);
+  }
+
+  .color-text-lighter {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .color-text-lightest {
+    color: var(--t5e-color-text-lightest);
+  }
+
+  .color-text-disabled {
+    color: var(--t5e-color-text-disabled);
+  }
+
+  .color-text-highlight {
+    color: var(--t5e-theme-color-highlight);
+  }
+
+  .color-icon-default {
+    color: var(--t5e-color-icon-default);
+  }
+
+  .color-icon-button {
+    color: var(--t5e-color-icon-button);
+  }
+
+  .color-icon-diminished {
+    color: var(--t5e-color-icon-diminished);
+  }
+
+  .color-icon-disabled {
+    color: var(--t5e-color-icon-disabled);
+  }
+
+  .color-icon-theme {
+    color: var(--t5e-theme-color-default);
+  }
+
+  .color-icon-theme-highlight {
+    color: var(--t5e-theme-color-highlight);
+  }
+
+  /* FONT STYLES
+  ------------------------------------------------------------ */
+  /* Body text */
+  .font-default-medium {
+    font: var(--t5e-font-default-medium);
+  }
+
+  .font-default-small {
+    font: var(--t5e-font-default-small);
+  }
+
+  .font-default-longform {
+    font: var(--t5e-font-default-longform);
+  }
+
+  /* Labels */
+  .font-label-xlarge {
+    font: var(--t5e-font-label-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-label-large {
+    font: var(--t5e-font-label-large);
+  }
+
+  .font-label-medium {
+    font: var(--t5e-font-label-medium);
+  }
+
+  .font-label-small {
+    font: var(--t5e-font-label-small);
+  }
+
+  /* Data (bold) */
+  .font-data-xlarge {
+    font: var(--t5e-font-data-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-data-large {
+    font: var(--t5e-font-data-large);
+  }
+
+  .font-data-medium {
+    font: var(--t5e-font-data-medium);
+  }
+
+  .font-data-small {
+    font: var(--t5e-font-data-small);
+  }
+
+  /* Titles */
+  .font-title-large {
+    font: var(--t5e-font-title-large);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-title-medium {
+    font: var(--t5e-font-title-medium);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-title-small {
+    font: var(--t5e-font-title-small);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  /* FONT FAMILIES
+  ------------------------------------------------------------ */
+  .font-family-title {
+    font-family: var(--t5e-font-family-title);
+  }
+
+  .font-family-default {
+    font-family: var(--t5e-font-family-default);
+  }
+
+  /* FONT WEIGHTS
+  ------------------------------------------------------------ */
+  .font-weight-label {
+    font-weight: var(--font-weight-label);
+  }
+
+  .font-weight-bold {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .font-weight-default {
+    font-weight: var(--font-weight-default);
+  }
+
+  /* HELPERS
+  ------------------------------------------------------------ */
+  /* Selectable Text */
+  .user-select-text * {
+    user-select: text;
+  }
+
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  hr {
+    margin: var(--t5e-size-2x) 0;
+  }
+
+  .lowercase {
+    text-transform: lowercase;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+}
