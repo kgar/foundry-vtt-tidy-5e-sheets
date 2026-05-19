@@ -17,9 +17,12 @@
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
+
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   const localize = FoundryAdapter.localize;
 
@@ -71,7 +74,7 @@
 <div {@attach observeResize(onResize)}>
   <TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES}>
     {#snippet header()}
-      <TidyTableHeaderRow class="theme-dark">
+      <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
         <TidyTableHeaderCell primary={true} class="header-label-cell">
           <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
           <span class="table-header-count">{context.activities.length}</span>

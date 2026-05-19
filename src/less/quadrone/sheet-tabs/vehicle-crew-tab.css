@@ -1,0 +1,28 @@
+.tidy5e-sheet.application:where(.quadrone.vehicle) {
+  .tidy-tab.crew-and-passengers {
+    .tidy-table-cell[data-tidy-column-key="assigned"] {
+      justify-content: flex-start;
+    }
+
+    .tidy-table-cell[data-tidy-column-key="assignTo"] {
+      .select-diminished {
+        border: none;
+        background-color: var(--t5e-component-card-darker);
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
+
+    .crew-warning {
+      .uses-value {
+        color: var(--t5e-text-warning);
+        font-weight: var(--font-weight-label);
+      }
+    }
+  }
+}

@@ -14,9 +14,11 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getVehicleSheetQuadroneContext());
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   const localize = FoundryAdapter.localize;
 
@@ -222,7 +224,7 @@
       )}
       <TidyTable key={section.key} data-area={section.type}>
         {#snippet header(expanded)}
-          <TidyTableHeaderRow class="theme-dark">
+          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}

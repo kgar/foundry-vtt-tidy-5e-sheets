@@ -19,10 +19,12 @@
   import { setContext } from 'svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
+  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
@@ -92,7 +94,7 @@
 
       <TidyTable key="npcs">
         {#snippet header()}
-          <TidyTableHeaderRow class="theme-dark">
+          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
             <TidyTableHeaderCell primary={true}>
               <h3>
                 {localize('DND5E.ENCOUNTER.Tab.Members')}

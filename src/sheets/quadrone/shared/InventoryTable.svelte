@@ -141,7 +141,7 @@
         : game.i18n.format('DND5E.WEAPON.Mastery.Label')}
 
       <i
-        class="fa-solid fa-circle-star color-text-gold-emphasis highlighted mastery item-state-indicator"
+        class="fa-solid fa-circle-star color-icon-theme-highlight highlighted mastery item-state-indicator"
         data-tooltip={!reference ? tooltip : null}
         data-reference-tooltip={reference}
       ></i>
@@ -149,7 +149,7 @@
 
     {#if ctx.attunement}
       {@const iconClass = entry.system.attuned
-        ? 'fa-solid fa-sun color-text-gold-emphasis highlighted'
+        ? 'fa-solid fa-sun color-icon-theme-highlight highlighted'
         : 'fa-regular fa-sun color-text-lightest'}
 
       {@const title = localize(ctx.attunement.title)}

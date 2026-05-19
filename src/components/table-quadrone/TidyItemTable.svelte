@@ -12,11 +12,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
     CharacterSheetQuadroneContext,
-    FeatureSection,
     NpcSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
@@ -26,12 +26,14 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
+  import type { Item5e } from 'src/types/item.types';
 
   interface Props {
     section: TidySectionBase;
     entries: TEntry[];
     entryContext: Record<string, any>;
-    sheetDocument: Actor5e;
+    /** Actor or item (e.g. nested container inventory); theme is resolved per document. */
+    sheetDocument: Actor5e | Item5e;
     sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
@@ -87,6 +89,9 @@
   let hiddenColumns = $derived(
     ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
   );
+  // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
+  
+  const isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 </script>
 
 <TidyTable
@@ -96,7 +101,7 @@
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
-      class={[{ 'theme-dark': root }, headerRowClasses]}
+      class={[!isBasicTheme ? 'theme-dark' : '', headerRowClasses]}
       {...headerRowAttributes}
     >
       <TidyTableHeaderCell primary={true} class="header-label-cell">
@@ -141,6 +146,7 @@
         >
           {#snippet children({ toggleSummary, expanded })}
             {@render beforeImage?.(entry, ctx)}
+            <!--svelte-ignore a11y_missing_attribute-->
             <a
               class={[
                 'tidy-table-row-use-button',
@@ -157,12 +163,16 @@
 
             {@render afterImage?.(entry, ctx)}
             <TidyTableCell primary={true} class="item-label text-cell">
+              <!--svelte-ignore a11y_missing_attribute-->
               <a
                 class="item-name"
                 role="button"
                 data-keyboard-focus
                 tabindex="0"
                 onclick={(ev) => toggleSummary()}
+                onkeydown={(ev) =>
+                  ev.key === 'Enter' ||
+                  (ev.key === ' ' && toggleSummary())}
               >
                 <span class="cell-text">
                   <span class="cell-name">{entry.name}</span>

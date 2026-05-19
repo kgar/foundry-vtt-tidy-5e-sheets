@@ -1,0 +1,502 @@
+.tidy5e-sheet.application:where(.quadrone) {
+  input.full-width {
+    flex: 0 0 100%;
+    margin-top: 0.25rem;
+  }
+
+  /* Fieldset */
+  fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+
+    > label.checkbox,
+    > label.radio {
+      flex-grow: unset;
+      min-height: var(--t5e-field-size-small);
+    }
+
+    > legend {
+      color: var(--t5e-color-text-default);
+      /* title/small */
+      font-family: var(--font-family-title, 'Modesto Condensed');
+      font-size: var(--font-size-18);
+      letter-spacing: 0.01rem;
+      padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
+      margin-bottom: 0.25rem;
+      width: 100%;
+
+      &:not(:has(tidy-gold-header-underline)) {
+        border-bottom: 0.0625rem solid var(--t5e-color-gold);
+      }
+
+      > label.checkbox {
+        font-weight: 600;
+
+        input[type='checkbox'] {
+          margin-bottom: 0.0625rem;
+        }
+      }
+
+      > .legend-with-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    > .empty {
+      padding: var(--t5e-size-1x) 0 var(--t5e-size-2x);
+      font-style: italic;
+      text-align: left;
+      color: var(--t5e-color-text-lightest);
+    }
+
+    &.card {
+      margin-top: var(--t5e-size-8x);
+    }
+  }
+
+  &.label-top {
+    --label-height: var(--font-size-small);
+    --label-font-size: var(--font-size-small);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.125rem;
+
+    > * {
+      flex: unset;
+    }
+
+    > label {
+      font-size: var(--label-font-size);
+      font-weight: 600;
+      line-height: var(--label-height);
+      height: var(--label-height);
+      color: var(--t5e-color-text-lightest);
+      margin: var(--t5e-size-halfx) 0;
+
+      > p.hint {
+        cursor: help;
+        font-size: var(--label-font-size);
+        font-weight: 600;
+        display: inline-block;
+        margin: 0.1875rem 0 0 0;
+        line-height: var(--label-height);
+        height: var(--label-height);
+
+        &:empty {
+          min-height: unset;
+        }
+      }
+    }
+
+    + .form-group {
+      align-self: end;
+    }
+
+    &.checkbox-top {
+      flex: 0;
+      min-width: max-content;
+      align-items: center;
+    }
+
+    /*
+          &.multi-select {
+      position: relative;
+
+      multi-select .tags.input-element-tags {
+        min-height: 0.625rem;
+        padding-left: 40%;
+      }
+
+      > label {
+        position: absolute;
+        inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
+      }
+    } 
+      */
+  }
+
+  .form-group.label-top,
+  .form-field.label-top {
+    --label-height: var(--font-size-small);
+    --label-font-size: var(--font-size-small);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.125rem;
+
+    > * {
+      flex: unset;
+    }
+
+    > label {
+      font-size: var(--label-font-size);
+      font-weight: 600;
+      line-height: var(--label-height);
+      height: var(--label-height);
+      color: var(--t5e-color-text-lightest);
+      margin: 0 0 var(--t5e-size-halfx) 0;
+
+      > p.hint {
+        cursor: help;
+        font-size: var(--label-font-size);
+        font-weight: 600;
+        display: inline-block;
+        margin: 0.1875rem 0 0 0;
+        line-height: var(--label-height);
+        height: var(--label-height);
+
+        &:empty {
+          min-height: unset;
+        }
+
+        /*
+
+          &:hover {
+            text-shadow: 0 0 0.375rem var(--color-shadow-primary);
+          }
+
+          &::before {
+            content: "\f059";
+            font-family: var(--font-awesome);
+            font-weight: normal;
+            color: var(--color-text-dark-5);
+          }
+
+        */
+      }
+    }
+
+    + .form-group {
+      align-self: end;
+    }
+
+    &.checkbox-top {
+      flex: 0;
+      min-width: max-content;
+      align-items: center;
+    }
+
+    /*
+        &.multi-select {
+    position: relative;
+
+    multi-select .tags.input-element-tags {
+      min-height: 0.625rem;
+      padding-left: 40%;
+    }
+
+    > label {
+      position: absolute;
+      inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
+    }
+  } 
+    */
+  }
+
+  /* Form Groups */
+  .form-group {
+    --form-field-height: var(--t5e-field-size-default);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    gap: 0.25rem;
+
+    > label {
+      color: var(--t5e-color-text-lighter);
+      font-size: var(--font-size-default);
+      font-weight: 500;
+      line-height: var(--t5e-line-height-default);
+    }
+
+    &:has(.label-top) > label {
+      margin-top: calc(var(--font-size-small) + 0.25rem);
+    }
+
+    &:has(input[type='radio']),
+    &:has(.vertical) {
+      align-items: flex-start;
+
+      > label {
+        margin-top: var(--t5e-size-1x);
+      }
+    }
+
+    &:hover,
+    &:focus-within {
+
+      > label,
+      > p.hint {
+        color: var(--t5e-color-text-default);
+      }
+    }
+
+    /* Flex form inputs */
+    > * {
+      flex: 2;
+    }
+
+    > input[type='checkbox'] {
+      flex: none;
+    }
+
+    /* Labels */
+    > label {
+      transition: color var(--t5e-transition-default);
+      flex: 1;
+    }
+
+    > p.hint {
+      transition: color var(--t5e-transition-default);
+    }
+
+    &:not(.label-top) {
+      > label {
+        align-content: center;
+        align-self: flex-start;
+        min-height: var(--t5e-field-size-default);
+      }
+    }
+
+    /* Icon-Only Labels */
+    > label.icon {
+      flex: 0 0 1rem;
+
+      > i {
+        margin: 0;
+      }
+    }
+
+    /* Stacked form groups, label is on its own line */
+    &.stacked {
+      > * {
+        flex: 0 0 100%;
+      }
+    }
+
+    /* Inline form groups allow fields to take up as much (or as little) space as required */
+    &.inline {
+      justify-content: space-between;
+
+      > label {
+        flex: none;
+      }
+
+      > .form-fields {
+        flex: 1;
+      }
+    }
+
+    /* Slim form groups have small input widths */
+    &.slim .form-fields {
+      flex: 1;
+
+      > label {
+        flex: none;
+        text-align: right;
+      }
+
+      > input[type='number'],
+      > input[type='text'] {
+        flex: 0 0 3.125rem;
+        padding: 0;
+      }
+
+      select {
+        width: auto;
+      }
+    }
+
+    label.label-icon {
+      position: relative;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: transparent no-repeat center / contain;
+        margin-left: 0.1875rem;
+        position: absolute;
+      }
+
+      &.currency {
+        &.cp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
+        }
+
+        &.sp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
+        }
+
+        &.ep::after {
+          background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
+        }
+
+        &.gp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
+        }
+
+        &.pp::after {
+          background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
+        }
+      }
+    }
+
+    /* Split Groups */
+    &.split-group {
+      gap: 0 0.25rem;
+
+      > .form-fields {
+        .form-group {
+          flex-wrap: nowrap;
+
+          &:not(.label-top):not(.checkbox) {
+            gap: 0.25rem;
+          }
+
+          > * {
+            flex: unset;
+          }
+        }
+      }
+    }
+
+    /* Full-Width Groups */
+    &.full-width {
+      padding: 0.375rem 0;
+
+      & + .full-width {
+        margin-top: 0.125rem;
+      }
+    }
+
+    label.checkbox {
+      min-height: var(--t5e-field-size-default);
+    }
+  }
+
+  .form-fields {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+
+    > * {
+      flex: 1;
+
+      &.flex0 {
+        flex: 0;
+      }
+    }
+
+    > button,
+    > input[type='checkbox'],
+    > input[type='radio'],
+    > label {
+      flex: none;
+    }
+
+    input[type='checkbox'] {
+      --checkbox-size: 1rem;
+    }
+
+    &:has(input[type="checkbox"]:only-child) {
+      justify-content: flex-end;
+    }
+
+    &.flexcol {
+      flex-direction: column;
+    }
+
+    &:has(.label-top) {
+      align-items: end;
+    }
+
+    &.vertical {
+      align-items: stretch;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 0.25rem;
+    }
+
+    > *:only-child {
+      flex: 1;
+    }
+  }
+
+  /** Hint Text */
+  .hint {
+    margin: 0;
+    margin-inline-start: 0.25rem;
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .form-group .hint {
+    flex: 0 0 100%;
+  }
+
+  /** Form Footers */
+  .form-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+
+    > button,
+    a.button {
+      flex: 1;
+      height: calc(1.25 * var(--input-height));
+      min-width: 11.25rem;
+    }
+  }
+
+  .form-group.split-group > .form-fields .form-group > * {
+    flex: unset;
+  }
+
+  :is(.form-group, fieldset) .hint {
+    font-size: var(--font-size-12);
+    margin: 0.125rem 0 0.25rem 0;
+  }
+
+  .checkbox-grid {
+    --min-column-width: 7.8125rem;
+
+    > .form-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,
+          minmax(var(--min-column-width), 1fr));
+      row-gap: 0;
+      column-gap: 0.625rem;
+
+      .checkbox {
+        line-height: var(--t5e-line-height-small);
+        gap: 0.25rem;
+        min-height: var(--t5e-field-size-small);
+      }
+
+      > label {
+        text-align: unset;
+
+        > span {
+          line-height: normal;
+        }
+      }
+    }
+  }
+
+  fieldset .form-group .form-fields .starting-equipment-list {
+    margin-bottom: var(--t5e-size-3x);
+  }
+}

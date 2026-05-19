@@ -1,0 +1,24 @@
+.tidy5e-sheet.application:where(.quadrone.character) {
+  .empty-state-description {
+    min-height: unset;
+    text-align: left;
+  }
+
+  .sheet-tab-footer {
+    padding: var(--t5e-size-3x) 0 0 0;
+
+    .button-borderless:not(:hover) {
+      --button-text: var(--t5e-color-text-lightest);
+      --button-icon: var(--t5e-color-text-lightest);
+    }
+
+    .sheet-footer-left > *,
+    .sheet-footer-right > * {
+      flex: 0 1 auto;
+    }
+
+    .button-borderless:first-child {
+      padding-left: 0;
+    }
+  }
+}

@@ -63,7 +63,7 @@
       class="flex-row align-items-center header-line-margin"
       style="margin-top: 0;"
     >
-      <span class="flex-1 fs-sm text-body-secondary">{context.summary}</span>
+      <span class="flex-1 text-body-secondary">{context.summary}</span>
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
     <div

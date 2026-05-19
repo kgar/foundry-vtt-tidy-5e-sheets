@@ -1,0 +1,16 @@
+.tidy5e-sheet.application:where(.quadrone) {
+  .inline-wrapped-elements {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    border: none;
+    gap: 0.125rem;
+  }
+
+  .flex-row-space-between {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

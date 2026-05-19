@@ -170,22 +170,30 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="initiative-container flexcol">
+        <div class="ability initiative flexcol">
           <div
             class={[
-              'initiative score bonus-container',
+              'initiative-score-container',
               Number(ini.value) >= 10 ? 'double-digit' : '',
             ]}
             data-tooltip="DND5E.Initiative"
           >
             <button
               type="button"
-              class="button-borderless initiative-roll-button"
+              class="button-borderless ability-roll-button"
               data-action="roll"
               data-type="initiative"
               data-has-roll-modes
             >
-              {localize('DND5E.InitiativeAbbr')}
+              <span class="ability-abbr color-text-gold">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-label-container initiative-bonus">
+                <span class="modifier color-text-lightest">
+                  {ini.sign}
+                </span>
+                <span class="bonus color-text-default">
+                  {ini.value}
+                </span>
+              </span>
             </button>
             {#if context.unlocked}
               <button
@@ -199,14 +207,6 @@
                 <i class="fas fa-cog"></i>
               </button>
             {/if}
-            <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest font-label-xlarge">
-                {ini.sign}
-              </span>
-              <span class="bonus color-text-default font-data-xlarge">
-                {ini.value}
-              </span>
-            </div>
           </div>
           <div class="ability-labels flexcol">
             <span class="label font-label-medium color-text-lightest"

@@ -19,7 +19,6 @@
     SectionOptionGroup,
   } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
-  import type { FeatureSection, SpellbookSection } from 'src/types/types';
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
@@ -164,6 +163,10 @@
     );
   });
 
+  let hasAtLeastOneItem = $derived(
+    sections.some((section) => section.items.length > 0),
+  );
+
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
@@ -195,6 +198,12 @@
     <SheetPins />
   {/if}
 
+  {#if !hasAtLeastOneItem}
+  <div class="empty-state-container empty-state-description">
+    {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+  </div>
+  {/if}
+
   <StatblockTables
     {sections}
     {inlineToggleService}
@@ -205,7 +214,7 @@
 
   {#if context.unlocked || context.background || context.species || context.classes.length > 0}
     <div class="tidy-table character-traits">
-      <div class="tidy-table-header-row theme-dark">
+      <div class="tidy-table-header-row">
         <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
       </div>
       <div class="list traits">
