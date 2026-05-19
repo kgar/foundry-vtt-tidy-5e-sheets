@@ -34,10 +34,6 @@
       : null,
   );
 
-  const handleChange = !favorite.effect.isSuppressed
-    ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
-    : undefined;
-
   let theSubtitle = $state<HTMLElement>();
 
   let tooltip = $derived(
@@ -64,7 +60,7 @@
     type="button"
     class="button button-borderless favorite-effect favorite-button"
     class:disabled={favorite.effect.isSuppressed}
-    onclick={handleChange}
+    data-action="toggle"
     data-favorite-type="effect"
   >
     <i class="effect-use-icon">
@@ -94,7 +90,7 @@
         <FieldToggle
           checked={!favorite.effect.disabled}
           disabled={favorite.effect.isSuppressed}
-          onchange={handleChange}
+          data-action="toggle"
         />
       </span>
     </div>

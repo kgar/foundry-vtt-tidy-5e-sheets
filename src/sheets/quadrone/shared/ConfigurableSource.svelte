@@ -37,7 +37,8 @@
       <button
         type="button"
         class="configure-source {buttonClass}"
-        onclick={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+        data-action="showConfiguration"
+        data-config="source"
         title={localize('DND5E.SOURCE.Action.Configure')}
       >
         <i class="fas fa-cog"></i>

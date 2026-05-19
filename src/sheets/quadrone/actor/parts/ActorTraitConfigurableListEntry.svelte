@@ -3,7 +3,11 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorTraitPills from 'src/sheets/quadrone/actor/parts/ActorTraitPills.svelte';
   import type { ActorTraitContext } from 'src/types/types';
-  import type { ClassValue } from 'svelte/elements';
+  import type {
+    ClassValue,
+    HTMLAttributes,
+    HTMLButtonAttributes,
+  } from 'svelte/elements';
 
   type OnConfigFn = (
     ev: MouseEvent & {
@@ -14,6 +18,7 @@
   interface Props {
     entries: ActorTraitContext[];
     onconfig?: OnConfigFn;
+    configAttributes?: HTMLAttributes<HTMLButtonElement>;
     configurationTooltip?: string;
     icon?: ClassValue;
     label: string;
@@ -32,6 +37,7 @@
   let {
     entries = [],
     onconfig,
+    configAttributes,
     configurationTooltip,
     icon,
     label,
@@ -62,8 +68,8 @@
         <i class={icon}></i>
         {label}
       </h4>
-      {#if context.unlocked && configButtonLocation == 'label' && onconfig}
-        {@render configButton(onconfig)}
+      {#if context.unlocked && configButtonLocation == 'label'}
+        {@render configButton(onconfig, configAttributes)}
       {/if}
     </div>
     <div class="list-content">
@@ -72,22 +78,33 @@
           <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
         {/if}
       </div>
-      {#if context.unlocked && configButtonLocation == 'end' && onconfig}
-        {@render configButton(onconfig)}
+      {#if context.unlocked && configButtonLocation == 'end'}
+        {@render configButton(onconfig, configAttributes)}
       {/if}
     </div>
   </div>
   {@html contentHtml}
 {/if}
 
-{#snippet configButton(configFn: OnConfigFn)}
-  <button
-    aria-label={configurationLabel}
-    type="button"
-    class="button button-borderless button-icon-only button-config flexshrink"
-    data-tooltip={configurationTooltip ?? configurationLabel}
-    onclick={(ev) => configFn(ev)}
-  >
-    <i class="fa-solid fa-cog"></i>
-  </button>
+{#snippet configButton(
+  configFn?: OnConfigFn,
+  attributes?: HTMLButtonAttributes,
+)}
+  {@const onclick = configFn
+    ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
+        configFn(ev)
+    : undefined}
+    
+  {#if onclick || attributes}
+    <button
+      aria-label={configurationLabel}
+      type="button"
+      class="button button-borderless button-icon-only button-config flexshrink"
+      data-tooltip={configurationTooltip ?? configurationLabel}
+      {onclick}
+      {...attributes}
+    >
+      <i class="fa-solid fa-cog"></i>
+    </button>
+  {/if}
 {/snippet}

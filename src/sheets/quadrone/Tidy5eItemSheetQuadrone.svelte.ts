@@ -144,6 +144,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           }),
         );
       },
+      showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
     dragDrop: [
       {
@@ -1027,6 +1028,33 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   _shouldShowAc() {
     return Tidy5eItemSheetQuadrone.ShouldShowAc(this.item);
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  static async #showConfiguration(
+    this: Tidy5eItemSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    switch ( target.dataset.config ) {
+      case "movement":
+      case "senses":
+        return FoundryAdapter.renderMovementSensesConfig(this.item, target.dataset.config);
+      case "source":
+        return FoundryAdapter.renderSourceConfig(this.item, "system.source");
+      case "starting-equipment":
+        return FoundryAdapter.openStartingEquipmentConfig(this.item);
+      case "type":
+        return this._renderChild(
+          new dnd5e.applications.shared.CreatureTypeConfig({
+            document: this.item,
+            keyPath: 'type',
+          }),
+        );
+    }  
   }
 
   /* -------------------------------------------- */

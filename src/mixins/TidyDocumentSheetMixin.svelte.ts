@@ -15,7 +15,7 @@ import type {
   Tab,
   TidySectionBase,
 } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { error, warn } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import {
   CustomContentRendererV2,
@@ -80,6 +80,7 @@ export function TidyExtensibleDocumentSheetMixin<
       },
       actions: {
         //changeMode: PrimarySheet5e.#changeMode,
+        currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
@@ -87,6 +88,8 @@ export function TidyExtensibleDocumentSheetMixin<
         showDocument: TidyDocumentSheet.#showDocument,
         use: TidyDocumentSheet.#useItem,
         'activity-use': TidyDocumentSheet.#useActivity,
+        toggle: TidyDocumentSheet.#toggle,
+        'transfer-currency': TidyDocumentSheet.#transferCurrency,
       },
     };
 
@@ -921,6 +924,16 @@ export function TidyExtensibleDocumentSheetMixin<
       data?: Record<string, any>;
     }): Promise<any> {}
 
+    static async #currency(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      return new dnd5e.applications.CurrencyManager({
+        document: this.document,
+      }).render({ force: true });    
+    }
+
     /**
      * Handle removing an document.
      * @this {PrimarySheet5e}
@@ -1090,6 +1103,38 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /* -------------------------------------------- */
+    
+    static async #toggle(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      // Effects
+      const { effectId, parentId } =
+        target.closest<HTMLElement>('[data-effect-id]')?.dataset ?? {};
+      if (effectId) {
+        const effect = FoundryAdapter.getEffect({
+          document: this.document,
+          effectId,
+          parentId,
+        });
+        const isConcentrationEffect =
+          this.document instanceof dnd5e.documents.Actor5e &&
+          this._concentration?.effects.has(effect);
+
+        // Concentration Break
+        if (isConcentrationEffect) {
+          return this.document.endConcentration(effect);
+        }
+
+        // Active Effect
+        return effect.update({ disabled: !effect.disabled });
+      }
+
+      // todo etc.
+    }
+
+    /* -------------------------------------------- */
     /*  Form Handling                               */
     /* -------------------------------------------- */
 
@@ -1142,6 +1187,51 @@ export function TidyExtensibleDocumentSheetMixin<
         const submit = new Event('submit', { cancelable: true });
         this.form.dispatchEvent(submit);
       }
+    }
+
+    /* -------------------------------------------- */
+
+    static async #transferCurrency(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      const currencyKeys = Object.keys(CONFIG.DND5E.currencies);
+      const { itemId } = target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+
+      const actor = this.actor;
+
+      if (!actor) {
+        warn(`No actor found for container ${itemId}.`);
+        return;
+      }
+
+      const container = actor.items.get(itemId);
+
+      if (!container) {
+        warn(`Container ${itemId} not found on this actor.`);
+        return;
+      }
+      
+      // Build update objects for both documents
+      const containerUpdate: Record<string, number> = {};
+      const actorUpdate: Record<string, number> = {};
+
+      for (const key of currencyKeys) {
+        const containerValue = container.system.currency[key] ?? 0;
+        const actorValue = actor.system.currency[key] ?? 0;
+
+        if (containerValue > 0) {
+          containerUpdate[`system.currency.${key}`] = 0;
+          actorUpdate[`system.currency.${key}`] = actorValue + containerValue;
+        }
+      }
+
+      // Update both documents
+      await Promise.all([
+        container.update(containerUpdate),
+        actor.update(actorUpdate),
+      ]);
     }
 
     /* -------------------------------------------- */

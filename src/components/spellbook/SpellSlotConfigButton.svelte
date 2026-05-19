@@ -14,7 +14,8 @@
   class="spell-slot-config inline-icon-button"
   title={localize('DND5E.SpellSlotsConfig')}
   aria-label={localize('DND5E.SpellSlotsConfig')}
-  onclick={() => FoundryAdapter.openSpellSlotsConfig(context.actor)}
+  data-action="showConfiguration"
+  data-config="spellSlots"
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-pencil"></i>

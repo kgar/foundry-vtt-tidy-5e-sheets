@@ -65,7 +65,11 @@
       <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
       <li style="order: 50">
         {#if context.isConcentrating}
-          <i class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse" aria-label="Concentration" style="font-size: var(--icon-size);"></i>
+          <i
+            class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+            aria-label="Concentration"
+            style="font-size: var(--icon-size);"
+          ></i>
         {:else}
           <i class="fas fa-head-side-brain color-text-gold"></i>
         {/if}
@@ -77,7 +81,10 @@
             context.actor.rollConcentration({ event: ev, legacy: false })}
           data-has-roll-modes
         >
-          {conc.label + (context.isConcentrating ? ` (${localize('EFFECT.DND5E.StatusConcentrating')})` : '')}
+          {conc.label +
+            (context.isConcentrating
+              ? ` (${localize('EFFECT.DND5E.StatusConcentrating')})`
+              : '')}
         </button>
         <span class="modifier">
           <span class="font-label-medium color-text-lightest">
@@ -92,8 +99,9 @@
             type="button"
             class="button button-borderless button-icon-only"
             data-tooltip={tooltip}
-            onclick={(ev) =>
-              FoundryAdapter.openConcentrationConfig(context.actor)}
+            data-action="showConfiguration"
+            data-config="ability"
+            data-ability="concentration"
           >
             <i class="fa-solid fa-cog"></i>
           </button>
@@ -143,8 +151,9 @@
       type="button"
       class="button button-borderless button-icon-only"
       data-tooltip={tooltip}
-      onclick={(ev) =>
-        FoundryAdapter.renderAbilityConfig(context.actor, ability.key)}
+      data-action="showConfiguration"
+      data-config="ability"
+      data-ability={ability.key}
     >
       <i class="fa-solid fa-cog"></i>
     </button>

@@ -740,4 +740,24 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       ['system.attributes.hp.max']: average,
     });
   }
+
+  /** @override */
+  _showConfiguration(_event: Event, target: HTMLElement) {
+    const config = { document: this.actor };
+
+    let app;
+    switch (target.dataset.config) {
+      case 'habitat':
+        app = new dnd5e.applications.actor.HabitatConfig(config);
+        break;
+      case 'treasure':
+        app = new dnd5e.applications.actor.TreasureConfig(config);
+        break;
+    }
+
+    if (app) {
+      this._renderChild(app);
+      return false;
+    }
+  }
 }

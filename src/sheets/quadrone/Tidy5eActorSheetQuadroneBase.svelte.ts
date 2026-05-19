@@ -63,6 +63,7 @@ import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
+import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -196,6 +197,7 @@ export function Tidy5eActorSheetQuadroneBase<
             document: this.document,
           }));
         },
+        showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
       },
       dragDrop: [
         {
@@ -2252,6 +2254,114 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     _roll(event: Event, target: HTMLElement): boolean | void {}
 
+    static async #showConfiguration(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (this._showConfiguration(event, target) === false) {
+        return;
+      }
+
+      if (target.dataset.trait) {
+        const trait = target.dataset.trait;
+        switch (trait) {
+          case 'di':
+          case 'dm':
+          case 'dr':
+          case 'dv':
+            return FoundryAdapter.openDamagesConfig(this.actor, trait);
+          case 'languages':
+            return FoundryAdapter.renderLanguagesConfig(this.actor);
+          case 'tool':
+            return FoundryAdapter.renderToolsConfig(this.actor);
+          case 'weapon':
+            return FoundryAdapter.renderWeaponsConfig(this.actor);
+          default:
+            return FoundryAdapter.renderTraitsConfig(this.actor, trait, {
+              width: 400,
+            });
+        }
+      }
+
+      switch (target.dataset.config) {
+        case 'ability':
+          const ability =
+            target.closest<HTMLElement>('[data-ability]')?.dataset.ability;
+
+          if (ability === 'concentration') {
+            return FoundryAdapter.openConcentrationConfig(this.actor);
+          }
+
+          return FoundryAdapter.renderAbilityConfig(this.actor, ability);
+        case 'armorClass':
+          return FoundryAdapter.renderArmorConfig(this.actor);
+        case 'creatureType':
+          return this._renderChild(
+            new dnd5e.applications.shared.CreatureTypeConfig(
+              this.actor.system.details.race?.id
+                ? { document: this.actor.system.details.race, keyPath: 'type' }
+                : { document: this.actor },
+            ),
+          );
+        case 'death':
+          return FoundryAdapter.renderDeathConfig(this.actor);
+        case 'hitDice':
+          return FoundryAdapter.renderHitDiceConfig(this.actor);
+        case 'hitPoints':
+          return FoundryAdapter.renderHitPointsConfig(this.actor);
+        case 'initiative':
+          return FoundryAdapter.renderInitiativeConfig(this.actor);
+        case 'movement':
+        case 'senses':
+          return FoundryAdapter.renderMovementSensesConfig(
+            this.actor,
+            target.dataset.config,
+          );
+        case 'skill':
+          const skill = target.closest<HTMLElement>('[data-key]')?.dataset.key;
+
+          if (skill) {
+            return FoundryAdapter.renderSkillToolConfig(
+              this.actor,
+              'skills',
+              skill,
+            );
+          }
+        case 'skills':
+          return FoundryAdapter.renderSkillsConfig(this.actor);
+        case 'special-traits':
+          return this._renderChild(
+            new SpecialTraitsApplication({ document: this.actor }),
+          );
+        case 'tool':
+          const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
+
+          if (tool) {
+            return FoundryAdapter.renderSkillToolConfig(
+              this.actor,
+              'tool',
+              tool,
+            );
+          }
+        case 'source':
+          return FoundryAdapter.renderSourceConfig(this.actor, 'system.source');
+        case 'spellSlots':
+          return FoundryAdapter.openSpellSlotsConfig(this.actor);
+      }
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle opening a configuration application.
+     * @param event         Triggering click event.
+     * @param target  Button that was clicked.
+     * @returns                Return `false` to prevent default behavior.
+     * @abstract
+     */
+    _showConfiguration(event: Event, target: HTMLElement): boolean | void {}
+    
     /* -------------------------------------------- */
     /* SheetTabCacheable
     /* -------------------------------------------- */

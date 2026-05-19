@@ -26,8 +26,10 @@
   {configButtonLocation}
   label={localize('DND5E.Speed')}
   entries={context.speeds.traitEntries}
-  onconfig={() =>
-    FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-config': 'movement',
+  }}
   icon="fa-solid fa-rabbit-running"
 />
 
@@ -36,8 +38,10 @@
   {configButtonLocation}
   label={localize('DND5E.Senses')}
   entries={context.senses.traitEntries}
-  onconfig={() =>
-    FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-config': 'senses',
+  }}
   icon="fa-solid fa-eye"
 />
 
@@ -46,7 +50,10 @@
   {configButtonLocation}
   label={localize('DND5E.Resistances')}
   entries={context.traits.dr}
-  onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'dr'
+  }}
   icon="fa-solid fa-shield-halved"
   pillClass="positive"
   aggregateIcons={{
@@ -60,7 +67,10 @@
   {configButtonLocation}
   label={localize('DND5E.TraitDIPlural.other')}
   entries={context.traits.di}
-  onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'di'
+  }}
   icon="fa-solid fa-shield"
   pillClass="positive"
   aggregateIcons={{
@@ -74,7 +84,10 @@
   {configButtonLocation}
   label={localize('DND5E.TraitCIPlural.other')}
   entries={context.traits.ci}
-  onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'ci'
+  }}
   icon="fa-solid fa-shield-virus"
   pillClass="positive"
 />
@@ -84,7 +97,10 @@
   {configButtonLocation}
   label={localize('DND5E.Vulnerabilities')}
   entries={context.traits.dv}
-  onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'dv'
+  }}
   icon="fa-solid fa-heart-crack"
   pillClass="negative"
   aggregateIcons={{
@@ -98,7 +114,10 @@
   {configButtonLocation}
   label={localize('DND5E.DamageModification.Label')}
   entries={context.traits.dm}
-  onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'dm'
+  }}
   icon="fa-solid fa-heart-circle-plus"
   aggregateIcons={{
     iconClass: 'fa-solid fa-shield-exclamation',
@@ -111,7 +130,10 @@
   {configButtonLocation}
   label={localize('DND5E.Armor')}
   entries={context.traits.armor}
-  onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'armor'
+  }}
   icon="fa-solid fa-shield-quartered"
 />
 
@@ -120,7 +142,10 @@
   {configButtonLocation}
   label={localize('TYPES.Item.weaponPl')}
   entries={context.traits.weapon}
-  onconfig={() => FoundryAdapter.renderWeaponsConfig(context.actor)}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'weapon'
+  }}
   icon="fa-solid fa-swords"
 />
 
@@ -129,7 +154,10 @@
   {configButtonLocation}
   label={localize('DND5E.Languages')}
   entries={context.traits.languages}
-  onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
+  configAttributes={{
+    'data-action': 'showConfiguration',
+    'data-trait': 'languages'
+  }}
   icon="fa-solid fa-comments"
 />
 

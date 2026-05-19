@@ -10,6 +10,7 @@
   import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
   import ItemName from '../item/parts/header/ItemName.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
 
   const context = $derived(getContainerSheetQuadroneContext());
 
@@ -62,20 +63,17 @@
       <h4 class="currency-header">
         <span>{localize('DND5E.Currency')}</span>
         {#if context.editable}
-          <a
-            class="button button-icon-only currency-conversion"
-            class:disabled={!context.editable}
-            onclick={() =>
-              context.owner &&
-              context.sheet._renderChild(
-                new dnd5e.applications.CurrencyManager({
-                  document: context.document,
-                }),
-              )}
+          <button
+            type="button"
+            class={[
+              'button button-icon-only currency-conversion',
+              { disabled: !context.editable },
+            ]}
+            data-action="currency"
             data-tooltip="DND5E.CurrencyManager.Title"
           >
             <i class="fas fa-database"></i>
-          </a>
+          </button>
         {/if}
       </h4>
       <div class="currencies">
@@ -98,6 +96,10 @@
             </span>
           </label>
         {/each}
+        <TransferCurrencyButton
+          container={context.item}
+          currencies={context.currencies}
+        />
       </div>
     </div>
   {/snippet}

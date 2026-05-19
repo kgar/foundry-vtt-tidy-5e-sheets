@@ -26,7 +26,9 @@
 
   let xpPool = $derived(context.system.details.xp.value);
 
-  let totalCurrency = $derived.by(() => context.sheet.getDefaultCurrencySummary(context.actor));
+  let totalCurrency = $derived.by(() =>
+    context.sheet.getDefaultCurrencySummary(context.actor),
+  );
 </script>
 
 {#snippet speedSenseSummary(
@@ -219,8 +221,8 @@
         class={[
           'button button-borderless button-icon-only button-config flexshrink',
         ]}
-        onclick={() =>
-          FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
+        data-action="showConfiguration"
+        data-config="movement"
         data-tidy-sheet-part="ability-configuration-control"
       >
         <i class="fas fa-cog"></i>

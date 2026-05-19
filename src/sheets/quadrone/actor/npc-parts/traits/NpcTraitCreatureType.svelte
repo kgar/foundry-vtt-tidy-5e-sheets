@@ -9,9 +9,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  let species = $derived(context.creatureType);
-  let onconfig = () => FoundryAdapter.renderCreatureTypeConfig(context.actor);
-
   let creatureTypeEntries = $derived.by(() => {
     let result: ActorTraitContext[] = [];
 
@@ -34,11 +31,12 @@
       </h4>
       {#if context.unlocked}
         <button
-          aria-label={localize('DND5E.CreatureType.Add')}
+          aria-label={localize('DND5E.CreatureTypeTitle')}
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip
-          onclick={onconfig}
+          data-action="showConfiguration"
+          data-config="creatureType"
         >
           <i class="fa-solid fa-cog"></i>
         </button>

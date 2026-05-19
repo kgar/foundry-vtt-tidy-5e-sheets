@@ -1,24 +1,6 @@
 ## kgar To Do
 
-- [x] Convert all single-actor ability rolls to data-action
-- [x] Convert all single-actor saving throws to data-action
-- [x] Convert all single-actor tool rolls to data-action
-- [x] Convert all single-actor skill rolls to data-action
-- [x] Convert all single-actor death saves to data-action
-- [x] Convert all single-actor inititive rolls to data-action
-- [x] Test PC
-- [x] Test NPC
-- [x] Test Vehicle
-- [x] Test Group
-- [x] Test Encounter?
-- [ ] Convert effect toggling on Favorites (and possibly on table button)
-- [ ] Convert concentration break to action
-- [ ] Plan out config sheet actions
-- [ ] Decide: 'saving-throw' class presence denotes a saving throw roll when using data-action="roll". Kinda gross. Should I deviate, or stick to the API?
-
----
-
-- [ ] Clicking and holding on the initiative button shows a red square.
+- [ ] review system sheets for forms handling. Are they using forms? Is there any way to prevent unwanted changes to an actor during submission?
 - [ ] Extract and share: TidyTableRowUseButton
   - [ ] Convert to sheet action
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
@@ -150,6 +132,7 @@
 
 ## hightouch To Do
 
+- [ ] Clicking and holding on the initiative button shows a red square.
 - [ ] Surface edit icon in non-edit mode Biography tab
 - [ ] Add fallback image for broken image links (text appears today)
 - [ ] Request from Kharmans: Specify base overrides for different sheet images instead of just a global setting.
