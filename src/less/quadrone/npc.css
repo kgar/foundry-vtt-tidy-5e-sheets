@@ -52,10 +52,20 @@
   .abilities-container.abilities-size-small {
     .initiative-score-container {
       height: 3.75rem;
+
+      .ability-roll-button {
+        gap: 0.25rem;
+        padding-top: 0.375rem;
+      }
     }
   }
 
-  &.theme-basic .abilities-container,
+  /* &.theme-basic .abilities-container.abilities-size-compact {
+    .initiative-score-container .ability-roll-button {
+      gap: 0.125rem;
+      margin-top: 0;
+    }
+  } */
   .abilities-container.abilities-size-compact {
     .initiative-score-container {
       margin-top: 0;
@@ -63,6 +73,18 @@
 
       .ability-roll-button {
         gap: 0.125rem;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+
+  &.theme-basic .abilities-container {
+    .initiative-score-container {
+      margin-top: 0;
+      padding-top: 0;
+
+      .ability-roll-button {
+        margin-top: 0;
       }
     }
   }
