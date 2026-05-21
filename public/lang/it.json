@@ -393,9 +393,9 @@
             "explanation": "Seleziona il colore che desideri utilizzare per ciascuna opzione. Il valore \"#00000000\" equivale a disabilitare il colore."
         },
         "hint": "Personalizza la tua scheda per creare un'esperienza immersiva che completi il tuo gioco.",
-        "ActorHeaderBackground.title": "Sfondo Intestazione Personaggio",
+        "ActorHeaderBackground.title": "Immagine Intestazione Personaggio",
         "AccentColor.title": "Colore Base",
-        "ItemSidebarBackground.title": "Sfondo Barra Laterale",
+        "ItemSidebarBackground.title": "Immagine Barra Laterale",
         "PortraitShape": {
             "title": "{type} Forma Ritratto",
             "option.round": "Rotondo",
@@ -404,7 +404,7 @@
             "option.token": "Token"
         },
         "RarityColors.title": "Colori Rarità",
-        "SheetTheme.title": "Tema Scheda",
+        "SheetTheme.title": "Tema Colore Scheda",
         "SheetTheme.hint": "Per risultati ottimali, scegli un colore vicino al centro della tavolozza dei colori.",
         "SpellcastingMethodColors.title": "Colori Modalità Preparazione Incantesimi",
         "UseHeaderBackground.title": "Usa Sfondo Intestazione",
@@ -414,6 +414,12 @@
         },
         "HeaderColor": {
             "title": "Colore Sfondo Intestazione",
+            "hint": "Per l'intestazione della scheda, utilizzare un colore diverso dal colore principale della scheda."
+        },
+        "UseBasicTheme.title": "Utilizza Tema Base",
+        "UseBasicTheme.hint": "Utilizzate lo stile classico della pergamena, senza intestazioni di tabella e schede stilizzate.",
+        "HeaderBackgroundColor": {
+            "title": "Colore Intestazione Personaggio",
             "hint": "Per l'intestazione della scheda, utilizzare un colore diverso dal colore principale della scheda."
         }
     },
@@ -889,7 +895,7 @@
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi",
     "TIDY5E.StatblockTabName": "Statistiche",
     "TIDY5E.JournalEntry.NewTitle": "Voce Diario {number}",
-    "TIDY5E.SheetLock.Empty.Hint": "Inizia aggiungendo una classe e i tuoi primi elementi. Quindi, usa il menu degli elementi o clicca con il tasto destro del mouse e seleziona \"Aggiungi alla Scheda\" per aggiungerli qui.",
+    "TIDY5E.SheetLock.Empty.Hint": "<h3>Per iniziare</h3><p>Inizia aggiungendo una classe e i tuoi primi elementi nella scheda <i class='fa-solid fa-wreath-laurel'></i> <strong>Personaggio</strong>. Quindi, usa il menu degli elementi o fai clic con il pulsante destro del mouse e scegli <strong>Aggiungi alla scheda Foglio</strong> per aggiungerli qui.</p><h3>Personalizza il tuo Foglio</h3><p>Scegli tra i temi del foglio Stilistico o Base, aggiorna il colore di accento del foglio o l'immagine dell'intestazione aprendo il <i class='fa-solid fa-ellipsis-vertical'></i> <strong>menu a discesa</strong> del foglio usando l'opzione <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Impostazioni del tema Tidy</strong></a>.</p><h3>Barra laterale</h3><p>Salva qualsiasi elemento nella <i class='fa-solid fa-sidebar'></i> <strong>Barra laterale</strong> per utilizzarlo in seguito. Utilizza il menu <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Overflow</strong> oppure fai clic con il pulsante destro del mouse su qualsiasi elemento e poi <i class='fa-solid fa-star'></i> <strong>Aggiungi ai preferiti</strong> per aggiungerlo alla barra laterale.</p><h3>Impostazioni</h3><p>Aggiorna le impostazioni per ogni scheda e personalizza le sezioni utilizzando il pulsante <i class='fa-solid fa-gear'></i> <strong>Configurazione</strong> in ogni scheda.</p>",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "Imposta come Fonte di Ispirazione",
     "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Rimuovi come Fonte di Ispirazione",
     "TIDY5E.ContextMenuActionAddToSheetTab": "Aggiungi alla Scheda",
@@ -1061,5 +1067,8 @@
     },
     "TIDY5E.Settings.ShowTooltipTool": {
         "name": "Visualizza suggerimenti di sistema sugli Strumenti"
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Colore Sfondo Intestazione"
     }
 }
