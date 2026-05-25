@@ -265,11 +265,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       );
 
       const accentColor = coalesce(
-        // Use the actor's accent color, if configured
-        ThemeQuadrone.getSheetThemeSettings({
-          doc: actor,
-          applyWorldThemeSetting: false,
-        }).accentColor,
+        // Use the actor's accent color, if configured, which references global themes if configured
+        TidyFlags.sheetThemeSettings.get(actor)?.accentColor,
         // Else, use the group sheet's accent color, with fallback to world default accent color
         actorContext.themeSettings.accentColor
       );
