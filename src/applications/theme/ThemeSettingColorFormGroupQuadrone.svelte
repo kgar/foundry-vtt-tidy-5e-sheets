@@ -11,6 +11,7 @@
     placeholder?: string;
     colorSelected?: () => void;
     disableDelete?: boolean;
+    requireValue?: boolean;
   }
 
   let {
@@ -20,6 +21,7 @@
     colorSelected,
     placeholder = '#FFFFFF',
     disableDelete = false,
+    requireValue = false,
   }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -56,7 +58,7 @@
     <label
       for="{inputId}-picker"
       class="color-picker-preview"
-      style:--bg-color={value}
+      style:--bg-color={value || placeholder}
     >
       <i class="fa-solid fa-palette"></i>
     </label>
@@ -79,8 +81,10 @@
       {placeholder}
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
       onblur={() => {
-        if (disableDelete && (isNil(value, '') || !chroma.valid(value))) {
+        if (requireValue && (isNil(value, '') || !chroma.valid(value))) {
           onColorSelected(placeholder);
+        } else if (!isNil(value, '') && !chroma.valid(value)) {
+          value = '';
         }
       }}
     />
