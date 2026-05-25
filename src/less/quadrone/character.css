@@ -272,7 +272,7 @@
       padding-top: 0;
 
       .shield {
-        margin-top: 0.1875rem;
+        margin-top: 0.125rem;
         height: auto;
         min-height: 3.25rem;
         min-width: auto;
@@ -304,7 +304,6 @@
     }
 
     .ability {
-      max-width: 3.25rem;
       gap: 0;
 
       .initiative-score-container {

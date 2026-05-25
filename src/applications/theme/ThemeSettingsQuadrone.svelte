@@ -35,14 +35,11 @@
   );
 
   let portraitShapeDefaultLabel = $derived(
-    localize(
-      'TIDY5E.UseSpecificDefaultValue.Label',
-      {
-        value: localize(
-          `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
-        ),
-      },
-    ),
+    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+      value: localize(
+        `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
+      ),
+    }),
   );
 
   let methodColorPlaceholders = $derived.by(() =>
@@ -74,11 +71,49 @@
 
     const liveSettings = ThemeQuadrone.getSheetThemeSettings({
       doc: app.document,
-      settingsOverride: app.mapContextToSettings(context),
+      settingsOverride: app.mapContextToChangedSettings(context) as any,
     });
 
     TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
   });
+
+  let useBasicThemeIfChanged = $derived(
+    context.value.useBasicTheme ?? placeholders?.value.useBasicTheme ?? false,
+  );
+  let useHeaderBackgroundIfChanged = $derived(
+    context.value.useHeaderBackground ??
+      placeholders?.value.useHeaderBackground ??
+      true,
+  );
+
+  let useBasicThemeDefaultLabel = $derived(
+    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+      value: localize(
+        (placeholders?.value.useBasicTheme ?? false)
+          ? localize('COMMON.Yes')
+          : localize('COMMON.No'),
+      ),
+    }),
+  );
+  let useHeaderBackgroundDefaultLabel = $derived(
+    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+      value: localize(
+        (placeholders?.value.useHeaderBackground ?? true)
+          ? localize('COMMON.Yes')
+          : localize('COMMON.No'),
+      ),
+    }),
+  );
+
+  function onUseBasicThemeChange(newValue: boolean | null) {
+    context.value.useBasicTheme = newValue;
+    // Keep the legacy invariant: explicit basic theme dictates header background.
+    if (newValue === true) {
+      context.value.useHeaderBackground = false;
+    } else if (newValue === false) {
+      context.value.useHeaderBackground = true;
+    }
+  }
 
   async function onDrop(
     ev: DragEvent & {
@@ -110,7 +145,10 @@
       type="button"
       class="button flexshrink"
       onclick={() =>
-        ThemeQuadroneImportService.export(app.mapContextToSettings(context))}
+        ThemeQuadroneImportService.export({
+          ...ThemeQuadrone.getDefaultThemeSettings(),
+          ...app.mapContextToChangedSettings(context),
+        })}
     >
       <i class="fa-solid fa-file-export"></i>
       {localize('TIDY5E.ThemeSettings.Sheet.export')}
@@ -130,11 +168,10 @@
         placeholders?.value.accentColor,
         ThemeQuadrone.DEFAULT_ACCENT_COLOR,
       )}
-      disableDelete
     />
 
-    {#if !context.value.useBasicTheme}
-
+    <!-- Hide if basic theme -->
+    {#if !useBasicThemeIfChanged}
       {#if !app.document?.documentName || app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
         <div class="form-group">
           <label for="{idPrefix}-actor-portrait-shape">
@@ -165,19 +202,49 @@
           <label for="{idPrefix}-use-header-background">
             {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
           </label>
-          <div class="form-fields">
-            <input
-              id="{idPrefix}-use-header-background"
-              type="checkbox"
-              bind:checked={context.value.useHeaderBackground}
-            />
+          <div class="form-fields vertical">
+            {#if app.document}
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="{idPrefix}-use-header-background"
+                  checked={context.value.useHeaderBackground === true}
+                  onclick={() => (context.value.useHeaderBackground = true)}
+                />
+                {localize('Yes')}
+              </label>
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="{idPrefix}-use-header-background"
+                  checked={context.value.useHeaderBackground === false}
+                  onclick={() => (context.value.useHeaderBackground = false)}
+                />
+                {localize('No')}
+              </label>
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="{idPrefix}-use-header-background"
+                  checked={context.value.useHeaderBackground === null}
+                  onclick={() => (context.value.useHeaderBackground = null)}
+                />
+                {useHeaderBackgroundDefaultLabel}
+              </label>
+            {:else}
+              <input
+                id="{idPrefix}-use-header-background"
+                type="checkbox"
+                bind:checked={context.value.useHeaderBackground}
+              />
+            {/if}
           </div>
           <p class="hint">
             {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
           </p>
         </div>
 
-        {#if context.value.useHeaderBackground}
+        {#if useHeaderBackgroundIfChanged}
           <div class="form-group">
             <label for="{idPrefix}-actor-header-background">
               {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
@@ -214,15 +281,43 @@
       <label for="{idPrefix}-use-basic-theme">
         {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
       </label>
-      <div class="form-fields">
-        <input
-          id="{idPrefix}-use-basic-theme"
-          type="checkbox"
-          bind:checked={context.value.useBasicTheme}
-          onchange={() => {
-            context.value.useHeaderBackground = !context.value.useBasicTheme;
-          }}
-        />
+      <div class="form-fields vertical">
+        {#if app.document}
+          <label class="radio">
+            <input
+              type="radio"
+              name="{idPrefix}-use-basic-theme"
+              checked={context.value.useBasicTheme === true}
+              onclick={() => onUseBasicThemeChange(true)}
+            />
+            {localize('Yes')}
+          </label>
+          <label class="radio">
+            <input
+              type="radio"
+              name="{idPrefix}-use-basic-theme"
+              checked={context.value.useBasicTheme === false}
+              onclick={() => onUseBasicThemeChange(false)}
+            />
+            {localize('No')}
+          </label>
+          <label class="radio">
+            <input
+              type="radio"
+              name="{idPrefix}-use-basic-theme"
+              checked={context.value.useBasicTheme === null}
+              onclick={() => onUseBasicThemeChange(null)}
+            />
+            {useBasicThemeDefaultLabel}
+          </label>
+        {:else}
+          <input
+            id="{idPrefix}-use-basic-theme"
+            type="checkbox"
+            checked={context.value.useBasicTheme ?? false}
+            onchange={(ev) => onUseBasicThemeChange(ev.currentTarget.checked)}
+          />
+        {/if}
       </div>
       <p class="hint">
         {localize('TIDY5E.ThemeSettings.UseBasicTheme.hint')}
@@ -230,7 +325,7 @@
     </div>
 
     <!-- TODO: Add item sidebar background setting -->
-    <!-- {#if settings.value.truesight}
+    {#if app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ITEM}
       <div class="form-group">
         <label for="{idPrefix}-item-sidebar-background">
           {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
@@ -249,7 +344,7 @@
           />
         </div>
       </div>
-    {/if} -->
+    {/if}
   </fieldset>
   <fieldset>
     <legend>

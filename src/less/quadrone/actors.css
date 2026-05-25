@@ -104,7 +104,7 @@
   /* THEMES
   ------------------------------------------------------------ */
   &:not(.theme-parchment) {
-    background: var(--t5e-theme-header-color, var(--t5e-theme-color-default));
+    background: var(--t5e-theme-color-header, var(--t5e-theme-color-default));
   }
 
   &.theme-parchment {

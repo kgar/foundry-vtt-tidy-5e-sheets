@@ -79,8 +79,19 @@ export class ThemeQuadrone {
     );
   }
 
+  /** Get any settings that have been changed, or null  */
+  static getChangedWorldThemeSettingsForForm(): Partial<ThemeSettingsV3> {
+    return SettingsProvider.settings.worldThemeSettings.get() ?? {};
+  }
+
   static saveWorldThemeSettings(settings: ThemeSettingsV3) {
     const toSave = { ...settings };
+
+    for (const [key, value] of Object.entries(toSave)) {
+      if (isNil(value, '')) {
+        delete toSave[key as keyof ThemeSettingsV3];
+      }
+    }
 
     return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
   }
