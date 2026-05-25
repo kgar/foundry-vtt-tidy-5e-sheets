@@ -67,11 +67,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   static _lockedSkillAllowlist = new Set<string>(['ins', 'per']);
 
@@ -114,11 +114,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       .filter((x: Actor5e) => x.type === 'group')
       .map(
         (x: Actor5e) =>
-          ({
-            id: x.id,
-            name: x.name,
-            primary: x.id === game.actors.party?.id,
-          } satisfies DifficultyTarget)
+        ({
+          id: x.id,
+          name: x.name,
+          primary: x.id === game.actors.party?.id,
+        } satisfies DifficultyTarget)
       );
 
     if (!game.actors.party) {
@@ -233,11 +233,9 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         );
 
         const accentColor = coalesce(
-          // Use the actor's accent color, if configured
-          ThemeQuadrone.getSheetThemeSettings({
-            doc: actor,
-            applyWorldThemeSetting: false,
-          }).accentColor,
+          // Use the actor's accent color, if configured, which references global themes if configured
+          TidyFlags.sheetThemeSettings.get(actor)?.accentColor,
+          // Else, use the group sheet's accent color, with fallback to world default accent color
           // Else, use the encounter sheet's accent color, with fallback to world default accent color
           context.themeSettings.accentColor
         );
