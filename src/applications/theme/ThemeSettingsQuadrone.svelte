@@ -325,7 +325,7 @@
     </div>
 
     <!-- TODO: Add item sidebar background setting -->
-    <!-- {#if settings.value.truesight}
+    {#if app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ITEM}
       <div class="form-group">
         <label for="{idPrefix}-item-sidebar-background">
           {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
@@ -344,7 +344,7 @@
           />
         </div>
       </div>
-    {/if} -->
+    {/if}
   </fieldset>
   <fieldset>
     <legend>

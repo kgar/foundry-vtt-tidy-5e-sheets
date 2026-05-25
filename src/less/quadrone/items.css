@@ -140,6 +140,9 @@
   /* Sidebar */
   .sidebar {
     background: var(--sidebar-bg);
+    background-position: top center;
+    background-size: auto;
+    background-repeat: no-repeat;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
     border-right: 0.0625rem solid var(--window-border-color, #9f9275);
