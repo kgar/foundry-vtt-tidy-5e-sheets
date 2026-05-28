@@ -74,6 +74,11 @@
       }
     }
 
+    .sheet-body.limited-sheet {
+      overflow-y: auto;
+      flex-direction: column;
+    }
+
     .main-content {
       display: flex;
       flex: 1;
