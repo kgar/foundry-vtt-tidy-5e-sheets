@@ -79,6 +79,7 @@ jobs:
           VERSION: ${{ github.event.release.tag_name }}
           COMPAT_MIN: ${{ steps.module.outputs.compat_min }}
           COMPAT_MAX: ${{ steps.module.outputs.compat_max }}
+          COMPAT_VERIFIED: ${{ steps.module.outputs.compat_verified }}
           DND5E_MIN: ${{ steps.module.outputs.dnd5e_min }}
           DND5E_MAX: ${{ steps.module.outputs.dnd5e_max }}
           RELEASE_PAGE: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}
@@ -101,6 +102,9 @@ jobs:
           title = os.environ.get('MODULE_TITLE', 'Tidy 5e Sheets') + ' ' + os.environ.get('VERSION', '')
           compat_min = os.environ.get('COMPAT_MIN', '')
           compat_max = os.environ.get('COMPAT_MAX', '')
+          verified = os.environ.get('COMPAT_VERIFIED', '')
+          compat_range = f'{compat_min} - {compat_max}' if compat_min != compat_max and compat_max else f'{compat_min}+'
+          compat_text = f'{compat_range} (Verified {verified})'
           dnd5e_min = os.environ.get('DND5E_MIN', '')
           dnd5e_max = os.environ.get('DND5E_MAX', '')
           release_page = os.environ.get('RELEASE_PAGE', '')
@@ -113,7 +117,7 @@ jobs:
                   'url': release_page,
                   'description': notes,
                   'fields': [
-                      {'name': 'Core Compatibility', 'value': compat_min if compat_min == compat_max else f'{compat_min} - {compat_max}', 'inline': True},
+                      {'name': 'Core Compatibility', 'value': compat_text, 'inline': True},
                       {'name': 'D&D 5e Compatibility', 'value': dnd5e_min if dnd5e_min == dnd5e_max else f'{dnd5e_min} - {dnd5e_max}', 'inline': True},
                       {'name': 'Foundry Package', 'value': f'[Install from Foundry]({foundry_url})', 'inline': True}
                   ],
