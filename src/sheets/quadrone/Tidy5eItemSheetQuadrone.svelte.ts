@@ -170,17 +170,15 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
   _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
     const isBasic = themeSettings.useBasicTheme;
-    const isParchment = !themeSettings.useHeaderBackground || isBasic;
     const foundryThemeIsDark = getThemeV2(this.document) === 'dark';
-    const isDark = themeSettings.useHeaderBackground || foundryThemeIsDark;
 
-    this.element.classList.toggle('theme-parchment', isParchment);
+    this.element.classList.toggle('theme-parchment', isBasic);
     this.element.classList.toggle('theme-basic', isBasic);
 
     for (const node of this.element.querySelectorAll(
       '.window-header, .sheet-header',
     )) {
-      node.classList.toggle('theme-dark', isDark);
+      node.classList.toggle('theme-dark', foundryThemeIsDark);
     }
   }
 
