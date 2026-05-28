@@ -103,10 +103,11 @@ jobs:
           compat_min = os.environ.get('COMPAT_MIN', '')
           compat_max = os.environ.get('COMPAT_MAX', '')
           verified = os.environ.get('COMPAT_VERIFIED', '')
-          compat_range = f'{compat_min} - {compat_max}' if compat_min != compat_max and compat_max else f'{compat_min}+'
+          compat_range = 'All' if not compat_min and not compat_max else f'{compat_min}-{compat_max}' if compat_min != compat_max and compat_max else f'{compat_min}+'
           compat_text = f'{compat_range} (Verified {verified})'
           dnd5e_min = os.environ.get('DND5E_MIN', '')
           dnd5e_max = os.environ.get('DND5E_MAX', '')
+          dnd5e_text = 'All' if not dnd5e_min and not dnd5e_max else f'{dnd5e_min}-{dnd5e_max}' if dnd5e_min != dnd5e_max and dnd5e_max else f'{dnd5e_min}+'
           release_page = os.environ.get('RELEASE_PAGE', '')
           foundry_url = os.environ.get('FOUNDRY_URL', 'https://foundryvtt.com/packages/tidy5e-sheet')
 
@@ -118,7 +119,7 @@ jobs:
                   'description': notes,
                   'fields': [
                       {'name': 'Core Compatibility', 'value': compat_text, 'inline': True},
-                      {'name': 'D&D 5e Compatibility', 'value': dnd5e_min if dnd5e_min == dnd5e_max else f'{dnd5e_min} - {dnd5e_max}', 'inline': True},
+                      {'name': 'D&D 5e Compatibility', 'value': dnd5e_text, 'inline': True},
                       {'name': 'Foundry Package', 'value': f'[Install from Foundry]({foundry_url})', 'inline': True}
                   ],
                   'color': 3250562 # Keeper Of Sheets Green
