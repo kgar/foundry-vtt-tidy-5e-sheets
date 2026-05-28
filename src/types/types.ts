@@ -1781,3 +1781,39 @@ export type SvelteInputEvent = (
     currentTarget: EventTarget & HTMLInputElement;
   },
 ) => any;
+
+/* Selection Engine */
+
+export type Comparator = '>' | '>=' | '<' | '<=' | '=' | '!=' | 'contains' | 'startsWith' | 'endsWith';
+
+export type Comparison = {
+  type: 'comparison';
+  comparator: Comparator;
+  value: any;
+}
+
+export type RegexComparator = {
+  type: 'regex';
+  regex: string;
+  value: any;
+}
+
+export type Range = {
+  type: 'range';
+  from: any;
+  to: any;
+}
+
+
+export type PropertySelection<TCriteria> = TCriteria & {
+  type: 'propertyComparison';
+  prop: string
+};
+
+export type SelectionCriteria = PropertySelection<Comparison> | PropertySelection<Comparison>;
+
+export type DocumentSelectable<TResult> = {
+  priority: number;
+  criteria: SelectionCriteria[];
+  result: TResult;
+}
