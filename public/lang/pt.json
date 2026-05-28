@@ -152,7 +152,9 @@
         "SelectedHeader": "Guias Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de guia.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma guia.",
-        "Explanation": "Qualquer guia que o utilizador ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada."
+        "Explanation": "Qualquer guia que o utilizador ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada.",
+        "SelectionTab.Title": "Seleção de Guias",
+        "VisibilityTab.Title": "Visibilidade de Guias"
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -667,7 +669,9 @@
         "name": "Definir Tidy como Ficha Padrão",
         "hint": "Se deseja definir o Tidy 5e Sheets como padrão para um ou mais tipos de documentos, mas o menu de configuração principal das fichas padrão não está funcionando conforme o esperado, use este menu para selecionar as suas preferências.",
         "buttonLabel": "Definir Tidy como Ficha Padrão",
-        "explanation": "Selecione todos os tipos de documentos onde prefere que o Tidy 5e Sheets seja o padrão."
+        "explanation": "Selecione todos os tipos de documentos onde prefere que o Tidy 5e Sheets seja o padrão.",
+        "disableAll": "Uso para nenhuma ficha",
+        "enableAll": "Use para todas as fichas"
     },
     "TIDY5E.Settings.About": {
         "name": "Sobre",
@@ -715,8 +719,8 @@
         },
         "hint": "Personalize a sua ficha para criar uma experiência imersiva que complemente o seu jogo.",
         "AccentColor.title": "Cor de Destaque",
-        "ActorHeaderBackground.title": "Fundo do Cabeçalho do Ator",
-        "ItemSidebarBackground.title": "Fundo da Lateral do Elemento",
+        "ActorHeaderBackground.title": "Imagem do Cabeçalho do Ator",
+        "ItemSidebarBackground.title": "Imagem da Lateral do Elemento",
         "PortraitShape": {
             "title": "Formato {type} do Retrato",
             "option.round": "Redondo",
@@ -727,7 +731,17 @@
         "RarityColors.title": "Cores de Raridade",
         "SheetTheme.title": "Tema da Ficha",
         "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
-        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias"
+        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias",
+        "AccentColor": {
+            "hint": "Personalize a cor de destaque da ficha, incluindo botões, cabeçalhos de tabela e outros elementos da interface."
+        },
+        "UseHeaderBackground.title": "Usar Fundo do Cabeçalho",
+        "UseHeaderBackground.hint": "Inclui estilos que suportam um cabeçalho colorido de ficha com uma imagem de fundo.",
+        "SpellcastingMethodColors.title": "Cores do Modo de Preparação de Magias",
+        "UseBasicTheme.title": "Use o Tema Básico",
+        "HeaderBackgroundColor": {
+            "title": "Cor do Cabeçalho do Ator"
+        }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -840,5 +854,140 @@
     "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos",
     "TIDY5E.CharacterTraits.Title": "Traços de Personagem",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}.",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Usar predefinição ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Usar predefinição ({value})",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Ficha de Encontro Clássica Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e",
+    "TIDY5E.AbilityRoll": "Rolar Teste de {ability}",
+    "TIDY5E.AddCustom": "Adicionar {name} Personalizado",
+    "TIDY5E.CompendiumBrowser": "Adicionar {name} do Compêndio",
+    "TIDY5E.RemoveSpecific": "Remover {name}",
+    "TIDY5E.SheetPin": {
+        "Label": "Fixado da Ficha",
+        "LabelPl": "Fixados da Ficha"
+    },
+    "TIDY5E.Show": "Exibir",
+    "TIDY5E.Hide": "Ocultar",
+    "TIDY5E.SectionOrganization": "Organização da Secção",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Inclui automaticamente elementos utilizáveis",
+    "TIDY5E.LegendaryLairToolbar": "Barra Lendária/Covil",
+    "TIDY5E.SpellbookSections": "Secções do Grimório",
+    "TIDY5E.UserDefaultPrefix": "Padrão do Utilizador: {value}",
+    "TIDY5E.GenericDefaultPrefix": "Padrão: {value}",
+    "TIDY5E.AbbrProficiency": "Prof",
+    "TIDY5E.Group.PrimaryParty.Label": "Grupo Primário",
+    "TIDY5E.CombatTabName": "Combate",
+    "TIDY5E.LegendaryAbbr": "AL",
+    "TIDY5E.LairAbbr": "Covil",
+    "TIDY5E.SheetMode.Edit": "Mudar para Modo de Jogo",
+    "TIDY5E.SheetMode.Play": "Mudar para Modo de Edição",
+    "TIDY5E.ContextMenuActionPin": "Fixar no topo",
+    "TIDY5E.ContextMenuActionUnpin": "Desfixar do topo",
+    "TIDY5E.ContextMenuActionUnassign": "Não-Atribuído",
+    "TIDY5E.ContextMenuActionAssignToEntity": "Atribuir a {entityName}",
+    "TIDY5E.InspirationAdd": "Adicionar Inspiração",
+    "TIDY5E.InspirationRemove": "Remover Inspiração",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "Cabeçalho"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Controlos de Cabeçalho",
+        "label": "Configurar Controlos de Cabeçalho",
+        "hint": "Apenas Novas Fichas Tidy: Configurar a localização dos controlos do cabeçalho da ficha."
+    },
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Usar Segurança de Membros da Ficha de Grupo",
+        "hint": "Permite que o Mestre controlo quais informações dos membros do grupo um utilizador pode ver na ficha do grupo. Quando o jogador não tem permissão para um membro do grupo, a ficha do grupo não mostra esse membro ou as suas informações agregadas. Com a permissão Limitada, o utilizador pode ver o nome do membro, mas nenhuma outra informação. Com a permissão Observador ou superior, o utilizador pode ver todas as informações da ficha do grupo sobre o membro."
+    },
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organização da Secção de Guias da Ficha de Personagem",
+        "hint": "Determina como as secções devem ser organizadas na guia Ficha de Personagem por padrão.",
+        "option.action": "Grupo por economia de ação",
+        "option.origin": "Grupo por elemento ou tipo de característica"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Guia Ficha de Personagem: Incluir Elementos Utilizáveis Automaticamente",
+        "hint": "Inclui automaticamente todos os elementos, magias e características atualmente utilizáveis na guia da ficha."
+    },
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "Mostrar dicas de Condição do sistema"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "Mostrar dicas de Tipo de Criatura do sistema"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "Mostrar dicas de Weapon Mastery do sistema"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "Mostrar dicas Investigações do sistema"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "Mostrar dicas Ferramentas do sistema"
+    },
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Tripulação Atribuída",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Tripulação Não-Atribuída",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "Passageiro",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de Carga / Criatura de Trabalho",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animais de Carga / Criaturas de Trabalho",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "Atribuir a",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "Atribuído",
+    "TIDY5E.Vehicle.Repair.Label": "Reparar",
+    "TIDY5E.Vehicle.Features.EmptyState": "Arraste e solte os recursos aqui ou clique para adicionar.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "Arraste e solte armas aqui ou clique para adicionar.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "Arraste e solte equipamento aqui ou clique para adicionar. A tripulação poderá depois ser atribuída ao equipamento do veículo.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Arraste e solte animais de carga ou criaturas de trabalho aqui, ou clique para adicionar.",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "PV Médio",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "Arraste e solte a tripulação aqui ou clique para adicionar. A tripulação pode depois ser atribuída a equipamentos ou recursos do veículo.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Arraste e solte os passageiros aqui ou clique para adicionar.",
+    "TIDY5E.GMOnly.Title": "Apenas Mestre",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Nenhuma magia está anexada a esta atividade.",
+    "TIDY5E.Utilities.ShowSheetPins": "Mostrar Fixados da Ficha",
+    "TIDY5E.Utilities.HideSheetPins": "Ocultar Fixados da Ficha",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na guia Bloco de Estatísticas",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transfere todas as moedas para o ator principal",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opções Globais de Exibição Padrão",
+    "TIDY5E.DisplayOptionsActor.Title": "Opções de Exibição do Ator",
+    "TIDY5E.AggregateSkill.HighMeasure": "Alta",
+    "TIDY5E.AggregateSkill.LowMeasure": "Baixa",
+    "TIDY5E.Difficulty": "Dificuldade",
+    "TIDY5E.Character.Sidebar.Title": "Barra Lateral do Personagem de Jogador",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Lutadores",
+        "Combat.IncludeInCombat.Tooltip": "Incluir em atividades de combate",
+        "Combat.ExcludeFromCombat.Tooltip": "Excluir das atividades de combate",
+        "AddMember.Label": "Adicionar Membro",
+        "AddPlaceholderToCombatTracker.Label": "Adicionar ao Encontro Atual como Reserva",
+        "AddPlaceholder.Label": "Criar Reserva para Combate",
+        "DeletePlaceholder.Label": "Apagar Reserva",
+        "DifficultyTarget.Label": "Dificuldade Alvo",
+        "AddAllPlaceholders.Label": "Adicionar Todos como Reservas",
+        "PrerollInitiative": "Pré-rolar Iniciativa",
+        "NewPlaceholder.Name": "Nova Reserva",
+        "NewPlaceholder.SubtitlePlaceholderText": "Nota sobre esta reserva",
+        "AddCombatants.MustHaveEncounter.Message": "Deve ter um encontro selecionado para adicionar ao rastreador de encontros",
+        "CombatVisibility.Hidden.Label": "Oculto dos jogadores quando adicionado ao rastreador",
+        "CombatVisibility.Visible.Label": "Visível para os jogadores quando adicionado ao rastreador",
+        "InitiativeCount.Label": "Adicionar Contagem de Iniciativa {count}",
+        "PlaceholderNameField.PlaceholderText": "Nome da Reserva",
+        "PlaceholderNotesField.PlaceholderText": "Notas"
+    },
+    "TIDY5E.Actor.Characteristics": "Características",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Aviso</strong>: As <strong>Fichas Clássicas</strong> Tidy 5e's serão removidas do módulo Tidy 5e Sheets no Foundry v14.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Aviso</strong>: As <strong>Fichas Clássicas</strong> Tidy 5e's foram removidas do módulo Tidy 5e Sheets à partir do Foundry v14.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorar {value}",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorar Todos Terrenos Difíceis",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "Rolar Salvaguarda de Contaminação",
+            "rollDeepHazeSave": "Rolar Salvaguarda Contra Deep Haze",
+            "rollMutation": "Role para Mutação",
+            "rolledMutation": "{name} rolou para uma mutação com um nível de contaminação de {level}.",
+            "clear": "Limpar Contaminação",
+            "none": "Sem contaminação ou sintomas."
+        }
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Cor de Fundo do Cabeçalho"
+    }
 }
