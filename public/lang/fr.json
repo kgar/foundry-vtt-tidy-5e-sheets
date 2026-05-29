@@ -233,7 +233,7 @@
         "default": "Aucun marqueur de lien (par défaut)",
         "unlinked": "Mise en évidence des tokens non liés",
         "linked": "Mise en évidence des tokens liés",
-        "both": "Mise en évidence des tokens liés ET non liés"
+        "both": "Mise en évidence des tokens liés et non liés"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Onglet initial de la feuille",
@@ -416,6 +416,12 @@
         "HeaderColor": {
             "title": "Couleur d'arrière-plan de l'en-tête",
             "hint": "Utilisez une couleur différente de celle utilisée pour mettre en valeur l'en-tête de la feuille."
+        },
+        "UseBasicTheme.title": "Utiliser le thème de base",
+        "UseBasicTheme.hint": "Utilisez le style parchemin classique, sans en-têtes stylisées pour les feuilles et les tableaux.",
+        "HeaderBackgroundColor": {
+            "title": "Couleur de l'en-tête de l'acteur",
+            "hint": "Utilisez une couleur différente de la couleur de surbrillance de la feuille pour l'en-tête de celle-ci."
         }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
@@ -879,7 +885,7 @@
     "TIDY5E.DisplayOptions.Title": "Options d'affichage",
     "TIDY5E.AddSpecific": "Ajouter{name}",
     "TIDY5E.JournalEntry.NewTitle": "Entrée de journal {number}",
-    "TIDY5E.SheetLock.Empty.Hint": "Commencez par ajouter une classe et vos premiers éléments. Ensuite, utilisez le menu des éléments ou cliquez avec le bouton droit de la souris et sélectionnez « Ajouter à l'onglet Feuille » pour les ajouter ici.",
+    "TIDY5E.SheetLock.Empty.Hint": "<h3>Bien démarrer</h3><p>Commence par ajouter une classe et tes premiers objets dans l’onglet <i class='fa-solid fa-wreath-laurel'></i> <strong>Personnage</strong>. Ensuite, utilise le menu des objets ou fais un clic droit et choisis <strong>Ajouter à l’onglet Feuille</strong> pour les afficher ici.</p><h3>Personnaliser ta feuille</h3><p>Choisis entre les thèmes Stylistique ou Basique, modifie la couleur d’accent de ta feuille ou l’image d’en‑tête en ouvrant le <i class='fa-solid fa-ellipsis-vertical'></i> <strong>menu Plus</strong> de la feuille via l’option <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Paramètres du thème Tidy</strong></a>.</p><h3>Barre latérale</h3><p>Enregistre n’importe quel élément dans la <i class='fa-solid fa-sidebar'></i> <strong>Barre latérale</strong> pour l’utiliser plus tard. Utilise le <i class='fa-solid fa-ellipsis-vertical'></i> <strong>menu Plus</strong> ou fais un clic droit sur un élément puis <i class='fa-solid fa-star'></i> <strong>Ajouter aux favoris</strong> pour l’ajouter à la barre latérale.</p><h3>Paramètres</h3><p>Modifie les paramètres de chaque onglet et personnalise les sections grâce au bouton <i class='fa-solid fa-gear'></i> <strong>Configuration</strong> présent dans chaque onglet.</p>",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "Définir comme source d'inspiration",
     "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Supprimer comme source d'inspiration",
     "TIDY5E.ContextMenuActionAddToSheetTab": "Ajouter à l'onglet Feuille",
@@ -1018,7 +1024,7 @@
     "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorer tous les terrains difficiles",
     "TIDY5E.SectionOrganization": "Organisation de la section",
     "TIDY5E.AutomaticallyIncludeUsableItems": "Inclure automatiquement les éléments utilisables",
-    "TIDY5E.GenericDefaultPrefix": "Par défaut: {value}",
+    "TIDY5E.GenericDefaultPrefix": "Par défaut : {value}",
     "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
         "name": "Organisation de la section Onglet Fiche de personnage",
         "hint": "Détermine comment les sections doivent être organisées par défaut dans l'onglet Fiche de personnage.",
@@ -1036,7 +1042,8 @@
             "rollMutation": "Jet de Mutation",
             "rolledMutation": "{name} a subi une mutation avec un niveau de contamination de {level}.",
             "clear": "Éliminer la contamination",
-            "none": "Aucune contamination ni symptômes."
+            "none": "Aucune contamination ni symptômes.",
+            "rollDeepHazeSave": "Jet de sauvegarde brouillard profond"
         }
     },
     "TIDY5E.AbilityRoll": "Lancer un test de {ability}",
@@ -1057,5 +1064,9 @@
     "TIDY5E.Settings.ShowTooltipTool": {
         "name": "Afficher les infobulles d'outil"
     },
-    "TIDY5E.Utilities.CastActivityMissingSpell": "Cette activité n'est associée à aucun sort."
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Cette activité n'est associée à aucun sort.",
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Couleur d'arrière-plan de l'en-tête"
+    },
+    "TIDY5E.AbbrProficiency": "Comp"
 }
