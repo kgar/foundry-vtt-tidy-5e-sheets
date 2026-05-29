@@ -636,6 +636,7 @@
     margin-bottom: auto;
     position: relative;
     padding-bottom: 2rem;
+    padding-top: 0.25rem;
     max-width: 11.25rem;
 
     .actor-image {
@@ -644,7 +645,6 @@
       max-width: 11.25rem;
       background-position: center;
       width: 100%;
-      box-shadow: var(--t5e-box-shadow-default);
 
       img {
         border: none;
@@ -711,6 +711,8 @@
       }
 
       &.token {
+        overflow: unset;
+
         img {
           filter: var(--t5e-filter-drop-shadow-token);
         }

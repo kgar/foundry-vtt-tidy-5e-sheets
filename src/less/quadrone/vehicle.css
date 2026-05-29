@@ -8,6 +8,10 @@
     padding-left: 0.5rem;
   }
 
+  .window-content {
+    margin-top: -0.25rem;
+  }
+
   /* VEHICLE SIDEBAR
   /* ------------------------------------------------------------ */
   .sidebar {

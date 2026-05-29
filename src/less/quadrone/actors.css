@@ -15,7 +15,7 @@
   .window-content {
     display: flex;
     flex-direction: column;
-    margin-top: -0.25rem;
+    margin-top: -0.5rem;
 
     .tabs-row {
       container-name: sheet-tabs;

@@ -19,7 +19,7 @@
 <TidyTable key="conditions">
   {#snippet header()}
     <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-      <TidyTableHeaderCell primary={true}>
+      <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.Conditions')}</h3>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>

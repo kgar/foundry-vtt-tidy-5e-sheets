@@ -234,7 +234,7 @@
       &.diminished {
         --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
         --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);
-        color: var(--t5e-color-text-oninverse-default);
+        color: var(--t5e-color-text-default);
       }
     }
   }
