@@ -67,7 +67,7 @@ import { SpecialTraitsApplication } from 'src/applications-quadrone/special-trai
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
-export function Tidy5eActorSheetQuadroneBase<
+export function GetTidy5eActorSheetQuadroneBase<
   TContext extends ActorSheetQuadroneContext
 >(sheetType: string) {
   abstract class Tidy5eActorSheetQuadroneBase extends TidyExtensibleDocumentSheetMixin(
