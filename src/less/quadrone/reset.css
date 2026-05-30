@@ -42,11 +42,6 @@
     margin: 0;
   }
 
-  &.themed.theme-dark .window-content {
-    -webkit-backdrop-filter: unset;
-    backdrop-filter: unset;
-  }
-
   /* Form Resets */
   &:is(form),
   form {
@@ -64,4 +59,9 @@
   .tidy-tab .tab {
     display: unset;
   }
+}
+
+.tidy5e-sheet.application:where(.quadrone).themed .window-content {
+  -webkit-backdrop-filter: unset;
+  backdrop-filter: unset;
 }
