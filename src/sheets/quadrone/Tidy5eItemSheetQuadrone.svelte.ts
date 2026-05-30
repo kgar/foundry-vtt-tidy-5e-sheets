@@ -89,7 +89,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       resizable: true,
       controls: [
         {
-          icon: 'fa-solid fa-excavator',
+          icon: 'fa-solid fa-swatchbook',
           label: 'TIDY5E.SheetSettings.title',
           action: 'sheetSettings',
           ownership: 'OWNER',

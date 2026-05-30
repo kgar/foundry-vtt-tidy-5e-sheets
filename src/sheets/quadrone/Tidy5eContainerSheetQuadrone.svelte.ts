@@ -102,7 +102,7 @@ export class Tidy5eContainerSheetQuadrone
       resizable: true,
       controls: [
         {
-          icon: 'fa-solid fa-excavator',
+          icon: 'fa-solid fa-swatchbook',
           label: 'TIDY5E.SheetSettings.title',
           action: 'sheetSettings',
           ownership: 'OWNER',
