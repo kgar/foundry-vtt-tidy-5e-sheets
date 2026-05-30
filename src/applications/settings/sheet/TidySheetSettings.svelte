@@ -61,13 +61,13 @@
             },
           ]
         : []),
-      ...(app.sidebartabDisplaySettingsTab
+      ...(app.sidebarTabDisplaySettingsTab
         ? [
             {
               id: SETTINGS_SIDEBAR_TAB_CONFIG,
               title: localize('TIDY5E.Character.Sidebar.Title'),
               iconClass: 'fas fa-sidebar',
-              hasChanges: app.sidebartabDisplaySettingsTab.hasChanges,
+              hasChanges: app.sidebarTabDisplaySettingsTab.hasChanges,
             },
           ]
         : []),
@@ -191,11 +191,11 @@
         config={app.tabDisplaySettingsTab._config}
         title={app.tabDisplaySettingsTab._inclusionTabTitle}
       />
-    {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebartabDisplaySettingsTab}
+    {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
-        app={app.sidebartabDisplaySettingsTab}
-        config={app.sidebartabDisplaySettingsTab._config}
-        title={app.sidebartabDisplaySettingsTab._inclusionTabTitle}
+        app={app.sidebarTabDisplaySettingsTab}
+        config={app.sidebarTabDisplaySettingsTab._config}
+        title={app.sidebarTabDisplaySettingsTab._inclusionTabTitle}
       />
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
       <SpellSourceAssignmentsPane app={spellAssignmentsApp} />

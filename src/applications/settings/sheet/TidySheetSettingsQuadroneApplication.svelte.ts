@@ -193,19 +193,6 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     }
   }
 
-  getSavedTabSettings(tabId: string): boolean {
-    if (this.tabSettings[tabId]) {
-      return true;
-    }
-    const runtime = this._getRuntime();
-    if (!runtime) {
-      return false;
-    }
-    const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
-    return !!tab?.settingsTabBuilder;
-  }
-
-  
   /* -------------------------------------------- */
   /*  Get tabs for the calling sheet
   /* -------------------------------------------- */
@@ -403,13 +390,11 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
     const allRegisteredTabs = runtime.getAllRegisteredTabs();
     const selectedIds = this._getParentSheetTabIds(runtime);
 
-    const settingsTabs = allRegisteredTabs
-      .filter((t): t is NonNullable<typeof t> => !!t)
-      .filter(
-        (t) =>
-          t.id === CONSTANTS.TAB_CHARACTER_ATTRIBUTES ||
-          this.getSavedTabSettings(t.id)
-      );
+    // Show a settings entry for every registered tab. Tabs without dedicated
+    // settings content fall back to the placeholder pane in the template.
+    const settingsTabs = allRegisteredTabs.filter(
+      (t): t is NonNullable<typeof t> => !!t
+    );
 
     return [
       ...selectedIds
