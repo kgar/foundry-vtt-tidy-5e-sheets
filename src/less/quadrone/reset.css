@@ -42,11 +42,9 @@
     margin: 0;
   }
 
-  /* TODO: when game.release.generation > 13, lower the specificity of this rule to bare minimum */
-  .theme-dark & .window-content,
-  &.theme-dark .window-content {
-    backdrop-filter: unset;
+  &.themed.theme-dark .window-content {
     -webkit-backdrop-filter: unset;
+    backdrop-filter: unset;
   }
 
   /* Form Resets */
@@ -54,7 +52,7 @@
   form {
     .form-group {
       .form-fields {
-        input[type="checkbox"] {
+        input[type='checkbox'] {
           flex-basis: var(--checkbox-size);
         }
       }
