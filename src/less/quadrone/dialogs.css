@@ -124,6 +124,30 @@
       color: var(--t5e-color-text-lighter);
       font-style: italic;
     }
+
+    &.dragging {
+      opacity: 0.5;
+    }
+
+    &.drop-indicator-above {
+      box-shadow: inset 0 0.125rem 0 0 var(--t5e-theme-color-highlight);
+    }
+
+    &.drop-indicator-below {
+      box-shadow: inset 0 -0.125rem 0 0 var(--t5e-theme-color-highlight);
+    }
+
+    .tab-icon {
+      flex-shrink: 0;
+      margin-inline-start: auto;
+      color: var(--t5e-color-text-lightest);
+      font-size: 0.75rem;
+      cursor: grab;
+    }
+
+    &:hover .tab-visibility-icon {
+      color: var(--t5e-color-text-lighter);
+    }
   }
 
   .nav-tab-icon {

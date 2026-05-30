@@ -13,6 +13,7 @@
   import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
   import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { arrayMove } from 'src/utils/array';
 
   interface Props {
     app: TidySheetSettingsQuadroneApplication;
@@ -113,6 +114,78 @@
   function selectTab(id: string) {
     app.selectTab(id);
   }
+
+  let draggedTabIndex = $state<number | null>(null);
+  let dropIndicatorIndex = $state<number | null>(null);
+
+  function onTabDragStart(ev: DragEvent, index: number) {
+    draggedTabIndex = index;
+    ev.dataTransfer?.setData('text/plain', index.toString());
+    if (ev.dataTransfer) {
+      ev.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
+  function onTabDragOver(ev: DragEvent, index: number) {
+    ev.preventDefault();
+
+    const rect = (ev.currentTarget as HTMLElement).getBoundingClientRect();
+    const after = ev.clientY > rect.top + rect.height / 2;
+    const gap = after ? index + 1 : index;
+
+    // Hide the indicator when the drop would be a no-op (dropping next to self).
+    if (
+      draggedTabIndex !== null &&
+      (gap === draggedTabIndex || gap === draggedTabIndex + 1)
+    ) {
+      dropIndicatorIndex = null;
+      return;
+    }
+
+    dropIndicatorIndex = gap;
+  }
+
+  function onTabDragEnd() {
+    draggedTabIndex = null;
+    dropIndicatorIndex = null;
+  }
+
+  function onTabDrop(ev: DragEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    const draggedIndex = parseInt(ev.dataTransfer?.getData('text/plain') ?? '');
+    const gap = dropIndicatorIndex;
+    draggedTabIndex = null;
+    dropIndicatorIndex = null;
+
+    if (isNaN(draggedIndex) || gap === null) {
+      return;
+    }
+
+    // Removing the dragged item shifts later positions down by one.
+    const target = gap > draggedIndex ? gap - 1 : gap;
+    if (target === draggedIndex) {
+      return;
+    }
+
+    arrayMove(config.parentSheetTabs, draggedIndex, target);
+    config.parentSheetTabs = config.parentSheetTabs;
+
+    updateTabOrder();
+  }
+
+  // Reorder the saved tab selection to match the new display order so the
+  // change persists with the rest of the dialog on Save.
+  function updateTabOrder() {
+    const entry = app.tabDisplaySettingsTab._config.entry;
+    const orderIndex = new Map(
+      config.parentSheetTabs.map((t, i) => [t.id, i]),
+    );
+    entry.selected = [...entry.selected].sort(
+      (a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0),
+    );
+  }
 </script>
 
 <div class="tidy-sheet-settings">
@@ -149,7 +222,7 @@
           {localize('TIDY5E.SheetSettings.NoTabsHint')}
         </div>
       {:else}
-        {#each tabConfigOptions as entry (entry.id)}
+        {#each tabConfigOptions as entry, i (entry.id)}
           <button
             type="button"
             class={[
@@ -158,16 +231,36 @@
                 active: entry.id === activeSelectedId,
                 'has-changes': entry.hasChanges,
                 'tab-hidden': entry.tabHidden,
+                dragging: draggedTabIndex === i,
+                'drop-indicator-above': dropIndicatorIndex === i,
+                'drop-indicator-below':
+                  dropIndicatorIndex === tabConfigOptions.length &&
+                  i === tabConfigOptions.length - 1,
               },
             ]}
             role="tab"
             aria-selected={entry.id === activeSelectedId}
+            draggable="true"
             onclick={() => selectTab(entry.id)}
+            ondragstart={(ev) => onTabDragStart(ev, i)}
+            ondragover={(ev) => onTabDragOver(ev, i)}
+            ondrop={(ev) => onTabDrop(ev)}
+            ondragend={onTabDragEnd}
           >
             {#if entry.iconClass}
               <i class={['nav-tab-icon', entry.iconClass]}></i>
             {/if}
             <span class="nav-tab-title">{entry.title}</span>
+            {#if entry.tabHidden}
+              <i
+                class="tab-icon tab-visibility-icon fa-solid fa-eye-slash fa-fw"
+                aria-hidden="true"
+              ></i>
+            {/if}
+            <i
+              class="tab-icon tab-drag-icon fa-solid fa-grip-lines fa-fw"
+              aria-hidden="true"
+            ></i>
           </button>
         {/each}
       {/if}
