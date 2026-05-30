@@ -175,7 +175,10 @@ export class TidySheetSettingsQuadroneApplication extends DocumentSheetDialog<
       this.themeSettingsTab._settings = this.themeSettingsTab._getSettings();
       this.themeSettingsTab._resetToGlobalDefaults();
       this.themePlaceholders = this.document
-        ? this.themeSettingsTab._mapSettings(ThemeQuadrone.getWorldThemeSettings())
+        ? this.themeSettingsTab._mapSettings(
+            ThemeQuadrone.getWorldThemeSettings(),
+            { allowNullBooleans: false },
+          )
         : undefined;
     }
 

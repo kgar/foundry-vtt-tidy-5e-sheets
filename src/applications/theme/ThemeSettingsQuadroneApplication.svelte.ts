@@ -155,7 +155,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return this._mapSettings(source, { allowNullBooleans });
   }
 
-  private _mapSettings(
+  _mapSettings(
     source: Partial<ThemeSettingsV3>,
     options: { allowNullBooleans: boolean }
   ): ThemeSettingsContext {

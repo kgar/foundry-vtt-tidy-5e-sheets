@@ -64,10 +64,11 @@
     </label>
 
     <!-- This input is driving the Coloris color picker. -->
+    <!-- When unset, default the picker to the inherited value from the inheritance stack rather than #000000. -->
     <input
       type="text"
       id="{inputId}-picker"
-      {value}
+      value={value || placeholder}
       class="coloris hidden-input"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />

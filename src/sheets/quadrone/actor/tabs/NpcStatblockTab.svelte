@@ -43,6 +43,10 @@
     settingsTab.sections as (FeatureSection | SpellbookSection)[],
   );
 
+  let hasAtLeastOneItem = $derived(
+    sections.some((section) => section.items.length > 0),
+  );
+
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
