@@ -423,9 +423,15 @@ export function GetTidy5eActorSheetClassicV2Base<
      * @protected
      */
     _getSenses(systemData: any) {
-      const senses = systemData.attributes.senses ?? {};
+      const senses = systemData.attributes.senses;
+
+      if (!senses) {
+        return {};
+      }
+
       const tags: Record<string, string> = {};
       const units = senses.units ?? dnd5e.utils.defaultUnits('length');
+
       for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
         const v = senses.ranges[k] ?? 0;
         if (v === 0) continue;
@@ -434,10 +440,13 @@ export function GetTidy5eActorSheetClassicV2Base<
           units
         )}`;
       }
-      if (senses.special)
+      
+      if (senses.special) {
         splitSemicolons(senses.special).forEach(
-          (c, i) => (tags[`custom${i + 1}`] = c)
+          (c, i) => (tags[`custom${i + 1}`] = c),
         );
+      }
+      
       return tags;
     }
 
