@@ -87,6 +87,7 @@
     align-items: center;
     background-color: var(--tab-background-color);
     border: 0.0625rem solid transparent;
+    box-shadow: none;
     color: inherit;
     cursor: pointer;
     font: inherit;
@@ -105,6 +106,7 @@
 
     &.active {
       --tab-background-color: var(--t5e-theme-color-darker);
+      --button-text: var(--t5e-theme-color-foreground);
       border-color: transparent;
       background-color: var(--tab-background-color);
       font-weight: var(--font-weight-label);
