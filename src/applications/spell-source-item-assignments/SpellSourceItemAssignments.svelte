@@ -12,7 +12,8 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import { SvelteMap } from 'svelte/reactivity';
 
   let context = $derived(
     getContext<CoarseReactivityProvider<SpellSourceItemAssignmentsContext>>(
@@ -43,10 +44,10 @@
     ),
   );
 
-  async function setSourceItem(item: Item5e, identifier: string) {
-    await item.update({
-      'system.sourceItem': identifier,
-    });
+  let sourceItemOverrides = new SvelteMap<string, string>();
+
+  function currentSource(item: Item5e): string {
+    return sourceItemOverrides.get(item.id) ?? item.system.sourceItem ?? '';
   }
 
   const localize = FoundryAdapter.localize;
@@ -55,6 +56,7 @@
 </script>
 
 <section class="dialog-content-container flexcol flexgap-3 full-height">
+  <h2> {localize('TIDY5E.Utilities.AssignSpellsToClasses')}</h2>
   <div role="presentation" class="flexrow flexgap-3">
     <Search bind:value={searchCriteria} />
     <label class="flexshrink checkbox">
@@ -75,16 +77,9 @@
               {localize('TYPES.Item.spell')}
             </h3>
           </TidyTableHeaderCell>
-          {#each classColumns as classColumn}
-            <TidyTableHeaderCell
-              columnWidth="8rem"
-              data-tooltip={classColumn.item.name}
-            >
-              <span class="truncate">
-                {classColumn.item.name}
-              </span>
-            </TidyTableHeaderCell>
-          {/each}
+          <TidyTableHeaderCell columnWidth="12.5rem">
+            <span class="truncate">{localize('TYPES.Item.class')}</span>
+          </TidyTableHeaderCell>
           <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
             <span
               >{localize('TIDY5E.SpellSourceItemAssignments.Identifier')}</span
@@ -100,43 +95,78 @@
       {/snippet}
       {#snippet body()}
         {#each context.assignments as assignment (assignment.item.id)}
-          {@const sourceItemIsUnassigned =
-            (assignment.item.system.sourceItem?.trim() ?? '') === ''}
+          {@const sourceItemValue = currentSource(assignment.item)}
+          {@const sourceItemIsUnassigned = sourceItemValue.trim() === ''}
           {@const hideRow =
             !visibleSelectablesIdSubset.has(assignment.item.id) ||
             (showUnassignedOnly && !sourceItemIsUnassigned)}
           <TidyTableRow hidden={hideRow}>
             <TidyTableCell primary={true} class="flexrow">
+              <!--svelte-ignore a11y_missing_attribute-->
               <a
+                tabindex="0"
+                role="button"
+                data-keyboard-focus
                 class="button button-borderless"
                 style="justify-content: flex-start;"
                 onclick={async () =>
                   FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    FoundryAdapter.renderSheetFromUuid(assignment.item.uuid);
+                  }
+                }}
               >
                 {assignment.item.name}
               </a>
             </TidyTableCell>
-            {#each classColumns as classColumn}
-              {@const selected =
-                assignment.item.system.sourceItem === classColumn.identifier}
-              <TidyTableCell columnWidth="8rem">
-                <FieldToggle
-                  checked={selected}
-                  onchange={(ev) =>
-                    setSourceItem(
-                      assignment.item,
-                      ev.currentTarget.checked ? classColumn.identifier : '',
-                    )}
-                />
-              </TidyTableCell>
-            {/each}
+            {@const isCustomSource =
+              sourceItemValue !== '' &&
+              !classColumns.some((c) => c.identifier === sourceItemValue)}
+            <TidyTableCell
+              columnWidth="12.5rem"
+              attributes={{
+                onchange: (ev) =>
+                  sourceItemOverrides.set(
+                    assignment.item.id,
+                    (ev.target as HTMLSelectElement).value,
+                  ),
+              }}
+            >
+              <SelectQuadrone
+                field="system.sourceItem"
+                document={assignment.item}
+                value={sourceItemValue}
+                blankValue=""
+                disabled={!assignment.item.isOwner}
+              >
+                <option value="">—</option>
+                {#each classColumns as classColumn}
+                  <option value={classColumn.identifier}>
+                    {classColumn.item.name}
+                  </option>
+                {/each}
+                {#if isCustomSource}
+                  <option value={sourceItemValue} disabled>
+                    {sourceItemValue}
+                  </option>
+                {/if}
+              </SelectQuadrone>
+            </TidyTableCell>
             <TidyTableCell columnWidth="12.5rem">
               <TextInput
                 document={assignment.item}
                 disabled={!assignment.item.isOwner}
                 field="system.sourceItem"
                 selectOnFocus={true}
-                value={assignment.item.system.sourceItem}
+                value={sourceItemValue}
+                onSaveChange={(ev) => {
+                  sourceItemOverrides.set(
+                    assignment.item.id,
+                    ev.currentTarget.value,
+                  );
+                  return true;
+                }}
               />
             </TidyTableCell>
           </TidyTableRow>

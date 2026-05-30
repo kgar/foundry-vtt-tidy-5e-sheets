@@ -43,7 +43,7 @@
   ];
 </script>
 
-<div class="tabs-row">
+<div class="tabs-row tab-configuration-tabs">
   <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
 </div>
 <TabContents {selectedTabId} {tabs} />

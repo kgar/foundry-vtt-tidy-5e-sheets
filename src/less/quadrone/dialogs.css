@@ -337,4 +337,9 @@
       }
     }
   }
+
+  .tab-configuration-tabs {
+    margin-bottom: var(--t5e-size-3x);
+    margin-top: var(--t5e-size-1x);
+  }
 }
