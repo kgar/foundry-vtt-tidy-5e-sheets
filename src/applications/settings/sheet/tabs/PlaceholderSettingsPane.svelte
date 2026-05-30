@@ -24,6 +24,23 @@
 <div class="button-bar">
   <button
     type="button"
+    class="button button-secondary button-large use-default-btn"
+    data-testid="placeholder-use-default"
+    onclick={() => app.tabDisplaySettingsTab.useDefault()}
+  >
+    <i class="fas fa-rotate-left"></i>
+    {localize('TIDY5E.UseDefault')}
+  </button>
+  <button
+    type="button"
+    class="button button-secondary button-large apply-changes-btn"
+    data-testid="placeholder-cancel"
+    onclick={() => app.cancel()}
+  >
+    {localize('Cancel')}
+  </button>
+  <button
+    type="button"
     data-testid="placeholder-save-changes"
     onclick={() => app.tabDisplaySettingsTab.apply()}
     class="button button-primary button-large button-save save-changes-btn"

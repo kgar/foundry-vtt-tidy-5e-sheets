@@ -127,6 +127,12 @@
   }
 
   function onTabDragOver(ev: DragEvent, index: number) {
+    // Hidden tabs can't be reordered, so they aren't valid drop targets.
+    if (config.parentSheetTabs[index]?.tabHidden) {
+      dropIndicatorIndex = null;
+      return;
+    }
+
     ev.preventDefault();
 
     const rect = (ev.currentTarget as HTMLElement).getBoundingClientRect();
@@ -150,7 +156,7 @@
     dropIndicatorIndex = null;
   }
 
-  function onTabDrop(ev: DragEvent) {
+  async function onTabDrop(ev: DragEvent) {
     ev.preventDefault();
     ev.stopPropagation();
 
@@ -173,10 +179,12 @@
     config.parentSheetTabs = config.parentSheetTabs;
 
     updateTabOrder();
+
+    // Reordering persists immediately rather than waiting for a Save click.
+    await app.tabDisplaySettingsTab.apply();
   }
 
-  // Reorder the saved tab selection to match the new display order so the
-  // change persists with the rest of the dialog on Save.
+  // Reorder the saved tab selection to match the new display order.
   function updateTabOrder() {
     const entry = app.tabDisplaySettingsTab._config.entry;
     const orderIndex = new Map(
@@ -240,7 +248,7 @@
             ]}
             role="tab"
             aria-selected={entry.id === activeSelectedId}
-            draggable="true"
+            draggable={!entry.tabHidden}
             onclick={() => selectTab(entry.id)}
             ondragstart={(ev) => onTabDragStart(ev, i)}
             ondragover={(ev) => onTabDragOver(ev, i)}
@@ -257,10 +265,12 @@
                 aria-hidden="true"
               ></i>
             {/if}
-            <i
-              class="tab-icon tab-drag-icon fa-solid fa-grip-lines fa-fw"
-              aria-hidden="true"
-            ></i>
+            {#if !entry.tabHidden}
+              <i
+                class="tab-icon tab-drag-icon fa-solid fa-grip-lines fa-fw"
+                aria-hidden="true"
+              ></i>
+            {/if}
           </button>
         {/each}
       {/if}
