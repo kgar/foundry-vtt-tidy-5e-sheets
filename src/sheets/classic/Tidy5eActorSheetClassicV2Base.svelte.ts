@@ -39,7 +39,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { TidyHooks } from 'src/api';
 
 // TODO: Simplify mixins to mostly a class hierarchy
-export function Tidy5eActorSheetClassicV2Base<
+export function GetTidy5eActorSheetClassicV2Base<
   TContext extends ActorSheetContextV1
 >(sheetType: string) {
   abstract class Tidy5eActorSheetClassicV2Base extends TidyExtensibleDocumentSheetMixin(

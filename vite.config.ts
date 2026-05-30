@@ -46,11 +46,12 @@ export default defineConfig({
       fileName: 'tidy5e-sheet',
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         globals: {
           svelte: 'svelte',
         },
+        keepNames: true,
       },
     },
     sourcemap: true,

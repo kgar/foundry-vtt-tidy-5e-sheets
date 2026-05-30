@@ -1037,22 +1037,25 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     _event: Event,
     target: HTMLElement,
   ) {
-    switch ( target.dataset.config ) {
-      case "movement":
-      case "senses":
-        return FoundryAdapter.renderMovementSensesConfig(this.item, target.dataset.config);
-      case "source":
-        return FoundryAdapter.renderSourceConfig(this.item, "system.source");
-      case "starting-equipment":
+    switch (target.dataset.config) {
+      case 'movement':
+      case 'senses':
+        return FoundryAdapter.renderMovementSensesConfig(
+          this.item,
+          target.dataset.config,
+        );
+      case 'source':
+        return FoundryAdapter.renderSourceConfig(this.item, 'system.source');
+      case 'starting-equipment':
         return FoundryAdapter.openStartingEquipmentConfig(this.item);
-      case "type":
+      case 'type':
         return this._renderChild(
           new dnd5e.applications.shared.CreatureTypeConfig({
             document: this.item,
             keyPath: 'type',
           }),
         );
-    }  
+    }
   }
 
   /* -------------------------------------------- */
@@ -1074,6 +1077,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   _onDragStart(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ) {
+    // Let content links (enricher items) use default drag/drop so they aren't pulled into advancement drag behaviors.
+    if (event.target.classList.contains('content-link')) {
+      return;
+    }
+
     const dragged = event.currentTarget;
 
     // Create drag data
@@ -1099,9 +1107,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       dragged.closest('[data-id]')
     ) {
       const { id } = dragged.closest<HTMLElement>('[data-id]')!.dataset ?? {};
-      dragData = this.item.system.advancement
-        .get(id)
-        ?.toDragData();
+      dragData = this.item.system.advancement.get(id)?.toDragData();
     }
 
     if (!dragData) return;
@@ -1322,7 +1328,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   async _onDropItem(event: DragEvent, data: object) {
     const item = await Item.implementation.fromDropData(data);
 
-    if (item?.type === CONSTANTS.ITEM_TYPE_SPELL && this.item.system.activities) {
+    if (
+      item?.type === CONSTANTS.ITEM_TYPE_SPELL &&
+      this.item.system.activities
+    ) {
       this._onDropSpell(event, item);
     } else {
       this._onDropAdvancement(event, data);

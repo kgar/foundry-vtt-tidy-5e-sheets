@@ -42,12 +42,12 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { Tidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eNpcSheet
-  extends Tidy5eActorSheetClassicV2Base<NpcSheetContext>(
+  extends GetTidy5eActorSheetClassicV2Base<NpcSheetContext>(
     CONSTANTS.SHEET_TYPE_NPC
   )
   implements

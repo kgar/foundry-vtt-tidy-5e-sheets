@@ -19,7 +19,7 @@ import type {
 import VehicleSheet from './actor/VehicleSheet.svelte';
 import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
+import { GetTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
@@ -37,7 +37,7 @@ import { isNil } from 'src/utils/data';
 
 const localize = FoundryAdapter.localize;
 
-export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<VehicleSheetQuadroneContext>(
+export class Tidy5eVehicleSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<VehicleSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_VEHICLE
 ) {
   currentTabId: string;

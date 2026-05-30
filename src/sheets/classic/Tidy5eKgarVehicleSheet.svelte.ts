@@ -34,12 +34,12 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { Tidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eVehicleSheet
-  extends Tidy5eActorSheetClassicV2Base<VehicleSheetContext>(
+  extends GetTidy5eActorSheetClassicV2Base<VehicleSheetContext>(
     CONSTANTS.SHEET_TYPE_VEHICLE
   )
   implements

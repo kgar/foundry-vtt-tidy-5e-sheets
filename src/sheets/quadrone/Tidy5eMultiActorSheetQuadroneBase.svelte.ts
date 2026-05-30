@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
+import { GetTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import type {
   Actor5e,
   ActorInventoryTypes,
@@ -37,7 +37,7 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
 >(sheetType: string) {
-  const TidyActorSheetBase = Tidy5eActorSheetQuadroneBase<TContext>(sheetType);
+  const TidyActorSheetBase = GetTidy5eActorSheetQuadroneBase<TContext>(sheetType);
 
   abstract class Tidy5eMultiActorSheetQuadroneBase extends TidyActorSheetBase {
     static DEFAULT_OPTIONS: Partial<
