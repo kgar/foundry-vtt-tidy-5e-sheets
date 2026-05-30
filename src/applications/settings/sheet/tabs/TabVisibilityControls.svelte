@@ -65,7 +65,7 @@
   </legend>
   <div class="form-group">
     <label for="">
-      {localize('TIDY5E.TabConfiguration.options.visibility')}
+      {localize('TIDY5E.TabConfiguration.VisibilityTab.Title')}
     </label>
     <div class="form-fields vertical">
       <label class="checkbox">

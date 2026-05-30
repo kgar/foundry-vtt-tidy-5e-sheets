@@ -16,7 +16,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="placeholder-pane">
+<div class="placeholder-pane dialog-content-container">
   <h2>{title}</h2>
   <TabVisibilityControls entry={tabConfigEntry} {tabId} />
 </div>
@@ -55,5 +55,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    flex-grow: 1;
   }
 </style>

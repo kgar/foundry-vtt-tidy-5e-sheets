@@ -16,7 +16,7 @@
     sections: ConfigurableSection[];
     application: ConfigureSectionsApplication;
     title: string;
-    tabConfigEntry: TabConfigContextEntry;
+    tabConfigEntry?: TabConfigContextEntry;
     tabId: string;
   }
 
@@ -92,7 +92,9 @@
       {/each}
     </fieldset>
   {/if}
-  <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+  {#if tabConfigEntry}
+    <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+  {/if}
   
   <fieldset class="section-config-container">
     <legend>

@@ -232,8 +232,8 @@
     "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected.",
-    "options.viewers": "Who can see this tab?",
-    "options.visibility": "Show this tab?"
+    "options.viewers": "User Access",
+    "options.visibility": "Show Tab"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",

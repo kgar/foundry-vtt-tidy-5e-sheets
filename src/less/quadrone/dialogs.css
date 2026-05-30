@@ -55,8 +55,12 @@
     grid-template-rows: 1fr auto;
     min-height: 0;
 
-    .settings-pane {
-      padding: var(--t5e-size-2x) var(--t5e-size-4x);
+    .settings-pane .dialog-content-container {
+      padding: var(--t5e-size-2x) var(--t5e-size-4x) 2rem;
+    }
+
+    .settings-pane .button-bar {
+      padding: 0 var(--t5e-size-4x) var(--t5e-size-3x);
     }
   }
 
@@ -169,12 +173,11 @@
   }
 
   .settings-pane {
-    grid-area: body;
-    overflow-y: auto;
-    padding: 0 var(--t5e-size-3x);
-    min-height: 0;
     display: flex;
     flex-direction: column;
+    grid-area: body;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .button-bar {

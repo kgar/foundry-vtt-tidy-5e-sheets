@@ -166,6 +166,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
         application: this,
         optionGroups: this.optionsGroups,
         title: this.formTitle,
+        tabId: this.tabId,
       },
     });
 
