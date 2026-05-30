@@ -337,15 +337,18 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     quantity: any
   ) {
     const details = actor.system.details;
+    const type = details.type;
+
+    if (!type?.value) {
+      return;
+    }
 
     const creatureTypeLabel =
-      details.type.value === 'custom'
-        ? details.type.custom
-        : CONFIG.DND5E.creatureTypes[details.type.value]?.label;
+      type.value === 'custom'
+        ? type.custom
+        : CONFIG.DND5E.creatureTypes[type.value]?.label;
     const creatureType =
-      details.type.value === 'custom'
-        ? details.type.custom
-        : details.type.value;
+      type.value === 'custom' ? type.custom : type.value;
 
     if (!isNil(creatureType)) {
       mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
