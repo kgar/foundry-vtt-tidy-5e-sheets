@@ -299,7 +299,11 @@
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
       <SpellSourceAssignmentsPane app={spellAssignmentsApp} />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
-      <SpecialTraitsPane app={app.getSpecialTraitsConfigTab()} />
+      <SpecialTraitsPane
+        app={app.getSpecialTraitsConfigTab()}
+        tabId={selectedSheetTabId}
+        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+      />
     {:else if configureSectionsApp}
       <ConfigureSections
         application={configureSectionsApp}

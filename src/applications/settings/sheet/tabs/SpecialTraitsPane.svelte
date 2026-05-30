@@ -28,9 +28,11 @@
   });
 </script>
 
-{#if tabConfigEntry && tabId}
-  <TabVisibilityControls entry={tabConfigEntry} {tabId} />
-{/if}
-{#if ready}
-  <SpecialTraits />
-{/if}
+<div class="dialog-content-container flexcol">
+  {#if ready}
+    <SpecialTraits />
+  {/if}
+  {#if tabConfigEntry && tabId}
+    <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+  {/if}
+</div>

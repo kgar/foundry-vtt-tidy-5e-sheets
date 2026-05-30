@@ -15,9 +15,6 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div
-  class="dialog-content-container special-traits-container scroll-container tidy-form flexcol"
->
   <h2>
     {localize('DND5E.SpecialTraits')}
   </h2>
@@ -73,4 +70,3 @@
       {/each}
     </fieldset>
   {/each}
-</div>
