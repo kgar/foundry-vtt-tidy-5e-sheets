@@ -3,12 +3,16 @@
   import SpecialTraits from 'src/applications-quadrone/special-traits/SpecialTraits.svelte';
   import type { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import { setContext, untrack } from 'svelte';
+  import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+  import TabVisibilityControls from './TabVisibilityControls.svelte';
 
   interface Props {
     app: SpecialTraitsApplication;
+    tabConfigEntry?: TabConfigContextEntry;
+    tabId?: string;
   }
 
-  let { app }: Props = $props();
+  let { app, tabConfigEntry, tabId }: Props = $props();
   setContext(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
     untrack(() => app._context),
@@ -24,6 +28,9 @@
   });
 </script>
 
+{#if tabConfigEntry && tabId}
+  <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+{/if}
 {#if ready}
   <SpecialTraits />
 {/if}

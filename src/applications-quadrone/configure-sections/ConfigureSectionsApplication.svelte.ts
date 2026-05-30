@@ -40,6 +40,7 @@ export type RadioSetting<TValue> = {
 
 export type SettingsTabNavigator = {
   selectTab(id: string): void;
+  tabDisplaySettingsTab?: { apply: () => Promise<unknown> };
 };
 
 export type ButtonSetting = {
@@ -266,6 +267,10 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
     for (const [doc, toSave] of documentsToSave) {
       await doc.update(toSave);
     }
+
+    // When embedded in the sheet settings dialog, the per-tab visibility controls
+    // mutate the shared tab-config entry; persist those alongside the section config.
+    await this.parentSettings?.tabDisplaySettingsTab?.apply();
 
     this._resetToGlobalDefaults();
   }

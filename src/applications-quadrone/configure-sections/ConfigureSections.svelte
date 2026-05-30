@@ -8,12 +8,16 @@
   } from './ConfigureSectionsApplication.svelte';
   import { isNil } from 'src/utils/data';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  
+  import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+  import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
+
   interface Props {
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
     application: ConfigureSectionsApplication;
     title: string;
+    tabConfigEntry: TabConfigContextEntry;
+    tabId: string;
   }
 
   let {
@@ -21,6 +25,8 @@
     sections = $bindable(),
     application,
     title,
+    tabConfigEntry,
+    tabId,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -86,6 +92,7 @@
       {/each}
     </fieldset>
   {/if}
+  <TabVisibilityControls entry={tabConfigEntry} {tabId} />
   
   <fieldset class="section-config-container">
     <legend>

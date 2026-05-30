@@ -284,6 +284,11 @@
       padding: 0;
       border: 0;
     }
+
+    .button-bar {
+      gap: var(--t5e-size-2x);
+      padding: 0 0 var(--t5e-size-2x);
+    }
   }
 
   &.sheet-tab-configuration,

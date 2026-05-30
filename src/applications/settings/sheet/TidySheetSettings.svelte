@@ -103,15 +103,11 @@
   );
 
   let selectedSheetTabId: string | undefined = $derived(
-    activeSelectedId.startsWith('sheet:')
-      ? activeSelectedId.slice('sheet:'.length)
-      : undefined,
+    activeSelectedId.slice('sheet:'.length)
   );
 
   let configureSectionsApp = $derived(
-    selectedSheetTabId
-      ? app.getConfigureSectionsConfigTab(selectedSheetTabId)
-      : undefined,
+    app.getConfigureSectionsConfigTab(selectedSheetTabId)
   );
 
   function selectTab(id: string) {
@@ -207,11 +203,15 @@
         title={configureSectionsApp.formTitle}
         bind:sections={configureSectionsApp.sections}
         optionGroups={configureSectionsApp.optionsGroups}
+        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        tabId={selectedSheetTabId}
       />
     {:else}
       <PlaceholderSettingsPane
+        {app}
         title={selectedEntry?.title ?? ''}
-        tabId={activeSelectedId}
+        tabId={selectedSheetTabId}
+        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
       />
     {/if}
   </section>
