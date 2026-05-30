@@ -2221,8 +2221,8 @@ export type Tidy5eSheetsPerformanceClassToggles = [string, boolean][];
 
 export function usePerformanceMode(): boolean {
   return (
-    (SettingsProvider?.settings.debug.get() &&
-      SettingsProvider?.settings.performanceMode.get()) ||
+    (SettingsProvider.settings.debug.get() &&
+      SettingsProvider.settings.performanceMode.get()) ||
     foundryCoreSettings.value.performanceMode === 0
   );
 }

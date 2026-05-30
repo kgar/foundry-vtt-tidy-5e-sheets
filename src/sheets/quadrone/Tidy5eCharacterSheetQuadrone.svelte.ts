@@ -970,7 +970,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
       }
 
       const vsmcr = game.i18n.getListFormatter({ style: 'narrow' }).format(
-        (item.labels?.components?.all ?? [])
+        item.labels.components.all
           .filter((a: any) => !isNil(a?.abbr)) // a valid use case with Default Sheets is to exclude Abbreviation. Quadrone's design doesn't account for that, so we will exclude any components that don't supply an abbreviation.
           .map((a: any) => a.abbr),
       );

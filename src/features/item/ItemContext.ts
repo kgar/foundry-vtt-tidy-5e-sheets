@@ -28,12 +28,7 @@ export class ItemContext {
   }
 
   static getToHit(item: Item5e): number | null {
-    const modifier = item.labels?.modifier;
-    if (!modifier) {
-      return null;
-    }
-
-    const toHit = parseInt(modifier);
+    const toHit = parseInt(item.labels.modifier);
     return item.hasAttack && !isNaN(toHit) ? toHit : null;
   }
 }

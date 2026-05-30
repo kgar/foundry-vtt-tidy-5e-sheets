@@ -1001,26 +1001,21 @@ export function GetTidy5eActorSheetQuadroneBase<
 
     _getCreatureType(): CreatureTypeContext {
       const { details } = this.actor.system;
-      const type = details.type;
 
-      if (!type?.value) {
-        return { icon: 'icons/svg/mystery-man.svg' };
-      }
-
-      const creatureType = CONFIG.DND5E.creatureTypes[type.value];
+      const creatureType = CONFIG.DND5E.creatureTypes[details.type.value];
 
       return {
         icon:
           creatureType?.icon ??
           'icons/svg/mystery-man.svg',
         title:
-          type.value === 'custom'
-            ? type.custom
+          details.type.value === 'custom'
+            ? details.type.custom
             : creatureType?.label,
-        reference: SettingsProvider.settings.referenceTooltipCreatureType.get()
-          ? creatureType?.reference
+        reference: SettingsProvider.settings.referenceTooltipCreatureType.get() 
+          ? creatureType?.reference 
           : undefined,
-        subtitle: type.subtype,
+        subtitle: details.type.subtype,
       };
     }
 
