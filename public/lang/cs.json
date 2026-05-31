@@ -394,8 +394,8 @@
         },
         "hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
         "AccentColor.title": "Akcentující barva",
-        "ActorHeaderBackground.title": "Pozadí záhlaví aktéra",
-        "ItemSidebarBackground.title": "Pozadí postranního panelu položky",
+        "ActorHeaderBackground.title": "Obrázek záhlaví aktéra",
+        "ItemSidebarBackground.title": "Obrázek postranního panelu položky",
         "PortraitShape": {
             "title": "Tvar portrétu typu {typ}",
             "option.round": "Kolo",
@@ -404,7 +404,7 @@
             "option.token": "Token"
         },
         "RarityColors.title": "Vzácné barvy",
-        "SheetTheme.title": "Motiv deníku",
+        "SheetTheme.title": "Barva motivu deníku",
         "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
         "SpellcastingMethodColors.title": "Barvy režimu přípravy kouzel",
         "UseHeaderBackground.title": "Použít pozadí záhlaví",
@@ -415,6 +415,12 @@
         "HeaderColor": {
             "title": "Barva pozadí záhlaví",
             "hint": "Pro záhlaví deníku použij jinou barvu než barvu zvýraznění."
+        },
+        "UseBasicTheme.title": "Použít základní motiv",
+        "UseBasicTheme.hint": "Použít klasický pergamenový vzhled bez stylizovaných záhlaví deníku a tabulek.",
+        "HeaderBackgroundColor": {
+            "title": "Barva záhlaví aktéra",
+            "hint": "Pro záhlaví deníku použít jinou barvu, než je zvýrazňovací barva deníku."
         }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Stupeň kouzla {number}",
@@ -895,7 +901,7 @@
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Vzestupně",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
-    "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost 'Přidat do záložky deníku'.",
+    "TIDY5E.SheetLock.Empty.Hint": "<h3>Jak začít.</h3>Začni přidáním povolání a prvních položek do záložky <i class='fa-solid fa-wreath-laurel'></i><strong>Povolání</strong>. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost <strong>Přidat do záložky deníku</strong>. <h3>Úprava svého deníku</h3><p>Vyber si mezi motivy deníku Stylistic a Basic , změň zvýrazňovací barvu deníku či obrázek záhlaví otevřením nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení</strong> a zvolením možnosti <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Nastavení motivu Tidy</strong></a>.</p><h3>Postranní panel</h3><p>Pro pozdější použití si ulož cokoli do <i class='fa-solid fa-sidebar'></i> <strong>Postranní panel</strong>. Pomocí nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení </strong> či kliknutím pravým tlačítkem na libovolnou položku a volbou <i class='fa-solid fa-star'></i> <strong>Přidat do oblíbených</strong> ji přidej do postranního panelu.</p><h3>Nastavení</h3><p>Uprav nastavení jednotlivých záložek a přizpůsob si sekce pomocí tlačítka <i class='fa-solid fa-gear'></i> <strong>Nastavení</strong> v každé záložce.</p>",
     "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost 'Přidat do oblíbených', nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
     "TIDY5E.EmptyTools": "Žádná dovednost s nástroji.",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
@@ -939,7 +945,7 @@
     "TIDY5E.SpellbookSections": "Sekce kouzel",
     "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
-    "TIDY5E.Character.Sidebar.Title": "Boční panel hráčských postav",
+    "TIDY5E.Character.Sidebar.Title": "Postranní panel hráčských postav",
     "TIDY5E.ContextMenuActionPin": "Připnout navrch",
     "TIDY5E.ContextMenuActionUnpin": "Odpojit z vrchu",
     "TIDY5E.HeaderControlConfiguration": {
@@ -1031,5 +1037,8 @@
     },
     "TIDY5E.Settings.ShowTooltipTool": {
         "name": "Zobrazit systémové popisky nástrojů"
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Barva pozadí záhlaví"
     }
 }
