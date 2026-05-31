@@ -314,6 +314,17 @@
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
+  "TIDY5E.WorldSettings": {
+    "title": "Tidy Sheet Settings",
+    "hint": "Configure global settings for Tidy Sheets.",
+    "Menu": {
+      "name": "Overview"
+    },
+    "Group": {
+      "TidySettings": "Tidy Settings",
+      "Sheets": "Sheets"
+    }
+  },
   "TIDY5E.SheetSettings": {
     "title": "Sheet Settings",
     "hint": "Configure the settings for the sheet.",
@@ -328,8 +339,14 @@
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
 
+  "TIDY5E.SettingsMenu.TidySettings": {
+    "name": "Tidy Sheet Settings",
+    "label": "Configure Settings",
+    "hint": "Configure Tidy sheets for your game. Set default sheets, customize themes, and global defaults for your players."
+  },
+
   "TIDY5E.SettingsMenu.WorldThemeSettings": {
-    "name": "Theme Settings",
+    "name": "Global Theme Settings",
     "label": "Configure Theme Settings",
     "hint": "New Tidy Sheets Only: Establish the default theme settings for your game world. These apply to all sheet types."
   },
@@ -365,7 +382,7 @@
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "TIDY5E.WorldSettings.Menu": {
-    "name": "World Settings",
+    "name": "Defaults",
     "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
     "label": "World Settings",
     "title": "World Settings (GM Only)"
@@ -797,6 +814,12 @@
     "explanation": "Select all document types where you would prefer Tidy 5e Sheets to be the default.",
     "disableAll": "Use for no sheets",
     "enableAll": "Use for all sheets"
+  },
+  "TIDY5E.WorldSettings.Defaults": {
+    "intro": "Welcome to Tidy 5e Sheets. Set your world-wide defaults here, then use the tabs on the left to fine-tune themes, sheet tabs, and more.",
+    "useTidyHint": "Make Tidy 5e Sheets the default for every actor and item type in this world.",
+    "chooseSpecific": "Choose specific sheet types instead",
+    "resetHint": "Reset all Tidy 5e Sheets world settings back to their defaults. This cannot be undone."
   },
   "TIDY5E.Settings.About": {
     "name": "About",

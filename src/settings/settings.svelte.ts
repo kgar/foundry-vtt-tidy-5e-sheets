@@ -209,10 +209,9 @@ export function createSettings() {
       },
       worldThemeSettingsMenu: {
         options: {
-          name: `TIDY5E.SettingsMenu.WorldThemeSettings.name`,
-          label: 'TIDY5E.SettingsMenu.WorldThemeSettings.label',
-          hint: `TIDY5E.SettingsMenu.WorldThemeSettings.hint`,
-          icon: 'fa-solid fa-swatchbook',
+          name: `TIDY5E.SettingsMenu.TidySettings.name`,
+          label: 'TIDY5E.SettingsMenu.TidySettings.label',
+          hint: `TIDY5E.SettingsMenu.TidySettings.hint`,
           type: WorldSettingsQuadroneApplication,
           restricted: true,
         },
@@ -225,6 +224,7 @@ export function createSettings() {
           icon: 'fa-solid fa-up-to-dotted-line',
           type: WorldHeaderControlConfigurationQuadroneApplication,
           restricted: true,
+          truesight: true,
         },
       },
       tabConfigurationMenu: {
@@ -235,6 +235,7 @@ export function createSettings() {
           icon: 'fa-solid fa-table-columns',
           type: WorldTabConfigurationQuadroneApplication,
           restricted: true,
+          truesight: true,
         },
       },
       homebrew: {
@@ -255,6 +256,7 @@ export function createSettings() {
           icon: 'fa-solid fa-broom-wide',
           type: ResetSettingsDialog,
           restricted: true,
+          truesight: true,
         },
       },
       migrations: {
@@ -273,7 +275,7 @@ export function createSettings() {
           name: `TIDY5E.Settings.SheetPreferences.name`,
           label: 'TIDY5E.Settings.SheetPreferences.buttonLabel',
           hint: `TIDY5E.Settings.SheetPreferences.hint`,
-          icon: 'fa-solid fa-file-circle-check',
+          icon: 'fa-solid fa-scroll',
           type: ApplyTidySheetPreferencesApplication,
           restricted: true,
         },
@@ -286,6 +288,7 @@ export function createSettings() {
           icon: 'fa-solid fa-block-question',
           type: AboutApplication,
           restricted: false,
+          truesight: true,
         },
       },
     },

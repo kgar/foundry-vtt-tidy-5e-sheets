@@ -5,6 +5,8 @@
     type WorldSettingsContext,
     type WorldSettingsQuadroneApplication,
   } from './TidyWorldSettingsQuadroneApplication.svelte';
+  import WorldSettingsDefaults from 'src/applications/settings/world-settings-defaults/WorldSettingsDefaults.svelte';
+  import About from 'src/applications/settings/about/About.svelte';
   import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
   import WorldTabConfigurationQuadrone from 'src/applications/tab-configuration/WorldTabConfigurationQuadrone.svelte';
   import WorldHeaderControlConfigurationQuadrone from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadrone.svelte';
@@ -20,6 +22,8 @@
 
   const localize = FoundryAdapter.localize;
 
+  const SETTINGS_DEFAULTS = WorldSettingsTabIds.defaults;
+  const SETTINGS_ABOUT = WorldSettingsTabIds.about;
   const SETTINGS_THEME = WorldSettingsTabIds.theme;
   const SETTINGS_TAB_CONFIG = WorldSettingsTabIds.tabConfig;
   const SETTINGS_HEADER_CONTROLS = WorldSettingsTabIds.headerControls;
@@ -33,6 +37,11 @@
   };
 
   let worldConfigOptions: SettingsTab[] = $derived([
+    {
+      id: SETTINGS_DEFAULTS,
+      title: localize('TIDY5E.WorldSettings.Menu.name'),
+      iconClass: 'fa-solid fa-house',
+    },
     {
       id: SETTINGS_THEME,
       title: localize('TIDY5E.SettingsMenu.WorldThemeSettings.name'),
@@ -56,18 +65,27 @@
     {
       id: SETTINGS_SHEET_PREFERENCES,
       title: localize('TIDY5E.Settings.SheetPreferences.name'),
-      iconClass: 'fa-solid fa-file-circle-check',
+      iconClass: 'fa-solid fa-scroll',
     },
+    {
+      id: SETTINGS_ABOUT,
+      title: localize('TIDY5E.Settings.About.name'),
+      iconClass: 'fa-solid fa-block-question',
+    },
+  ]);
+
+  let sheetConfigOptions: SettingsTab[] = $derived([
+
   ]);
 
   let allAvailableTabs: SettingsTab[] = $derived([...worldConfigOptions]);
 
-  let selectedId: string = $derived(app.currentTabId ?? SETTINGS_THEME);
+  let selectedId: string = $derived(app.currentTabId ?? SETTINGS_DEFAULTS);
 
   let activeSelectedId: string = $derived(
     allAvailableTabs.some((e) => e.id === selectedId)
       ? selectedId
-      : allAvailableTabs[0]?.id ?? SETTINGS_THEME,
+      : allAvailableTabs[0]?.id ?? SETTINGS_DEFAULTS,
   );
 
   function selectTab(id: string) {
@@ -79,7 +97,7 @@
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.SheetSettings.Group.SheetSettings')}
+        {localize('TIDY5E.WorldSettings.Group.TidySettings')}
       </h3>
       {#each worldConfigOptions as entry (entry.id)}
         <button
@@ -96,10 +114,28 @@
         </button>
       {/each}
     </div>
+    <div class="nav-group">
+      <h3 class="nav-group-header">
+        {localize('TIDY5E.WorldSettings.Group.Sheets')}
+      </h3>
+      {#each sheetConfigOptions as entry (entry.id)}
+        <button
+          type="button"
+          class={['nav-tab', { active: entry.id === activeSelectedId }]}
+          role="tab"
+          aria-selected={entry.id === activeSelectedId}
+          onclick={() => selectTab(entry.id)}
+        >
+          <span class="nav-tab-title">{entry.title}</span>
+        </button>
+      {/each}
+    </div>
   </div>
 
   <section class="settings-pane" role="tabpanel">
-    {#if activeSelectedId === SETTINGS_THEME}
+    {#if activeSelectedId === SETTINGS_DEFAULTS}
+      <WorldSettingsDefaults {app} />
+    {:else if activeSelectedId === SETTINGS_THEME}
       <ThemeSettingsQuadrone
         app={app.themeSettingsTab}
         settings={app.themeSettingsTab._settings}
@@ -122,6 +158,8 @@
         options={app.sheetPreferencesTab.sheetOptions}
         onConfirm={() => app.sheetPreferencesTab._onConfirm()}
       />
+    {:else if activeSelectedId === SETTINGS_ABOUT}
+      <About />
     {/if}
   </section>
 </div>

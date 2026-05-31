@@ -13,6 +13,8 @@ import { WorldHeaderControlConfigurationQuadroneApplication } from 'src/applicat
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 
 export const WorldSettingsTabIds = {
+  defaults: 'settings:defaults',
+  about: 'settings:about',
   theme: 'settings:theme',
   tabConfig: 'settings:tab-config',
   headerControls: 'settings:header-controls',
