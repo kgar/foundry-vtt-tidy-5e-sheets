@@ -31,6 +31,7 @@ import {
   TabConfigurationSchema,
 } from './settings-data-models';
 import { WorldHeaderControlConfigurationQuadroneApplication } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
+import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -181,6 +182,7 @@ export function createSettings() {
           icon: 'fa-solid fa-globe',
           type: WorldSettingsFormApplication,
           restricted: true,
+          truesight: true,
         },
       },
       userMenu: {
@@ -191,6 +193,7 @@ export function createSettings() {
           icon: 'fa-solid fa-user-gear',
           type: UserSettingsFormApplication,
           restricted: false,
+          truesight: true,
         },
       },
       theme: {
@@ -201,6 +204,7 @@ export function createSettings() {
           icon: 'fa-solid fa-swatchbook',
           type: ThemeSettingsFormApplication,
           restricted: false,
+          truesight: true,
         },
       },
       worldThemeSettingsMenu: {
@@ -209,7 +213,7 @@ export function createSettings() {
           label: 'TIDY5E.SettingsMenu.WorldThemeSettings.label',
           hint: `TIDY5E.SettingsMenu.WorldThemeSettings.hint`,
           icon: 'fa-solid fa-swatchbook',
-          type: ThemeSettingsQuadroneApplication,
+          type: WorldSettingsQuadroneApplication,
           restricted: true,
         },
       },
@@ -241,6 +245,7 @@ export function createSettings() {
           icon: `fa-solid fa-beer-mug`,
           type: HomebrewSettingsApplication,
           restricted: true,
+          truesight: true,
         },
       },
       resetAllSettings: {
@@ -260,6 +265,7 @@ export function createSettings() {
           icon: 'fa-solid fa-right-left',
           type: BulkMigrationsApplication,
           restricted: true,
+          truesight: true,
         },
       },
       applyTidySheetPreferences: {
@@ -2277,7 +2283,7 @@ export function initSettings() {
   const truesight = SettingsProvider.settings.truesight.get();
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
-    if ('truesight' in menu[1].options && !truesight) {
+    if ('truesight' in menu[1].options && truesight) {
       continue;
     }
 

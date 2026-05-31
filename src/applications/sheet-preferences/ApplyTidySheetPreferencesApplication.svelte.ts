@@ -68,7 +68,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
       .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
   }
 
-  private async _onConfirm(): Promise<void> {
+  async _onConfirm(): Promise<void> {
     try {
       // We intend to adjust the existing settings.
       let sheetSettings = this._getSheetClassesSetting();
