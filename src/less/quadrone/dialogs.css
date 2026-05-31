@@ -154,6 +154,10 @@
     }
   }
 
+  .nav-tab:not(:has(.nav-tab-icon)) {
+    padding-left: 0.4375rem;
+  }
+
   .nav-tab-icon {
     width: 1rem;
     text-align: center;

@@ -12,6 +12,7 @@
   import WorldHeaderControlConfigurationQuadrone from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadrone.svelte';
   import HomebrewSettings from 'src/applications/homebrew-settings/HomebrewSettings.svelte';
   import ApplyTidySheetPreferences from 'src/applications/sheet-preferences/ApplyTidySheetPreferences.svelte';
+  import WorldSheetSettings from './WorldSheetSettings.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -22,6 +23,7 @@
 
   const localize = FoundryAdapter.localize;
 
+  // TODO: Move to constants?
   const SETTINGS_DEFAULTS = WorldSettingsTabIds.defaults;
   const SETTINGS_ABOUT = WorldSettingsTabIds.about;
   const SETTINGS_THEME = WorldSettingsTabIds.theme;
@@ -30,10 +32,24 @@
   const SETTINGS_HOMEBREW = WorldSettingsTabIds.homebrew;
   const SETTINGS_SHEET_PREFERENCES = WorldSettingsTabIds.sheetPreferences;
 
+  const SETTINGS_SHEET_PREFIX = 'settings:sheet';
+
+  const ACTOR_SHEET_TAB_ORDER = [
+    'Actor:character',
+    'Actor:npc',
+    'Actor:group',
+    'Actor:encounter',
+    'Actor:vehicle',
+  ];
+
   type SettingsTab = {
     id: string;
     title: string;
     iconClass?: string;
+  };
+
+  type SheetSettingsTab = SettingsTab & {
+    orderKey: string;
   };
 
   let worldConfigOptions: SettingsTab[] = $derived([
@@ -74,11 +90,38 @@
     },
   ]);
 
-  let sheetConfigOptions: SettingsTab[] = $derived([
+  // Each Tidy sheet type becomes its own tab. The list of available sheets is
+  // shared with the header control configuration tab.
+  let sheetConfigOptions: SheetSettingsTab[] = $derived(
+    app.headerControlsTab._configs.map((config) => ({
+      id: `${SETTINGS_SHEET_PREFIX}:${config.documentName}:${config.documentType}`,
+      title: config.title,
+      orderKey: `${config.documentName}:${config.documentType}`,
+    })),
+  );
 
+  // Actor sheets are the ones explicitly listed in ACTOR_SHEET_TAB_ORDER, shown
+  // in that order. Everything else is treated as an item sheet, sorted by title.
+  let actorSheetConfigOptions: SheetSettingsTab[] = $derived(
+    sheetConfigOptions
+      .filter((o) => ACTOR_SHEET_TAB_ORDER.includes(o.orderKey))
+      .sort(
+        (a, b) =>
+          ACTOR_SHEET_TAB_ORDER.indexOf(a.orderKey) -
+          ACTOR_SHEET_TAB_ORDER.indexOf(b.orderKey),
+      ),
+  );
+
+  let itemSheetConfigOptions: SheetSettingsTab[] = $derived(
+    sheetConfigOptions
+      .filter((o) => !ACTOR_SHEET_TAB_ORDER.includes(o.orderKey))
+      .sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang)),
+  );
+
+  let allAvailableTabs: SettingsTab[] = $derived([
+    ...worldConfigOptions,
+    ...sheetConfigOptions,
   ]);
-
-  let allAvailableTabs: SettingsTab[] = $derived([...worldConfigOptions]);
 
   let selectedId: string = $derived(app.currentTabId ?? SETTINGS_DEFAULTS);
 
@@ -88,10 +131,17 @@
       : allAvailableTabs[0]?.id ?? SETTINGS_DEFAULTS,
   );
 
+  let selectedSheetConfig = $derived(
+    app.headerControlsTab._configs.find(
+      (c) =>
+        `${SETTINGS_SHEET_PREFIX}:${c.documentName}:${c.documentType}` ===
+        activeSelectedId,
+    ),
+  );
+
   function selectTab(id: string) {
     app.selectTab(id);
-  }
-</script>
+  }</script>
 
 <div class="tidy-sheet-settings">
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
@@ -116,9 +166,25 @@
     </div>
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.WorldSettings.Group.Sheets')}
+        {localize('TIDY5E.WorldSettings.Group.ActorSheets')}
       </h3>
-      {#each sheetConfigOptions as entry (entry.id)}
+      {#each actorSheetConfigOptions as entry (entry.id)}
+        <button
+          type="button"
+          class={['nav-tab', { active: entry.id === activeSelectedId }]}
+          role="tab"
+          aria-selected={entry.id === activeSelectedId}
+          onclick={() => selectTab(entry.id)}
+        >
+          <span class="nav-tab-title">{entry.title}</span>
+        </button>
+      {/each}
+    </div>
+    <div class="nav-group">
+      <h3 class="nav-group-header">
+        {localize('TIDY5E.WorldSettings.Group.ItemSheets')}
+      </h3>
+      {#each itemSheetConfigOptions as entry (entry.id)}
         <button
           type="button"
           class={['nav-tab', { active: entry.id === activeSelectedId }]}
@@ -160,6 +226,12 @@
       />
     {:else if activeSelectedId === SETTINGS_ABOUT}
       <About />
+    {:else if selectedSheetConfig}
+      <WorldSheetSettings
+        documentName={selectedSheetConfig.documentName}
+        documentType={selectedSheetConfig.documentType}
+        title={selectedSheetConfig.title}
+      />
     {/if}
   </section>
 </div>

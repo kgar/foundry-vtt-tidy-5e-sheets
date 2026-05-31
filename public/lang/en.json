@@ -315,14 +315,15 @@
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
   "TIDY5E.WorldSettings": {
-    "title": "Tidy Sheet Settings",
+    "label": "Tidy Sheet Settings",
     "hint": "Configure global settings for Tidy Sheets.",
     "Menu": {
       "name": "Overview"
     },
     "Group": {
       "TidySettings": "Tidy Settings",
-      "Sheets": "Sheets"
+      "ActorSheets": "Actor Sheets",
+      "ItemSheets": "Item Sheets"
     }
   },
   "TIDY5E.SheetSettings": {
