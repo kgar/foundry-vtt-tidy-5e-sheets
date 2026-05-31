@@ -146,8 +146,6 @@ export class ThemeQuadrone {
   static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV3) {
     const toSave = { ...settings };
 
-    // TODO: Figure out how to do this with a single call. Currently, it does not fully replace the information.
-    await TidyFlags.sheetThemeSettings.unset(doc);
     const result = await TidyFlags.sheetThemeSettings.set(doc, toSave);
 
     await this.syncSystemTokenPortraitSetting(doc, settings.portraitShape);
