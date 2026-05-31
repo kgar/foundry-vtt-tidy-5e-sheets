@@ -1,30 +1,124 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import type { Tab } from 'src/types/types';
+  import type { WorldSettingsQuadroneApplication } from './TidyWorldSettingsQuadroneApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
+  import TabInclusion from 'src/applications/tab-configuration/parts/TabInclusion.svelte';
+  import TabVisibilityLevels from 'src/applications/tab-configuration/parts/TabVisibilityLevels.svelte';
+  import TabbedTabConfig from 'src/applications/tab-configuration/parts/TabbedTabConfig.svelte';
+  import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
 
   interface Props {
+    app: WorldSettingsQuadroneApplication;
     documentName: string;
     documentType: string;
     title: string;
   }
-  
   const localize = FoundryAdapter.localize;
 
-  let { documentName, documentType, title }: Props = $props();
+  let { app, documentName, documentType, title }: Props = $props();
+
+  // Unique per selected sheet so tab contents remount (and re-read their entry)
+  // when the user switches to a different sheet.
+  let prefix = $derived(`${documentName}-${documentType}`);
+
+  let tabConfigEntry = $derived(
+    app.tabConfigTab._config.find(
+      (c) =>
+        c.documentName === documentName &&
+        c.documentType === documentType &&
+        !c.docTypeKeyOverride,
+    ),
+  );
+
+  let sidebarTabConfigEntry = $derived(
+    app.tabConfigTab._config.find(
+      (c) =>
+        c.documentName === documentName &&
+        c.documentType === documentType &&
+        c.docTypeKeyOverride === CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+    ),
+  );
+
+  let headerControlEntry = $derived(
+    app.headerControlsTab._configs.find(
+      (c) => c.documentName === documentName && c.documentType === documentType,
+    ),
+  );
+
+  let tabs: Tab[] = $derived.by(() => {
+    const result: Tab[] = [];
+
+    if (tabConfigEntry) {
+      const entry = tabConfigEntry;
+
+      result.push({
+        id: `${prefix}-inclusion`,
+        title: 'TIDY5E.TabConfiguration.SelectionTab.Title',
+        content: {
+          type: 'svelte',
+          component: TabInclusion,
+          getProps: () => ({ entry }),
+        },
+      });
+
+      result.push({
+        id: `${prefix}-visibility`,
+        title: 'TIDY5E.TabConfiguration.VisibilityTab.Title',
+        content: {
+          type: 'svelte',
+          component: TabVisibilityLevels,
+          getProps: () => ({ entry }),
+        },
+      });
+    }
+
+    if (headerControlEntry) {
+      const config = headerControlEntry;
+
+      result.push({
+        id: `${prefix}-header-controls`,
+        title: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.name',
+        content: {
+          type: 'svelte',
+          component: SheetHeaderControlConfig,
+          getProps: () => ({ config, idPrefix: `${app.id}-${prefix}` }),
+        },
+      });
+    }
+
+    if (sidebarTabConfigEntry) {
+      const entry = sidebarTabConfigEntry;
+
+      result.push({
+        id: `${prefix}-sidebar`,
+        title: 'TIDY5E.Character.Sidebar.Title',
+        content: {
+          type: 'svelte',
+          component: CharacterSidebarTabConfiguration,
+          getProps: () => ({ entry }),
+        },
+      });
+    }
+
+    return result;
+  });
+
+  let selectedTabId = $state('');
 </script>
 
-<!-- TODO: Migrate in three tabs: Tab Visibility, Player Acccess, and Header Controls -->
 <div
   class="dialog-content-container flexcol"
   data-document-name={documentName}
   data-document-type={documentType}
   aria-label={title}
 >
-  <h3>{localize('TIDY5E.TabConfiguration.SelectionTab.Title')}</h3>
-  <div>Tab Display</div>
-  <h3>{localize('TIDY5E.TabConfiguration.VisibilityTab.Title')}</h3>
-  <div>User Visibility</div>
-  <h3>{localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.label')}</h3>
-  <div>Header Controls</div>
-  <!-- Then sidebar tabs just for the PC sheet -->
-
+  <h2>{localize('TIDY5E.WorldSettings.SheetConfiguration.label', { sheetName: title })}</h2>
+  <p>{localize('TIDY5E.WorldSettings.SheetConfiguration.hint', { sheetName: title })}</p>
+  <div class="tabs-row tab-configuration-tabs">
+    <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
+  </div>
+  <TabContents {selectedTabId} {tabs} cssClass="flex1" />
 </div>

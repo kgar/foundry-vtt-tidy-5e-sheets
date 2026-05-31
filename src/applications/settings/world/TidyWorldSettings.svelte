@@ -228,6 +228,7 @@
       <About />
     {:else if selectedSheetConfig}
       <WorldSheetSettings
+        {app}
         documentName={selectedSheetConfig.documentName}
         documentType={selectedSheetConfig.documentType}
         title={selectedSheetConfig.title}

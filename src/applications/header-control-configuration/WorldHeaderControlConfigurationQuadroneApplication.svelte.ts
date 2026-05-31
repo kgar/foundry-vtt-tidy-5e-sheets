@@ -25,7 +25,7 @@ export type ConfigHeaderControlSetting = {
   location?: SheetHeaderControlPosition;
 };
 
-type HeaderControlConfigContextItem = {
+export type HeaderControlConfigContextItem = {
   documentName: string;
   documentType: string;
   title: string;
