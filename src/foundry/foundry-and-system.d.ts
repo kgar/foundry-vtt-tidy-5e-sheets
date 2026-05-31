@@ -209,6 +209,11 @@ declare global {
       height: number
     ): HTMLElement;
   }
+
+  /* game.release.generation > 13 */
+
+  function _del<T>(arg: T): T;
+  function _replace<T>(arg: T): T;
 }
 
 declare global {

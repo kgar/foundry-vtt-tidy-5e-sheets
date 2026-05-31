@@ -1426,7 +1426,7 @@ export class TidyFlags {
       );
     },
     set(doc: any, settings: ThemeSettingsV3) {
-      return TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings);
+      return TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings, true);
     },
     unset(doc: any) {
       return TidyFlags.unsetFlag(doc, TidyFlags.sheetThemeSettings.key);
@@ -1572,14 +1572,25 @@ export class TidyFlags {
    * @param flagged A document to set the flag on.
    * @param flagName The name of the flag to set.
    * @param value The value to set the flag to.
+   * @param replace Assign the flag to value without inner recursion. 
+   *          (game.release.generation < 14: unset the flag and then reapply it, to prevent inner recursion)
    * @returns A promise that resolves when the flag is set.
    */
-  static setFlag(
+  static async setFlag(
     flagged: any,
     flagName: string,
-    value: unknown
+    value: unknown,
+    replace: boolean = false
   ): Promise<void> {
-    return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
+    const toSave = replace && game.release.generation > 13
+      ? _replace(value)
+      : value;
+
+    if (replace && game.release.generation < 14) {
+      await TidyFlags.unsetFlag(flagged, flagName);
+    }
+    
+    await flagged.setFlag(CONSTANTS.MODULE_ID, flagName, toSave);
   }
 
   /**
