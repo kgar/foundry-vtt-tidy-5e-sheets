@@ -62,6 +62,10 @@
     .settings-pane .button-bar {
       padding: 0 var(--t5e-size-4x) var(--t5e-size-3x);
     }
+
+    .settings-nav {
+      padding-bottom: var(--t5e-size-6x);
+    }
   }
 
   .settings-nav {

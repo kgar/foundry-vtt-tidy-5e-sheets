@@ -34,6 +34,7 @@ import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterShe
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import { formatResourcePathForCss } from './utils/path';
+import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 
 Hooks.once('init', () => {
@@ -236,6 +237,8 @@ Hooks.once('ready', async () => {
   TidyNotificationsManager.onReady();
 
   registerCustomTidyRollRequests();
+
+  preloadSheetImages();
 });
 
 Hooks.once('setup', async () => {
