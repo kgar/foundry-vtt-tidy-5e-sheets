@@ -233,7 +233,9 @@
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected.",
     "options.viewers": "User Access",
-    "options.visibility": "Show Tab"
+    "options.visibility": "Show Tab",
+    "showTabTooltip": "Show this tab",
+    "hideTabTooltip": "Hide this tab"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -314,17 +316,20 @@
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
-  "TIDY5E.WorldSettings": {
-    "label": "Tidy Sheet Settings",
-    "hint": "Configure global settings for Tidy Sheets.",
-    "Menu": {
-      "name": "Overview"
-    },
-    "Group": {
-      "TidySettings": "Tidy Settings",
-      "ActorSheets": "Actor Sheets",
-      "ItemSheets": "Item Sheets"
-    }
+  "TIDY5E.WorldSettings.label": "Tidy Sheet Settings",
+  "TIDY5E.WorldSettings.hint": "Configure global settings for Tidy Sheets.",
+  "TIDY5E.WorldSettings.Group": {
+    "TidySettings": "Tidy Settings",
+    "ActorSheets": "Actor Sheets",
+    "ItemSheets": "Item Sheets"
+  },
+  "TIDY5E.WorldSettings.SheetConfiguration": {
+    "label": "{sheetName} Sheet Configuration",
+    "hint": "Configure settings for {sheetName} sheets. Hide or show header controls, and choose which tabs display on the sheet, in which order, and to who."
+  },
+  "TIDY5E.WorldSettings.TabConfiguration": {
+    "label": "{tabName} Tab Configuration",
+    "hint": "Configure which tabs display on the {tabName} sheet, in which order, and to who."
   },
   "TIDY5E.SheetSettings": {
     "title": "Sheet Settings",

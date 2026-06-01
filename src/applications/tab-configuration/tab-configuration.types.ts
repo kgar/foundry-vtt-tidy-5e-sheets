@@ -1,6 +1,7 @@
 export type ConfigTabInfo = {
   id: string;
   title: string;
+  iconClass?: string;
 };
 
 export type VisibilityLevelConfig = ConfigTabInfo & {

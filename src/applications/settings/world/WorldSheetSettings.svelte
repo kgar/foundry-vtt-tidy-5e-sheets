@@ -5,9 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import TabInclusion from 'src/applications/tab-configuration/parts/TabInclusion.svelte';
-  import TabVisibilityLevels from 'src/applications/tab-configuration/parts/TabVisibilityLevels.svelte';
-  import TabbedTabConfig from 'src/applications/tab-configuration/parts/TabbedTabConfig.svelte';
+  import TabSelectionList from 'src/applications/tab-configuration/parts/TabSelectionList.svelte';
   import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
 
   interface Props {
@@ -55,21 +53,11 @@
       const entry = tabConfigEntry;
 
       result.push({
-        id: `${prefix}-inclusion`,
-        title: 'TIDY5E.TabConfiguration.SelectionTab.Title',
+        id: `${prefix}-tabs`,
+        title: 'TIDY5E.TabConfiguration.MenuOptionText',
         content: {
           type: 'svelte',
-          component: TabInclusion,
-          getProps: () => ({ entry }),
-        },
-      });
-
-      result.push({
-        id: `${prefix}-visibility`,
-        title: 'TIDY5E.TabConfiguration.VisibilityTab.Title',
-        content: {
-          type: 'svelte',
-          component: TabVisibilityLevels,
+          component: TabSelectionList,
           getProps: () => ({ entry }),
         },
       });
@@ -97,7 +85,7 @@
         title: 'TIDY5E.Character.Sidebar.Title',
         content: {
           type: 'svelte',
-          component: CharacterSidebarTabConfiguration,
+          component: TabSelectionList,
           getProps: () => ({ entry }),
         },
       });

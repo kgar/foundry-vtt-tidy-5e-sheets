@@ -81,7 +81,7 @@ function getWorldDefaultSelectedTabIds(
 export function buildTabConfigContextEntry(
   documentName: string,
   type: string,
-  allRegisteredTabs: { id: string; title: CustomTabTitle }[],
+  allRegisteredTabs: { id: string; title: CustomTabTitle; iconClass?: string }[],
   settings: SheetTabConfiguration | undefined | null,
   defaultSelectedIds: string[],
   worldDefaultSelectedIds?: string[],
@@ -98,6 +98,7 @@ export function buildTabConfigContextEntry(
         title: FoundryAdapter.localize(
           typeof tab.title === 'function' ? tab.title() : tab.title
         ).titleCase(),
+        iconClass: tab.iconClass,
       };
       return prev;
     },
@@ -157,6 +158,7 @@ function mapTabIdsToOptions(
   return tabIds.map<ConfigTabInfo>((tabId) => ({
     id: tabId,
     title: all[tabId]?.title ?? tabId,
+    iconClass: all[tabId]?.iconClass,
   }));
 }
 
@@ -169,5 +171,6 @@ function getUnselectedTabs(
     .map<ConfigTabInfo>((t) => ({
       id: t.id,
       title: all[t.id]?.title ?? t.id,
+      iconClass: all[t.id]?.iconClass,
     }));
 }

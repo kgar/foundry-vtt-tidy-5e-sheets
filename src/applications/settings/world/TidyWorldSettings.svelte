@@ -27,8 +27,6 @@
   const SETTINGS_DEFAULTS = WorldSettingsTabIds.defaults;
   const SETTINGS_ABOUT = WorldSettingsTabIds.about;
   const SETTINGS_THEME = WorldSettingsTabIds.theme;
-  const SETTINGS_TAB_CONFIG = WorldSettingsTabIds.tabConfig;
-  const SETTINGS_HEADER_CONTROLS = WorldSettingsTabIds.headerControls;
   const SETTINGS_HOMEBREW = WorldSettingsTabIds.homebrew;
   const SETTINGS_SHEET_PREFERENCES = WorldSettingsTabIds.sheetPreferences;
 
@@ -62,16 +60,6 @@
       id: SETTINGS_THEME,
       title: localize('TIDY5E.SettingsMenu.WorldThemeSettings.name'),
       iconClass: 'fa-solid fa-swatchbook',
-    },
-    {
-      id: SETTINGS_TAB_CONFIG,
-      title: localize('TIDY5E.SettingsMenu.TabConfiguration.name'),
-      iconClass: 'fa-solid fa-table-columns',
-    },
-    {
-      id: SETTINGS_HEADER_CONTROLS,
-      title: localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name'),
-      iconClass: 'fa-solid fa-up-to-dotted-line',
     },
     {
       id: SETTINGS_HOMEBREW,
@@ -206,16 +194,6 @@
         app={app.themeSettingsTab}
         settings={app.themeSettingsTab._settings}
         placeholders={undefined}
-      />
-    {:else if activeSelectedId === SETTINGS_TAB_CONFIG}
-      <WorldTabConfigurationQuadrone
-        app={app.tabConfigTab}
-        bind:config={app.tabConfigTab._config}
-      />
-    {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS}
-      <WorldHeaderControlConfigurationQuadrone
-        app={app.headerControlsTab}
-        bind:context={app.headerControlsTab._configs}
       />
     {:else if activeSelectedId === SETTINGS_HOMEBREW}
       <HomebrewSettings app={app.homebrewTab} config={app.homebrewTab._config} />
