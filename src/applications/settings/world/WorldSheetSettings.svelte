@@ -107,6 +107,7 @@
   <p>{localize('TIDY5E.WorldSettings.SheetConfiguration.hint', { sheetName: title })}</p>
   <div class="tabs-row tab-configuration-tabs">
     <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
+    <hr class="golden-fade" />
   </div>
   <TabContents {selectedTabId} {tabs} cssClass="flex1" />
 </div>

@@ -342,6 +342,12 @@
       "title": "Sidebar",
       "Hint": "Configure the settings for the sidebar tabs."
     },
+    "HeaderControls": {
+      "ShowControl": "Show in {location}",
+      "Preview": "Header Controls Preview",
+      "MoveAllToMenu": "Move All to Menu",
+      "MoveAllToHeader": "Move All to Header"
+    },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
 

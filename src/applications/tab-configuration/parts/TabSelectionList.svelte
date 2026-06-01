@@ -205,11 +205,6 @@
 </script>
 
 <fieldset class="tab-selection-list">
-  <legend>
-    {localize('TIDY5E.TabConfiguration.MenuOptionText')}
-    <tidy-gold-header-underline></tidy-gold-header-underline>
-  </legend>
-
   <div class="tab-selection-header">
     <span class="tab-selection-header-label tabs-label font-label-medium">
       Tab
