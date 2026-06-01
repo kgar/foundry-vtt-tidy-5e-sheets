@@ -40,25 +40,25 @@
   </button>
 </div>
 
-<table class="header-controls-table">
+<table class="sheet-preferences-table">
   <thead>
     <tr>
     <th>
-      <h3 class="header-controls-label">
+      <h3 class="sheet-preferences-label">
         {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
       </h3>
       </th>
-      <th class="header-controls-column-label">
+      <th class="sheet-preferences-column-label">
         <i class="fas fa-square-list"></i>
         {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationMenu') })}
       </th>
-      <th class="header-controls-column-label">
+      <th class="sheet-preferences-column-label">
         <i class="fas fa-ellipsis-vertical"></i>
         {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationHeader') })}
       </th>
     </tr>
   </thead>
-  <tbody class="header-controls-list">
+  <tbody class="sheet-preferences-list">
     {#each config.controlSettings as setting}
       {@const formControlId = `${idPrefix}-${setting.title.slugify()}`}
       <tr>

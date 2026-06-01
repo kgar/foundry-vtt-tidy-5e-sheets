@@ -69,11 +69,11 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    <p class="hint">
+    <p class="settings-description">
       {localize('TIDY5E.WorldSettings.Defaults.useTidyHint')}
     </p>
 
-    <div class="flexcol setting-actions">
+    <div class="flexrow setting-actions">
       <button
         type="button"
         class="button button-primary button-large"
@@ -84,7 +84,7 @@
       </button>
       <button
         type="button"
-        class="button button-borderless choose-specific-btn"
+        class="button button-borderless button-large choose-specific-btn"
         onclick={() => chooseSpecificSheets()}
       >
         {localize('TIDY5E.WorldSettings.Defaults.chooseSpecific')}
@@ -98,11 +98,11 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    <p class="hint">
+    <p class="settings-description">
       {localize('TIDY5E.WorldSettings.Defaults.resetHint')}
     </p>
 
-    <div class="flexcol setting-actions">
+    <div class="flexrow setting-actions">
       <button
         type="button"
         class="button button-secondary button-large reset-defaults-btn"

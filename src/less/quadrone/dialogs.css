@@ -242,11 +242,6 @@
       margin-bottom: var(--t5e-size-3x);
     }
 
-    .settings-actions {
-      gap: var(--t5e-size-2x);
-      margin-bottom: var(--t5e-size-4x);
-    }
-
     .title-underlined {
       margin-bottom: var(--t5e-size-2x);
     }
@@ -254,6 +249,12 @@
     .tidy-table-header-row .tidy-table-header-cell {
       padding-top: var(--t5e-size-1x);
       padding-bottom: var(--t5e-size-1x);
+    }
+
+    .scroll-container {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
     }
   }
 
@@ -351,6 +352,10 @@
   }
 
   &.tidy-sheet-settings {
+    .settings-description {
+      margin-top: 0;
+    }
+
     .header-controls-preview {
       display: flex;
       justify-content: flex-end;
@@ -361,23 +366,25 @@
       flex: 1;
     }
 
-    .header-controls-table {
+    .controls-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--t5e-size-2x);
+    }
+
+    .sheet-preferences-table {
 
       tr th,
       tr td {
         padding: 0.3125rem 0.5rem;
       }
 
-      .header-controls-label {
+      .sheet-preferences-label {
         font-size: var(--font-size-18);
       }
 
-      .header-controls-column-label {
+      .sheet-preferences-column-label {
         text-align: center;
-
-        i {
-          width: 0.8125rem;
-        }
       }
 
       .radio {
@@ -385,12 +392,6 @@
         align-items: center;
         justify-content: center;
       }
-    }
-
-    .controls-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--t5e-size-2x);
     }
   }
 }

@@ -57,6 +57,11 @@
       iconClass: 'fa-solid fa-house',
     },
     {
+      id: SETTINGS_SHEET_PREFERENCES,
+      title: localize('TIDY5E.Settings.SheetPreferences.name'),
+      iconClass: 'fa-solid fa-scroll',
+    },
+    {
       id: SETTINGS_THEME,
       title: localize('TIDY5E.SettingsMenu.WorldThemeSettings.name'),
       iconClass: 'fa-solid fa-swatchbook',
@@ -65,11 +70,6 @@
       id: SETTINGS_HOMEBREW,
       title: localize('TIDY5E.SettingsMenu.Homebrew.name'),
       iconClass: 'fa-solid fa-beer-mug',
-    },
-    {
-      id: SETTINGS_SHEET_PREFERENCES,
-      title: localize('TIDY5E.Settings.SheetPreferences.name'),
-      iconClass: 'fa-solid fa-scroll',
     },
     {
       id: SETTINGS_ABOUT,

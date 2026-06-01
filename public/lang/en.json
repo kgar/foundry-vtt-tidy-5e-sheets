@@ -224,7 +224,7 @@
 
   "TIDY5E.TabConfiguration": {
     "Title": "Tab Configuration: {documentName}",
-    "MenuOptionText": "Tab Configuration",
+    "MenuOptionText": "Configure Tabs",
     "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",
@@ -394,7 +394,7 @@
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "TIDY5E.WorldSettings.Menu": {
-    "name": "Defaults",
+    "name": "Overview",
     "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
     "label": "World Settings",
     "title": "World Settings (GM Only)"
@@ -824,8 +824,11 @@
     "hint": "If you would like to set Tidy 5e Sheets as your default for one or more document types, but the core default sheets config menu is not working as expected, use this menu to select your preferences.",
     "buttonLabel": "Set Tidy as Default Sheet",
     "explanation": "Select all document types where you would prefer Tidy 5e Sheets to be the default.",
-    "disableAll": "Use for no sheets",
-    "enableAll": "Use for all sheets"
+    "disableAll": "Switch to System Sheets",
+    "enableAll": "Switch to Tidy Sheets",
+    "Sheet": "Document Type",
+    "TidySheets": "Tidy Sheets",
+    "SystemSheets": "System Sheets"
   },
   "TIDY5E.WorldSettings.Defaults": {
     "intro": "Welcome to Tidy 5e Sheets. Set your world-wide defaults here, then use the tabs on the left to fine-tune themes, sheet tabs, and more.",
@@ -1061,7 +1064,7 @@
   "TIDY5E.AggregateSkill.HighMeasure": "High",
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
-  "TIDY5E.Character.Sidebar.Title": "Player Character Sidebar",
+  "TIDY5E.Character.Sidebar.Title": "Configure Sidebar",
   "TIDY5E.Encounter": {
     "CombatantsSection.Title": "Combatants",
     "Combat.IncludeInCombat.Tooltip": "Include in combat activities",

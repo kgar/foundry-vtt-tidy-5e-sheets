@@ -387,7 +387,7 @@
     onclick={() => app.useDefault()}
   >
     <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseGlobalDefaults')}
+    {localize(app.document ? 'TIDY5E.UseGlobalDefaults' : 'TIDY5E.UseDefault')}
   </button>
   <button
     type="button"
