@@ -346,7 +346,9 @@
       "ShowControl": "Show in {location}",
       "Preview": "Header Controls Preview",
       "MoveAllToMenu": "Move All to Menu",
-      "MoveAllToHeader": "Move All to Header"
+      "MoveAllToHeader": "Move All to Header",
+      "WorldSettingHint": "Header control placement is a world-level setting shared by every {sheetName} sheet. Changes made here apply to all of them.",
+      "OpenWorldSettings": "Open World Settings"
     },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
