@@ -11,7 +11,9 @@
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
   import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
   import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
+  import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
   import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
+  import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
   import { CONSTANTS } from 'src/constants';
   import { arrayMove } from 'src/utils/array';
 
@@ -26,6 +28,7 @@
 
   const SETTINGS_THEME = TidySheetSettingsTabIds.theme;
   const SETTINGS_TAB_CONFIG = TidySheetSettingsTabIds.tabConfig;
+  const SETTINGS_HEADER_CONTROLS = TidySheetSettingsTabIds.headerControls;
   const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsTabIds.sidebarTabConfig;
   const SETTINGS_SPELL_ASSIGNMENTS = TidySheetSettingsTabIds.spellAssignments;
 
@@ -38,6 +41,12 @@
   };
 
   let spellAssignmentsApp = $derived(app.getSpellSourceItemAssignmentsTab());
+
+  let headerControlEntry = $derived(app.headerControlEntry);
+
+  let sheetName = $derived(
+    localize(`TYPES.${app.document.documentName}.${app.document.type}`),
+  );
 
   let sheetConfigOptions: SettingsTab[] = $derived(
     [
@@ -53,6 +62,16 @@
         iconClass: 'fas fa-file-invoice',
         hasChanges: app.tabDisplaySettingsTab.hasChanges,
       },
+      ...(app.headerControlsTab && headerControlEntry
+        ? [
+            {
+              id: SETTINGS_HEADER_CONTROLS,
+              title: localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name'),
+              iconClass: 'fas fa-ellipsis-vertical',
+              hasChanges: app.headerControlsTab.hasChanges,
+            },
+          ]
+        : []),
       ...(spellAssignmentsApp
         ? [
             {
@@ -290,6 +309,38 @@
         config={app.tabDisplaySettingsTab._config}
         title={app.tabDisplaySettingsTab._inclusionTabTitle}
       />
+    {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
+      <div class="dialog-content-container flexcol">
+        <h2>
+          {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
+        </h2>
+        <p class="settings-description">
+          {localize('TIDY5E.SheetSettings.HeaderControls.WorldSettingHint', {
+            sheetName,
+          })}
+          <!-- svelte-ignore a11y_invalid_attribute -->
+          <a
+            tabindex="0"
+            href="javascript:void(0)"
+            role="button"
+            aria-label={localize('TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings')}
+            class="inline-link"
+            onclick={() => app.openWorldHeaderControlSettings()}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                app.openWorldHeaderControlSettings();
+              }
+            }}
+          >
+            {localize('TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings')}
+        </a>
+        </p>
+        <SheetHeaderControlConfig
+          config={headerControlEntry}
+          idPrefix={`${app.id}-header-controls`}
+        />
+      </div>
     {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.sidebarTabDisplaySettingsTab}
@@ -322,4 +373,10 @@
       />
     {/if}
   </section>
+
+  <!-- One footer for the deferred-save panes. Section editors / spell
+       assignments report no active pane and keep their own in-pane controls. -->
+  {#if app.getActivePane()}
+    <SettingsFooter host={app} />
+  {/if}
 </div>

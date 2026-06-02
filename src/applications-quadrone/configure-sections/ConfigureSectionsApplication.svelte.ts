@@ -13,6 +13,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
 import { DocumentSheetDialog } from '../DocumentSheetDialog.svelte';
 import { mapGetOrInsert } from 'src/utils/map';
+import type { SettingsPane } from 'src/applications/settings/settings-pane.types';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -102,7 +103,10 @@ function snapshotOptionGroupValues(
   }));
 }
 
-export class ConfigureSectionsApplication extends DocumentSheetDialog() {
+export class ConfigureSectionsApplication
+  extends DocumentSheetDialog()
+  implements SettingsPane
+{
   sections = $state<SectionConfigItem[]>([]);
   optionsGroups = $state<SectionOptionGroup[]>([]);
   tabId: string;
@@ -111,6 +115,10 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   parentSettings?: SettingsTabNavigator;
 
   _initialSnapshot = $state('');
+
+  // Save the original settings for undo
+  _originalSections: SectionConfigItem[] = [];
+  _originalOptionValues: ReturnType<typeof snapshotOptionGroupValues> = [];
 
   hasChanges = $derived(
     JSON.stringify({
@@ -219,11 +227,6 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
   /* -------------------------------------------- */
 
-  async saveChanges() {
-    await this.apply();
-    await this.close();
-  }
-
   async apply() {
     const thisDocumentData: Record<string, any> = {};
     const documentsToSave: Map<any, Record<string, any>> = new Map([
@@ -277,34 +280,51 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   }
 
   _resetToGlobalDefaults() {
+    this._originalSections = $state
+      .snapshot(this.sections)
+      .map((section) => ({ ...section }));
+    this._originalOptionValues = snapshotOptionGroupValues(this.optionsGroups);
     this._initialSnapshot = JSON.stringify({
       sections: $state.snapshot(this.sections),
-      optionsGroups: snapshotOptionGroupValues(this.optionsGroups),
+      optionsGroups: this._originalOptionValues,
     });
   }
 
-  async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
-      )}</p>`,
-    });
+  undoChanges() {
+    this.sections = this._originalSections.map((section) => ({ ...section }));
+    this._applyOptionGroupValues(this._originalOptionValues);
+    this.optionsGroups = this.optionsGroups;
+  }
 
-    if (!proceed) {
-      return;
+  resetToDefault() {
+    this.sections = this.sections.map((section) => ({
+      ...section,
+      show: true,
+    }));
+    for (const group of this.optionsGroups) {
+      for (const setting of group.settings) {
+        if (setting.type === 'boolean') {
+          setting.checked = setting.default ?? false;
+        } else if (setting.type === 'radio') {
+          setting.selected = setting.default;
+        }
+      }
     }
+    this.optionsGroups = this.optionsGroups;
+  }
 
-    const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
-    delete sectionConfig[this.tabId];
-    // TODO: Figure out how to do this in a less suppressing way.
-    //@ts-expect-error
-    sectionConfig[`-=${this.tabId}`] = null;
-    await this.document.update({
-      [TidyFlags.sectionConfig.prop]: sectionConfig,
+  _applyOptionGroupValues(
+    baseline: ReturnType<typeof snapshotOptionGroupValues>
+  ) {
+    this.optionsGroups.forEach((group, groupIndex) => {
+      const values = baseline[groupIndex]?.values ?? [];
+      group.settings.forEach((setting, settingIndex) => {
+        if (setting.type === 'boolean') {
+          setting.checked = values[settingIndex] as boolean | undefined;
+        } else if (setting.type === 'radio') {
+          setting.selected = values[settingIndex];
+        }
+      });
     });
-    await this.close();
   }
 }

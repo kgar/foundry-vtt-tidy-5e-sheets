@@ -131,31 +131,3 @@
     </SortingListbox>
   </fieldset>
 </div>
-<div class="button-bar">
-  <button
-    type="button"
-    class="button button-secondary button-large use-default-btn"
-    data-testid="section-config-use-default"
-    onclick={(ev) => application.useDefault()}
-  >
-    <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseDefault')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary button-large apply-changes-btn"
-    data-testid="section-config-apply-changes"
-    onclick={() => application.close()}
-  >
-    {localize('Cancel')}
-  </button>
-  <button
-    type="button"
-    data-testid="section-config-save-changes"
-    onclick={(ev) => application.saveChanges()}
-    class="button button-primary button-large button-save save-changes-btn"
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
-</div>

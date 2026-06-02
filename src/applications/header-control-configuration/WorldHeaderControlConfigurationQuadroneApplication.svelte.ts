@@ -11,6 +11,7 @@ import {
 import type { SheetHeaderControlPosition } from 'src/api';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { coalesce } from 'src/utils/formatting';
+import type { SettingsPane } from 'src/applications/settings/settings-pane.types';
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
@@ -34,10 +35,32 @@ export type HeaderControlConfigContextItem = {
 
 export type WorldHeaderControlConfigContext = HeaderControlConfigContextItem[];
 
-export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteApplicationMixin<
-  Partial<ApplicationConfiguration>
->(foundry.applications.api.ApplicationV2) {
+export type WorldHeaderControlConfigurationOptions =
+  Partial<ApplicationConfiguration> & {
+    /** When set, useDefault resets only this sheet type (embedded sheet settings). */
+    scope?: { documentName: string; documentType: string };
+  };
+
+export class WorldHeaderControlConfigurationQuadroneApplication
+  extends SvelteApplicationMixin<Partial<ApplicationConfiguration>>(
+    foundry.applications.api.ApplicationV2
+  )
+  implements SettingsPane
+{
+  scope?: { documentName: string; documentType: string };
+
   _configs: WorldHeaderControlConfigContext = $state([]);
+
+  _initialSnapshot = $state('');
+
+  constructor(options: WorldHeaderControlConfigurationOptions = {}) {
+    super(options);
+    this.scope = options.scope;
+  }
+
+  hasChanges = $derived(
+    JSON.stringify($state.snapshot(this._configs)) !== this._initialSnapshot
+  );
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
@@ -66,6 +89,7 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
 
   _createComponent(node: HTMLElement): Record<string, any> {
     this._configs = this._getConfigs();
+    this._resetToGlobalDefaults();
 
     const component = mount(WorldHeaderControlConfigurationQuadrone, {
       target: node,
@@ -78,11 +102,12 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     return component;
   }
 
-  _getConfigs(): WorldHeaderControlConfigContext {
+  _getConfigs(
+    headerControlSettings: HeaderControlConfiguration = settings.value
+      .headerControlConfiguration
+  ): WorldHeaderControlConfigContext {
     const members: HeaderControlConfigMember[] =
       FoundryAdapter.getAllTidySheetClassMetadata();
-
-    const headerControlSettings = settings.value.headerControlConfiguration;
 
     const config: WorldHeaderControlConfigContext = members.map((member) =>
       this._getConfig(member, headerControlSettings)
@@ -168,24 +193,47 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     }, {} as HeaderControlConfiguration);
 
     await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
+
+    this._resetToGlobalDefaults();
   }
 
-  async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
-      )}</p>`,
-    });
+  _resetToGlobalDefaults() {
+    this._initialSnapshot = JSON.stringify($state.snapshot(this._configs));
+  }
 
-    if (!proceed) {
+  undoChanges() {
+    this._configs = this._getConfigs();
+    this._resetToGlobalDefaults();
+  }
+
+  /**
+   * Stage controls back to their default placement (as if no header overrides
+   * exist). When scoped (embedded sheet settings) only that sheet type resets;
+   * otherwise every type does. Persisted on Save, reversible via Undo.
+   */
+  resetToDefault() {
+    const defaults = this._getConfigs({});
+
+    if (this.scope) {
+      const { documentName, documentType } = this.scope;
+      this._configs = this._configs.map((config) => {
+        if (
+          config.documentName === documentName &&
+          config.documentType === documentType
+        ) {
+          return (
+            defaults.find(
+              (d) =>
+                d.documentName === documentName &&
+                d.documentType === documentType
+            ) ?? config
+          );
+        }
+        return config;
+      });
       return;
     }
 
-    await FoundryAdapter.setTidySetting('headerControlConfiguration', {});
-
-    await this.close();
+    this._configs = defaults;
   }
 }

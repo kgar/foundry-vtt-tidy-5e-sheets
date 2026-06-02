@@ -52,6 +52,18 @@
   let rows = $state<TabRow[]>(buildRows());
   let selectedIndex = $state<number | null>(null);
 
+  // Rebuild the editable rows when the host swaps in a new entry object (Undo /
+  // Use Global Defaults). Tracked by identity only — the write-back effect below
+  // mutates entry's properties, never its reference, so it won't retrigger this.
+  let trackedEntry = entry;
+  $effect(() => {
+    if (entry !== trackedEntry) {
+      trackedEntry = entry;
+      rows = buildRows();
+      selectedIndex = null;
+    }
+  });
+
   // Write any change (reorder, show/hide, viewer level) back to the entry so
   // the host application reads it when saving.
   $effect(() => {

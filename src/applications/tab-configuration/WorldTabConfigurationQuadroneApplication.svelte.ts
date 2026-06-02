@@ -16,16 +16,28 @@ import type { TabConfigContextEntry } from './tab-configuration.types';
 import {
   buildTabConfigContextEntry,
   getActorTabContext,
+  getCanonicalTabSelection,
   getItemTabContext,
 } from './tab-configuration-functions';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
+import type { SettingsPane } from 'src/applications/settings/settings-pane.types';
 
 export type WorldTabConfigContext = TabConfigContextEntry[];
 
-export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationMixin<
-  Partial<ApplicationConfiguration>
->(foundry.applications.api.ApplicationV2) {
+export class WorldTabConfigurationQuadroneApplication
+  extends SvelteApplicationMixin<Partial<ApplicationConfiguration>>(
+    foundry.applications.api.ApplicationV2
+  )
+  implements SettingsPane
+{
   _config: WorldTabConfigContext = $state([]);
+
+  _initialSnapshot = $state('');
+
+  hasChanges = $derived(
+    this._snapshotConfig($state.snapshot(this._config)) !==
+      this._initialSnapshot
+  );
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
@@ -54,6 +66,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
   _createComponent(node: HTMLElement): Record<string, any> {
     this._config = this._getConfig();
+    this._resetToGlobalDefaults();
 
     const component = mount(WorldTabConfigurationQuadrone, {
       target: node,
@@ -173,25 +186,56 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       return prev;
     }, {});
 
-    return await FoundryAdapter.setTidySetting('tabConfiguration', toSave);
+    const result = await FoundryAdapter.setTidySetting(
+      'tabConfiguration',
+      toSave
+    );
+
+    this._resetToGlobalDefaults();
+
+    return result;
   }
 
-  async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
-      )}</p>`,
-    });
+  _resetToGlobalDefaults() {
+    this._initialSnapshot = this._snapshotConfig($state.snapshot(this._config));
+  }
 
-    if (!proceed) {
-      return;
-    }
+  /**
+   * Canonical, order-independent snapshot of every sheet type's tab selection.
+   * TabSelectionList rewrites visibilityLevels in display order on mount, so a
+   * raw JSON.stringify of `_config` would always look dirty.
+   */
+  _snapshotConfig(config: WorldTabConfigContext): string {
+    return JSON.stringify(
+      config.map((entry) => ({
+        documentName: entry.documentName,
+        documentType: entry.documentType,
+        docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
+        ...getCanonicalTabSelection(entry),
+      }))
+    );
+  }
 
-    await FoundryAdapter.setTidySetting('tabConfiguration', {});
+  undoChanges() {
+    // Reassign so the per-sheet entries get fresh objects; TabSelectionList
+    // rebuilds its rows when its entry reference changes.
+    this._config = this._getConfig();
+    this._resetToGlobalDefaults();
+  }
 
-    await this.close();
+  /**
+   * Stage every sheet type back to its default tab selection with no visibility
+   * overrides. Persisted on the dialog's Save, reversible via Undo.
+   */
+  resetToDefault() {
+    this._config = this._config.map((entry) => ({
+      ...entry,
+      selected: entry.defaultSelected.map((t) => ({ ...t })),
+      unselected: entry.defaultUnselected.map((t) => ({ ...t })),
+      visibilityLevels: entry.visibilityLevels.map((l) => ({
+        ...l,
+        visibilityLevel: null,
+      })),
+    }));
   }
 }

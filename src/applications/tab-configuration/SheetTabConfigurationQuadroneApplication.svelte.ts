@@ -6,10 +6,16 @@ import type {
 import type { TabConfigContextEntry } from './tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
 import SheetTabConfigurationQuadrone from './SheetTabConfigurationQuadrone.svelte';
+import SettingsDialogShell from 'src/applications/settings/SettingsDialogShell.svelte';
+import type {
+  SettingsFooterHost,
+  SettingsPane,
+} from 'src/applications/settings/settings-pane.types';
 import { mount } from 'svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
   getActorTabContext,
+  getCanonicalTabSelection,
   getItemTabContext,
 } from './tab-configuration-functions';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
@@ -52,10 +58,13 @@ export type SheetTabConfigurationQuadroneApplicationConfiguration =
  * Selected tabs: document flag data ➡️ else world default setting ➡️ else document runtime default.
  * **Note**: The runtime default is designed to always be available when there are no user-defined settings present.
  */
-export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialog<
-  SheetTabConfigurationQuadroneApplicationConfiguration,
-  SheetTabConfigurationContext
->() {
+export class SheetTabConfigurationQuadroneApplication
+  extends DocumentSheetDialog<
+    SheetTabConfigurationQuadroneApplicationConfiguration,
+    SheetTabConfigurationContext
+  >()
+  implements SettingsPane, SettingsFooterHost
+{
   _config: SheetTabConfigurationContext = $state({
     entry: {
       allTabs: {},
@@ -73,9 +82,13 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   _initialSnapshot = $state('');
 
   hasChanges = $derived(
-    JSON.stringify($state.snapshot(this._config.entry)) !==
+    this._snapshotEntry($state.snapshot(this._config.entry)) !==
       this._initialSnapshot
   );
+
+  // Standalone window is its own single-pane host.
+  canUndo = $derived(this.hasChanges);
+  canUseDefault = true;
   _getTabConfig: GetTabConfigFn;
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
@@ -141,12 +154,16 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     };
     this._resetToGlobalDefaults();
 
-    const component = mount(SheetTabConfigurationQuadrone, {
+    const component = mount(SettingsDialogShell, {
       target: node,
       props: {
-        app: this,
-        config: this._config,
-        title: this._inclusionTabTitle,
+        host: this,
+        pane: SheetTabConfigurationQuadrone,
+        paneProps: {
+          app: this,
+          config: this._config,
+          title: this._inclusionTabTitle,
+        },
       },
     });
 
@@ -226,16 +243,21 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     return result;
   }
 
+  /** Serializable form aligned with {@link apply} — ignores visibility array order. */
+  _snapshotEntry(entry: TabConfigContextEntry): string {
+    return JSON.stringify(getCanonicalTabSelection(entry));
+  }
+
   _resetToGlobalDefaults() {
-    this._initialSnapshot = JSON.stringify(
+    this._initialSnapshot = this._snapshotEntry(
       $state.snapshot(this._config.entry)
     );
   }
 
   undoChanges() {
-    this._config = {
-      entry: this._getConfig(),
-    };
+    // Reassign the nested entry (not _config) so the host keeps its stable
+    // _config reference; the list rebuilds via {#key config.entry}.
+    this._config.entry = this._getConfig();
     this._resetToGlobalDefaults();
   }
 
@@ -253,20 +275,22 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       return;
     }
 
-    let config = this._getTabConfig(this.document) ?? {
+    this.resetToDefault();
+  }
+
+  /**
+   * Stage the global/system default selection (ignoring the saved override).
+   * Persisted on the dialog's Save, reversible via Undo.
+   */
+  resetToDefault() {
+    const defaultEntry = this._getTabContext(this.document, {
       selected: [],
       visibilityLevels: {},
-    };
-
-    config.selected = [];
-
-    Object.keys(config.visibilityLevels).forEach((key) => {
-      config.visibilityLevels[key] = null;
     });
 
-    await this._setTabConfig(this.document, config);
-
-    await this.close();
+    if (defaultEntry) {
+      this._config.entry = defaultEntry;
+    }
   }
 }
 

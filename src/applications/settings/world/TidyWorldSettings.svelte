@@ -5,14 +5,12 @@
     type WorldSettingsContext,
     type WorldSettingsQuadroneApplication,
   } from './TidyWorldSettingsQuadroneApplication.svelte';
-  import WorldSettingsDefaults from 'src/applications/settings/world-settings-defaults/WorldSettingsDefaults.svelte';
-  import About from 'src/applications/settings/about/About.svelte';
+  import WorldSettingsOverview from 'src/applications/settings/world-settings-overview/WorldSettingsOverview.svelte';
   import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
-  import WorldTabConfigurationQuadrone from 'src/applications/tab-configuration/WorldTabConfigurationQuadrone.svelte';
-  import WorldHeaderControlConfigurationQuadrone from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadrone.svelte';
   import HomebrewSettings from 'src/applications/homebrew-settings/HomebrewSettings.svelte';
   import ApplyTidySheetPreferences from 'src/applications/sheet-preferences/ApplyTidySheetPreferences.svelte';
   import WorldSheetSettings from './WorldSheetSettings.svelte';
+  import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -25,7 +23,6 @@
 
   // TODO: Move to constants?
   const SETTINGS_DEFAULTS = WorldSettingsTabIds.defaults;
-  const SETTINGS_ABOUT = WorldSettingsTabIds.about;
   const SETTINGS_THEME = WorldSettingsTabIds.theme;
   const SETTINGS_HOMEBREW = WorldSettingsTabIds.homebrew;
   const SETTINGS_SHEET_PREFERENCES = WorldSettingsTabIds.sheetPreferences;
@@ -44,6 +41,7 @@
     id: string;
     title: string;
     iconClass?: string;
+    hasChanges?: boolean;
   };
 
   type SheetSettingsTab = SettingsTab & {
@@ -53,28 +51,25 @@
   let worldConfigOptions: SettingsTab[] = $derived([
     {
       id: SETTINGS_DEFAULTS,
-      title: localize('TIDY5E.WorldSettings.Menu.name'),
+      title: localize('TIDY5E.WorldSettings.Menu.tabLabel'),
       iconClass: 'fa-solid fa-house',
     },
     {
       id: SETTINGS_SHEET_PREFERENCES,
-      title: localize('TIDY5E.Settings.SheetPreferences.name'),
+      title: localize('TIDY5E.WorldSettings.SheetPreferences.tabLabel'),
       iconClass: 'fa-solid fa-scroll',
     },
     {
       id: SETTINGS_THEME,
-      title: localize('TIDY5E.SettingsMenu.WorldThemeSettings.name'),
+      title: localize('TIDY5E.WorldSettings.GlobalTheme.tabLabel'),
       iconClass: 'fa-solid fa-swatchbook',
+      hasChanges: app.themeSettingsTab.hasChanges,
     },
     {
       id: SETTINGS_HOMEBREW,
-      title: localize('TIDY5E.SettingsMenu.Homebrew.name'),
+      title: localize('TIDY5E.WorldSettings.Homebrew.tabLabel'),
       iconClass: 'fa-solid fa-beer-mug',
-    },
-    {
-      id: SETTINGS_ABOUT,
-      title: localize('TIDY5E.Settings.About.name'),
-      iconClass: 'fa-solid fa-block-question',
+      hasChanges: app.homebrewTab.hasChanges,
     },
   ]);
 
@@ -129,7 +124,16 @@
 
   function selectTab(id: string) {
     app.selectTab(id);
-  }</script>
+  }
+
+  // Pages without deferred-save settings (Overview/Defaults, About) and the
+  // immediate apply-and-reload Sheet Preferences page get no shared footer.
+  const FOOTERLESS_TABS = new Set<string>([
+    SETTINGS_DEFAULTS,
+    SETTINGS_SHEET_PREFERENCES,
+  ]);
+
+  let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId));</script>
 
 <div class="tidy-sheet-settings">
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
@@ -140,7 +144,13 @@
       {#each worldConfigOptions as entry (entry.id)}
         <button
           type="button"
-          class={['nav-tab', { active: entry.id === activeSelectedId }]}
+          class={[
+            'nav-tab',
+            {
+              active: entry.id === activeSelectedId,
+              'has-changes': entry.hasChanges,
+            },
+          ]}
           role="tab"
           aria-selected={entry.id === activeSelectedId}
           onclick={() => selectTab(entry.id)}
@@ -188,7 +198,7 @@
 
   <section class="settings-pane" role="tabpanel">
     {#if activeSelectedId === SETTINGS_DEFAULTS}
-      <WorldSettingsDefaults {app} />
+      <WorldSettingsOverview {app} />
     {:else if activeSelectedId === SETTINGS_THEME}
       <ThemeSettingsQuadrone
         app={app.themeSettingsTab}
@@ -196,14 +206,14 @@
         placeholders={undefined}
       />
     {:else if activeSelectedId === SETTINGS_HOMEBREW}
-      <HomebrewSettings app={app.homebrewTab} config={app.homebrewTab._config} />
+      <HomebrewSettings
+        app={app.homebrewTab}
+        config={app.homebrewTab._config}
+      />
     {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
       <ApplyTidySheetPreferences
         options={app.sheetPreferencesTab.sheetOptions}
-        onConfirm={() => app.sheetPreferencesTab._onConfirm()}
       />
-    {:else if activeSelectedId === SETTINGS_ABOUT}
-      <About />
     {:else if selectedSheetConfig}
       <WorldSheetSettings
         {app}
@@ -213,4 +223,13 @@
       />
     {/if}
   </section>
+
+  <!-- One shared footer. Deferred-save pages drive it through the dialog; the
+       Sheet Preferences page is self-contained, so it hosts its own footer.
+       Overview/Defaults and About have no settings, so they get none. -->
+  {#if showFooter}
+    <SettingsFooter host={app} />
+  {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
+    <SettingsFooter host={app.sheetPreferencesTab} />
+  {/if}
 </div>

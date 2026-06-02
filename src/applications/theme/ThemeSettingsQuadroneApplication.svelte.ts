@@ -13,6 +13,11 @@ import type {
 } from 'src/types/application.types';
 import { mount, type Component } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
+import SettingsDialogShell from 'src/applications/settings/SettingsDialogShell.svelte';
+import type {
+  SettingsFooterHost,
+  SettingsPane,
+} from 'src/applications/settings/settings-pane.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { isNil } from 'src/utils/data';
@@ -40,9 +45,12 @@ export type ThemeSettingsContext = {
 
 type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
 
-export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<ConstructorArgs>(
-  foundry.applications.api.ApplicationV2
-) {
+export class ThemeSettingsQuadroneApplication
+  extends SvelteApplicationMixin<ConstructorArgs>(
+    foundry.applications.api.ApplicationV2
+  )
+  implements SettingsPane, SettingsFooterHost
+{
   document?: any;
 
   _settings: ThemeSettingsContext = $state({
@@ -66,6 +74,10 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     JSON.stringify($state.snapshot(this._settings.value)) !==
       this._initialSnapshot
   );
+
+  // Standalone window is its own single-pane host.
+  canUndo = $derived(this.hasChanges);
+  canUseDefault = true;
 
   actorHeaderBackgroundSupportedActorTypes = new Set<string>([
     CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -125,12 +137,16 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       : undefined;
 
 
-    const component = mount(ThemeSettingsQuadrone, {
+    const component = mount(SettingsDialogShell, {
       target: node,
       props: {
-        app: this,
-        settings: this._settings,
-        placeholders,
+        host: this,
+        pane: ThemeSettingsQuadrone,
+        paneProps: {
+          app: this,
+          settings: this._settings,
+          placeholders,
+        },
       },
     });
 
@@ -225,7 +241,9 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   }
 
   undoChanges() {
-    this._settings = this._getSettings();
+    // Mutate in place so bound fields refresh whether the settings object was
+    // captured once (standalone shell) or re-read each render (composite host).
+    Object.assign(this._settings.value, this._getSettings().value);
     this._resetToGlobalDefaults();
   }
 
@@ -295,13 +313,19 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       return;
     }
 
-    if (this.document) {
-      await TidyFlags.sheetThemeSettings.unset(this.document);
-    } else {
-      FoundryAdapter.setTidySetting('worldThemeSettings', {});
-    }
+    this.resetToDefault();
+  }
 
-    await this.close();
+  /**
+   * Stage defaults into memory (sheet: inherit world via null/empty; world:
+   * system fallbacks). Persisted on the dialog's Save, reversible via Undo.
+   */
+  resetToDefault() {
+    const defaults = this._mapSettings(
+      {},
+      { allowNullBooleans: !!this.document }
+    ).value;
+    Object.assign(this._settings.value, defaults);
   }
 
   /* -------------------------------------------- */

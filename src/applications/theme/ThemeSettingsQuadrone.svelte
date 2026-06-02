@@ -15,6 +15,8 @@
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { TidyHooks } from 'src/api';
+  import { onMount } from 'svelte';
+  import chroma from 'chroma-js';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -43,15 +45,56 @@
     }),
   );
 
-  let methodColorPlaceholders = $derived.by(() =>
-    createColorPlaceholderMap(
+  let defaultRarityColors = $state<Record<string, string>>({});
+  let defaultMethodColors = $state<Record<string, string>>({});
+
+  onMount(() => {
+    let target = document.querySelector<HTMLElement>('.tidy5e-sheet.quadrone');
+    // imps are so back, gimme those styles
+    let imp: HTMLElement | undefined;
+    if (!target) {
+      imp = document.createElement('div');
+      imp.classList.add('tidy5e-sheet', 'quadrone');
+      imp.style.display = 'none';
+      document.body.appendChild(imp);
+      target = imp;
+    }
+
+    const styles = getComputedStyle(target);
+
+    const readColor = (variableName: string) => {
+      const raw = styles.getPropertyValue(variableName).trim();
+      return raw && chroma.valid(raw) ? chroma(raw).hex() : raw;
+    };
+
+    defaultRarityColors = Object.fromEntries(
+      context.value.rarityColors.map((c) => [
+        c.key,
+        readColor(`--t5e-color-rarity-${c.key.toLowerCase()}`),
+      ]),
+    );
+
+    defaultMethodColors = Object.fromEntries(
+      context.value.spellPreparationMethodColors.map((c) => [
+        c.key,
+        readColor(`--t5e-color-spellcasting-${c.key.toLowerCase()}`),
+      ]),
+    );
+
+    imp?.remove();
+  });
+
+  let methodColorPlaceholders = $derived.by(() => ({
+    ...defaultMethodColors,
+    ...createColorPlaceholderMap(
       placeholders?.value?.spellPreparationMethodColors,
     ),
-  );
+  }));
 
-  let rarityColorPlaceholders = $derived.by(() =>
-    createColorPlaceholderMap(placeholders?.value?.rarityColors),
-  );
+  let rarityColorPlaceholders = $derived.by(() => ({
+    ...defaultRarityColors,
+    ...createColorPlaceholderMap(placeholders?.value?.rarityColors),
+  }));
 
   function createColorPlaceholderMap(colors?: ThemeColorSettingConfigEntry[]) {
     return (
@@ -203,7 +246,7 @@
           <label for="{idPrefix}-use-header-background">
             {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
           </label>
-          <div class="form-fields vertical">
+          <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
             {#if app.document}
               <label class="radio">
                 <input
@@ -270,10 +313,8 @@
             bind:value={context.value.headerBackgroundColor}
             label={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.title')}
             placeholder={placeholders?.value.headerBackgroundColor}
+            hint={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
           />
-          <p class="hint">
-            {localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
-          </p>
         {/if}
       {/if}
     {/if}
@@ -282,7 +323,7 @@
       <label for="{idPrefix}-use-basic-theme">
         {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
       </label>
-      <div class="form-fields vertical">
+      <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
         {#if app.document}
           <label class="radio">
             <input
@@ -378,35 +419,4 @@
       />
     {/each}
   </fieldset>
-</div>
-
-<div class="button-bar">
-  <button
-    type="button"
-    class="button button-secondary button-large use-default-btn"
-    onclick={() => app.useDefault()}
-  >
-    <i class="fas fa-rotate-left"></i>
-    {localize(app.document ? 'TIDY5E.UseGlobalDefaults' : 'TIDY5E.UseDefault')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary button-large undo-changes-btn"
-    data-testid="section-config-apply-changes"
-    onclick={() => app.undoChanges()}
-  >
-    <i class="fas fa-arrow-rotate-left"></i>
-    {localize('TIDY5E.UndoChanges')}
-  </button>
-  <button
-    type="button"
-    class={[
-      'button button-large button-save save-changes-btn',
-      app.hasChanges ? 'button-primary' : 'button-secondary',
-    ]}
-    onclick={() => app.save()}
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
 </div>

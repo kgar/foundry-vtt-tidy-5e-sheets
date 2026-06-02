@@ -1,21 +1,17 @@
 <script lang="ts">
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
-  import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     options: SheetPreferenceOption[];
-    onConfirm: ApplyTidySheetPreferencesApplication['_onConfirm'];
   }
 
-  let { options, onConfirm }: Props = $props();
+  let { options }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   const tidyOptionText = localize('TIDY5E.SheetPreferences.TidySheets');
   const systemOptionText = localize('TIDY5E.SheetPreferences.SystemSheets');
-
-  let totalSelected = $derived(options.filter((t) => t.selected).length);
 </script>
 
 <div class="dialog-content-container flexcol">
@@ -29,18 +25,8 @@
   <div class="controls-row">
     <button
       type="button"
-      class="button button-secondary use-default-btn"
-      onclick={() => {
-        options.forEach((o) => (o.selected = false));
-      }}
-    >
-      <i class="fas fa-xmark"></i>
-      {localize('TIDY5E.Settings.SheetPreferences.disableAll')}
-    </button>
-
-    <button
-      type="button"
-      class="button button-primary use-default-btn"
+      class="button button-primary button-large use-default-btn"
+      style="flex: 1;"
       onclick={() => {
         options.forEach((o) => (o.selected = true));
       }}
@@ -106,20 +92,4 @@
       </tbody>
     </table>
   </div>
-</div>
-
-<div class="button-bar">
-  <p>
-    {localize('TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel', {
-      total: totalSelected,
-    })}
-  </p>
-  <button
-    type="button"
-    class="button button-primary button-large button-save use-default-btn"
-    onclick={() => onConfirm()}
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
 </div>

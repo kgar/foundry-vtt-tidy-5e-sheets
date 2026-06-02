@@ -11,6 +11,9 @@ import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
 import { WorldHeaderControlConfigurationQuadroneApplication } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
+import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { error } from 'src/utils/logging';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -35,10 +38,13 @@ export type WorldSettingsApplicationConfiguration =
     initialTabId?: string;
   };
 
-export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
-  WorldSettingsApplicationConfiguration,
-  WorldSettingsContext
->(foundry.applications.api.ApplicationV2) {
+export class WorldSettingsQuadroneApplication
+  extends SvelteApplicationMixin<
+    WorldSettingsApplicationConfiguration,
+    WorldSettingsContext
+  >(foundry.applications.api.ApplicationV2)
+  implements SettingsFooterHost
+{
   _config: WorldSettingsContext = $state({});
 
   initialTabId?: string;
@@ -49,6 +55,16 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
   headerControlsTab!: WorldHeaderControlConfigurationQuadroneApplication;
   homebrewTab!: HomebrewSettingsApplication;
   sheetPreferencesTab!: ApplyTidySheetPreferencesApplication;
+
+  // The dialog persists every settings page with a single shared Save. Sheet
+  // Preferences is excluded: it is an immediate apply-and-reload action that
+  // keeps its own button. `hasChanges` aggregates the deferred-save pages.
+  hasChanges = $derived(
+    !!this.themeSettingsTab?.hasChanges ||
+      !!this.tabConfigTab?.hasChanges ||
+      !!this.headerControlsTab?.hasChanges ||
+      !!this.homebrewTab?.hasChanges
+  );
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
@@ -87,6 +103,65 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
     this.currentTabId = id;
   }
 
+  // World pages don't map to a single pane, so Undo / Use Global Defaults act
+  // on the whole dialog and stay enabled. All changes are staged until Save.
+  canUndo = true;
+  canUseDefault = true;
+
+  // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
+  // this forces them to remount and re-read the reset config. See WorldSheetSettings.
+  tabPaneVersion = $state(0);
+
+  /** Revert every deferred-save page to its last-saved state (staged). */
+  undoChanges() {
+    this.themeSettingsTab.undoChanges();
+    this.tabConfigTab.undoChanges();
+    this.headerControlsTab.undoChanges();
+    this.homebrewTab.undoChanges();
+    this.tabPaneVersion++;
+  }
+
+  /** Confirm once, then stage system defaults across every page. */
+  async useDefault() {
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
+      content: `<p>${FoundryAdapter.localize(
+        'TIDY5E.UseDefaultDialog.text'
+      )}</p>`,
+    });
+
+    if (!proceed) {
+      return;
+    }
+
+    this.themeSettingsTab.resetToDefault();
+    this.tabConfigTab.resetToDefault();
+    this.headerControlsTab.resetToDefault();
+    this.homebrewTab.resetToDefault();
+    this.tabPaneVersion++;
+  }
+
+  /** Persist every deferred-save settings page in one shot, then close. */
+  async save() {
+    try {
+      await this.themeSettingsTab.apply();
+      await this.tabConfigTab.apply();
+      await this.headerControlsTab.apply();
+      await this.homebrewTab.apply();
+    } catch (e) {
+      error('Failed to save world settings', false, e);
+      return;
+    }
+
+    await this.close();
+  }
+
+  async cancel() {
+    await this.close();
+  }
+
   _initializeSettingsTabs(): void {
     // Make sure things aren't already loaded.
     if (
@@ -110,6 +185,7 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
     if (!this.tabConfigTab) {
       const app = new WorldTabConfigurationQuadroneApplication({});
       app._config = app._getConfig();
+      app._resetToGlobalDefaults();
       app.close = async () => {};
       this.tabConfigTab = app;
     }
@@ -117,6 +193,7 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
     if (!this.headerControlsTab) {
       const app = new WorldHeaderControlConfigurationQuadroneApplication({});
       app._configs = app._getConfigs();
+      app._resetToGlobalDefaults();
       app.close = async () => {};
       this.headerControlsTab = app;
     }
@@ -124,6 +201,7 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
     if (!this.homebrewTab) {
       const app = new HomebrewSettingsApplication({});
       app._config = app._getConfig();
+      app._resetToGlobalDefaults();
       app.close = async () => {};
       this.homebrewTab = app;
     }
@@ -131,6 +209,7 @@ export class WorldSettingsQuadroneApplication extends SvelteApplicationMixin<
     if (!this.sheetPreferencesTab) {
       const app = new ApplyTidySheetPreferencesApplication({});
       app.sheetOptions = app.getTidySheetPreferenceOptions();
+      app._resetToGlobalDefaults();
       app.close = async () => {};
       this.sheetPreferencesTab = app;
     }

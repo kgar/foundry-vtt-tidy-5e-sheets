@@ -12,6 +12,7 @@
     colorSelected?: () => void;
     disableDelete?: boolean;
     requireValue?: boolean;
+    hint?: string;
   }
 
   let {
@@ -22,6 +23,7 @@
     placeholder = '#FFFFFF',
     disableDelete = false,
     requireValue = false,
+    hint,
   }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -114,4 +116,9 @@
       </button>
     {/if}
   </div>
+  {#if hint}
+    <p class="hint">
+      {hint}
+    </p>
+  {/if}
 </div>

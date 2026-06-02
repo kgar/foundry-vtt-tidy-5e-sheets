@@ -9,7 +9,6 @@ import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
-import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
@@ -212,6 +211,7 @@ export function createSettings() {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
           label: 'TIDY5E.SettingsMenu.TidySettings.label',
           hint: `TIDY5E.SettingsMenu.TidySettings.hint`,
+          icon: 'fa-solid fa-swatchbook',
           type: WorldSettingsQuadroneApplication,
           restricted: true,
         },
@@ -272,23 +272,12 @@ export function createSettings() {
       },
       applyTidySheetPreferences: {
         options: {
-          name: `TIDY5E.Settings.SheetPreferences.name`,
-          label: 'TIDY5E.Settings.SheetPreferences.buttonLabel',
-          hint: `TIDY5E.Settings.SheetPreferences.hint`,
+          name: `TIDY5E.SettingsMenu.Defaults.name`,
+          label: 'TIDY5E.SettingsMenu.Defaults.label',
+          hint: `TIDY5E.SettingsMenu.Defaults.hint`,
           icon: 'fa-solid fa-scroll',
           type: ApplyTidySheetPreferencesApplication,
           restricted: true,
-        },
-      },
-      about: {
-        options: {
-          name: `TIDY5E.Settings.About.name`,
-          label: 'TIDY5E.Settings.About.buttonLabel',
-          hint: `TIDY5E.Settings.About.hint`,
-          icon: 'fa-solid fa-block-question',
-          type: AboutApplication,
-          restricted: false,
-          truesight: true,
         },
       },
     },

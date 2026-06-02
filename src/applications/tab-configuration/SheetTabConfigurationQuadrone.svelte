@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     SheetTabConfigurationContext,
     SheetTabConfigurationQuadroneApplication,
   } from './SheetTabConfigurationQuadroneApplication.svelte';
-  import TabbedTabConfig from './parts/TabbedTabConfig.svelte';
+  import TabSelectionList from './parts/TabSelectionList.svelte';
 
   interface Props {
     app: SheetTabConfigurationQuadroneApplication;
@@ -12,33 +11,12 @@
     title: string;
   }
 
-  let { config, app, title }: Props = $props();
-
-  const localize = FoundryAdapter.localize;
+  let { config, title }: Props = $props();
 </script>
 
-<div class="dialog-content-container flexcol">
+<div class="dialog-content-container sheet-tab-configuration flexcol">
   <h2>{title}</h2>
-  <TabbedTabConfig entry={config.entry} />
-</div>
-<div class="button-bar">
-  <button
-    type="button"
-    class="button button-secondary button-large use-default-btn"
-    onclick={() => app.useDefault()}
-  >
-    <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseGlobalDefaults')}
-  </button>
-  <button
-    type="button"
-    class={[
-      'button button-large button-save save-changes-btn',
-      app.hasChanges ? 'button-primary' : 'button-secondary',
-    ]}
-    onclick={() => app.save()}
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
+  <!-- TabSelectionList rebuilds its rows when config.entry is replaced
+       (Undo / Use Global Defaults); in-place edits keep the same entry. -->
+  <TabSelectionList entry={config.entry} />
 </div>

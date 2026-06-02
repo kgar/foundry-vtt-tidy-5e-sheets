@@ -11,6 +11,31 @@ import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRunt
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { CustomTabTitle } from 'src/api';
 
+/**
+ * Canonical, order-independent view of what {@link TabConfigContextEntry} data
+ * actually persists: the ordered selected tab ids plus an id-keyed visibility
+ * map. Keys are inserted in id order so `JSON.stringify` is stable regardless of
+ * the array order TabSelectionList rewrites on mount. Shared by the sheet and
+ * world tab-config apps' change detection.
+ */
+export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
+  selected: string[];
+  visibilityLevels: Record<string, number | null>;
+} {
+  const visibilityLevels: Record<string, number | null> = {};
+
+  for (const level of [...entry.visibilityLevels].sort((a, b) =>
+    a.id.localeCompare(b.id)
+  )) {
+    visibilityLevels[level.id] = level.visibilityLevel;
+  }
+
+  return {
+    selected: entry.selected.map((tab) => tab.id),
+    visibilityLevels,
+  };
+}
+
 export function getItemTabContext(
   type: string,
   settings: SheetTabConfiguration | undefined | null,
