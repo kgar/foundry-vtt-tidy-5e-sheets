@@ -201,7 +201,11 @@ export class TidySheetSettingsQuadroneApplication
     return !!this.getActivePane();
   }
 
-  // Section editors are sheet-level
+  /**
+   * Section editors and default sheet settings operate differently and don't
+   * have global fallback settings. This lets you set a different label on the
+   * reset button.
+   */
   get useDefaultLabel(): string | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
     return currentTabId.startsWith('sheet:') ? 'TIDY5E.UseDefault' : undefined;
@@ -305,7 +309,9 @@ export class TidySheetSettingsQuadroneApplication
     }
   }
 
-  /** The world header control config entry matching the current document's sheet type. */
+  /** 
+   * The world header control config entry matching the current document's sheet type.
+   */
   get headerControlEntry(): HeaderControlConfigContextItem | undefined {
     return this.headerControlsTab?._configs.find(
       (c) =>
@@ -314,7 +320,9 @@ export class TidySheetSettingsQuadroneApplication
     );
   }
 
-  /** Open the world settings dialog focused on this sheet type's configuration. */
+  /** 
+   * Open the world settings dialog focused on this sheet type's configuration.
+   */
   async openWorldHeaderControlSettings() {
     const { WorldSettingsQuadroneApplication } = await import(
       'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte'
@@ -325,9 +333,9 @@ export class TidySheetSettingsQuadroneApplication
     }).render(true);
   }
 
-  /* -------------------------------------------- */
-  /*  Get tabs for the calling sheet
-  /* -------------------------------------------- */
+  /**
+   *  Get tabs for the calling sheet
+   */
   _createComponent(node: HTMLElement): Record<string, any> {
     this._initializeSettingsTabs();
 
@@ -409,9 +417,9 @@ export class TidySheetSettingsQuadroneApplication
     }
   }
 
-  /* -------------------------------------------- */
-  /*  Character sidebar tab configuration init    */
-  /* -------------------------------------------- */
+  /**
+   *  Character sidebar tab configuration init.
+   */
   _initializeSidebarTabConfigForCharacter() {
     if (this.sidebarTabDisplaySettingsTab) {
       return;
@@ -478,6 +486,10 @@ export class TidySheetSettingsQuadroneApplication
     return tab.settingsTabBuilder(sheetContext, tabId);
   }
 
+  /**
+   *  Get the Configure Sections config tab for a given tab ID. This is used within every
+   *  tab settings pane for the section configuration.
+   */
   getConfigureSectionsConfigTab(
     tabId: string
   ): ConfigureSectionsApplication | undefined {
@@ -510,9 +522,9 @@ export class TidySheetSettingsQuadroneApplication
     return app;
   }
 
-  /* -------------------------------------------- */
-  /*  Get tabs for the calling sheet
-  /* -------------------------------------------- */
+  /**
+   *  Get tabs for the calling sheet.
+   */
   _getTabsForParentSheet(): TidySheetSettingsTabInfo[] {
     const runtime = this._getRuntime();
     if (!runtime) {
@@ -570,9 +582,10 @@ export class TidySheetSettingsQuadroneApplication
     return this._runtimes?.[this.document.type];
   }
 
-  /* -------------------------------------------- */
-  /*  Save / Cancel
-  /* -------------------------------------------- */
+  /**
+   *  Saves settings for each Sheet Setttings tab in the Settings app.
+   *  Individual tabs
+   */
   async save() {
     try {
       await this.themeSettingsTab.apply();

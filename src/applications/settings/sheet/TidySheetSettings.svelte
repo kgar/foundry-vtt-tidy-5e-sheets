@@ -188,7 +188,7 @@
       return;
     }
 
-    // Removing the dragged item shifts later positions down by one.
+    /** Removing the dragged item shifts later positions down by one. */
     const target = gap > draggedIndex ? gap - 1 : gap;
     if (target === draggedIndex) {
       return;
@@ -203,15 +203,21 @@
     await app.tabDisplaySettingsTab.apply();
   }
 
-  // Reorder the saved tab selection to match the new display order.
+  /**
+   *  Reorder the saved tab selection to match the new display order. Shown tabs
+   *  are reordered to follow the display order; hidden tabs keep their order
+   *  after them.
+   */
   function updateTabOrder() {
     const entry = app.tabDisplaySettingsTab._config.entry;
     const orderIndex = new Map(
       config.parentSheetTabs.map((t, i) => [t.id, i]),
     );
-    entry.selected = [...entry.selected].sort(
-      (a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0),
-    );
+    const shown = entry.tabs
+      .filter((t) => t.show)
+      .sort((a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0));
+    const hidden = entry.tabs.filter((t) => !t.show);
+    entry.tabs = [...shown, ...hidden];
   }
 </script>
 

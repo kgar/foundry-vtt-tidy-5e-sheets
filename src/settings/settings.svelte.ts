@@ -1,10 +1,8 @@
 import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
-import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
-import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
@@ -21,15 +19,11 @@ import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRun
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
-import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import {
   HeaderControlConfigurationSchema,
   TabConfigurationSchema,
 } from './settings-data-models';
-import { WorldHeaderControlConfigurationQuadroneApplication } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
@@ -195,17 +189,6 @@ export function createSettings() {
           truesight: true,
         },
       },
-      theme: {
-        options: {
-          name: `TIDY5E.ThemeSettings.SheetMenu.name`,
-          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
-          hint: `TIDY5E.ThemeSettings.SheetMenu.hint`,
-          icon: 'fa-solid fa-swatchbook',
-          type: ThemeSettingsFormApplication,
-          restricted: false,
-          truesight: true,
-        },
-      },
       worldThemeSettingsMenu: {
         options: {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
@@ -214,49 +197,6 @@ export function createSettings() {
           icon: 'fa-solid fa-swatchbook',
           type: WorldSettingsQuadroneApplication,
           restricted: true,
-        },
-      },
-      headerControlConfigurationMenu: {
-        options: {
-          name: `TIDY5E.SettingsMenu.HeaderControlConfiguration.name`,
-          label: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.label',
-          hint: `TIDY5E.SettingsMenu.HeaderControlConfiguration.hint`,
-          icon: 'fa-solid fa-up-to-dotted-line',
-          type: WorldHeaderControlConfigurationQuadroneApplication,
-          restricted: true,
-          truesight: true,
-        },
-      },
-      tabConfigurationMenu: {
-        options: {
-          name: `TIDY5E.SettingsMenu.TabConfiguration.name`,
-          label: 'TIDY5E.SettingsMenu.TabConfiguration.label',
-          hint: `TIDY5E.SettingsMenu.TabConfiguration.hint`,
-          icon: 'fa-solid fa-table-columns',
-          type: WorldTabConfigurationQuadroneApplication,
-          restricted: true,
-          truesight: true,
-        },
-      },
-      homebrew: {
-        options: {
-          name: `TIDY5E.SettingsMenu.Homebrew.name`,
-          label: `TIDY5E.SettingsMenu.Homebrew.label`,
-          hint: `TIDY5E.SettingsMenu.Homebrew.hint`,
-          icon: `fa-solid fa-beer-mug`,
-          type: HomebrewSettingsApplication,
-          restricted: true,
-          truesight: true,
-        },
-      },
-      resetAllSettings: {
-        options: {
-          name: `TIDY5E.Settings.Reset.name`,
-          hint: `TIDY5E.Settings.Reset.hint`,
-          icon: 'fa-solid fa-broom-wide',
-          type: ResetSettingsDialog,
-          restricted: true,
-          truesight: true,
         },
       },
       migrations: {
@@ -2184,6 +2124,21 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('truesight');
         },
       },
+
+      // hideClassic: {
+      //   options: {
+      //     name: 'Tidy 5e Hide Classic Sheets',
+      //     hint: 'Hide Tidy Classic sheets from the world.',
+      //     scope: 'world',
+      //     config: false,
+      //     default: false,
+      //     type: Boolean,
+      //     requiresReload: true,
+      //   },
+      //   get() {
+      //     return FoundryAdapter.getTidySetting<boolean>('hideClassicSheets');
+      //   },
+      // },
     } satisfies Tidy5eSettings,
   } as const;
 }

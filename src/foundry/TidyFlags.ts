@@ -18,7 +18,10 @@ import type {
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
-import { TabConfigurationSchema } from 'src/settings/settings-data-models';
+import {
+  deriveTabsFromLegacyTabConfiguration,
+  TabConfigurationSchema,
+} from 'src/settings/settings-data-models';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -1452,6 +1455,19 @@ export class TidyFlags {
 
       config = TabConfigurationSchema.clean(config);
       TabConfigurationSchema.validate(config, { fallback: true });
+      // Populate the new keyed structure from the legacy fields on load. Only
+      // when there is a real saved selection — an empty selection means the
+      // document is tracking defaults, so there is nothing to migrate.
+      if (
+        config &&
+        config.selected?.length &&
+        (!config.tabs || Object.keys(config.tabs).length === 0)
+      ) {
+        config.tabs = deriveTabsFromLegacyTabConfiguration(
+          config.selected,
+          config.visibilityLevels
+        );
+      }
       return config;
     },
     /** Sets sidebar tab configuration. */
@@ -1490,6 +1506,19 @@ export class TidyFlags {
 
       config = TabConfigurationSchema.clean(config);
       TabConfigurationSchema.validate(config, { fallback: true });
+      // Populate the new keyed structure from the legacy fields on load. Only
+      // when there is a real saved selection — an empty selection means the
+      // document is tracking defaults, so there is nothing to migrate.
+      if (
+        config &&
+        config.selected?.length &&
+        (!config.tabs || Object.keys(config.tabs).length === 0)
+      ) {
+        config.tabs = deriveTabsFromLegacyTabConfiguration(
+          config.selected,
+          config.visibilityLevels
+        );
+      }
       return config;
     },
     /** Sets tab configuration. */

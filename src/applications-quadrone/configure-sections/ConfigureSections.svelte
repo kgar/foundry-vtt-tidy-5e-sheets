@@ -1,5 +1,8 @@
 <script lang="ts">
-  import SortingListbox from 'src/components/listbox/SortingListbox.svelte';
+  import { untrack } from 'svelte';
+  import SortableListbox, {
+    type SortableListboxItem,
+  } from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './configure-sections.types';
   import type {
@@ -7,7 +10,6 @@
     SectionOptionGroup,
   } from './ConfigureSectionsApplication.svelte';
   import { isNil } from 'src/utils/data';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
   import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
 
@@ -30,7 +32,36 @@
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: application.document }).useBasicTheme ?? false);
+
+  // Sections use {key,label,show}. Edits save to `sections`.
+  let sectionItems = $state<SortableListboxItem[]>(
+    sections.map((s) => ({ id: s.key, label: s.label, show: s.show })),
+  );
+
+  // Rebuild local items if undo/reset changes.
+  let trackedSections = sections;
+  $effect(() => {
+    if (sections !== trackedSections) {
+      trackedSections = sections;
+      sectionItems = sections.map((s) => ({
+        id: s.key,
+        label: s.label,
+        show: s.show,
+      }));
+    }
+  });
+
+  $effect(() => {
+    const next = sectionItems.map((it) => ({
+      key: it.id,
+      label: it.label,
+      show: it.show,
+    }));
+    // Make sure effect doesn't re-trigger
+    untrack(() => {
+      sections.splice(0, sections.length, ...next);
+    });
+  });
 </script>
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
@@ -101,33 +132,10 @@
       {localize('TIDY5E.Section.LabelPl')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
-    <SortingListbox
-      bind:items={sections}
-      labelProp="label"
-      valueProp="key"
-      selectedItemClasses={!isBasicTheme ? 'theme-dark' : ''}
-    >
-      {#snippet itemTemplate({ item })}
-        <span
-          data-section-key={item['key']}
-          data-testid="section-config-item-label"
-          class="section-config-item-label font-label-medium"
-          class:marked-as-hidden={item.show === false}>{item.label}</span
-        >
-          <button
-            type="button"
-            class="button listbox-option-button option-{item.show ? 'show' : 'hide'}"
-            title={item.show ? localize('TIDY5E.Section.ConfigDialog.hideTooltip') : localize('TIDY5E.Section.ConfigDialog.showTooltip')}
-            data-testid="section-config-show"
-            onclick={() => {
-              item.show = !item.show;
-              sections = sections;
-            }}
-          >
-            <i class="{item.show ? 'fas fa-eye' : 'far fa-eye-slash'} fa-fw"></i>
-            {item.show ? localize('TIDY5E.Visible') : localize('TIDY5E.Hidden')}
-          </button>
-      {/snippet}
-    </SortingListbox>
+    <SortableListbox
+      bind:items={sectionItems}
+      showUserVisibility={false}
+      headerLabels={{ primary: 'Section', show: 'Show Section' }}
+    />
   </fieldset>
 </div>

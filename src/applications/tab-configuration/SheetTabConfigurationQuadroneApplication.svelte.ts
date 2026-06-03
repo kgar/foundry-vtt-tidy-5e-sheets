@@ -14,6 +14,7 @@ import type {
 import { mount } from 'svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
+  buildTabConfigMap,
   getActorTabContext,
   getCanonicalTabSelection,
   getItemTabContext,
@@ -68,13 +69,11 @@ export class SheetTabConfigurationQuadroneApplication
   _config: SheetTabConfigurationContext = $state({
     entry: {
       allTabs: {},
-      defaultSelected: [],
-      defaultUnselected: [],
+      defaultTabs: [],
       documentName: '',
       documentType: '',
-      selected: [],
+      tabs: [],
       title: '',
-      unselected: [],
       visibilityLevels: [],
     },
   });
@@ -221,14 +220,21 @@ export class SheetTabConfigurationQuadroneApplication
   async apply() {
     let curr = this._config.entry;
 
-    let selected =
-      curr.defaultSelected.length === curr.selected.length &&
-      curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
-        ? []
-        : curr.selected.map((s) => s.id);
+    let selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
+
+    // When the current congfiguration exactly matches the default,
+    // empty out the settings so that we use defaults.
+    let matchesDefault =
+      curr.tabs.length === curr.defaultTabs.length &&
+      curr.tabs.every((t, i) => {
+        const d = curr.defaultTabs[i];
+        return d && d.id === t.id && d.show === t.show;
+      });
 
     const result = await this._setTabConfig(this.document, {
-      selected: selected,
+      // Legacy fields kept in sync for the sheet runtimes (visible tabs, in order).
+      // TODO: Migrate off legacy selected/unselected arrays.
+      selected: matchesDefault ? [] : selectedIds,
       visibilityLevels: this._config.entry.visibilityLevels.reduce(
         (prev, curr) => {
           prev[curr.id] = curr.visibilityLevel;
@@ -236,6 +242,10 @@ export class SheetTabConfigurationQuadroneApplication
         },
         {} as Record<string, number | null>
       ),
+      // Full per-tab arrangement (preserves hidden-tab order).
+      tabs: matchesDefault
+        ? {}
+        : buildTabConfigMap(curr.tabs, curr.visibilityLevels),
     });
 
     this._resetToGlobalDefaults();
@@ -243,11 +253,12 @@ export class SheetTabConfigurationQuadroneApplication
     return result;
   }
 
-  /** Serializable form aligned with {@link apply} — ignores visibility array order. */
+  /** Get the initial configuration snapshot for {@link apply} through {@link _resetToGlobalDefaults}.*/
   _snapshotEntry(entry: TabConfigContextEntry): string {
     return JSON.stringify(getCanonicalTabSelection(entry));
   }
 
+  /** Reset the initial snapshot to the global defaults. */
   _resetToGlobalDefaults() {
     this._initialSnapshot = this._snapshotEntry(
       $state.snapshot(this._config.entry)

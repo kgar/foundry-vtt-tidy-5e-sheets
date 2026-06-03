@@ -1,3 +1,4 @@
+<!-- Classic-only -->
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SortingListbox from 'src/components/listbox/SortingListbox.svelte';

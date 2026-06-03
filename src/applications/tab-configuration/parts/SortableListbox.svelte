@@ -1,4 +1,18 @@
+<script lang="ts" module>
+  /**
+   * {@link SortableListbox} items are generic to support both tabs and sections.
+   */
+  export type SortableListboxItem = {
+    id: string;
+    label: string;
+    iconClass?: string;
+    show: boolean;
+    visibilityLevel?: number | null;
+  };
+</script>
+
 <script lang="ts">
+  import { untrack } from 'svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
@@ -6,86 +20,108 @@
   import { arrayMove } from 'src/utils/array';
   import type { TabConfigContextEntry } from '../tab-configuration.types';
 
+  type HeaderLabels = {
+    primary?: string;
+    userVisibility?: string;
+    show?: string;
+  };
+
   interface Props {
-    entry: TabConfigContextEntry;
+    /** Tab-config mode: bind a {@link TabConfigContextEntry}; rows map to/from its `tabs`/`visibilityLevels`. */
+    entry?: TabConfigContextEntry;
+    /** Generic mode: bind a list of items directly. */
+    items?: SortableListboxItem[];
+    /** Show the per-row user-visibility column. Hidden for section configuration. */
+    showUserVisibility?: boolean;
+    /** Visibility level `<select>` options; defaults to the entry's document name options. */
+    visibilityLevelOptions?: { key: any; value: any; label: string }[];
+    headerLabels?: HeaderLabels;
   }
 
-  let { entry = $bindable() }: Props = $props();
+  let {
+    entry = $bindable(),
+    items = $bindable(),
+    showUserVisibility = true,
+    visibilityLevelOptions: visibilityLevelOptionsProp,
+    headerLabels,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
   const userIsGm = FoundryAdapter.userIsGm();
 
   // Vertical gap between rows, in px (keep in sync with the listbox `gap`).
+  // This moves the offset for the drag indicator.
   const ROW_GAP = 8;
 
-  let visibilityLevelOptions = VisibilityLevels.getOptions(entry.documentName);
+  let visibilityLevelOptions = $derived(
+    visibilityLevelOptionsProp ??
+      (entry ? VisibilityLevels.getOptions(entry.documentName) : []),
+  );
 
-  type TabRow = {
-    id: string;
-    title: string;
-    iconClass?: string;
-    show: boolean;
-    visibilityLevel: number | null;
-  };
+  // Collapse the bound source into editable rows. In entry mode the list is
+  // already ordered (visible first, then hidden) and visibility lives in a
+  // separate array; in items mode the items are the rows.
+  function buildRows(): SortableListboxItem[] {
+    if (entry) {
+      const viewerLevelById = new Map(
+        entry.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
+      );
 
-  // Collapse the entry's separate selected/unselected/visibility data into a
-  // single ordered list: visible tabs (in order) first, then hidden tabs.
-  function buildRows(): TabRow[] {
-    const levelById = new Map(
-      entry.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
-    );
+      return entry.tabs.map((tab) => ({
+        id: tab.id,
+        label: entry!.allTabs[tab.id]?.title ?? tab.title,
+        iconClass: entry!.allTabs[tab.id]?.iconClass ?? tab.iconClass,
+        show: tab.show,
+        visibilityLevel: viewerLevelById.get(tab.id) ?? null,
+      }));
+    }
 
-    const toRow = (tab: { id: string }, show: boolean): TabRow => ({
-      id: tab.id,
-      title: entry.allTabs[tab.id]?.title ?? tab.id,
-      iconClass: entry.allTabs[tab.id]?.iconClass,
-      show,
-      visibilityLevel: levelById.get(tab.id) ?? null,
-    });
-
-    return [
-      ...entry.selected.map((t) => toRow(t, true)),
-      ...entry.unselected.map((t) => toRow(t, false)),
-    ];
+    return (items ?? []).map((item) => ({ ...item }));
   }
 
-  let rows = $state<TabRow[]>(buildRows());
+  let rows = $state<SortableListboxItem[]>(buildRows());
   let selectedIndex = $state<number | null>(null);
 
-  // Rebuild the editable rows when the host swaps in a new entry object (Undo /
-  // Use Global Defaults). Tracked by identity only — the write-back effect below
-  // mutates entry's properties, never its reference, so it won't retrigger this.
+  // Rebuild rows when a new source is applied from undo/reset
   let trackedEntry = entry;
+  let trackedItems = items;
   $effect(() => {
-    if (entry !== trackedEntry) {
+    const sourceChanged = entry
+      ? entry !== trackedEntry
+      : items !== trackedItems;
+    if (sourceChanged) {
       trackedEntry = entry;
+      trackedItems = items;
       rows = buildRows();
       selectedIndex = null;
     }
   });
 
-  // Write any change (reorder, show/hide, viewer level) back to the entry so
-  // the host application reads it when saving.
+  // Write any change (reorder, show/hide, viewer level) back to the bound
+  // source so the host reads it when saving.
   $effect(() => {
-    const selected: TabConfigContextEntry['selected'] = [];
-    const unselected: TabConfigContextEntry['unselected'] = [];
-
-    for (const row of rows) {
-      const info = {
+    if (entry) {
+      entry.tabs = rows.map((row) => ({
         id: row.id,
-        title: row.title,
+        title: row.label,
         iconClass: row.iconClass,
-      };
-      (row.show ? selected : unselected).push(info);
+        show: row.show,
+      }));
+      entry.visibilityLevels = rows.map((row) => ({
+        id: row.id,
+        title: row.label,
+        show: row.show,
+        visibilityLevel: row.visibilityLevel ?? null,
+      }));
+    } else if (items) {
+      const next = rows.map((row) => ({ ...row }));
+      // Mutate the bound array in place (untracked) so its reference stays
+      // stable — reassigning a $bindable array reads back as a new proxy, which
+      // would defeat the identity guard above and loop endlessly.
+      untrack(() => {
+        items!.splice(0, items!.length, ...next);
+      });
     }
-
-    entry.selected = selected;
-    entry.unselected = unselected;
-    entry.visibilityLevels = rows.map((row) => ({
-      id: row.id,
-      title: row.title,
-      visibilityLevel: row.visibilityLevel,
-    }));
   });
 
   function moveUp() {
@@ -132,7 +168,7 @@
 
   // --- Drag to reorder, with a drop indicator that lies in the gap between rows ---
 
-  let rowEls: HTMLLIElement[] = [];
+  let rowElements: HTMLLIElement[] = [];
   let draggedIndex = $state<number | null>(null);
   let dropIndicatorIndex = $state<number | null>(null);
 
@@ -143,11 +179,11 @@
     }
 
     if (dropIndicatorIndex < rows.length) {
-      const el = rowEls[dropIndicatorIndex];
+      const el = rowElements[dropIndicatorIndex];
       return el ? el.offsetTop - ROW_GAP + 2 : null;
     }
 
-    const el = rowEls[rows.length - 1];
+    const el = rowElements[rows.length - 1];
     return el ? el.offsetTop + el.offsetHeight + ROW_GAP / 2 : null;
   });
 
@@ -167,7 +203,7 @@
     const y = ev.clientY;
     let gap = rows.length;
     for (let i = 0; i < rows.length; i++) {
-      const rect = rowEls[i]?.getBoundingClientRect();
+      const rect = rowElements[i]?.getBoundingClientRect();
       if (rect && y < rect.top + rect.height / 2) {
         gap = i;
         break;
@@ -216,16 +252,18 @@
   }
 </script>
 
-<fieldset class="tab-selection-list">
+<fieldset class="tab-selection-list" class:no-user-visibility={!showUserVisibility}>
   <div class="tab-selection-header">
     <span class="tab-selection-header-label tabs-label font-label-medium">
-      Tab
+      {headerLabels?.primary ?? 'Tab'}
     </span>
-    <span class="tab-selection-header-label viewers-label font-label-medium">
-      User Visibility
-    </span>
+    {#if showUserVisibility}
+      <span class="tab-selection-header-label viewers-label font-label-medium">
+        {headerLabels?.userVisibility ?? 'User Visibility'}
+      </span>
+    {/if}
     <span class="tab-selection-header-label visibility-label font-label-medium">
-      Show Tab
+      {headerLabels?.show ?? 'Show Tab'}
     </span>
   </div>
   <div class="tab-selection-body">
@@ -263,7 +301,7 @@
         {@const canConfigureViewers =
           userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM}
         <li
-          bind:this={rowEls[i]}
+          bind:this={rowElements[i]}
           class="listbox-item"
           class:marked-as-hidden={!item.show}
           class:focused={selectedIndex === i}
@@ -281,10 +319,12 @@
           {#if item.iconClass}
             <i class="{item.iconClass} fa-fw tab-row-icon"></i>
           {/if}
-          <span class="section-config-item-label font-label-medium"
-            >{item.title}</span
+          <span
+            data-section-key={item.id}
+            data-testid="section-config-item-label"
+            class="section-config-item-label font-label-medium">{item.label}</span
           >
-          {#if item.show && canConfigureViewers}
+          {#if showUserVisibility && item.show && canConfigureViewers}
             <select
               class="tab-viewers-button"
               title={localize('TIDY5E.TabConfiguration.options.viewers')}
@@ -297,13 +337,13 @@
           {/if}
           <div class="tab-visibility-switch">
             <FieldToggle
-            checked={item.show}
-            onchange={(ev) => {
-              item.show = (ev.currentTarget as HTMLInputElement).checked;
-              selectedIndex = i;
-            }}
-            disabled={!canConfigureViewers}
-          />
+              checked={item.show}
+              onchange={(ev) => {
+                item.show = (ev.currentTarget as HTMLInputElement).checked;
+                selectedIndex = i;
+              }}
+              disabled={showUserVisibility && !canConfigureViewers}
+            />
           </div>
         </li>
       {/each}

@@ -1,15 +1,13 @@
 /**
- * Shared contract for the unified settings footer (Use Global Defaults / Undo
- * Changes / Save Changes). Every deferred-save settings page implements
- * {@link SettingsPane}; whoever owns the footer (a composite dialog or a
- * standalone window) implements {@link SettingsFooterHost} and decides the
+ * Unified settings footer (Use Global Defaults / Undo Changes / Save Changes)
+ * for Settings modal Panes. Every deferred-save settings modal implements
+ * {@link SettingsPane}. Panes implement {@link SettingsFooterHost} and decide the
  * scope of Undo / Use Global Defaults (active page vs. whole dialog).
  */
 
 export interface SettingsPane {
-  /** Whether the pane has unsaved edits relative to its last-saved baseline. */
   hasChanges: boolean;
-  /** Persist the pane's in-memory state. Called for every pane on a dialog Save. */
+  /** When saving, applies to every tab in the settings app. */
   apply(): Promise<unknown> | unknown;
   /** Recompute the baseline snapshot so {@link hasChanges} reads clean. */
   _resetToGlobalDefaults(): void;
@@ -20,13 +18,11 @@ export interface SettingsPane {
 }
 
 export interface SettingsFooterHost {
-  /** Aggregate dirty state across the host's pages; drives the Save button. */
+  /** Holds changed state across the host's pages for the Save button. */
   hasChanges: boolean;
-  /** Whether Undo Changes is enabled. */
   canUndo: boolean;
-  /** Whether Use Global Defaults is enabled. */
   canUseDefault: boolean;
-  /** Localization key overriding the default "Use Global Defaults" label. */
+  /** Overrides the default "Use Global Defaults" label. */
   useDefaultLabel?: string;
   /** Persist every page, then close the window. */
   save(): Promise<void>;

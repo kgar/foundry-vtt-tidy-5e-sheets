@@ -1,9 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { mount } from 'svelte';
-import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
@@ -14,7 +12,6 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { TabConfigContextEntry } from './tab-configuration.types';
 import {
-  buildTabConfigContextEntry,
   getActorTabContext,
   getCanonicalTabSelection,
   getItemTabContext,
@@ -63,21 +60,6 @@ export class WorldTabConfigurationQuadroneApplication
     actions: {},
     submitOnClose: false,
   };
-
-  _createComponent(node: HTMLElement): Record<string, any> {
-    this._config = this._getConfig();
-    this._resetToGlobalDefaults();
-
-    const component = mount(WorldTabConfigurationQuadrone, {
-      target: node,
-      props: {
-        app: this,
-        config: this._config,
-      },
-    });
-
-    return component;
-  }
 
   _getConfig() {
     let setting = settings.value.tabConfiguration;
@@ -166,8 +148,8 @@ export class WorldTabConfigurationQuadroneApplication
 
       // When selected tabs exactly match default selections, exclude that sheet type from settings, which represents taking the default tabs.
       let selected =
-        curr.defaultSelected.length === curr.selected.length &&
-        curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
+        curr.defaultSelected?.length === curr.selected?.length &&
+        curr.defaultSelected?.every((d, i) => d.id === curr.selected?.[i]?.id)
           ? undefined
           : curr.selected;
 
@@ -202,7 +184,7 @@ export class WorldTabConfigurationQuadroneApplication
 
   /**
    * Canonical, order-independent snapshot of every sheet type's tab selection.
-   * TabSelectionList rewrites visibilityLevels in display order on mount, so a
+   * SortableListbox rewrites visibilityLevels in display order on mount, so a
    * raw JSON.stringify of `_config` would always look dirty.
    */
   _snapshotConfig(config: WorldTabConfigContext): string {
@@ -217,7 +199,7 @@ export class WorldTabConfigurationQuadroneApplication
   }
 
   undoChanges() {
-    // Reassign so the per-sheet entries get fresh objects; TabSelectionList
+    // Reassign so the per-sheet entries get fresh objects; SortableListbox
     // rebuilds its rows when its entry reference changes.
     this._config = this._getConfig();
     this._resetToGlobalDefaults();
@@ -230,8 +212,8 @@ export class WorldTabConfigurationQuadroneApplication
   resetToDefault() {
     this._config = this._config.map((entry) => ({
       ...entry,
-      selected: entry.defaultSelected.map((t) => ({ ...t })),
-      unselected: entry.defaultUnselected.map((t) => ({ ...t })),
+      selected: entry.defaultSelected?.map((t) => ({ ...t })) ?? [],
+      unselected: entry.defaultUnselected?.map((t) => ({ ...t })) ?? [],
       visibilityLevels: entry.visibilityLevels.map((l) => ({
         ...l,
         visibilityLevel: null,

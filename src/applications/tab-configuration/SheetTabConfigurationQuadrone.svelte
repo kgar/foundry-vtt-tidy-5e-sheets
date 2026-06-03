@@ -3,7 +3,7 @@
     SheetTabConfigurationContext,
     SheetTabConfigurationQuadroneApplication,
   } from './SheetTabConfigurationQuadroneApplication.svelte';
-  import TabSelectionList from './parts/TabSelectionList.svelte';
+  import SortableListbox from './parts/SortableListbox.svelte';
 
   interface Props {
     app: SheetTabConfigurationQuadroneApplication;
@@ -16,7 +16,5 @@
 
 <div class="dialog-content-container sheet-tab-configuration flexcol">
   <h2>{title}</h2>
-  <!-- TabSelectionList rebuilds its rows when config.entry is replaced
-       (Undo / Use Global Defaults); in-place edits keep the same entry. -->
-  <TabSelectionList entry={config.entry} />
+  <SortableListbox entry={config.entry} />
 </div>

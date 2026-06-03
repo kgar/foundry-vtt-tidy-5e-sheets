@@ -5,7 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import TabSelectionList from 'src/applications/tab-configuration/parts/TabSelectionList.svelte';
+  import SortableListbox from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
   import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
 
   interface Props {
@@ -18,8 +18,10 @@
 
   let { app, documentName, documentType, title }: Props = $props();
 
-  // Unique per selected sheet so tab contents remount (and re-read their entry)
-  // when the user switches to a different sheet.
+  /**
+   * Unique per sheet/document type so the tabs remount and are 
+   * re-read when you switch sheets.
+   */
   let prefix = $derived(`${documentName}-${documentType}`);
 
   let tabConfigEntry = $derived(
@@ -57,7 +59,7 @@
         title: 'TIDY5E.TabConfiguration.MenuOptionText',
         content: {
           type: 'svelte',
-          component: TabSelectionList,
+          component: SortableListbox,
           getProps: () => ({ entry }),
         },
       });
@@ -85,7 +87,7 @@
         title: 'TIDY5E.Character.Sidebar.Title',
         content: {
           type: 'svelte',
-          component: TabSelectionList,
+          component: SortableListbox,
           getProps: () => ({ entry }),
         },
       });

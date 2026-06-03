@@ -14,7 +14,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  let isVisible = $derived(entry.selected.some((t) => t.id === tabId));
+  let isVisible = $derived(
+    entry.tabs.some((t) => t.id === tabId && t.show),
+  );
 
   let visibilityLevelIndex = $derived(
     entry.visibilityLevels.findIndex((v) => v.id === tabId),
@@ -34,26 +36,18 @@
   );
 
   function toggleVisibility(visible: boolean) {
-    if (visible) {
-      if (entry.selected.some((t) => t.id === tabId)) {
-        return;
-      }
-      const info =
-        entry.unselected.find((t) => t.id === tabId) ?? entry.allTabs[tabId];
-      if (!info) {
-        return;
-      }
-      entry.selected = [...entry.selected, info];
-      entry.unselected = entry.unselected.filter((t) => t.id !== tabId);
-    } else {
-      const info = entry.selected.find((t) => t.id === tabId);
-      if (!info) {
-        return;
-      }
-      entry.selected = entry.selected.filter((t) => t.id !== tabId);
-      if (!entry.unselected.some((t) => t.id === tabId)) {
-        entry.unselected = [...entry.unselected, info];
-      }
+    if (entry.tabs.some((t) => t.id === tabId)) {
+      entry.tabs = entry.tabs.map((t) =>
+        t.id === tabId ? { ...t, show: visible } : t,
+      );
+      return;
+    }
+
+    // Tab isn't in the list yet (shouldn't normally happen); add it from the
+    // registry when turning it on.
+    const info = entry.allTabs[tabId];
+    if (visible && info) {
+      entry.tabs = [...entry.tabs, { ...info, show: true }];
     }
   }
 </script>
