@@ -86,7 +86,6 @@
       background: var(--t5e-component-field-background);
       border-radius: var(--t5e-size-halfx);
       outline: 0.0625rem solid var(--t5e-component-field-border);
-      outline-offset: -0.0625rem;
       color: var(--t5e-color-text-default);
       cursor: grab;
       transition: background-color var(--t5e-transition-default),
@@ -105,6 +104,23 @@
         background-color: var(--t5e-theme-color-darker);
         outline-color: var(--t5e-component-field-border-hover);
         box-shadow: var(--t5e-drop-shadow-field-hover);
+
+        .drag-grip {
+          color: var(--t5e-theme-color-foreground-disabled);
+        }
+
+        .tab-row-icon {
+          color: var(--t5e-theme-color-foreground-diminished);
+        }
+
+        .tab-viewers-button,
+        .section-config-item-label {
+          color: var(--t5e-theme-color-foreground);
+        }
+
+        .field-toggle {
+          border-color: var(--t5e-theme-color-foreground-disabled);
+        }
       }
 
       &.marked-as-hidden {
