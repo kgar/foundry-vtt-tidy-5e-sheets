@@ -360,7 +360,6 @@
       "hint": "Configure settings, visibility, and sections for the {tabName} tab."
     },
     "AssignSpellsToClasses": {
-      "title": "Assign Spells to Classes",
       "hint": "Assign spells to the source class to update grouping and visual indicators of spells in the Spellbook tab."
     },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."

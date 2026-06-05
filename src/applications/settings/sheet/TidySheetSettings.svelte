@@ -4,7 +4,7 @@
     TidySheetSettingsTabIds,
     type TidySheetSettingsQuadroneApplication,
   } from './TidySheetSettingsQuadroneApplication.svelte';
-  import PlaceholderSettingsPane from './tabs/PlaceholderSettingsPane.svelte';
+  import BasicTabSettingsPane from './tabs/BasicTabSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
   import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
@@ -380,8 +380,7 @@
         tabId={selectedSheetTabId}
       />
     {:else}
-      <PlaceholderSettingsPane
-        {app}
+      <BasicTabSettingsPane
         title={selectedEntry?.title ?? ''}
         tabId={selectedSheetTabId}
         tabConfigEntry={app.tabDisplaySettingsTab._config.entry}

@@ -60,121 +60,123 @@
   <p class="settings-description">
     {localize('TIDY5E.SheetSettings.AssignSpellsToClasses.hint')}
   </p>
-  <div role="presentation" class="flexrow flexgap-3">
-    <Search bind:value={searchCriteria} />
-    <label class="flexshrink checkbox">
-      <input type="checkbox" bind:checked={showUnassignedOnly} />
-      {localize('TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text')}
-    </label>
-  </div>
-  <div role="presentation" class="scroll-container flex1">
-    <TidyTable key="spell-source-class-assignments-matrix" toggleable={false}>
-      {#snippet header()}
-        <TidyTableHeaderRow class="unset-header-height theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3
-              class="truncate"
-              data-tooltip="DND5E.spell"
-              style="padding-inline-start: 0.75rem"
-            >
-              {localize('TYPES.Item.spell')}
-            </h3>
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth="12.5rem">
-            <span class="truncate">{localize('TYPES.Item.class')}</span>
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
-            <span
-              >{localize('TIDY5E.SpellSourceItemAssignments.Identifier')}</span
-            >
-            <i
-              class="fas fa-question-circle"
-              title={localize(
-                'TIDY5E.SpellSourceItemAssignments.IdentifierHint',
-              )}
-            ></i>
-          </TidyTableHeaderCell>
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each context.assignments as assignment (assignment.item.id)}
-          {@const sourceItemValue = currentSource(assignment.item)}
-          {@const sourceItemIsUnassigned = sourceItemValue.trim() === ''}
-          {@const hideRow =
-            !visibleSelectablesIdSubset.has(assignment.item.id) ||
-            (showUnassignedOnly && !sourceItemIsUnassigned)}
-          <TidyTableRow hidden={hideRow}>
-            <TidyTableCell primary={true} class="flexrow">
-              <!--svelte-ignore a11y_missing_attribute-->
-              <a
-                tabindex="0"
-                role="button"
-                data-keyboard-focus
-                class="button button-borderless"
-                style="justify-content: flex-start;"
-                onclick={async () =>
-                  FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    FoundryAdapter.renderSheetFromUuid(assignment.item.uuid);
-                  }
+  <div class="flexcol flexgap-3">
+    <div role="presentation" class="flexrow flexgap-3">
+      <Search bind:value={searchCriteria} />
+      <label class="flexshrink checkbox">
+        <input type="checkbox" bind:checked={showUnassignedOnly} />
+        {localize('TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text')}
+      </label>
+    </div>
+    <div role="presentation" class="scroll-container flex1">
+      <TidyTable key="spell-source-class-assignments-matrix" toggleable={false}>
+        {#snippet header()}
+          <TidyTableHeaderRow class="unset-header-height theme-dark">
+            <TidyTableHeaderCell primary={true}>
+              <h3
+                class="truncate"
+                data-tooltip="DND5E.spell"
+                style="padding-inline-start: 0.75rem"
+              >
+                {localize('TYPES.Item.spell')}
+              </h3>
+            </TidyTableHeaderCell>
+            <TidyTableHeaderCell columnWidth="12.5rem">
+              <span class="truncate">{localize('TYPES.Item.class')}</span>
+            </TidyTableHeaderCell>
+            <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
+              <span
+                >{localize('TIDY5E.SpellSourceItemAssignments.Identifier')}</span
+              >
+              <i
+                class="fas fa-question-circle"
+                title={localize(
+                  'TIDY5E.SpellSourceItemAssignments.IdentifierHint',
+                )}
+              ></i>
+            </TidyTableHeaderCell>
+          </TidyTableHeaderRow>
+        {/snippet}
+        {#snippet body()}
+          {#each context.assignments as assignment (assignment.item.id)}
+            {@const sourceItemValue = currentSource(assignment.item)}
+            {@const sourceItemIsUnassigned = sourceItemValue.trim() === ''}
+            {@const hideRow =
+              !visibleSelectablesIdSubset.has(assignment.item.id) ||
+              (showUnassignedOnly && !sourceItemIsUnassigned)}
+            <TidyTableRow hidden={hideRow}>
+              <TidyTableCell primary={true} class="flexrow">
+                <!--svelte-ignore a11y_missing_attribute-->
+                <a
+                  tabindex="0"
+                  role="button"
+                  data-keyboard-focus
+                  class="button button-borderless"
+                  style="justify-content: flex-start;"
+                  onclick={async () =>
+                    FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
+                  onkeydown={(ev) => {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                      FoundryAdapter.renderSheetFromUuid(assignment.item.uuid);
+                    }
+                  }}
+                >
+                  {assignment.item.name}
+                </a>
+              </TidyTableCell>
+              {@const isCustomSource =
+                sourceItemValue !== '' &&
+                !classColumns.some((c) => c.identifier === sourceItemValue)}
+              <TidyTableCell
+                columnWidth="12.5rem"
+                attributes={{
+                  onchange: (ev) =>
+                    sourceItemOverrides.set(
+                      assignment.item.id,
+                      (ev.target as HTMLSelectElement).value,
+                    ),
                 }}
               >
-                {assignment.item.name}
-              </a>
-            </TidyTableCell>
-            {@const isCustomSource =
-              sourceItemValue !== '' &&
-              !classColumns.some((c) => c.identifier === sourceItemValue)}
-            <TidyTableCell
-              columnWidth="12.5rem"
-              attributes={{
-                onchange: (ev) =>
-                  sourceItemOverrides.set(
-                    assignment.item.id,
-                    (ev.target as HTMLSelectElement).value,
-                  ),
-              }}
-            >
-              <SelectQuadrone
-                field="system.sourceItem"
-                document={assignment.item}
-                value={sourceItemValue}
-                blankValue=""
-                disabled={!assignment.item.isOwner}
-              >
-                <option value="">—</option>
-                {#each classColumns as classColumn}
-                  <option value={classColumn.identifier}>
-                    {classColumn.item.name}
-                  </option>
-                {/each}
-                {#if isCustomSource}
-                  <option value={sourceItemValue} disabled>
-                    {sourceItemValue}
-                  </option>
-                {/if}
-              </SelectQuadrone>
-            </TidyTableCell>
-            <TidyTableCell columnWidth="12.5rem">
-              <TextInput
-                document={assignment.item}
-                disabled={!assignment.item.isOwner}
-                field="system.sourceItem"
-                selectOnFocus={true}
-                value={sourceItemValue}
-                onSaveChange={(ev) => {
-                  sourceItemOverrides.set(
-                    assignment.item.id,
-                    ev.currentTarget.value,
-                  );
-                  return true;
-                }}
-              />
-            </TidyTableCell>
-          </TidyTableRow>
-        {/each}
-      {/snippet}
-    </TidyTable>
+                <SelectQuadrone
+                  field="system.sourceItem"
+                  document={assignment.item}
+                  value={sourceItemValue}
+                  blankValue=""
+                  disabled={!assignment.item.isOwner}
+                >
+                  <option value="">—</option>
+                  {#each classColumns as classColumn}
+                    <option value={classColumn.identifier}>
+                      {classColumn.item.name}
+                    </option>
+                  {/each}
+                  {#if isCustomSource}
+                    <option value={sourceItemValue} disabled>
+                      {sourceItemValue}
+                    </option>
+                  {/if}
+                </SelectQuadrone>
+              </TidyTableCell>
+              <TidyTableCell columnWidth="12.5rem">
+                <TextInput
+                  document={assignment.item}
+                  disabled={!assignment.item.isOwner}
+                  field="system.sourceItem"
+                  selectOnFocus={true}
+                  value={sourceItemValue}
+                  onSaveChange={(ev) => {
+                    sourceItemOverrides.set(
+                      assignment.item.id,
+                      ev.currentTarget.value,
+                    );
+                    return true;
+                  }}
+                />
+              </TidyTableCell>
+            </TidyTableRow>
+          {/each}
+        {/snippet}
+      </TidyTable>
+    </div>
   </div>
 </section>

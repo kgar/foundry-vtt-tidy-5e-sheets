@@ -183,7 +183,9 @@ export class TidySheetSettingsQuadroneApplication
         if (tabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES) {
           return undefined;
         }
-        return this.getConfigureSectionsConfigTab(tabId);
+        // Fall back to tabDisplaySettingsTab for tabs that only have visibility
+        // controls (the placeholder pane) — changes land there either way.
+        return this.getConfigureSectionsConfigTab(tabId) ?? this.tabDisplaySettingsTab;
       }
     }
   }
