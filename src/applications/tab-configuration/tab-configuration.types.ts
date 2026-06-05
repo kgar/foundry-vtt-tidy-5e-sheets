@@ -31,4 +31,5 @@ export type TabConfigContextEntry = {
   visibilityLevels: VisibilityLevelConfig[];
   /** Replaces the document type as a property when saving world tab configuration info. */
   docTypeKeyOverride?: string;
+  sidebarExpandedByTabId?: Record<string, boolean>;
 };

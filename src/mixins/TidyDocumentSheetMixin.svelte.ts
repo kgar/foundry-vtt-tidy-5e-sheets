@@ -30,6 +30,7 @@ import type {
   SheetHeaderControlPosition,
 } from 'src/api/api.types';
 import { coalesce } from 'src/utils/formatting';
+import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import {
   insertHeaderButton,
@@ -741,10 +742,14 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     private _getHeaderControlSettings(document: any) {
-      const settings =
-        SettingsProvider.settings.headerControlConfiguration.get()?.[
-          document.documentName
-        ]?.[document.type];
+      // SettingsProvider is assigned in initSettings(); optional chaining covers
+      // circular-import / ordering edge cases. Fall back to the raw game setting.
+      const settings = (
+        SettingsProvider?.settings?.headerControlConfiguration?.get() ??
+        FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
+          'headerControlConfiguration'
+        )
+      )?.[document.documentName]?.[document.type];
 
       if (!settings) {
         return new Map();

@@ -49,7 +49,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         control: {
           action: 'openTabSelection',
           icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabConfiguration.MenuOptionText',
+          label: 'TIDY5E.TabConfiguration.buttonLabel',
           visible: function (this: Tidy5eActorSheetBase) {
             return this.isEditable;
           },

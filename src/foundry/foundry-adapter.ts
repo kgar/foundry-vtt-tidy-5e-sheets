@@ -65,6 +65,17 @@ export const FoundryAdapter = {
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
   },
+  tryGetGameSetting<T>(
+    namespace: string,
+    settingName: string,
+    fallback: T
+  ): T {
+    try {
+      return game.settings.get(namespace, settingName) as T;
+    } catch {
+      return fallback;
+    }
+  },
   getSystemSetting<T = string>(settingName: string): T {
     return FoundryAdapter.getGameSetting(
       CONSTANTS.DND5E_SYSTEM_ID,

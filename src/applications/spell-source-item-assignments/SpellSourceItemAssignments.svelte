@@ -55,8 +55,11 @@
   var showUnassignedOnly = $state(false);
 </script>
 
-<section class="dialog-content-container flexcol flexgap-3 full-height">
+<section class="dialog-content-container flexcol">
   <h2> {localize('TIDY5E.Utilities.AssignSpellsToClasses')}</h2>
+  <p class="settings-description">
+    {localize('TIDY5E.SheetSettings.AssignSpellsToClasses.hint')}
+  </p>
   <div role="presentation" class="flexrow flexgap-3">
     <Search bind:value={searchCriteria} />
     <label class="flexshrink checkbox">

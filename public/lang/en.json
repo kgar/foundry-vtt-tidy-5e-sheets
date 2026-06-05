@@ -223,7 +223,8 @@
   },
 
   "TIDY5E.TabConfiguration": {
-    "Title": "Tab Configuration: {documentName} Sheet",
+    "Title": "Configure {documentName} Sheet Tabs",
+    "buttonLabel": "Configure Tabs",
     "MenuOptionText": "Configure Tabs",
     "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
@@ -354,7 +355,22 @@
       "WorldSettingHint": "Header control placement is a world-level setting shared by every {sheetName} sheet. Changes made here apply to all of them.",
       "OpenWorldSettings": "Open World Settings"
     },
+    "ConfigureTab": {
+      "title": "Configure {tabName} Tab",
+      "hint": "Configure settings, visibility, and sections for the {tabName} tab."
+    },
+    "AssignSpellsToClasses": {
+      "title": "Assign Spells to Classes",
+      "hint": "Assign spells to the source class to update grouping and visual indicators of spells in the Spellbook tab."
+    },
     "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
+  },
+
+  "TIDY5E.TabSettings": {
+    "SidebarSettings": {
+      "name": "Sidebar Expanded",
+      "label": "Show Sidebar"
+    }
   },
 
   "TIDY5E.SettingsMenu": {
@@ -369,7 +385,8 @@
       "hint": "Update default actor and item sheets here if the Core → Default Sheets configuration menu isn't working as expected."
     },
     "HeaderControlConfiguration": {
-      "name": "Header Controls",
+      "name": "Configure Header Controls",
+      "buttonLabel": "Header Controls",
       "label": "Configure Header Controls",
       "hint": "New Tidy Sheets Only: Configure the location of sheet header controls."
     },
@@ -843,7 +860,7 @@
   },
   "TIDY5E.WorldSettings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
-    "tabLabel": "Sheet Preferences",
+    "tabLabel": "Default Sheets",
     "switchToTidySheets": "Switch to Tidy Sheets",
     "revertToSystemSheets": "Revert to System Sheets",
     "chooseSpecific": "Choose specific sheet types instead",

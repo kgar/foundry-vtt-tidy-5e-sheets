@@ -27,6 +27,7 @@ import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 export type SheetTabConfigurationContext = {
   entry: TabConfigContextEntry;
@@ -95,6 +96,19 @@ export class SheetTabConfigurationQuadroneApplication
 
   /** TODO: document */
   _docTypeKeyOverride?: string;
+
+  /**
+   * The saved per-tab "sidebar expanded" preference values at the time the
+   * config was loaded. Used to flush only changed values on {@link apply}.
+   */
+  _initialSidebarExpanded?: Record<string, boolean>;
+
+  /** Actor sheet types that have a collapsible main sidebar. */
+  static SIDEBAR_EXPANDABLE_SHEET_TYPES: ReadonlySet<string> = new Set([
+    CONSTANTS.SHEET_TYPE_CHARACTER,
+    CONSTANTS.SHEET_TYPE_NPC,
+    CONSTANTS.SHEET_TYPE_VEHICLE,
+  ]);
 
   constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
@@ -190,7 +204,62 @@ export class SheetTabConfigurationQuadroneApplication
       );
     }
 
+    // Set sidebar-expanded state from saved config and capture the niitial
+    this._seedSidebarExpanded(context, { useDefaults: false });
+    this._initialSidebarExpanded = { ...context.sidebarExpandedByTabId };
+
     return context;
+  }
+
+  /**
+   * Determine if the configuration supports sidebar expansion. Not present
+   * for sidebar tabs configuration.
+   */
+  _supportsSidebarExpanded(): boolean {
+    return (
+      !this._docTypeKeyOverride &&
+      this.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
+      SheetTabConfigurationQuadroneApplication.SIDEBAR_EXPANDABLE_SHEET_TYPES.has(
+        this.document.type
+      )
+    );
+  }
+
+  /** The default sidebar-expanded state for a tab. */
+  _getDefaultSidebarExpanded(tabId: string): boolean {
+    if (this.document?.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+      return tabId !== CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+    }
+    return false;
+  }
+
+  /**
+   * Populate {@link TabConfigContextEntry.sidebarExpandedByTabId} for every
+   * registered tab, either from the saved config or from defaults.
+   */
+  _seedSidebarExpanded(
+    entry: TabConfigContextEntry,
+    { useDefaults }: { useDefaults: boolean }
+  ) {
+    if (!this._supportsSidebarExpanded()) {
+      return;
+    }
+
+    const type = this.document.type;
+    const map: Record<string, boolean> = {};
+    for (const tabId of Object.keys(entry.allTabs)) {
+      const fallback = this._getDefaultSidebarExpanded(tabId);
+      if (useDefaults) {
+        map[tabId] = fallback;
+        continue;
+      }
+      const saved = UserSheetPreferencesService.getDocumentTypeTabPreference<
+        'sidebarExpanded',
+        boolean
+      >(type, tabId, 'sidebarExpanded');
+      map[tabId] = saved ?? fallback;
+    }
+    entry.sidebarExpandedByTabId = map;
   }
 
   _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
@@ -248,14 +317,45 @@ export class SheetTabConfigurationQuadroneApplication
         : buildTabConfigMap(curr.tabs, curr.visibilityLevels),
     });
 
+    await this._applySidebarExpanded(curr);
+
     this._resetToGlobalDefaults();
 
     return result;
   }
 
+  /**
+   * Save changed sidebar-expanded values to the user's saved config, then 
+   * update the initial state.
+   */
+  async _applySidebarExpanded(entry: TabConfigContextEntry) {
+    const staged = entry.sidebarExpandedByTabId;
+    if (!staged || !this._supportsSidebarExpanded()) {
+      return;
+    }
+
+    const type = this.document.type;
+    const baseline = this._initialSidebarExpanded ?? {};
+    for (const [tabId, expanded] of Object.entries(staged)) {
+      if (baseline[tabId] !== expanded) {
+        await UserSheetPreferencesService.setDocumentTypeTabPreference(
+          type,
+          tabId,
+          'sidebarExpanded',
+          expanded
+        );
+      }
+    }
+
+    this._initialSidebarExpanded = { ...staged };
+  }
+
   /** Get the initial configuration snapshot for {@link apply} through {@link _resetToGlobalDefaults}.*/
   _snapshotEntry(entry: TabConfigContextEntry): string {
-    return JSON.stringify(getCanonicalTabSelection(entry));
+    return JSON.stringify({
+      ...getCanonicalTabSelection(entry),
+      sidebarExpandedByTabId: entry.sidebarExpandedByTabId ?? null,
+    });
   }
 
   /** Reset the initial snapshot to the global defaults. */
@@ -300,6 +400,8 @@ export class SheetTabConfigurationQuadroneApplication
     });
 
     if (defaultEntry) {
+      // Re-seed initial expanded state on reset.
+      this._seedSidebarExpanded(defaultEntry, { useDefaults: true });
       this._config.entry = defaultEntry;
     }
   }

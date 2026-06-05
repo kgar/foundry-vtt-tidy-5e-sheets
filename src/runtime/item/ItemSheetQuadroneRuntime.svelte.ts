@@ -13,6 +13,7 @@ import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/Item
 import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
+import { buildContainerContentsSettingsTab } from 'src/sheets/quadrone/container/settings/ContainerContentsSettingsTab';
 import ItemContainerDetailsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
 import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
@@ -391,6 +392,11 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         component: ItemContainerContentsQuadroneTab,
         type: 'svelte',
       },
+      settingsTabBuilder: (context, tabId) =>
+        buildContainerContentsSettingsTab(
+          context as unknown as ContainerSheetQuadroneContext,
+          tabId,
+        ),
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {

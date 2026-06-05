@@ -2,9 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     TidySheetSettingsTabIds,
-    type TidySheetSettingsContext,
     type TidySheetSettingsQuadroneApplication,
-    type TidySheetSettingsTabInfo,
   } from './TidySheetSettingsQuadroneApplication.svelte';
   import PlaceholderSettingsPane from './tabs/PlaceholderSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
@@ -19,10 +17,9 @@
 
   interface Props {
     app: TidySheetSettingsQuadroneApplication;
-    config: TidySheetSettingsContext;
   }
 
-  let { app, config }: Props = $props();
+  let { app }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -52,13 +49,13 @@
     [
       {
         id: SETTINGS_THEME,
-        title: localize('TIDY5E.ThemeSettings.SheetMenu.name'),
+        title: localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel'),
         iconClass: 'fa-solid fa-swatchbook',
         hasChanges: app.themeSettingsTab.hasChanges,
       },
       {
         id: SETTINGS_TAB_CONFIG,
-        title: localize('TIDY5E.TabConfiguration.MenuOptionText'),
+        title: localize('TIDY5E.TabConfiguration.buttonLabel'),
         iconClass: 'fas fa-file-invoice',
         hasChanges: app.tabDisplaySettingsTab.hasChanges,
       },
@@ -66,7 +63,7 @@
         ? [
             {
               id: SETTINGS_HEADER_CONTROLS,
-              title: localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name'),
+              title: localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.buttonLabel'),
               iconClass: 'fas fa-ellipsis-vertical',
               hasChanges: app.headerControlsTab.hasChanges,
             },
@@ -94,12 +91,15 @@
     ],
   );
 
+  // Tab lists come from singular `tabs`array in order with a visibility property.
+  let tabConfigEntry = $derived(app.tabDisplaySettingsTab._config.entry);
+
   let tabConfigOptions: SettingsTab[] = $derived(
-    config.parentSheetTabs.map((t: TidySheetSettingsTabInfo) => ({
+    tabConfigEntry.tabs.map((t) => ({
       id: `sheet:${t.id}`,
       title: t.title,
       iconClass: t.iconClass,
-      tabHidden: t.tabHidden,
+      tabHidden: !t.show,
     })),
   );
 
@@ -134,8 +134,29 @@
     app.selectTab(id);
   }
 
+  // Drag to reorder, with a drop indicator centered in the gap between rows.
+
+  // Vertical gap between nav rows, in px (sync with `.nav-tab-list` gap).
+  const ROW_GAP = 2;
+
+  let rowElements: HTMLButtonElement[] = [];
   let draggedTabIndex = $state<number | null>(null);
   let dropIndicatorIndex = $state<number | null>(null);
+
+  // The indicator's y-offset, centered in the gap before `dropIndicatorIndex`
+  let dropLineTop = $derived.by(() => {
+    if (dropIndicatorIndex === null) {
+      return null;
+    }
+
+    if (dropIndicatorIndex < tabConfigOptions.length) {
+      const el = rowElements[dropIndicatorIndex];
+      return el ? el.offsetTop - ROW_GAP / 2 : null;
+    }
+
+    const el = rowElements[tabConfigOptions.length - 1];
+    return el ? el.offsetTop + el.offsetHeight + ROW_GAP / 2 : null;
+  });
 
   function onTabDragStart(ev: DragEvent, index: number) {
     draggedTabIndex = index;
@@ -145,18 +166,19 @@
     }
   }
 
-  function onTabDragOver(ev: DragEvent, index: number) {
-    // Hidden tabs can't be reordered, so they aren't valid drop targets.
-    if (config.parentSheetTabs[index]?.tabHidden) {
-      dropIndicatorIndex = null;
-      return;
-    }
-
+  // Target the entire list. The drop zone is midway between each row.
+  function onListDragOver(ev: DragEvent) {
     ev.preventDefault();
 
-    const rect = (ev.currentTarget as HTMLElement).getBoundingClientRect();
-    const after = ev.clientY > rect.top + rect.height / 2;
-    const gap = after ? index + 1 : index;
+    const y = ev.clientY;
+    let gap = tabConfigOptions.length;
+    for (let i = 0; i < tabConfigOptions.length; i++) {
+      const rect = rowElements[i]?.getBoundingClientRect();
+      if (rect && y < rect.top + rect.height / 2) {
+        gap = i;
+        break;
+      }
+    }
 
     // Hide the indicator when the drop would be a no-op (dropping next to self).
     if (
@@ -194,30 +216,13 @@
       return;
     }
 
-    arrayMove(config.parentSheetTabs, draggedIndex, target);
-    config.parentSheetTabs = config.parentSheetTabs;
-
-    updateTabOrder();
+    // Reorder the tab list so hidden tabs keep their relative before `apply()`
+    const entry = app.tabDisplaySettingsTab._config.entry;
+    arrayMove(entry.tabs, draggedIndex, target);
+    entry.tabs = entry.tabs;
 
     // Reordering persists immediately rather than waiting for a Save click.
     await app.tabDisplaySettingsTab.apply();
-  }
-
-  /**
-   *  Reorder the saved tab selection to match the new display order. Shown tabs
-   *  are reordered to follow the display order; hidden tabs keep their order
-   *  after them.
-   */
-  function updateTabOrder() {
-    const entry = app.tabDisplaySettingsTab._config.entry;
-    const orderIndex = new Map(
-      config.parentSheetTabs.map((t, i) => [t.id, i]),
-    );
-    const shown = entry.tabs
-      .filter((t) => t.show)
-      .sort((a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0));
-    const hidden = entry.tabs.filter((t) => !t.show);
-    entry.tabs = [...shown, ...hidden];
   }
 </script>
 
@@ -255,49 +260,53 @@
           {localize('TIDY5E.SheetSettings.NoTabsHint')}
         </div>
       {:else}
-        {#each tabConfigOptions as entry, i (entry.id)}
-          <button
-            type="button"
-            class={[
-              'nav-tab',
-              {
-                active: entry.id === activeSelectedId,
-                'has-changes': entry.hasChanges,
-                'tab-hidden': entry.tabHidden,
-                dragging: draggedTabIndex === i,
-                'drop-indicator-above': dropIndicatorIndex === i,
-                'drop-indicator-below':
-                  dropIndicatorIndex === tabConfigOptions.length &&
-                  i === tabConfigOptions.length - 1,
-              },
-            ]}
-            role="tab"
-            aria-selected={entry.id === activeSelectedId}
-            draggable={!entry.tabHidden}
-            onclick={() => selectTab(entry.id)}
-            ondragstart={(ev) => onTabDragStart(ev, i)}
-            ondragover={(ev) => onTabDragOver(ev, i)}
-            ondrop={(ev) => onTabDrop(ev)}
-            ondragend={onTabDragEnd}
-          >
-            {#if entry.iconClass}
-              <i class={['nav-tab-icon', entry.iconClass]}></i>
-            {/if}
-            <span class="nav-tab-title">{entry.title}</span>
-            {#if entry.tabHidden}
-              <i
-                class="tab-icon tab-visibility-icon fa-solid fa-eye-slash fa-fw"
-                aria-hidden="true"
-              ></i>
-            {/if}
-            {#if !entry.tabHidden}
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="nav-tab-list" ondragover={onListDragOver} ondrop={onTabDrop}>
+          {#each tabConfigOptions as entry, i (entry.id)}
+            <button
+              bind:this={rowElements[i]}
+              type="button"
+              class={[
+                'nav-tab',
+                {
+                  active: entry.id === activeSelectedId,
+                  'has-changes': entry.hasChanges,
+                  'tab-hidden': entry.tabHidden,
+                  dragging: draggedTabIndex === i,
+                },
+              ]}
+              role="tab"
+              aria-selected={entry.id === activeSelectedId}
+              draggable="true"
+              onclick={() => selectTab(entry.id)}
+              ondragstart={(ev) => onTabDragStart(ev, i)}
+              ondragend={onTabDragEnd}
+            >
+              {#if entry.iconClass}
+                <i class={['nav-tab-icon', entry.iconClass]}></i>
+              {/if}
+              <span class="nav-tab-title">{entry.title}</span>
+              {#if entry.tabHidden}
+                <i
+                  class="tab-icon tab-visibility-icon fa-solid fa-eye-slash fa-fw"
+                  aria-hidden="true"
+                ></i>
+              {/if}
               <i
                 class="tab-icon tab-drag-icon fa-solid fa-grip-lines fa-fw"
                 aria-hidden="true"
               ></i>
-            {/if}
-          </button>
-        {/each}
+            </button>
+          {/each}
+          {#if dropLineTop !== null}
+            <div
+              class="drop-line"
+              style="top: {dropLineTop}px"
+              role="presentation"
+              aria-hidden="true"
+            ></div>
+          {/if}
+        </div>
       {/if}
     </div>
   </div>

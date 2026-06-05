@@ -10,7 +10,6 @@ import { mount } from 'svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
-import { settings } from 'src/settings/settings.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import {
@@ -32,6 +31,12 @@ import type {
   SettingsFooterHost,
   SettingsPane,
 } from 'src/applications/settings/settings-pane.types';
+import type { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import type { RegisteredTab } from 'src/runtime/types';
+
+type SheetSettingsRuntimeAdapter = {
+  getAllRegisteredTabs(): RegisteredTab<any>[];
+};
 
 export const TidySheetSettingsTabIds = {
   theme: 'settings:theme',
@@ -41,16 +46,7 @@ export const TidySheetSettingsTabIds = {
   spellAssignments: 'settings:spell-assignments',
 } as const;
 
-export type TidySheetSettingsTabInfo = {
-  id: string;
-  title: string;
-  iconClass?: string;
-  tabHidden?: boolean;
-};
-
-export type TidySheetSettingsContext = {
-  parentSheetTabs: TidySheetSettingsTabInfo[];
-};
+export type TidySheetSettingsContext = {};
 
 export type ConfigureSectionsInput = {
   tabId: string;
@@ -74,9 +70,7 @@ export class TidySheetSettingsQuadroneApplication
   >()
   implements SettingsFooterHost
 {
-  _config: TidySheetSettingsContext = $state({
-    parentSheetTabs: [],
-  });
+  _config: TidySheetSettingsContext = $state({});
 
   initialTabId?: string;
   currentTabId = $state<string | undefined>(undefined);
@@ -112,6 +106,7 @@ export class TidySheetSettingsQuadroneApplication
   >;
 
   _runtimes?: Record<string, ActorSheetQuadroneRuntime<any>>;
+  _itemRuntime?: typeof ItemSheetQuadroneRuntime;
   _sidebarRuntime?: ActorSheetQuadroneRuntime<any>;
   _getActorTabContext?: typeof import('src/applications/tab-configuration/tab-configuration-functions').getActorTabContext;
 
@@ -343,7 +338,6 @@ export class TidySheetSettingsQuadroneApplication
       target: node,
       props: {
         app: this,
-        config: this._config,
       },
     });
   }
@@ -353,7 +347,6 @@ export class TidySheetSettingsQuadroneApplication
   ): Promise<TidySheetSettingsContext> {
     await this._loadRuntimes();
     this._initializeSettingsTabs();
-    this._config.parentSheetTabs = this._getTabsForParentSheet();
     return this._config;
   }
 
@@ -363,6 +356,14 @@ export class TidySheetSettingsQuadroneApplication
     }
 
     this._runtimes = {};
+
+    if (this.document?.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      const itemRuntime = await import(
+        'src/runtime/item/ItemSheetQuadroneRuntime.svelte'
+      );
+      this._itemRuntime = itemRuntime.ItemSheetQuadroneRuntime;
+      return;
+    }
 
     if (this.document?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
       return;
@@ -522,64 +523,30 @@ export class TidySheetSettingsQuadroneApplication
     return app;
   }
 
-  /**
-   *  Get tabs for the calling sheet.
-   */
-  _getTabsForParentSheet(): TidySheetSettingsTabInfo[] {
-    const runtime = this._getRuntime();
-    if (!runtime) {
-      return [];
+  _getRuntime(): SheetSettingsRuntimeAdapter | undefined {
+    // Item sheet tabs are handled differently
+    if (this.document?.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      const runtime = this._itemRuntime;
+      if (!runtime) {
+        return undefined;
+      }
+      const type = this.document.type;
+      return {
+        getAllRegisteredTabs: () => runtime.getAllRegisteredTabs(type),
+      };
     }
 
-    const allRegisteredTabs = runtime.getAllRegisteredTabs();
-    const selectedIds = this._getParentSheetTabIds(runtime);
-
-    // Show a settings entry for every registered tab. Tabs without dedicated
-    // settings content fall back to the placeholder pane in the template.
-    const settingsTabs = allRegisteredTabs.filter(
-      (t): t is NonNullable<typeof t> => !!t
-    );
-
-    return [
-      ...selectedIds
-        .map((id) => settingsTabs.find((t) => t.id === id))
-        .filter((t): t is NonNullable<typeof t> => !!t),
-      ...settingsTabs.filter((t) => !selectedIds.includes(t.id)),
-    ]
-      .map((t) => ({
-        id: t.id,
-        title: FoundryAdapter.localize(
-          typeof t.title === 'function' ? t.title() : t.title
-        ),
-        iconClass: t.iconClass,
-        tabHidden: !selectedIds.includes(t.id),
-      }));
-  }
-
-  _getParentSheetTabIds(runtime: ActorSheetQuadroneRuntime<any>): string[] {
-    const flag = TidyFlags.tabConfiguration.get(this.document);
-    if (flag?.selected?.length) {
-      return [...flag.selected];
+    if (this.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      const runtime = this._runtimes?.[this.document.type];
+      if (!runtime) {
+        return undefined;
+      }
+      return {
+        getAllRegisteredTabs: () => runtime.getAllRegisteredTabs(),
+      };
     }
 
-    const worldDefault =
-      settings.value.tabConfiguration?.[this.document.documentName]?.[
-        this.document.type
-      ]?.selected ?? [];
-
-    if (worldDefault.length) {
-      return [...worldDefault];
-    }
-
-    return runtime.getDefaultTabIds();
-  }
-
-  _getRuntime(): ActorSheetQuadroneRuntime<any> | undefined {
-    if (this.document?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
-      return undefined;
-    }
-
-    return this._runtimes?.[this.document.type];
+    return undefined;
   }
 
   /**
