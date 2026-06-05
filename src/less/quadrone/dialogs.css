@@ -212,8 +212,9 @@
     }
   }
 
-  .tidy-journal-entry .dialog-content-container {
-    padding: 0 var(--t5e-size-4x) 2rem;
+  .window-content .dialog-content-container {
+    padding-left: var(--t5e-size-4x);
+    padding-right: var(--t5e-size-4x);
   }
 
   .window-header {

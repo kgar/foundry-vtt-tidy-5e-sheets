@@ -22,11 +22,10 @@
     {localize('TIDY5E.Settings.SheetPreferences.explanation')}
   </p>
 
-  <div class="controls-row">
+  <div class="controls-row flexrow">
     <button
       type="button"
-      class="button button-primary button-large use-default-btn"
-      style="flex: 1;"
+      class="button button-primary button-large use-default-btn flex1"
       onclick={() => {
         options.forEach((o) => (o.selected = true));
       }}
