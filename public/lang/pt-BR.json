@@ -1001,8 +1001,8 @@
     "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
         "name": "Organização da Seção de Abas da Ficha de Personagem",
         "hint": "Determina como as seções devem ser organizadas na aba Ficha de Personagem por padrão.",
-        "option.action": "Grupo por economia de ação",
-        "option.origin": "Grupo por item ou tipo de característica"
+        "option.action": "Agrupar por Economia de Ação",
+        "option.origin": "Agrupar por Item ou Tipo de Característica"
     },
     "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
         "name": "Aba Ficha de Personagem: Incluir Itens Utilizáveis Automaticamente",
