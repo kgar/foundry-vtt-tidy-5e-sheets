@@ -14,9 +14,10 @@ export class MonstersOfDrakkenheimModuleIntegration
   init(api: Tidy5eSheetsApi): void {
     // Since the setting requires a reload to toggle, we will simply avoid registering a column if it's disabled.
     if (
-      FoundryAdapter.getGameSetting(
+      FoundryAdapter.tryGetGameSetting(
         DRAKKENHEIM_CORE_CONSTANTS.MONSTERS_OF_DRAKKENHEIM_MODULE_ID,
-        DRAKKENHEIM_CORE_CONSTANTS.SETTING_DISABLE_TAB
+        DRAKKENHEIM_CORE_CONSTANTS.SETTING_DISABLE_TAB,
+        false
       )
     ) {
       return;
