@@ -86,8 +86,8 @@ export class WorldSettingsQuadroneApplication
       contentClasses: ['flexcol'],
     },
     position: {
-      width: 750,
-      height: 600,
+      width: 800,
+      height: 700,
     },
     actions: {},
     submitOnClose: false,
