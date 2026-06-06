@@ -63,7 +63,8 @@ export class WorldSettingsQuadroneApplication
     !!this.themeSettingsTab?.hasChanges ||
       !!this.tabConfigTab?.hasChanges ||
       !!this.headerControlsTab?.hasChanges ||
-      !!this.homebrewTab?.hasChanges
+      !!this.homebrewTab?.hasChanges ||
+      !!this.sheetPreferencesTab?.hasChanges
   );
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -118,6 +119,7 @@ export class WorldSettingsQuadroneApplication
     this.tabConfigTab.undoChanges();
     this.headerControlsTab.undoChanges();
     this.homebrewTab.undoChanges();
+    this.sheetPreferencesTab.undoChanges();
     this.tabPaneVersion++;
   }
 
@@ -140,6 +142,7 @@ export class WorldSettingsQuadroneApplication
     this.tabConfigTab.resetToDefault();
     this.headerControlsTab.resetToDefault();
     this.homebrewTab.resetToDefault();
+    this.sheetPreferencesTab.resetToDefault();
     this.tabPaneVersion++;
   }
 
