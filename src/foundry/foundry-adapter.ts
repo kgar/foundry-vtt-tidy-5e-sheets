@@ -887,12 +887,7 @@ export const FoundryAdapter = {
   },
   async renderSheetFromUuid(uuid: string) {
     const doc = await fromUuid(uuid);
-    const parent = doc?.parent ?? doc?.container;
-    if (parent) {
-      parent.sheet._renderChild(doc);
-    } else {
-      doc?.sheet?.render(true);
-    }
+    doc?.sheet?.render(true);
   },
   renderImagePopout(args: {
     src: string;
