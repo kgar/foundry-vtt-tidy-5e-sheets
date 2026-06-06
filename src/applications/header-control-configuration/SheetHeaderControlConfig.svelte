@@ -2,6 +2,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { clickOutside } from 'src/events/clickOutside.svelte';
   import type { HeaderControlConfigContextItem } from './WorldHeaderControlConfigurationQuadroneApplication.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
     config: HeaderControlConfigContextItem;
@@ -40,35 +45,39 @@
   </button>
 </div>
 
-<table class="sheet-preferences-table">
-  <thead>
-    <tr>
-    <th>
-      <h3 class="sheet-preferences-label">
-        {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
-      </h3>
-      </th>
-      <th class="sheet-preferences-column-label">
-        <i class="fas fa-square-list"></i>
-        {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationMenu') })}
-      </th>
-      <th class="sheet-preferences-column-label">
-        <i class="fas fa-ellipsis-vertical"></i>
-        {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationHeader') })}
-      </th>
-    </tr>
-  </thead>
-  <tbody class="sheet-preferences-list">
-    {#each config.controlSettings as setting}
+<TidyTable key={`${idPrefix}-header-controls`} toggleable={false} class="sheet-preferences-table">
+  {#snippet header()}
+    <TidyTableHeaderRow class="unset-header-height theme-dark">
+      <TidyTableHeaderCell primary={true}>
+        <h3 class="sheet-preferences-label">
+          {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
+        </h3>
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell class="sheet-preferences-column-label" columnWidth="8rem">
+        <i class="fas fa-square-list header-cell-icon"></i>
+        <span class="header-cell-label">
+          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationMenu') })}
+        </span>
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell class="sheet-preferences-column-label" columnWidth="8rem">
+        <i class="fas fa-ellipsis-horizontal header-cell-icon"></i>
+        <span class="header-cell-label">
+          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationHeader') })}
+        </span>
+      </TidyTableHeaderCell>
+    </TidyTableHeaderRow>
+  {/snippet}
+  {#snippet body()}
+    {#each config.controlSettings as setting (setting.id)}
       {@const formControlId = `${idPrefix}-${setting.title.slugify()}`}
-      <tr>
-        <td>
+      <TidyTableRow>
+        <TidyTableCell primary={true}>
           <label for={formControlId}>
             <i class={setting.icon}></i>
             {setting.title}
           </label>
-        </td>
-        <td>
+        </TidyTableCell>
+        <TidyTableCell columnWidth="8rem">
           <label class="radio">
             <input
               type="radio"
@@ -79,8 +88,8 @@
             />
             <span class="hidden">{menuOptionText}</span>
           </label>
-        </td>
-        <td>
+        </TidyTableCell>
+        <TidyTableCell columnWidth="8rem">
           <label class="radio">
             <input
               type="radio"
@@ -91,11 +100,11 @@
             />
             <span class="hidden">{headerOptionText}</span>
           </label>
-        </td>
-      </tr>
+        </TidyTableCell>
+      </TidyTableRow>
     {/each}
-  </tbody>
-</table>
+  {/snippet}
+</TidyTable>
 
 <div class="controls-row">
   <button

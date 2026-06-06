@@ -3,10 +3,12 @@
   --t5e-settings-border-color: var(--t5e-table-row-divider);
 
   &.theme-light {
-    --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
+    &.tidy-sheet-settings {
+      --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
 
-    .window-header {
-      border: 0.0625rem solid var(--t5e-settings-border-color);
+      .window-header {
+        border: 0.0625rem solid var(--t5e-settings-border-color);
+      }
     }
   }
 
@@ -452,14 +454,27 @@
     .controls-row {
       display: flex;
       justify-content: flex-end;
+      margin-top: var(--t5e-size-2x);
       gap: var(--t5e-size-2x);
     }
 
     .sheet-preferences-table {
-
-      tr th,
-      tr td {
+      :is(.tidy-table-cell, .tidy-table-header-cell) {
         padding: 0.3125rem 0.5rem;
+      }
+
+      .header-cell-icon {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: var(--t5e-icon-size-5x);
+        height: var(--t5e-icon-size-5x);
+      }
+
+      .header-cell-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .sheet-preferences-label {
