@@ -150,6 +150,7 @@ export class WorldSettingsQuadroneApplication
       await this.tabConfigTab.apply();
       await this.headerControlsTab.apply();
       await this.homebrewTab.apply();
+      await this.sheetPreferencesTab.apply();
     } catch (e) {
       error('Failed to save world settings', false, e);
       return;
