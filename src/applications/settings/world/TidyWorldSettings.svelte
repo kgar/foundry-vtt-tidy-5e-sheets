@@ -111,7 +111,7 @@
   let activeSelectedId: string = $derived(
     allAvailableTabs.some((e) => e.id === selectedId)
       ? selectedId
-      : allAvailableTabs[0]?.id ?? SETTINGS_DEFAULTS,
+      : (allAvailableTabs[0]?.id ?? SETTINGS_DEFAULTS),
   );
 
   let selectedSheetConfig = $derived(
@@ -133,7 +133,8 @@
     SETTINGS_SHEET_PREFERENCES,
   ]);
 
-  let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId));</script>
+  let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId));
+</script>
 
 <div class="tidy-sheet-settings">
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
