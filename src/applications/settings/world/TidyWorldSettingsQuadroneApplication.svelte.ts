@@ -197,6 +197,7 @@ export class WorldSettingsQuadroneApplication
       app.close = async () => {};
       this.headerControlsTab = app;
     }
+    
 
     if (!this.homebrewTab) {
       const app = new HomebrewSettingsApplication({});
