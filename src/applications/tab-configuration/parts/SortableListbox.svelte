@@ -168,7 +168,7 @@
 
   // --- Drag to reorder, with a drop indicator that lies in the gap between rows ---
 
-  let rowElements: HTMLLIElement[] = [];
+  let rowElements: HTMLLIElement[] = $state([]);
   let draggedIndex = $state<number | null>(null);
   let dropIndicatorIndex = $state<number | null>(null);
 

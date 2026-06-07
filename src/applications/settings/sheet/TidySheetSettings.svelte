@@ -139,7 +139,7 @@
   // Vertical gap between nav rows, in px (sync with `.nav-tab-list` gap).
   const ROW_GAP = 2;
 
-  let rowElements: HTMLButtonElement[] = [];
+  let rowElements: HTMLButtonElement[] = $state([]);
   let draggedTabIndex = $state<number | null>(null);
   let dropIndicatorIndex = $state<number | null>(null);
 
