@@ -1526,7 +1526,12 @@ export class TidyFlags {
       const toSave = TabConfigurationSchema.clean(config);
       TabConfigurationSchema.validate(toSave, { fallback: true });
 
-      return TidyFlags.setFlag(doc, TidyFlags.tabConfiguration.key, toSave);
+      return TidyFlags.setFlag(
+        doc,
+        TidyFlags.tabConfiguration.key,
+        toSave,
+        true,
+      );
     },
     /** Clears tab configuration. */
     unset(doc: any) {
