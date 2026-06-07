@@ -27,7 +27,7 @@
     sections = $bindable(),
     application,
     title,
-    tabConfigEntry,
+    tabConfigEntry = $bindable(),
     tabId,
   }: Props = $props();
 
@@ -124,7 +124,7 @@
     </fieldset>
   {/if}
   {#if tabConfigEntry}
-    <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+    <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />
   {/if}
   
   <fieldset class="section-config-container">

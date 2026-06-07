@@ -321,7 +321,7 @@
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG}
       <SheetTabConfigurationQuadrone
         app={app.tabDisplaySettingsTab}
-        config={app.tabDisplaySettingsTab._config}
+        bind:config={app.tabDisplaySettingsTab._config}
         title={app.tabDisplaySettingsTab._inclusionTabTitle}
       />
     {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
@@ -359,7 +359,7 @@
     {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.sidebarTabDisplaySettingsTab}
-        config={app.sidebarTabDisplaySettingsTab._config}
+        bind:config={app.sidebarTabDisplaySettingsTab._config}
         title={app.sidebarTabDisplaySettingsTab._inclusionTabTitle}
       />
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
@@ -368,7 +368,7 @@
       <SpecialTraitsPane
         app={app.getSpecialTraitsConfigTab()}
         tabId={selectedSheetTabId}
-        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
       />
     {:else if configureSectionsApp}
       <ConfigureSections
@@ -376,14 +376,14 @@
         title={configureSectionsApp.formTitle}
         bind:sections={configureSectionsApp.sections}
         optionGroups={configureSectionsApp.optionsGroups}
-        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
         tabId={selectedSheetTabId}
       />
     {:else}
       <BasicTabSettingsPane
         title={selectedEntry?.title ?? ''}
         tabId={selectedSheetTabId}
-        tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
       />
     {/if}
   </section>

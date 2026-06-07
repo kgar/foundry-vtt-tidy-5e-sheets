@@ -12,7 +12,7 @@
     tabId?: string;
   }
 
-  let { app, tabConfigEntry, tabId }: Props = $props();
+  let { app, tabConfigEntry = $bindable(), tabId }: Props = $props();
   setContext(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
     untrack(() => app._context),
@@ -33,6 +33,6 @@
     <SpecialTraits />
   {/if}
   {#if tabConfigEntry && tabId}
-    <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+    <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />
   {/if}
 </div>

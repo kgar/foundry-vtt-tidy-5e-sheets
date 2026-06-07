@@ -11,10 +11,10 @@
     title: string;
   }
 
-  let { config, title }: Props = $props();
+  let { config = $bindable(), title }: Props = $props();
 </script>
 
 <div class="dialog-content-container sheet-tab-configuration flexcol">
   <h2>{title}</h2>
-  <SortableListbox entry={config.entry} />
+  <SortableListbox bind:entry={config.entry} />
 </div>

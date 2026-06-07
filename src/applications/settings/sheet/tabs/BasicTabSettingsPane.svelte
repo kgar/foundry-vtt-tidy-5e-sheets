@@ -8,10 +8,10 @@
     tabConfigEntry: TabConfigContextEntry;
   }
 
-  let { title, tabId, tabConfigEntry }: Props = $props();
+  let { title, tabId, tabConfigEntry = $bindable() }: Props = $props();
 </script>
 
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
-  <TabVisibilityControls entry={tabConfigEntry} {tabId} />
+  <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />
 </div>
