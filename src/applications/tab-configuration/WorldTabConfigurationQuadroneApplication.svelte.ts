@@ -226,8 +226,7 @@ export class WorldTabConfigurationQuadroneApplication
   resetToDefault() {
     this._config = this._config.map((entry) => ({
       ...entry,
-      selected: entry.defaultSelected?.map((t) => ({ ...t })) ?? [],
-      unselected: entry.defaultUnselected?.map((t) => ({ ...t })) ?? [],
+      tabs: entry.defaultTabs.map((t) => ({ ...t })),
       visibilityLevels: entry.visibilityLevels.map((l) => ({
         ...l,
         visibilityLevel: null,
