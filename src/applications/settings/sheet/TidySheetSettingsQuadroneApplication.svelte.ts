@@ -110,6 +110,14 @@ export class TidySheetSettingsQuadroneApplication
   // For storing save/cancel state
   _persisted = false;
 
+  static sheetTabId(tabId: string): string {
+    return `sheet:${tabId}`;
+  }
+
+  static settingsSheetTabId(documentName: string, documentType: string): string {
+    return `settings:sheet:${documentName}:${documentType}`;
+  }
+
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
@@ -313,7 +321,7 @@ export class TidySheetSettingsQuadroneApplication
     );
 
     new WorldSettingsQuadroneApplication({
-      initialTabId: `settings:sheet:${this.document.documentName}:${this.document.type}`,
+      initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(this.document.documentName, this.document.type),
     }).render(true);
   }
 

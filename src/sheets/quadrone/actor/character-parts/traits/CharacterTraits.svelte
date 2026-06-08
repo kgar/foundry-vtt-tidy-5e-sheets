@@ -24,15 +24,8 @@
       <button
         type="button"
         class="button"
-        onclick={async () => {
-          const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-          context.sheet._renderChild(
-            new TidySheetSettingsQuadroneApplication({
-              document: context.actor,
-              initialTabId: `sheet:${CONSTANTS.TAB_CHARACTER_ATTRIBUTES}`,
-            }),
-          );
-        }}
+        data-action="configureTab"
+        data-tab-id={CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
       >
         <i class="fa-solid fa-star"></i>
         {localize('DND5E.SpecialTraits')}

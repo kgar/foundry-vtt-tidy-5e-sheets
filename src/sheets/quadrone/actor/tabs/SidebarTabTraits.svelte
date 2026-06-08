@@ -25,15 +25,7 @@
         label={localize('DND5E.SpecialTraits')}
         entries={context.specialTraits}
         configurationTooltip={localize('DND5E.SpecialTraits')}
-        onconfig={async () => {
-          const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-          context.sheet._renderChild(
-            new TidySheetSettingsQuadroneApplication({
-              document: context.actor,
-              initialTabId: `sheet:${CONSTANTS.TAB_CHARACTER_ATTRIBUTES}`,
-            }),
-          );
-        }}
+        configAttributes={{ 'data-action': 'configureTab', 'data-tab-id': CONSTANTS.TAB_CHARACTER_ATTRIBUTES }}
         icon="fa-solid fa-star"
       />
     {/snippet}
