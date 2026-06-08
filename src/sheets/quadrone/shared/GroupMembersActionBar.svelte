@@ -1,14 +1,10 @@
 <script lang="ts">
-  import {
-    type SectionOptionGroup,
-  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     GroupSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
-  import { buildGroupMembersSettingsTab } from '../actor/settings/GroupMemberSettingsTab';
   import ExpandCollapseButton from './ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -17,7 +13,6 @@
     searchCriteria: string;
     tabId: string;
     sections: TidySectionBase[];
-    tabOptionGroups?: SectionOptionGroup[];
   }
 
   let {
@@ -30,21 +25,8 @@
   let context = $derived(getSheetContext<GroupSheetQuadroneContext>());
 
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
-  let settingsTab = $derived(buildGroupMembersSettingsTab(context, tabId));
 
   let tabName = $derived(localize(tab?.title ?? ''));
-
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
 <section
@@ -56,22 +38,16 @@
   <Search bind:searchCriteria />
 
   {#if context.editable}
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      role="button"
-      tabindex="0"
-      aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+    <button
+      type="button"
       class="button button-icon-only"
+      data-action="configureTab"
+      data-tab-id={tabId}
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-      onclick={openTabSettings}
-      onkeydown={(event) => {
-        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
-          event.preventDefault();
-          openTabSettings();
-        }
-      }}
+      aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+      data-tooltip
     >
       <i class="fas fa-gear"></i>
-    </a>
+    </button>
   {/if}
 </section>

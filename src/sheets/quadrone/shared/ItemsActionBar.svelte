@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -19,23 +18,12 @@
   interface Props {
     searchCriteria: string;
     tabId: string;
-    sections: TidySectionBase[];
-    tabOptionGroups?: SectionOptionGroup[];
-    onConfigureClick?: (params: {
-      tabId: string;
-      tabName: string;
-      sections: TidySectionBase[];
-      tabOptionGroups: SectionOptionGroup[];
-      formTitle: string;
-    }) => void;
+    sections?: TidySectionBase[];
   }
 
   let {
     searchCriteria = $bindable(),
     tabId,
-    sections,
-    tabOptionGroups = [],
-    onConfigureClick,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -63,23 +51,6 @@
     ItemSortRuntime.getDocumentSortMethodsQuadrone(context.document, tabId) ??
       [],
   );
-  
-
-  function openConfigureSections() {
-    if (!context.editable || !onConfigureClick) return;
-
-    const formTitle = localize('TIDY5E.ConfigureTab.Title', {
-      tabName: tabName,
-    });
-
-    onConfigureClick({
-      tabId,
-      tabName,
-      sections,
-      tabOptionGroups,
-      formTitle,
-    });
-  }
 </script>
 
 <section
@@ -115,23 +86,16 @@
 
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} {methods} />
 
-  {#if context.editable && onConfigureClick}
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      role="button"
-      tabindex="0"
+  {#if context.editable}
+    <button
+      type="button"
       class="button button-icon-only"
+      data-action="configureTab"
+      data-tab-id={tabId}
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-      onclick={openConfigureSections}
-      onkeydown={(event) => {
-        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
-          event.preventDefault();
-          openConfigureSections();
-        }
-      }}
- 
+      data-tooltip
     >
       <i class="fas fa-gear"></i>
-    </a>
+    </button>
   {/if}
 </section>

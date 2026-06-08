@@ -36,10 +36,11 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let settingsTab = $derived(buildNpcStatblockSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
   let sections = $derived(
-    settingsTab.sections as (FeatureSection | SpellbookSection)[],
+    buildNpcStatblockSettingsTab(context, tabId).sections as (
+      | FeatureSection
+      | SpellbookSection
+    )[],
   );
 
   let hasAtLeastOneItem = $derived(
@@ -63,26 +64,9 @@
     });
   });
 
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
-<ItemsActionBar
-  bind:searchCriteria
-  {sections}
-  {tabId}
-  {tabOptionGroups}
-  onConfigureClick={openTabSettings}
-/>
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content">
   {#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}

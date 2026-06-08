@@ -41,6 +41,7 @@ import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
+import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -91,6 +92,7 @@ export function TidyExtensibleDocumentSheetMixin<
         'activity-use': TidyDocumentSheet.#useActivity,
         toggle: TidyDocumentSheet.#toggle,
         'transfer-currency': TidyDocumentSheet.#transferCurrency,
+        configureTab: TidyDocumentSheet.#configureTab,
       },
     };
 
@@ -937,6 +939,35 @@ export function TidyExtensibleDocumentSheetMixin<
       return new dnd5e.applications.CurrencyManager({
         document: this.document,
       }).render({ force: true });    
+    }
+
+    /**
+     * Handle configuring a tab on a sheet.
+     * @param this {TidyDocumentSheet}
+     * @param _event {Event}
+     * @param target The clicked element, with a data-tab-id attribute containing the tab ID
+     * @returns Nothing, loads the tab configuration application
+     */
+    static async #configureTab(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const tabId = target.dataset.tabId;
+      if (!tabId) {
+        return;
+      }
+
+      this._renderChild(
+        new TidySheetSettingsQuadroneApplication({
+          document: this.document,
+          initialTabId: tabId,
+        }),
+      );
     }
 
     /**

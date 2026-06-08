@@ -22,8 +22,6 @@
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { buildCharacterSheetSettingsTab } from '../settings/CharacterSheetSettingsTab';
-
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -38,9 +36,6 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(context.sheetTabSections);
-
-  let settingsTab = $derived(buildCharacterSheetSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(buildCharacterSheetSettingsTab(context, tabId).optionsGroups ?? []);
 
   let showSheetPins = $state(true);
 
@@ -102,20 +97,9 @@
 
   let tabName = $derived(localize(tab?.title ?? ''));
 
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
-<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} onConfigureClick={openTabSettings} />
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content" bind:this={tabContent}>
   {#if showSheetPins}
@@ -290,7 +274,8 @@
             tabName: tabName,
           })}
           class="button button-borderless button-icon-only"
-          onclick={() => openTabSettings()}
+          data-action="configureTab"
+          data-tab-id={tabId}
         >
           <i class="fas fa-gear"></i>
         </button>

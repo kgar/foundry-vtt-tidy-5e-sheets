@@ -13,11 +13,7 @@
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import {
-    buildMcdmPowersSections,
-    buildMcdmPowersSettingsTab,
-  } from './settings/McdmPowersSettingsTab';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+  import { buildMcdmPowersSections } from './settings/McdmPowersSettingsTab';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -38,9 +34,6 @@
   let levels = Array.fromRange(9);
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let settingsTab = $derived(buildMcdmPowersSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
   let searchCriteria = $state('');
 
@@ -98,16 +91,6 @@
     });
   }
 
-  function openTabSettings() {
-    context.editable &&
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    )
-  }
 </script>
 
 <div class="tab-content">
@@ -193,13 +176,7 @@
       </TidyTable>
     </div>
   {/if}
-  <ItemsActionBar
-    bind:searchCriteria
-    sections={powerSections}
-    {tabId}
-    {tabOptionGroups}
-    onConfigureClick={openTabSettings}
-  />
+  <ItemsActionBar bind:searchCriteria sections={powerSections} {tabId} />
   <McdmPowersTables
     sections={powerSections}
     {searchCriteria}

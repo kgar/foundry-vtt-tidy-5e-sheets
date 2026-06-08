@@ -13,18 +13,12 @@
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { Container } from 'src/features/containers/Container';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
-  import {
-    buildContainerContentsSections,
-    buildContainerContentsSettingsTab,
-  } from '../settings/ContainerContentsSettingsTab';
+  import { buildContainerContentsSections } from '../settings/ContainerContentsSettingsTab';
 
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let settingsTab = $derived(buildContainerContentsSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -50,26 +44,9 @@
 
   let footerEl: HTMLElement | undefined = $state();
 
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
-<ItemsActionBar
-  bind:searchCriteria
-  sections={configuredContents}
-  {tabId}
-  {tabOptionGroups}
-  onConfigureClick={openTabSettings}
-/>
+<ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
 
 
 <!-- Tables -->

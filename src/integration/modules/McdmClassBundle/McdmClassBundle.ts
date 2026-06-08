@@ -15,6 +15,7 @@ import { defaultItemFilters } from 'src/runtime/item/default-item-filters';
 import type { ItemFilter } from 'src/runtime/item/item.types';
 import type { Item5e } from 'src/types/item.types';
 import type { TidySectionBase } from 'src/types/types';
+import { buildMcdmPowersSettingsTab } from './settings/McdmPowersSettingsTab';
 
 declare global {
   interface CONFIG extends OriginalConfig {
@@ -61,7 +62,8 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       title: () => FoundryAdapter.localize('TYPES.Item.mcdm-class-bundle.powerPl'),
       tabId: this.powersTabId,
       component: McdmPowersTab,
-      iconClass: 'fa-solid fa-brain'
+      iconClass: 'fa-solid fa-brain',
+      settingsTabBuilder: buildMcdmPowersSettingsTab,
     });
     
     api.registerCharacterTab(powersTab, {

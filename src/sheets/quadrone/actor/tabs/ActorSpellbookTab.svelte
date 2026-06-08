@@ -18,7 +18,6 @@
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { buildActorSpellbookSettingsTab } from '../settings/ActorSpellbookSettingsTab';
 
   let context =
     $derived(
@@ -42,9 +41,6 @@
     SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
 
-  let settingsTab = $derived(buildActorSpellbookSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
-
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
@@ -62,26 +58,9 @@
     });
   });
 
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
-<ItemsActionBar
-  bind:searchCriteria
-  sections={spellbook}
-  {tabId}
-  {tabOptionGroups}
-  onConfigureClick={openTabSettings}
-/>
+<ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} />
 
 <div class="tab-content">
   {#if showSheetPins}

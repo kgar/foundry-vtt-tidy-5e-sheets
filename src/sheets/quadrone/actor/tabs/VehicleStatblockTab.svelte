@@ -51,10 +51,11 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let settingsTab = $derived(buildVehicleStatblockSettingsTab(context, tabId));
-  let tabOptionGroups = $derived(settingsTab.optionsGroups ?? []);
   let sections = $derived(
-    settingsTab.sections as (InventorySection | DraftAnimalSection)[],
+    buildVehicleStatblockSettingsTab(context, tabId).sections as (
+      | InventorySection
+      | DraftAnimalSection
+    )[],
   );
 
   $effect(() => {
@@ -96,18 +97,6 @@
       'showSheetPins',
     ) ?? true,
   );
-
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -204,13 +193,7 @@
   }
 </script>
 
-<ItemsActionBar
-  bind:searchCriteria
-  {sections}
-  {tabId}
-  {tabOptionGroups}
-  onConfigureClick={openTabSettings}
-/>
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content">
   {#if showSheetPins}

@@ -20,8 +20,6 @@
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
-
   let context =
     $derived(
       getSheetContext<
@@ -30,7 +28,6 @@
     );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-  let settingsTab = $derived(buildActorInventorySettingsTab(context, tabId));
 
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
@@ -67,25 +64,9 @@
     });
   });
 
-  async function openTabSettings() {
-    if (!context.editable) return;
-    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
-    context.sheet._renderChild(
-      new TidySheetSettingsQuadroneApplication({
-        document: context.document,
-        initialTabId: tabId,
-        tabSettings: { [tabId]: settingsTab },
-      }),
-    );
-  }
 </script>
 
-<InventoryActionBar
-  bind:searchCriteria
-  sections={inventory}
-  {tabId}
-  onConfigureClick={openTabSettings}
-/>
+<InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
 <div class="tab-content">
   {#if showSheetPins}

@@ -18,7 +18,6 @@
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { createSearchResultsState } from 'src/features/search/search.svelte';
   import { isNil } from 'src/utils/data';
@@ -64,18 +63,6 @@
     ),
   );
 
-  const tabOptionGroups = $derived([
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(
-          context.document.type,
-          CONSTANTS.TAB_MEMBERS,
-        ),
-      ],
-    },
-  ]);
-
   $effect(() => {
     searchResults.uuids = !isNil(searchCriteria)
       ? new Set(
@@ -98,7 +85,6 @@
     bind:searchCriteria
     {sections}
     tabId={CONSTANTS.TAB_MEMBERS}
-    {tabOptionGroups}
   />
 
   <div class="tab-content" {@attach observeResize(onResize)}>
