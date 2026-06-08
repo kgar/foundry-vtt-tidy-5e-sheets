@@ -25,6 +25,7 @@
 
   const SETTINGS_THEME = TidySheetSettingsTabIds.theme;
   const SETTINGS_TAB_CONFIG = TidySheetSettingsTabIds.tabConfig;
+  const SETTINGS_SPECIAL_TRAITS = TidySheetSettingsTabIds.specialTraits;
   const SETTINGS_HEADER_CONTROLS = TidySheetSettingsTabIds.headerControls;
   const SETTINGS_SIDEBAR_TAB_CONFIG = TidySheetSettingsTabIds.sidebarTabConfig;
   const SETTINGS_SPELL_ASSIGNMENTS = TidySheetSettingsTabIds.spellAssignments;
@@ -38,6 +39,12 @@
   };
 
   let spellAssignmentsApp = $derived(app.getSpellSourceItemAssignmentsTab());
+
+  let specialTraitsApp = $derived(
+    app.document?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? app.getSpecialTraitsConfigTab()
+      : undefined,
+  );
 
   let headerControlEntry = $derived(app.headerControlEntry);
 
@@ -59,6 +66,15 @@
         iconClass: 'fas fa-file-invoice',
         hasChanges: app.tabDisplaySettingsTab?.hasChanges,
       },
+      ...(specialTraitsApp
+        ? [
+            {
+              id: SETTINGS_SPECIAL_TRAITS,
+              title: localize('DND5E.SpecialTraits'),
+              iconClass: 'fa-solid fa-star',
+            },
+          ]
+        : []),
       ...(app.headerControlsTab && headerControlEntry
         ? [
             {
@@ -369,6 +385,8 @@
       />
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
       <SpellSourceAssignmentsPane app={spellAssignmentsApp} />
+    {:else if activeSelectedId === SETTINGS_SPECIAL_TRAITS && specialTraitsApp}
+      <SpecialTraitsPane app={specialTraitsApp} />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.tabDisplaySettingsTab}
       <SpecialTraitsPane
         app={app.getSpecialTraitsConfigTab()}
