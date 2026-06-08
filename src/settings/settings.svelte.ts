@@ -175,7 +175,7 @@ export function createSettings() {
           icon: 'fa-solid fa-globe',
           type: WorldSettingsFormApplication,
           restricted: true,
-          truesight: true,
+          hideClassic: true,
         },
       },
       userMenu: {
@@ -186,7 +186,7 @@ export function createSettings() {
           icon: 'fa-solid fa-user-gear',
           type: UserSettingsFormApplication,
           restricted: false,
-          truesight: true,
+          hideClassic: true,
         },
       },
       worldThemeSettingsMenu: {
@@ -207,7 +207,7 @@ export function createSettings() {
           icon: 'fa-solid fa-right-left',
           type: BulkMigrationsApplication,
           restricted: true,
-          truesight: true,
+          hideClassic: true,
         },
       },
       applyTidySheetPreferences: {
@@ -2125,20 +2125,20 @@ export function createSettings() {
         },
       },
 
-      // hideClassic: {
-      //   options: {
-      //     name: 'Tidy 5e Hide Classic Sheets',
-      //     hint: 'Hide Tidy Classic sheets from the world.',
-      //     scope: 'world',
-      //     config: false,
-      //     default: false,
-      //     type: Boolean,
-      //     requiresReload: true,
-      //   },
-      //   get() {
-      //     return FoundryAdapter.getTidySetting<boolean>('hideClassicSheets');
-      //   },
-      // },
+      hideClassic: {
+        options: {
+          name: 'Tidy 5e Hide Classic Sheets',
+          hint: 'Hide Tidy Classic sheets from the world.',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+          requiresReload: true,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('hideClassic');
+        },
+      },
     } satisfies Tidy5eSettings,
   } as const;
 }
@@ -2228,9 +2228,13 @@ export function initSettings() {
   }
 
   const truesight = SettingsProvider.settings.truesight.get();
+  const hideClassic = SettingsProvider.settings.hideClassic.get();
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
-    if ('truesight' in menu[1].options && truesight) {
+    if ('truesight' in menu[1].options && !truesight) {
+      continue;
+    }
+    if ('hideClassic' in menu[1].options && hideClassic) {
       continue;
     }
 
