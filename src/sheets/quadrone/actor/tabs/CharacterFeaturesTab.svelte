@@ -12,7 +12,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildCharacterFeaturesSettingsTab } from '../settings/CharacterFeaturesSettingsTab';
   import type { FeatureSection } from 'src/types/types';
 
@@ -51,8 +50,9 @@
     });
   });
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

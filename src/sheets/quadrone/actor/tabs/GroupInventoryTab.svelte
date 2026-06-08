@@ -18,7 +18,6 @@
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
 
   let context = $derived(getGroupSheetQuadroneContext());
@@ -169,8 +168,9 @@
     bind:searchCriteria
     sections={inventory}
     {tabId}
-    onConfigureClick={() => {
+    onConfigureClick={async () => {
       const settingsTab = buildActorInventorySettingsTab(context, tabId);
+      const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
       context.sheet._renderChild(
         new TidySheetSettingsQuadroneApplication({
           document: context.document,

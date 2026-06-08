@@ -19,7 +19,6 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { buildActorSpellbookSettingsTab } from '../settings/ActorSpellbookSettingsTab';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
   let context =
     $derived(
@@ -63,15 +62,16 @@
     });
   });
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,
         initialTabId: tabId,
         tabSettings: { [tabId]: settingsTab },
       }),
-    )
+    );
   }
 </script>
 

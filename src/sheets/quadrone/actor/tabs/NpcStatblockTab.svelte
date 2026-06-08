@@ -18,7 +18,6 @@
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildNpcStatblockSettingsTab } from '../settings/NpcStatblockSettingsTab';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
 
@@ -64,8 +63,9 @@
     });
   });
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

@@ -21,7 +21,6 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildCharacterSheetSettingsTab } from '../settings/CharacterSheetSettingsTab';
 
@@ -103,15 +102,16 @@
 
   let tabName = $derived(localize(tab?.title ?? ''));
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,
         initialTabId: tabId,
         tabSettings: { [tabId]: settingsTab },
       }),
-    )
+    );
   }
 </script>
 

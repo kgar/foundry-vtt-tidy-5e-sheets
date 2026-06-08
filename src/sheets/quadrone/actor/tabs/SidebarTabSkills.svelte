@@ -1,7 +1,6 @@
 <script lang="ts">
   import SkillsCard from '../parts/skills/SkillsCard.svelte';
   import ToolsCard from '../parts/ToolsCard.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import CharacterTraitPills from '../character-parts/traits/CharacterTraitPills.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
@@ -26,13 +25,15 @@
         label={localize('DND5E.SpecialTraits')}
         entries={context.specialTraits}
         configurationTooltip={localize('DND5E.SpecialTraits')}
-        onconfig={() =>
+        onconfig={async () => {
+          const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
           context.sheet._renderChild(
             new TidySheetSettingsQuadroneApplication({
               document: context.actor,
               initialTabId: `sheet:${CONSTANTS.TAB_CHARACTER_ATTRIBUTES}`,
             }),
-          )}
+          );
+        }}
         icon="fa-solid fa-star"
       />
     {/snippet}

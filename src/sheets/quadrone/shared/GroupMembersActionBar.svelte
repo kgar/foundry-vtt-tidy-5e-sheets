@@ -4,7 +4,6 @@
   } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import type {
     GroupSheetQuadroneContext,
     TidySectionBase,
@@ -35,8 +34,9 @@
 
   let tabName = $derived(localize(tab?.title ?? ''));
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

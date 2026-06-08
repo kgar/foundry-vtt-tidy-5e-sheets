@@ -17,7 +17,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
 
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -65,8 +64,9 @@
   bind:searchCriteria
   sections={cargo}
   {tabId}
-  onConfigureClick={() => {
+  onConfigureClick={async () => {
     const settingsTab = buildActorInventorySettingsTab(context, tabId);
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

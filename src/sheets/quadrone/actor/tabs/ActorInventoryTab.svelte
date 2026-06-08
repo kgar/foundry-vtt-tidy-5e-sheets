@@ -20,7 +20,6 @@
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildActorInventorySettingsTab } from '../settings/ActorInventorySettingsTab';
 
   let context =
@@ -68,8 +67,9 @@
     });
   });
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

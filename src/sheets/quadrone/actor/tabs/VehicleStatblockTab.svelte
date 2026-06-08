@@ -26,7 +26,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import { buildVehicleStatblockSettingsTab } from '../settings/VehicleStatblockSettingsTab';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
 
@@ -98,8 +97,9 @@
     ) ?? true,
   );
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,

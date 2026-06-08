@@ -13,7 +13,6 @@
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { Container } from 'src/features/containers/Container';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
-  import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
   import {
     buildContainerContentsSections,
     buildContainerContentsSettingsTab,
@@ -51,15 +50,16 @@
 
   let footerEl: HTMLElement | undefined = $state();
 
-  function openTabSettings() {
-    context.editable &&
+  async function openTabSettings() {
+    if (!context.editable) return;
+    const { TidySheetSettingsQuadroneApplication } = await import('src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte');
     context.sheet._renderChild(
       new TidySheetSettingsQuadroneApplication({
         document: context.document,
         initialTabId: tabId,
         tabSettings: { [tabId]: settingsTab },
       }),
-    )
+    );
   }
 </script>
 
