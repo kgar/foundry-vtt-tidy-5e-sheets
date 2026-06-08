@@ -46,6 +46,17 @@ ${sorted.map((p) => `  '${p}',`).join('\n')}
 ];
 `;
 
+  const existingContents = fs.existsSync(resolvedOutput)
+    ? fs.readFileSync(resolvedOutput, 'utf-8')
+    : null;
+
+  if (existingContents === fileContents) {
+    console.log(
+      `[== Image manifest unchanged: ${sorted.length} images -> ${OUTPUT_FILE} ==]`
+    );
+    return;
+  }
+
   fs.writeFileSync(resolvedOutput, fileContents);
   console.log(
     `[== Generated image manifest: ${sorted.length} images -> ${OUTPUT_FILE} ==]`
