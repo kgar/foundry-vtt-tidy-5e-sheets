@@ -337,7 +337,7 @@
     "hint": "Configure which tabs display on the {tabName} sheet, in which order, and to who."
   },
   "TIDY5E.SheetSettings": {
-    "title": "Sheet Settings",
+    "title": "Tidy Sheet Settings",
     "hint": "Configure the settings for the sheet.",
     "Group": {
       "SheetSettings": "Sheet Settings",
