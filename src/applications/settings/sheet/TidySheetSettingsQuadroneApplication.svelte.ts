@@ -231,20 +231,10 @@ export class TidySheetSettingsQuadroneApplication
     pane.resetToDefault();
   }
 
-  get actorHasSpells(): boolean {
-    if (this.document?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
-      return false;
-    }
-
-    return this.document.items.some(
-      (item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL,
-    );
-  }
-
   getSpellSourceItemAssignmentsTab():
     | SpellSourceItemAssignmentsFormApplication
     | undefined {
-    if (!this.actorHasSpells) {
+    if (!this.document?.itemTypes?.spell?.length) {
       return undefined;
     }
 
