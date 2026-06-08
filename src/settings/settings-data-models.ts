@@ -1,4 +1,7 @@
-import type { SheetTabConfigEntry } from './settings.types';
+import type {
+  SheetTabConfigEntry,
+  SheetTabConfiguration,
+} from './settings.types';
 
 export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
   {
@@ -90,6 +93,45 @@ export function deriveTabsFromLegacyTabConfiguration(
   }
 
   return result;
+}
+
+/**
+ * Visible tab IDs in display order. Use the new `tabs` map first then 
+ * fall back to the legacy `selected` array.
+ * TODO: Migrate off the legacy tab settings, then drop the fallback.
+ */
+export function getSelectedTabIds(
+  config: SheetTabConfiguration | undefined | null
+): string[] {
+  const tabs = config?.tabs;
+  if (tabs && Object.keys(tabs).length) {
+    return Object.values(tabs)
+      .filter((t) => t.show)
+      .sort((a, b) => a.order - b.order)
+      .map((t) => t.key);
+  }
+  return config?.selected ?? [];
+}
+
+/**
+ * Per-tab viewer visibility levels by tab ID. Use the new `tabs` map first 
+ * then fall back to `visibilityLevels`
+ * TODO: Migrate off the legacy tab settings, then drop the fallback.
+ */
+export function getTabVisibilityLevels(
+  config: SheetTabConfiguration | undefined | null
+): Record<string, number | null> {
+  const tabs = config?.tabs;
+  if (tabs && Object.keys(tabs).length) {
+    return Object.values(tabs).reduce<Record<string, number | null>>(
+      (prev, t) => {
+        prev[t.key] = t.visibilityLevel;
+        return prev;
+      },
+      {}
+    );
+  }
+  return config?.visibilityLevels ?? {};
 }
 
 export const HeaderControlConfigurationSchema =

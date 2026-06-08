@@ -12,6 +12,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { TabConfigContextEntry } from './tab-configuration.types';
 import {
+  buildTabConfigMap,
   getActorTabContext,
   getCanonicalTabSelection,
   getItemTabContext,
@@ -146,22 +147,35 @@ export class WorldTabConfigurationQuadroneApplication
     let toSave = this._config.reduce<TabConfiguration>((prev, curr) => {
       let docName = (prev[curr.documentName] ??= {});
 
-      // When selected tabs exactly match default selections, exclude that sheet type from settings, which represents taking the default tabs.
-      let selected =
-        curr.defaultSelected?.length === curr.selected?.length &&
-        curr.defaultSelected?.every((d, i) => d.id === curr.selected?.[i]?.id)
-          ? undefined
-          : curr.selected;
+      // When the tab array exactly matches the default (order + show), exclude
+      // that sheet type from settings, which represents taking the default tabs.
+      const matchesDefault =
+        curr.tabs.length === curr.defaultTabs.length &&
+        curr.tabs.every((t, i) => {
+          const d = curr.defaultTabs[i];
+          return d && d.id === t.id && d.show === t.show;
+        });
 
-      if (selected || curr.visibilityLevels.some((l) => !!l)) {
+      const hasVisibilityOverride = curr.visibilityLevels.some(
+        (l) => l.visibilityLevel != null
+      );
+
+      if (!matchesDefault || hasVisibilityOverride) {
         const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
+        const selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
 
         docName[docTypeKey] = {
-          selected: selected?.map((s) => s.id) ?? [],
+          // Legacy fields kept in sync for any sheets not yet migrated.
+          // TODO: Drop these once all reads go through the keyed `tabs` map.
+          selected: matchesDefault ? [] : selectedIds,
           visibilityLevels: curr.visibilityLevels.reduce((levels, level) => {
             levels[level.id] = level.visibilityLevel;
             return levels;
           }, {} as Record<string, number | null>),
+          
+          tabs: matchesDefault
+            ? {}
+            : buildTabConfigMap(curr.tabs, curr.visibilityLevels),
         };
       }
 

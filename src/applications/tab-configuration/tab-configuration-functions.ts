@@ -13,6 +13,7 @@ import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRu
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { getSelectedTabIds } from 'src/settings/settings-data-models';
 import type { CustomTabTitle } from 'src/api';
 
 /**
@@ -95,12 +96,13 @@ function getWorldDefaultSelectedTabIds(
   type: string,
   typeOverride?: string
 ): string[] | undefined {
-  const selected =
+  const selected = getSelectedTabIds(
     SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
       typeOverride ?? type
-    ]?.selected;
+    ]
+  );
 
-  if (selected?.length > 0) {
+  if (selected.length > 0) {
     return selected;
   }
 }

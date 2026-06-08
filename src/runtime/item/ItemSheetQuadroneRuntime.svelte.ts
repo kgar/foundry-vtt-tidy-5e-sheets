@@ -46,6 +46,10 @@ import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
+import {
+  getSelectedTabIds,
+  getTabVisibilityLevels, 
+} from 'src/settings/settings-data-models';
 import type {
   ItemTabRegistrationOptions,
   TabEnabledCallbackFunctionOverrideOptions,
@@ -116,8 +120,9 @@ class ItemSheetQuadroneRuntimeImpl {
     let tabsForType = this._getVisibleTabs(context);
     let tabIds = tabsForType.map((t) => t.id);
 
-    const selectedTabs =
-      TidyFlags.tabConfiguration.get(context.item)?.selected ?? [];
+    const selectedTabs = getSelectedTabIds(
+      TidyFlags.tabConfiguration.get(context.item)
+    );
 
     if (selectedTabs?.length) {
       tabIds = tabIds
@@ -126,10 +131,11 @@ class ItemSheetQuadroneRuntimeImpl {
     }
 
     if (!selectedTabs?.length) {
-      let defaultTabs =
+      let defaultTabs = getSelectedTabIds(
         settings.value.tabConfiguration[context.document.documentName]?.[
           context.document.type
-        ]?.selected ?? [];
+        ]
+      );
 
       if (!defaultTabs.length) {
         defaultTabs = this.getDefaultTabIds(context.document.type);
@@ -160,13 +166,15 @@ class ItemSheetQuadroneRuntimeImpl {
       return [...tabs];
     }
 
-    const worldTabConfig =
+    const worldTabConfig = getTabVisibilityLevels(
       settings.value.tabConfiguration[context.document.documentName]?.[
         context.document.type
-      ]?.visibilityLevels ?? {};
+      ]
+    );
 
-    const sheetTabConfig =
-      TidyFlags.tabConfiguration.get(context.document)?.visibilityLevels ?? {};
+    const sheetTabConfig = getTabVisibilityLevels(
+      TidyFlags.tabConfiguration.get(context.document)
+    );
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
