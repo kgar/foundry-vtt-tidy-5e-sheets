@@ -60,7 +60,7 @@
         content: {
           type: 'svelte',
           component: SortableListbox,
-          getProps: () => ({ entry }),
+          getProps: () => ({ tabConfigContext: entry }),
         },
       });
     }
@@ -88,7 +88,7 @@
         content: {
           type: 'svelte',
           component: SortableListbox,
-          getProps: () => ({ entry }),
+          getProps: () => ({ tabConfigContext: entry }),
         },
       });
     }

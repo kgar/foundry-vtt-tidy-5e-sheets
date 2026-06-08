@@ -1,9 +1,10 @@
 <script lang="ts" module>
   /**
-   * {@link SortableListbox} items are generic to support both tabs and sections.
+   * Item using `key` as the identity. Sections already have it, tabs
+   * map to it using `id`.
    */
   export type SortableListboxItem = {
-    id: string;
+    key: string;
     label: string;
     iconClass?: string;
     show: boolean;
@@ -28,8 +29,8 @@
 
   interface Props {
     /** Tab-config mode: bind a {@link TabConfigContextEntry}; rows map to/from its `tabs`/`visibilityLevels`. */
-    entry?: TabConfigContextEntry;
-    /** Generic mode: bind a list of items directly. */
+    tabConfigContext?: TabConfigContextEntry;
+    /** Items mode: bind a list of `key`-identified items directly (e.g. sections). */
     items?: SortableListboxItem[];
     /** Show the per-row user-visibility column. Hidden for section configuration. */
     showUserVisibility?: boolean;
@@ -39,7 +40,7 @@
   }
 
   let {
-    entry = $bindable(),
+    tabConfigContext = $bindable(),
     items = $bindable(),
     showUserVisibility = true,
     visibilityLevelOptions: visibilityLevelOptionsProp,
@@ -55,27 +56,28 @@
 
   let visibilityLevelOptions = $derived(
     visibilityLevelOptionsProp ??
-      (entry ? VisibilityLevels.getOptions(entry.documentName) : []),
+      (tabConfigContext ? VisibilityLevels.getOptions(tabConfigContext.documentName) : []),
   );
 
-  // Collapse the bound source into editable rows. In entry mode the list is
+  // Collapse source into editable rows. In tabs mode the list is
   // already ordered (visible first, then hidden) and visibility lives in a
   // separate array; in items mode the items are the rows.
   function buildRows(): SortableListboxItem[] {
-    if (entry) {
+    if (tabConfigContext) {
       const viewerLevelById = new Map(
-        entry.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
+        tabConfigContext.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
       );
 
-      return entry.tabs.map((tab) => ({
-        id: tab.id,
-        label: entry!.allTabs[tab.id]?.title ?? tab.title,
-        iconClass: entry!.allTabs[tab.id]?.iconClass ?? tab.iconClass,
+      return tabConfigContext.tabs.map((tab) => ({
+        key: tab.id,
+        label: tabConfigContext!.allTabs[tab.id]?.title ?? tab.title,
+        iconClass: tabConfigContext!.allTabs[tab.id]?.iconClass ?? tab.iconClass,
         show: tab.show,
         visibilityLevel: viewerLevelById.get(tab.id) ?? null,
       }));
     }
 
+    // Items mode: the items are already `key`-identified rows.
     return (items ?? []).map((item) => ({ ...item }));
   }
 
@@ -83,14 +85,14 @@
   let selectedIndex = $state<number | null>(null);
 
   // Rebuild rows when a new source is applied from undo/reset
-  let trackedEntry = entry;
+  let trackedTabConfigContext = tabConfigContext;
   let trackedItems = items;
   $effect(() => {
-    const sourceChanged = entry
-      ? entry !== trackedEntry
+    const sourceChanged = tabConfigContext
+      ? tabConfigContext !== trackedTabConfigContext
       : items !== trackedItems;
     if (sourceChanged) {
-      trackedEntry = entry;
+      trackedTabConfigContext = tabConfigContext;
       trackedItems = items;
       rows = buildRows();
       selectedIndex = null;
@@ -100,15 +102,15 @@
   // Write any change (reorder, show/hide, viewer level) back to the bound
   // source so the host reads it when saving.
   $effect(() => {
-    if (entry) {
-      entry.tabs = rows.map((row) => ({
-        id: row.id,
+    if (tabConfigContext) {
+      tabConfigContext.tabs = rows.map((row) => ({
+        id: row.key,
         title: row.label,
         iconClass: row.iconClass,
         show: row.show,
       }));
-      entry.visibilityLevels = rows.map((row) => ({
-        id: row.id,
+      tabConfigContext.visibilityLevels = rows.map((row) => ({
+        id: row.key,
         title: row.label,
         show: row.show,
         visibilityLevel: row.visibilityLevel ?? null,
@@ -116,8 +118,7 @@
     } else if (items) {
       const next = rows.map((row) => ({ ...row }));
       // Mutate the bound array in place (untracked) so its reference stays
-      // stable — reassigning a $bindable array reads back as a new proxy, which
-      // would defeat the identity guard above and loop endlessly.
+      // stable — reassigning a $bindable array loops endlessly
       untrack(() => {
         items!.splice(0, items!.length, ...next);
       });
@@ -297,7 +298,7 @@
       ondragover={onListDragOver}
       ondrop={onDrop}
     >
-      {#each rows as item, i (item.id)}
+      {#each rows as item, i (item.key)}
         {@const canConfigureViewers =
           userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM}
         <li
@@ -320,7 +321,7 @@
             <i class="{item.iconClass} fa-fw tab-row-icon"></i>
           {/if}
           <span
-            data-section-key={item.id}
+            data-section-key={item.key}
             data-testid="section-config-item-label"
             class="section-config-item-label font-label-medium">{item.label}</span
           >

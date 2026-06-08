@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
-  import SortableListbox, {
-    type SortableListboxItem,
-  } from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
+  import SortableListbox from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './configure-sections.types';
   import type {
@@ -32,36 +29,6 @@
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-
-  // Sections use {key,label,show}. Edits save to `sections`.
-  let sectionItems = $state<SortableListboxItem[]>(
-    sections.map((s) => ({ id: s.key, label: s.label, show: s.show })),
-  );
-
-  // Rebuild local items if undo/reset changes.
-  let trackedSections = sections;
-  $effect(() => {
-    if (sections !== trackedSections) {
-      trackedSections = sections;
-      sectionItems = sections.map((s) => ({
-        id: s.key,
-        label: s.label,
-        show: s.show,
-      }));
-    }
-  });
-
-  $effect(() => {
-    const next = sectionItems.map((it) => ({
-      key: it.id,
-      label: it.label,
-      show: it.show,
-    }));
-    // Make sure effect doesn't re-trigger
-    untrack(() => {
-      sections.splice(0, sections.length, ...next);
-    });
-  });
 </script>
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
@@ -133,7 +100,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
     <SortableListbox
-      bind:items={sectionItems}
+      bind:items={sections}
       showUserVisibility={false}
       headerLabels={{ primary: 'Section', show: 'Show Section' }}
     />

@@ -16,5 +16,5 @@
 
 <div class="dialog-content-container sheet-tab-configuration flexcol">
   <h2>{title}</h2>
-  <SortableListbox bind:entry={config.entry} />
+  <SortableListbox bind:tabConfigContext={config.entry} />
 </div>
