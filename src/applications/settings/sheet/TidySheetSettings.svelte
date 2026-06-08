@@ -51,13 +51,13 @@
         id: SETTINGS_THEME,
         title: localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel'),
         iconClass: 'fa-solid fa-swatchbook',
-        hasChanges: app.themeSettingsTab.hasChanges,
+        hasChanges: app.themeSettingsTab?.hasChanges,
       },
       {
         id: SETTINGS_TAB_CONFIG,
         title: localize('TIDY5E.TabConfiguration.buttonLabel'),
         iconClass: 'fas fa-file-invoice',
-        hasChanges: app.tabDisplaySettingsTab.hasChanges,
+        hasChanges: app.tabDisplaySettingsTab?.hasChanges,
       },
       ...(app.headerControlsTab && headerControlEntry
         ? [
@@ -92,10 +92,10 @@
   );
 
   // Tab lists come from singular `tabs`array in order with a visibility property.
-  let tabConfigEntry = $derived(app.tabDisplaySettingsTab._config.entry);
+  let tabConfigEntry = $derived(app.tabDisplaySettingsTab?._config.entry);
 
   let tabConfigOptions: SettingsTab[] = $derived(
-    tabConfigEntry.tabs.map((t) => ({
+    (tabConfigEntry?.tabs ?? []).map((t) => ({
       id: `sheet:${t.id}`,
       title: t.title,
       iconClass: t.iconClass,
@@ -216,13 +216,18 @@
       return;
     }
 
+    const tabApp = app.tabDisplaySettingsTab;
+    if (!tabApp) {
+      return;
+    }
+
     // Reorder the tab list so hidden tabs keep their relative before `apply()`
-    const entry = app.tabDisplaySettingsTab._config.entry;
+    const entry = tabApp._config.entry;
     arrayMove(entry.tabs, draggedIndex, target);
     entry.tabs = entry.tabs;
 
     // Reordering persists immediately rather than waiting for a Save click.
-    await app.tabDisplaySettingsTab.apply();
+    await tabApp.apply();
   }
 </script>
 
@@ -312,13 +317,13 @@
   </div>
 
   <section class="settings-pane" role="tabpanel">
-    {#if activeSelectedId === SETTINGS_THEME}
+    {#if activeSelectedId === SETTINGS_THEME && app.themeSettingsTab}
       <ThemeSettingsQuadrone
         app={app.themeSettingsTab}
         settings={app.themeSettingsTab._settings}
         placeholders={app.themePlaceholders}
       />
-    {:else if activeSelectedId === SETTINGS_TAB_CONFIG}
+    {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.tabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.tabDisplaySettingsTab}
         bind:config={app.tabDisplaySettingsTab._config}
@@ -364,13 +369,13 @@
       />
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
       <SpellSourceAssignmentsPane app={spellAssignmentsApp} />
-    {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
+    {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.tabDisplaySettingsTab}
       <SpecialTraitsPane
         app={app.getSpecialTraitsConfigTab()}
         tabId={selectedSheetTabId}
         bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
       />
-    {:else if configureSectionsApp}
+    {:else if configureSectionsApp && app.tabDisplaySettingsTab}
       <ConfigureSections
         application={configureSectionsApp}
         title={configureSectionsApp.formTitle}
@@ -379,7 +384,7 @@
         bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
         tabId={selectedSheetTabId}
       />
-    {:else}
+    {:else if app.tabDisplaySettingsTab}
       <BasicTabSettingsPane
         title={selectedEntry?.title ?? ''}
         tabId={selectedSheetTabId}

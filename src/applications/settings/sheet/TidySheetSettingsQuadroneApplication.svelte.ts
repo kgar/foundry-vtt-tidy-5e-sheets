@@ -76,8 +76,8 @@ export class TidySheetSettingsQuadroneApplication
   currentTabId = $state<string | undefined>(undefined);
 
   tabSettings: Record<string, ConfigureSectionsInput>;
-  themeSettingsTab!: ThemeSettingsQuadroneApplication;
-  tabDisplaySettingsTab!: SheetTabConfigurationQuadroneApplication;
+  themeSettingsTab?: ThemeSettingsQuadroneApplication;
+  tabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
   headerControlsTab?: WorldHeaderControlConfigurationQuadroneApplication;
   sidebarTabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
 
@@ -556,9 +556,10 @@ export class TidySheetSettingsQuadroneApplication
    *  Individual tabs
    */
   async save() {
+    this._initializeSettingsTabs();
     try {
-      await this.themeSettingsTab.apply();
-      await this.tabDisplaySettingsTab.apply();
+      await this.themeSettingsTab?.apply();
+      await this.tabDisplaySettingsTab?.apply();
       await this.headerControlsTab?.apply();
       await this.sidebarTabDisplaySettingsTab?.apply();
       await this.specialTraitsChildApp?.apply();
