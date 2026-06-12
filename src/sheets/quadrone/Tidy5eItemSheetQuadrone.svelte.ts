@@ -29,9 +29,7 @@ import type {
   ActiveEffectSection,
   GroupableSelectOption,
   ActiveEffectContext,
-  DocumentSheetV2Context,
 } from 'src/types/types';
-import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
@@ -42,7 +40,6 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
@@ -107,13 +104,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     actions: {
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
-      },
-      openTabConfiguration: async function (this: Tidy5eItemSheetQuadrone) {
-        this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
-            document: this.document,
-          }),
-        );
       },
       sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
         this._renderChild(

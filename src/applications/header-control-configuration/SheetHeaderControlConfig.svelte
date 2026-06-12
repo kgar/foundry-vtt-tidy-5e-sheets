@@ -1,12 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { clickOutside } from 'src/events/clickOutside.svelte';
-  import type { HeaderControlConfigContextItem } from './WorldHeaderControlConfigurationQuadroneApplication.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import type { HeaderControlConfigContextItem } from '../settings/editors/world-header-control-configuration-settings-editor.svelte';
 
   interface Props {
     config: HeaderControlConfigContextItem;
@@ -26,7 +25,9 @@
 </script>
 
 <div class="header-controls-preview">
-  <div class="header-controls-preview-label font-label-medium">{localize('TIDY5E.SheetSettings.HeaderControls.Preview')}</div>
+  <div class="header-controls-preview-label font-label-medium">
+    {localize('TIDY5E.SheetSettings.HeaderControls.Preview')}
+  </div>
   <button
     aria-label={localize('APPLICATION.TOOLS.ToggleControls')}
     type="button"
@@ -36,16 +37,30 @@
     <i class="fas fa-ellipsis-vertical"></i>
   </button>
   {#each config.controlSettings.filter((setting) => setting.location === 'header') as setting}
-    <button aria-label={setting.title} type="button" data-tooltip={setting.title} class="button button-icon-only button-borderless">
+    <button
+      aria-label={setting.title}
+      type="button"
+      data-tooltip={setting.title}
+      class="button button-icon-only button-borderless"
+    >
       <i class={setting.icon}></i>
     </button>
   {/each}
-  <button aria-label={localize('APPLICATION.TOOLS.Close')} type="button" class="button button-icon-only button-borderless" data-tooltip={localize('APPLICATION.TOOLS.Close')}>
+  <button
+    aria-label={localize('APPLICATION.TOOLS.Close')}
+    type="button"
+    class="button button-icon-only button-borderless"
+    data-tooltip={localize('APPLICATION.TOOLS.Close')}
+  >
     <i class="fas fa-close"></i>
   </button>
 </div>
 
-<TidyTable key={`${idPrefix}-header-controls`} toggleable={false} class="sheet-preferences-table">
+<TidyTable
+  key={`${idPrefix}-header-controls`}
+  toggleable={false}
+  class="sheet-preferences-table"
+>
   {#snippet header()}
     <TidyTableHeaderRow class="unset-header-height theme-dark">
       <TidyTableHeaderCell primary={true}>
@@ -53,16 +68,30 @@
           {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
         </h3>
       </TidyTableHeaderCell>
-      <TidyTableHeaderCell class="sheet-preferences-column-label" columnWidth="8rem">
+      <TidyTableHeaderCell
+        class="sheet-preferences-column-label"
+        columnWidth="8rem"
+      >
         <i class="fas fa-square-list header-cell-icon"></i>
         <span class="header-cell-label">
-          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationMenu') })}
+          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', {
+            location: localize(
+              'TIDY5E.HeaderControlConfiguration.LocationMenu',
+            ),
+          })}
         </span>
       </TidyTableHeaderCell>
-      <TidyTableHeaderCell class="sheet-preferences-column-label" columnWidth="8rem">
+      <TidyTableHeaderCell
+        class="sheet-preferences-column-label"
+        columnWidth="8rem"
+      >
         <i class="fas fa-ellipsis-horizontal header-cell-icon"></i>
         <span class="header-cell-label">
-          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', { location: localize('TIDY5E.HeaderControlConfiguration.LocationHeader') })}
+          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', {
+            location: localize(
+              'TIDY5E.HeaderControlConfiguration.LocationHeader',
+            ),
+          })}
         </span>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>

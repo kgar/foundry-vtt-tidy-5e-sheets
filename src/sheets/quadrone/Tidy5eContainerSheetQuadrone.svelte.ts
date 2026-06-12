@@ -35,7 +35,6 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -117,15 +116,6 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
-      openTabConfiguration: async function (
-        this: Tidy5eContainerSheetQuadrone
-      ) {
-        this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
-            document: this.document,
-          }),
-        );
-      },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
         const title =

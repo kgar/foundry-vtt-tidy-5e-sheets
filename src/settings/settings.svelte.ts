@@ -212,10 +212,13 @@ export function createSettings() {
       },
       applyTidySheetPreferences: {
         options: {
+          // TODO: Change this out with verbiage explaining that we're going to change them all in one go.
           name: `TIDY5E.SettingsMenu.Defaults.name`,
           label: 'TIDY5E.SettingsMenu.Defaults.label',
           hint: `TIDY5E.SettingsMenu.Defaults.hint`,
           icon: 'fa-solid fa-scroll',
+          // TODO: Change this out with a confirmation dialog that will set all sheets to tidy
+          // Then delete ApplyTidySheetPreferencesApplication
           type: ApplyTidySheetPreferencesApplication,
           restricted: true,
         },

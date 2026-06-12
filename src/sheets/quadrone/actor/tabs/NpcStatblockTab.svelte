@@ -16,7 +16,6 @@
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
-  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { buildNpcStatblockSettingsTab } from '../settings/NpcStatblockSettingsTab';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
@@ -63,7 +62,6 @@
       tabId: tabId,
     });
   });
-
 </script>
 
 <ItemsActionBar bind:searchCriteria {sections} {tabId} />
@@ -80,9 +78,9 @@
   {/if}
 
   {#if !hasAtLeastOneItem}
-  <div class="empty-state-container empty-state-description">
-    {@html localize('TIDY5E.SheetLock.Empty.Hint')}
-  </div>
+    <div class="empty-state-container empty-state-description">
+      {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+    </div>
   {/if}
 
   <StatblockTables
@@ -115,12 +113,8 @@
                 class="button button-secondary"
                 aria-label={localize('DND5E.FlagsTitle')}
                 data-tooltip
-                onclick={() =>
-                  context.sheet._renderChild(
-                    new SpecialTraitsApplication({
-                      document: context.actor,
-                    }),
-                  )}
+                data-action="showConfiguration"
+                data-config="special-traits"
               >
                 <i class="fa-solid fa-star"></i>
                 {localize('DND5E.FlagsTitle')}

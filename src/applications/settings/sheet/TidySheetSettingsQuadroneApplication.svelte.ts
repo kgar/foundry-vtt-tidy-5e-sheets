@@ -20,7 +20,6 @@ import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQ
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { type HeaderControlConfigContextItem } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
@@ -33,6 +32,7 @@ import {
 } from '../editors/theme-settings-editor.svelte';
 import {
   getWorldHeaderControlConfigurationSettingsEditor,
+  type HeaderControlConfigContextItem,
   type WorldHeaderControlConfigurationSettingsEditor,
 } from '../editors/world-header-control-configuration-settings-editor.svelte';
 import type { SettingsEditor } from '../editors/settings-editors.svelte';

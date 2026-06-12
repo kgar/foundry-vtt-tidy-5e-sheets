@@ -45,9 +45,8 @@ import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsQuadroneApplication, TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -64,7 +63,6 @@ import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
-import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -163,13 +161,6 @@ export function GetTidy5eActorSheetQuadroneBase<
           this: Tidy5eActorSheetQuadroneBase
         ) {
           this.actor.revertOriginalForm();
-        },
-        openTabConfiguration: async function (
-          this: Tidy5eActorSheetQuadroneBase
-        ) {
-          this._renderChild(new SheetTabConfigurationQuadroneApplication({
-            document: this.document,
-          }));
         },
         sheetSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
           this._renderChild(
@@ -2330,8 +2321,12 @@ export function GetTidy5eActorSheetQuadroneBase<
         case 'skills':
           return FoundryAdapter.renderSkillsConfig(this.actor);
         case 'special-traits':
+          const settings = new TidySheetSettingsQuadroneApplication({
+            document: this.document,
+          });
+          settings.selectTab(TidySheetSettingsTabIds.specialTraits);
           return this._renderChild(
-            new SpecialTraitsApplication({ document: this.actor }),
+            settings
           );
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
