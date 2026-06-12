@@ -38,77 +38,69 @@
     tabHidden?: boolean;
   };
 
-  let spellAssignmentsApp = $derived(app.getSpellSourceItemAssignmentsTab());
-
-  let specialTraitsApp = $derived(
-    app.document?.type === CONSTANTS.SHEET_TYPE_CHARACTER
-      ? app.getSpecialTraitsConfigTab()
-      : undefined,
-  );
-
   let headerControlEntry = $derived(app.headerControlEntry);
 
   let sheetName = $derived(
     localize(`TYPES.${app.document.documentName}.${app.document.type}`),
   );
 
-  let sheetConfigOptions: SettingsTab[] = $derived(
-    [
-      {
-        id: SETTINGS_THEME,
-        title: localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel'),
-        iconClass: 'fa-solid fa-swatchbook',
-        hasChanges: app.themeSettingsTab?.hasChanges,
-      },
-      {
-        id: SETTINGS_TAB_CONFIG,
-        title: localize('TIDY5E.TabConfiguration.buttonLabel'),
-        iconClass: 'fas fa-file-invoice',
-        hasChanges: app.tabDisplaySettingsTab?.hasChanges,
-      },
-      ...(specialTraitsApp
-        ? [
-            {
-              id: SETTINGS_SPECIAL_TRAITS,
-              title: localize('DND5E.SpecialTraits'),
-              iconClass: 'fa-solid fa-star',
-            },
-          ]
-        : []),
-      ...(app.headerControlsTab && headerControlEntry
-        ? [
-            {
-              id: SETTINGS_HEADER_CONTROLS,
-              title: localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.buttonLabel'),
-              iconClass: 'fas fa-ellipsis-vertical',
-              hasChanges: app.headerControlsTab.hasChanges,
-            },
-          ]
-        : []),
-      ...(spellAssignmentsApp
-        ? [
-            {
-              id: SETTINGS_SPELL_ASSIGNMENTS,
-              title: localize('TIDY5E.Utilities.AssignSpellsToClasses'),
-              iconClass: 'fa-solid fa-list-check',
-            },
-          ]
-        : []),
-      ...(app.sidebarTabDisplaySettingsTab
-        ? [
-            {
-              id: SETTINGS_SIDEBAR_TAB_CONFIG,
-              title: localize('TIDY5E.Character.Sidebar.Title'),
-              iconClass: 'fas fa-sidebar',
-              hasChanges: app.sidebarTabDisplaySettingsTab.hasChanges,
-            },
-          ]
-        : []),
-    ],
-  );
+  let sheetConfigOptions: SettingsTab[] = $derived([
+    {
+      id: SETTINGS_THEME,
+      title: localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel'),
+      iconClass: 'fa-solid fa-swatchbook',
+      hasChanges: app.themeSettingsTab?.hasChanges,
+    },
+    {
+      id: SETTINGS_TAB_CONFIG,
+      title: localize('TIDY5E.TabConfiguration.buttonLabel'),
+      iconClass: 'fas fa-file-invoice',
+      hasChanges: app.tabDisplaySettingsTab?.hasChanges,
+    },
+    ...(app.specialTraitsChildApp
+      ? [
+          {
+            id: SETTINGS_SPECIAL_TRAITS,
+            title: localize('DND5E.SpecialTraits'),
+            iconClass: 'fa-solid fa-star',
+          },
+        ]
+      : []),
+    ...(app.headerControlsTab && headerControlEntry
+      ? [
+          {
+            id: SETTINGS_HEADER_CONTROLS,
+            title: localize(
+              'TIDY5E.SettingsMenu.HeaderControlConfiguration.buttonLabel',
+            ),
+            iconClass: 'fas fa-ellipsis-vertical',
+            hasChanges: app.headerControlsTab.hasChanges,
+          },
+        ]
+      : []),
+    ...(app.spellSourceItemAssignmentsChildApp
+      ? [
+          {
+            id: SETTINGS_SPELL_ASSIGNMENTS,
+            title: localize('TIDY5E.Utilities.AssignSpellsToClasses'),
+            iconClass: 'fa-solid fa-list-check',
+          },
+        ]
+      : []),
+    ...(app.sidebarTabDisplaySettingsTab
+      ? [
+          {
+            id: SETTINGS_SIDEBAR_TAB_CONFIG,
+            title: localize('TIDY5E.Character.Sidebar.Title'),
+            iconClass: 'fas fa-sidebar',
+            hasChanges: app.sidebarTabDisplaySettingsTab.hasChanges,
+          },
+        ]
+      : []),
+  ]);
 
   // Tab lists come from singular `tabs`array in order with a visibility property.
-  let tabConfigEntry = $derived(app.tabDisplaySettingsTab?._config.entry);
+  let tabConfigEntry = $derived(app.tabDisplaySettingsTab.value.entry);
 
   let tabConfigOptions: SettingsTab[] = $derived(
     (tabConfigEntry?.tabs ?? []).map((t) => ({
@@ -124,14 +116,12 @@
     ...tabConfigOptions,
   ]);
 
-  let selectedId: string = $derived(
-    app.currentTabId ?? SETTINGS_THEME,
-  );
+  let selectedId: string = $derived(app.currentTabId ?? SETTINGS_THEME);
 
   let activeSelectedId: string = $derived(
     allAvailableTabs.some((e) => e.id === selectedId)
       ? selectedId
-      : allAvailableTabs[0]?.id ?? SETTINGS_THEME,
+      : (allAvailableTabs[0]?.id ?? SETTINGS_THEME),
   );
 
   let selectedEntry: SettingsTab | undefined = $derived(
@@ -139,11 +129,11 @@
   );
 
   let selectedSheetTabId: string | undefined = $derived(
-    activeSelectedId.slice('sheet:'.length)
+    activeSelectedId.slice('sheet:'.length),
   );
 
   let configureSectionsApp = $derived(
-    app.getConfigureSectionsConfigTab(selectedSheetTabId)
+    app.getConfigureSectionsConfigTab(selectedSheetTabId),
   );
 
   function selectTab(id: string) {
@@ -238,12 +228,12 @@
     }
 
     // Reorder the tab list so hidden tabs keep their relative before `apply()`
-    const entry = tabApp._config.entry;
+    const entry = tabApp.value.entry;
     arrayMove(entry.tabs, draggedIndex, target);
     entry.tabs = entry.tabs;
 
     // Reordering persists immediately rather than waiting for a Save click.
-    await tabApp.apply();
+    await tabApp.save();
   }
 </script>
 
@@ -258,7 +248,10 @@
           type="button"
           class={[
             'nav-tab',
-            { active: entry.id === activeSelectedId, 'has-changes': entry.hasChanges },
+            {
+              active: entry.id === activeSelectedId,
+              'has-changes': entry.hasChanges,
+            },
           ]}
           role="tab"
           aria-selected={entry.id === activeSelectedId}
@@ -282,7 +275,11 @@
         </div>
       {:else}
         <!-- svelte-ignore a11y_no_static_element_interactions -->
-        <div class="nav-tab-list" ondragover={onListDragOver} ondrop={onTabDrop}>
+        <div
+          class="nav-tab-list"
+          ondragover={onListDragOver}
+          ondrop={onTabDrop}
+        >
           {#each tabConfigOptions as entry, i (entry.id)}
             <button
               bind:this={rowElements[i]}
@@ -336,14 +333,14 @@
     {#if activeSelectedId === SETTINGS_THEME && app.themeSettingsTab}
       <ThemeSettingsQuadrone
         app={app.themeSettingsTab}
-        settings={app.themeSettingsTab._settings}
-        placeholders={app.themePlaceholders}
+        placeholders={undefined}
       />
+      <!-- TODO: Deal with the undefined placeholders. They are unused. -->
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.tabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.tabDisplaySettingsTab}
-        bind:config={app.tabDisplaySettingsTab._config}
-        title={app.tabDisplaySettingsTab._inclusionTabTitle}
+        bind:config={app.tabDisplaySettingsTab.value}
+        title={app.tabDisplaySettingsTab.inclusionTabTitle}
       />
     {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
       <div class="dialog-content-container flexcol">
@@ -359,7 +356,9 @@
             tabindex="0"
             href="javascript:void(0)"
             role="button"
-            aria-label={localize('TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings')}
+            aria-label={localize(
+              'TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings',
+            )}
             class="inline-link"
             onclick={() => app.openWorldHeaderControlSettings()}
             onkeydown={(ev) => {
@@ -370,7 +369,7 @@
             }}
           >
             {localize('TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings')}
-        </a>
+          </a>
         </p>
         <SheetHeaderControlConfig
           config={headerControlEntry}
@@ -380,33 +379,35 @@
     {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabDisplaySettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.sidebarTabDisplaySettingsTab}
-        bind:config={app.sidebarTabDisplaySettingsTab._config}
-        title={app.sidebarTabDisplaySettingsTab._inclusionTabTitle}
+        bind:config={app.sidebarTabDisplaySettingsTab.value}
+        title={app.sidebarTabDisplaySettingsTab.inclusionTabTitle}
       />
-    {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && spellAssignmentsApp}
-      <SpellSourceAssignmentsPane app={spellAssignmentsApp} />
-    {:else if activeSelectedId === SETTINGS_SPECIAL_TRAITS && specialTraitsApp}
-      <SpecialTraitsPane app={specialTraitsApp} />
+    {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && app.spellSourceItemAssignmentsChildApp}
+      <SpellSourceAssignmentsPane
+        app={app.spellSourceItemAssignmentsChildApp}
+      />
+    {:else if activeSelectedId === SETTINGS_SPECIAL_TRAITS && app.specialTraitsChildApp}
+      <SpecialTraitsPane app={app.specialTraitsChildApp} />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.tabDisplaySettingsTab}
       <SpecialTraitsPane
-        app={app.getSpecialTraitsConfigTab()}
+        app={app.specialTraitsChildApp}
         tabId={selectedSheetTabId}
-        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab.value.entry}
       />
     {:else if configureSectionsApp && app.tabDisplaySettingsTab}
       <ConfigureSections
         application={configureSectionsApp}
         title={configureSectionsApp.formTitle}
-        bind:sections={configureSectionsApp.sections}
-        optionGroups={configureSectionsApp.optionsGroups}
-        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:sections={configureSectionsApp.value.sections}
+        optionGroups={configureSectionsApp.value.optionsGroups}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab.value.entry}
         tabId={selectedSheetTabId}
       />
     {:else if app.tabDisplaySettingsTab}
       <BasicTabSettingsPane
         title={selectedEntry?.title ?? ''}
         tabId={selectedSheetTabId}
-        bind:tabConfigEntry={app.tabDisplaySettingsTab._config.entry}
+        bind:tabConfigEntry={app.tabDisplaySettingsTab.value.entry}
       />
     {/if}
   </section>

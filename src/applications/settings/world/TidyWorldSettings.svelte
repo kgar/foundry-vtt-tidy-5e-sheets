@@ -63,20 +63,20 @@
       id: SETTINGS_THEME,
       title: localize('TIDY5E.WorldSettings.GlobalTheme.tabLabel'),
       iconClass: 'fa-solid fa-swatchbook',
-      hasChanges: app.themeSettingsTab.hasChanges,
+      hasChanges: app.editors.themeSettingsTab.hasChanges,
     },
     {
       id: SETTINGS_HOMEBREW,
       title: localize('TIDY5E.WorldSettings.Homebrew.tabLabel'),
       iconClass: 'fa-solid fa-beer-mug',
-      hasChanges: app.homebrewTab.hasChanges,
+      hasChanges: app.editors.homebrewTab.hasChanges,
     },
   ]);
 
   // Each Tidy sheet type becomes its own tab. The list of available sheets is
   // shared with the header control configuration tab.
   let sheetConfigOptions: SheetSettingsTab[] = $derived(
-    app.headerControlsTab._configs.map((config) => ({
+    app.editors.headerControlsTab.value.map((config) => ({
       id: `${SETTINGS_SHEET_PREFIX}:${config.documentName}:${config.documentType}`,
       title: config.title,
       orderKey: `${config.documentName}:${config.documentType}`,
@@ -115,7 +115,7 @@
   );
 
   let selectedSheetConfig = $derived(
-    app.headerControlsTab._configs.find(
+    app.editors.headerControlsTab.value.find(
       (c) =>
         `${SETTINGS_SHEET_PREFIX}:${c.documentName}:${c.documentType}` ===
         activeSelectedId,
@@ -128,10 +128,7 @@
 
   // Pages without deferred-save settings (Overview/Defaults, About) and the
   // immediate apply-and-reload Sheet Preferences page get no shared footer.
-  const FOOTERLESS_TABS = new Set<string>([
-    SETTINGS_DEFAULTS,
-    SETTINGS_SHEET_PREFERENCES,
-  ]);
+  const FOOTERLESS_TABS = new Set<string>([SETTINGS_DEFAULTS]);
 
   let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId));
 </script>
@@ -202,18 +199,17 @@
       <WorldSettingsOverview {app} />
     {:else if activeSelectedId === SETTINGS_THEME}
       <ThemeSettingsQuadrone
-        app={app.themeSettingsTab}
-        settings={app.themeSettingsTab._settings}
+        app={app.editors.themeSettingsTab}
         placeholders={undefined}
       />
     {:else if activeSelectedId === SETTINGS_HOMEBREW}
       <HomebrewSettings
-        app={app.homebrewTab}
-        config={app.homebrewTab._config}
+        app={app.editors.homebrewTab}
+        config={app.editors.homebrewTab.value}
       />
     {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
       <ApplyTidySheetPreferences
-        options={app.sheetPreferencesTab.sheetOptions}
+        options={app.editors.sheetPreferencesTab.value}
       />
     {:else if selectedSheetConfig}
       <WorldSheetSettings
@@ -225,12 +221,9 @@
     {/if}
   </section>
 
-  <!-- One shared footer. Deferred-save pages drive it through the dialog; the
-       Sheet Preferences page is self-contained, so it hosts its own footer.
+  <!-- One shared footer. Deferred-save pages drive it through the dialog.
        Overview/Defaults and About have no settings, so they get none. -->
   {#if showFooter}
     <SettingsFooter host={app} />
-  {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
-    <SettingsFooter host={app.sheetPreferencesTab} />
   {/if}
 </div>

@@ -17,8 +17,8 @@
   const localize = FoundryAdapter.localize;
 
   async function useTidyForAllSheets() {
-    app.sheetPreferencesTab.sheetOptions.forEach((o) => (o.selected = true));
-    await app.sheetPreferencesTab.save();
+    app.editors.sheetPreferencesTab.value.forEach((o) => (o.selected = true));
+    await app.editors.sheetPreferencesTab.save();
   }
 
   function chooseSpecificSheets() {

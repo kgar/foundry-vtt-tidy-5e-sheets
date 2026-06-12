@@ -2,18 +2,18 @@
   import SortableListbox from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './configure-sections.types';
-  import type {
-    ConfigureSectionsApplication,
-    SectionOptionGroup,
-  } from './ConfigureSectionsApplication.svelte';
   import { isNil } from 'src/utils/data';
   import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
   import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
+  import type {
+    ConfigureSectionsSettingsEditor,
+    SectionOptionGroup,
+  } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
-    application: ConfigureSectionsApplication;
+    application: ConfigureSectionsSettingsEditor;
     title: string;
     tabConfigEntry?: TabConfigContextEntry;
     tabId: string;
@@ -30,6 +30,7 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
   {#if optionGroups?.length}
@@ -93,7 +94,7 @@
   {#if tabConfigEntry}
     <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />
   {/if}
-  
+
   <fieldset class="section-config-container">
     <legend>
       {localize('TIDY5E.Section.LabelPl')}

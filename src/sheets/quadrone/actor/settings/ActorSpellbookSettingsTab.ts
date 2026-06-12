@@ -1,4 +1,4 @@
-import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+import type { SectionOptionGroup } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
@@ -102,7 +102,7 @@ export function buildActorSpellbookSettingsTab(
                 icon: 'fa-solid fa-list-check',
                 label: 'TIDY5E.Utilities.AssignSpellsToClasses',
                 onclick: (_ev, app) =>
-                  app.parentSettings?.selectTab(
+                  app.navigator?.selectTab(
                     TidySheetSettingsTabIds.spellAssignments
                   ),
               },

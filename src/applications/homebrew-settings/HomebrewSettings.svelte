@@ -2,12 +2,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     HomebrewConfigContext,
-    HomebrewSettingsApplication,
-  } from './HomebrewSettingsApplication.svelte';
+    HomebrewSettingsEditor,
+  } from '../settings/editors/homebrew-settings-editor.svelte';
 
   interface Props {
     config: HomebrewConfigContext;
-    app: HomebrewSettingsApplication;
+    app: HomebrewSettingsEditor;
   }
 
   let { config }: Props = $props();
@@ -25,7 +25,7 @@
         <h3>{localize('TIDY5E.Settings.BankedInspiration.title')}</h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
-  
+
       <div class="form-group slim">
         <label for="banked-inspiration-{idPrefix}">
           {localize('TIDY5E.Settings.EnableBankedInspiration.name')}

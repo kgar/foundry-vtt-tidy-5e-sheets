@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { SheetTabConfigurationSettingsEditor } from '../settings/editors/sheet-tab-configuration-settings-editor.svelte';
   import type {
     SheetTabConfigurationContext,
     SheetTabConfigurationQuadroneApplication,
@@ -6,7 +7,7 @@
   import SortableListbox from './parts/SortableListbox.svelte';
 
   interface Props {
-    app: SheetTabConfigurationQuadroneApplication;
+    app: SheetTabConfigurationSettingsEditor;
     config: SheetTabConfigurationContext;
     title: string;
   }

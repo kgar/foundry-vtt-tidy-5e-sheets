@@ -20,33 +20,44 @@ import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQ
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import {
-  WorldHeaderControlConfigurationQuadroneApplication,
-  type HeaderControlConfigContextItem,
-} from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
-import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
-import {
-  ConfigureSectionsApplication,
-  type SectionOptionGroup,
-} from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+import { type HeaderControlConfigContextItem } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
-import type { Item5e } from 'src/types/item.types';
-import type {
-  SettingsFooterHost,
-  SettingsPane,
-} from 'src/applications/settings/settings-pane.types';
+import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { RegisteredTab } from 'src/runtime/types';
+import {
+  getThemeSettingsEditor,
+  type ThemeSettingsEditor,
+} from '../editors/theme-settings-editor.svelte';
+import {
+  getWorldHeaderControlConfigurationSettingsEditor,
+  type WorldHeaderControlConfigurationSettingsEditor,
+} from '../editors/world-header-control-configuration-settings-editor.svelte';
+import type { SettingsEditor } from '../editors/settings-editors.svelte';
+import {
+  getSheetTabConfigurationSettingsEditor,
+  SIDEBAR_EXPANDABLE_SHEET_TYPES,
+  type SheetTabConfigurationSettingsEditor,
+} from '../editors/sheet-tab-configuration-settings-editor.svelte';
+import {
+  getSpecialTraitsSettingsEditor,
+  type SpecialTraitsSettingsEditor,
+} from '../editors/special-traits-settings-editor.svelte';
+import {
+  getSpellSourceItemAssignmentsSettingsEditor,
+  type SpellSourceItemAssignmentsSettingsEditor,
+} from '../editors/spell-source-item-assignments-settings-editor.svelte';
+import {
+  getConfigureSectionsSettingsEditor,
+  type ConfigureSectionsSettingsEditor,
+  type SectionOptionGroup,
+} from '../editors/configure-sections-settings-editor.svelte';
 
 type SheetSettingsRuntimeAdapter = {
   getAllRegisteredTabs(): RegisteredTab<any>[];
 };
-
 
 export type TidySheetSettingsContext = {};
 
@@ -78,34 +89,38 @@ export class TidySheetSettingsQuadroneApplication
   currentTabId = $state<string | undefined>(undefined);
 
   tabSettings: Record<string, ConfigureSectionsInput>;
-  themeSettingsTab?: ThemeSettingsQuadroneApplication;
-  tabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
-  headerControlsTab?: WorldHeaderControlConfigurationQuadroneApplication;
-  sidebarTabDisplaySettingsTab?: SheetTabConfigurationQuadroneApplication;
+
+  themeSettingsTab: ThemeSettingsEditor;
+  tabDisplaySettingsTab: SheetTabConfigurationSettingsEditor;
+  headerControlsTab?: WorldHeaderControlConfigurationSettingsEditor;
+  sidebarTabDisplaySettingsTab?: SheetTabConfigurationSettingsEditor;
+  specialTraitsChildApp: SpecialTraitsSettingsEditor;
+  spellSourceItemAssignmentsChildApp?: SpellSourceItemAssignmentsSettingsEditor;
+  configureSectionsChildAppByTabId = new Map<
+    string,
+    ConfigureSectionsSettingsEditor
+  >();
+
+  themePlaceholders?: ReturnType<
+    ThemeSettingsQuadroneApplication['_mapSettings']
+  >;
 
   // Check changes across all tabs
   hasChanges = $derived.by(() => {
     // Make sure to get the current tab if loaded by default
     this.currentTabId;
     return (
-      !!this.themeSettingsTab?.hasChanges ||
-      !!this.tabDisplaySettingsTab?.hasChanges ||
+      !!this.themeSettingsTab.hasChanges ||
+      !!this.tabDisplaySettingsTab.hasChanges ||
       !!this.headerControlsTab?.hasChanges ||
       !!this.sidebarTabDisplaySettingsTab?.hasChanges ||
+      !!this.specialTraitsChildApp.hasChanges ||
+      !!this.spellSourceItemAssignmentsChildApp?.hasChanges ||
       [...this.configureSectionsChildAppByTabId.values()].some(
-        (app) => app.hasChanges
+        (app) => app.hasChanges,
       )
     );
   });
-  specialTraitsChildApp?: SpecialTraitsApplication;
-  spellSourceItemAssignmentsChildApp?: SpellSourceItemAssignmentsFormApplication;
-  configureSectionsChildAppByTabId = new Map<
-    string,
-    ConfigureSectionsApplication
-  >();
-  themePlaceholders?: ReturnType<
-    ThemeSettingsQuadroneApplication['_mapSettings']
-  >;
 
   // For storing save/cancel state
   _persisted = false;
@@ -114,19 +129,17 @@ export class TidySheetSettingsQuadroneApplication
     return `sheet:${tabId}`;
   }
 
-  static settingsSheetTabId(documentName: string, documentType: string): string {
+  static settingsSheetTabId(
+    documentName: string,
+    documentType: string,
+  ): string {
     return `settings:sheet:${documentName}:${documentType}`;
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
-    classes: [
-      CONSTANTS.MODULE_ID,
-      'sheet',
-      'quadrone',
-      'tidy-sheet-settings',
-    ],
+    classes: [CONSTANTS.MODULE_ID, 'sheet', 'quadrone', 'tidy-sheet-settings'],
     id: 'tidy-sheet-settings-{id}',
-    tag: 'form',
+    tag: 'div',
     sheetConfig: false,
     window: {
       frame: true,
@@ -148,16 +161,67 @@ export class TidySheetSettingsQuadroneApplication
     super(options);
 
     const initial = options.initialTabId;
-    if (
-      initial?.startsWith('settings:') ||
-      initial?.startsWith('sheet:')
-    ) {
+    if (initial?.startsWith('settings:') || initial?.startsWith('sheet:')) {
       this.initialTabId = initial;
     } else if (initial) {
       this.initialTabId = `sheet:${initial}`;
     }
     this.currentTabId = this.initialTabId;
     this.tabSettings = options.tabSettings ?? {};
+
+    this.themeSettingsTab = getThemeSettingsEditor(this.document);
+    this.themeSettingsTab.initialize();
+
+    // Header control placement is world-level, so only GMs can persist changes.
+    if (!this.headerControlsTab && FoundryAdapter.userIsGm()) {
+      this.headerControlsTab = getWorldHeaderControlConfigurationSettingsEditor(
+        {
+          documentName: this.document.documentName,
+          documentType: this.document.type,
+        },
+      );
+      this.headerControlsTab.initialize();
+    }
+
+    this.tabDisplaySettingsTab = getSheetTabConfigurationSettingsEditor({
+      document: this.document,
+    });
+    this.tabDisplaySettingsTab.initialize();
+
+    this.specialTraitsChildApp = getSpecialTraitsSettingsEditor(this.document);
+    this.specialTraitsChildApp.initialize();
+
+    if (this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+      this.sidebarTabDisplaySettingsTab =
+        getSheetTabConfigurationSettingsEditor({
+          document: this.document,
+          customTabConfigProvider: {
+            getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+            setTabConfig: TidyFlags.sidebarTabConfiguration.set,
+            getTabContext: (doc, setting) =>
+              getActorTabContext(
+                CharacterSheetQuadroneSidebarRuntime,
+                doc.documentName,
+                setting,
+                true,
+                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+              ),
+          },
+          title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
+            documentName: FoundryAdapter.localize(
+              'TIDY5E.SheetSettings.Sidebar.title',
+            ),
+          }),
+          docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+        });
+      this.sidebarTabDisplaySettingsTab.initialize();
+    }
+
+    if (this.document?.itemTypes?.spell?.length) {
+      this.spellSourceItemAssignmentsChildApp =
+        getSpellSourceItemAssignmentsSettingsEditor(this.document);
+      this.spellSourceItemAssignmentsChildApp.initialize();
+    }
   }
 
   selectTab(id: string) {
@@ -165,14 +229,18 @@ export class TidySheetSettingsQuadroneApplication
   }
 
   /**
-   * The pane for undo/use global defaults. Undefined for pages that act 
+   * The pane for undo/use global defaults. Undefined for pages that act
    * immediately (spell assignments, special traits).
    */
-  getActivePane(): SettingsPane | undefined {
+  getActivePane(): SettingsEditor<unknown> | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
     switch (currentTabId) {
       case TidySheetSettingsTabIds.theme:
         return this.themeSettingsTab;
+      case TidySheetSettingsTabIds.specialTraits:
+        return this.specialTraitsChildApp;
+      case TidySheetSettingsTabIds.spellAssignments:
+        return this.spellSourceItemAssignmentsChildApp;
       case TidySheetSettingsTabIds.tabConfig:
         return this.tabDisplaySettingsTab;
       case TidySheetSettingsTabIds.headerControls:
@@ -190,7 +258,10 @@ export class TidySheetSettingsQuadroneApplication
         }
         // Fall back to tabDisplaySettingsTab for tabs that only have visibility
         // controls (the placeholder pane) — changes land there either way.
-        return this.getConfigureSectionsConfigTab(tabId) ?? this.tabDisplaySettingsTab;
+        return (
+          this.getConfigureSectionsConfigTab(tabId) ??
+          this.tabDisplaySettingsTab
+        );
       }
     }
   }
@@ -200,7 +271,7 @@ export class TidySheetSettingsQuadroneApplication
   }
 
   get canUseDefault(): boolean {
-    return !!this.getActivePane();
+    return !!this.getActivePane()?.canUseDefault;
   }
 
   /**
@@ -228,7 +299,7 @@ export class TidySheetSettingsQuadroneApplication
         title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
       },
       content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
+        'TIDY5E.UseDefaultDialog.text',
       )}</p>`,
     });
 
@@ -239,89 +310,29 @@ export class TidySheetSettingsQuadroneApplication
     pane.resetToDefault();
   }
 
-  getSpellSourceItemAssignmentsTab():
-    | SpellSourceItemAssignmentsFormApplication
-    | undefined {
-    if (!this.document?.itemTypes?.spell?.length) {
-      return undefined;
-    }
-
-    if (!this.spellSourceItemAssignmentsChildApp) {
-      const app = new SpellSourceItemAssignmentsFormApplication({
-        document: this.document,
-      });
-      app.close = async () => {};
-      this.spellSourceItemAssignmentsChildApp = app;
-    }
-
-    return this.spellSourceItemAssignmentsChildApp;
-  }
-
-  _initializeSettingsTabs(): void {
-    if (this.themeSettingsTab && this.tabDisplaySettingsTab) {
-      return;
-    }
-
-    if (!this.themeSettingsTab) {
-      this.themeSettingsTab = new ThemeSettingsQuadroneApplication({
-        document: this.document,
-      });
-      this.themeSettingsTab._settings = this.themeSettingsTab._getSettings();
-      this.themeSettingsTab._resetToGlobalDefaults();
-      this.themePlaceholders = this.document
-        ? this.themeSettingsTab._mapSettings(
-            ThemeQuadrone.getWorldThemeSettings(),
-            { allowNullBooleans: false },
-          )
-        : undefined;
-    }
-
-    if (!this.tabDisplaySettingsTab) {
-      const tabApp = new SheetTabConfigurationQuadroneApplication({
-        document: this.document,
-      });
-      tabApp._config = { entry: tabApp._getConfig() };
-      tabApp._resetToGlobalDefaults();
-      tabApp.close = async () => {};
-      this.tabDisplaySettingsTab = tabApp;
-    }
-
-    // Header control placement is world-level, so only GMs can persist changes.
-    if (!this.headerControlsTab && FoundryAdapter.userIsGm()) {
-      const app = new WorldHeaderControlConfigurationQuadroneApplication({
-        scope: {
-          documentName: this.document.documentName,
-          documentType: this.document.type,
-        },
-      });
-      app._configs = app._getConfigs();
-      app._resetToGlobalDefaults();
-      app.close = async () => {};
-      this.headerControlsTab = app;
-    }
-  }
-
-  /** 
+  /**
    * The world header control config entry matching the current document's sheet type.
    */
   get headerControlEntry(): HeaderControlConfigContextItem | undefined {
-    return this.headerControlsTab?._configs.find(
+    return this.headerControlsTab?.value.find(
       (c) =>
         c.documentName === this.document.documentName &&
-        c.documentType === this.document.type
+        c.documentType === this.document.type,
     );
   }
 
-  /** 
+  /**
    * Open the world settings dialog focused on this sheet type's configuration.
    */
   async openWorldHeaderControlSettings() {
-    const { WorldSettingsQuadroneApplication } = await import(
-      'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte'
-    );
+    const { WorldSettingsQuadroneApplication } =
+      await import('src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte');
 
     new WorldSettingsQuadroneApplication({
-      initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(this.document.documentName, this.document.type),
+      initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(
+        this.document.documentName,
+        this.document.type,
+      ),
     }).render(true);
   }
 
@@ -329,8 +340,6 @@ export class TidySheetSettingsQuadroneApplication
    *  Get tabs for the calling sheet
    */
   _createComponent(node: HTMLElement): Record<string, any> {
-    this._initializeSettingsTabs();
-
     return mount(TidySheetSettings, {
       target: node,
       props: {
@@ -340,61 +349,14 @@ export class TidySheetSettingsQuadroneApplication
   }
 
   async _prepareContext(
-    _options: ApplicationRenderOptions
+    _options: ApplicationRenderOptions,
   ): Promise<TidySheetSettingsContext> {
-    this._initializeSettingsTabs();
-    this._initializeSidebarTabConfigForCharacter();
     return this._config;
   }
 
-  /**
-   *  Character sidebar tab configuration init.
-   */
-  _initializeSidebarTabConfigForCharacter() {
-    if (this.sidebarTabDisplaySettingsTab) {
-      return;
-    }
-    if (this.document?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return;
-    }
-
-    const app = new SheetTabConfigurationQuadroneApplication({
-      document: this.document,
-      customTabConfigProvider: {
-        getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-        setTabConfig: TidyFlags.sidebarTabConfiguration.set,
-        getTabContext: (doc, setting) =>
-          getActorTabContext(
-            CharacterSheetQuadroneSidebarRuntime,
-            doc.documentName,
-            setting,
-            true,
-            CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
-          ),
-      },
-      title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
-        documentName: FoundryAdapter.localize('TIDY5E.SheetSettings.Sidebar.title'),
-      }),
-      docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-    });
-    app._config = { entry: app._getConfig() };
-    app._resetToGlobalDefaults();
-    app.close = async () => {};
-    this.sidebarTabDisplaySettingsTab = app;
-  }
-
-  getSpecialTraitsConfigTab(): SpecialTraitsApplication {
-    if (!this.specialTraitsChildApp) {
-      const app = new SpecialTraitsApplication({
-        document: this.document,
-      });
-      app.close = async () => {};
-      this.specialTraitsChildApp = app;
-    }
-    return this.specialTraitsChildApp;
-  }
-
-  _buildTabSettingsFromRuntime(tabId: string): ConfigureSectionsInput | undefined {
+  _buildTabSettingsFromRuntime(
+    tabId: string,
+  ): ConfigureSectionsInput | undefined {
     const runtime = this._getRuntime();
     if (!runtime) {
       return undefined;
@@ -415,19 +377,20 @@ export class TidySheetSettingsQuadroneApplication
    *  tab settings pane for the section configuration.
    */
   getConfigureSectionsConfigTab(
-    tabId: string
-  ): ConfigureSectionsApplication | undefined {
+    tabId: string,
+  ): ConfigureSectionsSettingsEditor | undefined {
     const cached = this.configureSectionsChildAppByTabId.get(tabId);
     if (cached) {
       return cached;
     }
 
-    const input = this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+    const input =
+      this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
     if (!input) {
       return undefined;
     }
 
-    const app = new ConfigureSectionsApplication({
+    const app = getConfigureSectionsSettingsEditor({
       document: this.document,
       settings: {
         tabId: input.tabId,
@@ -435,14 +398,16 @@ export class TidySheetSettingsQuadroneApplication
         optionsGroups: input.optionsGroups ?? ([] as SectionOptionGroup[]),
         formTitle: input.formTitle ?? '',
       },
+      navigator: this,
+      onSave: async () => {
+        this.tabDisplaySettingsTab.save();
+      },
     });
-    app.parentSettings = this;
-    // Embedded — never opened as a window. Swallow close() so save/useDefault
-    // don't try to dismiss an unrendered child window.
-    app.close = async () => {};
-    app._seedOptionGroupsFromDocument();
-    app._resetToGlobalDefaults();
+
+    app.initialize();
+
     this.configureSectionsChildAppByTabId.set(tabId, app);
+
     return app;
   }
 
@@ -491,15 +456,16 @@ export class TidySheetSettingsQuadroneApplication
    *  Individual tabs
    */
   async save() {
-    this._initializeSettingsTabs();
     try {
-      await this.themeSettingsTab?.apply();
-      await this.tabDisplaySettingsTab?.apply();
-      await this.headerControlsTab?.apply();
-      await this.sidebarTabDisplaySettingsTab?.apply();
-      await this.specialTraitsChildApp?.apply();
+      await this.themeSettingsTab?.save();
+      await this.tabDisplaySettingsTab?.save();
+      await this.headerControlsTab?.save();
+      await this.sidebarTabDisplaySettingsTab?.save();
+      await this.specialTraitsChildApp.save();
+      await this.spellSourceItemAssignmentsChildApp?.save();
+
       for (const helper of this.configureSectionsChildAppByTabId.values()) {
-        await helper.apply();
+        await helper.save();
       }
       this._persisted = true;
     } catch (e) {

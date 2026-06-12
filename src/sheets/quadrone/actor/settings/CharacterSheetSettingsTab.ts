@@ -1,7 +1,7 @@
 import {
   type RadioSetting,
   type SectionOptionGroup,
-} from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+} from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

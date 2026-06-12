@@ -25,7 +25,7 @@
   let prefix = $derived(`${documentName}-${documentType}`);
 
   let tabConfigEntry = $derived(
-    app.tabConfigTab._config.find(
+    app.editors.tabConfigTab.value.find(
       (c) =>
         c.documentName === documentName &&
         c.documentType === documentType &&
@@ -34,7 +34,7 @@
   );
 
   let sidebarTabConfigEntry = $derived(
-    app.tabConfigTab._config.find(
+    app.editors.tabConfigTab.value.find(
       (c) =>
         c.documentName === documentName &&
         c.documentType === documentType &&
@@ -43,7 +43,7 @@
   );
 
   let headerControlEntry = $derived(
-    app.headerControlsTab._configs.find(
+    app.editors.headerControlsTab.value.find(
       (c) => c.documentName === documentName && c.documentType === documentType,
     ),
   );
