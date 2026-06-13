@@ -98,7 +98,11 @@ export function getConfigureSectionsSettingsEditor(
 
   const current = $state<ConfigureSectionsSettingsEditorContext>({
     optionsGroups: settings.optionsGroups ?? [],
-    sections: settings.sections,
+    sections: settings.sections.map((s) => ({
+      key: s.key,
+      label: s.label,
+      show: s.show,
+    })),
   });
 
   const original = snapshotConfig(current);
@@ -128,9 +132,7 @@ export function getConfigureSectionsSettingsEditor(
 
   function snapshotConfig(config: ConfigureSectionsSettingsEditorContext) {
     return {
-      sections: $state
-        .snapshot(config.sections)
-        .map((section) => ({ ...section })),
+      sections: $state.snapshot(config.sections),
       optionsGroups: snapshotOptionGroupValues(config.optionsGroups),
     };
   }
