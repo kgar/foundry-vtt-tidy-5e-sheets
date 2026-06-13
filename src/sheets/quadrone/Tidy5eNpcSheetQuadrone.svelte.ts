@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { GetTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
+import { getTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import type {
   Actor5e,
   ActorInventoryTypes,
@@ -41,7 +41,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 
-export class Tidy5eNpcSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
+export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
 ) {
   currentTabId: string;

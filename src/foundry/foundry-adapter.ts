@@ -23,12 +23,12 @@ import { processInputChangeDelta } from 'src/utils/form';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
-import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { CurrencyItemConfig } from './config.types';
 
 const quadroneSheetRegex = /Tidy.*Quadrone/;
 export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
-  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
+  ReturnType<typeof getTidyExtensibleDocumentSheetMixin>
 >;
 export type TidySheetClassMetadata = {
   documentClass: any;

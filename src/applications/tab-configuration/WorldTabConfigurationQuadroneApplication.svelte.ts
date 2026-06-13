@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
@@ -22,7 +22,7 @@ import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/Characte
 
 export type WorldTabConfigContext = TabConfigContextEntry[];
 
-export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationMixin<
+export class WorldTabConfigurationQuadroneApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration>
 >(foundry.applications.api.ApplicationV2) {
   _config: WorldTabConfigContext = $state([]);

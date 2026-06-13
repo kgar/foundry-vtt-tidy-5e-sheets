@@ -13,7 +13,7 @@ import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/C
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
-export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
+export function getTidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends BaseApplication {
     _supportedItemTypes: Set<string> = new Set();
     _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;

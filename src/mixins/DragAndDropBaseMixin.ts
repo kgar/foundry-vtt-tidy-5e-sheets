@@ -3,7 +3,7 @@ import { firstOfSet } from 'src/utils/set';
 
 export type DropEffectValue = 'copy' | 'move' | 'link' | 'none';
 
-export function DragAndDropMixin(BaseApplication: any) {
+export function getDragAndDropMixin(BaseApplication: any) {
   class DragAndDrop extends BaseApplication {
     #dragDrop;
 

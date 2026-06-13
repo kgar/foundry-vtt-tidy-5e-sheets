@@ -30,7 +30,7 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import { GetTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
+import { getTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
   Activity5e,
@@ -65,7 +65,7 @@ import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.s
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
 
-export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
+export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
 ) {
   currentTabId: string;

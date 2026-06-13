@@ -6,7 +6,7 @@ import type {
   ApplicationRenderOptions,
   DocumentSheetApplicationConfiguration,
 } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ContainerSheetQuadroneContext,
   CurrencyContext,
@@ -34,7 +34,7 @@ import { settings } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -45,12 +45,12 @@ import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eContainerSheetQuadrone
-  extends TidyExtensibleDocumentSheetMixin<
+  extends getTidyExtensibleDocumentSheetMixin<
     DocumentSheetApplicationConfiguration | undefined,
     ContainerSheetQuadroneContext
   >(
     CONSTANTS.SHEET_TYPE_CONTAINER,
-    SvelteApplicationMixin<
+    getSvelteApplicationMixin<
       DocumentSheetApplicationConfiguration | undefined,
       ContainerSheetQuadroneContext
     >(foundry.applications.sheets.ItemSheetV2)

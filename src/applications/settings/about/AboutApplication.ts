@@ -2,11 +2,11 @@ import { mount } from 'svelte';
 import About from './About.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
-export class AboutApplication extends SvelteApplicationMixin<
+export class AboutApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   {}
 >(foundry.applications.api.ApplicationV2) {

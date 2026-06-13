@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import HomebrewSettings from './HomebrewSettings.svelte';
@@ -11,7 +11,7 @@ export type HomebrewConfigContext = {
   bankedInspirationGmOnly: boolean;
 };
 
-export class HomebrewSettingsApplication extends SvelteApplicationMixin<
+export class HomebrewSettingsApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration>
 >(foundry.applications.api.ApplicationV2) {
   _config: HomebrewConfigContext = $state({

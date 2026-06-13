@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type {
   ApplicationConfiguration,
@@ -26,12 +26,12 @@ import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 
-export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
+export class Tidy5eItemSheetClassic extends getTidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
-  SvelteApplicationMixin<
+  getSvelteApplicationMixin<
     ApplicationConfiguration | undefined,
     ItemSheetClassicContext
   >(foundry.applications.sheets.ItemSheetV2)

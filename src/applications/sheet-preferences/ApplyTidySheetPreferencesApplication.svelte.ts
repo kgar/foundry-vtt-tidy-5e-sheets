@@ -2,7 +2,7 @@ import { mount } from 'svelte';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
@@ -15,7 +15,7 @@ export type SheetPreferenceOption = {
   selected: boolean;
 };
 
-export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin<
+export class ApplyTidySheetPreferencesApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   {}
 >(foundry.applications.api.ApplicationV2) {

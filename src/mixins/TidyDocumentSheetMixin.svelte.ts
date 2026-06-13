@@ -36,7 +36,7 @@ import {
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
-import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
+import { getDragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
@@ -46,21 +46,21 @@ export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
 };
 
 export type TidyExtensibleDocumentSheetMixinInstance = InstanceType<
-  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
+  ReturnType<typeof getTidyExtensibleDocumentSheetMixin>
 >;
 
 /**
  * A mixin which fills in the extensibility and common functionality
  * for Tidy actor and item sheets.
  */
-export function TidyExtensibleDocumentSheetMixin<
+export function getTidyExtensibleDocumentSheetMixin<
   TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
   TContext extends Partial<{
     tabs: Tab[];
     customContent: CustomContent[];
   }>
 >(sheetType: string, BaseApplication: any) {
-  class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
+  class TidyDocumentSheet extends getDragAndDropMixin(BaseApplication) {
     // TODO: Remove _fixedMode when classic sheets are gone
     _fixedMode: number | undefined;
     _mode = $state<number | undefined>();

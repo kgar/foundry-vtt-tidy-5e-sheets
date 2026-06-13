@@ -1,4 +1,4 @@
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
@@ -12,7 +12,7 @@ export function DocumentSheetDialog<
   TConstructorArgs extends DocumentSheetApplicationConfiguration = DocumentSheetApplicationConfiguration,
   TContext extends any = {}
 >() {
-  return class DocumentSheetDialog extends SvelteApplicationMixin<
+  return class DocumentSheetDialog extends getSvelteApplicationMixin<
     Partial<DocumentSheetConfiguration> & { document: any },
     TContext
   >(foundry.applications.api.DocumentSheetV2) {

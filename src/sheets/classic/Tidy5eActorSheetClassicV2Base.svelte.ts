@@ -9,9 +9,9 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
@@ -39,12 +39,12 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { TidyHooks } from 'src/api';
 
 // TODO: Simplify mixins to mostly a class hierarchy
-export function GetTidy5eActorSheetClassicV2Base<
+export function getTidy5eActorSheetClassicV2Base<
   TContext extends ActorSheetContextV1
 >(sheetType: string) {
-  abstract class Tidy5eActorSheetClassicV2Base extends TidyExtensibleDocumentSheetMixin(
+  abstract class Tidy5eActorSheetClassicV2Base extends getTidyExtensibleDocumentSheetMixin(
     sheetType,
-    SvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
+    getSvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
       foundry.applications.sheets.ActorSheetV2
     )
   ) {

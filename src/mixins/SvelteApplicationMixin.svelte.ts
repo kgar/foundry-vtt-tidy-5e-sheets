@@ -27,7 +27,7 @@ export type RenderResult<TContext> = {
 };
 
 export type SvelteApplicationMixinInstance = InstanceType<
-  ReturnType<typeof SvelteApplicationMixin>
+  ReturnType<typeof getSvelteApplicationMixin>
 >;
 
 const HEADER_CONTROLS_DROPDOWN_SELECTOR = '.controls-dropdown';
@@ -41,7 +41,7 @@ const HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR =
  * @param BaseApplication the application which should adopt this mixin functionality.
  * @returns the resulting application with this mixin functionality applied.
  */
-export function SvelteApplicationMixin<
+export function getSvelteApplicationMixin<
   TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
   TContext extends any = {}
 >(BaseApplication: any) {

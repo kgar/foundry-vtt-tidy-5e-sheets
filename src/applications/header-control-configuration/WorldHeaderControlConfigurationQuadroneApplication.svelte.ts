@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldHeaderControlConfigurationQuadrone from './WorldHeaderControlConfigurationQuadrone.svelte';
@@ -34,7 +34,7 @@ type HeaderControlConfigContextItem = {
 
 export type WorldHeaderControlConfigContext = HeaderControlConfigContextItem[];
 
-export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteApplicationMixin<
+export class WorldHeaderControlConfigurationQuadroneApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration>
 >(foundry.applications.api.ApplicationV2) {
   _configs: WorldHeaderControlConfigContext = $state([]);

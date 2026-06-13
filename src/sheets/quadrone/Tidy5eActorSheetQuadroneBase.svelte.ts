@@ -6,9 +6,9 @@ import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -67,12 +67,12 @@ import { SpecialTraitsApplication } from 'src/applications-quadrone/special-trai
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
-export function GetTidy5eActorSheetQuadroneBase<
+export function getTidy5eActorSheetQuadroneBase<
   TContext extends ActorSheetQuadroneContext
 >(sheetType: string) {
-  abstract class Tidy5eActorSheetQuadroneBase extends TidyExtensibleDocumentSheetMixin(
+  abstract class Tidy5eActorSheetQuadroneBase extends getTidyExtensibleDocumentSheetMixin(
     sheetType,
-    SvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
+    getSvelteApplicationMixin<ApplicationConfiguration | undefined, TContext>(
       foundry.applications.sheets.ActorSheetV2
     )
   ) {
