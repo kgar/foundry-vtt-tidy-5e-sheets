@@ -97,7 +97,7 @@
       <button
         title={FoundryAdapter.localize('TIDY5E.ContextMenuActionPickColor')}
         type="button"
-        class="button button-borderless button-icon-only eye-dropper"
+        class="button button-secondary eye-dropper"
         onclick={() => activateEyeDropper()}
       >
         <i class="fa-solid fa-eye-dropper"></i>
