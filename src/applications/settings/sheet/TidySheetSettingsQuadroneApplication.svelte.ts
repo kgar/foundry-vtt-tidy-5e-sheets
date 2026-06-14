@@ -54,6 +54,7 @@ import {
   type ConfigureSectionsSettingsEditor,
   type SectionOptionGroup,
 } from '../editors/configure-sections-settings-editor.svelte';
+import type { TidySectionBase } from 'src/types/types';
 
 type SheetSettingsRuntimeAdapter = {
   getAllRegisteredTabs(): RegisteredTab<any>[];
@@ -63,7 +64,8 @@ export type TidySheetSettingsContext = {};
 
 export type ConfigureSectionsInput = {
   tabId: string;
-  sections: import('src/types/types').TidySectionBase[];
+  sections: TidySectionBase[];
+  defaultSections: TidySectionBase[];
   optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };
@@ -397,6 +399,7 @@ export class TidySheetSettingsQuadroneApplication
         sections: input.sections,
         optionsGroups: input.optionsGroups ?? ([] as SectionOptionGroup[]),
         formTitle: input.formTitle ?? '',
+        defaultSections: input.defaultSections,
       },
       navigator: this,
       onSave: async () => {

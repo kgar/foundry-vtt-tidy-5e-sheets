@@ -5,15 +5,18 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SheetSectionConfigurationTab } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import type { ActorSheetQuadroneContext } from 'src/types/types';
+import type {
+  ActorSheetQuadroneContext,
+  InventorySection,
+} from 'src/types/types';
 
 type GroupMembersTabContext = ActorSheetQuadroneContext & {
-  inventory: any;
+  inventory: InventorySection[];
 };
 
 export function buildGroupMembersSettingsTab(
   context: GroupMembersTabContext,
-  tabId: string
+  tabId: string,
 ): SheetSectionConfigurationTab {
   const localize = FoundryAdapter.localize;
 
@@ -21,7 +24,7 @@ export function buildGroupMembersSettingsTab(
     context.inventory,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
-    TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
 
   const optionsGroups: SectionOptionGroup[] = [
@@ -36,12 +39,15 @@ export function buildGroupMembersSettingsTab(
   const tab = context.tabs.find((t) => t.id === tabId);
   const rawTitle: unknown = tab?.title;
   const resolvedTitle =
-    typeof rawTitle === 'function' ? (rawTitle as () => string)() : (rawTitle as string | undefined) ?? '';
+    typeof rawTitle === 'function'
+      ? (rawTitle as () => string)()
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {
     tabId,
     sections,
+    defaultSections: context.inventory,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

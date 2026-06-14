@@ -47,6 +47,7 @@ export function buildContainerContentsSettingsTab(
   return {
     tabId,
     sections,
+    defaultSections: context.containerContents.contents,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

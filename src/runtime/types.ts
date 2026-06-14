@@ -36,6 +36,7 @@ export type RegisteredContent<TContext> = {
 export type SheetSectionConfigurationTab = {
   tabId: string;
   sections: TidySectionBase[];
+  defaultSections: TidySectionBase[];
   optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };

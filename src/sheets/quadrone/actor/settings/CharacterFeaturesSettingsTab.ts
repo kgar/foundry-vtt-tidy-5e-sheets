@@ -41,6 +41,7 @@ export function buildCharacterFeaturesSettingsTab(
   return {
     tabId,
     sections,
+    defaultSections: context.features,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

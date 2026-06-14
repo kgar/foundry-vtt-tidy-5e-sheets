@@ -3,6 +3,7 @@ import {
   type SectionOptionGroup,
 } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
+import { getCharacterSheetTabActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -12,11 +13,12 @@ import type { CharacterSheetQuadroneContext } from 'src/types/types';
 
 export function buildCharacterSheetSettingsTab(
   context: CharacterSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): SheetSectionConfigurationTab {
   const localize = FoundryAdapter.localize;
 
-  const organization = SettingsProvider.settings.characterSheetTabOrganization.get();
+  const organization =
+    SettingsProvider.settings.characterSheetTabOrganization.get();
 
   const optionsGroups: SectionOptionGroup[] = [
     {
@@ -29,7 +31,7 @@ export function buildCharacterSheetSettingsTab(
               label: localize('TIDY5E.GenericDefaultPrefix', {
                 value: localize(
                   SettingsProvider.settings.characterSheetTabOrganization
-                    .options.choices[organization]
+                    .options.choices[organization],
                 ),
               }),
               value: null,
@@ -61,9 +63,10 @@ export function buildCharacterSheetSettingsTab(
           options: [
             {
               label: localize('TIDY5E.GenericDefaultPrefix', {
-                value: SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
-                  ? 'Yes'
-                  : 'No',
+                value:
+                  SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
+                    ? 'Yes'
+                    : 'No',
               }),
               value: null,
             },
@@ -87,12 +90,19 @@ export function buildCharacterSheetSettingsTab(
   const tab = context.tabs.find((t) => t.id === tabId);
   const rawTitle: unknown = tab?.title;
   const resolvedTitle =
-    typeof rawTitle === 'function' ? (rawTitle as () => string)() : (rawTitle as string | undefined) ?? '';
+    typeof rawTitle === 'function'
+      ? (rawTitle as () => string)()
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
+  const defaultSections = getCharacterSheetTabActionSectionsQuadrone(
+    context.actor,
+    context,
+  );
 
   return {
     tabId,
     sections: context.sheetTabSections,
+    defaultSections: defaultSections,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

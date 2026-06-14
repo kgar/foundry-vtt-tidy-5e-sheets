@@ -18,7 +18,10 @@ import type { PowersSection } from '../McdmClassBundle';
 
 export function buildMcdmPowersSections(
   context: ActorSheetQuadroneContext,
-  tabId: string
+  tabId: string,
+  options?: {
+    useDefaultSectionConfig?: boolean;
+  },
 ): PowersSection[] {
   const allPowers: Item5e[] =
     context.actor.itemTypes[MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE];
@@ -27,8 +30,9 @@ export function buildMcdmPowersSections(
     (p) => !customSectionPowers.includes(p),
   );
 
-  const orderToPowersMap = Object.groupBy<any, any>(normalPowers, (p) =>
-    p.system.order,
+  const orderToPowersMap = Object.groupBy<any, any>(
+    normalPowers,
+    (p) => p.system.order,
   );
   const customSectionToPowersMap = Object.groupBy<any, any>(
     customSectionPowers,
@@ -39,7 +43,9 @@ export function buildMcdmPowersSections(
     context.actor.type,
   );
   const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-  const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
+  const sectionConfig = !options?.useDefaultSectionConfig
+    ? TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    : undefined;
   const sectionActions: SectionCommand[] = [];
   if (context.owner) {
     sectionActions.push(SectionActions.getCreateItemHeaderSectionAction());
@@ -81,10 +87,13 @@ export function buildMcdmPowersSections(
 
 export function buildMcdmPowersSettingsTab(
   context: ActorSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): SheetSectionConfigurationTab {
   const localize = FoundryAdapter.localize;
   const sections = buildMcdmPowersSections(context, tabId);
+  const defaultSections = buildMcdmPowersSections(context, tabId, {
+    useDefaultSectionConfig: true,
+  });
 
   const optionsGroups: SectionOptionGroup[] = [
     {
@@ -100,13 +109,14 @@ export function buildMcdmPowersSettingsTab(
   const resolvedTitle =
     typeof rawTitle === 'function'
       ? (rawTitle as () => string)()
-      : (rawTitle as string | undefined) ?? '';
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {
     tabId,
     sections,
     optionsGroups,
+    defaultSections,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };
 }

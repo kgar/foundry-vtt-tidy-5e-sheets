@@ -67,6 +67,7 @@ export type ConfigureSectionsSettingsEditorParams = {
   settings: {
     optionsGroups?: SectionOptionGroup[];
     sections: TidySectionBase[];
+    defaultSections: TidySectionBase[];
     tabId: string;
     formTitle: string;
   };
@@ -99,20 +100,26 @@ export function getConfigureSectionsSettingsEditor(
 
   const current = $state<ConfigureSectionsSettingsEditorContext>({
     optionsGroups: settings.optionsGroups ?? [],
-    sections: settings.sections.map((s) => ({
-      key: s.key,
-      label: FoundryAdapter.localize(s.label),
-      show: s.show,
-    })),
+    sections: mapSectionBaseToConfig(settings.sections),
   });
 
   const original = snapshotConfig(current);
+
+  const defaultSections = mapSectionBaseToConfig(settings.defaultSections);
 
   let initialSnapshot = $state<string>('');
 
   const hasChanges = $derived(
     JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
   );
+
+  function mapSectionBaseToConfig(sections: TidySectionBase[]) {
+    return sections.map((s) => ({
+      key: s.key,
+      label: FoundryAdapter.localize(s.label),
+      show: s.show,
+    }));
+  }
 
   function snapshotOptionGroupValues(
     optionsGroups: SectionOptionGroup[],
@@ -163,7 +170,7 @@ export function getConfigureSectionsSettingsEditor(
       return this.hasChanges;
     },
 
-    canUseDefault: false,
+    canUseDefault: true,
 
     document,
 
@@ -197,10 +204,6 @@ export function getConfigureSectionsSettingsEditor(
     navigator: navigator,
 
     resetToDefault() {
-      current.sections = current.sections.map((section) => ({
-        ...section,
-        show: true,
-      }));
       for (const group of current.optionsGroups) {
         for (const setting of group.settings) {
           if (setting.type === 'boolean') {
@@ -210,6 +213,7 @@ export function getConfigureSectionsSettingsEditor(
           }
         }
       }
+      this.value.sections = defaultSections;
     },
 
     async save() {
@@ -276,7 +280,20 @@ export function getConfigureSectionsSettingsEditor(
     },
 
     async useDefault() {
-      // noop
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: {
+          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+        },
+        content: `<p>${FoundryAdapter.localize(
+          'TIDY5E.UseDefaultDialog.text',
+        )}</p>`,
+      });
+
+      if (!proceed) {
+        return;
+      }
+
+      this.resetToDefault();
     },
 
     get value() {
@@ -284,7 +301,9 @@ export function getConfigureSectionsSettingsEditor(
     },
 
     set value(value) {
-      Object.assign(this.value, value);
+      const toApply = snapshotOptionGroupValues(value.optionsGroups);
+      applyOptionGroupValues(toApply, current);
+      current.sections = structuredClone(value.sections);
     },
   };
 }

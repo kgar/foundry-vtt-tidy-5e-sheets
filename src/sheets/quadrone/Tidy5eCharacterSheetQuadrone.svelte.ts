@@ -315,7 +315,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     return context;
   }
 
-  async prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
+  prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
     const sectionMode:
       | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
       | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
@@ -330,7 +330,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       this.setUpSheetTabOriginSections(context);
     } else {
-      const actionSections = await getCharacterSheetTabActionSectionsQuadrone(
+      const actionSections = getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
         context,
         {

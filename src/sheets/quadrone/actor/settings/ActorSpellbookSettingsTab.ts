@@ -123,6 +123,7 @@ export function buildActorSpellbookSettingsTab(
   return {
     tabId,
     sections,
+    defaultSections: context.spellbook,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

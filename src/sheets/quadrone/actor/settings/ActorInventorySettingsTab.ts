@@ -13,7 +13,7 @@ type InventoryTabContext = ActorSheetQuadroneContext & {
 
 export function buildActorInventorySettingsTab(
   context: InventoryTabContext,
-  tabId: string
+  tabId: string,
 ): SheetSectionConfigurationTab {
   const localize = FoundryAdapter.localize;
 
@@ -21,7 +21,7 @@ export function buildActorInventorySettingsTab(
     context.inventory,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
-    TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
 
   const optionsGroups: SectionOptionGroup[] = [
@@ -36,12 +36,15 @@ export function buildActorInventorySettingsTab(
   const tab = context.tabs.find((t) => t.id === tabId);
   const rawTitle: unknown = tab?.title;
   const resolvedTitle =
-    typeof rawTitle === 'function' ? (rawTitle as () => string)() : (rawTitle as string | undefined) ?? '';
+    typeof rawTitle === 'function'
+      ? (rawTitle as () => string)()
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {
     tabId,
     sections,
+    defaultSections: context.inventory,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

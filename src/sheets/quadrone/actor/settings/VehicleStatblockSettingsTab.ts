@@ -9,19 +9,19 @@ import type { VehicleSheetQuadroneContext } from 'src/types/types';
 
 export function buildVehicleStatblockSections(
   context: VehicleSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ) {
   return SheetSections.configureVehicleStatblockSections(
     context.statblock,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
-    TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
 }
 
 export function buildVehicleStatblockSettingsTab(
   context: VehicleSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): SheetSectionConfigurationTab {
   const localize = FoundryAdapter.localize;
   const sections = buildVehicleStatblockSections(context, tabId);
@@ -40,12 +40,13 @@ export function buildVehicleStatblockSettingsTab(
   const resolvedTitle =
     typeof rawTitle === 'function'
       ? (rawTitle as () => string)()
-      : (rawTitle as string | undefined) ?? '';
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {
     tabId,
     sections,
+    defaultSections: context.statblock,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };
