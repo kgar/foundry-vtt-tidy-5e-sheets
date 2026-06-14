@@ -306,6 +306,7 @@
           class="listbox-item"
           class:marked-as-hidden={!item.show}
           class:focused={selectedIndex === i}
+          class:theme-dark={selectedIndex === i}
           class:dragging={draggedIndex === i}
           role="option"
           aria-selected={selectedIndex === i}

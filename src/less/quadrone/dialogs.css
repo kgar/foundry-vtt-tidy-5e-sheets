@@ -136,6 +136,11 @@
       background-color: var(--tab-background-color);
     }
 
+    &:active:hover,
+    &:focus-within:not(:active) {
+      --button-text: var(--t5e-theme-color-foreground);
+    }
+
     &.active {
       --tab-background-color: var(--t5e-theme-color-darker);
       --button-text: var(--t5e-theme-color-foreground);
@@ -144,7 +149,7 @@
       font-weight: var(--font-weight-label);
 
       &:active,
-      &:focus-within,
+      &:focus-within:not(:active),
       &:hover {
         --tab-background-color: var(--t5e-theme-color-darkest);
         border-color: transparent;
