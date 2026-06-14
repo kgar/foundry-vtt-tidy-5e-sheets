@@ -4,6 +4,7 @@ import type { Item5e } from 'src/types/item.types';
 import { mapGetOrInsert } from 'src/utils/map';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -100,7 +101,7 @@ export function getConfigureSectionsSettingsEditor(
     optionsGroups: settings.optionsGroups ?? [],
     sections: settings.sections.map((s) => ({
       key: s.key,
-      label: s.label,
+      label: FoundryAdapter.localize(s.label),
       show: s.show,
     })),
   });
