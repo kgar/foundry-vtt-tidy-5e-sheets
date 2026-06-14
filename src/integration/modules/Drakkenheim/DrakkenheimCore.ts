@@ -10,6 +10,9 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
   }
 
   init(api: Tidy5eSheetsApi): void {
+    import('./DrakkenheimContaminationTabClassic.less');
+    import('./DrakkenheimContaminationTab.css');
+    
     // Since the setting requires a reload to toggle, we will simply avoid registering a column if it's disabled.
     if (
       FoundryAdapter.getGameSetting<boolean>(
@@ -19,8 +22,6 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
     ) {
       return;
     }
-
-    import('./DrakkenheimContaminationTabClassic.less');
 
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),
