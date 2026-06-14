@@ -445,6 +445,25 @@
     }
   }
 
+  .sheet-preferences-table {
+    margin-top: var(--t5e-size-4x);
+
+    &.scrollable-table .expandable {
+      overflow-y: auto;
+    }
+
+    :is(.tidy-table-cell, .tidy-table-header-cell) {
+      align-items: center;
+      padding: 0.3125rem 0.5rem;
+    }
+  }
+
+  &.tidy5e-sheet-preferences {
+    .sheet-preferences-table {
+      margin-bottom: var(--t5e-size-8x);
+    }
+  }
+
   &.tidy-sheet-settings {
     .header-controls-preview {
       display: flex;

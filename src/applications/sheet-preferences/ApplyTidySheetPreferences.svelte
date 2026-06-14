@@ -1,6 +1,11 @@
 <script lang="ts">
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
     options: SheetPreferenceOption[];
@@ -35,60 +40,62 @@
     </button>
   </div>
 
-  <div class="scroll-container">
-    <table class="sheet-preferences-table">
-      <thead>
-        <tr>
-          <th>
-            <h3 class="sheet-preferences-label">
-              {localize('TIDY5E.Settings.SheetPreferences.Sheet')}
-            </h3>
-          </th>
-          <th class="sheet-preferences-column-label">
-            {localize('TIDY5E.Settings.SheetPreferences.SystemSheets')}
-          </th>
-          <th class="sheet-preferences-column-label">
-            {localize('TIDY5E.Settings.SheetPreferences.TidySheets')}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each options as option}
-          {@const formControlId = `${option.label.slugify()}`}
-          <tr>
-            <td>
-              <label for={formControlId}>
-                {option.label}
-              </label>
-            </td>
-            <td>
-              <label class="radio">
-                <input
-                  type="radio"
-                  checked={!option.selected}
-                  onclick={() => {
-                    option.selected = false;
-                  }}
-                />
-                <span class="hidden">{systemOptionText}</span>
-              </label>
-            </td>
-            <td>
-              <label class="radio">
-                <input
-                  id={formControlId}
-                  type="radio"
-                  checked={option.selected}
-                  onclick={() => {
-                    option.selected = true;
-                  }}
-                />
-                <span class="hidden">{tidyOptionText}</span>
-              </label>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
+  <TidyTable key="sheet-preferences-table" toggleable={false} class="sheet-preferences-table scrollable-table">
+    {#snippet header()}
+      <TidyTableHeaderRow class="unset-header-height theme-dark">
+        <TidyTableHeaderCell primary={true}>
+          <h3 class="sheet-preferences-label">
+            {localize('TIDY5E.Settings.SheetPreferences.Sheet')}
+          </h3>
+        </TidyTableHeaderCell>
+        <TidyTableHeaderCell 
+          class="sheet-preferences-column-label"
+          columnWidth="7rem"
+        >
+          {localize('TIDY5E.Settings.SheetPreferences.SystemSheets')}
+        </TidyTableHeaderCell>
+        <TidyTableHeaderCell
+          class="sheet-preferences-column-label"
+          columnWidth="7rem"
+        >
+          {localize('TIDY5E.Settings.SheetPreferences.TidySheets')}
+        </TidyTableHeaderCell>
+      </TidyTableHeaderRow>
+    {/snippet}
+    {#snippet body()}
+      {#each options as option}
+        {@const formControlId = `${option.label.slugify()}`}
+        <TidyTableRow>
+          <TidyTableCell primary={true}>
+            <label for={formControlId}>{option.label}</label>
+          </TidyTableCell>
+          <TidyTableCell columnWidth="7rem">
+            <label class="radio">
+              <input
+                type="radio"
+                checked={!option.selected}
+                onclick={() => {
+                  option.selected = false;
+                }}
+              />
+              <span class="hidden">{systemOptionText}</span>
+            </label>
+          </TidyTableCell>
+          <TidyTableCell columnWidth="7rem">
+            <label class="radio">
+              <input
+                id={formControlId}
+                type="radio"
+                checked={option.selected}
+                onclick={() => {
+                  option.selected = true;
+                }}
+              />
+              <span class="hidden">{tidyOptionText}</span>
+            </label>
+          </TidyTableCell>
+        </TidyTableRow>
+      {/each}
+    {/snippet}
+  </TidyTable>
 </div>
