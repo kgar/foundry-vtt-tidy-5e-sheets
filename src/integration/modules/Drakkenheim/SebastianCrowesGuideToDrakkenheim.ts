@@ -23,7 +23,8 @@ export class SebastianCrowesGuideToDrakkenheimModuleIntegration
     }
 
     import('./DrakkenheimContaminationTabClassic.less');
-
+    import('./DrakkenheimContaminationTab.css');
+    
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),
       tabId: 'drakkenheim-contamination-tab',
