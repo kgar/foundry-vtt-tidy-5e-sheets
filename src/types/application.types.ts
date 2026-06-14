@@ -83,15 +83,17 @@ export interface ApplicationRenderOptions {
   action?: string;
   data?: object;
 
-  // Tidy-specific options
-  /**
-   * If possible, reuse the existing prepared context data and
-   * proceed through the render lifecycle logic, particularly including
-   * custom content management.
-   */
-  soft?: boolean;
   /** The desired sheet mode. */
   mode?: number;
+
+  tidy?: {
+    /**
+     * If possible, reuse the existing prepared context data and
+     * proceed through the render lifecycle logic, particularly including
+     * custom content management.
+     */
+    soft?: boolean;
+  };
 }
 
 export interface ApplicationWindowRenderOptions {
@@ -109,13 +111,13 @@ export interface ApplicationClosingOptions {
 
 export type ApplicationClickAction = (
   event: PointerEvent,
-  target: HTMLElement
+  target: HTMLElement,
 ) => Promise<void>;
 
 export type ApplicationFormSubmission = (
   event: SubmitEvent | Event,
   form: HTMLFormElement,
-  formData: /*FormDataExtended*/ unknown
+  formData: /*FormDataExtended*/ unknown,
 ) => Promise<void>;
 
 export interface ApplicationTab {
