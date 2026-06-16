@@ -210,7 +210,7 @@ export function createSettings() {
           hideClassic: true,
         },
       },
-      applyTidySheetPreferences: {
+      makeAllSheetsTidy: {
         options: {
           name: `TIDY5E.SettingsMenu.Defaults.name`,
           label: 'TIDY5E.SettingsMenu.Defaults.label',

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import type { SheetPreferenceOption } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
 
   interface Props {
     options: SheetPreferenceOption[];
@@ -40,7 +40,11 @@
     </button>
   </div>
 
-  <TidyTable key="sheet-preferences-table" toggleable={false} class="sheet-preferences-table scrollable-table">
+  <TidyTable
+    key="sheet-preferences-table"
+    toggleable={false}
+    class="sheet-preferences-table scrollable-table"
+  >
     {#snippet header()}
       <TidyTableHeaderRow class="unset-header-height theme-dark">
         <TidyTableHeaderCell primary={true}>
@@ -48,7 +52,7 @@
             {localize('TIDY5E.Settings.SheetPreferences.Sheet')}
           </h3>
         </TidyTableHeaderCell>
-        <TidyTableHeaderCell 
+        <TidyTableHeaderCell
           class="sheet-preferences-column-label"
           columnWidth="7rem"
         >

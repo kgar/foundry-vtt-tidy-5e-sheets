@@ -1,4 +1,4 @@
-import type { SectionOptionGroup } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
+import type { SectionOptionGroup } from 'src/settings/editors/configure-sections-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';

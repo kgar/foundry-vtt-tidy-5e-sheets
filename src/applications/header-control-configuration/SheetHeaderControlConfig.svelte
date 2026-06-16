@@ -5,7 +5,7 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import type { HeaderControlConfigContextItem } from '../settings/editors/world-header-control-configuration-settings-editor.svelte';
+  import type { HeaderControlConfigContextItem } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
 
   interface Props {
     config: HeaderControlConfigContextItem;

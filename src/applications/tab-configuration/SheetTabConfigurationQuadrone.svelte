@@ -2,7 +2,7 @@
   import type {
     SheetTabConfigurationContext,
     SheetTabConfigurationSettingsEditor,
-  } from '../settings/editors/sheet-tab-configuration-settings-editor.svelte';
+  } from 'src/settings/editors/sheet-tab-configuration-settings-editor.svelte';
   import SortableListbox from './parts/SortableListbox.svelte';
 
   interface Props {

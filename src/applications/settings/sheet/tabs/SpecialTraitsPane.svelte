@@ -2,7 +2,7 @@
   import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
   import TabVisibilityControls from './TabVisibilityControls.svelte';
   import SpecialTraitsV2 from 'src/applications-quadrone/special-traits/SpecialTraitsV2.svelte';
-  import type { SpecialTraitsSettingsEditor } from '../../editors/special-traits-settings-editor.svelte';
+  import type { SpecialTraitsSettingsEditor } from 'src/settings/editors/special-traits-settings-editor.svelte';
 
   interface Props {
     app: SpecialTraitsSettingsEditor;

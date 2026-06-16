@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
-  import type { SpecialTraitsContext } from 'src/applications/settings/editors/special-traits-settings-editor.svelte';
+  import type { SpecialTraitsContext } from 'src/settings/editors/special-traits-settings-editor.svelte';
   import type { Actor5e } from 'src/types/types';
 
   type Props = {

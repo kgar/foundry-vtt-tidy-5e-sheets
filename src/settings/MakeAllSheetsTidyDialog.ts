@@ -1,4 +1,4 @@
-import { getDefaultSheetPreferencesSettingsEditor } from 'src/applications/settings/editors/default-sheet-preferences-settings-editor.svelte';
+import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 

@@ -15,7 +15,7 @@
   import type {
     ThemeSettingsContext,
     ThemeSettingsEditor,
-  } from '../settings/editors/theme-settings-editor.svelte';
+  } from 'src/settings/editors/theme-settings-editor.svelte';
     import type { ThemeColorSettingConfigEntry } from './ThemeSettingsQuadroneApplication.svelte';
 
   interface Props {

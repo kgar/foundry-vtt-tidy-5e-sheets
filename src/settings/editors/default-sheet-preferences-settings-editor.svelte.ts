@@ -1,5 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SettingsEditor } from '../editors/settings-editors.svelte';
+import type { SettingsEditor } from './settings-editors.svelte';
 
 export type SheetPreferenceOption = {
   label: string;

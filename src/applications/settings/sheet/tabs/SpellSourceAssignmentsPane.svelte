@@ -1,6 +1,6 @@
 <script lang="ts">
   import SpellSourceItemAssignmentsV2 from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsV2.svelte';
-  import type { SpellSourceItemAssignmentsSettingsEditor } from '../../editors/spell-source-item-assignments-settings-editor.svelte';
+  import type { SpellSourceItemAssignmentsSettingsEditor } from 'src/settings/editors/spell-source-item-assignments-settings-editor.svelte';
 
   interface Props {
     app: SpellSourceItemAssignmentsSettingsEditor;
