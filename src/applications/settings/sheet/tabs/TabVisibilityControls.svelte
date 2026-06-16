@@ -35,7 +35,7 @@
           CONSTANTS.VISIBILITY_LEVEL_GM),
   );
 
-  const sidebarExpandableSheetTypes = new Set([
+  const sidebarExpandableSheetTypes = new Set<string>([
     CONSTANTS.SHEET_TYPE_CHARACTER,
     CONSTANTS.SHEET_TYPE_NPC,
     CONSTANTS.SHEET_TYPE_VEHICLE,
@@ -43,7 +43,7 @@
 
   let showSidebarExpandedControl = $derived(
     entry.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
-      sidebarExpandableSheetTypes.has(entry.documentType as 'character' | 'npc' | 'vehicle'),
+      sidebarExpandableSheetTypes.has(entry.documentType),
   );
 
   // The value is staged on the shared tab-config entry (seeded from the user's
