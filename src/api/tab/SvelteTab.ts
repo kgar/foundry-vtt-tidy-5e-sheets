@@ -1,4 +1,4 @@
-import type { Component } from 'svelte';
+import type { Component, mount, unmount } from 'svelte';
 import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
@@ -37,7 +37,11 @@ export class SvelteTab extends CustomTabBase {
   /**
    * A reference to the `.svelte` component.
    */
-  component?: Component = undefined;
+  component?:
+    | Component
+    | { component: Component }
+    | { component: Component; mount: typeof mount; unmount: typeof unmount } =
+    undefined;
   title: CustomTabTitle = '';
   iconClass?: string | undefined;
   tabId: string = '';
