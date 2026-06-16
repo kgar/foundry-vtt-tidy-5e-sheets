@@ -747,7 +747,7 @@ export function TidyExtensibleDocumentSheetMixin<
       // SettingsProvider is assigned in initSettings(); optional chaining covers
       // circular-import / ordering edge cases. Fall back to the raw game setting.
       const settings = (
-        SettingsProvider?.settings?.headerControlConfiguration?.get() ??
+        SettingsProvider.settings.headerControlConfiguration.get() ??
         FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
           'headerControlConfiguration'
         )

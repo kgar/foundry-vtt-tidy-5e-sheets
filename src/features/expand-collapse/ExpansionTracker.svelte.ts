@@ -43,7 +43,7 @@ export class ExpansionTracker {
       return;
     }
     const state =
-      SettingsProvider?.settings?.sectionExpansionState?.get() ??
+      SettingsProvider.settings.sectionExpansionState.get() ??
       FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
         'sectionExpansionState'
       ) ??
@@ -69,7 +69,7 @@ export class ExpansionTracker {
       // SettingsProvider is assigned in initSettings(); optional chaining covers
       // circular-import / ordering edge cases. Fall back to the raw game setting.
       const state = (
-        SettingsProvider?.settings?.sectionExpansionState?.get() ??
+        SettingsProvider.settings.sectionExpansionState.get() ??
         FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
           'sectionExpansionState'
         )

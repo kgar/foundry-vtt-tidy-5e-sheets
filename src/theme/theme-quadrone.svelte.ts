@@ -76,7 +76,7 @@ export class ThemeQuadrone {
     // SettingsProvider is assigned in initSettings(); optional chaining covers
     // circular-import / ordering edge cases. Fall back to raw game setting.
     const stored =
-      SettingsProvider?.settings?.worldThemeSettings?.get() ??
+      SettingsProvider.settings.worldThemeSettings.get() ??
       FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
         'worldThemeSettings'
       ) ??
@@ -263,7 +263,7 @@ export class ThemeQuadrone {
   static getActorPortraitShape(doc: any): PortraitShape {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
-      SettingsProvider?.settings?.worldThemeSettings?.get()?.portraitShape,
+      SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
       FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
         'worldThemeSettings'
       )?.portraitShape,
