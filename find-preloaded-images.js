@@ -50,16 +50,18 @@ ${sorted.map((p) => `  '${p}',`).join('\n')}
     ? fs.readFileSync(resolvedOutput, 'utf-8')
     : null;
 
-  if (existingContents === fileContents) {
+  const normalize = (s) => s.replace(/\r\n/g, '\n').trim();
+
+  if (normalize(existingContents) === normalize(fileContents)) {
     console.log(
-      `[== Image manifest unchanged: ${sorted.length} images -> ${OUTPUT_FILE} ==]`
+      `[== Image manifest unchanged: ${sorted.length} images -> ${OUTPUT_FILE} ==]`,
     );
     return;
   }
 
   fs.writeFileSync(resolvedOutput, fileContents);
   console.log(
-    `[== Generated image manifest: ${sorted.length} images -> ${OUTPUT_FILE} ==]`
+    `[== Generated image manifest: ${sorted.length} images -> ${OUTPUT_FILE} ==]`,
   );
 }
 
