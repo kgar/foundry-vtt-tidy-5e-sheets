@@ -1147,9 +1147,14 @@ export class TidyFlags {
         return undefined;
       }
 
-      for (let section of Object.values(sectionConfigs)) {
+      for (let [sectionKey, sectionValue] of Object.entries(sectionConfigs)) {
+        if (sectionValue == null) {
+          delete sectionConfigs[sectionKey];
+          continue;
+        }
+
         // Account for how localized keys are stored. For each top-level property, flatten until SheetTabSectionConfigs shape achieved.
-        for (let [key, value] of Object.entries(section)) {
+        for (let [key, value] of Object.entries(sectionValue)) {
           if (Object.getOwnPropertyNames(value).length > 1) {
             continue;
           }
@@ -1169,8 +1174,8 @@ export class TidyFlags {
             newValue = newValue[currentPropAtDepth];
           }
 
-          delete section[key];
-          section[newKey] = newValue;
+          delete sectionValue[key];
+          sectionValue[newKey] = newValue;
         }
       }
 
