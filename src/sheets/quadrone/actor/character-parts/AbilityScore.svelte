@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorAbilityContextEntry } from 'src/types/types';
+  import { settings } from 'src/settings/settings.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
 
@@ -18,6 +19,10 @@
     onScoreChanged,
   }: Props = $props();
 
+  const swapAbilityScoreAndBonusEnabled = $derived(
+    settings.value.swapAbilityScoreAndBonus,
+  );
+
   const localize = FoundryAdapter.localize;
 
   const sourceValue = $derived(ability.source?.value ?? ability.value);
@@ -28,6 +33,26 @@
   const uniqueId = foundry.utils.randomID();
 
   const abilityInputId = $derived(`ability-score-${ability.key}-${uniqueId}`);
+
+  const scoreSectionTooltip = $derived(
+    localize('DND5E.ABILITY.SECTIONS.Score', { ability: ability.label }),
+  );
+
+  const abilityCheckTooltip = $derived(
+    localize('DND5E.AbilityPromptTitle', { ability: ability.label }),
+  );
+
+  const savingThrowTooltip = $derived(
+    localize('DND5E.SavingThrowRoll', { ability: ability.label }),
+  );
+
+  const primaryTooltip = $derived(
+    swapAbilityScoreAndBonusEnabled ? scoreSectionTooltip : abilityCheckTooltip,
+  );
+
+  const secondaryTooltip = $derived(
+    swapAbilityScoreAndBonusEnabled ? abilityCheckTooltip : scoreSectionTooltip,
+  );
 
   let configButtonTooltip = $derived(
     localize('DND5E.AbilityConfigure', { ability: ability.label }),
@@ -74,24 +99,52 @@
     ]}
     data-tidy-sheet-part="ability-mod-container"
   >
-    <button
-      type="button"
-      data-action="roll"
-      data-type="ability"
-      data-ability={ability.key}
-      data-tooltip={localize('DND5E.AbilityPromptTitle', {
-        ability: ability.label,
-      })}
-      class="button-borderless ability-roll-button"
-      data-tidy-sheet-part="ability-roller"
-      data-has-roll-modes
-      {disabled}
-    >
-      <span class="ability-abbr color-text-gold">{ability.abbr}</span>
-      <span class="ability-label-container">
-        <span class="modifier font-label-xlarge color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span><span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
-      </span>
-    </button>
+    {#if swapAbilityScoreAndBonusEnabled}
+      <!-- Swapped: score display at top; editing via overlay input -->
+      {#if unlocked}
+        <label
+          class="button-borderless ability-roll-button"
+          for={abilityInputId}
+          data-tooltip={primaryTooltip}
+          data-tidy-sheet-part="ability-score"
+        >
+          <span class="ability-abbr color-text-gold">{ability.abbr}</span>
+          <span class="ability-label-container">
+            <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{ability.value}</span>
+          </span>
+        </label>
+      {:else}
+        <div
+          class="button-borderless ability-roll-button"
+          data-tooltip={primaryTooltip}
+          data-tidy-sheet-part="ability-score"
+        >
+          <span class="ability-abbr color-text-gold">{ability.abbr}</span>
+          <span class="ability-label-container">
+            <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{ability.value}</span>
+          </span>
+        </div>
+      {/if}
+    {:else}
+      <!-- Default: ability check roller at top -->
+      <button
+        type="button"
+        data-action="roll"
+        data-type="ability"
+        data-ability={ability.key}
+        data-tooltip={primaryTooltip}
+        class="button-borderless ability-roll-button"
+        data-tidy-sheet-part="ability-roller"
+        data-has-roll-modes
+        {disabled}
+      >
+        <span class="ability-abbr color-text-gold">{ability.abbr}</span>
+        <span class="ability-label-container">
+          <span class="modifier font-label-xlarge color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span>
+          <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+        </span>
+      </button>
+    {/if}
     {#if unlocked}
       <input
         id={abilityInputId}
@@ -116,19 +169,52 @@
     {/if}
   </div>
   <div class="ability-score-container">
-    <label
-      class={['ability-score', { invisible: editingScore }]}
-      data-tooltip={localize('DND5E.ABILITY.SECTIONS.Score', {
-        ability: ability.label,
-      })}
-      for={abilityInputId}
-      data-tidy-sheet-part="ability-score"
-    >
-      <span class="font-title-small color-text-default">{ability.value}</span>
-      {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
-        <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
-      {/if}
-    </label>
+    {#if swapAbilityScoreAndBonusEnabled}
+      <!-- Swapped: modifier roller in the middle -->
+      <button
+        type="button"
+        data-action="roll"
+        data-type="ability"
+        data-ability={ability.key}
+        data-tooltip={secondaryTooltip}
+        class={[
+          'button-borderless ability-score',
+          { invisible: editingScore },
+        ]}
+        data-tidy-sheet-part="ability-roller"
+        data-has-roll-modes
+        {disabled}
+      >
+        <span class="modifier font-default-large color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span>
+        <span class="font-label-large color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+        {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
+          <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
+        {/if}
+      </button>
+    {:else if unlocked}
+      <label
+        class={['ability-score', { invisible: editingScore }]}
+        data-tooltip={secondaryTooltip}
+        for={abilityInputId}
+        data-tidy-sheet-part="ability-score"
+      >
+        <span class="font-title-small color-text-default">{ability.value}</span>
+        {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
+          <span class="ability-proficiency-indicator config-button-visible"></span>
+        {/if}
+      </label>
+    {:else}
+      <span
+        class={['ability-score', { invisible: editingScore }]}
+        data-tooltip={secondaryTooltip}
+        data-tidy-sheet-part="ability-score"
+      >
+        <span class="font-title-small color-text-default">{ability.value}</span>
+        {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
+          <span class="ability-proficiency-indicator"></span>
+        {/if}
+      </span>
+    {/if}
     {#if unlocked}
       <button
         aria-label={configButtonTooltip}
@@ -150,8 +236,8 @@
   <div class="ability-save-container">
     <button
       type="button"
-      aria-label={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
-      data-tooltip
+      aria-label={savingThrowTooltip}
+      data-tooltip={savingThrowTooltip}
       class={[
         'button-borderless ability-save flexrow',
         'saving-throw',

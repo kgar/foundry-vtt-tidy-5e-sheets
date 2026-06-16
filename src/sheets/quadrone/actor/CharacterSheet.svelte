@@ -14,6 +14,7 @@
   import { SvelteSet } from 'svelte/reactivity';
   import { untrack } from 'svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { settings } from 'src/settings/settings.svelte';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
   import { CONSTANTS } from 'src/constants';
 
@@ -39,6 +40,11 @@
   // When the user expands or collapses the sidebar, remember their preference
   //  for this tab.
   let sidebarExpanded = $derived(sidebarExpandedPreference);
+
+  
+  const swapAbilityScoreAndBonusEnabled = $derived(
+    settings.value.swapAbilityScoreAndBonus,
+  );
 
   // Save two-way updates when the sidebar is expanded/collapsed from a sheet.
   $effect(() => {
@@ -223,9 +229,15 @@
             {/if}
           </div>
           <div class="ability-labels flexcol">
+            {#if swapAbilityScoreAndBonusEnabled}
+            <span class="label font-label-medium color-text-gold"
+              >{localize('DND5E.Modifier')}</span
+            >
+            {:else}
             <span class="label font-label-medium color-text-gold"
               >{localize('DND5E.AbilityScoreShort')}</span
             >
+            {/if}
             <span class="divider"></span>
             <span class="label font-label-medium color-text-gold"
               >{localize('DND5E.SavingThrowShort')}</span
