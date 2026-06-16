@@ -7,7 +7,6 @@ import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
-import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
   GlobalCustomSectionsetting,
@@ -25,6 +24,7 @@ import {
   TabConfigurationSchema,
 } from './settings-data-models';
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
+import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -212,14 +212,11 @@ export function createSettings() {
       },
       applyTidySheetPreferences: {
         options: {
-          // TODO: Change this out with verbiage explaining that we're going to change them all in one go.
           name: `TIDY5E.SettingsMenu.Defaults.name`,
           label: 'TIDY5E.SettingsMenu.Defaults.label',
           hint: `TIDY5E.SettingsMenu.Defaults.hint`,
           icon: 'fa-solid fa-scroll',
-          // TODO: Change this out with a confirmation dialog that will set all sheets to tidy
-          // Then delete ApplyTidySheetPreferencesApplication
-          type: ApplyTidySheetPreferencesApplication,
+          type: MakeAllSheetsTidyDialog,
           restricted: true,
         },
       },

@@ -855,7 +855,9 @@
     "RevertToSystemSheets": "Revert to System Sheets",
     "Sheet": "Document Type",
     "TidySheets": "Tidy Sheets",
-    "SystemSheets": "System Sheets"
+    "SystemSheets": "System Sheets",
+    "dialogTitle": "Set Tidy as Default Sheet",
+    "dialogMessage": "Are you sure you want to set the default for all sheets to Tidy?"
   },
   "TIDY5E.WorldSettings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
