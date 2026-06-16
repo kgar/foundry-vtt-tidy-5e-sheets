@@ -337,11 +337,7 @@
       />
       <!-- TODO: Deal with the undefined placeholders. They are unused. -->
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.tabDisplaySettingsTab}
-      <SheetTabConfigurationQuadrone
-        app={app.tabDisplaySettingsTab}
-        bind:config={app.tabDisplaySettingsTab.value}
-        title={app.tabDisplaySettingsTab.inclusionTabTitle}
-      />
+      <SheetTabConfigurationQuadrone app={app.tabDisplaySettingsTab} />
     {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
       <div class="dialog-content-container flexcol">
         <h2>
@@ -377,11 +373,7 @@
         />
       </div>
     {:else if activeSelectedId === SETTINGS_SIDEBAR_TAB_CONFIG && app.sidebarTabDisplaySettingsTab}
-      <SheetTabConfigurationQuadrone
-        app={app.sidebarTabDisplaySettingsTab}
-        bind:config={app.sidebarTabDisplaySettingsTab.value}
-        title={app.sidebarTabDisplaySettingsTab.inclusionTabTitle}
-      />
+      <SheetTabConfigurationQuadrone app={app.sidebarTabDisplaySettingsTab} />
     {:else if activeSelectedId === SETTINGS_SPELL_ASSIGNMENTS && app.spellSourceItemAssignmentsChildApp}
       <SpellSourceAssignmentsPane
         app={app.spellSourceItemAssignmentsChildApp}
