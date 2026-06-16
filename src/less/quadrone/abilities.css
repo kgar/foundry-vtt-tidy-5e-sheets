@@ -176,6 +176,11 @@
       align-items: center;
       justify-content: center;
       pointer-events: initial;
+
+      .modifier {
+        margin-inline-start: -0.1875rem;
+        margin-inline-end: 0.0625rem;
+      }
     }
 
     .ability-save-container {
@@ -246,10 +251,14 @@
   }
 
   .ability-label-container {
-    margin-top: -0.3125rem;
-    margin-left: -0.0625rem;
+    margin-block-start: -0.3125rem;
     display: flex;
     flex-direction: row;
+
+    &:has(.modifier) {
+      gap: 0;
+      margin-inline-start: -0.0625rem;
+    }
   }
 
   .initiative-score-container {

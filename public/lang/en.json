@@ -416,6 +416,13 @@
     "name": "Banked Inspiration Management - GM Only",
     "hint": "Enable this option to limit banked inspiration management to the GM."
   },
+
+  "TIDY5E.Settings.SwapAbilityScoreAndBonus.title": "Swap Ability Score and Modifier",
+  "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+    "name": "Swap Ability Score and Modifier",
+    "hint": "Swap the ability score and modifier in sheet headers."
+  },
+
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
   "TIDY5E.WorldSettings.Menu": {
     "name": "Overview",
