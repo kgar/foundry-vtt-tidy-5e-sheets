@@ -3,7 +3,10 @@ import type { SettingsEditor } from './settings-editors.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { mapGetOrInsert } from 'src/utils/map';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { SectionConfig } from 'src/features/sections/sections.types';
+import type {
+  SectionConfig,
+  SheetTabSectionConfigs,
+} from 'src/features/sections/sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type BooleanSetting = {
@@ -112,6 +115,13 @@ export function getConfigureSectionsSettingsEditor(
   const hasChanges = $derived(
     JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
   );
+
+  function sectionsAreDefault() {
+    return (
+      JSON.stringify($state.snapshot(current.sections)) ===
+      JSON.stringify(defaultSections)
+    );
+  }
 
   function mapSectionBaseToConfig(sections: TidySectionBase[]) {
     return sections.map((s) => ({
@@ -242,19 +252,29 @@ export function getConfigureSectionsSettingsEditor(
         }
       }
 
-      const sectionConfig = TidyFlags.sectionConfig.get(document) ?? {};
+      const sectionConfig: SheetTabSectionConfigs =
+        TidyFlags.sectionConfig.get(document) ?? {};
 
-      sectionConfig[settings.tabId] = this.value.sections.reduce<
-        Record<string, SectionConfig>
-      >((result, curr, i) => {
-        result[curr.key] = {
-          key: curr.key,
-          order: i,
-          show: curr.show !== false,
-        };
-        return result;
-      }, {});
-
+      if (sectionsAreDefault()) {
+        if (game.release.generation < 14) {
+          delete sectionConfig[settings.tabId];
+          // @ts-expect-error
+          sectionConfig[`-=${settings.tabId}`] = null;
+        } else {
+          sectionConfig[settings.tabId] = _del;
+        }
+      } else {
+        sectionConfig[settings.tabId] = this.value.sections.reduce<
+          Record<string, SectionConfig>
+        >((result, curr, i) => {
+          result[curr.key] = {
+            key: curr.key,
+            order: i,
+            show: curr.show !== false,
+          };
+          return result;
+        }, {});
+      }
       thisDocumentData[TidyFlags.sectionConfig.prop] = sectionConfig;
 
       for (const [doc, toSave] of documentsToSave) {
