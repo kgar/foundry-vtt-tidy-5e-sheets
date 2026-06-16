@@ -253,6 +253,10 @@
     "name": "Homebrew Settings",
     "tabLabel": "Homebrew"
   },
+  "TIDY5E.WorldSettings.HideClassic": {
+    "name": "Tidy 5e Hide Classic Sheets",
+    "hint": "Hide Tidy Classic sheets from the world."
+  },
 
   "TIDY5E.WorldSettings.TabCharacter": {
     "tabLabel": "Character"

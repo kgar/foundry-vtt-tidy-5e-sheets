@@ -2127,10 +2127,10 @@ export function createSettings() {
 
       hideClassic: {
         options: {
-          name: 'Tidy 5e Hide Classic Sheets',
-          hint: 'Hide Tidy Classic sheets from the world.',
+          name: 'TIDY5E.WorldSettings.HideClassic.name',
+          hint: 'TIDY5E.WorldSettings.HideClassic.hint',
           scope: 'world',
-          config: false,
+          config: true,
           default: false,
           type: Boolean,
           requiresReload: true,
