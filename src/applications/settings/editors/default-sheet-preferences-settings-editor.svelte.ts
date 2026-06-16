@@ -37,6 +37,12 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
   }
 
   async function save() {
+    const changed = hasChanges;
+
+    if (!changed) {
+      return;
+    }
+
     // We intend to adjust the existing settings.
     let settings = game.settings.get('core', 'sheetClasses');
 
@@ -68,6 +74,19 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
     await game.settings.set('core', 'sheetClasses', settings);
 
     initialSnapshot = snapshotConfig(current);
+
+    // Sheet class changes only take effect after a reload.
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('SETTINGS.ReloadPromptTitle'),
+      },
+      content: FoundryAdapter.localize('SETTINGS.ReloadPromptBody'),
+      yes: { default: true },
+    });
+
+    if (proceed) {
+      foundry.utils.debouncedReload();
+    }
   }
 
   return {
