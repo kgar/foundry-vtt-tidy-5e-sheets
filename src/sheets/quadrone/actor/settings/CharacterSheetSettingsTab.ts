@@ -94,9 +94,8 @@ export function buildCharacterSheetSettingsTab(
       ? (rawTitle as () => string)()
       : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
-  const defaultSections = getCharacterSheetTabActionSectionsQuadrone(
-    context.actor,
-    context,
+  const defaultSections = context.sheet.createSheetTabOriginSections(
+    context
   );
 
   return {

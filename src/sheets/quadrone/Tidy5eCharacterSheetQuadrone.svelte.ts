@@ -53,7 +53,8 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { TidySheetSettingsTabIds,
+import {
+  TidySheetSettingsTabIds,
   TidySheetSettingsQuadroneApplication,
 } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
@@ -328,7 +329,15 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     const sortMode = sheetTabPreferences?.sort ?? 'm';
 
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
-      this.setUpSheetTabOriginSections(context);
+      const sheetTabSections = this.createSheetTabOriginSections(context);
+      context.sheetTabSections = SheetSections.configureActionsQuadrone(
+        sheetTabSections,
+        CONSTANTS.TAB_ACTOR_ACTIONS,
+        UserSheetPreferencesService.getByType(this.actor.type),
+        TidyFlags.sectionConfig.get(context.actor)?.[
+          CONSTANTS.TAB_ACTOR_ACTIONS
+        ],
+      );
     } else {
       const actionSections = getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
@@ -369,7 +378,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     );
   }
 
-  private setUpSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
+  createSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true },
@@ -475,7 +484,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
       );
     });
 
-    context.sheetTabSections = [
+    let sheetTabSections: SheetTabSection[] = [
       ...inventorySections,
       ...spellbookSections,
       ...featureSections,
@@ -517,7 +526,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     }
 
     let sectionsMap: Record<string, SheetTabSection> = {};
-    for (let section of context.sheetTabSections) {
+    for (let section of sheetTabSections) {
       const mappedSection = sectionsMap[section.key];
 
       if (!mappedSection) {
@@ -541,16 +550,9 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
       mappedSection.items.push(...incomingItems);
     }
 
-    context.sheetTabSections = Object.values(sectionsMap);
+    sheetTabSections = Object.values(sectionsMap);
 
-    context.sheetTabSections = SheetSections.configureActionsQuadrone(
-      context.sheetTabSections,
-      CONSTANTS.TAB_ACTOR_ACTIONS,
-      UserSheetPreferencesService.getByType(this.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
-    );
-
-    context.sheetTabSections.forEach(
+    sheetTabSections.forEach(
       (section) =>
         (section.sectionActions = SectionActions.getActionHeaderActions(
           this.document,
@@ -559,6 +561,8 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
           section,
         )),
     );
+
+    return sheetTabSections;
   }
 
   shouldIncludeItemInSheetTab(
@@ -738,7 +742,7 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
               CONFIG.DND5E.tools[id]?.id ?? '',
             );
           }
-          
+
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
           }));
@@ -1212,7 +1216,9 @@ export class Tidy5eCharacterSheetQuadrone extends GetTidy5eActorSheetQuadroneBas
     const element = await super._renderFrame(options);
 
     // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
     if (themeSettings.useHeaderBackground) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
