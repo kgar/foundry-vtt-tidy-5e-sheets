@@ -118,6 +118,11 @@ export type Tidy5eSetting = {
      * Prompts a reload if the setting is changed.
      */
     requiresReload?: boolean;
+
+    /**
+     * Enable to hide classic-sheet-only settings from the world.
+     */
+    hideClassic?: boolean;
   };
   get: () => any;
   /**
@@ -169,24 +174,24 @@ export function createSettings() {
     menus: {
       worldSettings: {
         options: {
+          hideClassic: true,
           name: `TIDY5E.WorldSettings.Menu.name`,
           label: 'TIDY5E.WorldSettings.Menu.label',
           hint: `TIDY5E.WorldSettings.Menu.hint`,
           icon: 'fa-solid fa-globe',
           type: WorldSettingsFormApplication,
           restricted: true,
-          hideClassic: true,
         },
       },
       userMenu: {
         options: {
+          hideClassic: true,
           name: `TIDY5E.UserSettings.Menu.name`,
           label: 'TIDY5E.UserSettings.Menu.label',
           hint: `TIDY5E.UserSettings.Menu.hint`,
           icon: 'fa-solid fa-user-gear',
           type: UserSettingsFormApplication,
           restricted: false,
-          hideClassic: true,
         },
       },
       worldThemeSettingsMenu: {
@@ -201,13 +206,13 @@ export function createSettings() {
       },
       migrations: {
         options: {
+          hideClassic: true,
           name: `TIDY5E.Settings.Migrations.name`,
           label: 'TIDY5E.Settings.Migrations.buttonLabel',
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
           type: BulkMigrationsApplication,
           restricted: true,
-          hideClassic: true,
         },
       },
       applyTidySheetPreferences: {
@@ -276,6 +281,7 @@ export function createSettings() {
 
       initialCharacterSheetTab: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.InitialSheetTab.name',
           hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
@@ -376,6 +382,7 @@ export function createSettings() {
 
       useClassicControlsForCharacter: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseClassicControls.name',
           hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
@@ -393,6 +400,7 @@ export function createSettings() {
       // Info Cards
       itemCardsForAllItems: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ItemCardsForAllItems.name',
           hint: 'TIDY5E.Settings.ItemCardsForAllItems.hint',
           scope: 'client',
@@ -407,6 +415,7 @@ export function createSettings() {
 
       useEffectCards: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseEffectCards.name',
           hint: 'TIDY5E.Settings.UseEffectCards.hint',
           scope: 'client',
@@ -421,6 +430,7 @@ export function createSettings() {
 
       itemCardsAreFloating: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ItemCardsAreFloating.name',
           hint: 'TIDY5E.Settings.ItemCardsAreFloating.hint',
           scope: 'client',
@@ -435,6 +445,7 @@ export function createSettings() {
 
       itemCardsDelay: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ItemCardsDelay.name',
           hint: 'TIDY5E.Settings.ItemCardsDelay.hint',
           scope: 'client',
@@ -449,6 +460,7 @@ export function createSettings() {
 
       useAccessibleKeyboardSupport: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseAccessibleKeyboardSupport.name',
           hint: 'TIDY5E.Settings.UseAccessibleKeyboardSupport.hint',
           scope: 'world',
@@ -465,6 +477,7 @@ export function createSettings() {
 
       useDefaultSheetAttributeTabbing: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.name',
           hint: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.hint',
           scope: 'client',
@@ -481,6 +494,7 @@ export function createSettings() {
 
       useDefaultSheetHpTabbing: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.name',
           hint: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.hint',
           scope: 'client',
@@ -497,6 +511,7 @@ export function createSettings() {
 
       itemCardsFixKey: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.InfoCardsInspectKey.name',
           hint: 'TIDY5E.Settings.InfoCardsInspectKey.hint',
           scope: 'world',
@@ -512,6 +527,7 @@ export function createSettings() {
       //Show trait labels
       showTraitLabels: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowTraitLabels.name',
           hint: 'TIDY5E.Settings.ShowTraitLabels.hint',
           scope: 'world',
@@ -526,6 +542,7 @@ export function createSettings() {
 
       showClassList: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowClassList.name',
           hint: 'TIDY5E.Settings.ShowClassList.hint',
           scope: 'client',
@@ -540,6 +557,7 @@ export function createSettings() {
 
       animateInspiration: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.InspirationAnimation.name',
           hint: 'TIDY5E.Settings.InspirationAnimation.hint',
           scope: 'client',
@@ -554,6 +572,7 @@ export function createSettings() {
 
       hideIfZero: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.HideIfZero.name',
           hint: 'TIDY5E.Settings.HideIfZero.hint',
           scope: 'client',
@@ -568,6 +587,7 @@ export function createSettings() {
 
       showInspirationOnHover: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowInspirationOnHover.name',
           hint: 'TIDY5E.Settings.ShowInspirationOnHover.hint',
           scope: 'client',
@@ -584,6 +604,7 @@ export function createSettings() {
 
       showExhaustionOnHover: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowExhaustionOnHover.name',
           hint: 'TIDY5E.Settings.ShowExhaustionOnHover.hint',
           scope: 'client',
@@ -600,6 +621,7 @@ export function createSettings() {
 
       useHpBar: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpBar.name',
           hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
@@ -614,6 +636,7 @@ export function createSettings() {
 
       useHpOverlay: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpOverlay.name',
           hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
@@ -628,6 +651,7 @@ export function createSettings() {
 
       toggleEmptyCharacterSkills: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ToggleEmptyCharacterSkills.name',
           hint: 'TIDY5E.Settings.ToggleEmptyCharacterSkills.hint',
           scope: 'client',
@@ -644,6 +668,7 @@ export function createSettings() {
 
       moveCharacterTraitsToRightOfSkills: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.name',
           hint: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.hint',
           scope: 'client',
@@ -660,6 +685,7 @@ export function createSettings() {
 
       showEquippedAmmoOnly: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowEquippedAmmoOnly.name',
           hint: 'TIDY5E.Settings.ShowEquippedAmmoOnly.hint',
           scope: 'client',
@@ -674,6 +700,7 @@ export function createSettings() {
 
       initialNpcSheetTab: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.InitialSheetTab.name',
           hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
@@ -713,6 +740,7 @@ export function createSettings() {
 
       useClassicControlsForNpc: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseClassicControls.name',
           hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
@@ -729,6 +757,7 @@ export function createSettings() {
 
       moveNpcTraitsToRightOfSkills: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.name',
           hint: 'TIDY5E.Settings.MoveTraitsToRightOfSkills.hint',
           scope: 'client',
@@ -745,6 +774,7 @@ export function createSettings() {
 
       useHpBarNpc: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpBar.name',
           hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
@@ -759,6 +789,7 @@ export function createSettings() {
 
       useHpOverlayNpc: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpOverlay.name',
           hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
@@ -773,6 +804,7 @@ export function createSettings() {
 
       alwaysShowNpcSkills: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.AlwaysShowSkills.name',
           hint: 'TIDY5E.Settings.AlwaysShowSkills.hint',
           scope: 'client',
@@ -787,6 +819,7 @@ export function createSettings() {
 
       showSpellbookTabNpc: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowNPCSpellbookTab.name',
           hint: 'TIDY5E.Settings.ShowNPCSpellbookTab.hint',
           scope: 'client',
@@ -801,6 +834,7 @@ export function createSettings() {
 
       initialVehicleSheetTab: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.InitialSheetTab.name',
           hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
@@ -843,6 +877,7 @@ export function createSettings() {
 
       useClassicControlsForVehicle: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseClassicControls.name',
           hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
@@ -859,6 +894,7 @@ export function createSettings() {
 
       useHpBarVehicle: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpBar.name',
           hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
@@ -873,6 +909,7 @@ export function createSettings() {
 
       useHpOverlayVehicle: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseHpOverlay.name',
           hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
@@ -887,6 +924,7 @@ export function createSettings() {
 
       showPlayerName: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowPlayerName.name',
           hint: 'TIDY5E.Settings.ShowPlayerName.hint',
           scope: 'world',
@@ -974,6 +1012,7 @@ export function createSettings() {
 
       useCircularPortraitStyle: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseCircularPortraitStyle.name',
           hint: 'TIDY5E.Settings.UseCircularPortraitStyle.hint',
           scope: 'world',
@@ -1000,6 +1039,7 @@ export function createSettings() {
 
       useTotalSheetLock: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseTotalSheetLock.name',
           hint: 'TIDY5E.Settings.UseTotalSheetLock.hint',
           scope: 'world',
@@ -1030,6 +1070,7 @@ export function createSettings() {
 
       hideDeathSavesFromPlayers: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.HideDeathSavesFromPlayers.name',
           hint: 'TIDY5E.Settings.HideDeathSavesFromPlayers.hint',
           scope: 'world',
@@ -1066,6 +1107,7 @@ export function createSettings() {
 
       useCharacterEncumbranceBar: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseCharacterEncumbranceBar.name',
           hint: 'TIDY5E.Settings.UseCharacterEncumbranceBar.hint',
           scope: 'world',
@@ -1082,6 +1124,7 @@ export function createSettings() {
 
       useNpcEncumbranceBar: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseNPCEncumbranceBar.name',
           hint: 'TIDY5E.Settings.UseNPCEncumbranceBar.hint',
           scope: 'world',
@@ -1096,6 +1139,7 @@ export function createSettings() {
 
       useVehicleEncumbranceBar: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseVehicleEncumbranceBar.name',
           hint: 'TIDY5E.Settings.UseVehicleEncumbranceBar.hint',
           scope: 'world',
@@ -1112,6 +1156,7 @@ export function createSettings() {
 
       useExhaustion: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseExhaustion.name',
           hint: 'TIDY5E.Settings.UseExhaustion.hint',
           scope: 'world',
@@ -1126,6 +1171,7 @@ export function createSettings() {
 
       useCharacterInspiration: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseInspiration.name',
           hint: 'TIDY5E.Settings.UseInspiration.hint',
           scope: 'world',
@@ -1142,6 +1188,7 @@ export function createSettings() {
 
       useVehicleMotion: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseVehicleMotion.name',
           hint: 'TIDY5E.Settings.UseVehicleMotion.hint',
           scope: 'world',
@@ -1156,6 +1203,7 @@ export function createSettings() {
 
       showNpcRestInChat: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowNPCRestInChat.name',
           hint: 'TIDY5E.Settings.ShowNPCRestInChat.hint',
           scope: 'world',
@@ -1170,6 +1218,7 @@ export function createSettings() {
 
       showNpcActorLinkMarker: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowNPCActorLinkMarker.name',
           hint: 'TIDY5E.Settings.ShowNPCActorLinkMarker.hint',
           scope: 'world',
@@ -1191,6 +1240,7 @@ export function createSettings() {
 
       showActiveEffectsMarker: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.ShowActiveEffectsMarker.name',
           hint: 'TIDY5E.Settings.ShowActiveEffectsMarker.hint',
           scope: 'world',
@@ -1293,6 +1343,7 @@ export function createSettings() {
 
       useSpellClassFilterIcons: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseSpellClassIcons.name',
           hint: 'TIDY5E.Settings.UseSpellClassIcons.hint',
           scope: 'client',
@@ -1309,6 +1360,7 @@ export function createSettings() {
 
       allowHpMaxOverride: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.AllowHpMaxOverride.name',
           hint: 'TIDY5E.Settings.AllowHpMaxOverride.hint',
           scope: 'world',
@@ -1387,6 +1439,7 @@ export function createSettings() {
 
       exhaustionConfig: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.WorldSettings.Exhaustion.name',
           hint: 'TIDY5E.WorldSettings.Exhaustion.hint',
           scope: 'world',
@@ -1403,6 +1456,7 @@ export function createSettings() {
 
       vehicleExhaustionConfig: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.WorldSettings.VehicleExhaustion.name',
           hint: 'TIDY5E.WorldSettings.VehicleExhaustion.hint',
           scope: 'world',
@@ -1876,6 +1930,7 @@ export function createSettings() {
       // Icons
       useTidySpellSchoolIcons: {
         options: {
+          hideClassic: true,
           name: 'TIDY5E.Settings.UseTidySpellSchoolIcons.name',
           hint: 'TIDY5E.Settings.UseTidySpellSchoolIcons.hint',
           scope: 'world',
@@ -1963,6 +2018,21 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'bankedInspirationGmOnly'
+          );
+        },
+      },
+      swapAbilityScoreAndBonus: {
+        options: {
+          name: 'TIDY5E.Settings.SwapAbilityScoreAndBonus.name',
+          hint: 'TIDY5E.Settings.SwapAbilityScoreAndBonus.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'swapAbilityScoreAndBonus'
           );
         },
       },
@@ -2199,8 +2269,33 @@ export function initSettings() {
     _settings = getCurrentSettings();
   }, 100);
 
+  const registerSetting = (
+    key: string,
+    setting: Tidy5eSetting,
+    overrides: Record<string, unknown> = {}
+  ) => {
+    const options = {
+      ...setting.options,
+      ...overrides,
+      onChange: (...args: any[]) => {
+        debouncedSettingStoreRefresh();
+
+        (setting.options as any).onChange?.(...args);
+      },
+    };
+    FoundryAdapter.registerTidySetting(key, options);
+  };
+
+  // Register before init-time reads (used to filter menus and classic-only config).
+  registerSetting('hideClassic', SettingsProvider.settings.hideClassic);
+  registerSetting('truesight', SettingsProvider.settings.truesight);
+
+  const hideClassic = SettingsProvider.settings.hideClassic.get();
+  const initRegisteredKeys = new Set(['hideClassic', 'truesight']);
+
   for (let setting of Object.entries(SettingsProvider.settings).filter(
-    (x: [string, Tidy5eSetting]) => !x[1].debugOnly
+    (x: [string, Tidy5eSetting]) =>
+      !x[1].debugOnly && !initRegisteredKeys.has(x[0])
   )) {
     const options = {
       ...setting[1].options,
@@ -2210,6 +2305,9 @@ export function initSettings() {
         (setting[1].options as any).onChange?.(...args);
       },
     };
+    if ('hideClassic' in setting[1].options && hideClassic) {
+      options.config = false;
+    }
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
@@ -2227,11 +2325,13 @@ export function initSettings() {
         (setting[1].options as any).onChange?.(...args);
       },
     };
+    if ('hideClassic' in setting[1].options && hideClassic) {
+      options.config = false;
+    }
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
   const truesight = SettingsProvider.settings.truesight.get();
-  const hideClassic = SettingsProvider.settings.hideClassic.get();
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
     if ('truesight' in menu[1].options && !truesight) {
