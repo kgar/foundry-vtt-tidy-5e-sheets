@@ -212,7 +212,7 @@ declare global {
 
   /* game.release.generation > 13 */
 
-  function _del<T>(arg: T): T;
+  declare var _del: any;
   function _replace<T>(arg: T): T;
 }
 
