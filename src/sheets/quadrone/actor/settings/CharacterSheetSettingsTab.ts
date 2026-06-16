@@ -1,7 +1,7 @@
 import {
   type RadioSetting,
   type SectionOptionGroup,
-} from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
+} from 'src/settings/editors/configure-sections-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { getCharacterSheetTabActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
@@ -94,9 +94,8 @@ export function buildCharacterSheetSettingsTab(
       ? (rawTitle as () => string)()
       : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
-  const defaultSections = getCharacterSheetTabActionSectionsQuadrone(
-    context.actor,
-    context,
+  const defaultSections = context.sheet.createSheetTabOriginSections(
+    context
   );
 
   return {

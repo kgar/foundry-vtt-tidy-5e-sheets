@@ -29,31 +29,30 @@ import type { RegisteredTab } from 'src/runtime/types';
 import {
   getThemeSettingsEditor,
   type ThemeSettingsEditor,
-} from '../editors/theme-settings-editor.svelte';
+} from 'src/settings/editors/theme-settings-editor.svelte';
 import {
   getWorldHeaderControlConfigurationSettingsEditor,
   type HeaderControlConfigContextItem,
   type WorldHeaderControlConfigurationSettingsEditor,
-} from '../editors/world-header-control-configuration-settings-editor.svelte';
-import type { SettingsEditor } from '../editors/settings-editors.svelte';
+} from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
+import type { SettingsEditor } from 'src/settings/editors/settings-editors.svelte';
 import {
   getSheetTabConfigurationSettingsEditor,
-  SIDEBAR_EXPANDABLE_SHEET_TYPES,
   type SheetTabConfigurationSettingsEditor,
-} from '../editors/sheet-tab-configuration-settings-editor.svelte';
+} from 'src/settings/editors/sheet-tab-configuration-settings-editor.svelte';
 import {
   getSpecialTraitsSettingsEditor,
   type SpecialTraitsSettingsEditor,
-} from '../editors/special-traits-settings-editor.svelte';
+} from 'src/settings/editors/special-traits-settings-editor.svelte';
 import {
   getSpellSourceItemAssignmentsSettingsEditor,
   type SpellSourceItemAssignmentsSettingsEditor,
-} from '../editors/spell-source-item-assignments-settings-editor.svelte';
+} from 'src/settings/editors/spell-source-item-assignments-settings-editor.svelte';
 import {
   getConfigureSectionsSettingsEditor,
   type ConfigureSectionsSettingsEditor,
   type SectionOptionGroup,
-} from '../editors/configure-sections-settings-editor.svelte';
+} from 'src/settings/editors/configure-sections-settings-editor.svelte';
 import type { TidySectionBase } from 'src/types/types';
 
 type SheetSettingsRuntimeAdapter = {

@@ -10,12 +10,12 @@ import TidyWorldSettings from './TidyWorldSettings.svelte';
 import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import { getThemeSettingsEditor } from '../editors/theme-settings-editor.svelte';
-import { getWorldTabConfigurationSettingsEditor } from '../editors/world-tab-configuration-settings-editor.svelte';
-import { getWorldHeaderControlConfigurationSettingsEditor } from '../editors/world-header-control-configuration-settings-editor.svelte';
-import { getHomebrewSettingsEditor } from '../editors/homebrew-settings-editor.svelte';
-import { getDefaultSheetPreferencesSettingsEditor } from '../editors/default-sheet-preferences-settings-editor.svelte';
-import type { SettingsEditor } from '../editors/settings-editors.svelte';
+import { getThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
+import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/world-tab-configuration-settings-editor.svelte';
+import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
+import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
+import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
+import type { SettingsEditor } from 'src/settings/editors/settings-editors.svelte';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',

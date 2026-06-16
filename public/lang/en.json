@@ -253,6 +253,10 @@
     "name": "Homebrew Settings",
     "tabLabel": "Homebrew"
   },
+  "TIDY5E.WorldSettings.HideClassic": {
+    "name": "Tidy 5e Hide Classic Sheets",
+    "hint": "Hide Tidy Classic sheets from the world."
+  },
 
   "TIDY5E.WorldSettings.TabCharacter": {
     "tabLabel": "Character"
@@ -395,17 +399,11 @@
       "hint": "New Tidy Sheets Only: Configure which tabs are visible for all actor and item sheets."
     }
   },
-
-
   "TIDY5E.WorldSettings.GlobalTheme": {
     "name": "Configure Global Theme Settings",
     "tabLabel": "Theme Settings",
     "hint": "Configure the default theme settings for your game world. These apply to all sheets. You can also configure theme settings for specific sheets."
   },
-  
-
-
-
   "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
   "TIDY5E.Settings.EnableBankedInspiration": {
     "name": "Enable Banked Inspiration",
@@ -415,9 +413,7 @@
     "name": "Banked Inspiration Management - GM Only",
     "hint": "Enable this option to limit banked inspiration management to the GM."
   },
-
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
-
   "TIDY5E.WorldSettings.Menu": {
     "name": "Overview",
     "tabLabel": "Overview",
@@ -425,7 +421,6 @@
     "label": "World Settings",
     "title": "World Settings (GM Only)"
   },
-
   "TIDY5E.UserSettings.Menu": {
     "name": "User Settings",
     "hint": "Customize your own version of Tidy 5e Sheets. These settings are saved to your browser and apply to your sheets.",
@@ -855,7 +850,9 @@
     "RevertToSystemSheets": "Revert to System Sheets",
     "Sheet": "Document Type",
     "TidySheets": "Tidy Sheets",
-    "SystemSheets": "System Sheets"
+    "SystemSheets": "System Sheets",
+    "dialogTitle": "Set Tidy as Default Sheet",
+    "dialogMessage": "Are you sure you want to set the default for all sheets to Tidy?"
   },
   "TIDY5E.WorldSettings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",

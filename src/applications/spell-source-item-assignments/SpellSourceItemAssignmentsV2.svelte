@@ -12,9 +12,8 @@
   import type {
     SpellSourceItemAssignment,
     SpellSourceItemAssignmentsContext,
-  } from '../settings/editors/spell-source-item-assignments-settings-editor.svelte';
+  } from 'src/settings/editors/spell-source-item-assignments-settings-editor.svelte';
   import type { Actor5e } from 'src/types/types';
-  import SpellSourceItemAssignments from './SpellSourceItemAssignments.svelte';
 
   type Props = {
     config: SpellSourceItemAssignmentsContext;

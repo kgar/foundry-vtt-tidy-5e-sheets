@@ -1,17 +1,17 @@
 <script lang="ts">
   import type {
-    SheetTabConfigurationContext,
     SheetTabConfigurationSettingsEditor,
-  } from '../settings/editors/sheet-tab-configuration-settings-editor.svelte';
+  } from 'src/settings/editors/sheet-tab-configuration-settings-editor.svelte';
   import SortableListbox from './parts/SortableListbox.svelte';
 
   interface Props {
     app: SheetTabConfigurationSettingsEditor;
-    config: SheetTabConfigurationContext;
-    title: string;
   }
 
-  let { config = $bindable(), title }: Props = $props();
+  let { app }: Props = $props();
+
+  const config = $derived(app.value);
+  const title = $derived(app.inclusionTabTitle);
 </script>
 
 <div class="dialog-content-container sheet-tab-configuration flexcol">

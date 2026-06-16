@@ -8,7 +8,7 @@
   import type {
     ConfigureSectionsSettingsEditor,
     SectionOptionGroup,
-  } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
+  } from 'src/settings/editors/configure-sections-settings-editor.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];

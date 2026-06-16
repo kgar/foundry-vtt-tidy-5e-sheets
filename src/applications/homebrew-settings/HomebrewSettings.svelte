@@ -3,7 +3,7 @@
   import type {
     HomebrewConfigContext,
     HomebrewSettingsEditor,
-  } from '../settings/editors/homebrew-settings-editor.svelte';
+  } from 'src/settings/editors/homebrew-settings-editor.svelte';
 
   interface Props {
     config: HomebrewConfigContext;
