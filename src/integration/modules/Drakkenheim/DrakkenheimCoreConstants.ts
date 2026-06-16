@@ -1,7 +1,19 @@
+const DRAKKENHEIM_MODULE_IDS = {
+  CORE: 'drakkenheim-core',
+  SCGD: 'drakkenheim-scgd',
+  MONSTERS: 'drakkenheim-monsters',
+} as const;
+
 export const DRAKKENHEIM_CORE_CONSTANTS = {
-  MODULE_ID: 'drakkenheim-core',
-  SEBASTIAN_CROWE_MODULE_ID: 'drakkenheim-scgd',
-  MONSTERS_OF_DRAKKENHEIM_MODULE_ID: 'drakkenheim-monsters',
+  MODULE_ID: DRAKKENHEIM_MODULE_IDS.CORE,
+  SEBASTIAN_CROWE_MODULE_ID: DRAKKENHEIM_MODULE_IDS.SCGD,
+  MONSTERS_OF_DRAKKENHEIM_MODULE_ID: DRAKKENHEIM_MODULE_IDS.MONSTERS,
+  // @metamorphic/hochofen-plugin-drakkenheim's getScope() priority order
+  PRIORITIZED_SCOPE_MODULE_IDS: [
+    DRAKKENHEIM_MODULE_IDS.MONSTERS,
+    DRAKKENHEIM_MODULE_IDS.SCGD,
+    DRAKKENHEIM_MODULE_IDS.CORE,
+  ] as const,
   SETTING_VERSION: 'VERSION',
   SETTING_DISABLE_TAB: 'DISABLE_TAB',
   CONTAMINATION_LEVEL_FLAG_PROP: `flags.drakkenheim.contamination`,

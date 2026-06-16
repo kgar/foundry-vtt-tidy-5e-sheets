@@ -62,6 +62,9 @@ export const FoundryAdapter = {
   registerTidyMenu(key: string, data: any): void {
     game.settings.registerMenu(CONSTANTS.MODULE_ID, key, data);
   },
+  hasGameSetting(namespace: string, settingName: string): boolean {
+    return game.settings.settings.has(`${namespace}.${settingName}`);
+  },
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
   },
