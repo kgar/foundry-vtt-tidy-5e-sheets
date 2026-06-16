@@ -26,7 +26,6 @@
     hint,
   }: Props = $props();
 
-  // TODO: Delete? Are we still using/wanting this?
   const eyeDropperEnabled = 'EyeDropper' in window;
 
   let inputId = $derived(`color-setting-${key}-${foundry.utils.randomID()}`);
