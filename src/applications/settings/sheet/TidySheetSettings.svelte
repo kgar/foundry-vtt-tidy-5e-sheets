@@ -380,7 +380,7 @@
       />
     {:else if activeSelectedId === SETTINGS_SPECIAL_TRAITS && app.specialTraitsChildApp}
       <SpecialTraitsPane app={app.specialTraitsChildApp} />
-    {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.tabDisplaySettingsTab}
+    {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.specialTraitsChildApp}
       <SpecialTraitsPane
         app={app.specialTraitsChildApp}
         tabId={selectedSheetTabId}
