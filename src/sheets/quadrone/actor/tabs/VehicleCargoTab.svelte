@@ -17,7 +17,6 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-
   let context = $derived(getVehicleSheetQuadroneContext());
   const localize = FoundryAdapter.localize;
 

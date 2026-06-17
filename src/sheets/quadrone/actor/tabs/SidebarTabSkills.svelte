@@ -1,7 +1,7 @@
 <script lang="ts">
   import SkillsCard from '../parts/skills/SkillsCard.svelte';
   import ToolsCard from '../parts/ToolsCard.svelte';
-  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
+  import { CONSTANTS } from 'src/constants';
   import CharacterTraitPills from '../character-parts/traits/CharacterTraitPills.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -25,10 +25,7 @@
         label={localize('DND5E.SpecialTraits')}
         entries={context.specialTraits}
         configurationTooltip={localize('DND5E.SpecialTraits')}
-        onconfig={() =>
-          context.sheet._renderChild(
-            new SpecialTraitsApplication({ document: context.actor }),
-          )}
+        configAttributes={{ 'data-action': 'configureTab', 'data-tab-id': CONSTANTS.TAB_CHARACTER_ATTRIBUTES }}
         icon="fa-solid fa-star"
       />
     {/snippet}

@@ -5,10 +5,6 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -30,6 +26,8 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import { buildVehicleStatblockSettingsTab } from '../settings/VehicleStatblockSettingsTab';
+  import type { DraftAnimalSection, InventorySection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
 
@@ -52,6 +50,13 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
+
+  let sections = $derived(
+    buildVehicleStatblockSettingsTab(context, tabId).sections as (
+      | InventorySection
+      | DraftAnimalSection
+    )[],
+  );
 
   $effect(() => {
     context;
@@ -85,31 +90,12 @@
     });
   });
 
-  // TODO: set up action bar so we can configure pins
-  let tabOptionGroups: SectionOptionGroup[] = $derived([
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
-  ]);
-
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       tabId,
       'showSheetPins',
     ) ?? true,
-  );
-
-  let sections = $derived(
-    SheetSections.configureVehicleStatblockSections(
-      context.statblock,
-      tabId,
-      UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
   );
 
   let sectionsInlineWidth: number = $state(0);
@@ -207,7 +193,7 @@
   }
 </script>
 
-<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content">
   {#if showSheetPins}

@@ -133,7 +133,7 @@ export function getSvelteApplicationMixin<
 
     /** Run the standard render cycle while reusing the existing prepared context data. */
     #renderSoftly() {
-      this.render({ soft: true });
+      this.render({ tidy: { soft: true } });
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {

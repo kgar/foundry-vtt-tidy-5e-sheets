@@ -20,6 +20,7 @@ import type {
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
+import type { SectionOptionGroup } from 'src/settings/editors/configure-sections-settings-editor.svelte';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
@@ -31,6 +32,19 @@ export type RegisteredContent<TContext> = {
   onRender?: (args: OnRenderParams) => void;
   renderScheme?: RenderScheme;
 };
+
+export type SheetSectionConfigurationTab = {
+  tabId: string;
+  sections: TidySectionBase[];
+  defaultSections: TidySectionBase[];
+  optionsGroups?: SectionOptionGroup[];
+  formTitle?: string;
+};
+
+export type SheetSectionConfigurationTabBuilder<TContext> = (
+  context: TContext,
+  tabId: string,
+) => SheetSectionConfigurationTab | undefined;
 
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
@@ -47,6 +61,7 @@ export type RegisteredTab<TContext> = {
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
   types?: Set<string>;
+  settingsTabBuilder?: SheetSectionConfigurationTabBuilder<TContext>;
 };
 
 /**
@@ -118,7 +133,11 @@ export type RegisteredCustomActorTrait = {
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;
-  pills: ((params: RegisteredCustomTraitRenderParams) => RegisteredCustomTraitEntry[]) | undefined;
+  pills:
+    | ((
+        params: RegisteredCustomTraitRenderParams,
+      ) => RegisteredCustomTraitEntry[])
+    | undefined;
   content: ((params: RegisteredCustomTraitRenderParams) => string) | undefined;
 };
 
@@ -235,7 +254,7 @@ export type ColumnSpecification = {
   headerClasses?: ClassValue;
   cellClasses?: ClassValue;
   condition?: <TSection extends TidySectionBase>(
-    data: ColumnSpecificationConditionArgs<any, TSection>
+    data: ColumnSpecificationConditionArgs<any, TSection>,
   ) => boolean;
 };
 
@@ -256,7 +275,7 @@ export type ConfiguredColumnSpecification = ColumnSpecification & {
 export type ColumnHeaderProps<
   TDocument = any,
   TContext = any,
-  TSection = TidySectionBase
+  TSection = TidySectionBase,
 > = {
   sheetDocument: TDocument;
   sheetContext: TContext;
@@ -266,7 +285,7 @@ export type ColumnHeaderProps<
 export type ColumnCellProps<
   TDocument = any,
   TContext = any,
-  TSection = TidySectionBase
+  TSection = TidySectionBase,
 > = {
   rowDocument: TDocument;
   rowContext: TContext;
@@ -275,7 +294,7 @@ export type ColumnCellProps<
 
 export type ColumnSpecificationConditionArgs<
   TDocument = any,
-  TSection = TidySectionBase
+  TSection = TidySectionBase,
 > = {
   sheetDocument: TDocument;
   section: TSection;
@@ -346,6 +365,6 @@ export type BankedInspirationConfiguration = {
    */
   getData: (
     app: any,
-    actor: any
+    actor: any,
   ) => BankedInspirationCount | Promise<BankedInspirationCount>;
 };

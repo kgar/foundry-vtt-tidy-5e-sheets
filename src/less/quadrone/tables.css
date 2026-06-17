@@ -946,7 +946,6 @@
 
   .spell-slot-tracker {
     margin-left: var(--t5e-size-1x);
-    transform: translateY(var(--t5e-size-1));
     gap: var(--t5e-size-1x);
 
     input,

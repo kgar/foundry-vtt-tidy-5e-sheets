@@ -81,7 +81,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<NpcSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 

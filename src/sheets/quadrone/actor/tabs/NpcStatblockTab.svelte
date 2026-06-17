@@ -8,24 +8,17 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/api';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import type {
-    RadioSetting,
-    SectionOptionGroup,
-  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
-  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
-  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { buildNpcStatblockSettingsTab } from '../settings/NpcStatblockSettingsTab';
+  import type { FeatureSection, SpellbookSection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
 
@@ -42,126 +35,12 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
-    const preferences = UserPreferencesService.get();
-
-    const legendariesProp = `${UserPreferencesService.prop}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
-    const spellbookInStatblockProp = `${UserPreferencesService.prop}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
-
-    const legendariesUserPreference =
-      preferences.showLegendariesOnNpcStatblock ?? true;
-    const spellbookInStatblockUserPreference =
-      preferences.includeSpellbookInNpcStatblockTab ?? true;
-
-    const legendariesDefaultTextKey = legendariesUserPreference
-      ? 'TIDY5E.Show'
-      : 'TIDY5E.Hide';
-
-    const spellbookInStatblockDefaultTextKey =
-      spellbookInStatblockUserPreference ? 'TIDY5E.Show' : 'TIDY5E.Hide';
-
-    return [
-      {
-        title: 'TIDY5E.LegendaryLairToolbar',
-        settings: [
-          {
-            type: 'radio',
-            options: [
-              {
-                label: 'TIDY5E.Show',
-                value: true,
-              },
-              {
-                label: 'TIDY5E.Hide',
-                value: false,
-              },
-              {
-                label: FoundryAdapter.localize(
-                  'TIDY5E.UseSpecificDefaultValue.Label',
-                  { value: FoundryAdapter.localize(legendariesDefaultTextKey) },
-                ),
-                value: null,
-              },
-            ],
-            selected: TidyFlags.showLegendariesOnNpcStatblock.get(
-              context.actor,
-            ),
-            prop: TidyFlags.showLegendariesOnNpcStatblock.prop,
-            doc: context.actor,
-            default: null,
-          } satisfies RadioSetting<boolean | null>,
-        ],
-      },
-      {
-        title: 'TIDY5E.SpellbookSections',
-        settings: [
-          {
-            type: 'radio',
-            options: [
-              {
-                label: 'TIDY5E.Show',
-                value: true,
-              },
-              {
-                label: 'TIDY5E.Hide',
-                value: false,
-              },
-              {
-                label: FoundryAdapter.localize(
-                  'TIDY5E.UseSpecificDefaultValue.Label',
-                  {
-                    value: FoundryAdapter.localize(
-                      spellbookInStatblockDefaultTextKey,
-                    ),
-                  },
-                ),
-                value: null,
-              },
-            ],
-            selected: TidyFlags.includeSpellbookInNpcStatblockTab.get(
-              context.actor,
-            ),
-            prop: TidyFlags.includeSpellbookInNpcStatblockTab.prop,
-            doc: context.actor,
-            default: null,
-          } satisfies RadioSetting<boolean | null>,
-        ],
-      },
-      {
-        title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-        settings: [
-          {
-            type: 'boolean',
-            label: 'TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock',
-            doc: game.user,
-            prop: legendariesProp,
-            default: legendariesUserPreference,
-          },
-          {
-            type: 'boolean',
-            label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
-            doc: game.user,
-            prop: spellbookInStatblockProp,
-            default: spellbookInStatblockUserPreference,
-          },
-          SheetPinsProvider.getGlobalSectionSetting(
-            context.document.type,
-            tabId,
-          ),
-        ],
-      } satisfies SectionOptionGroup,
-    ];
-  });
-
-  let sections = $derived.by(() => {
-    return SheetSections.configureStatblock(
-      context.features,
-      context,
-      tabId,
-      UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    );
-  });
+  let sections = $derived(
+    buildNpcStatblockSettingsTab(context, tabId).sections as (
+      | FeatureSection
+      | SpellbookSection
+    )[],
+  );
 
   let hasAtLeastOneItem = $derived(
     sections.some((section) => section.items.length > 0),
@@ -185,7 +64,7 @@
   });
 </script>
 
-<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content">
   {#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
@@ -199,9 +78,9 @@
   {/if}
 
   {#if !hasAtLeastOneItem}
-  <div class="empty-state-container empty-state-description">
-    {@html localize('TIDY5E.SheetLock.Empty.Hint')}
-  </div>
+    <div class="empty-state-container empty-state-description">
+      {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+    </div>
   {/if}
 
   <StatblockTables
@@ -234,12 +113,8 @@
                 class="button button-secondary"
                 aria-label={localize('DND5E.FlagsTitle')}
                 data-tooltip
-                onclick={() =>
-                  context.sheet._renderChild(
-                    new SpecialTraitsApplication({
-                      document: context.actor,
-                    }),
-                  )}
+                data-action="showConfiguration"
+                data-config="special-traits"
               >
                 <i class="fa-solid fa-star"></i>
                 {localize('DND5E.FlagsTitle')}

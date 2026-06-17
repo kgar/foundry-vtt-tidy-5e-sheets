@@ -53,8 +53,10 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
+import {
+  TidySheetSettingsTabIds,
+  TidySheetSettingsQuadroneApplication,
+} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import {
   getCharacterSheetTabActionSectionsQuadrone,
@@ -94,26 +96,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         this: Tidy5eCharacterSheetQuadrone,
       ) {
         this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
+          new TidySheetSettingsQuadroneApplication({
             document: this.document,
-            customTabConfigProvider: {
-              getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-              setTabConfig: TidyFlags.sidebarTabConfiguration.set,
-              getTabContext: (doc, setting) => {
-                return getActorTabContext(
-                  CharacterSheetQuadroneSidebarRuntime,
-                  doc.documentName,
-                  setting,
-                  true,
-                  CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-                );
-              },
-            },
-            title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
-              documentName: FoundryAdapter.localize(
-                'TIDY5E.Character.Sidebar.Title',
-              ),
-            }),
+            initialTabId: TidySheetSettingsTabIds.sidebarTabConfig,
           }),
         );
       },
@@ -140,7 +125,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   async _prepareContext(
     options: ApplicationRenderOptions,
   ): Promise<CharacterSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 
@@ -331,7 +316,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return context;
   }
 
-  async prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
+  prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
     const sectionMode:
       | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
       | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
@@ -344,9 +329,17 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const sortMode = sheetTabPreferences?.sort ?? 'm';
 
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
-      this.setUpSheetTabOriginSections(context);
+      const sheetTabSections = this.createSheetTabOriginSections(context);
+      context.sheetTabSections = SheetSections.configureActionsQuadrone(
+        sheetTabSections,
+        CONSTANTS.TAB_ACTOR_ACTIONS,
+        UserSheetPreferencesService.getByType(this.actor.type),
+        TidyFlags.sectionConfig.get(context.actor)?.[
+          CONSTANTS.TAB_ACTOR_ACTIONS
+        ],
+      );
     } else {
-      const actionSections = await getCharacterSheetTabActionSectionsQuadrone(
+      const actionSections = getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
         context,
         {
@@ -385,7 +378,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     );
   }
 
-  private setUpSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
+  createSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true },
@@ -491,7 +484,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       );
     });
 
-    context.sheetTabSections = [
+    let sheetTabSections: SheetTabSection[] = [
       ...inventorySections,
       ...spellbookSections,
       ...featureSections,
@@ -533,7 +526,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     }
 
     let sectionsMap: Record<string, SheetTabSection> = {};
-    for (let section of context.sheetTabSections) {
+    for (let section of sheetTabSections) {
       const mappedSection = sectionsMap[section.key];
 
       if (!mappedSection) {
@@ -557,16 +550,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       mappedSection.items.push(...incomingItems);
     }
 
-    context.sheetTabSections = Object.values(sectionsMap);
+    sheetTabSections = Object.values(sectionsMap);
 
-    context.sheetTabSections = SheetSections.configureActionsQuadrone(
-      context.sheetTabSections,
-      CONSTANTS.TAB_ACTOR_ACTIONS,
-      UserSheetPreferencesService.getByType(this.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
-    );
-
-    context.sheetTabSections.forEach(
+    sheetTabSections.forEach(
       (section) =>
         (section.sectionActions = SectionActions.getActionHeaderActions(
           this.document,
@@ -575,6 +561,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           section,
         )),
     );
+
+    return sheetTabSections;
   }
 
   shouldIncludeItemInSheetTab(
@@ -754,7 +742,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
               CONFIG.DND5E.tools[id]?.id ?? '',
             );
           }
-          
+
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
           }));
@@ -1228,7 +1216,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const element = await super._renderFrame(options);
 
     // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
     if (themeSettings.useHeaderBackground) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }

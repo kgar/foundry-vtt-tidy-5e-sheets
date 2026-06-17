@@ -1,8 +1,4 @@
 <script lang="ts">
-  import {
-    ConfigureSectionsApplication,
-    type SectionOptionGroup,
-  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -22,15 +18,12 @@
   interface Props {
     searchCriteria: string;
     tabId: string;
-    sections: TidySectionBase[];
-    tabOptionGroups?: SectionOptionGroup[];
+    sections?: TidySectionBase[];
   }
 
   let {
     searchCriteria = $bindable(),
     tabId,
-    sections,
-    tabOptionGroups = [],
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -94,31 +87,15 @@
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} {methods} />
 
   {#if context.editable}
-    <a
+    <button
+      type="button"
       class="button button-icon-only"
+      data-action="configureTab"
+      data-tab-id={tabId}
       title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-      onclick={() =>
-        context.editable &&
-        context.sheet._renderChild(
-          new ConfigureSectionsApplication({
-            document: context.document,
-            settings: {
-              tabId,
-              sections: sections,
-              optionsGroups: tabOptionGroups,
-              formTitle: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-            window: {
-              title: localize('TIDY5E.ConfigureTab.Title', {
-                tabName: tabName,
-              }),
-            },
-          }),
-        )}
+      data-tooltip
     >
       <i class="fas fa-gear"></i>
-    </a>
+    </button>
   {/if}
 </section>

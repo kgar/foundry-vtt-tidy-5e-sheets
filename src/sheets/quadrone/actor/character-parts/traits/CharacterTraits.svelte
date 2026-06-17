@@ -4,7 +4,7 @@
   import ActorTraitClasses from '../../parts/ActorTraitClasses.svelte';
   import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
   import ActorTraitBackground from '../../parts/ActorTraitBackground.svelte';
-  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
+  import { CONSTANTS } from 'src/constants';
   import CharacterTraitPills from './CharacterTraitPills.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -24,10 +24,8 @@
       <button
         type="button"
         class="button"
-        onclick={() =>
-          context.sheet._renderChild(
-            new SpecialTraitsApplication({ document: context.actor }),
-          )}
+        data-action="configureTab"
+        data-tab-id={CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
       >
         <i class="fa-solid fa-star"></i>
         {localize('DND5E.SpecialTraits')}

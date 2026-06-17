@@ -12,6 +12,7 @@
     colorSelected?: () => void;
     disableDelete?: boolean;
     requireValue?: boolean;
+    hint?: string;
   }
 
   let {
@@ -22,6 +23,7 @@
     placeholder = '#FFFFFF',
     disableDelete = false,
     requireValue = false,
+    hint,
   }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -64,10 +66,11 @@
     </label>
 
     <!-- This input is driving the Coloris color picker. -->
+    <!-- When unset, default the picker to the inherited value from the inheritance stack rather than #000000. -->
     <input
       type="text"
       id="{inputId}-picker"
-      {value}
+      value={value || placeholder}
       class="coloris hidden-input"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
@@ -93,7 +96,7 @@
       <button
         title={FoundryAdapter.localize('TIDY5E.ContextMenuActionPickColor')}
         type="button"
-        class="button button-borderless button-icon-only eye-dropper"
+        class="button button-secondary eye-dropper"
         onclick={() => activateEyeDropper()}
       >
         <i class="fa-solid fa-eye-dropper"></i>
@@ -113,4 +116,9 @@
       </button>
     {/if}
   </div>
+  {#if hint}
+    <p class="hint">
+      {hint}
+    </p>
+  {/if}
 </div>

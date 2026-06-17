@@ -1,9 +1,4 @@
 <script lang="ts">
-  import type {
-    ThemeColorSettingConfigEntry,
-    ThemeSettingsContext,
-    ThemeSettingsQuadroneApplication,
-  } from './ThemeSettingsQuadroneApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -15,14 +10,23 @@
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { TidyHooks } from 'src/api';
+  import { onMount } from 'svelte';
+  import chroma from 'chroma-js';
+  import type {
+    ThemeSettingsContext,
+    ThemeSettingsEditor,
+  } from 'src/settings/editors/theme-settings-editor.svelte';
+    import type { ThemeColorSettingConfigEntry } from './ThemeSettingsQuadroneApplication.svelte';
 
   interface Props {
-    app: ThemeSettingsQuadroneApplication;
-    settings: ThemeSettingsContext;
+    app: ThemeSettingsEditor;
+    // TODO: nix placeholders
     placeholders: ThemeSettingsContext | undefined;
   }
 
-  let { app, settings: context, placeholders }: Props = $props();
+  let { app, placeholders }: Props = $props();
+
+  const context = $derived(app.value);
 
   const localize = FoundryAdapter.localize;
 
@@ -31,7 +35,7 @@
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 
   let portraitShapeDefaultValue = $derived(
-    placeholders?.value?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+    placeholders?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
   );
 
   let portraitShapeDefaultLabel = $derived(
@@ -42,20 +46,59 @@
     }),
   );
 
-  let methodColorPlaceholders = $derived.by(() =>
-    createColorPlaceholderMap(
-      placeholders?.value?.spellPreparationMethodColors,
-    ),
-  );
+  let defaultRarityColors = $state<Record<string, string>>({});
+  let defaultMethodColors = $state<Record<string, string>>({});
 
-  let rarityColorPlaceholders = $derived.by(() =>
-    createColorPlaceholderMap(placeholders?.value?.rarityColors),
-  );
+  onMount(() => {
+    let target = document.querySelector<HTMLElement>('.tidy5e-sheet.quadrone');
+    // imps are so back, gimme those styles
+    let imp: HTMLElement | undefined;
+    if (!target) {
+      imp = document.createElement('div');
+      imp.classList.add('tidy5e-sheet', 'quadrone');
+      imp.style.display = 'none';
+      document.body.appendChild(imp);
+      target = imp;
+    }
+
+    const styles = getComputedStyle(target);
+
+    const readColor = (variableName: string) => {
+      const raw = styles.getPropertyValue(variableName).trim();
+      return raw && chroma.valid(raw) ? chroma(raw).hex() : raw;
+    };
+
+    defaultRarityColors = Object.fromEntries(
+      context.rarityColors.map((c) => [
+        c.key,
+        readColor(`--t5e-color-rarity-${c.key.toLowerCase()}`),
+      ]),
+    );
+
+    defaultMethodColors = Object.fromEntries(
+      context.spellPreparationMethodColors.map((c) => [
+        c.key,
+        readColor(`--t5e-color-spellcasting-${c.key.toLowerCase()}`),
+      ]),
+    );
+
+    imp?.remove();
+  });
+
+  let methodColorPlaceholders = $derived.by(() => ({
+    ...defaultMethodColors,
+    ...createColorPlaceholderMap(placeholders?.spellPreparationMethodColors),
+  }));
+
+  let rarityColorPlaceholders = $derived.by(() => ({
+    ...defaultRarityColors,
+    ...createColorPlaceholderMap(placeholders?.rarityColors),
+  }));
 
   function createColorPlaceholderMap(colors?: ThemeColorSettingConfigEntry[]) {
     return (
       colors?.reduce<Record<string, string>>((prev, curr) => {
-        if (!isNil(curr.value, '')) {
+        if (!isNil(curr, '')) {
           prev[curr.key] = curr.value;
         }
         return prev;
@@ -78,18 +121,16 @@
   });
 
   let useBasicThemeIfChanged = $derived(
-    context.value.useBasicTheme ?? placeholders?.value.useBasicTheme ?? false,
+    context.useBasicTheme ?? placeholders?.useBasicTheme ?? false,
   );
   let useHeaderBackgroundIfChanged = $derived(
-    context.value.useHeaderBackground ??
-      placeholders?.value.useHeaderBackground ??
-      true,
+    context.useHeaderBackground ?? placeholders?.useHeaderBackground ?? true,
   );
 
   let useBasicThemeDefaultLabel = $derived(
     localize('TIDY5E.UseSpecificDefaultValue.Label', {
       value: localize(
-        (placeholders?.value.useBasicTheme ?? false)
+        (placeholders?.useBasicTheme ?? false)
           ? localize('COMMON.Yes')
           : localize('COMMON.No'),
       ),
@@ -98,7 +139,7 @@
   let useHeaderBackgroundDefaultLabel = $derived(
     localize('TIDY5E.UseSpecificDefaultValue.Label', {
       value: localize(
-        (placeholders?.value.useHeaderBackground ?? true)
+        (placeholders?.useHeaderBackground ?? true)
           ? localize('COMMON.Yes')
           : localize('COMMON.No'),
       ),
@@ -106,12 +147,12 @@
   );
 
   function onUseBasicThemeChange(newValue: boolean | null) {
-    context.value.useBasicTheme = newValue;
+    context.useBasicTheme = newValue;
     // Keep the legacy invariant: explicit basic theme dictates header background.
     if (newValue === true) {
-      context.value.useHeaderBackground = false;
+      context.useHeaderBackground = false;
     } else if (newValue === false) {
-      context.value.useHeaderBackground = true;
+      context.useHeaderBackground = true;
     }
   }
 
@@ -129,7 +170,10 @@
     if (file) {
       const imported = await ThemeQuadroneImportService.import(file);
       if (imported) {
-        context.value = app._getSettings(imported).value;
+        app.resetToDefault();
+        if (imported) {
+          app.value = app.mapFromSettings(imported);
+        }
       }
     }
   }
@@ -162,10 +206,10 @@
     </legend>
     <ThemeSettingColorFormGroupQuadrone
       key="accent-color"
-      bind:value={context.value.accentColor}
+      bind:value={context.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
       placeholder={coalesce(
-        placeholders?.value.accentColor,
+        placeholders?.accentColor,
         ThemeQuadrone.DEFAULT_ACCENT_COLOR,
       )}
     />
@@ -182,7 +226,7 @@
           <div class="form-fields">
             <select
               id="{idPrefix}-actor-portrait-shape"
-              bind:value={context.value.portraitShape}
+              bind:value={context.portraitShape}
             >
               <option value={undefined}>{portraitShapeDefaultLabel}</option>
               {#each portraitShapes as shape}
@@ -202,14 +246,14 @@
           <label for="{idPrefix}-use-header-background">
             {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
           </label>
-          <div class="form-fields vertical">
+          <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
             {#if app.document}
               <label class="radio">
                 <input
                   type="radio"
                   name="{idPrefix}-use-header-background"
-                  checked={context.value.useHeaderBackground === true}
-                  onclick={() => (context.value.useHeaderBackground = true)}
+                  checked={context.useHeaderBackground === true}
+                  onclick={() => (context.useHeaderBackground = true)}
                 />
                 {localize('Yes')}
               </label>
@@ -217,8 +261,8 @@
                 <input
                   type="radio"
                   name="{idPrefix}-use-header-background"
-                  checked={context.value.useHeaderBackground === false}
-                  onclick={() => (context.value.useHeaderBackground = false)}
+                  checked={context.useHeaderBackground === false}
+                  onclick={() => (context.useHeaderBackground = false)}
                 />
                 {localize('No')}
               </label>
@@ -226,8 +270,8 @@
                 <input
                   type="radio"
                   name="{idPrefix}-use-header-background"
-                  checked={context.value.useHeaderBackground === null}
-                  onclick={() => (context.value.useHeaderBackground = null)}
+                  checked={context.useHeaderBackground === null}
+                  onclick={() => (context.useHeaderBackground = null)}
                 />
                 {useHeaderBackgroundDefaultLabel}
               </label>
@@ -235,7 +279,7 @@
               <input
                 id="{idPrefix}-use-header-background"
                 type="checkbox"
-                bind:checked={context.value.useHeaderBackground}
+                bind:checked={context.useHeaderBackground}
               />
             {/if}
           </div>
@@ -253,26 +297,24 @@
               <input
                 id="{idPrefix}-actor-header-background"
                 type="text"
-                bind:value={context.value.actorHeaderBackground}
-                placeholder={placeholders?.value.actorHeaderBackground}
+                bind:value={context.actorHeaderBackground}
+                placeholder={placeholders?.actorHeaderBackground}
               />
               <ImagePickerButton
-                current={context.value.actorHeaderBackground}
+                current={context.actorHeaderBackground}
                 onimagepicked={(image) =>
-                  (context.value.actorHeaderBackground = image)}
+                  (context.actorHeaderBackground = image)}
               />
             </div>
           </div>
 
           <ThemeSettingColorFormGroupQuadrone
             key="sheet-accent-color"
-            bind:value={context.value.headerBackgroundColor}
+            bind:value={context.headerBackgroundColor}
             label={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.title')}
-            placeholder={placeholders?.value.headerBackgroundColor}
+            placeholder={placeholders?.headerBackgroundColor}
+            hint={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
           />
-          <p class="hint">
-            {localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
-          </p>
         {/if}
       {/if}
     {/if}
@@ -281,13 +323,13 @@
       <label for="{idPrefix}-use-basic-theme">
         {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
       </label>
-      <div class="form-fields vertical">
+      <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
         {#if app.document}
           <label class="radio">
             <input
               type="radio"
               name="{idPrefix}-use-basic-theme"
-              checked={context.value.useBasicTheme === true}
+              checked={context.useBasicTheme === true}
               onclick={() => onUseBasicThemeChange(true)}
             />
             {localize('Yes')}
@@ -296,7 +338,7 @@
             <input
               type="radio"
               name="{idPrefix}-use-basic-theme"
-              checked={context.value.useBasicTheme === false}
+              checked={context.useBasicTheme === false}
               onclick={() => onUseBasicThemeChange(false)}
             />
             {localize('No')}
@@ -305,7 +347,7 @@
             <input
               type="radio"
               name="{idPrefix}-use-basic-theme"
-              checked={context.value.useBasicTheme === null}
+              checked={context.useBasicTheme === null}
               onclick={() => onUseBasicThemeChange(null)}
             />
             {useBasicThemeDefaultLabel}
@@ -314,7 +356,7 @@
           <input
             id="{idPrefix}-use-basic-theme"
             type="checkbox"
-            checked={context.value.useBasicTheme ?? false}
+            checked={context.useBasicTheme ?? false}
             onchange={(ev) => onUseBasicThemeChange(ev.currentTarget.checked)}
           />
         {/if}
@@ -334,13 +376,12 @@
           <input
             id="{idPrefix}-item-sidebar-background"
             type="text"
-            bind:value={context.value.itemSidebarBackground}
-            placeholder={placeholders?.value.itemSidebarBackground}
+            bind:value={context.itemSidebarBackground}
+            placeholder={placeholders?.itemSidebarBackground}
           />
           <ImagePickerButton
-            current={context.value.itemSidebarBackground}
-            onimagepicked={(image) =>
-              (context.value.itemSidebarBackground = image)}
+            current={context.itemSidebarBackground}
+            onimagepicked={(image) => (context.itemSidebarBackground = image)}
           />
         </div>
       </div>
@@ -352,7 +393,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each context.value.rarityColors as color}
+    {#each context.rarityColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}
@@ -368,7 +409,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each context.value.spellPreparationMethodColors as color}
+    {#each context.spellPreparationMethodColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}
@@ -377,31 +418,4 @@
       />
     {/each}
   </fieldset>
-</div>
-
-<div class="button-bar">
-  <button
-    type="button"
-    class="button button-secondary button-large use-default-btn"
-    onclick={() => app.useDefault()}
-  >
-    <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseDefault')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary button-large apply-changes-btn"
-    data-testid="section-config-apply-changes"
-    onclick={() => app.close()}
-  >
-    {localize('Cancel')}
-  </button>
-  <button
-    type="button"
-    class="button button-primary button-large button-save save-changes-btn"
-    onclick={() => app.save()}
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
 </div>

@@ -87,7 +87,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 

@@ -30,6 +30,7 @@ import type {
   SheetHeaderControlPosition,
 } from 'src/api/api.types';
 import { coalesce } from 'src/utils/formatting';
+import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import {
   insertHeaderButton,
@@ -40,6 +41,7 @@ import { getDragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixi
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
+import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -90,6 +92,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         'activity-use': TidyDocumentSheet.#useActivity,
         toggle: TidyDocumentSheet.#toggle,
         'transfer-currency': TidyDocumentSheet.#transferCurrency,
+        configureTab: TidyDocumentSheet.#configureTab,
       },
     };
 
@@ -741,10 +744,14 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     private _getHeaderControlSettings(document: any) {
-      const settings =
-        SettingsProvider.settings.headerControlConfiguration.get()?.[
-          document.documentName
-        ]?.[document.type];
+      // SettingsProvider is assigned in initSettings(); optional chaining covers
+      // circular-import / ordering edge cases. Fall back to the raw game setting.
+      const settings = (
+        SettingsProvider.settings.headerControlConfiguration.get() ??
+        FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
+          'headerControlConfiguration'
+        )
+      )?.[document.documentName]?.[document.type];
 
       if (!settings) {
         return new Map();
@@ -932,6 +939,35 @@ export function getTidyExtensibleDocumentSheetMixin<
       return new dnd5e.applications.CurrencyManager({
         document: this.document,
       }).render({ force: true });    
+    }
+
+    /**
+     * Handle configuring a tab on a sheet.
+     * @param this {TidyDocumentSheet}
+     * @param _event {Event}
+     * @param target The clicked element, with a data-tab-id attribute containing the tab ID
+     * @returns Nothing, loads the tab configuration application
+     */
+    static async #configureTab(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const tabId = target.dataset.tabId;
+      if (!tabId) {
+        return;
+      }
+
+      this._renderChild(
+        new TidySheetSettingsQuadroneApplication({
+          document: this.document,
+          initialTabId: tabId,
+        }),
+      );
     }
 
     /**

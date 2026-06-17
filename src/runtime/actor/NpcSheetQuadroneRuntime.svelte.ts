@@ -7,6 +7,9 @@ import ActorSpellbookTab from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
 import NpcBiographyTab from 'src/sheets/quadrone/actor/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
+import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/settings/ActorSpellbookSettingsTab';
+import { buildNpcStatblockSettingsTab } from 'src/sheets/quadrone/actor/settings/NpcStatblockSettingsTab';
 
 export const NpcSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(
@@ -20,6 +23,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_STATBLOCK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-wreath-laurel',
+        settingsTabBuilder: buildNpcStatblockSettingsTab,
       },
       {
         title: 'DND5E.Inventory',
@@ -30,6 +34,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
+        settingsTabBuilder: buildActorInventorySettingsTab,
       },
       {
         title: 'DND5E.Spellbook',
@@ -40,6 +45,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-book-sparkles',
+        settingsTabBuilder: buildActorSpellbookSettingsTab,
       },
       {
         title: 'DND5E.Effects',

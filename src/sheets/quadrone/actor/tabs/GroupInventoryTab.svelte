@@ -18,7 +18,6 @@
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import SheetPins from '../../shared/SheetPins.svelte';
-
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
 
@@ -73,6 +72,7 @@
         (member.actor.system.attributes.death.failure >= 3 &&
           member.actor.system.attributes.death.success < 3))}
 
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
       class="actor-container flexrow"
       style:--t5e-theme-color-default={member.accentColor}

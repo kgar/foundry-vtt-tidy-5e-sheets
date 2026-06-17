@@ -20,7 +20,6 @@
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-
   let context =
     $derived(
       getSheetContext<
@@ -64,6 +63,7 @@
       tabId: tabId,
     });
   });
+
 </script>
 
 <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />

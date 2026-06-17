@@ -144,11 +144,11 @@ function buildActionSections(
   return Object.values(actionSections);
 }
 
-export async function getCharacterSheetTabActionSectionsQuadrone(
+export function getCharacterSheetTabActionSectionsQuadrone(
   actor: Actor5e,
   context: CharacterSheetQuadroneContext,
   options?: Partial<TidyItemSectionBase>,
-): Promise<CustomItemSectionQuadrone[]> {
+): CustomItemSectionQuadrone[] {
   try {
     let eligibleItems: Item5e[] = actor.items.filter(
       (item: Item5e) =>

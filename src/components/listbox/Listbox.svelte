@@ -161,7 +161,9 @@
       out:send={{ key: item[valueProp] }}
     >
       {#if draggable}
-        <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
+        <div class="drag-grip-container">
+          <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
+        </div>
       {/if}
       {#if itemTemplate}{@render itemTemplate({ item })}{:else}
         {item[labelProp]}

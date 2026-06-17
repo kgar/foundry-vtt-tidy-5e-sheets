@@ -45,8 +45,8 @@ import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsQuadroneApplication, TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -63,7 +63,6 @@ import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
-import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -143,18 +142,9 @@ export function getTidy5eActorSheetQuadroneBase<
             position: 'header',
           },
           {
-            action: 'openTabConfiguration',
-            icon: 'fas fa-file-invoice',
-            label: 'TIDY5E.TabConfiguration.MenuOptionText',
-            ownership: 'OWNER',
-            visible: function (this: Tidy5eActorSheetQuadroneBase) {
-              return this.isEditable;
-            },
-          },
-          {
             icon: 'fa-solid fa-swatchbook',
-            label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-            action: 'themeSettings',
+            label: 'TIDY5E.SheetSettings.title',
+            action: 'sheetSettings',
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
               return this.isEditable;
@@ -172,12 +162,12 @@ export function getTidy5eActorSheetQuadroneBase<
         ) {
           this.actor.revertOriginalForm();
         },
-        openTabConfiguration: async function (
-          this: Tidy5eActorSheetQuadroneBase
-        ) {
-          this._renderChild(new SheetTabConfigurationQuadroneApplication({
-            document: this.document,
-          }));
+        sheetSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
+          this._renderChild(
+            new TidySheetSettingsQuadroneApplication({
+              document: this.document,
+            })
+          );
         },
         rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
           this.actor.initiateRest({ type: target.dataset.type });
@@ -2331,8 +2321,12 @@ export function getTidy5eActorSheetQuadroneBase<
         case 'skills':
           return FoundryAdapter.renderSkillsConfig(this.actor);
         case 'special-traits':
+          const settings = new TidySheetSettingsQuadroneApplication({
+            document: this.document,
+          });
+          settings.selectTab(TidySheetSettingsTabIds.specialTraits);
           return this._renderChild(
-            new SpecialTraitsApplication({ document: this.actor }),
+            settings
           );
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;

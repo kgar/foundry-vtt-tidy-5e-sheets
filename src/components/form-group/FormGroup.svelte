@@ -24,6 +24,7 @@
     localize?: boolean;
     stacked?: boolean;
     units?: string;
+    onChange?: (value: any) => Promise<void> | void;
   };
 
   let {
@@ -50,6 +51,7 @@
     tooltip,
     units,
     valueAttr,
+    onChange,
   }: Props = $props();
 
   let effectiveLabel = $derived(label ?? field?.label ?? field?.fieldPath);
@@ -57,6 +59,31 @@
   let effectiveHint = $derived(hint ?? config?.hint ?? field?.hint);
 
   let fieldPathSlug = $derived(field?.fieldPath);
+
+  function handleOnChange(event: Event) {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const formElement = target as
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement;
+
+    let value: string | boolean = formElement.value;
+
+    // Special handling for checkboxes.
+    if (
+      formElement instanceof HTMLInputElement &&
+      (formElement.type === 'checkbox' || formElement.type === 'radio')
+    ) {
+      value = formElement.checked;
+    }
+
+    onChange?.(value);
+  }
 </script>
 
 <svelte:boundary
@@ -77,6 +104,7 @@
       groupClasses,
     ]}
     data-field-path={fieldPathSlug}
+    onchange={(event) => !!onChange && handleOnChange(event)}
   >
     {#if formLabel}
       {@render formLabel()}

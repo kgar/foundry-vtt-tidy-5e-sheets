@@ -135,6 +135,7 @@
         tab.id === selectedTabId || extraTabs?.has(tab.id)}
       {@const tabindex = tabIsSelected ? 0 : -1}
       {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
         class={[
           CONSTANTS.TAB_OPTION_CLASS,

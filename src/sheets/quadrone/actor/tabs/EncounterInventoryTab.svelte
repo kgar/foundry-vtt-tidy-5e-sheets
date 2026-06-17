@@ -15,7 +15,6 @@
   import InventoryTables from '../../shared/InventoryTables.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
