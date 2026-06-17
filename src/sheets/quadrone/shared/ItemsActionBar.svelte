@@ -92,7 +92,7 @@
       class="button button-icon-only"
       data-action="configureTab"
       data-tab-id={tabId}
-      title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+      aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
       data-tooltip
     >
       <i class="fas fa-gear"></i>
