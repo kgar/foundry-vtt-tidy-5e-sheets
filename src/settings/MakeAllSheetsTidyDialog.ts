@@ -41,10 +41,10 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
 
   _onYes?: MakeAllSheetsTidyDialogConfiguration['onYes'];
 
-  constructor(options: Partial<MakeAllSheetsTidyDialogConfiguration>) {
+  constructor(options?: Partial<MakeAllSheetsTidyDialogConfiguration>) {
     super(options);
 
-    this._onYes = options.onYes;
+    this._onYes = options?.onYes;
   }
 
   _initializeApplicationOptions(options: Partial<ApplicationConfiguration>) {
