@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -32,11 +32,11 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
-export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixin(
+export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_CONTAINER,
-  SvelteApplicationMixin<
+  getSvelteApplicationMixin<
     ApplicationConfiguration | undefined,
     ContainerSheetClassicContext
   >(foundry.applications.sheets.ItemSheetV2)

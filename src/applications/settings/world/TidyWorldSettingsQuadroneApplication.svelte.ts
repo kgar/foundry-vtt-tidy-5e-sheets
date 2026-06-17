@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -41,7 +41,7 @@ export type WorldSettingsApplicationConfiguration =
   };
 
 export class WorldSettingsQuadroneApplication
-  extends SvelteApplicationMixin<
+  extends getSvelteApplicationMixin<
     WorldSettingsApplicationConfiguration,
     WorldSettingsContext
   >(foundry.applications.api.ApplicationV2)

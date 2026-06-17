@@ -1,7 +1,7 @@
 import { mount } from 'svelte';
 import BulkMigrations from './BulkMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
 
@@ -12,7 +12,7 @@ interface ConfirmsMigrations {
 }
 
 export class BulkMigrationsApplication
-  extends SvelteApplicationMixin<
+  extends getSvelteApplicationMixin<
     Partial<ApplicationConfiguration> | undefined,
     {}
   >(foundry.applications.api.ApplicationV2)

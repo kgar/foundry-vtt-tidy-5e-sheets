@@ -27,7 +27,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import type { Item5e } from 'src/types/item.types';
-import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
+import { getTidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
@@ -40,7 +40,7 @@ import { warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
@@ -48,7 +48,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
@@ -59,10 +59,10 @@ type MemberStats = {
   memberCount: number;
 };
 
-export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
-  TidyExtensibleDocumentSheetMixin(
+export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
+  getTidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_ENCOUNTER,
-    SvelteApplicationMixin<
+    getSvelteApplicationMixin<
       ApplicationConfiguration | undefined,
       EncounterSheetClassicContext
     >(foundry.applications.sheets.ActorSheetV2)

@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type {
   ApplicationConfiguration,
@@ -35,7 +35,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -48,12 +48,12 @@ import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
-export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
+export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
   ItemSheetQuadroneContext
 >(
   CONSTANTS.SHEET_TYPE_ITEM,
-  SvelteApplicationMixin<
+  getSvelteApplicationMixin<
     DocumentSheetApplicationConfiguration | undefined,
     ItemSheetQuadroneContext
   >(foundry.applications.sheets.ItemSheetV2),

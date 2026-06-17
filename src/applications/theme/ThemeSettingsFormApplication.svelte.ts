@@ -12,7 +12,7 @@ import { mount } from 'svelte';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
@@ -21,7 +21,7 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
+export class ThemeSettingsFormApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   {}
 >(foundry.applications.api.ApplicationV2) {

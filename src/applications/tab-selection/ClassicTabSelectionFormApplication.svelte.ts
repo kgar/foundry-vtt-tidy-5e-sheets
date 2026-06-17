@@ -14,7 +14,7 @@ import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.sve
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export type TabSelectionItem = {
@@ -27,7 +27,7 @@ export type TabSelectionContext = {
   selected: TabSelectionItem[];
 };
 
-export default class ClassicTabSelectionFormApplication extends SvelteApplicationMixin<
+export default class ClassicTabSelectionFormApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   TabSelectionContext
 >(foundry.applications.api.ApplicationV2) {

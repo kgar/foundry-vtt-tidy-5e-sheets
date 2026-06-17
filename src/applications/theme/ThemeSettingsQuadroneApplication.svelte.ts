@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   PortraitShape,
   ThemeColorSetting,
@@ -46,7 +46,7 @@ export type ThemeSettingsContext = {
 type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
 
 export class ThemeSettingsQuadroneApplication
-  extends SvelteApplicationMixin<ConstructorArgs>(
+  extends getSvelteApplicationMixin<ConstructorArgs>(
     foundry.applications.api.ApplicationV2
   )
   implements SettingsPane, SettingsFooterHost

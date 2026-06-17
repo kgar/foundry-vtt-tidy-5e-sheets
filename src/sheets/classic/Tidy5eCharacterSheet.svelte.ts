@@ -56,12 +56,12 @@ import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eCharacterSheet
-  extends GetTidy5eActorSheetClassicV2Base<CharacterSheetContext>(
+  extends getTidy5eActorSheetClassicV2Base<CharacterSheetContext>(
     CONSTANTS.SHEET_TYPE_CHARACTER
   )
   implements
