@@ -20,25 +20,37 @@
   let selectedTabId: string = $derived(context.currentTabId);
   let extraTabs = new SvelteSet<string>();
 
-  let sidebarExpanded = $state(true);
-
-  // When the user changes tabs, check their preference on the new tab and apply expanded state.
-  $effect(() => {
-    const type = untrack(() => context.actor.type);
-
-    sidebarExpanded =
+  // TODO: Combine these across sheets somehow?
+  // Sidebar expanded setting, updates live.
+  let sidebarExpandedPreference = $derived.by(() => {
+    const type = context.actor.type;
+    return (
       UserSheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
-        ?.sidebarExpanded == true;
+        ?.sidebarExpanded ?? false
+    );
   });
 
-  // When the user expands or collapses the sidebar, remember their preference for this tab.
+  // When the user expands or collapses the sidebar, remember their preference
+  //  for this tab.
+  let sidebarExpanded = $derived(sidebarExpandedPreference);
+
+  // Save two-way updates when the sidebar is expanded/collapsed from a sheet.
   $effect(() => {
-    UserSheetPreferencesService.setDocumentTypeTabPreference(
-      untrack(() => context.actor.type),
-      untrack(() => selectedTabId),
-      'sidebarExpanded',
-      sidebarExpanded,
-    );
+    const expanded = sidebarExpanded;
+    untrack(() => {
+      const type = context.actor.type;
+      const tabId = selectedTabId;
+      const stored = UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
+        ?.sidebarExpanded;
+      if (stored !== expanded) {
+        UserSheetPreferencesService.setDocumentTypeTabPreference(
+          type,
+          tabId,
+          'sidebarExpanded',
+          expanded,
+        );
+      }
+    });
   });
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));

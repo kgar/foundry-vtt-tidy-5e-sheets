@@ -1,16 +1,15 @@
-import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import type { ApplicationConfiguration } from 'src/types/application.types';
-import { mount } from 'svelte';
-import WorldHeaderControlConfigurationQuadrone from './WorldHeaderControlConfigurationQuadrone.svelte';
-import { settings } from 'src/settings/settings.svelte';
 import {
   FoundryAdapter,
   type DocumentSheetConstructor,
 } from 'src/foundry/foundry-adapter';
-import type { SheetHeaderControlPosition } from 'src/api';
+import type { SettingsEditor } from './settings-editors.svelte';
+import type { SheetHeaderControlPosition } from 'src/api/api.types';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
+import { settings } from 'src/settings/settings.svelte';
 import { coalesce } from 'src/utils/formatting';
+
+export type WorldHeaderControlConfigurationSettingsEditor =
+  SettingsEditor<WorldHeaderControlConfigContext>;
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
@@ -25,7 +24,7 @@ export type ConfigHeaderControlSetting = {
   location?: SheetHeaderControlPosition;
 };
 
-type HeaderControlConfigContextItem = {
+export type HeaderControlConfigContextItem = {
   documentName: string;
   documentType: string;
   title: string;
@@ -34,68 +33,43 @@ type HeaderControlConfigContextItem = {
 
 export type WorldHeaderControlConfigContext = HeaderControlConfigContextItem[];
 
-export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteApplicationMixin<
-  Partial<ApplicationConfiguration>
->(foundry.applications.api.ApplicationV2) {
-  _configs: WorldHeaderControlConfigContext = $state([]);
+export type WorldHeaderControlConfigScope = {
+  documentName: string;
+  documentType: string;
+};
 
-  static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
-    classes: [
-      CONSTANTS.MODULE_ID,
-      'sheet',
-      'quadrone',
-      'world-header-control-configuration',
-    ],
-    tag: 'form',
-    sheetConfig: false,
-    window: {
-      frame: true,
-      positioned: true,
-      resizable: true,
-      controls: [],
-      title: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.label',
-      contentClasses: ['flexcol'],
-    },
-    position: {
-      width: 750,
-      height: 600,
-    },
-    actions: {},
-    submitOnClose: false,
-  };
+export function getWorldHeaderControlConfigurationSettingsEditor(
+  scope?: WorldHeaderControlConfigScope,
+): WorldHeaderControlConfigurationSettingsEditor {
+  const current = $state<WorldHeaderControlConfigContext>([]);
 
-  _createComponent(node: HTMLElement): Record<string, any> {
-    this._configs = this._getConfigs();
+  let initialSnapshot = $state('');
 
-    const component = mount(WorldHeaderControlConfigurationQuadrone, {
-      target: node,
-      props: {
-        app: this,
-        context: this._configs,
-      },
-    });
+  const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
-    return component;
+  function snapshotConfig(config: WorldHeaderControlConfigContext) {
+    return JSON.stringify($state.snapshot(config));
   }
 
-  _getConfigs(): WorldHeaderControlConfigContext {
+  function getConfigs(
+    headerControlSettings: HeaderControlConfiguration = settings.value
+      .headerControlConfiguration,
+  ): WorldHeaderControlConfigContext {
     const members: HeaderControlConfigMember[] =
       FoundryAdapter.getAllTidySheetClassMetadata();
 
-    const headerControlSettings = settings.value.headerControlConfiguration;
-
     const config: WorldHeaderControlConfigContext = members.map((member) =>
-      this._getConfig(member, headerControlSettings)
+      getConfig(member, headerControlSettings),
     );
 
     return config.sort((a, b) =>
-      a.title.localeCompare(b.title, game.i18n.lang)
+      a.title.localeCompare(b.title, game.i18n.lang),
     );
   }
 
-  _getConfig(
+  function getConfig(
     member: HeaderControlConfigMember,
-    headerControlSettings: HeaderControlConfiguration
+    headerControlSettings: HeaderControlConfiguration,
   ): HeaderControlConfigContextItem {
     const sheet = new member.sheetClass({
       document: new member.documentClass({
@@ -109,8 +83,8 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
       .sort((l, r) =>
         FoundryAdapter.localize(l.label ?? '').localeCompare(
           FoundryAdapter.localize(r.label ?? ''),
-          game.i18n.lang
-        )
+          game.i18n.lang,
+        ),
       );
 
     const headerSet = new Set(
@@ -118,7 +92,7 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
         headerControlSettings[sheet.document.documentName]?.[
           sheet.document.type
         ] ?? { header: [] }
-      ).header
+      ).header,
     );
 
     const controlSettings: ConfigHeaderControlSetting[] = [];
@@ -139,18 +113,13 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
       documentType: sheet.document.type,
       controlSettings: controlSettings,
       title: FoundryAdapter.localize(
-        `TYPES.${sheet.document.documentName}.${sheet.document.type}`
+        `TYPES.${sheet.document.documentName}.${sheet.document.type}`,
       ),
     };
   }
 
-  async save() {
-    await this.apply();
-    await this.close();
-  }
-
-  async apply() {
-    const toSave = this._configs.reduce((prev, curr) => {
+  async function save() {
+    const toSave = current.reduce((prev, curr) => {
       prev[curr.documentName] ??= {};
       prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
       prev[curr.documentName][curr.documentType].header = [
@@ -168,24 +137,71 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     }, {} as HeaderControlConfiguration);
 
     await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
+
+    initialSnapshot = snapshotConfig(current);
   }
 
-  async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
-      )}</p>`,
-    });
+  return {
+    get hasChanges() {
+      return hasChanges;
+    },
 
-    if (!proceed) {
-      return;
-    }
+    initialize() {
+      this.value = getConfigs();
+      initialSnapshot = snapshotConfig(this.value);
+    },
 
-    await FoundryAdapter.setTidySetting('headerControlConfiguration', {});
+    resetToDefault() {
+      const defaults = getConfigs({});
 
-    await this.close();
-  }
+      if (scope) {
+        const { documentName, documentType } = scope;
+        this.value = this.value.map((config) => {
+          if (
+            config.documentName === documentName &&
+            config.documentType === documentType
+          ) {
+            return (
+              defaults.find(
+                (d) =>
+                  d.documentName === documentName &&
+                  d.documentType === documentType,
+              ) ?? config
+            );
+          }
+          return config;
+        });
+        return;
+      }
+
+      this.value = defaults;
+    },
+
+    canUndo: false,
+
+    canUseDefault: false,
+
+    useDefaultLabel: undefined,
+
+    async useDefault() {
+      // noop
+    },
+
+    save() {
+      return save();
+    },
+
+    undoChanges() {
+      this.value = JSON.parse(initialSnapshot);
+    },
+
+    get value() {
+      return current;
+    },
+
+    set value(value) {
+      current.length = 0;
+      current.push(...value);
+    },
+  };
 }

@@ -4,8 +4,10 @@ import GroupMembersTab from 'src/sheets/quadrone/actor/tabs/GroupMembersTab.svel
 import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
-import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
-import { systemSettings } from 'src/settings/settings.svelte';
+import { buildGroupMembersSettingsTab } from 'src/sheets/quadrone/actor/settings/GroupMemberSettingsTab';
+// import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
+// import { systemSettings } from 'src/settings/settings.svelte';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
 
 export const GroupSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<GroupSheetQuadroneContext>(
@@ -17,8 +19,9 @@ export const GroupSheetQuadroneRuntime =
           type: 'svelte',
         },
         id: CONSTANTS.TAB_MEMBERS,
-        layout: 'quadrone',
+        layout: 'quadrone', 
         iconClass: 'fa-solid fa-people-group',
+        settingsTabBuilder: buildGroupMembersSettingsTab,
       },
       {
         title: 'DND5E.Inventory',
@@ -29,6 +32,7 @@ export const GroupSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
+        settingsTabBuilder: buildActorInventorySettingsTab,
       },
       // {
       //   title: 'DND5E.Bastion.Configuration.Name',

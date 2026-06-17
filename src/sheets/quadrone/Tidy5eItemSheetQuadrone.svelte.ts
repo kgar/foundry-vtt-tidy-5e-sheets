@@ -29,9 +29,7 @@ import type {
   ActiveEffectSection,
   GroupableSelectOption,
   ActiveEffectContext,
-  DocumentSheetV2Context,
 } from 'src/types/types';
-import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
@@ -42,8 +40,8 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -89,18 +87,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       resizable: true,
       controls: [
         {
-          action: 'openTabConfiguration',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabConfiguration.MenuOptionText',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eItemSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-        {
           icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-          action: 'themeSettings',
+          label: 'TIDY5E.SheetSettings.title',
+          action: 'sheetSettings',
           ownership: 'OWNER',
           visible: function (this: Tidy5eItemSheetQuadrone) {
             return this.isEditable;
@@ -116,9 +105,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      openTabConfiguration: async function (this: Tidy5eItemSheetQuadrone) {
+      sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
         this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
+          new TidySheetSettingsQuadroneApplication({
             document: this.document,
           }),
         );
@@ -248,7 +237,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions,
   ): Promise<ItemSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 

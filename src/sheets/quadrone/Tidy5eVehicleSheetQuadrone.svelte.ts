@@ -130,7 +130,7 @@ export class Tidy5eVehicleSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<VehicleSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 
@@ -725,7 +725,7 @@ export class Tidy5eVehicleSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<
   }
 
   async removeUnassignedCrew(uuid: string) {
-    const context = await this._prepareContext({ soft: true });
+    const context = await this._prepareContext({ tidy: { soft: true } });
 
     const numberToRemove =
       context.crew.unassigned.members.find((m) => m.actor.uuid === uuid)
@@ -932,7 +932,7 @@ export class Tidy5eVehicleSheetQuadrone extends GetTidy5eActorSheetQuadroneBase<
       return;
     }
 
-    const context = await this._prepareContext({ soft: true });
+    const context = await this._prepareContext({ tidy: { soft: true } });
 
     // From Assigned Crew, dropping away from Assigned
     if (src === 'crew' && sectionKey === 'assigned' && destKey !== 'assigned') {

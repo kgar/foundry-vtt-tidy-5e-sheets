@@ -1,8 +1,8 @@
 import type { Component } from 'svelte';
+import type { SheetSectionConfigurationTabBuilder } from 'src/runtime/types';
 import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
-import { warn } from 'src/utils/logging';
 
 /**
  * The information necessary for rendering a svelte-based tab.
@@ -52,6 +52,11 @@ export class SvelteTab extends CustomTabBase {
 
     const merged = foundry.utils.mergeObject(this, props);
     Object.assign(this, merged);
+
+    // Assign if skipped by mergeObject
+    if (props?.settingsTabBuilder) {
+      this.settingsTabBuilder = props.settingsTabBuilder;
+    }
   }
 
   /**
@@ -76,4 +81,9 @@ export class SvelteTab extends CustomTabBase {
   enabled?: (data: any) => boolean;
 
   onRender?: (params: OnRenderTabParams) => void;
+
+  /**
+   * Optional builder for the per-tab section configuration shown in sheet settings.
+   */
+  settingsTabBuilder?: SheetSectionConfigurationTabBuilder<any>;
 }

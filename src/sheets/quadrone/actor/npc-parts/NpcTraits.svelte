@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import NpcTraitCreatureType from './traits/NpcTraitCreatureType.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import ActorCustomTraitListEntries from '../parts/ActorCustomTraitListEntries.svelte';

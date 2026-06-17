@@ -223,15 +223,20 @@
   },
 
   "TIDY5E.TabConfiguration": {
-    "Title": "Tab Configuration: {documentName}",
-    "MenuOptionText": "Tab Configuration",
+    "Title": "Configure {documentName} Sheet Tabs",
+    "buttonLabel": "Configure Tabs",
+    "MenuOptionText": "Configure Tabs",
     "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",
     "VisibilityTab.Title": "Tab Visibility",
     "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
-    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
+    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected.",
+    "options.viewers": "User Access",
+    "options.visibility": "Show Tab",
+    "showTabTooltip": "Show this tab",
+    "hideTabTooltip": "Hide this tab"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -243,6 +248,14 @@
     "MoveRight": "Move right (Space)",
     "MoveAllLeft": "Move all to the left",
     "MoveAllRight": "Move all to the right"
+  },
+  "TIDY5E.WorldSettings.Homebrew": {
+    "name": "Homebrew Settings",
+    "tabLabel": "Homebrew"
+  },
+  "TIDY5E.WorldSettings.HideClassic": {
+    "name": "Tidy 5e Hide Classic Sheets",
+    "hint": "Hide Tidy Classic sheets from the world."
   },
 
   "TIDY5E.WorldSettings.TabCharacter": {
@@ -312,31 +325,85 @@
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
-
-  "TIDY5E.SettingsMenu.WorldThemeSettings": {
-    "name": "Theme Settings",
-    "label": "Configure Theme Settings",
-    "hint": "New Tidy Sheets Only: Establish the default theme settings for your game world. These apply to all sheet types."
+  "TIDY5E.WorldSettings.label": "Tidy Sheet Settings",
+  "TIDY5E.WorldSettings.hint": "Configure global settings for Tidy Sheets.",
+  "TIDY5E.WorldSettings.Group": {
+    "TidySettings": "Tidy Settings",
+    "ActorSheets": "Actor Sheets",
+    "ItemSheets": "Item Sheets"
+  },
+  "TIDY5E.WorldSettings.SheetConfiguration": {
+    "label": "{sheetName} Sheet Configuration",
+    "hint": "Configure settings for {sheetName} sheets. Hide or show header controls, and choose which tabs display on the sheet, in which order, and to who."
+  },
+  "TIDY5E.WorldSettings.TabConfiguration": {
+    "label": "{tabName} Tab Configuration",
+    "hint": "Configure which tabs display on the {tabName} sheet, in which order, and to who."
+  },
+  "TIDY5E.SheetSettings": {
+    "title": "Tidy Sheet Settings",
+    "hint": "Configure the settings for the sheet.",
+    "Group": {
+      "SheetSettings": "Sheet Settings",
+      "Tabs": "Tabs"
+    },
+    "Sidebar": {
+      "title": "Sidebar",
+      "Hint": "Configure the settings for the sidebar tabs."
+    },
+    "HeaderControls": {
+      "ShowControl": "Show in {location}",
+      "Preview": "Header Controls Preview",
+      "MoveAllToMenu": "Move All to Menu",
+      "MoveAllToHeader": "Move All to Header",
+      "WorldSettingHint": "Header control placement is a world-level setting shared by every {sheetName} sheet. Changes made here apply to all of them.",
+      "OpenWorldSettings": "Open World Settings"
+    },
+    "ConfigureTab": {
+      "title": "Configure {tabName} Tab",
+      "hint": "Configure settings, visibility, and sections for the {tabName} tab."
+    },
+    "AssignSpellsToClasses": {
+      "hint": "Assign spells to the source class to update grouping and visual indicators of spells in the Spellbook tab."
+    },
+    "NoTabsHint": "No tabs are currently visible. Adjust Tab Configuration to enable tabs."
   },
 
-  "TIDY5E.SettingsMenu.Homebrew": {
-    "name": "Homebrew",
-    "label": "Configure Homebrew",
-    "hint": "Enable and configure homebrew options provided by this module."
+  "TIDY5E.TabSettings": {
+    "SidebarSettings": {
+      "name": "Sidebar Expanded",
+      "label": "Show Sidebar"
+    }
   },
 
-  "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-    "name": "Header Controls",
-    "label": "Configure Header Controls",
-    "hint": "New Tidy Sheets Only: Configure the location of sheet header controls."
+  "TIDY5E.SettingsMenu": {
+    "TidySettings": {
+      "name": "Tidy Sheet Settings",
+      "label": "Configure Tidy Settings",
+      "hint": "Configure Tidy sheets for your game. Set default sheets, customize themes, and global defaults for your players."
+    },
+    "Defaults": {
+      "name": "Set Tidy as Default Sheet",
+      "label": "Set Tidy as Default Sheet",
+      "hint": "Update default actor and item sheets here if the Core → Default Sheets configuration menu isn't working as expected."
+    },
+    "HeaderControlConfiguration": {
+      "name": "Configure Header Controls",
+      "buttonLabel": "Header Controls",
+      "label": "Configure Header Controls",
+      "hint": "New Tidy Sheets Only: Configure the location of sheet header controls."
+    },
+    "TabConfiguration": {
+      "name": "Sheet Tabs",
+      "label": "Configure Sheet Tabs",
+      "hint": "New Tidy Sheets Only: Configure which tabs are visible for all actor and item sheets."
+    }
   },
-
-  "TIDY5E.SettingsMenu.TabConfiguration": {
-    "name": "Sheet Tabs",
-    "label": "Configure Sheet Tabs",
-    "hint": "New Tidy Sheets Only: Configure which tabs are visible for all actor and item sheets."
+  "TIDY5E.WorldSettings.GlobalTheme": {
+    "name": "Configure Global Theme Settings",
+    "tabLabel": "Theme Settings",
+    "hint": "Configure the default theme settings for your game world. These apply to all sheets. You can also configure theme settings for specific sheets."
   },
-
   "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
   "TIDY5E.Settings.EnableBankedInspiration": {
     "name": "Enable Banked Inspiration",
@@ -346,16 +413,14 @@
     "name": "Banked Inspiration Management - GM Only",
     "hint": "Enable this option to limit banked inspiration management to the GM."
   },
-
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
-
   "TIDY5E.WorldSettings.Menu": {
-    "name": "World Settings",
+    "name": "Overview",
+    "tabLabel": "Overview",
     "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
     "label": "World Settings",
     "title": "World Settings (GM Only)"
   },
-
   "TIDY5E.UserSettings.Menu": {
     "name": "User Settings",
     "hint": "Customize your own version of Tidy 5e Sheets. These settings are saved to your browser and apply to your sheets.",
@@ -778,10 +843,29 @@
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
     "hint": "If you would like to set Tidy 5e Sheets as your default for one or more document types, but the core default sheets config menu is not working as expected, use this menu to select your preferences.",
-    "buttonLabel": "Set Tidy as Default Sheet",
+    "buttonLabel": "Default Sheets",
     "explanation": "Select all document types where you would prefer Tidy 5e Sheets to be the default.",
-    "disableAll": "Use for no sheets",
-    "enableAll": "Use for all sheets"
+    "disableAll": "Switch to System Sheets",
+    "enableAll": "Switch to Tidy Sheets",
+    "RevertToSystemSheets": "Revert to System Sheets",
+    "Sheet": "Document Type",
+    "TidySheets": "Tidy Sheets",
+    "SystemSheets": "System Sheets",
+    "dialogTitle": "Set Tidy as Default Sheet",
+    "dialogMessage": "Are you sure you want to set the default for all sheets to Tidy?"
+  },
+  "TIDY5E.WorldSettings.SheetPreferences": {
+    "name": "Set Tidy as Default Sheet",
+    "tabLabel": "Default Sheets",
+    "switchToTidySheets": "Switch to Tidy Sheets",
+    "revertToSystemSheets": "Revert to System Sheets",
+    "chooseSpecific": "Choose specific sheet types instead",
+    "hint": "Select all document types where you would prefer Tidy 5e Sheets to be the default."
+  },
+  "TIDY5E.WorldSettings.Defaults": {
+    "intro": "Welcome to <span>Tidy 5e Sheets</span>. Set your world-wide defaults here, then use the tabs on the left to fine-tune themes, sheet tabs, and more.",
+    "useTidyHint": "Make Tidy 5e Sheets the default for every actor and item type in this world.",
+    "resetHint": "Reset all Tidy 5e Sheets world settings back to their defaults. This cannot be undone."
   },
   "TIDY5E.Settings.About": {
     "name": "About",
@@ -796,8 +880,7 @@
     "FinancialSupportHeader": "Ways to Support Tidy 5e Sheets",
     "FinancialSupportParagraph": "If you like Tidy 5e Sheets and want to support it financially, here are some ways to do it:",
     "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
-    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-    "PatreonLink": "{urlStart}Patreon{urlEnd}"
+    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}"
   },
   "TIDY5E.Settings.GlobalCustomSections": {
     "name": "Global Custom Sections",
@@ -872,6 +955,8 @@
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
+  "TIDY5E.UseGlobalDefaults": "Use Global Defaults",
+  "TIDY5E.UndoChanges": "Undo Changes",
   "TIDY5E.Reset": "Reset",
   "TIDY5E.Weapon.Mastery.LabelWithMastery": "Weapon Mastery: {mastery}",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
@@ -993,7 +1078,7 @@
   "TIDY5E.Visible": "Visible",
   "TIDY5E.Hidden": "Hidden",
   "TIDY5E.Options.Title": "Options",
-  "TIDY5E.ConfigureTab.Title": "Configure {tabName}",
+  "TIDY5E.ConfigureTab.Title": "Configure {tabName} Tab",
   "TIDY5E.DisplayOptions.Title": "Display Options",
   "TIDY5E.DisplayOptionsGlobalDefault.Title": "Global Default Display Options",
   "TIDY5E.DisplayOptionsActor.Title": "Actor Display Options",
@@ -1009,7 +1094,7 @@
   "TIDY5E.AggregateSkill.HighMeasure": "High",
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
-  "TIDY5E.Character.Sidebar.Title": "Player Character Sidebar",
+  "TIDY5E.Character.Sidebar.Title": "Configure Sidebar",
   "TIDY5E.Encounter": {
     "CombatantsSection.Title": "Combatants",
     "Combat.IncludeInCombat.Tooltip": "Include in combat activities",

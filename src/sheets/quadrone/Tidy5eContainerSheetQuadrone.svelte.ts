@@ -35,7 +35,6 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -102,18 +101,9 @@ export class Tidy5eContainerSheetQuadrone
       resizable: true,
       controls: [
         {
-          action: 'openTabConfiguration',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabConfiguration.MenuOptionText',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eContainerSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-        {
           icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-          action: 'themeSettings',
+          label: 'TIDY5E.SheetSettings.title',
+          action: 'sheetSettings',
           ownership: 'OWNER',
           visible: function (this: Tidy5eContainerSheetQuadrone) {
             return this.isEditable;
@@ -126,15 +116,6 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
-      openTabConfiguration: async function (
-        this: Tidy5eContainerSheetQuadrone
-      ) {
-        this._renderChild(
-          new SheetTabConfigurationQuadroneApplication({
-            document: this.document,
-          }),
-        );
-      },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
         const title =
@@ -225,7 +206,7 @@ export class Tidy5eContainerSheetQuadrone
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetQuadroneContext> {
-    if (options?.soft && this._context?.data) {
+    if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 

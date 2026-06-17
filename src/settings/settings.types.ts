@@ -17,9 +17,22 @@ export interface GlobalCustomSectionsetting {
   showWhenEmptyFilters: GlobalCustomSectionSheetFilters;
 }
 
+export type SheetTabConfigEntry = {
+  key: string;
+  order: number;
+  show: boolean;
+  visibilityLevel: number | null;
+};
+
 export type SheetTabConfiguration = {
   selected: string[];
   visibilityLevels: Record<string, number | null>;
+  /**
+   * Tab config (sort order, visibility, and viewer level).
+   * Populated from `selected`/`visibilityLevels` on load.
+   * TODO: Migrate off legacy fields
+   */
+  tabs?: Record<string, SheetTabConfigEntry>;
 };
 
 export type TabConfiguration = {

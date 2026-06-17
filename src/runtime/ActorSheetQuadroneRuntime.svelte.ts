@@ -12,6 +12,10 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import {
+  getSelectedTabIds,
+  getTabVisibilityLevels,
+} from 'src/settings/settings-data-models';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import { CONSTANTS } from 'src/constants';
 
@@ -54,17 +58,18 @@ export class ActorSheetQuadroneRuntime<
   async getTabs(context: TSheetContext): Promise<Tab[]> {
     let tabIds = this._getVisibleTabIds(context);
 
-    const selectedTabs = this._getTabConfig(context.actor)?.selected ?? [];
+    const selectedTabs = getSelectedTabIds(this._getTabConfig(context.actor));
 
     if (selectedTabs?.length) {
       tabIds = tabIds
         .filter((t) => selectedTabs?.includes(t))
         .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
     } else {
-      let defaultTabs =
+      let defaultTabs = getSelectedTabIds(
         settings.value.tabConfiguration[context.document.documentName]?.[
           this._docTypeKeyOverride ?? context.document.type
-        ]?.selected ?? [];
+        ]
+      );
 
       if (!defaultTabs.length) {
         defaultTabs = this.getDefaultTabIds();
@@ -96,13 +101,15 @@ export class ActorSheetQuadroneRuntime<
       return [...tabIds];
     }
 
-    const worldTabConfig =
+    const worldTabConfig = getTabVisibilityLevels(
       settings.value.tabConfiguration[context.document.documentName]?.[
         this._docTypeKeyOverride ?? context.document.type
-      ]?.visibilityLevels ?? {};
+      ]
+    );
 
-    const sheetTabConfig =
-      this._getTabConfig(context.document)?.visibilityLevels ?? {};
+    const sheetTabConfig = getTabVisibilityLevels(
+      this._getTabConfig(context.document)
+    );
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 

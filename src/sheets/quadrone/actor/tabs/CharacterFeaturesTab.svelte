@@ -9,13 +9,11 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { buildCharacterFeaturesSettingsTab } from '../settings/CharacterFeaturesSettingsTab';
+  import type { FeatureSection } from 'src/types/types';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -31,23 +29,8 @@
   setSearchResultsContext(searchResults);
 
   let features = $derived(
-    SheetSections.configureFeatures(
-      context.features,
-      context,
-      tabId,
-      UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
+    buildCharacterFeaturesSettingsTab(context, tabId).sections as FeatureSection[],
   );
-
-  let tabOptionGroups: SectionOptionGroup[] = $derived([
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
-  ]);
 
   let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
@@ -65,14 +48,10 @@
       tabId: tabId,
     });
   });
+
 </script>
 
-<ItemsActionBar
-  bind:searchCriteria
-  sections={features}
-  {tabId}
-  {tabOptionGroups}
-/>
+<ItemsActionBar bind:searchCriteria sections={features} {tabId} />
 
 <div class="tab-content">
   {#if showSheetPins}

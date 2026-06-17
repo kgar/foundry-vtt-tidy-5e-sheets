@@ -9,9 +9,9 @@
     border: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--t5e-size-3x);
     margin: 0;
-    padding: 0;
+    padding: 0 0 var(--t5e-size-2x);
 
     > label.checkbox,
     > label.radio {
@@ -26,7 +26,6 @@
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
       padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
-      margin-bottom: 0.25rem;
       width: 100%;
 
       &:not(:has(tidy-gold-header-underline)) {

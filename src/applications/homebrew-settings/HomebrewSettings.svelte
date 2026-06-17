@@ -2,29 +2,31 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     HomebrewConfigContext,
-    HomebrewSettingsApplication,
-  } from './HomebrewSettingsApplication.svelte';
+    HomebrewSettingsEditor,
+  } from 'src/settings/editors/homebrew-settings-editor.svelte';
 
   interface Props {
-    config: HomebrewConfigContext;
-    app: HomebrewSettingsApplication;
+    app: HomebrewSettingsEditor;
   }
 
-  let { config, app }: Props = $props();
+  let { app }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   const idPrefix = foundry.utils.randomID();
+
+  const config = $derived(app.value);
 </script>
 
 <div class="dialog-content-container flexcol">
+  <h2>{localize('TIDY5E.WorldSettings.Homebrew.name')}</h2>
   <div class="flexcol flex1">
     <fieldset>
       <legend>
-        <h2>{localize('TIDY5E.Settings.BankedInspiration.title')}</h2>
+        <h3>{localize('TIDY5E.Settings.BankedInspiration.title')}</h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
-  
+
       <div class="form-group slim">
         <label for="banked-inspiration-{idPrefix}">
           {localize('TIDY5E.Settings.EnableBankedInspiration.name')}
@@ -57,14 +59,4 @@
       </div>
     </fieldset>
   </div>
-</div>
-<div class="button-bar">
-  <button
-    type="button"
-    class="button button-primary button-large button-save save-changes-btn"
-    onclick={() => app.save()}
-  >
-    <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
-  </button>
 </div>

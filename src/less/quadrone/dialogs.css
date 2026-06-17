@@ -1,5 +1,17 @@
 /* The place for all dialogs and their specific layout styles. */
 .tidy5e-sheet.application:where(.quadrone) {
+  --t5e-settings-border-color: var(--t5e-table-row-divider);
+
+  &.theme-light {
+    &.tidy-sheet-settings {
+      --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
+
+      .window-header {
+        border: 0.0625rem solid var(--t5e-settings-border-color);
+      }
+    }
+  }
+
   .window-content {
     gap: 0;
     padding: 0;
@@ -14,7 +26,6 @@
       display: flex;
       flex: 1;
       min-height: 0;
-      padding: 0 1rem 1.5rem;
       overflow-y: scroll;
 
       &.flexrow {
@@ -43,6 +54,174 @@
         text-wrap: none;
       }
     }
+  }
+
+  .tidy-sheet-settings {
+    border-top: 0.0625rem solid var(--t5e-table-row-divider);
+    flex: 1;
+    display: grid;
+    grid-template-areas:
+      'nav    body'
+      'nav    buttons';
+    grid-template-columns: 12rem 1fr;
+    grid-template-rows: 1fr auto;
+    min-height: 0;
+
+    .settings-pane .dialog-content-container {
+      padding: var(--t5e-size-2x) var(--t5e-size-4x) 2rem;
+    }
+  }
+
+  .settings-nav {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    padding: var(--t5e-size-2x) var(--t5e-size-2x) var(--t5e-size-6x) var(--t5e-size-2x);
+    border-right: 0.0625rem solid var(--t5e-settings-border-color);
+    background-color: var(--t5e-header-background);
+  }
+
+  .nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .nav-tab-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+
+    .drop-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 0.1875rem;
+      margin: 0;
+      border-radius: 0.125rem;
+      background-color: var(--t5e-theme-color-highlight);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  h3.nav-group-header {
+    font-size: var(--font-size-20);
+    padding: 0.25rem 0 0.375rem var(--t5e-size-2x);
+  }
+
+  .nav-tab {
+    --button-padding-inline-start: var(--t5e-size-2x);
+    --tab-background-color: transparent;
+    align-items: center;
+    background-color: var(--tab-background-color);
+    border: 0.0625rem solid transparent;
+    box-shadow: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    min-height: var(--t5e-field-size-default);
+    padding: var(--t5e-size-2x);
+    text-align: left;
+    width: 100%;
+
+    &:active,
+    &:focus-within,
+    &:hover {
+      --tab-background-color: var(--t5e-component-card-lighter);
+      border-color: transparent;
+      background-color: var(--tab-background-color);
+    }
+
+    &:active:hover,
+    &:focus-within:not(:active) {
+      --button-text: var(--t5e-theme-color-foreground);
+    }
+
+    &.active {
+      --tab-background-color: var(--t5e-theme-color-darker);
+      --button-text: var(--t5e-theme-color-foreground);
+      border-color: transparent;
+      background-color: var(--tab-background-color);
+      font-weight: var(--font-weight-label);
+
+      &:active,
+      &:focus-within:not(:active),
+      &:hover {
+        --tab-background-color: var(--t5e-theme-color-darkest);
+        border-color: transparent;
+        background-color: var(--tab-background-color);
+      }
+    }
+
+    &.tab-hidden {
+      color: var(--t5e-color-text-lighter);
+      font-style: italic;
+    }
+
+    &.dragging {
+      opacity: 0.5;
+    }
+
+    .tab-icon {
+      flex-shrink: 0;
+      margin-inline-start: auto;
+      color: var(--t5e-color-text-lightest);
+      font-size: 0.75rem;
+      cursor: grab;
+    }
+
+    &:hover .tab-visibility-icon {
+      color: var(--t5e-color-text-lighter);
+    }
+  }
+
+  .nav-tab:not(:has(.nav-tab-icon)) {
+    padding-left: 0.4375rem;
+  }
+
+  .nav-tab-icon {
+    width: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-tab-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-empty {
+    padding: 0.25rem 0.5rem;
+    font-style: italic;
+  }
+
+  .settings-pane {
+    display: flex;
+    flex-direction: column;
+    grid-area: body;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .button-bar {
+    grid-area: buttons;
+    display: flex;
+    gap: var(--t5e-size-2x);
+
+    button {
+      flex: 1;
+    }
+  }
+
+  .window-content .dialog-content-container {
+    padding-left: var(--t5e-size-4x);
+    padding-right: var(--t5e-size-4x);
   }
 
   .window-header {
@@ -88,11 +267,6 @@
       margin-bottom: var(--t5e-size-3x);
     }
 
-    .settings-actions {
-      gap: var(--t5e-size-2x);
-      margin-bottom: var(--t5e-size-4x);
-    }
-
     .title-underlined {
       margin-bottom: var(--t5e-size-2x);
     }
@@ -101,10 +275,39 @@
       padding-top: var(--t5e-size-1x);
       padding-bottom: var(--t5e-size-1x);
     }
+
+    .scroll-container {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 
   /* Theme Settings */
-  &.tidy-theme-settings {
+  &.tidy-theme-settings,
+  &.tidy-sheet-settings {
+    --t5e-font-roboto-condensed: "Signika", "Palatino Linotype", sans-serif;
+    --t5e-font-family-default: "Signika", "Palatino Linotype", sans-serif;
+    --font-size-default: var(--font-size-14);
+
+    .settings-description {
+      color: var(--t5e-color-text-lighter);
+    }
+
+    h3 {
+      font-size: var(--font-size-20);
+    }
+
+    .setting-actions {
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .choose-specific-btn {
+      padding: 0;
+      align-self: flex-start;
+    }
+
     .color-picker-container {
       position: relative;
     }
@@ -165,6 +368,15 @@
       padding: 0;
       border: 0;
     }
+
+    .button-bar {
+      gap: var(--t5e-size-2x);
+      padding: 0 var(--t5e-size-4x) var(--t5e-size-3x);
+    }
+  }
+
+  .sheet-tab-configuration {
+    gap: var(--t5e-size-4x);
   }
 
   &.sheet-tab-configuration,
@@ -188,5 +400,148 @@
         background: var(--t5e-component-field-background-active);
       }
     }
+  }
+
+  .world-settings-overview {
+    .filigree-card {
+      margin-bottom: var(--t5e-size-4x);
+      margin-top: var(--t5e-size-2x);
+    }
+
+    .tidy-info-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--t5e-size-4x);
+      text-align: center;
+    }
+
+    .banner-text {
+      font-size: var(--font-size-16);
+      color: var(--t5e-color-text-lighter);
+      line-height: 1.25rem;
+      margin-left: var(--t5e-size-8x);
+      margin-right: var(--t5e-size-8x);
+      margin-bottom: var(--t5e-size-6x);
+
+      span {
+        font-weight: var(--font-weight-label);
+        color: var(--t5e-color-text-default);
+      }
+    }
+
+    .settings-description {
+      margin-top: 0;
+    }
+
+    .settings-description-list {
+      margin: 0;
+    }
+
+    .logo {
+      max-width: 8.25rem;
+      animation: TheShining 6s infinite;
+    }
+  }
+
+  .sheet-preferences-table {
+    margin-top: var(--t5e-size-4x);
+
+    &.scrollable-table .expandable {
+      overflow-y: auto;
+    }
+
+    :is(.tidy-table-cell, .tidy-table-header-cell) {
+      align-items: center;
+      padding: 0.3125rem 0.5rem;
+    }
+  }
+
+  &.tidy5e-sheet-preferences {
+    .sheet-preferences-table {
+      margin-bottom: var(--t5e-size-8x);
+    }
+  }
+
+  &.tidy-sheet-settings {
+    .header-controls-preview {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .header-controls-preview-label {
+      flex: 1;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: var(--t5e-size-2x);
+      gap: var(--t5e-size-2x);
+    }
+
+    .sheet-preferences-table {
+      :is(.tidy-table-cell, .tidy-table-header-cell) {
+        padding: 0.3125rem 0.5rem;
+      }
+
+      .header-cell-icon {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: var(--t5e-icon-size-5x);
+        height: var(--t5e-icon-size-5x);
+      }
+
+      .header-cell-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sheet-preferences-label {
+        font-size: var(--font-size-18);
+      }
+
+      .sheet-preferences-column-label {
+        text-align: center;
+      }
+
+      .radio {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    button.button:where(:not(.header-control)) {
+      --font-size-default: var(--font-size-14);
+    }
+
+    .form-group {
+      label {
+        color: var(--t5e-color-text-default);
+      }
+
+      p.hint {
+        font-size: var(--font-size-13);
+      }
+    }
+  }
+}
+
+@keyframes TheShining {
+  0% {
+    filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 1.5rem var(--t5e-theme-color-default)) drop-shadow(0 0.25rem 1rem var(--t5e-theme-color-default));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
   }
 }

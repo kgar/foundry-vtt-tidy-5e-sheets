@@ -5,6 +5,7 @@ import EncounterInventoryTab from 'src/sheets/quadrone/actor/tabs/EncounterInven
 import EncounterDescriptionTab from 'src/sheets/quadrone/actor/tabs/EncounterDescriptionTab.svelte';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import EncounterCombatTab from 'src/sheets/quadrone/actor/tabs/EncounterCombatTab.svelte';
+import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
 
 export const EncounterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<EncounterSheetQuadroneContext>(
@@ -28,6 +29,7 @@ export const EncounterSheetQuadroneRuntime =
         },
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
+        settingsTabBuilder: buildActorInventorySettingsTab,
       },
       {
         id: CONSTANTS.TAB_ACTOR_COMBAT,

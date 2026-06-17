@@ -26,8 +26,19 @@
   }
 
   &.minimized {
-    .window-header {
-      margin-top: 0.0625rem;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .actor-header-start {
+      display: none;
+    }
+
+    [data-action='copyUuid'],
+    [data-action='configureSheet'] {
+      display: grid;
     }
 
     .window-title {
@@ -38,6 +49,11 @@
 
     .header-control {
       color: var(--t5e-color-text-default);
+    }
+
+    .window-content {
+      display: none;
+      background: none;
     }
   }
 
@@ -162,28 +178,6 @@
 
   .flexgap-3 {
     gap: var(--t5e-size-3x);
-  }
-
-  &.minimized .window-content {
-    display: none;
-    background: none;
-  }
-
-  &.minimized {
-
-    &::before,
-    &::after {
-      display: none;
-    }
-
-    .actor-header-start {
-      display: none;
-    }
-
-    [data-action='copyUuid'],
-    [data-action='configureSheet'] {
-      display: grid;
-    }
   }
 
   &.scrollable-window-content .window-content {

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { coalesce } from 'src/utils/formatting';
-  import { settings } from 'src/settings/settings.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
@@ -27,7 +26,6 @@
       aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
       data-action="showConfiguration"
       data-config="starting-equipment"
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-gear"></i>
       {localize('DND5E.StartingEquipment.Action.Configure')}

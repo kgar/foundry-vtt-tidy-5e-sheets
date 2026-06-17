@@ -11,11 +11,6 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import type {
-    RadioSetting,
-    SectionOptionGroup,
-  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SpellTable from '../../shared/SpellTable.svelte';
   import FeatureTable from '../../shared/FeatureTable.svelte';
@@ -26,9 +21,7 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';
-  import { ConfigureSectionsApplication } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -44,85 +37,7 @@
 
   let sections = $derived(context.sheetTabSections);
 
-  const organization = $derived(
-    SettingsProvider.settings.characterSheetTabOrganization.get(),
-  );
-
-  let tabOptionGroups = $derived<SectionOptionGroup[]>([
-    {
-      title: 'TIDY5E.SectionOrganization',
-      settings: [
-        {
-          type: 'radio',
-          options: [
-            {
-              label: FoundryAdapter.localize('TIDY5E.GenericDefaultPrefix', {
-                value: FoundryAdapter.localize(
-                  SettingsProvider.settings.characterSheetTabOrganization
-                    .options.choices[organization],
-                ),
-              }),
-              value: null,
-            },
-            {
-              label:
-                SettingsProvider.settings.characterSheetTabOrganization.options
-                  .choices.action,
-              value: CONSTANTS.SECTION_ORGANIZATION_ACTION,
-            },
-            {
-              label:
-                SettingsProvider.settings.characterSheetTabOrganization.options
-                  .choices.origin,
-              value: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
-            },
-          ],
-          prop: TidyFlags.characterSheetTabSectionOrganization.prop,
-          doc: context.actor,
-          default: null,
-        } satisfies RadioSetting<string | null>,
-      ],
-    },
-    {
-      title: 'TIDY5E.AutomaticallyIncludeUsableItems',
-      settings: [
-        {
-          type: 'radio',
-          options: [
-            {
-              label: FoundryAdapter.localize('TIDY5E.GenericDefaultPrefix', {
-                value:
-                  SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
-                    ? 'Yes'
-                    : 'No',
-              }),
-              value: null,
-            },
-            {
-              label: 'Yes',
-              value: true,
-            },
-            {
-              label: 'No',
-              value: false,
-            },
-          ],
-          prop: TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.prop,
-          doc: context.actor,
-          default: null,
-        } satisfies RadioSetting<boolean | null>,
-      ],
-    },
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
-  ]);
-
   let showSheetPins = $state(true);
-  let groupItemsBySetting = $state(true);
 
   // Sync from persisted preference when context/tab changes; persist on toggle via onclick
   $effect(() => {
@@ -181,9 +96,10 @@
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
 
   let tabName = $derived(localize(tab?.title ?? ''));
+
 </script>
 
-<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content" bind:this={tabContent}>
   {#if showSheetPins}
@@ -358,26 +274,8 @@
             tabName: tabName,
           })}
           class="button button-borderless button-icon-only"
-          onclick={() =>
-            context.editable &&
-            context.sheet._renderChild(
-              new ConfigureSectionsApplication({
-                document: context.document,
-                settings: {
-                  tabId,
-                  sections: sections,
-                  optionsGroups: tabOptionGroups,
-                  formTitle: localize('TIDY5E.ConfigureTab.Title', {
-                    tabName: tabName,
-                  }),
-                },
-                window: {
-                  title: localize('TIDY5E.ConfigureTab.Title', {
-                    tabName: tabName,
-                  }),
-                },
-              }),
-            )}
+          data-action="configureTab"
+          data-tab-id={tabId}
         >
           <i class="fas fa-gear"></i>
         </button>

@@ -34,20 +34,102 @@ import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterShe
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import { formatResourcePathForCss } from './utils/path';
+import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eCharacterSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-      label: 'TIDY5E.Tidy5eCharacterSheetClassic',
-    }
-  );
+  initSettings();
+
+  const hideClassic = SettingsProvider.settings.hideClassic.get();
+
+  if (!hideClassic) {
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eCharacterSheet,
+      {
+        types: [CONSTANTS.SHEET_TYPE_CHARACTER],
+        label: 'TIDY5E.Tidy5eCharacterSheetClassic',
+      }
+    );
+
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eNpcSheet,
+      {
+        types: [CONSTANTS.SHEET_TYPE_NPC],
+        label: 'TIDY5E.Tidy5eNpcSheetClassic',
+      }
+    );
+
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eVehicleSheet,
+      {
+        types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+        label: 'TIDY5E.Tidy5eVehicleSheetClassic',
+      }
+    );
+
+    const supportedItemTypes = [
+      CONSTANTS.ITEM_TYPE_BACKGROUND,
+      CONSTANTS.ITEM_TYPE_CLASS,
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FACILITY,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_LOOT,
+      CONSTANTS.ITEM_TYPE_RACE,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_SUBCLASS,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ];
+
+    documentSheetConfig.registerSheet(
+      Item,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eItemSheetClassic,
+      {
+        types: supportedItemTypes,
+        label: 'TIDY5E.Tidy5eItemSheetClassic',
+      }
+    );
+
+    documentSheetConfig.registerSheet(
+      Item,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eContainerSheetClassic,
+      {
+        types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+        label: 'TIDY5E.Tidy5eContainerSheetClassic',
+      }
+    );
+
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eGroupSheetClassic,
+      {
+        types: [CONSTANTS.SHEET_TYPE_GROUP],
+        label: 'TIDY5E.Tidy5eGroupSheetClassic',
+      }
+    );
+
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eEncounterSheetClassic,
+      {
+        types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
+        label: 'TIDY5E.Tidy5eEncounterSheetClassic',
+      }
+    );
+  }
 
   documentSheetConfig.registerSheet(
     Actor,
@@ -59,82 +141,6 @@ Hooks.once('init', () => {
     }
   );
 
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eNpcSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_NPC],
-      label: 'TIDY5E.Tidy5eNpcSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eVehicleSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-      label: 'TIDY5E.Tidy5eVehicleSheetClassic',
-    }
-  );
-
-  const supportedItemTypes = [
-    CONSTANTS.ITEM_TYPE_BACKGROUND,
-    CONSTANTS.ITEM_TYPE_CLASS,
-    CONSTANTS.ITEM_TYPE_CONSUMABLE,
-    CONSTANTS.ITEM_TYPE_EQUIPMENT,
-    CONSTANTS.ITEM_TYPE_FACILITY,
-    CONSTANTS.ITEM_TYPE_FEAT,
-    CONSTANTS.ITEM_TYPE_LOOT,
-    CONSTANTS.ITEM_TYPE_RACE,
-    CONSTANTS.ITEM_TYPE_SPELL,
-    CONSTANTS.ITEM_TYPE_SUBCLASS,
-    CONSTANTS.ITEM_TYPE_TOOL,
-    CONSTANTS.ITEM_TYPE_WEAPON,
-  ];
-
-  documentSheetConfig.registerSheet(
-    Item,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eItemSheetClassic,
-    {
-      types: supportedItemTypes,
-      label: 'TIDY5E.Tidy5eItemSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Item,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eContainerSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'TIDY5E.Tidy5eContainerSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eGroupSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_GROUP],
-      label: 'TIDY5E.Tidy5eGroupSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eEncounterSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
-      label: 'TIDY5E.Tidy5eEncounterSheetClassic',
-    }
-  );
-
-  initSettings();
   initRuntime();
   initKeybindings();
 
@@ -236,6 +242,8 @@ Hooks.once('ready', async () => {
   TidyNotificationsManager.onReady();
 
   registerCustomTidyRollRequests();
+
+  preloadSheetImages();
 });
 
 Hooks.once('setup', async () => {

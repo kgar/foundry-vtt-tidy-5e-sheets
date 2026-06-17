@@ -13,6 +13,7 @@ import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/Item
 import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
+import { buildContainerContentsSettingsTab } from 'src/sheets/quadrone/container/settings/ContainerContentsSettingsTab';
 import ItemContainerDetailsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
 import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
@@ -45,6 +46,10 @@ import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
+import {
+  getSelectedTabIds,
+  getTabVisibilityLevels, 
+} from 'src/settings/settings-data-models';
 import type {
   ItemTabRegistrationOptions,
   TabEnabledCallbackFunctionOverrideOptions,
@@ -115,8 +120,9 @@ class ItemSheetQuadroneRuntimeImpl {
     let tabsForType = this._getVisibleTabs(context);
     let tabIds = tabsForType.map((t) => t.id);
 
-    const selectedTabs =
-      TidyFlags.tabConfiguration.get(context.item)?.selected ?? [];
+    const selectedTabs = getSelectedTabIds(
+      TidyFlags.tabConfiguration.get(context.item)
+    );
 
     if (selectedTabs?.length) {
       tabIds = tabIds
@@ -125,10 +131,11 @@ class ItemSheetQuadroneRuntimeImpl {
     }
 
     if (!selectedTabs?.length) {
-      let defaultTabs =
+      let defaultTabs = getSelectedTabIds(
         settings.value.tabConfiguration[context.document.documentName]?.[
           context.document.type
-        ]?.selected ?? [];
+        ]
+      );
 
       if (!defaultTabs.length) {
         defaultTabs = this.getDefaultTabIds(context.document.type);
@@ -159,13 +166,15 @@ class ItemSheetQuadroneRuntimeImpl {
       return [...tabs];
     }
 
-    const worldTabConfig =
+    const worldTabConfig = getTabVisibilityLevels(
       settings.value.tabConfiguration[context.document.documentName]?.[
         context.document.type
-      ]?.visibilityLevels ?? {};
+      ]
+    );
 
-    const sheetTabConfig =
-      TidyFlags.tabConfiguration.get(context.document)?.visibilityLevels ?? {};
+    const sheetTabConfig = getTabVisibilityLevels(
+      TidyFlags.tabConfiguration.get(context.document)
+    );
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
@@ -391,6 +400,11 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         component: ItemContainerContentsQuadroneTab,
         type: 'svelte',
       },
+      settingsTabBuilder: (context, tabId) =>
+        buildContainerContentsSettingsTab(
+          context as unknown as ContainerSheetQuadroneContext,
+          tabId,
+        ),
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {

@@ -1,3 +1,5 @@
+<!-- Classic-only: Use SortableListbox instead -->
+
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import Listbox from './Listbox.svelte';

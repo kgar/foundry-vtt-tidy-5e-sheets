@@ -62,6 +62,9 @@ export const FoundryAdapter = {
   registerTidyMenu(key: string, data: any): void {
     game.settings.registerMenu(CONSTANTS.MODULE_ID, key, data);
   },
+  hasGameSetting(namespace: string, settingName: string): boolean {
+    return game.settings.settings.has(`${namespace}.${settingName}`);
+  },
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
   },
@@ -876,12 +879,7 @@ export const FoundryAdapter = {
   },
   async renderSheetFromUuid(uuid: string) {
     const doc = await fromUuid(uuid);
-    const parent = doc?.parent ?? doc?.container;
-    if (parent) {
-      parent.sheet._renderChild(doc);
-    } else {
-      doc?.sheet?.render(true);
-    }
+    doc?.sheet?.render(true);
   },
   renderImagePopout(args: {
     src: string;

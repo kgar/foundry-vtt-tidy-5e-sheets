@@ -42,7 +42,12 @@ export class ExpansionTracker {
     if (!this.document.uuid) {
       return;
     }
-    const state = SettingsProvider.settings.sectionExpansionState.get();
+    const state =
+      SettingsProvider.settings.sectionExpansionState.get() ??
+      FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
+        'sectionExpansionState'
+      ) ??
+      {};
     state[this.clientStateKey] = this.#tabs;
     FoundryAdapter.setTidySetting('sectionExpansionState', state);
   }, 250);
@@ -61,10 +66,14 @@ export class ExpansionTracker {
     this.document = document;
 
     if (this.document?.uuid) {
-      const state =
-        SettingsProvider.settings.sectionExpansionState.get()?.[
-          this.clientStateKey
-        ];
+      // SettingsProvider is assigned in initSettings(); optional chaining covers
+      // circular-import / ordering edge cases. Fall back to the raw game setting.
+      const state = (
+        SettingsProvider.settings.sectionExpansionState.get() ??
+        FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
+          'sectionExpansionState'
+        )
+      )?.[this.clientStateKey];
 
       if (state) {
         Object.assign(this.#tabs, state);

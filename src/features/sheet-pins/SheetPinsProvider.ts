@@ -8,7 +8,7 @@ import type {
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CONSTANTS } from 'src/constants';
 import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { BooleanSetting } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+import type { BooleanSetting } from 'src/settings/editors/configure-sections-settings-editor.svelte';
 
 export class SheetPinsProvider {
   static isPinnable(
