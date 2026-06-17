@@ -95,7 +95,7 @@ export class TidySheetSettingsQuadroneApplication
   tabDisplaySettingsTab: SheetTabConfigurationSettingsEditor;
   headerControlsTab?: WorldHeaderControlConfigurationSettingsEditor;
   sidebarTabDisplaySettingsTab?: SheetTabConfigurationSettingsEditor;
-  specialTraitsChildApp: SpecialTraitsSettingsEditor;
+  specialTraitsChildApp?: SpecialTraitsSettingsEditor;
   spellSourceItemAssignmentsChildApp?: SpellSourceItemAssignmentsSettingsEditor;
   configureSectionsChildAppByTabId = new Map<
     string,
@@ -115,7 +115,7 @@ export class TidySheetSettingsQuadroneApplication
       !!this.tabDisplaySettingsTab.hasChanges ||
       !!this.headerControlsTab?.hasChanges ||
       !!this.sidebarTabDisplaySettingsTab?.hasChanges ||
-      !!this.specialTraitsChildApp.hasChanges ||
+      !!this.specialTraitsChildApp?.hasChanges ||
       !!this.spellSourceItemAssignmentsChildApp?.hasChanges ||
       [...this.configureSectionsChildAppByTabId.values()].some(
         (app) => app.hasChanges,
@@ -189,8 +189,16 @@ export class TidySheetSettingsQuadroneApplication
     });
     this.tabDisplaySettingsTab.initialize();
 
-    this.specialTraitsChildApp = getSpecialTraitsSettingsEditor(this.document);
-    this.specialTraitsChildApp.initialize();
+    if (
+      [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
+        this.document.type,
+      )
+    ) {
+      this.specialTraitsChildApp = getSpecialTraitsSettingsEditor(
+        this.document,
+      );
+      this.specialTraitsChildApp.initialize();
+    }
 
     if (this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       this.sidebarTabDisplaySettingsTab =
@@ -463,7 +471,7 @@ export class TidySheetSettingsQuadroneApplication
       await this.tabDisplaySettingsTab?.save();
       await this.headerControlsTab?.save();
       await this.sidebarTabDisplaySettingsTab?.save();
-      await this.specialTraitsChildApp.save();
+      await this.specialTraitsChildApp?.save();
       await this.spellSourceItemAssignmentsChildApp?.save();
 
       for (const helper of this.configureSectionsChildAppByTabId.values()) {
