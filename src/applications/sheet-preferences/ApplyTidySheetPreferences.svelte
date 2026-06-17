@@ -5,13 +5,18 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import type { SheetPreferenceOption } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
+  import type {
+    DefaultSheetPreferencesSettingsEditor,
+    SheetPreferenceOption,
+  } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
+  import { MakeAllSheetsTidyDialog } from 'src/settings/MakeAllSheetsTidyDialog';
 
   interface Props {
     options: SheetPreferenceOption[];
+    onMakeAllSheetsTidy?: () => Promise<void> | void;
   }
 
-  let { options }: Props = $props();
+  let { onMakeAllSheetsTidy, options }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -32,7 +37,9 @@
       type="button"
       class="button button-primary button-large use-default-btn flex1"
       onclick={() => {
-        options.forEach((o) => (o.selected = true));
+        new MakeAllSheetsTidyDialog({ onYes: onMakeAllSheetsTidy }).render({
+          force: true,
+        });
       }}
     >
       <i class="fas fa-check-double"></i>

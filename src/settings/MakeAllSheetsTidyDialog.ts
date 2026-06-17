@@ -2,6 +2,10 @@ import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/d
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 
+type MakeAllSheetsTidyDialogConfiguration = ApplicationConfiguration & {
+  onYes?: () => Promise<void> | void;
+};
+
 export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
   static DEFAULT_OPTIONS = {
     window: {
@@ -14,7 +18,12 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
         action: 'yes',
         label: 'Yes',
         icon: 'fa-solid fa-check',
-        callback: async () => {
+        callback: async (
+          _event: PointerEvent | SubmitEvent,
+          _target: HTMLButtonElement,
+          app: MakeAllSheetsTidyDialog,
+        ) => {
+          await app._onYes?.();
           const editor = getDefaultSheetPreferencesSettingsEditor();
           editor.initialize();
           editor.value.forEach((x) => (x.selected = true));
@@ -29,6 +38,14 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
       },
     ],
   };
+
+  _onYes?: MakeAllSheetsTidyDialogConfiguration['onYes'];
+
+  constructor(options: Partial<MakeAllSheetsTidyDialogConfiguration>) {
+    super(options);
+
+    this._onYes = options.onYes;
+  }
 
   _initializeApplicationOptions(options: Partial<ApplicationConfiguration>) {
     options = super._initializeApplicationOptions(options);

@@ -205,10 +205,10 @@
     {:else if activeSelectedId === SETTINGS_HOMEBREW}
       <HomebrewSettings
         app={app.editors.homebrewTab}
-        config={app.editors.homebrewTab.value}
       />
     {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
       <ApplyTidySheetPreferences
+        onMakeAllSheetsTidy={async () => await app.save()}
         options={app.editors.sheetPreferencesTab.value}
       />
     {:else if selectedSheetConfig}

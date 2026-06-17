@@ -6,15 +6,16 @@
   } from 'src/settings/editors/homebrew-settings-editor.svelte';
 
   interface Props {
-    config: HomebrewConfigContext;
     app: HomebrewSettingsEditor;
   }
 
-  let { config }: Props = $props();
+  let { app }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   const idPrefix = foundry.utils.randomID();
+
+  const config = $derived(app.value);
 </script>
 
 <div class="dialog-content-container flexcol">
