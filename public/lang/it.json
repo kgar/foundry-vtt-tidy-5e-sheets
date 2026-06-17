@@ -83,7 +83,7 @@
     "TIDY5E.UserSettings.Menu": {
         "name": "Impostazioni Utente",
         "hint": "Personalizza la tua versione di Tidy 5e Sheets. Queste impostazioni vengono salvate nel tuo browser e si applicano ai tuoi fogli.",
-        "label": "Impostazioni Scheda",
+        "label": "Impostazioni Utente",
         "title": "Impostazioni Utente: {userName}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
@@ -456,14 +456,19 @@
     },
     "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Schede Visibili",
-        "MenuOptionText": "Configurazione Scheda",
+        "MenuOptionText": "Configura Tab",
         "AvailableHeader": "Schede Nascoste",
         "AtLeastOneRequiredErrorMessage": "Almeno una scheda è richiesta.",
-        "Title": "Configurazione Scheda: {documentName}",
+        "Title": "Configura Tab Scheda{documentName}",
         "UnsupportedDocumentErrorMessage": "Il tipo di documento {documentType} non è attualmente impostato per la selezione della scheda.",
         "Explanation": "Qualsiasi scheda che è configurata per non essere vista (ad esempio, disabilitando il diario nelle impostazioni di configurazione) non verrà comunque visualizzata sul foglio, anche se selezionata.",
         "SelectionTab.Title": "Selezione Scheda",
-        "VisibilityTab.Title": "Visibilità Scheda"
+        "VisibilityTab.Title": "Visibilità Scheda",
+        "buttonLabel": "Configura Tab",
+        "options.viewers": "Accesso Utente",
+        "options.visibility": "Mostra Tab",
+        "showTabTooltip": "Mostra questa tab",
+        "hideTabTooltip": "Nascondi questa tab"
     },
     "TIDY5E.Listbox": {
         "MoveDown": "Muovi Giù (Alt + Freccia Giù)",
@@ -643,10 +648,11 @@
         "AtLeastOneLevelRequiredErrorMessage": "Almeno un livello di indebolimento del veicolo è richiesto."
     },
     "TIDY5E.WorldSettings.Menu": {
-        "name": "Impostazioni del mondo",
+        "name": "Panoramica",
         "hint": "Regola le impostazioni a livello mondiale per personalizzare l'esperienza di Tidy 5e Sheets. Queste impostazioni vengono salvate in questo mondo Foundry e si applicano a tutti i contenuti rilevanti di Tidy 5e Sheets.",
         "label": "Impostazioni del Mondo",
-        "title": "Impostazioni del Mondo (Solo DM)"
+        "title": "Impostazioni del Mondo (Solo DM)",
+        "tabLabel": "Panoramica"
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Usa supporto per Tastiera Accessibile",
@@ -738,9 +744,15 @@
         "hint": "Se desideri impostare Tidy 5e Sheets come predefinito per uno o più tipi di documenti, ma il menu di configurazione delle schede predefinite principali non funziona come previsto, utilizza questo menu per selezionare le tue preferenze.",
         "explanation": "Seleziona tutti i tipi di documento in cui preferisci che Tidy 5e Sheets sia quello predefinito.",
         "name": "Imposta Tidy come scheda predefinita",
-        "buttonLabel": "Imposta Tidy come scheda predefinita",
-        "disableAll": "Non usare per nessuna scheda",
-        "enableAll": "Usa per tutte le schede"
+        "buttonLabel": "Scheda Predefinita",
+        "disableAll": "Passa alla Scheda di Sistema",
+        "enableAll": "Passa a Scheda Tidy",
+        "RevertToSystemSheets": "Ritorna alla Scheda di Sistema",
+        "Sheet": "Tipo Documento",
+        "TidySheets": "Scheda Tidy",
+        "SystemSheets": "Scheda di Sistema",
+        "dialogTitle": "Imposta Tidy come Scheda Predefinita",
+        "dialogMessage": "Sei sicuro di voler impostare Tidy come predefinita per tutte le schede?"
     },
     "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli.",
     "TIDY5E.Utilities.ConfigureSections": "Configura sezioni",
@@ -875,7 +887,7 @@
     "TIDY5E.Visible": "Visibile",
     "TIDY5E.Hidden": "Nascosto",
     "TIDY5E.Options.Title": "Opzioni",
-    "TIDY5E.ConfigureTab.Title": "Configura {tabName}",
+    "TIDY5E.ConfigureTab.Title": "Configura Tab {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opzioni Visualizzazione",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Mostra riga contenitore",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Scheda Inventario Tidy 5e",
@@ -975,7 +987,7 @@
     "TIDY5E.SpellbookSections": "Sezioni Libro Incantesimi",
     "TIDY5E.UserDefaultPrefix": "Predefinito utente: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opzioni Visualizzazione Predefinite Globali",
-    "TIDY5E.Character.Sidebar.Title": "Barra Laterale Personaggio",
+    "TIDY5E.Character.Sidebar.Title": "Configura Barra Laterale",
     "TIDY5E.ContextMenuActionPin": "Fissa in Alto",
     "TIDY5E.ContextMenuActionUnpin": "Sblocca dall'Alto",
     "TIDY5E.HeaderControlConfiguration": {
@@ -983,7 +995,7 @@
         "LocationHeader": "Intestazione"
     },
     "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Controlli Intestazione",
+        "name": "Configura Controlli Intestazione",
         "label": "Configura Controlli Intestazione",
         "hint": "Solo per nuova Tidy Sheets: Configura la posizione dei controlli dell'intestazione scheda."
     },
@@ -1070,5 +1082,97 @@
     },
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Colore Sfondo Intestazione"
-    }
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Impostazioni Homebrew",
+        "tabLabel": "Homebrew"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "Nascondi Scheda Classica Tidy 5e",
+        "hint": "Nascondi Scheda Classica Tidy dal mondo."
+    },
+    "TIDY5E.WorldSettings.label": "Impostazioni Scheda Tidy",
+    "TIDY5E.WorldSettings.hint": "Configura impostazioni globali per Scheda Tidy.",
+    "TIDY5E.WorldSettings.Group": {
+        "TidySettings": "Impostazioni Tidy",
+        "ActorSheets": "Scheda Personaggio",
+        "ItemSheets": "Scheda Oggetto"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "Configurazione Scheda {sheetName}",
+        "hint": "Configura impostazioni per la scheda {sheetName}. Nascondi o mostra controlli di intestazione e scegli quali tab visualizzare sulla scheda, in quale ordine e a chi."
+    },
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "Configurazione Tab {tabName}",
+        "hint": "Configura quali tab visualizzare nella scheda {tabName}, in quale ordine e a chi."
+    },
+    "TIDY5E.SheetSettings": {
+        "title": "Impostazioni Scheda Tidy",
+        "hint": "Configura impostazioni per la scheda.",
+        "Group": {
+            "SheetSettings": "Impostazioni Scheda",
+            "Tabs": "Tab"
+        },
+        "Sidebar": {
+            "title": "Barra Laterale",
+            "Hint": "Configura impostazioni Tab Barra Laterale."
+        },
+        "HeaderControls": {
+            "ShowControl": "Mostra in {location}",
+            "Preview": "Anteprima Controlli Intestazione",
+            "MoveAllToMenu": "Sposta Tutto nel Menu",
+            "MoveAllToHeader": "Sposta Tutto nell'Intestazione",
+            "WorldSettingHint": "Il posizionamento dei controlli dell'intestazione è un'impostazione globale condivisa da ogni scheda {sheetName}. Le modifiche apportate qui si applicano a tutte.",
+            "OpenWorldSettings": "Impostazioni Open World"
+        },
+        "ConfigureTab": {
+            "title": "Configura Tab {tabName}",
+            "hint": "Configura impostazioni, visibilità e sezioni per la tab {tabName}."
+        },
+        "AssignSpellsToClasses": {
+            "hint": "Assegna incantesimi alla classe sorgente per aggiornare il raggruppamento e gli indicatori visivi degli incantesimi nella tab Incantesimi."
+        },
+        "NoTabsHint": "Al momento non è visibile alcuna tab. Modifica Configurazione Tab per abilitarle."
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "name": "Barra Laterale Espansa",
+            "label": "Mostra Barra Laterale"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "TidySettings": {
+            "name": "Impostazioni Scheda Tidy",
+            "label": "Configura Impostazioni Tidy",
+            "hint": "Configura le Schede Tidy per il tuo gioco. Imposta le schede predefinite, personalizza i temi e le impostazioni predefinite globali per i tuoi giocatori."
+        },
+        "Defaults": {
+            "name": "Imposta Tidy come Scheda Predefinita",
+            "label": "Imposta Tidy come Scheda Predefinita",
+            "hint": "Se il menu di configurazione Core → Schede Predefinite non funziona come previsto, è possibile aggiornare qui le schede predefinite di personaggi e oggetti."
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Controlli Intestazione"
+        }
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "name": "Configura Impostazioni Tema Globale",
+        "tabLabel": "Impostazioni Tema",
+        "hint": "Configura le impostazioni del tema predefinite per il tuo mondo di gioco. Queste si applicano a tutte le schede. Puoi anche configurare le impostazioni del tema per schede specifiche."
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "name": "Imposta Tidy come Scheda Predefinita",
+        "tabLabel": "Scheda Predefinita",
+        "switchToTidySheets": "Passa a Scheda Tidy",
+        "revertToSystemSheets": "Ritorna alla Scheda di Sistema",
+        "chooseSpecific": "Scegli invece un tipo specifico di scheda",
+        "hint": "Seleziona tutti i tipi di documento per i quali desideri impostare la Scheda Tidy 5e come predefinita."
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Benvenuto in <span>Scheda Tidy 5e</span>. Imposta qui le tue impostazioni predefinite globali, quindi utilizza le tab a sinistra per personalizzare temi, tab delle schede e altro ancora.",
+        "useTidyHint": "Imposta Scheda Tidy 5e come predefinita per ogni personaggio e tipo di oggetto in questo mondo.",
+        "resetHint": "Ripristina tutte le impostazioni del mondo in Scheda Tidy 5e ai valori predefiniti. Questa operazione è irreversibile."
+    },
+    "TIDY5E.UseGlobalDefaults": "Usa Predefiniti Globali",
+    "TIDY5E.UndoChanges": "Annulla Modifiche"
 }

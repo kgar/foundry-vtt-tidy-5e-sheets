@@ -449,12 +449,17 @@
         "SelectedHeader": "Viditelné záložky",
         "Explanation": "Jakékoli záložky, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
         "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není pro výběr záložek aktuálně nastaven.",
-        "Title": "Výběr záložky: {documentName}",
-        "MenuOptionText": "Nastavení záložek",
+        "Title": "Nastavení záložek deníku {documentName}",
+        "MenuOptionText": "Nastavit záložky",
         "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna záložka.",
         "AvailableHeader": "Skryté záložky",
         "SelectionTab.Title": "Výběr záložky",
-        "VisibilityTab.Title": "Viditelnost záložky"
+        "VisibilityTab.Title": "Viditelnost záložky",
+        "buttonLabel": "Nastavení záložek",
+        "options.viewers": "Uživatelský přístup",
+        "options.visibility": "Zobrazit záložku",
+        "showTabTooltip": "Zobrazit tuto záložku",
+        "hideTabTooltip": "Skrýt tuto záložku"
     },
     "TIDY5E.SpellSourceItemAssignments.Identifier": "Identifikátor zdrojového povolání",
     "TIDY5E.Settings.Migrations": {
@@ -647,12 +652,18 @@
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
-        "buttonLabel": "Tidy jako základní deníky",
+        "buttonLabel": "Základní deníky",
         "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
         "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
         "name": "Nastavit Tidy jako základní deníky",
-        "disableAll": "Použít bez deníků",
-        "enableAll": "Použít pro všechny deníky"
+        "disableAll": "Přepnout na deníky systému",
+        "enableAll": "Přepnout na deníky Tidy",
+        "RevertToSystemSheets": "Vrátit se k deníkům systému",
+        "Sheet": "Typ dokumentu",
+        "TidySheets": "Deníky Tidy",
+        "SystemSheets": "Deníky systému",
+        "dialogTitle": "Nastavit Tidy jako výchozí deník",
+        "dialogMessage": "Opravdu chceš nastavit výchozí nastavení všech deníků na Tidy?"
     },
     "TIDY5E.Utilities.Tools": "Nástroje",
     "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
@@ -667,7 +678,8 @@
         "label": "Celková nastavení",
         "title": "Celkové nastavení (pouze PJ)",
         "hint": "Uprav nastavení na celkové úrovni a přizpůsob si tak zážitek z deníků Tidy 5e. Toto nastavení je následně uloženo v tomto světě Foundry a platí pro veškerý příslušný obsah deníků Tidy 5e.",
-        "name": "Celkové nastavení"
+        "name": "Přehled",
+        "tabLabel": "Přehled"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Seznam akcí"
@@ -854,7 +866,7 @@
     "TIDY5E.AddSpecific": "Přidat {name}",
     "TIDY5E.Options.Title": "Možnost",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Deník dopravního prostředku Tidy 5e",
-    "TIDY5E.ConfigureTab.Title": "Nastavit {tabName}",
+    "TIDY5E.ConfigureTab.Title": "Nastavit záložku {tabName}",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Deník položky Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Deník skupiny Tidy 5e",
     "TIDY5E.StatblockTabName": "Blok statistik",
@@ -945,7 +957,7 @@
     "TIDY5E.SpellbookSections": "Sekce kouzel",
     "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
-    "TIDY5E.Character.Sidebar.Title": "Postranní panel hráčských postav",
+    "TIDY5E.Character.Sidebar.Title": "Nastavení postranního panelu",
     "TIDY5E.ContextMenuActionPin": "Připnout navrch",
     "TIDY5E.ContextMenuActionUnpin": "Odpojit z vrchu",
     "TIDY5E.HeaderControlConfiguration": {
@@ -953,7 +965,7 @@
         "LocationHeader": "Záhlaví"
     },
     "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Ovládací prvky záhlaví",
+        "name": "Nastavení ovládacích prvků záhlaví",
         "label": "Nastavení ovládacích prvků záhlaví",
         "hint": "Pouze nové deníky Tidy: Nastavení umístění ovládacích prvků záhlaví deníku."
     },
@@ -1040,5 +1052,97 @@
     },
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Barva pozadí záhlaví"
-    }
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Nastavení domácích pravidel",
+        "tabLabel": "Domácí pravidla"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "Skrýt klasické deníky Tidy 5e",
+        "hint": "Skrýt klasické deníky Tidy 5e v tomto světě."
+    },
+    "TIDY5E.WorldSettings.label": "Nastavení deníku Tidy",
+    "TIDY5E.WorldSettings.hint": "Nastav globálně deníky Tidy.",
+    "TIDY5E.WorldSettings.Group": {
+        "TidySettings": "Nastavení Tidy",
+        "ActorSheets": "Deníky aktérů",
+        "ItemSheets": "Deníky položek"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "Nastavení deníku {sheetName}",
+        "hint": "Nastav deník {sheetName}. Skryj či zobraz ovládací prvky záhlaví a urči, které záložky se na deníku zobrazí, v jakém pořadí a komu."
+    },
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "Nastavení záložky {tabName}",
+        "hint": "Nastav, jaké záložky se mají zobrazovat na deníku {tabName}, v jakém pořadí a komu."
+    },
+    "TIDY5E.SheetSettings": {
+        "title": "Nastavení deníku Tidy",
+        "hint": "Nastavte parametry deníku.",
+        "Group": {
+            "SheetSettings": "Nastavení deníku",
+            "Tabs": "Záložky"
+        },
+        "Sidebar": {
+            "title": "Postranní panel",
+            "Hint": "Nastavení záložek postranního panelu."
+        },
+        "HeaderControls": {
+            "ShowControl": "Zobrazit v {location}",
+            "Preview": "Náhled ovládacích prvků záhlaví",
+            "MoveAllToMenu": "Přesunout vše do nabídky",
+            "MoveAllToHeader": "Přesunout vše do záhlaví",
+            "WorldSettingHint": "Umístění ovládacích prvků v záhlaví je nastavení na úrovni celého světa, které sdílejí všechny deníky {sheetName}. Zde provedené změny se projeví u všech těchto deníků.",
+            "OpenWorldSettings": "Otevřít nastavení světa"
+        },
+        "ConfigureTab": {
+            "title": "Nastavit záložku {tabName}",
+            "hint": "Nastavení parametrů, viditelnosti a sekcí záložky {tabName}."
+        },
+        "AssignSpellsToClasses": {
+            "hint": "Přiřaď kouzla ke zdrojovému povolání, aby se aktualizovalo seskupení a vizuální označení kouzel na záložce Kouzla."
+        },
+        "NoTabsHint": "V současné době nejsou zobrazeny žádné záložky. Chceš-li záložky zapnout, uprav jejich nastavení."
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "name": "Rozbalený postranní panel",
+            "label": "Zobrazit postranní panel"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "TidySettings": {
+            "name": "Nastavení deníku Tidy",
+            "label": "Nastavení nástrojů Tidy",
+            "hint": "Nastav si deníky Tidy ve své hře. Nastav výchozí deníky, přizpůsob si motivy a globální výchozí nastavení deníků svých hráčů."
+        },
+        "Defaults": {
+            "name": "Nastavit Tidy jako výchozí deník",
+            "label": "Nastavit Tidy jako výchozí deník",
+            "hint": "Pokud nabídka 'Foundry→ Výchozí deníky' nefunguje dle očekávání, pak výchozí deníky postav a položek nastav zde."
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Ovládací prvky záhlaví"
+        }
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "name": "Nastav Tidy jako výchozí deník",
+        "tabLabel": "Výchozí deníky",
+        "switchToTidySheets": "Přepnout na deníky Tidy",
+        "revertToSystemSheets": "Vrátit se k deníkům systému",
+        "chooseSpecific": "Zvol místo toho konkrétní typy deníků",
+        "hint": "Zvol všechny typy dokumentů, u nichž si přeješ, aby byly nastaveny jako výchozí deníky Tidy 5e."
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "name": "Nastavení globálních motivů",
+        "hint": "Nastav výchozí parametry motivu pro svůj herní svět. Tyto parametry se vztahují na všechny deníky. Můžeš také nastavit parametry motivu pro konkrétní deníky.",
+        "tabLabel": "Nastavení motivu"
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Vítej v <span>Denících Tidy</span>. Zde si nastav výchozí nastavení v celém světě a poté pomocí záložek vlevo doladíš vzhled, záložky v deníku a další možnosti.",
+        "useTidyHint": "Nastav deníky Tidy 5e jako výchozí pro všechny typy postav a položek v tomto světě.",
+        "resetHint": "Obnovit všechna nastavení světa v denících Tidy 5e na výchozí hodnoty. Tato akce je nevratná."
+    },
+    "TIDY5E.UseGlobalDefaults": "Použít globální výchozí nastavení",
+    "TIDY5E.UndoChanges": "Vrátit změny"
 }
