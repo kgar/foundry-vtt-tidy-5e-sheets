@@ -290,7 +290,13 @@ export class TidySheetSettingsQuadroneApplication
    */
   get useDefaultLabel(): string | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
-    return currentTabId.startsWith('sheet:') ? 'TIDY5E.UseDefault' : undefined;
+    if (
+      currentTabId.startsWith('sheet:') ||
+      currentTabId === TidySheetSettingsTabIds.headerControls
+    ) {
+      return 'TIDY5E.UseDefault';
+    }
+    return undefined;
   }
 
   undoChanges() {
