@@ -177,14 +177,29 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
       this.value = defaults;
     },
 
-    canUndo: false,
+    get canUndo() {
+      return this.hasChanges;
+    },
 
-    canUseDefault: false,
+    canUseDefault: true,
 
-    useDefaultLabel: undefined,
+    useDefaultLabel: 'TIDY5E.UseDefault',
 
     async useDefault() {
-      // noop
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: {
+          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+        },
+        content: `<p>${FoundryAdapter.localize(
+          'TIDY5E.UseDefaultDialog.text',
+        )}</p>`,
+      });
+
+      if (!proceed) {
+        return;
+      }
+
+      this.resetToDefault();
     },
 
     save() {

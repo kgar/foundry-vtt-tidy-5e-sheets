@@ -35,13 +35,13 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
+import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -52,7 +52,7 @@ export class Tidy5eContainerSheetQuadrone
     getSvelteApplicationMixin<
       DocumentSheetApplicationConfiguration | undefined,
       ContainerSheetQuadroneContext
-    >(foundry.applications.sheets.ItemSheetV2)
+    >(foundry.applications.sheets.ItemSheetV2),
   )
   implements SheetTabCacheable
 {
@@ -70,7 +70,7 @@ export class Tidy5eContainerSheetQuadrone
     this.itemFilterService = new ItemFilterService(
       {},
       this.item,
-      ItemFilterRuntime.getDocumentFiltersQuadrone
+      ItemFilterRuntime.getDocumentFiltersQuadrone,
     );
 
     this.currentTabId = CONSTANTS.TAB_CONTAINER_CONTENTS;
@@ -78,7 +78,7 @@ export class Tidy5eContainerSheetQuadrone
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
@@ -116,22 +116,26 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
+      sheetSettings: async function (this: Tidy5eContainerSheetQuadrone) {
+        this._renderChild(
+          new TidySheetSettingsQuadroneApplication({
+            document: this.document,
+          }),
+        );
+      },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
         const title =
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        this._renderChild(new foundry.applications.apps.ImagePopout({
-          src: this.item.img,
-          uuid: this.item.uuid,
-          window: { title },
-        }));
-      },
-      themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
-        this._renderChild(new ThemeSettingsQuadroneApplication({
-          document: this.document,
-        }));
+        this._renderChild(
+          new foundry.applications.apps.ImagePopout({
+            src: this.item.img,
+            uuid: this.item.uuid,
+            window: { title },
+          }),
+        );
       },
     },
     dragDrop: [
@@ -204,7 +208,7 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<ContainerSheetQuadroneContext> {
     if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
@@ -227,15 +231,15 @@ export class Tidy5eContainerSheetQuadrone
     const enriched = {
       description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.value,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.unidentified?.description,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.chat,
-        enrichmentOptions
+        enrichmentOptions,
       ),
     };
 
@@ -288,7 +292,7 @@ export class Tidy5eContainerSheetQuadrone
         abbr:
           CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
             ?.abbreviation ?? key,
-      })
+      }),
     );
 
     const capacityContext = await Container.computeCapacity(this.item);
@@ -352,22 +356,22 @@ export class Tidy5eContainerSheetQuadrone
             this.document,
             this.document.isOwner,
             context.unlocked,
-            section
+            section,
           );
-      }
+      },
     );
 
     // Properties
     context.properties = {
       active: [],
       object: Object.fromEntries(
-        (this.document.system.properties ?? []).map((p: string) => [p, true])
+        (this.document.system.properties ?? []).map((p: string) => [p, true]),
       ),
       options: (this.document.system.validProperties ?? [])
         .reduce(
           (
             arr: ContainerSheetQuadroneContext['properties']['options'],
-            k: any
+            k: any,
           ) => {
             // @ts-ignore
             const { label } = CONFIG.DND5E.itemProperties[k];
@@ -378,13 +382,13 @@ export class Tidy5eContainerSheetQuadrone
             });
             return arr;
           },
-          []
+          [],
         )
         .sort(
           (
             a: ContainerSheetQuadroneContext['properties']['options'][0],
-            b: ContainerSheetQuadroneContext['properties']['options'][0]
-          ) => a.label.localeCompare(b.label, game.i18n.lang)
+            b: ContainerSheetQuadroneContext['properties']['options'][0],
+          ) => a.label.localeCompare(b.label, game.i18n.lang),
         ),
     };
 
@@ -412,7 +416,7 @@ export class Tidy5eContainerSheetQuadrone
       if (item) {
         this.expandedItemData.set(
           id,
-          await item.getChatData({ secrets: this.item.isOwner })
+          await item.getChatData({ secrets: this.item.isOwner }),
         );
       }
     }
@@ -423,7 +427,7 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
   async _renderHTML(
     context: ContainerSheetQuadroneContext,
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ) {
     game.user.apps[this.id] = this;
 
@@ -454,7 +458,9 @@ export class Tidy5eContainerSheetQuadrone
 
     // Items - Tidy tables
     if (el.matches('[data-item-id] > [data-tidy-table-row]')) {
-      const { itemId } = event.currentTarget.closest<HTMLElement>("[data-item-id]")?.dataset ?? {};
+      const { itemId } =
+        event.currentTarget.closest<HTMLElement>('[data-item-id]')?.dataset ??
+        {};
 
       const item = await this.item.system.getContainedItem(itemId);
 
@@ -473,7 +479,7 @@ export class Tidy5eContainerSheetQuadrone
 
   /** @inheritDoc */
   async _onDrop(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ): Promise<unknown> {
     this.#dropBehavior = this._dropBehavior(event);
 
@@ -505,7 +511,7 @@ export class Tidy5eContainerSheetQuadrone
 
   async _onDropFolder(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    document: any
+    document: any,
   ): Promise<Item5e[]> {
     if (!this.item.isOwner || document.type !== 'Item') {
       return [];
@@ -525,7 +531,7 @@ export class Tidy5eContainerSheetQuadrone
         }
         if (item.type === 'container') containers.add(item.id);
         return item;
-      })
+      }),
     );
     items = items.filter((i) => i && !containers.has(i.system.container));
 
@@ -564,7 +570,7 @@ export class Tidy5eContainerSheetQuadrone
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    document: Item5e
+    document: Item5e,
   ): Promise<Item5e[] | boolean | void> {
     if (!this.item.isOwner || !document) {
       return false;
@@ -622,7 +628,7 @@ export class Tidy5eContainerSheetQuadrone
         container: this.item,
         transformAll: (itemData: any, options: any) =>
           this._onDropSingleItem(itemData, { ...options, event }),
-      }
+      },
     );
     if (this.item.folder) {
       toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
@@ -658,9 +664,8 @@ export class Tidy5eContainerSheetQuadrone
         itemData.flags = itemData.flags;
       }
 
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
-      );
+      const scroll =
+        await dnd5e.documents.Item5e.createScrollFromSpell(itemData);
 
       return scroll?.toObject?.() ?? false;
     }
@@ -669,7 +674,7 @@ export class Tidy5eContainerSheetQuadrone
       const result = await FoundryAdapter.onDropStackConsumablesForActor(
         this.item.actor,
         itemData,
-        { container }
+        { container },
       );
       if (result) return false;
     }
@@ -684,7 +689,7 @@ export class Tidy5eContainerSheetQuadrone
    */
   async _onSortItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    item: Item5e
+    item: Item5e,
   ) {
     const eventTarget = event.target;
 
@@ -710,7 +715,7 @@ export class Tidy5eContainerSheetQuadrone
 
     const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
       eventTarget,
-      item
+      item,
     );
 
     // Perform the sort
@@ -803,7 +808,7 @@ export class Tidy5eContainerSheetQuadrone
     const locationSet = mapGetOrInsert(
       this.expandedItems,
       itemId,
-      new Set<string>()
+      new Set<string>(),
     );
 
     if (isVisible) {
