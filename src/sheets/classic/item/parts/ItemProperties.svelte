@@ -12,11 +12,11 @@
 </script>
 
 {#each context.properties.options as property}
-  {@const field = `system.properties.${property.value}`}
-  {@const isEnchanted = context.itemOverrides.has(field)}
-  {@const enchantedTooltip = isEnchanted
+  {const field = $derived(`system.properties.${property.value}`)}
+  {const isEnchanted = $derived(context.itemOverrides.has(field))}
+  {const enchantedTooltip = $derived(isEnchanted
     ? localize('DND5E.ENCHANTMENT.Warning.Override')
-    : null}
+    : null)}
 
   <Checkbox
     id="{appId}-properties-{property.value?.slugify()}"

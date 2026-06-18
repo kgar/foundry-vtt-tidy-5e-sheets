@@ -50,8 +50,8 @@
 
   <!-- Feature Sub-Type -->
   {#if context.itemSubtypes}
-    {@const category =
-      context.config.featureTypes[context.system.type.value]?.label}
+    {const category =
+      $derived(context.config.featureTypes[context.system.type.value]?.label)}
 
     <FormGroup
       label={localize('DND5E.ItemFeatureSubtype', { category })}

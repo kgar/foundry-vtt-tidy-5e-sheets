@@ -147,7 +147,7 @@
         {/if}
 
         {#each context.labels.damages ?? [] as damage}
-          {@const label = damage.label}
+          {const label = $derived(damage.label)}
           <li>
             {label}
           </li>

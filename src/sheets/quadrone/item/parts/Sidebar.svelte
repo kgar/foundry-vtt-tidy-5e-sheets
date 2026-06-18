@@ -258,10 +258,11 @@
   <!-- Item States -->
   <ul class="pills stacked">
     {#if !isNil(context.system.hp?.max, 0)}
-      {@const effectiveHpValue = context.system.hp.value ?? 0}
-      {@const effectiveHpMax = context.system.hp.max ?? 0}
-      {@const pct =
-        effectiveHpMax > 0 ? (effectiveHpValue / effectiveHpMax) * 100 : 0}
+      {const effectiveHpValue = $derived(context.system.hp.value ?? 0)}
+      {const effectiveHpMax = $derived(context.system.hp.max ?? 0)}
+      {const pct = $derived(
+        effectiveHpMax > 0 ? (effectiveHpValue / effectiveHpMax) * 100 : 0
+      )}
       <li>
         <span
           class={[
@@ -301,10 +302,10 @@
       </li>
     {/if}
     {#if 'equipped' in context.system && context.editable}
-      {@const checkedIconClass =
+      {const checkedIconClass = 
         'fas fa-hand-fist equip-icon fa-fw color-text-default'}
-      {@const uncheckedIconClass = 'far fa-hand fa-fw'}
-      {@const equipped = context.system.equipped}
+      {const uncheckedIconClass = 'far fa-hand fa-fw'}
+      {const equipped = $derived(context.system.equipped)}
       <li>
         <PillSwitch
           checked={equipped}
@@ -325,7 +326,7 @@
       </li>
     {/if}
     {#if FoundryAdapter.isAttunementApplicable(context.item)}
-      {@const attuned = context.system.attuned}
+      {const attuned = $derived(context.system.attuned)}
       <li>
         <PillSwitch
           checked={attuned}
@@ -362,8 +363,7 @@
       </li>
     {/if}
     {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
-      <!-- {@const prepared = context.system.prepared} -->
-      {@const spellIconClasses = FoundryAdapter.getSpellIcon(context.item)}
+      {const spellIconClasses = $derived(FoundryAdapter.getSpellIcon(context.item))}
       <li>
         <PillSwitch
           checked={context.system.prepared ==
@@ -401,8 +401,8 @@
         <h4>{localize('DND5E.Action')}</h4>
         <ul class="pills stacked">
           {#each sidebarActivations as activation}
-            {@const activationText =
-              activation?.toString().replace(/NaN/g, '—') ?? ''}
+            {const activationText =
+              $derived(activation?.toString().replace(/NaN/g, '—') ?? '')}
             <li class="pill activation-pill">
               {activationText
                 ? activationText.charAt(0).toUpperCase() +
@@ -513,13 +513,13 @@
   <!-- Custom Sections -->
 
   {#if showCustomSections}
-    {@const sectionLabel = SheetSections.getSectionLabel(context.item)}
-    {@const actionSectionLabel = SheetSections.getActionSectionLabel(
+    {const sectionLabel = $derived(SheetSections.getSectionLabel(context.item))}
+    {const actionSectionLabel = $derived(SheetSections.getActionSectionLabel(
       context.item,
-    )}
-    {@const sectionType = context.item.parent?.system.isCharacter
+    ))}
+    {const sectionType = $derived(context.item.parent?.system.isCharacter
       ? 'Sheet'
-      : 'TIDY5E.Section.Label'}
+      : 'TIDY5E.Section.Label')}
     <div>
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">

@@ -143,7 +143,7 @@
         </p>
       </div>
       {#each context.settings.globalCustomSections as sectionConfig}
-        {@const hasAdvancedSettings = sectionConfig.showWhenEmpty}
+        {const hasAdvancedSettings = $derived(sectionConfig.showWhenEmpty)}
         <details>
           <summary
             class:has-advanced-settings={hasAdvancedSettings}
@@ -207,8 +207,8 @@
                   )}
                 </div>
                 {#each sheetTypes as sheetType}
-                  {@const sheetSelected =
-                    sheetType.type in sectionConfig.showWhenEmptyFilters}
+                  {const sheetSelected =
+                    $derived(sheetType.type in sectionConfig.showWhenEmptyFilters)}
                   <div class="custom-section-sheet">
                     <label class="flex-row align-items-center extra-small-gap">
                       <input

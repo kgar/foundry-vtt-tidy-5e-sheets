@@ -82,11 +82,11 @@
         </div>
       </li>
       {#each ability.members as member}
-        {@const modScore = member.actor.system.abilities?.[ability.key]?.mod}
-        {@const mod = getModifierData(modScore)}
-        {@const saveScore =
-          member.actor.system.abilities?.[ability.key]?.save.value}
-        {@const save = getModifierData(saveScore)}
+        {const modScore = $derived(member.actor.system.abilities?.[ability.key]?.mod)}
+        {const mod = $derived(getModifierData(modScore))}
+        {const saveScore =
+          $derived(member.actor.system.abilities?.[ability.key]?.save.value)}
+        {const save = $derived(getModifierData(saveScore))}
 
         <li>
           <div

@@ -83,7 +83,7 @@
     </h4>
     {#if member.canObserve}
       {#if member.actor.system.isCharacter}
-        {@const classes = Object.values<Item5e>(member.actor.classes)}
+        {const classes = $derived(Object.values<Item5e>(member.actor.classes))}
         {#if classes.length > 0}
           <div class="separated-list">
             {#each classes as thisClass, index}
@@ -102,13 +102,13 @@
           </div>
         {/if}
       {:else if member.actor.system.isNPC}
-        {@const size =
-          CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
-          member.actor.system.traits.size}
+        {const size =
+          $derived(CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
+          member.actor.system.traits.size)}
 
-        {@const creatureType = member.actor.system.details.type.label}
+        {const creatureType = $derived(member.actor.system.details.type.label)}
 
-        {@const classes = Object.values<Item5e>(member.actor.classes)}
+        {const classes = $derived(Object.values<Item5e>(member.actor.classes))}
 
         <span class="separated-list">
           {#each classes as thisClass, index}
@@ -125,9 +125,9 @@
           {/each}
 
           {#if member.actor.system.details.cr}
-            {@const formattedCr = dnd5e.utils.formatCR(
+            {const formattedCr = $derived(dnd5e.utils.formatCR(
               member.actor.system.details.cr,
-            )}
+            ))}
             <span class="cr">
               <span class="font-label-medium color-text-gold-emphasis"
                 >{localize('DND5E.AbbreviationCR')}</span
@@ -155,9 +155,9 @@
           {/if}
         </span>
       {:else if member.actor.system.isVehicle}
-        {@const vehicleType =
-          CONFIG.DND5E.vehicleTypes[member.actor.system.details.type] ??
-          member.actor.system.details.type}
+        {const vehicleType =
+          $derived(CONFIG.DND5E.vehicleTypes[member.actor.system.details.type] ??
+          member.actor.system.details.type)}
 
         <span class="font-label-medium color-text-gold-emphasis"
           >{vehicleType}</span

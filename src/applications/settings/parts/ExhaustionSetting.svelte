@@ -70,10 +70,10 @@
 
   {#if config.type === 'specific'}
     {#each levelsIterator as _, i (i)}
-      {@const hint = localize(
+      {const hint = $derived(localize(
         coalesce(config.hints[i], 'TIDY5E.ExhaustionLevelTooltip'),
         { level: i },
-      )}
+      ))}
       <article class="setting group">
         <section class="">
           <div class="description">

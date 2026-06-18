@@ -23,8 +23,8 @@
       class="damage-modification {modification.consequence} flex-row extra-small-gap"
     >
       {#each modification.icons ?? [] as icon}
-        {@const propertyLabel =
-          context.config.itemProperties[icon]?.label ?? ''}
+        {const propertyLabel =
+          $derived(context.config.itemProperties[icon]?.label ?? '')}
         <i
           class="damage-modification-icon {icon}"
           title={localize('DND5E.DAMAGE.PhysicalBypass.DescriptionShort', {

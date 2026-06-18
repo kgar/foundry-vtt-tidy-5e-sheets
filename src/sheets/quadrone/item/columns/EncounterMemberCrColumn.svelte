@@ -16,7 +16,7 @@
 </script>
 
 {#if rowContext.type === 'member' && rowDocument.system.details.cr}
-  {@const formattedCr = FoundryAdapter.formatCr(rowDocument.system.details.cr)}
+  {const formattedCr = $derived(FoundryAdapter.formatCr(rowDocument.system.details.cr))}
   <span class="cr-value font-label-large color-text-default">{formattedCr}</span
   >
 {:else}

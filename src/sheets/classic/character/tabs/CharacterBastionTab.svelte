@@ -135,15 +135,15 @@
       </h3>
       <ul class="facility-list">
         {#each context.facilities.special.chosen as chosen}
-          {@const bgImg = chosen.img.includes(
+          {const bgImg = $derived(chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
             ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
-            : chosen.img}
+            : chosen.img)}
 
-          {@const img = !chosen.disabled
+          {const img = $derived(!chosen.disabled
             ? chosen.img
-            : context.config.facilities.orders.repair.icon}
+            : context.config.facilities.orders.repair.icon)}
 
           <li
             class="facility special"
@@ -294,15 +294,15 @@
       </h3>
       <ul class="facility-list">
         {#each context.facilities.basic.chosen as chosen}
-          {@const bgImg = chosen.img.includes(
+          {const bgImg = $derived(chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
             ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
-            : chosen.img}
+            : chosen.img)}
 
-          {@const img = !chosen.disabled
+          {const img = $derived(!chosen.disabled
             ? chosen.img
-            : context.config.facilities.orders.repair.icon}
+            : context.config.facilities.orders.repair.icon)}
 
           <li
             class="facility basic"

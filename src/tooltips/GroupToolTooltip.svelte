@@ -69,8 +69,8 @@
         </div>
       </li>
       {#each tool.members as member}
-        {@const score = member.actor.system.tools[tool.key]?.total}
-        {@const modifier = getModifierData(score)}
+        {const score = $derived(member.actor.system.tools[tool.key]?.total)}
+        {const modifier = $derived(getModifierData(score))}
         <li class="group-tool-grid">
           <!-- TODO add token shape to class list  -->
           <div

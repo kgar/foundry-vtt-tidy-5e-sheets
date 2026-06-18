@@ -65,7 +65,7 @@
                 </a>
               </li>
             {:else if slot.actor}
-              {@const memberAttributes =
+              {const memberAttributes = $derived(
                 context.editable && !context.unlocked
                   ? {
                       'data-action': 'showDocument',
@@ -76,7 +76,8 @@
                         'data-action': 'showContextMenu',
                         'data-target-selector': '[data-context-menu]',
                       }
-                    : {}}
+                    : {}
+                )}
               <li
                 class="slot member-slot"
                 data-uuid={slot.actor.uuid}

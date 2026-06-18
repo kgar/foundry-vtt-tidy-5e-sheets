@@ -73,7 +73,7 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
     >
       {#each skills as skill (skill.key)}
-        {@const modifier = getModifierData(skill.total)}
+        {const modifier = $derived(getModifierData(skill.total))}
         <li
           class="skill-list-item"
           data-reference-tooltip={references[skill.key]}

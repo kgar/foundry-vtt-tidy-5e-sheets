@@ -40,7 +40,7 @@
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}
-  {@const fullLabel = getFullLabel()}
+  {const fullLabel = $derived(getFullLabel())}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent}>
     {fullLabel}
   </span>

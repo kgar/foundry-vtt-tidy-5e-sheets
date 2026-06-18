@@ -59,10 +59,10 @@
   >
     {#each context.skills as skill}
       {#if expanded || skill.proficient}
-        {@const memberSkill = skill.identifiers.get(
+        {const memberSkill = $derived(skill.identifiers.get(
           emphasizedMember?.actor.uuid ?? '',
-        )}
-        {@const memberProficient = (memberSkill?.proficient ?? 0) > 0}
+        ))}
+        {const memberProficient = $derived((memberSkill?.proficient ?? 0) > 0)}
 
         <li
           class={[

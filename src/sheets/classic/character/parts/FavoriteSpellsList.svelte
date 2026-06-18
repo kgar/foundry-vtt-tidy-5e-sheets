@@ -51,10 +51,10 @@
     data-custom-section={section.custom ? true : null}
   >
     {#snippet header()}
-      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
         section.items,
         searchResults.uuids,
-      )}
+      ))}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           {#if CONFIG.DND5E.spellcasting[section.dataset['method']]?.prepares && section.dataset.level > 0}

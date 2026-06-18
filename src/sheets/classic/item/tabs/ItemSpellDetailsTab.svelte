@@ -188,12 +188,12 @@
 
 <!-- Source Class -->
 {#if context.isEmbedded}
-  {@const options = Object.entries<Item5e>(
+  {const options = $derived(Object.entries<Item5e>(
     context.document.parent.spellcastingClasses,
   ).map(([identifier, item]) => ({
     text: item.name,
     value: `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`,
-  }))}
+  })))}
   <div class="form-group">
     <label for="{appId}-sourceItem">{localize('DND5E.SourceItem.Label')}</label>
     <div class="form-fields">

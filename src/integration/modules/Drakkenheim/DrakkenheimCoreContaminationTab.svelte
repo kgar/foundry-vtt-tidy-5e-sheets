@@ -153,7 +153,7 @@
     {/if}
   </button>
     {#each enrichedPromises as promise, i}
-      {@const level = i + 1}
+      {const level = $derived(i + 1)}
       <button
         type="button"
         tabindex={0}

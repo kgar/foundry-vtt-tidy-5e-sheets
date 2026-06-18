@@ -102,11 +102,12 @@
         {/snippet}
         {#snippet body()}
           {#each config.assignments as assignment (assignment._id)}
-            {@const sourceItemValue = currentSource(assignment)}
-            {@const sourceItemIsUnassigned = sourceItemValue.trim() === ''}
-            {@const hideRow =
+            {const sourceItemValue = $derived(currentSource(assignment))}
+            {const sourceItemIsUnassigned = $derived(sourceItemValue.trim() === '')}
+            {const hideRow = $derived(
               !visibleSelectablesIdSubset.has(assignment._id) ||
-              (showUnassignedOnly && !sourceItemIsUnassigned)}
+              (showUnassignedOnly && !sourceItemIsUnassigned)
+              )}
             <TidyTableRow hidden={hideRow}>
               <TidyTableCell primary={true} class="flexrow">
                 <!--svelte-ignore a11y_missing_attribute-->
@@ -127,9 +128,10 @@
                   {assignment.name}
                 </a>
               </TidyTableCell>
-              {@const isCustomSource =
+              {const isCustomSource = $derived(
                 sourceItemValue !== '' &&
-                !classColumns.some((c) => c.identifier === sourceItemValue)}
+                !classColumns.some((c) => c.identifier === sourceItemValue)
+              )}
               <TidyTableCell
                 columnWidth="12.5rem"
                 attributes={{

@@ -86,10 +86,10 @@
 </script>
 
 {#if uuid}
-  {@const imageTypeClassName = occupant?.token ? 'token' : 'portrait'}
-  {@const imageSrc =
-    imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img}
-  {@const name = occupant ? occupant.name : localize('TIDY5E.BrokenLink')}
+  {const imageTypeClassName = $derived(occupant?.token ? 'token' : 'portrait')}
+  {const imageSrc =
+    $derived(imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img)}
+  {const name = $derived(occupant ? occupant.name : localize('TIDY5E.BrokenLink'))}
 
   <li
     class:highlight={hoveredFacilityOccupant.value ===

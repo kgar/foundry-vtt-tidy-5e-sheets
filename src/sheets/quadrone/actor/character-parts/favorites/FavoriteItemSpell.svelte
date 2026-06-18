@@ -68,7 +68,7 @@
       {#if !isNil(modifier) || !isNil(save?.dc?.value)}
         <span class="primary">
           {#if !isNil(modifier)}
-            {@const mod = getModifierData(modifier)}
+            {const mod = $derived(getModifierData(modifier))}
             <span class="modifier">
               <span class="sign font-default-medium color-text-lighter"
                 >{mod.sign}</span
@@ -87,9 +87,9 @@
       {#if !isNil(range?.value) || !isNil(range?.reach)}
         <span class="subtitle secondary font-default-medium">
           {#if range?.value}
-            {@const units =
-              CONFIG.DND5E.movementUnits[range.units]?.abbreviation ??
-              range.units}
+            {const units =
+              $derived(CONFIG.DND5E.movementUnits[range.units]?.abbreviation ??
+              range.units)}
             <span class="range">
               {range.value}
               {#if range.long}&sol; {range.long}{/if}
@@ -98,9 +98,9 @@
               {units}
             </span>
           {:else if range?.reach}
-            {@const units =
-              CONFIG.DND5E.movementUnits[range.units]?.abbreviation ??
-              range.units}
+            {const units =
+              $derived(CONFIG.DND5E.movementUnits[range.units]?.abbreviation ??
+              range.units)}
             <span class="range">
               {range.reach}
             </span>

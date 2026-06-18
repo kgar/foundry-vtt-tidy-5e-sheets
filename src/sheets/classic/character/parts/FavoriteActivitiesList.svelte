@@ -132,7 +132,7 @@
           </a>
         </TidyTableCell>
         <TidyTableCell>
-          {@const hasActivityUses = activityHasUses(activity)}
+          {const hasActivityUses = $derived(activityHasUses(activity))}
           {#if hasActivityUses}
             <ActivityUses {activity}></ActivityUses>
           {:else}
@@ -147,11 +147,11 @@
           {/if}
         </TidyTableCell>
         <TidyTableCell>
-          {@const label = activity.labels.toHit
+          {const label = $derived(activity.labels.toHit
             ? activity.labels.toHit
             : activity.save?.ability && activity.save?.dc?.value
               ? `${FoundryAdapter.getSaveAbilityAbbreviation(activity.save)} ${activity.save.dc.value}`.toLocaleUpperCase()
-              : '—'}
+              : '—')}
 
           <span class="truncate" title={label}>
             {label}

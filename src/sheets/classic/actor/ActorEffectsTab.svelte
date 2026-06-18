@@ -84,9 +84,9 @@
     {#each effectSections as section}
       {#if !section.hidden}
         {#if (context.unlocked && context.allowEffectsManagement) || section.effects.length > 0}
-          {@const effectEntries = section.effects.map((e: any) => ({
+          {const effectEntries = $derived(section.effects.map((e: any) => ({
             effect: e,
-          }))}
+          })))}
 
           <ItemTable key={section.label}>
             {#snippet header()}

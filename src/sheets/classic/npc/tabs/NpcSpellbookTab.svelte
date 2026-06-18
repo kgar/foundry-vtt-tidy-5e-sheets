@@ -129,10 +129,10 @@
   {:else}
     {#each spellbook as section (section.key)}
       {#if section.show}
-        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
-        )}
+        ))}
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList allowFavorites={false} {section} />

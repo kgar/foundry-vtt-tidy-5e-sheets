@@ -84,8 +84,8 @@
     {/snippet}
     {#snippet body()}
       {#each itemEntries as { item, ctx } (item.id)}
-        {@const disabledClass =
-          ctx?.chosen?.disabled === true ? 'disabled' : ''}
+        {const disabledClass =
+          $derived(ctx?.chosen?.disabled === true ? 'disabled' : '')}
 
         <ItemTableRow
           {item}
@@ -120,7 +120,7 @@
               baseWidth={ordersWidth}
               cssClass="justify-content-stretch"
             >
-              {@const chosen = ctx?.chosen}
+              {const chosen = $derived(ctx?.chosen)}
 
               {#if chosen?.progress?.max || chosen?.executing}
                 <FacilityOrderProgressMeter class="flex-1" {chosen}

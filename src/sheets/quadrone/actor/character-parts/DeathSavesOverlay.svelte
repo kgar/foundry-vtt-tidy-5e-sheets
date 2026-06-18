@@ -40,8 +40,8 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
   >
     {#each Array(halfSaves) as _, i}
-      {@const filled = failures >= i + 1}
-      {@const path = 'system.attributes.death.failure'}
+      {const filled = $derived(failures >= i + 1)}
+      {const path = 'system.attributes.death.failure'}
       <button
         type="button"
         aria-label={localize('DND5E.DeathSaveFailureLabel')}
@@ -84,8 +84,8 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES}
   >
     {#each Array(halfSaves) as _, i}
-      {@const filled = successes >= i + 1}
-      {@const path = 'system.attributes.death.success'}
+      {const filled = $derived(successes >= i + 1)}
+      {const path = 'system.attributes.death.success'}
       <button
         type="button"
         aria-label={localize('DND5E.DeathSaveSuccessLabel')}

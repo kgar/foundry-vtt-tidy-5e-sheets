@@ -190,7 +190,6 @@
           rowClass="advancement-item"
         >
           {#snippet children()}
-            {@const isSvg = advancement.icon?.endsWith('.svg')}
             <span class="tidy-table-row-use-button disabled">
               <img
                 class="item-image"
@@ -215,7 +214,7 @@
             </TidyTableCell>
             <TidyTableCell {...columnSpecs.value}>
               {#if !isNil(advancement.value)}
-                {@const value = advancement.value?.toString()}
+                {const value = $derived(advancement.value?.toString())}
                 <span class="truncate" data-tooltip={value}>
                   {value}
                 </span>
@@ -230,11 +229,13 @@
               >
                 {#if context.unlocked}
                   {#each tableRowActions as action}
-                    {@const props = action.props({
-                      data: advancement,
-                      section,
-                      rowContext: undefined,
-                    })}
+                    {const props = $derived(
+                      action.props({
+                        data: advancement,
+                        section,
+                        rowContext: undefined,
+                      })
+                    )}
                     <action.component {...props} />
                   {/each}
                 {/if}

@@ -125,7 +125,7 @@
     {#snippet body()}
       <div class="flex-column no-gap">
         {#each memberEntries as { member }, index (member.uuid)}
-          {@const ctx = context.memberContext[member.uuid]}
+          {const ctx = $derived(context.memberContext[member.uuid])}
           <TidyTableRow
             rowContainerAttributes={{
               ['data-tidy-draggable']: '',

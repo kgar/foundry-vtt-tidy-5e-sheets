@@ -69,7 +69,7 @@
   <div class="item-descriptions-container">
     <Accordion>
       {#each accordionItemOpenStates, i}
-        {@const itemDescription = context.itemDescriptions[i]}
+        {const itemDescription = $derived(context.itemDescriptions[i])}
         {#key itemDescription.content}
           <div use:manageSecrets>
             <AccordionItem

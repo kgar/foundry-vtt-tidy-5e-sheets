@@ -61,7 +61,7 @@
     {/if}
 
     {#if npcs.length}
-      {@const columns = new ColumnsLoadout(
+      {const columns = $derived(new ColumnsLoadout(
         EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
           tabId: CONSTANTS.TAB_MEMBERS,
@@ -70,13 +70,13 @@
           section: { ...SheetSections.EMPTY, rowActions },
           sheetDocument: context.actor,
         }),
-      )}
-      {@const visibleItemCount = npcs.length}
-      {@const hiddenColumns =
-        EncounterMemberColumnRuntime.determineHiddenColumns(
+      ))}
+      {const visibleItemCount = $derived(npcs.length)}
+      {const hiddenColumns =
+        $derived(EncounterMemberColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth,
           columns,
-        )}
+        ))}
 
       {#if context.difficulty?.label}
         <div class="difficulty-row flexrow">

@@ -60,7 +60,7 @@
   >
     {#snippet body()}
       {#each activities as ctx (ctx.activity.id)}
-        {@const configurable = Activities.isConfigurable(ctx.activity)}
+        {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
         <TidyTableRow
           rowAttributes={{
             'data-activity-id': ctx.activity.id,
@@ -103,8 +103,8 @@
                   uses={ctx.activity.uses}
                 />
               {:else if ctx.hasRecharge}
-                {@const remaining =
-                  ctx.activity.uses.max - ctx.activity.uses.spent}
+                {const remaining =
+                  $derived(ctx.activity.uses.max - ctx.activity.uses.spent)}
                 {#if remaining > 1}
                   <span>{remaining}</span>
                 {/if}

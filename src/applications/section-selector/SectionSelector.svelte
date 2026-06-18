@@ -103,7 +103,7 @@
         {localize('TIDY5E.UseDefault')}
       </button>
       {#each filteredResults as section (section)}
-        {@const isSelected = context.data?.currentSection === section}
+        {const isSelected = $derived(context.data?.currentSection === section)}
         <button
           type="button"
           onclick={() => onOptionSelected(section)}

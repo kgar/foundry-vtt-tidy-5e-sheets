@@ -113,11 +113,11 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
   >
     {#each skillRefs as skillRef (skillRef.key)}
-      {@const showSkill =
-        skillRef.skill &&
+      {const showSkill =
+        $derived(skillRef.skill &&
         (defaultSkills.has(skillRef.key) ||
           showAllSkills ||
-          skillRef.skill.prof.hasProficiency > 0)}
+          skillRef.skill.prof.hasProficiency > 0))}
 
       {#if showSkill}
         <li
@@ -127,11 +127,11 @@
           data-key={skillRef.key}
         >
           {#if context.editable && context.unlocked}
-            {@const activeEffectApplied =
-              ActiveEffectsHelper.isActiveEffectAppliedToField(
+            {const activeEffectApplied =
+              $derived(ActiveEffectsHelper.isActiveEffectAppliedToField(
                 context.actor,
                 `system.skills.${skillRef.key}.value`,
-              )}
+              ))}
             <button
               type="button"
               class="configure-proficiency inline-icon-button"

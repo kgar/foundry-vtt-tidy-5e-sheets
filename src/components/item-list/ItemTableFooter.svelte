@@ -70,7 +70,7 @@
 <footer class="item-table-footer-row">
   <!-- TODO: Handle custom section item creation -->
   {#if canCreate}
-    {@const custom = section.custom}
+    {const custom = $derived(section.custom)}
     {#if custom}
       <ItemCreateButton
         dataset={section.dataset}

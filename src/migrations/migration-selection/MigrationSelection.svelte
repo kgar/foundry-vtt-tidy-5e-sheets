@@ -104,7 +104,7 @@
               <input type="checkbox" bind:checked={selectable.selected} />
             </TidyTableCell>
             {#each params.columns as column}
-              {@const field = column.field}
+              {const field = $derived(column.field)}
               <TidyTableCell
                 primary={column?.cellWidth === 'primary'}
                 class="flex-row small-gap"
@@ -112,11 +112,11 @@
                 {#if field.type === 'contextual'}
                   {field.getText(selectable.document) ?? ''}
                 {:else if column.field.type === 'simple'}
-                  {@const text =
-                    FoundryAdapter.getProperty(
+                  {const text =
+                    $derived(FoundryAdapter.getProperty(
                       selectable.document,
                       field.propPath,
-                    ) ?? ''}
+                    ) ?? '')}
                   {#if field.onClick}
                     <button
                       type="button"

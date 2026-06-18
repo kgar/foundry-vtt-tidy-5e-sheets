@@ -42,10 +42,10 @@
     </Select>
   </div>
   {#if context.itemSubtypes}
-    {@const consumableSubTypeLabel = localize('DND5E.ItemConsumableSubtype', {
+    {const consumableSubTypeLabel = $derived(localize('DND5E.ItemConsumableSubtype', {
       category:
         context.config.consumableTypes[context.system.type.value]?.label,
-    })}
+    }))}
 
     <div class="form-group">
       <label for="{appId}-type-subtype">{consumableSubTypeLabel}</label>

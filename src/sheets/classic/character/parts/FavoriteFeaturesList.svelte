@@ -41,10 +41,10 @@
 
 <ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
   {#snippet header()}
-    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+    {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
       section.items,
       searchResults.uuids,
-    )}
+    ))}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Features')}
@@ -93,7 +93,7 @@
                 uses={item.system.uses}
               />
             {:else if item.hasRecharge}
-              {@const remaining = item.system.uses.max - item.system.uses.spent}
+              {const remaining = $derived(item.system.uses.max - item.system.uses.spent)}
               {#if remaining > 1}
                 <span>{remaining}</span>
               {/if}

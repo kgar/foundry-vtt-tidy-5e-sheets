@@ -155,10 +155,10 @@
     data-custom-section={section.custom ? true : null}
   >
     {#snippet header()}
-      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
         section.items,
         searchResults.uuids,
-      )}
+      ))}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
@@ -288,7 +288,7 @@
               />
             </ItemTableCell>
             {#if includeSchool}
-              {@const icon = SpellSchool.getIcon(spell.system.school)}
+              {const icon = $derived(SpellSchool.getIcon(spell.system.school))}
               <ItemTableCell
                 baseWidth={spellSchoolBaseWidth}
                 title={spell.labels.school ?? ''}

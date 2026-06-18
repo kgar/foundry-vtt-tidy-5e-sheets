@@ -135,10 +135,10 @@
 
 {#each configuredContents as section (section.key)}
   {#if section.show}
-    {@const itemEntries = section.items.map((item) => ({
+    {const itemEntries = $derived(section.items.map((item) => ({
       item,
       ctx: itemContext[item.id],
-    }))}
+    })))}
 
     <section class="container-contents-list-section">
       <TidyTable
@@ -147,10 +147,10 @@
         {gridTemplateColumns}
       >
         {#snippet header()}
-          {@const visibleItemCount = ItemVisibility.countVisibleItems(
+          {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
             section.items,
             searchResults.uuids,
-          )}
+          ))}
           <TidyTableHeaderRow>
             <TidyTableHeaderCell primary={true}>
               {localize(section.label)}
@@ -172,7 +172,7 @@
         {/snippet}
         {#snippet body()}
           {#each itemEntries as { item, ctx } (item.id)}
-            {@const weight = ctx?.totalWeight ?? item.system.weight.value}
+            {const weight = $derived(ctx?.totalWeight ?? item.system.weight.value)}
 
             <ItemTableRowV2
               {item}
@@ -213,8 +213,8 @@
                   </ItemName>
 
                   {#if !FoundryAdapter.concealDetails(item)}
-                    {@const attunementContext =
-                      FoundryAdapter.getAttunementContext(item)}
+                    {const attunementContext =
+                      $derived(FoundryAdapter.getAttunementContext(item))}
 
                     {#if attunementContext}
                       <i
