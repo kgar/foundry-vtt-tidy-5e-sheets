@@ -7,6 +7,7 @@ import type {
 import type { WorldTabConfigurationSettingsEditor } from './world-tab-configuration-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { getCanonicalTabSelection } from 'src/applications/tab-configuration/tab-configuration-functions';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type WorldSheetConfigurationContext = {
   tabConfig?: TabConfigContextEntry;
@@ -99,25 +100,44 @@ export function getWorldSheetConfigurationSettingsEditor(
     },
 
     resetToDefault() {
-        // todo
+      headerControlsEditor.resetEntryToDefault(documentName, documentType);
+      tabConfigEditor.resetEntryToDefault(documentName, documentType);
+      sidebarTabConfigEditor?.resetEntryToDefault(documentName, documentType);
     },
 
     async save() {
-        // todo
+      // noop - we are relying on the base editors to be saved.
     },
 
     undoChanges() {
-        // todo
+      headerControlsEditor.undoEntryChanges(documentName, documentType);
+      tabConfigEditor.undoEntryChanges(documentName, documentType);
+      sidebarTabConfigEditor?.undoEntryChanges(documentName, documentType);
     },
 
     async useDefault() {
-        // todo
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: {
+          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+        },
+        content: `<p>${FoundryAdapter.localize(
+          'TIDY5E.UseDefaultDialog.text',
+        )}</p>`,
+      });
+
+      if (!proceed) {
+        return;
+      }
+
+      this.resetToDefault();
     },
 
-    get value() { return current; },
+    get value() {
+      return current;
+    },
 
     set value(value) {
-        // todo
-    }
+      Object.assign(current, value);
+    },
   };
 }

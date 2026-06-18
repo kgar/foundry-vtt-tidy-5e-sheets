@@ -58,15 +58,14 @@ export const SIDEBAR_EXPANDABLE_SHEET_TYPES: ReadonlySet<string> = new Set([
 export function getSheetTabConfigurationSettingsEditor(
   params: SheetTabConfigurationSettingsEditorParams,
 ): SheetTabConfigurationSettingsEditor {
-  const { document, customTabConfigProvider, docTypeKeyOverride, title } = params;
+  const { document, customTabConfigProvider, docTypeKeyOverride, title } =
+    params;
 
   const getTabConfig =
-    customTabConfigProvider?.getTabConfig ??
-    TidyFlags.tabConfiguration.get;
+    customTabConfigProvider?.getTabConfig ?? TidyFlags.tabConfiguration.get;
 
   const setTabConfig =
-    customTabConfigProvider?.setTabConfig ??
-    TidyFlags.tabConfiguration.set;
+    customTabConfigProvider?.setTabConfig ?? TidyFlags.tabConfiguration.set;
 
   const getTabContext =
     customTabConfigProvider?.getTabContext ?? getConfigFromRuntime;

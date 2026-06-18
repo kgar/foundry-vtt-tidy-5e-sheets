@@ -20,7 +20,10 @@ import type { SettingsEditor } from './settings-editors.svelte';
 
 export type WorldTabConfigurationSettingsEditor = SettingsEditor<
   TabConfigContextEntry[]
->;
+> & {
+  resetEntryToDefault(documentName: string, documentType: string): void;
+  undoEntryChanges(documentName: string, documentType: string): void;
+};
 
 export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationSettingsEditor {
   const current = $state<TabConfigContextEntry[]>(getConfig());
@@ -121,6 +124,17 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     return config;
   }
 
+  function getDefaultEntry(entry: TabConfigContextEntry) {
+    return {
+      ...entry,
+      tabs: entry.defaultTabs.map((t) => ({ ...t })),
+      visibilityLevels: entry.visibilityLevels.map((l) => ({
+        ...l,
+        visibilityLevel: null,
+      })),
+    };
+  }
+
   async function save() {
     let toSave = current.reduce<TabConfiguration>((prev, curr) => {
       let docName = (prev[curr.documentName] ??= {});
@@ -172,14 +186,26 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     },
 
     resetToDefault() {
-      this.value = this.value.map((entry) => ({
-        ...entry,
-        tabs: entry.defaultTabs.map((t) => ({ ...t })),
-        visibilityLevels: entry.visibilityLevels.map((l) => ({
-          ...l,
-          visibilityLevel: null,
-        })),
-      }));
+      this.value = this.value.map((entry) => getDefaultEntry(entry));
+    },
+
+    resetEntryToDefault(
+      documentName: string,
+      documentType: string,
+      // docTypeKeyOverride?: string,
+    ) {
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          entry.documentName === documentName &&
+          entry.documentType === documentType
+          // &&
+          // entry.docTypeKeyOverride === docTypeKeyOverride
+        ) {
+          this.value[index] = getDefaultEntry(entry);
+
+          return;
+        }
+      }
     },
 
     async save() {
@@ -195,11 +221,15 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     useDefaultLabel: undefined,
 
     async useDefault() {
-      // noop
+      // TODO: Implement useDefault
     },
 
     undoChanges() {
-      // noop
+      // TODO: Implement undoChanges
+    },
+
+    undoEntryChanges(documentName: string, documentType: string) {
+      // TODO: Implement undoEntryChanges
     },
 
     get value() {

@@ -7,9 +7,13 @@ import type { SheetHeaderControlPosition } from 'src/api/api.types';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { settings } from 'src/settings/settings.svelte';
 import { coalesce } from 'src/utils/formatting';
+import { warn } from 'src/utils/logging';
 
 export type WorldHeaderControlConfigurationSettingsEditor =
-  SettingsEditor<WorldHeaderControlConfigContext>;
+  SettingsEditor<WorldHeaderControlConfigContext> & {
+    resetEntryToDefault(documentName: string, documentType: string): void;
+    undoEntryChanges(documentName: string, documentType: string): void;
+  };
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
@@ -39,6 +43,7 @@ export type WorldHeaderControlConfigScope = {
 };
 
 export function getWorldHeaderControlConfigurationSettingsEditor(
+  // TODO: We are going to use a composite editor in place of this. Eliminate when able.
   scope?: WorldHeaderControlConfigScope,
 ): WorldHeaderControlConfigurationSettingsEditor {
   const current = $state<WorldHeaderControlConfigContext>(getConfigs());
@@ -146,6 +151,30 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
       return hasChanges;
     },
 
+    resetEntryToDefault(documentName: string, documentType: string) {
+      const defaults = getConfigs({});
+      const defaultEntry = defaults.find(
+        (d) =>
+          d.documentName === documentName && d.documentType === documentType,
+      );
+
+      if (!defaultEntry) {
+        warn(
+          `Default world header control entry not found for ${documentName} ${documentType}. Unable to reset to default.`,
+        );
+        return;
+      }
+
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          documentName === entry.documentName &&
+          documentType === entry.documentType
+        ) {
+          this.value[index] = defaultEntry;
+        }
+      }
+    },
+
     resetToDefault() {
       const defaults = getConfigs({});
 
@@ -203,6 +232,33 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
 
     undoChanges() {
       this.value = JSON.parse(initialSnapshot);
+    },
+
+    undoEntryChanges(documentName: string, documentType: string) {
+      const initial = JSON.parse(
+        initialSnapshot,
+      ) as WorldHeaderControlConfigContext;
+      const initialEntry = initial.find(
+        (entry) =>
+          entry.documentName === documentName &&
+          entry.documentType === documentType,
+      );
+
+      if (!initialEntry) {
+        warn(
+          `Initial world header control entry not found for ${documentName} ${documentType}. Unable to reset to default.`,
+        );
+        return;
+      }
+
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          entry.documentName === documentName &&
+          entry.documentType === documentType
+        ) {
+          this.value[index] = initialEntry;
+        }
+      }
     },
 
     get value() {
