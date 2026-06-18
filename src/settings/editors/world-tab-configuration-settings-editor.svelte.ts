@@ -4,7 +4,11 @@ import {
   getCanonicalTabSelection,
   getItemTabContext,
 } from 'src/applications/tab-configuration/tab-configuration-functions';
-import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+import type {
+  ConfigTabInfo,
+  TabConfigContextEntry,
+  VisibilityLevelConfig,
+} from 'src/applications/tab-configuration/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
@@ -28,7 +32,7 @@ export type WorldTabConfigurationSettingsEditor = SettingsEditor<
 export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationSettingsEditor {
   const current = $state<TabConfigContextEntry[]>(getConfig());
 
-  let initialSnapshot = $state<string>(snapshotConfig(current));
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -37,19 +41,17 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
    * SortableListbox rewrites visibilityLevels in display order on mount, so a
    * raw JSON.stringify of `_config` would always look dirty.
    */
-  function snapshotConfig(config: TabConfigContextEntry[]): string {
-    return JSON.stringify(
-      $state.snapshot(config).map((entry) => ({
-        documentName: entry.documentName,
-        documentType: entry.documentType,
-        docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
-        ...getCanonicalTabSelection(entry),
-      })),
-    );
+  function snapshotConfig(config: TabConfigContextEntry[]) {
+    return $state.snapshot(config).map((entry) => ({
+      documentName: entry.documentName,
+      documentType: entry.documentType,
+      docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
+      ...getCanonicalTabSelection(entry),
+    }));
   }
 
-  function getConfig() {
-    let setting = settings.value.tabConfiguration;
+  function getConfig(settingOverride?: TabConfiguration) {
+    let setting = settingOverride ?? settings.value.tabConfiguration;
 
     let config: TabConfigContextEntry[] = [];
 
@@ -180,6 +182,65 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     await FoundryAdapter.setTidySetting('tabConfiguration', toSave);
   }
 
+  function getInitialEntry(
+    initial: ReturnType<typeof snapshotConfig>,
+    entry: TabConfigContextEntry,
+  ) {
+    const initialEntry = initial.find(
+      (i) =>
+        i.documentName === entry.documentName &&
+        i.documentType === entry.documentType,
+    );
+
+    if (!initialEntry) {
+      return entry;
+    }
+
+    // Rebuild tabs and replace
+    const currentTabs = new Map<string, ConfigTabInfo>(
+      entry.tabs.map((tab) => [tab.id, tab]),
+    );
+
+    const tabs = initialEntry.tabs.reduce<ConfigTabInfo[]>((prev, tab) => {
+      const currentTab = currentTabs.get(tab.id);
+
+      if (currentTab) {
+        prev.push({
+          ...currentTab,
+          ...tab,
+        });
+      }
+
+      return prev;
+    }, []);
+
+    // Rebuild visibilityLevels and replace
+    const currentVisibilityLevels = new Map<string, VisibilityLevelConfig>(
+      entry.visibilityLevels.map((level) => [level.id, level]),
+    );
+
+    const visibilityLevels = Object.entries(
+      initialEntry.visibilityLevels,
+    ).reduce<VisibilityLevelConfig[]>((prev, [tabId, level]) => {
+      const currentLevel = currentVisibilityLevels.get(tabId);
+
+      if (currentLevel) {
+        prev.push({
+          ...currentLevel,
+          visibilityLevel: level,
+        });
+      }
+
+      return prev;
+    }, []);
+
+    return {
+      ...entry,
+      tabs: tabs,
+      visibilityLevels: visibilityLevels,
+    };
+  }
+
   return {
     get hasChanges() {
       return hasChanges;
@@ -211,25 +272,54 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     async save() {
       await save();
       this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
-    canUndo: false,
+    canUndo: true,
 
-    canUseDefault: false,
+    canUseDefault: true,
 
     useDefaultLabel: undefined,
 
     async useDefault() {
-      // TODO: Implement useDefault
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: {
+          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+        },
+        content: `<p>${FoundryAdapter.localize(
+          'TIDY5E.UseDefaultDialog.text',
+        )}</p>`,
+      });
+
+      if (!proceed) {
+        return;
+      }
+
+      this.resetToDefault();
     },
 
     undoChanges() {
-      // TODO: Implement undoChanges
+      const initial = JSON.parse(initialSnapshot) as ReturnType<
+        typeof snapshotConfig
+      >;
+
+      this.value = this.value.map((entry) => getInitialEntry(initial, entry));
     },
 
     undoEntryChanges(documentName: string, documentType: string) {
-      // TODO: Implement undoEntryChanges
+      const initial = JSON.parse(initialSnapshot) as ReturnType<
+        typeof snapshotConfig
+      >;
+
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          entry.documentName === documentName &&
+          entry.documentType === documentType
+        ) {
+          this.value[index] = getInitialEntry(initial, entry);
+          break;
+        }
+      }
     },
 
     get value() {
