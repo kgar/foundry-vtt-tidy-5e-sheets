@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
   import type { WorldSettingsQuadroneApplication } from './TidyWorldSettingsQuadroneApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -7,46 +6,31 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import SortableListbox from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
   import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
+  import type { WorldSheetConfigurationSettingsEditor } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
-    documentName: string;
-    documentType: string;
-    title: string;
+    editor: WorldSheetConfigurationSettingsEditor;
   }
   const localize = FoundryAdapter.localize;
 
-  let { app, documentName, documentType, title }: Props = $props();
+  let { app, editor }: Props = $props();
+
+  const documentName = $derived(editor.documentName);
+  const documentType = $derived(editor.documentType);
+  const title = $derived(editor.title);
 
   /**
-   * Unique per sheet/document type so the tabs remount and are 
+   * Unique per sheet/document type so the tabs remount and are
    * re-read when you switch sheets.
    */
   let prefix = $derived(`${documentName}-${documentType}`);
 
-  let tabConfigEntry = $derived(
-    app.editors.tabConfigTab.value.find(
-      (c) =>
-        c.documentName === documentName &&
-        c.documentType === documentType &&
-        !c.docTypeKeyOverride,
-    ),
-  );
+  let tabConfigEntry = $derived(editor.value.tabConfig);
 
-  let sidebarTabConfigEntry = $derived(
-    app.editors.tabConfigTab.value.find(
-      (c) =>
-        c.documentName === documentName &&
-        c.documentType === documentType &&
-        c.docTypeKeyOverride === CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-    ),
-  );
+  let sidebarTabConfigEntry = $derived(editor.value.sidebarTabConfig);
 
-  let headerControlEntry = $derived(
-    app.editors.headerControlsTab.value.find(
-      (c) => c.documentName === documentName && c.documentType === documentType,
-    ),
-  );
+  let headerControlEntry = $derived(editor.value.headerControlConfig);
 
   let tabs: Tab[] = $derived.by(() => {
     const result: Tab[] = [];
@@ -105,8 +89,16 @@
   data-document-type={documentType}
   aria-label={title}
 >
-  <h2>{localize('TIDY5E.WorldSettings.SheetConfiguration.label', { sheetName: title })}</h2>
-  <p class="settings-description">{localize('TIDY5E.WorldSettings.SheetConfiguration.hint', { sheetName: title })}</p>
+  <h2>
+    {localize('TIDY5E.WorldSettings.SheetConfiguration.label', {
+      sheetName: title,
+    })}
+  </h2>
+  <p class="settings-description">
+    {localize('TIDY5E.WorldSettings.SheetConfiguration.hint', {
+      sheetName: title,
+    })}
+  </p>
   <!-- Tab/header panes mount once (TabContent.onMount); remount them when the
        dialog stages an Undo / Use Global Defaults so they re-read the config. -->
   {#key app.tabPaneVersion}

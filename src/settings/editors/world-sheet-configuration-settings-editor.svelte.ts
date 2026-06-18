@@ -21,12 +21,14 @@ type WorldSheetConfigurationSettingsEditorParams = {
   tabConfigEditor: WorldTabConfigurationSettingsEditor;
   sidebarTabConfigEditor?: WorldTabConfigurationSettingsEditor;
   headerControlsEditor: WorldHeaderControlConfigurationSettingsEditor;
+  title: string;
 };
 
 export type WorldSheetConfigurationSettingsEditor =
   SettingsEditor<WorldSheetConfigurationContext> & {
     documentName: string;
     documentType: string;
+    title: string;
   };
 
 export function getWorldSheetConfigurationSettingsEditor(
@@ -38,6 +40,7 @@ export function getWorldSheetConfigurationSettingsEditor(
     headerControlsEditor,
     sidebarTabConfigEditor,
     tabConfigEditor,
+    title,
   } = params;
 
   const current = $derived<WorldSheetConfigurationContext>({
@@ -108,6 +111,8 @@ export function getWorldSheetConfigurationSettingsEditor(
     async save() {
       // noop - we are relying on the base editors to be saved.
     },
+
+    title,
 
     undoChanges() {
       headerControlsEditor.undoEntryChanges(documentName, documentType);

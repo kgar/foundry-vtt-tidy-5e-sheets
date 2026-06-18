@@ -18,6 +18,10 @@ import type {
   SettingsEditor,
   SettingsEditorController,
 } from 'src/settings/editors/settings-editors.svelte';
+import {
+  getWorldSheetConfigurationSettingsEditor,
+  type WorldSheetConfigurationSettingsEditor,
+} from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -56,6 +60,7 @@ export class WorldSettingsQuadroneApplication
 
   /** All settings editors */
   editors;
+  sheetConfigEditors;
 
   // The dialog persists every settings page with a single shared Save. Sheet
   // Preferences is excluded: it is an immediate apply-and-reload action that
@@ -96,6 +101,27 @@ export class WorldSettingsQuadroneApplication
       homebrewTab: getHomebrewSettingsEditor(),
       sheetPreferencesTab: getDefaultSheetPreferencesSettingsEditor(),
     } satisfies Record<string, SettingsEditor<unknown>>;
+
+    // Create sheet editors
+    this.sheetConfigEditors = this.editors.headerControlsTab.value.reduce<
+      Record<string, WorldSheetConfigurationSettingsEditor>
+    >((prev, curr) => {
+      const tabId = this.getSheetConfigTabId(
+        curr.documentName,
+        curr.documentType,
+      );
+
+      prev[tabId] = getWorldSheetConfigurationSettingsEditor({
+        documentName: curr.documentName,
+        documentType: curr.documentType,
+        headerControlsEditor: this.editors.headerControlsTab,
+        tabConfigEditor: this.editors.tabConfigTab,
+        title: curr.title,
+        sidebarTabConfigEditor: this.editors.tabConfigTab,
+      });
+
+      return prev;
+    }, {}) satisfies Record<string, WorldSheetConfigurationSettingsEditor>;
 
     this.hasChanges = $derived(
       Object.values(this.editors).some((e) => e.hasChanges),

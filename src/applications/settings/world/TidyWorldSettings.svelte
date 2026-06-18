@@ -108,12 +108,8 @@
       : (allAvailableTabs[0]?.id ?? WorldSettingsTabIds.defaults),
   );
 
-  let selectedSheetConfig = $derived(
-    app.editors.headerControlsTab.value.find(
-      (c) =>
-        app.getSheetConfigTabId(c.documentName, c.documentType) ===
-        activeSelectedId,
-    ),
+  let selectedSheetConfigEditor = $derived(
+    app.sheetConfigEditors[activeSelectedId]
   );
 
   function selectTab(id: string) {
@@ -197,12 +193,10 @@
         onMakeAllSheetsTidy={async () => await app.save()}
         options={app.editors.sheetPreferencesTab.value}
       />
-    {:else if selectedSheetConfig}
+    {:else if selectedSheetConfigEditor}
       <WorldSheetSettings
         {app}
-        documentName={selectedSheetConfig.documentName}
-        documentType={selectedSheetConfig.documentType}
-        title={selectedSheetConfig.title}
+        editor={selectedSheetConfigEditor}
       />
     {/if}
   </section>

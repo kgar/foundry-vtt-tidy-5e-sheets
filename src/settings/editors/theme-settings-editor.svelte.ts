@@ -49,7 +49,7 @@ export type ThemeSettingsContext = {
 export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   const current = $state<ThemeSettingsContext>(getSettings());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
