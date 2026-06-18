@@ -1,0 +1,32 @@
+- [x] Eliminate initialize()
+- [x] Finish the Sheet Config composite editor
+- [x] // TODO: Implement useDefault
+- [x] // TODO: Implement undoChanges
+- [x] // TODO: Implement undoEntryChanges
+- [x] Init the sheet config composite editor map in world settings constructor
+- [ ] Test and fix
+  - [ ] When "Undo Changes", player character Sidebar tabs vanish
+- [ ] Refactor - move JSON.stringify() outside of snapshot config. Make callers invoke it if needed. The snapshot is actual data.
+- [ ] Implement GetActivePane for world settings - Goal: get the appropriate setting editor for the current tab
+- [ ] Wire up settings footer properly for world settings
+- [ ] Remove apps like ThemeSettingsQuadrone
+- [ ] Bring disparate files together for Settings
+- [ ] Sheet Settings - on initial open, look for tabs where the Save Changes button lights up prematurely. Fix hasChanges for those
+  - [ ] Theme Settings
+  - [ ] Configure Tabs
+  - [ ] Confgure Sidebar
+  - [ ] Tabs - Effects
+  - [ ] Tabs - Biography
+  - [ ] Tabs - Bastion
+  - [ ] Tabs - Journal
+  - [ ] Tabs - Contamination (etc.)
+- [ ] Sheet Settings - check all tabs for correct hasChanges handling
+- [ ] Sheet Settings - check all tabs for correct undoChanges handling
+- [ ] Sheet Settings - check all tabs for correct resetToDefault handling
+- [ ] World Settings - on initial open, look for tabs where the Save Changes button lights up prematurely. Fix hasChanges for those
+  - [ ] ... enumerate once we have something to work with
+- [ ] World Settings - check all tabs for correct hasChanges handling
+- [ ] World Settings - check all tabs for correct undoChanges handling
+- [ ] World Settings - check all tabs for correct resetToDefault handling
+- [ ] TODO: Migrate off legacy fields
+- [ ] ...

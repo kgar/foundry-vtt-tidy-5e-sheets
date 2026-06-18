@@ -94,6 +94,7 @@ export class WorldSettingsQuadroneApplication
     this.initialTabId = options.initialTabId;
     this.currentTabId = this.initialTabId;
 
+    // Create base editors
     this.editors = {
       themeSettingsTab: getThemeSettingsEditor(),
       tabConfigTab: getWorldTabConfigurationSettingsEditor(),
@@ -102,7 +103,7 @@ export class WorldSettingsQuadroneApplication
       sheetPreferencesTab: getDefaultSheetPreferencesSettingsEditor(),
     } satisfies Record<string, SettingsEditor<unknown>>;
 
-    // Create sheet editors
+    // Create composite sheet editors
     this.sheetConfigEditors = this.editors.headerControlsTab.value.reduce<
       Record<string, WorldSheetConfigurationSettingsEditor>
     >((prev, curr) => {
@@ -124,7 +125,8 @@ export class WorldSettingsQuadroneApplication
     }, {}) satisfies Record<string, WorldSheetConfigurationSettingsEditor>;
 
     this.hasChanges = $derived(
-      Object.values(this.editors).some((e) => e.hasChanges),
+      Object.values(this.editors).some((e) => e.hasChanges) ||
+        Object.values(this.sheetConfigEditors).some((e) => e.hasChanges),
     );
   }
 
