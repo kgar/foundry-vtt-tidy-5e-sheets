@@ -9,7 +9,7 @@
 </script>
 
 {#each context.properties.options as property}
-  {@const field = `system.properties.${property.value}`}
+  {const field = $derived(`system.properties.${property.value}`)}
   <label class="checkbox" for="{appId}-properties-{property.value?.slugify()}">
     <CheckboxQuadrone
       id="{appId}-properties-{property.value?.slugify()}"

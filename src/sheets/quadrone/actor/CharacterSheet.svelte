@@ -273,7 +273,7 @@
           </div>
           <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
           {#if context.saves.concentration}
-            {@const save = context.saves.concentration}
+            {const save = $derived(context.saves.concentration)}
             <div class="concentration flexcol">
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
@@ -292,9 +292,9 @@
                     {save.mod}
                   </span>
                 {:else}
-                  {@const tooltip = localize('DND5E.AbilityConfigure', {
+                  {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
                     ability: context.saves.concentration.label,
-                  })}
+                  }))}
                   <div class="config-container">
                     <button
                       aria-label={tooltip}

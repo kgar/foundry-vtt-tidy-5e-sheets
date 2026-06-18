@@ -28,11 +28,11 @@
       data-key={key}
     >
       {#if context.editable && !context.lockSensitiveFields}
-        {@const activeEffectApplied =
-          ActiveEffectsHelper.isActiveEffectAppliedToField(
+        {const activeEffectApplied =
+          $derived(ActiveEffectsHelper.isActiveEffectAppliedToField(
             context.actor,
             `system.tools.${key}.value`,
-          )}
+          ))}
         <button
           type="button"
           class="tool-proficiency-toggle inline-transparent-button"

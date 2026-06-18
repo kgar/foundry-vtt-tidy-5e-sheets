@@ -93,7 +93,7 @@
   {/snippet}
   {#snippet body()}
     {#each activities as ctx (ctx.activity.id)}
-      {@const configurable = Activities.isConfigurable(ctx.activity)}
+      {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
       <TidyTableRow
         rowAttributes={{
           'data-item-id': ctx.activity.item.id,

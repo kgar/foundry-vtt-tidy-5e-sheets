@@ -88,7 +88,7 @@
     </div>
   {/if}
 {:else if item.system.linkedActivity}
-  {@const ctx = Activities.getActivityItemContext(item.system.linkedActivity)}
+  {const ctx = $derived(Activities.getActivityItemContext(item.system.linkedActivity))}
   <ActivityUsesColumn
     rowContext={ctx}
     rowDocument={ctx.activity}

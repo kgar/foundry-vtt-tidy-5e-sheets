@@ -271,7 +271,7 @@
               </div>
             </ItemTableCell>
             {#if includeWeightColumn}
-              {@const weight = ctx?.totalWeight ?? item.system.weight.value}
+              {const weight = $derived(ctx?.totalWeight ?? item.system.weight.value)}
               <ItemTableCell
                 baseWidth="4rem"
                 title={localize('TIDY5E.Inventory.Weight.Tooltip', {

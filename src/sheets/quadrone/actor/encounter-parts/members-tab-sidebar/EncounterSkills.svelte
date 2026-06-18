@@ -56,13 +56,13 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
   >
     {#each context.skills as skill}
-      {@const memberSkill = skill.identifiers.get(
+      {const memberSkill = $derived(skill.identifiers.get(
         emphasizedMember?.actor.uuid ?? '',
-      )}
-      {@const memberProficient = (memberSkill?.proficient ?? 0) > 0}
-      {@const hidden =
-        !expanded &&
-        !Tidy5eEncounterSheetQuadrone._lockedSkillAllowlist.has(skill.key)}
+      ))}
+      {const memberProficient = $derived((memberSkill?.proficient ?? 0) > 0)}
+      {const hidden =
+        $derived(!expanded &&
+        !Tidy5eEncounterSheetQuadrone._lockedSkillAllowlist.has(skill.key))}
 
       <li
         class={[

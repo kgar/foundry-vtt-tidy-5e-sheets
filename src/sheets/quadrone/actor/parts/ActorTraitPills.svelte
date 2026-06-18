@@ -51,7 +51,7 @@
 
 <ul class="pills">
   {#each values as value}
-    {@const onClick = value.onClick}
+    {const onClick = $derived(value.onClick)}
 
     <li
       {...value.attributes}

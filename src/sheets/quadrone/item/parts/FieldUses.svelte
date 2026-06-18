@@ -88,8 +88,8 @@
     </legend>
 
     {#each context.usesRecovery as recovery, index}
-      {@const systemRecovery = context.system.uses.recovery}
-      {@const disabled = !context.unlocked}
+      {const systemRecovery = $derived(context.system.uses.recovery)}
+      {const disabled = $derived(!context.unlocked)}
       <div class="form-group split-group full-width card" data-index={index}>
         <div class="form-fields">
           <!-- Period -->

@@ -52,9 +52,9 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
     {#each section.fields as fieldContext}
-      {@const isCheckbox =
-        fieldContext instanceof foundry.data.fields.BooleanField}
-      {@const id = `${actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`}
+      {const isCheckbox =
+        $derived(fieldContext instanceof foundry.data.fields.BooleanField)}
+      {const id = $derived(`${actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`)}
       <FormGroup
         labelFor={id}
         field={fieldContext.field}

@@ -10,7 +10,7 @@
 </script>
 
 {#if !isNil(rowContext.toHit)}
-  {@const mod = getModifierData(rowContext.toHit)}
+  {const mod = $derived(getModifierData(rowContext.toHit))}
   <span class="modifier">
     <span class="sign font-default-medium color-text-lightest">{mod.sign}</span><span class="value font-label-medium">{mod.value}</span>
   </span>

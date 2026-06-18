@@ -46,9 +46,9 @@
 >
   <ol class="items-list effects-list">
     {#each effects as [_, section]}
-      {@const effectEntries = section.effects.map((effect: any) => ({
+      {const effectEntries = $derived(section.effects.map((effect: any) => ({
         effect,
-      }))}
+      })))}
 
       {#if !section.hidden}
         <li class="items-header flexrow" data-effect-type={section.type}>

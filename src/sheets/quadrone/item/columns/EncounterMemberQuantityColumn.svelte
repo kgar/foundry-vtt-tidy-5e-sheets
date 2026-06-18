@@ -23,7 +23,7 @@
 </script>
 
 {#if rowContext.type === 'member'}
-  {@const quantity = rowContext.quantity.value?.toString() ?? ''}
+  {const quantity = $derived(rowContext.quantity.value?.toString() ?? '')}
 
   {#if context.unlocked}
     <InlineQuantityTracker

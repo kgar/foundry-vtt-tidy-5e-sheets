@@ -123,15 +123,15 @@
   {/snippet}
 
   {#snippet body()}
-    {@const entriesWithContext = entries.map((entry) => ({
+    {const entriesWithContext = $derived(entries.map((entry) => ({
       entry,
       ctx: entryContext[entry.id],
-    }))}
+    })))}
 
     {#if entriesWithContext.length}
       {#each entriesWithContext as { entry, ctx }, i (entry.uuid)}
-        {@const expanded = !!entryToggleMap.get(tabId)?.has(entry.id)}
-        {@const classes = rowClassFunction ? rowClassFunction(entry) : {}}
+        {const expanded = $derived(!!entryToggleMap.get(tabId)?.has(entry.id))}
+        {const classes = $derived(rowClassFunction ? rowClassFunction(entry) : {})}
 
         <TidyItemTableRow
           item={entry}

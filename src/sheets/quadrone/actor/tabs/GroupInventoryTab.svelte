@@ -65,12 +65,13 @@
 
 <aside class="sidebar expanded">
   {#each members as member}
-    {@const actorIsDead =
+    {const actorIsDead = $derived( 
       member.actor.system.attributes?.hp?.value === 0 &&
       member.actor.system.attributes?.hp?.max > 0 &&
       (member.actor.system.attributes.death === undefined ||
         (member.actor.system.attributes.death.failure >= 3 &&
-          member.actor.system.attributes.death.success < 3))}
+          member.actor.system.attributes.death.success < 3))
+      )}
 
     <!-- svelte-ignore a11y_missing_attribute -->
     <a

@@ -113,10 +113,10 @@
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each actions as section (section.key)}
-    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+    {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
       section.actions.map((a) => a.item),
       searchResults.uuids,
-    )}
+    ))}
     {#if visibleItemCount > 0 && section.show}
       <ItemTable key={section.key}>
         {#snippet header()}
@@ -140,7 +140,7 @@
         {/snippet}
         {#snippet body()}
           {#each section.actions as actionItem (actionItem.item.id)}
-            {@const ctx = context.itemContext[actionItem.item.id]}
+            {const ctx = $derived(context.itemContext[actionItem.item.id])}
 
             <ItemTableRow
               item={actionItem.item}
@@ -170,10 +170,10 @@
                     onToggle={() => toggleSummary(context.actor)}
                     useActiveEffectsMarker={false}
                   >
-                    {@const sourceItemText =
-                      context.actor.identifiedItems?.[
+                    {const sourceItemText =
+                      $derived(context.actor.identifiedItems?.[
                         actionItem.item.system.sourceItem
-                      ]?.first()?.name ?? ''}
+                      ]?.first()?.name ?? '')}
                     <div class="flex-1 min-width-0">
                       <div
                         data-tidy-item-name={actionItem.item.name}
@@ -205,9 +205,9 @@
                   {#if actionItem.item.hasRecharge || actionItem.item.hasLimitedUses || ItemUtils.hasSpecificActivationType(actionItem.item, CONSTANTS.ACTIVATION_COST_LEGENDARY)}
                     <div class="item-uses" title={localize('DND5E.Uses')}>
                       {#if actionItem.item.hasRecharge && !actionItem.item.isOnCooldown}
-                        {@const remaining =
-                          actionItem.item.system.uses.max -
-                          actionItem.item.system.uses.spent}
+                        {const remaining =
+                          $derived(actionItem.item.system.uses.max -
+                          actionItem.item.system.uses.spent)}
                         {#if remaining > 1}
                           <span>{remaining}</span>
                         {/if}
@@ -263,7 +263,7 @@
                 </ItemTableCell>
                 <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
                   <!-- HIT / DC -->
-                  {@const save = ctx?.save}
+                  {const save = $derived(ctx?.save)}
                   {#if save?.dc || ctx?.toHit}
                     {#if save?.dc}
                       <span
@@ -280,9 +280,9 @@
                         {save.ability}
                       </small>
                     {:else}
-                      {@const toHit = formatAsModifier(
+                      {const toHit = $derived(formatAsModifier(
                         ctx.toHit?.toString() ?? '',
-                      )}
+                      ))}
                       <span>{toHit}</span>
                     {/if}
                   {/if}
@@ -293,8 +293,8 @@
                 >
                   <!-- Damage -->
                   {#each actionItem.calculatedDerivedDamage ?? [] as entry, i}
-                    {@const iconSrc =
-                      damageHealingTypeIconMap[entry.damageType]}
+                    {const iconSrc =
+                      $derived(damageHealingTypeIconMap[entry.damageType])}
                     <div
                       title={entry.label ??
                         entry.formula + entry.damageHealingTypeLabel}

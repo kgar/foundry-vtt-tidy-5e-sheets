@@ -208,7 +208,7 @@
     noMembersView?: Snippet<[CrewSection | PassengerSection]>,
   )}
     {#if section.members.length || noMembersView}
-      {@const columns = new ColumnsLoadout(
+      {const columns = $derived(new ColumnsLoadout(
         VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: context.document.type,
           tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
@@ -217,11 +217,11 @@
           section: section,
           sheetDocument: context.document,
         }),
-      )}
-      {@const hiddenColumns = VehicleMemberColumnRuntime.determineHiddenColumns(
+      ))}
+      {const hiddenColumns = $derived(VehicleMemberColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
-      )}
+      ))}
       <TidyTable key={section.key} data-area={section.type}>
         {#snippet header(expanded)}
           <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
@@ -245,8 +245,8 @@
         {/snippet}
         {#snippet body()}
           {#each section.members as member}
-            {@const assignedItemId =
-              'assignedTo' in member ? member.assignedTo?.id : undefined}
+            {const assignedItemId =
+              $derived('assignedTo' in member ? member.assignedTo?.id : undefined)}
             <TidyTableRow
               rowContainerAttributes={{
                 ['data-assigned-item-id']: assignedItemId,

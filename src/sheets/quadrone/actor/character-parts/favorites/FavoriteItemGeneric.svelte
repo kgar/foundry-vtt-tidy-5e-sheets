@@ -76,7 +76,7 @@
       {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />
       {:else if !isNil(modifier)}
-        {@const mod = getModifierData(modifier)}
+        {const mod = $derived(getModifierData(modifier))}
         <span class="modifier">
           <span class="sign">
             {mod.sign}
@@ -101,16 +101,16 @@
       {#if uses?.max && quantity}
         <span class="quantity">&times; {quantity}</span>
       {:else if range?.value}
-        {@const units =
-          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
+        {const units =
+          $derived(CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units)}
         <span class="range">
           {range.value}
           {#if range.long}&sol; {range.long}{/if}
           {units}
         </span>
       {:else if range?.reach}
-        {@const units =
-          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
+        {const units =
+          $derived(CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units)}
         <span class="range">
           {range.reach}
           {units}

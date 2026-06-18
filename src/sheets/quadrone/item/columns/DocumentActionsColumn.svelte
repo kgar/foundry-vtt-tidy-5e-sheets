@@ -6,7 +6,7 @@
 
 {#each section.rowActions as action}
   {#if action.condition?.({ data: rowDocument, section, rowContext: rowContext }) ?? true}
-    {@const props = action.props({ data: rowDocument, section, rowContext: rowContext })}
+    {const props = $derived(action.props({ data: rowDocument, section, rowContext: rowContext }))}
     <action.component {...props} />
   {/if}
 {/each}

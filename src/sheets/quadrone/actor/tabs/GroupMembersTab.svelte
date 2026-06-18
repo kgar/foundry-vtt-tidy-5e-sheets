@@ -93,11 +93,11 @@
     {/if}
 
     {#each sections as section (section.key)}
-      {@const hasViewableItems =
-        !searchResults.uuids ||
-        section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
+      {const hasViewableItems =
+        $derived(!searchResults.uuids ||
+        section.members.some((m) => searchResults.uuids?.has(m.actor.uuid)))}
       {#if section.show && hasViewableItems}
-        {@const columns = new ColumnsLoadout(
+        {const columns = $derived(new ColumnsLoadout(
           GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
             sheetType: CONSTANTS.SHEET_TYPE_GROUP,
             tabId: CONSTANTS.TAB_MEMBERS,
@@ -106,12 +106,12 @@
             section,
             sheetDocument: context.actor,
           }),
-        )}
-        {@const visibleItemCount = section.members.length}
-        {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+        ))}
+        {const visibleItemCount = $derived(section.members.length)}
+        {const hiddenColumns = $derived(GroupMemberColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth,
           columns,
-        )}
+        ))}
 
         <TidyTable key={section.key} data-custom-section={section.custom}>
           {#snippet header()}

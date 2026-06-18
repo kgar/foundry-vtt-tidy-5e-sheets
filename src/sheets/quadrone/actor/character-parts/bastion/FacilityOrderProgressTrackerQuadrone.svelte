@@ -34,10 +34,10 @@
     </div>
     <div class="craft-and-meter theme-dark">
       {#if chosen.craft}
-        {@const itemAttributes = context.editable ? {
+        {const itemAttributes = $derived(context.editable ? {
           'data-action': 'editDocument',
           'data-uuid': chosen.craft.uuid
-        } : {}}
+        } : {})}
         <a
           {...itemAttributes}
           data-info-card={'item'}

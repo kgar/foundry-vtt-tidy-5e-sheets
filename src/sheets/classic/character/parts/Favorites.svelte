@@ -53,10 +53,10 @@
   {#each favorites as section}
     {#if section.show}
       {#if section.type === CONSTANTS.TAB_ACTOR_INVENTORY}
-        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
-        )}
+        ))}
         <InventoryList
           {section}
           lockControls={true}
@@ -77,20 +77,20 @@
         <FavoriteSpellsList {section} />
       {/if}
       {#if section.type === CONSTANTS.SECTION_TYPE_EFFECT}
-        {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
+        {const visibleEffectIdSubset = $derived(FoundryAdapter.searchEffects(
           searchCriteria,
           section.effects.map((e) => e.effect),
-        )}
+        ))}
         <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
       {#if section.type === CONSTANTS.SECTION_TYPE_FACILITY}
         <FavoriteFacilitiesList {section} />
       {/if}
       {#if section.type === CONSTANTS.SECTION_TYPE_ACTIVITY}
-        {@const visibleActivityUuidSubset = FoundryAdapter.searchActivities(
+        {const visibleActivityUuidSubset = $derived(FoundryAdapter.searchActivities(
           searchCriteria,
           section.activities,
-        )}
+        ))}
         <FavoriteActivitiesList {section} {visibleActivityUuidSubset} />
       {/if}
     {/if}

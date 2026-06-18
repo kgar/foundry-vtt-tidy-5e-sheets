@@ -25,7 +25,7 @@
     ]}
   >
     {#each tabs as tab, i (tab.id)}
-      {@const selected = tab.id === selectedTabId}
+      {const selected = $derived(tab.id === selectedTabId)}
       <li
         class={['vertical-tab', { selected }]}
         onclick={() => !selected && (selectedTabId = tab.id)}

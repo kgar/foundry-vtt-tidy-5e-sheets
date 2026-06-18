@@ -73,7 +73,6 @@
   {#if context.editable}
     <div class="sheet-footer-right flexshrink">
       {#if context.isConcentrating && context.saves.concentration}
-        {@const save = context.saves.concentration}
         <!-- svelte-ignore a11y_mouse_events_have_key_events -->
         <button
           type="button"

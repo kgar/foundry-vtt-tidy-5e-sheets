@@ -86,7 +86,7 @@
 <Sidebar>
   {#snippet belowStateSwitches()}
     {#if !isNil(context.system.progress?.order, '') && effectiveOrderMax > 0}
-      {@const pct = (effectiveOrderValue / effectiveOrderMax) * 100}
+      {const pct = $derived((effectiveOrderValue / effectiveOrderMax) * 100)}
       <div>
         <h4>
           {#if icon?.type === 'fa-icon-class'}

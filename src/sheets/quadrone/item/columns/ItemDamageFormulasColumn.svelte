@@ -53,8 +53,8 @@
     allDamageLabels?.length && tooltip?.tryShow(ev.currentTarget)}
 >
   {#each topTwoDamages ?? [] as damage, i}
-    {@const formula = getTrimmedExpression(damage.formula)}
-    {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
+    {const formula = $derived(getTrimmedExpression(damage.formula))}
+    {const damageHealingIcon = $derived(damageHealingTypeIcons[damage.damageType])}
     <div class="flexrow damage-formula-container">
       <span class="flexshrink damage-formula truncate">{formula}</span>
       {#if damageHealingIcon}

@@ -98,7 +98,7 @@
   {/snippet}
   {#snippet body()}
     {#each config.controlSettings as setting (setting.id)}
-      {@const formControlId = `${idPrefix}-${setting.title.slugify()}`}
+      {const formControlId = $derived(`${idPrefix}-${setting.title.slugify()}`)}
       <TidyTableRow>
         <TidyTableCell primary={true}>
           <label for={formControlId}>

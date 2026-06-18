@@ -119,13 +119,13 @@
       {#each sections as section}
         {#if 'type' in section}
           {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
               section.items,
               searchResults.uuids,
-            )}
+            ))}
 
             {#if section.show && hasViewableItems}
-              {@const columns = new ColumnsLoadout(
+              {const columns = $derived(new ColumnsLoadout(
                 ItemColumnRuntime.getConfiguredColumnSpecifications({
                   sheetType: context.document.type,
                   tabId: tabId,
@@ -134,7 +134,7 @@
                   section: section,
                   sheetDocument: context.document,
                 }),
-              )}
+              ))}
               <SpellTable
                 {section}
                 sheetDocument={context.document}
@@ -144,12 +144,12 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
-            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
               section.items,
               searchResults.uuids,
-            )}
+            ))}
             {#if section.show && hasViewableItems}
-              {@const columns = new ColumnsLoadout(
+              {const columns = $derived(new ColumnsLoadout(
                 ItemColumnRuntime.getConfiguredColumnSpecifications({
                   sheetType: context.document.type,
                   tabId: tabId,
@@ -158,7 +158,7 @@
                   section: section,
                   sheetDocument: context.document,
                 }),
-              )}
+              ))}
               <InventoryTable
                 containingDocument={context.document}
                 editable={context.editable}
@@ -174,12 +174,12 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
               section.items,
               searchResults.uuids,
-            )}
+            ))}
             {#if section.show && hasViewableItems}
-              {@const columns = new ColumnsLoadout(
+              {const columns = $derived(new ColumnsLoadout(
                 ItemColumnRuntime.getConfiguredColumnSpecifications({
                   sheetType: context.document.type,
                   tabId,
@@ -188,7 +188,7 @@
                   section: section,
                   sheetDocument: context.document,
                 }),
-              )}
+              ))}
               <FeatureTable
                 {section}
                 {itemToggleMap}
@@ -198,10 +198,10 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
-            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
               section.items,
               searchResults.uuids,
-            )}
+            ))}
             {#if section.show && hasViewableItems}
               <ActionTable
                 {inlineToggleService}

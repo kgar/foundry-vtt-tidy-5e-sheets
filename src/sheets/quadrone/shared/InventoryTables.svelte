@@ -93,9 +93,11 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        section.items,
-        searchResults.uuids,
+      {const hasViewableItems = $derived(
+        ItemVisibility.hasViewableItems(
+          section.items,
+          searchResults.uuids,
+        )
       )}
       {#if section.show && hasViewableItems}
         <InventoryTable

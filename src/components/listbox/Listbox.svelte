@@ -130,7 +130,7 @@
   ondrop={(ev) => onlistboxDrop?.(ev)}
 >
   {#each items as item, i (item[valueProp])}
-    {@const isSelected = selectedItemIndex === i}
+    {const isSelected = $derived(selectedItemIndex === i)}
     <li
       id="listbox-item-{i}-{idRandomizer}"
       role="option"

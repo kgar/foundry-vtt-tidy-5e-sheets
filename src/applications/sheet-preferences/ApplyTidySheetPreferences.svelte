@@ -75,7 +75,7 @@
     {/snippet}
     {#snippet body()}
       {#each options as option}
-        {@const formControlId = `${option.label.slugify()}`}
+        {const formControlId = $derived(`${option.label.slugify()}`)}
         <TidyTableRow>
           <TidyTableCell primary={true}>
             <label for={formControlId}>{option.label}</label>

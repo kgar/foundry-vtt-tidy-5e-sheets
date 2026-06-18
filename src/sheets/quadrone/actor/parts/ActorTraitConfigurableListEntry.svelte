@@ -90,10 +90,10 @@
   configFn?: OnConfigFn,
   attributes?: HTMLButtonAttributes,
 )}
-  {@const onclick = configFn
+  {const onclick = $derived(configFn
     ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
         configFn(ev)
-    : undefined}
+    : undefined)}
     
   {#if onclick || attributes}
     <button

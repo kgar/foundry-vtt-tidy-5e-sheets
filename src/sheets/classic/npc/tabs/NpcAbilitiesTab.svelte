@@ -214,14 +214,14 @@
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
-        {@const featureEntries = section.items.map((item) => ({
+        {const featureEntries = $derived(section.items.map((item) => ({
           item,
           ctx: context.itemContext[item.id],
-        }))}
-        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        })))}
+        {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
-        )}
+        ))}
         {#if context.unlocked || visibleItemCount > 0}
           <ItemTable
             key={section.key}
@@ -310,8 +310,8 @@
                             uses={item.system.uses}
                           />
                         {:else if item.hasRecharge}
-                          {@const remaining =
-                            item.system.uses.max - item.system.uses.spent}
+                          {const remaining =
+                            $derived(item.system.uses.max - item.system.uses.spent)}
                           {#if remaining > 1}
                             <span>{remaining}</span>
                           {/if}

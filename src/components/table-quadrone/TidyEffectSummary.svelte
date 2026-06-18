@@ -59,7 +59,7 @@
       </thead>
       <tbody>
         {#each activeEffect.changes as change}
-          {@const modeLabel = ActiveEffectsHelper.findMode(change)}
+          {const modeLabel = $derived(ActiveEffectsHelper.findMode(change))}
 
           <tr>
             <td

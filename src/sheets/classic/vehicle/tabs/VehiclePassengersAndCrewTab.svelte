@@ -29,7 +29,7 @@
 </div>
 
 {#snippet MemberTable(section: VehicleMemberSection, area: string)}
-  {@const mode = section.members.length ? 'section' : 'dropzone'}
+  {const mode = $derived(section.members.length ? 'section' : 'dropzone')}
   {#if mode === 'section'}
     <div style="display: contents;" class="member-list-container">
       <ItemTable key={section.key} data-area={area}>

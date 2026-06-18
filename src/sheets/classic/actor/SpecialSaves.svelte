@@ -8,7 +8,7 @@
 </script>
 
 {#if context.saves.concentration}
-  {@const save = context.saves.concentration}
+  {const save = $derived(context.saves.concentration)}
   <span class="special-save">
     <button
       type="button"

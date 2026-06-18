@@ -299,8 +299,8 @@
       ondrop={onDrop}
     >
       {#each rows as item, i (item.key)}
-        {@const canConfigureViewers =
-          userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM}
+        {const canConfigureViewers =
+          $derived(userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM)}
         <li
           bind:this={rowElements[i]}
           class="listbox-item"

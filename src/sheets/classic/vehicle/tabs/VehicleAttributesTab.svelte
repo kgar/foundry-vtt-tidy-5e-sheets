@@ -121,12 +121,12 @@
 </div>
 
 {#snippet featuresTable()}
-  {@const section = context.features}
+  {const section = $derived(context.features)}
   {#if context.unlocked || section.items.length}
-    {@const itemEntries = section.items.map((item) => ({
+    {const itemEntries = $derived(section.items.map((item) => ({
       item,
       ctx: context.itemContext[item.id],
-    }))}
+    })))}
 
     <ItemTable key={section.key}>
       {#snippet header()}
@@ -183,8 +183,8 @@
                     uses={item.system.uses}
                   />
                 {:else if item.hasRecharge}
-                  {@const remaining =
-                    item.system.uses.max - item.system.uses.spent}
+                  {const remaining =
+                    $derived(item.system.uses.max - item.system.uses.spent)}
                   {#if remaining > 1}
                     <span>{remaining}</span>
                   {/if}
@@ -222,10 +222,10 @@
 
 {#snippet stationsTable(section: InventorySection)}
   {#if context.unlocked || section.items.length}
-    {@const itemEntries = section.items.map((item) => ({
+    {const itemEntries = $derived(section.items.map((item) => ({
       item,
       ctx: context.itemContext[item.id],
-    }))}
+    })))}
 
     <ItemTable key={section.key}>
       {#snippet header()}

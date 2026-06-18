@@ -143,12 +143,12 @@
         {/snippet}
 
         {#snippet body()}
-          {@const itemEntries = section.items.map((item) => ({
+          {const itemEntries = $derived(section.items.map((item) => ({
             item,
             ctx: context.itemContext[item.id],
-          }))}
+          })))}
           {#each itemEntries as { item, ctx }, i (item.id)}
-            {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
+            {const expanded = $derived(!!itemToggleMap.get(tabId)?.has(item.id))}
 
             <TidyItemTableRow
               {item}

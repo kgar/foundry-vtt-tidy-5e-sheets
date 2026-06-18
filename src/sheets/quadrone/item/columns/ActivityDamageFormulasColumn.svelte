@@ -37,8 +37,8 @@
   onmouseover={(ev) => labels?.length && tooltip?.tryShow(ev.currentTarget)}
 >
   {#each rowDocument.labels.damages ?? [] as damage}
-    {@const formula = getTrimmedExpression(damage.formula)}
-    {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
+    {const formula = $derived(getTrimmedExpression(damage.formula))}
+    {const damageHealingIcon = $derived(damageHealingTypeIcons[damage.damageType])}
     <div class="flexrow damage-formula-container">
       <span class="flexshrink damage-formula truncate">{formula}</span>
       {#if damageHealingIcon}

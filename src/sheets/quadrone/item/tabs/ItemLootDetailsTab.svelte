@@ -37,10 +37,10 @@
 
   <!-- Loot Subtype -->
   {#if context.itemSubtypes}
-    {@const subtypeLabel = localize('DND5E.ItemLootSubtype', {
+    {const subtypeLabel = $derived(localize('DND5E.ItemLootSubtype', {
       category:
         context.config.lootTypes[context.system.type.value]?.label ?? '',
-    })}
+    }))}
 
     <FormGroup
       label={subtypeLabel}

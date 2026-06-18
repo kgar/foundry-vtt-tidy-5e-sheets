@@ -26,7 +26,7 @@
 </script>
 
 {#each columns.ordered as column}
-  {@const hidden = hiddenColumns.has(column.key)}
+  {const hidden = $derived(hiddenColumns.has(column.key))}
 
   <TidyTableCell
     columnWidth="{column.widthRems}rem"
