@@ -20,16 +20,9 @@ export type SpecialTraitsSettingsEditor =
 export function getSpecialTraitsSettingsEditor(
   document: Actor5e,
 ): SpecialTraitsSettingsEditor {
-  const current = $state<SpecialTraitsContext>({
-    originalClass: undefined,
-    flags: {
-      classes: [],
-      data: {},
-      sections: [],
-    },
-  });
+  const current = $state<SpecialTraitsContext>(getConfig());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(
     JSON.stringify(buildDocumentUpdateObject(current)) !== initialSnapshot,
@@ -150,11 +143,6 @@ export function getSpecialTraitsSettingsEditor(
 
     canUseDefault: true,
 
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
-    },
-
     resetToDefault() {
       current.originalClass = undefined;
       current.flags.sections
@@ -171,8 +159,8 @@ export function getSpecialTraitsSettingsEditor(
     },
 
     undoChanges() {
-      // TODO: If this works fine, then leave it and move on!
-      this.initialize();
+      this.value = getConfig();
+      initialSnapshot = snapshotConfig(this.value);
     },
 
     async useDefault() {

@@ -47,18 +47,7 @@ export type ThemeSettingsContext = {
 };
 
 export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
-  const current = $state<ThemeSettingsContext>({
-    accentColor: '',
-    useBasicTheme: null,
-    useHeaderBackground: null,
-    headerColor: '',
-    actorHeaderBackground: '',
-    headerBackgroundColor: '',
-    itemSidebarBackground: '',
-    portraitShape: undefined,
-    rarityColors: [],
-    spellPreparationMethodColors: [],
-  });
+  const current = $state<ThemeSettingsContext>(getSettings());
 
   let initialSnapshot = $state<string>('');
 
@@ -174,11 +163,6 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
 
     get hasChanges() {
       return hasChanges;
-    },
-
-    initialize() {
-      this.value = getSettings();
-      initialSnapshot = snapshotConfig(this.value);
     },
 
     mapContextToChangedSettings: mapContextToChangedSettings,

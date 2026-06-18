@@ -244,21 +244,6 @@ export class TidySheetSettingsQuadroneApplication
       this.spellSourceItemAssignmentsChildApp =
         getSpellSourceItemAssignmentsSettingsEditor(this.document);
     }
-
-    this.initialize();
-  }
-
-  // TODO: eliminate `initialize()` ; all editors should initialize upon creation.
-  initialize(): Promise<void> | void {
-    this.themeSettingsTab.initialize();
-    this.headerControlsTab?.initialize();
-    this.tabDisplaySettingsTab.initialize();
-    this.specialTraitsChildApp?.initialize();
-    this.sidebarTabDisplaySettingsTab?.initialize();
-    this.spellSourceItemAssignmentsChildApp?.initialize();
-    this.configureSectionsChildAppByTabId
-      .values()
-      .forEach((editor) => editor.initialize());
   }
 
   resetToDefault(): Promise<void> | void {

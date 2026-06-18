@@ -58,46 +58,30 @@ export const SIDEBAR_EXPANDABLE_SHEET_TYPES: ReadonlySet<string> = new Set([
 export function getSheetTabConfigurationSettingsEditor(
   params: SheetTabConfigurationSettingsEditorParams,
 ): SheetTabConfigurationSettingsEditor {
-  const document = params.document;
+  const { document, customTabConfigProvider, docTypeKeyOverride, title } = params;
 
   const getTabConfig =
-    params.customTabConfigProvider?.getTabConfig ??
+    customTabConfigProvider?.getTabConfig ??
     TidyFlags.tabConfiguration.get;
 
   const setTabConfig =
-    params.customTabConfigProvider?.setTabConfig ??
+    customTabConfigProvider?.setTabConfig ??
     TidyFlags.tabConfiguration.set;
 
   const getTabContext =
-    params.customTabConfigProvider?.getTabContext ?? getConfigFromRuntime;
+    customTabConfigProvider?.getTabContext ?? getConfigFromRuntime;
 
   const inclusionTabTitle =
-    params.title ??
+    title ??
     FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
       documentName: FoundryAdapter.localize(
-        `TYPES.${params.document.documentName}.${params.document.type}`,
+        `TYPES.${document.documentName}.${document.type}`,
       ),
     });
 
-  const current = $state<SheetTabConfigurationContext>({
-    entry: {
-      allTabs: {},
-      defaultTabs: [],
-      documentName: '',
-      documentType: '',
-      tabs: [],
-      title: '',
-      visibilityLevels: [],
-      defaultSelected: undefined,
-      defaultUnselected: undefined,
-      docTypeKeyOverride: params.docTypeKeyOverride,
-      selected: undefined,
-      sidebarExpandedByTabId: undefined,
-      unselected: undefined,
-    },
-  });
+  const current = $state<SheetTabConfigurationContext>(getConfig());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -122,7 +106,7 @@ export function getSheetTabConfigurationSettingsEditor(
           doc.type,
           setting,
           true,
-          current.entry.docTypeKeyOverride,
+          docTypeKeyOverride,
         );
       }
     }
@@ -148,7 +132,7 @@ export function getSheetTabConfigurationSettingsEditor(
 
   function supportsSidebarExpanded(): boolean {
     return (
-      !current.entry.docTypeKeyOverride &&
+      !docTypeKeyOverride &&
       document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
       SIDEBAR_EXPANDABLE_SHEET_TYPES.has(document.type)
     );
@@ -251,11 +235,6 @@ export function getSheetTabConfigurationSettingsEditor(
 
     canUseDefault: true,
 
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
-    },
-
     resetToDefault() {
       const defaultEntry = getTabContext(document, {
         selected: [],
@@ -302,7 +281,8 @@ export function getSheetTabConfigurationSettingsEditor(
 
       await applySidebarExpanded(curr);
 
-      this.initialize();
+      this.value = getConfig();
+      initialSnapshot = snapshotConfig(this.value);
     },
 
     undoChanges() {

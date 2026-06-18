@@ -102,10 +102,6 @@ export class WorldSettingsQuadroneApplication
     );
   }
 
-  initialize(): Promise<void> | void {
-    Object.values(this.editors).forEach((e) => e.initialize());
-  }
-
   resetToDefault(): Promise<void> | void {
     Object.values(this.editors).forEach((e) => e.resetToDefault());
     this.tabPaneVersion++;
@@ -144,9 +140,11 @@ export class WorldSettingsQuadroneApplication
   //   }
   // }
 
-  canUndo = $derived(!!this.getActivePane()?.hasChanges);
+  // canUndo = $derived(!!this.getActivePane()?.hasChanges);
+  canUndo = true;
 
-  canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
+  // canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
+  canUseDefault = true;
 
   // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
   // this forces them to remount and re-read the reset config. See WorldSheetSettings.
@@ -210,16 +208,9 @@ export class WorldSettingsQuadroneApplication
     return this._config;
   }
 
-  async _preFirstRender(
-    _context: ApplicationWindowRenderOptions,
-    _options: ApplicationRenderOptions,
-  ) {
-    this.initialize();
-  }
-
   // TODO: organize
   static readonly SETTINGS_SHEET_PREFIX = 'settings:sheet';
-  
+
   // TODO: organize
   getSheetConfigTabId(documentName: string, documentType: string) {
     return `${this.SETTINGS_SHEET_PREFIX}:${documentName}:${documentType}`;

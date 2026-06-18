@@ -10,12 +10,9 @@ export type HomebrewConfigContext = {
 export type HomebrewSettingsEditor = SettingsEditor<HomebrewConfigContext>;
 
 export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
-  const current = $state<HomebrewConfigContext>({
-    bankedInspirationGmOnly: false,
-    enableBankedInspiration: false,
-  });
+  const current = $state<HomebrewConfigContext>(getConfig());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -33,11 +30,6 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
   return {
     get hasChanges() {
       return hasChanges;
-    },
-
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
     },
 
     resetToDefault() {

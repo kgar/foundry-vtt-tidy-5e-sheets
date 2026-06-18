@@ -23,9 +23,9 @@ export type WorldTabConfigurationSettingsEditor = SettingsEditor<
 >;
 
 export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationSettingsEditor {
-  const current = $state<TabConfigContextEntry[]>([]);
+  const current = $state<TabConfigContextEntry[]>(getConfig());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -171,11 +171,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       return hasChanges;
     },
 
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
-    },
-
     resetToDefault() {
       this.value = this.value.map((entry) => ({
         ...entry,
@@ -189,7 +184,8 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
 
     async save() {
       await save();
-      this.initialize();
+      this.value = getConfig();
+      initialSnapshot = snapshotConfig(this.value);
     },
 
     canUndo: false,

@@ -98,10 +98,6 @@ export function getWorldSheetConfigurationSettingsEditor(
       return hasChanges;
     },
 
-    initialize() {
-        // noop
-    },
-
     resetToDefault() {
         // todo
     },

@@ -41,9 +41,9 @@ export type WorldHeaderControlConfigScope = {
 export function getWorldHeaderControlConfigurationSettingsEditor(
   scope?: WorldHeaderControlConfigScope,
 ): WorldHeaderControlConfigurationSettingsEditor {
-  const current = $state<WorldHeaderControlConfigContext>([]);
+  const current = $state<WorldHeaderControlConfigContext>(getConfigs());
 
-  let initialSnapshot = $state('');
+  let initialSnapshot = $state(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -144,11 +144,6 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
   return {
     get hasChanges() {
       return hasChanges;
-    },
-
-    initialize() {
-      this.value = getConfigs();
-      initialSnapshot = snapshotConfig(this.value);
     },
 
     resetToDefault() {

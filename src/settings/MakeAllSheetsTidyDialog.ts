@@ -25,7 +25,6 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
         ) => {
           await app._onYes?.();
           const editor = getDefaultSheetPreferencesSettingsEditor();
-          editor.initialize();
           editor.value.forEach((x) => (x.selected = true));
           await editor.save();
         },

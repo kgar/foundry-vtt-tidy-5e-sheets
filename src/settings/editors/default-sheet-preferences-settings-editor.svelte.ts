@@ -14,9 +14,9 @@ export type DefaultSheetPreferencesSettingsEditor = SettingsEditor<
 >;
 
 export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferencesSettingsEditor {
-  const current = $state<SheetPreferenceOption[]>([]);
+  const current = $state<SheetPreferenceOption[]>(getConfig());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -92,11 +92,6 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
   return {
     get hasChanges() {
       return hasChanges;
-    },
-
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
     },
 
     resetToDefault() {

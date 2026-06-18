@@ -38,11 +38,9 @@ export type SpellSourceItemAssignmentsSettingsEditor =
 export function getSpellSourceItemAssignmentsSettingsEditor(
   document: Actor5e,
 ): SpellSourceItemAssignmentsSettingsEditor {
-  const current = $state<SpellSourceItemAssignmentsContext>({
-    assignments: [],
-  });
+  const current = $state<SpellSourceItemAssignmentsContext>(getConfig());
 
-  let initialSnapshot = $state('');
+  let initialSnapshot = $state(snapshotConfig(current));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
@@ -78,14 +76,11 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
       return hasChanges;
     },
 
-    get canUndo() { return this.hasChanges },
+    get canUndo() {
+      return this.hasChanges;
+    },
 
     canUseDefault: true,
-
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
-    },
 
     resetToDefault() {
       // TODO: find out - '' or undefined?

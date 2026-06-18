@@ -13,9 +13,6 @@ export type SettingsEditorController = {
    */
   hasChanges: boolean;
 
-  /** Load initial state from its source. */
-  initialize(): Promise<void> | void;
-
   /** Set initial state to the value-less default. */
   resetToDefault(): Promise<void> | void;
 
