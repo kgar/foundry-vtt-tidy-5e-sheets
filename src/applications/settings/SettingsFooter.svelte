@@ -1,12 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { SettingsFooterHost } from './settings-pane.types';
+  import type { SettingsEditorController } from 'src/settings/editors/settings-editors.svelte';
 
   interface Props {
-    host: SettingsFooterHost;
+    host: SettingsEditorController;
+    onSave: () => Promise<void> | void;
   }
 
-  let { host }: Props = $props();
+  let { host, onSave }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -28,7 +29,7 @@
   <button
     type="button"
     class="button button-secondary button-large undo-changes-btn"
-    onclick={() => host.canUndo ? host.undoChanges() : undefined}
+    onclick={() => (host.canUndo ? host.undoChanges() : undefined)}
   >
     <i class="fas fa-arrow-rotate-left"></i>
     {localize('TIDY5E.UndoChanges')}
@@ -39,7 +40,7 @@
       'button button-large button-save save-changes-btn',
       host.hasChanges ? 'button-primary' : 'button-secondary',
     ]}
-    onclick={() => host.save()}
+    onclick={onSave}
   >
     <i class="fas fa-save"></i>
     {localize('TIDY5E.SaveChanges')}

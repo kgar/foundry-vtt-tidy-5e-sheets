@@ -21,14 +21,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  // TODO: Move to constants?
-  const SETTINGS_DEFAULTS = WorldSettingsTabIds.defaults;
-  const SETTINGS_THEME = WorldSettingsTabIds.theme;
-  const SETTINGS_HOMEBREW = WorldSettingsTabIds.homebrew;
-  const SETTINGS_SHEET_PREFERENCES = WorldSettingsTabIds.sheetPreferences;
-
-  const SETTINGS_SHEET_PREFIX = 'settings:sheet';
-
   const ACTOR_SHEET_TAB_ORDER = [
     'Actor:character',
     'Actor:npc',
@@ -50,23 +42,23 @@
 
   let worldConfigOptions: SettingsTab[] = $derived([
     {
-      id: SETTINGS_DEFAULTS,
+      id: WorldSettingsTabIds.defaults,
       title: localize('TIDY5E.WorldSettings.Menu.tabLabel'),
       iconClass: 'fa-solid fa-house',
     },
     {
-      id: SETTINGS_SHEET_PREFERENCES,
+      id: WorldSettingsTabIds.sheetPreferences,
       title: localize('TIDY5E.WorldSettings.SheetPreferences.tabLabel'),
       iconClass: 'fa-solid fa-scroll',
     },
     {
-      id: SETTINGS_THEME,
+      id: WorldSettingsTabIds.theme,
       title: localize('TIDY5E.WorldSettings.GlobalTheme.tabLabel'),
       iconClass: 'fa-solid fa-swatchbook',
       hasChanges: app.editors.themeSettingsTab.hasChanges,
     },
     {
-      id: SETTINGS_HOMEBREW,
+      id: WorldSettingsTabIds.homebrew,
       title: localize('TIDY5E.WorldSettings.Homebrew.tabLabel'),
       iconClass: 'fa-solid fa-beer-mug',
       hasChanges: app.editors.homebrewTab.hasChanges,
@@ -77,7 +69,7 @@
   // shared with the header control configuration tab.
   let sheetConfigOptions: SheetSettingsTab[] = $derived(
     app.editors.headerControlsTab.value.map((config) => ({
-      id: `${SETTINGS_SHEET_PREFIX}:${config.documentName}:${config.documentType}`,
+      id: app.getSheetConfigTabId(config.documentName, config.documentType),
       title: config.title,
       orderKey: `${config.documentName}:${config.documentType}`,
     })),
@@ -106,18 +98,20 @@
     ...sheetConfigOptions,
   ]);
 
-  let selectedId: string = $derived(app.currentTabId ?? SETTINGS_DEFAULTS);
+  let selectedId: string = $derived(
+    app.currentTabId ?? WorldSettingsTabIds.defaults,
+  );
 
   let activeSelectedId: string = $derived(
     allAvailableTabs.some((e) => e.id === selectedId)
       ? selectedId
-      : (allAvailableTabs[0]?.id ?? SETTINGS_DEFAULTS),
+      : (allAvailableTabs[0]?.id ?? WorldSettingsTabIds.defaults),
   );
 
   let selectedSheetConfig = $derived(
     app.editors.headerControlsTab.value.find(
       (c) =>
-        `${SETTINGS_SHEET_PREFIX}:${c.documentName}:${c.documentType}` ===
+        app.getSheetConfigTabId(c.documentName, c.documentType) ===
         activeSelectedId,
     ),
   );
@@ -125,12 +119,6 @@
   function selectTab(id: string) {
     app.selectTab(id);
   }
-
-  // Pages without deferred-save settings (Overview/Defaults, About) and the
-  // immediate apply-and-reload Sheet Preferences page get no shared footer.
-  const FOOTERLESS_TABS = new Set<string>([SETTINGS_DEFAULTS]);
-
-  let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId));
 </script>
 
 <div class="tidy-sheet-settings">
@@ -195,18 +183,16 @@
   </div>
 
   <section class="settings-pane" role="tabpanel">
-    {#if activeSelectedId === SETTINGS_DEFAULTS}
+    {#if activeSelectedId === WorldSettingsTabIds.defaults}
       <WorldSettingsOverview {app} />
-    {:else if activeSelectedId === SETTINGS_THEME}
+    {:else if activeSelectedId === WorldSettingsTabIds.theme}
       <ThemeSettingsQuadrone
         app={app.editors.themeSettingsTab}
         placeholders={undefined}
       />
-    {:else if activeSelectedId === SETTINGS_HOMEBREW}
-      <HomebrewSettings
-        app={app.editors.homebrewTab}
-      />
-    {:else if activeSelectedId === SETTINGS_SHEET_PREFERENCES}
+    {:else if activeSelectedId === WorldSettingsTabIds.homebrew}
+      <HomebrewSettings app={app.editors.homebrewTab} />
+    {:else if activeSelectedId === WorldSettingsTabIds.sheetPreferences}
       <ApplyTidySheetPreferences
         onMakeAllSheetsTidy={async () => await app.save()}
         options={app.editors.sheetPreferencesTab.value}
@@ -223,7 +209,16 @@
 
   <!-- One shared footer. Deferred-save pages drive it through the dialog.
        Overview/Defaults and About have no settings, so they get none. -->
+  {const FOOTERLESS_TABS = new Set<string>([WorldSettingsTabIds.defaults])}
+  {let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId))}
+  
   {#if showFooter}
-    <SettingsFooter host={app} />
+    <SettingsFooter host={app} onSave={() => app.save()} />
   {/if}
+  <!-- 
+  TODO: make this possible     
+  {const activePane = $derived(app.getActivePane())}
+  {#if activePane}
+    <SettingsFooter host={activePane} onSave={() => app.save()} />
+  {/if} -->
 </div>

@@ -7,7 +7,6 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import TidyWorldSettings from './TidyWorldSettings.svelte';
-import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { getThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
@@ -15,7 +14,10 @@ import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/wor
 import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
 import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
 import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
-import type { SettingsEditor } from 'src/settings/editors/settings-editors.svelte';
+import type {
+  SettingsEditor,
+  SettingsEditorController,
+} from 'src/settings/editors/settings-editors.svelte';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -45,7 +47,7 @@ export class WorldSettingsQuadroneApplication
     WorldSettingsApplicationConfiguration,
     WorldSettingsContext
   >(foundry.applications.api.ApplicationV2)
-  implements SettingsFooterHost
+  implements SettingsEditorController
 {
   _config: WorldSettingsContext = $state({});
 
@@ -100,14 +102,51 @@ export class WorldSettingsQuadroneApplication
     );
   }
 
+  initialize(): Promise<void> | void {
+    Object.values(this.editors).forEach((e) => e.initialize());
+  }
+
+  resetToDefault(): Promise<void> | void {
+    Object.values(this.editors).forEach((e) => e.resetToDefault());
+    this.tabPaneVersion++;
+  }
+
+  useDefaultLabel?: string | undefined;
+
   selectTab(id: string) {
     this.currentTabId = id;
   }
 
-  // World pages don't map to a single pane, so Undo / Use Global Defaults act
-  // on the whole dialog anDd stay enabled. All changes are staged until Save.
-  canUndo = true;
-  canUseDefault = true;
+  /**
+   * The pane for undo/use defaults.
+   */
+  // getActivePane(): SettingsEditor<unknown> | undefined {
+  //   const currentTabId = this.currentTabId;
+  //   switch (currentTabId) {
+  //     case WorldSettingsTabIds.theme:
+  //       return this.editors.themeSettingsTab;
+  //     case WorldSettingsTabIds.sheetPreferences:
+  //       return this.editors.sheetPreferencesTab;
+  //     case WorldSettingsTabIds.homebrew:
+  //       return this.editors.homebrewTab;
+  //   }
+
+  //   // Sheet Settings
+  //   const sheetConfig = this.editors.headerControlsTab.value.find(
+  //     (config) =>
+  //       currentTabId ===
+  //       this.getSheetConfigTabId(config.documentName, config.documentType),
+  //   );
+
+  //   const sheetConfigEditor = this.;
+  //   if (sheetConfig) {
+  //     return sheetConfig;
+  //   }
+  // }
+
+  canUndo = $derived(!!this.getActivePane()?.hasChanges);
+
+  canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
 
   // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
   // this forces them to remount and re-read the reset config. See WorldSheetSettings.
@@ -134,8 +173,7 @@ export class WorldSettingsQuadroneApplication
       return;
     }
 
-    Object.values(this.editors).forEach((e) => e.resetToDefault());
-    this.tabPaneVersion++;
+    this.resetToDefault();
   }
 
   /** Persist every deferred-save settings page in one shot, then close. */
@@ -176,6 +214,14 @@ export class WorldSettingsQuadroneApplication
     _context: ApplicationWindowRenderOptions,
     _options: ApplicationRenderOptions,
   ) {
-    Object.values(this.editors).forEach((e) => e.initialize());
+    this.initialize();
+  }
+
+  // TODO: organize
+  static readonly SETTINGS_SHEET_PREFIX = 'settings:sheet';
+  
+  // TODO: organize
+  getSheetConfigTabId(documentName: string, documentType: string) {
+    return `${this.SETTINGS_SHEET_PREFIX}:${documentName}:${documentType}`;
   }
 }

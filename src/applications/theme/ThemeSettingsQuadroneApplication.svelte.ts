@@ -13,7 +13,6 @@ import type {
 } from 'src/types/application.types';
 import { mount, type Component } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
-import SettingsDialogShell from 'src/applications/settings/SettingsDialogShell.svelte';
 import type {
   SettingsFooterHost,
   SettingsPane,
@@ -137,20 +136,20 @@ export class ThemeSettingsQuadroneApplication
       : undefined;
 
 
-    const component = mount(SettingsDialogShell, {
-      target: node,
-      props: {
-        host: this,
-        pane: ThemeSettingsQuadrone,
-        paneProps: {
-          app: this,
-          settings: this._settings,
-          placeholders,
-        },
-      },
-    });
+    // const component = mount(SettingsDialogShell, {
+    //   target: node,
+    //   props: {
+    //     host: this,
+    //     pane: ThemeSettingsQuadrone,
+    //     paneProps: {
+    //       app: this,
+    //       settings: this._settings,
+    //       placeholders,
+    //     },
+    //   },
+    // });
 
-    return component;
+    return {}; // TODO: Remove this application
   }
 
   async _prepareContext(options: ApplicationRenderOptions) {
