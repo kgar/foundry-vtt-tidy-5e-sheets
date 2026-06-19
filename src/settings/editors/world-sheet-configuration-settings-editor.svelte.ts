@@ -1,4 +1,4 @@
-import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
+import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import type { SettingsEditor } from './settings-editors.svelte';
 import type {
   HeaderControlConfigContextItem,
@@ -6,7 +6,7 @@ import type {
 } from './world-header-control-configuration-settings-editor.svelte';
 import type { WorldTabConfigurationSettingsEditor } from './world-tab-configuration-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
-import { getCanonicalTabSelection } from 'src/applications/settings/tab-configuration/tab-configuration-functions';
+import { getCanonicalTabSelection } from 'src/settings/editors/shared/tab-configuration-functions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type WorldSheetConfigurationContext = {

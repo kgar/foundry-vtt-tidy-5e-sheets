@@ -3,7 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './configure-sections.types';
   import { isNil } from 'src/utils/data';
-  import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
   import type {
     ConfigureSectionsSettingsEditor,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import TabVisibilityControls from './TabVisibilityControls.svelte';
   import SpecialTraitsV2 from 'src/applications/settings/special-traits/SpecialTraitsV2.svelte';
   import type { SpecialTraitsSettingsEditor } from 'src/settings/editors/special-traits-settings-editor.svelte';

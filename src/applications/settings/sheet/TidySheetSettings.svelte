@@ -396,6 +396,6 @@
        assignments report no active pane and keep their own in-pane controls. -->
   {const activePane = $derived(app.getActivePane())}
   {#if activePane}
-    <SettingsFooter host={activePane} onSave={() => app.save()} />
+    <SettingsFooter host={activePane} save={() => app.save()} />
   {/if}
 </div>

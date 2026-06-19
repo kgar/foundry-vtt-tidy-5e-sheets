@@ -1,4 +1,7 @@
-import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
+import type {
+  TabConfigContextEntry,
+  TabConfigSnapshot,
+} from 'src/settings/editors/shared/tab-configuration.types';
 import type { SettingsEditor } from './settings-editors.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
@@ -14,8 +17,10 @@ import { CONSTANTS } from 'src/constants';
 import {
   buildTabConfigMap,
   getActorTabContext,
+  getInitialTabConfigContextEntry,
   getItemTabContext,
-} from 'src/applications/settings/tab-configuration/tab-configuration-functions';
+  mapTabConfigContextEntryToSnapshot,
+} from 'src/settings/editors/shared/tab-configuration-functions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { error } from 'src/utils/logging';
 
@@ -82,10 +87,13 @@ export function getSheetTabConfigurationSettingsEditor(
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
-  const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
+  const hasChanges = $derived(
+    JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
+  );
 
   function snapshotConfig(config: SheetTabConfigurationContext) {
-    return $state.snapshot(config);
+    const entry = $state.snapshot(config).entry;
+    return mapTabConfigContextEntryToSnapshot(entry);
   }
 
   function getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
@@ -277,7 +285,12 @@ export function getSheetTabConfigurationSettingsEditor(
     },
 
     undoChanges() {
-      this.value = JSON.parse(initialSnapshot);
+      const initial = JSON.parse(initialSnapshot) as TabConfigSnapshot;
+
+      this.value.entry = getInitialTabConfigContextEntry(
+        [initial],
+        this.value.entry,
+      );
     },
 
     async useDefault() {

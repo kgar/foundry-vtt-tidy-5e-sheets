@@ -19,7 +19,7 @@
   import { CONSTANTS } from 'src/constants';
   import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
   import { arrayMove } from 'src/utils/array';
-  import type { TabConfigContextEntry } from '../tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 
   type HeaderLabels = {
     primary?: string;
