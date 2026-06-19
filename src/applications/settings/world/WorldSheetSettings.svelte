@@ -4,8 +4,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import SortableListbox from 'src/applications/tab-configuration/parts/SortableListbox.svelte';
-  import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
+  import SortableListbox from 'src/applications/settings/tab-configuration/parts/SortableListbox.svelte';
+  import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
   import type { WorldSheetConfigurationSettingsEditor } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 
   interface Props {

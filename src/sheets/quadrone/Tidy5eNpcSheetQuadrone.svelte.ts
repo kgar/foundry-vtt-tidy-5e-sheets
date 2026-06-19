@@ -27,13 +27,11 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { Container } from 'src/features/containers/Container';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
-import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
@@ -42,7 +40,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
-  CONSTANTS.SHEET_TYPE_NPC
+  CONSTANTS.SHEET_TYPE_NPC,
 ) {
   currentTabId: string;
 
@@ -79,26 +77,26 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
   _showDeathSaves: boolean = false;
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<NpcSheetQuadroneContext> {
     if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 
     const actorContext = (await super._prepareContext(
-      options
+      options,
     )) as ActorSheetQuadroneContext;
 
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
-        this.actor.allApplicableEffects()
+        this.actor.allApplicableEffects(),
       );
     let { conditions, effects: enhancedEffectSections } =
       await ConditionsAndEffects.getConditionsAndEffectsForActorQuadrone(
         actorContext,
         this.object,
-        baseEffects
+        baseEffects,
       );
 
     const preferences = UserSheetPreferencesService.getByType(this.actor.type);
@@ -113,7 +111,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         abbr:
           CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
             ?.abbreviation ?? key,
-      })
+      }),
     );
 
     const enrichmentArgs = {
@@ -127,9 +125,9 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     const important = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
-    const gear: Item5e[] = (await this.actor.items.filter(
+    const gear: Item5e[] = await this.actor.items.filter(
       (i: Item5e) => i.system.quantity && i.system.properties?.has('gear'),
-    ));
+    );
 
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
@@ -146,31 +144,31 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       enriched: {
         appearance: await foundry.applications.ux.TextEditor.enrichHTML(
           TidyFlags.appearance.get(this.actor) ?? '',
-          enrichmentArgs
+          enrichmentArgs,
         ),
         biography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.value,
-          enrichmentArgs
+          enrichmentArgs,
         ),
         publicBiography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.public,
-          enrichmentArgs
+          enrichmentArgs,
         ),
         bond: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.bond,
-          enrichmentArgs
+          enrichmentArgs,
         ),
         flaw: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.flaw,
-          enrichmentArgs
+          enrichmentArgs,
         ),
         ideal: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.ideal,
-          enrichmentArgs
+          enrichmentArgs,
         ),
         trait: await foundry.applications.ux.TextEditor.enrichHTML(
           TidyFlags.trait.get(this.actor) ?? '',
-          enrichmentArgs
+          enrichmentArgs,
         ),
       },
       features: [],
@@ -185,7 +183,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
             'data-gear': '',
             'data-tidy-draggable': '',
             'data-action': 'showDocument',
-            'data-uuid': uuid
+            'data-uuid': uuid,
           },
         };
       }),
@@ -261,7 +259,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     if (details?.habitat?.value.length || details?.habitat?.custom) {
       const { habitat } = details;
       const any = details.habitat.value.find(
-        ({ type }: NpcHabitat) => type === CONSTANTS.HABITAT_TYPE_ANY
+        ({ type }: NpcHabitat) => type === CONSTANTS.HABITAT_TYPE_ANY,
       );
       context.habitats = habitat.value
         .reduce((arr: { label: string }[], { type, subtype }: NpcHabitat) => {
@@ -278,7 +276,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         }, [])
         .concat(splitSemicolons(habitat.custom).map((label) => ({ label })))
         .sort((a: { label: string }, b: { label: string }) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         );
     }
 
@@ -293,7 +291,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           return arr;
         }, [])
         .toSorted((a: { label: string }, b: { label: string }) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         );
     }
 
@@ -310,8 +308,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
   static isImportantNpc(actor: Actor5e) {
     return (
-      (actor.system.isNPC &&
-        !foundry.utils.isEmpty(actor.classes)) ||
+      (actor.system.isNPC && !foundry.utils.isEmpty(actor.classes)) ||
       actor.system.traits.important
     );
   }
@@ -326,7 +323,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
-      { hasActionsTab: false }
+      { hasActionsTab: false },
     );
 
     const inventory: ActorInventoryTypes =
@@ -353,7 +350,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
         return obj;
       },
-      { inventoryItems: [] as Item5e[] }
+      { inventoryItems: [] as Item5e[] },
     );
 
     const statblockRowActions =
@@ -362,7 +359,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     const createNewStatblockSection = (
       label: string,
       id: string,
-      customSectionName?: string
+      customSectionName?: string,
     ): FeatureSection => {
       const dataset: Record<string, any> = {
         type: CONSTANTS.ITEM_TYPE_FEAT,
@@ -386,22 +383,25 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     };
 
     const featureSections = Object.entries(
-      CONFIG.DND5E.activityActivationTypes
-    ).reduce<Record<string, FeatureSection | SpellbookSection>>((obj, [id, config], i) => {
-      const label = config.header ?? config.label;
+      CONFIG.DND5E.activityActivationTypes,
+    ).reduce<Record<string, FeatureSection | SpellbookSection>>(
+      (obj, [id, config], i) => {
+        const label = config.header ?? config.label;
 
-      if (!!config.passive) {
+        if (!!config.passive) {
+          return obj;
+        }
+
+        obj[id] ??= createNewStatblockSection(label, id);
+
         return obj;
-      }
-
-      obj[id] ??= createNewStatblockSection(label, id);
-
-      return obj;
-    }, {});
+      },
+      {},
+    );
 
     featureSections.passive = createNewStatblockSection(
       'DND5E.Features',
-      'passive'
+      'passive',
     );
 
     featureSections.items = createNewStatblockSection('DND5E.Items', 'items');
@@ -425,7 +425,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           createNewStatblockSection(
             FoundryAdapter.localize(customSectionName),
             customSectionName,
-            customSectionName
+            customSectionName,
           ));
 
         section.items.push(item);
@@ -443,8 +443,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         isPassive && !inventoryTypesSet.has(item.type)
           ? 'passive'
           : !activationType && inventoryTypesSet.has(item.type)
-          ? 'items'
-          : activationType || 'passive';
+            ? 'items'
+            : activationType || 'passive';
 
       if (isImportant && section === 'items') {
         // Important NPCs are anticipated to have potentially a large number of items.
@@ -465,11 +465,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       this.actor,
-      CONSTANTS.TAB_STATBLOCK
+      CONSTANTS.TAB_STATBLOCK,
     ).forEach((sectionName) => {
       featureSections[sectionName] ??= createNewStatblockSection(
         sectionName,
-        sectionName
+        sectionName,
       );
     });
 
@@ -485,7 +485,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
-      CONSTANTS.TAB_ACTOR_INVENTORY
+      CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
         canCreate: true,
@@ -502,7 +502,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
           hasActionsTab: false,
         }),
-      }
+      },
     );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
@@ -510,7 +510,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         this.actor,
         this.actor.isOwner,
         context.unlocked,
-        section
+        section,
       );
     };
 
@@ -526,18 +526,18 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         this.actor,
         this.actor.isOwner,
         context.unlocked,
-        section
+        section,
       );
     });
 
     if (context.includeSpellbookInStatblockTab) {
       context.spellbook.forEach((section) => {
         const addSpells = !!featureSections[section.key];
-        
+
         const addedOrUpdated = (featureSections[section.key] ??= {
           ...section,
         });
-        
+
         if (addSpells) {
           addedOrUpdated.items.push(...section.items);
         }
@@ -580,7 +580,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
   }
 
   protected _prepareSpellcastingContext(
-    rollData: any
+    rollData: any,
   ): (SpellcastingClassContext | NpcSpellcastingContext)[] {
     const classSpellcasting = this._prepareSpellcastingClassContext();
 
@@ -597,7 +597,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     const abilityMod = getModifierData(abilityModValue);
     const attackBonus = msak === rsak ? msak : 0;
     const attackMod = getModifierData(
-      abilityModValue + attributes.prof + attackBonus
+      abilityModValue + attributes.prof + attackBonus,
     );
 
     const abilityConfig = CONFIG.DND5E.abilities[ability];
@@ -628,8 +628,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     const originTab = Inventory.isItemInventoryType(item)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
       : item.type === CONSTANTS.ITEM_TYPE_SPELL
-      ? CONSTANTS.TAB_ACTOR_SPELLBOOK
-      : null;
+        ? CONSTANTS.TAB_ACTOR_SPELLBOOK
+        : null;
 
     if (originTab) {
       tabIds.push(originTab);
@@ -682,10 +682,9 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
 
-
   async _preRender(
     context: NpcSheetQuadroneContext,
-    options: TidyDocumentSheetRenderOptions
+    options: TidyDocumentSheetRenderOptions,
   ) {
     await super._preRender(context, options);
 
@@ -696,7 +695,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       renderContext === 'update' || renderContext === 'updateActor';
     const hp = foundry.utils.getProperty(
       renderData ?? {},
-      'system.attributes.hp.value'
+      'system.attributes.hp.value',
     );
 
     if (isUpdate && hp === 0) {

@@ -6,7 +6,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;

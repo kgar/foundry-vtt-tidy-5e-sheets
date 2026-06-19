@@ -1,4 +1,4 @@
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationRenderOptions,
@@ -18,8 +18,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { getActorTabContext } from 'src/applications/settings/tab-configuration/tab-configuration-functions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
@@ -103,10 +102,6 @@ export class TidySheetSettingsQuadroneApplication
     string,
     ConfigureSectionsSettingsEditor
   >();
-
-  themePlaceholders?: ReturnType<
-    ThemeSettingsQuadroneApplication['_mapSettings']
-  >;
 
   // Check changes across all tabs
   hasChanges = $derived.by(() => {

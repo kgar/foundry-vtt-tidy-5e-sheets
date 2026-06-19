@@ -1,7 +1,7 @@
 import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
 import { TidyFlags } from 'src/api';
 import { SheetSections } from 'src/features/sections/SheetSections';
 

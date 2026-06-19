@@ -24,7 +24,7 @@ export class CustomContentRendererV2 {
   async renderCustomContent(
     customContents: CustomContent[],
     context: unknown,
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<RenderedSheetPart[]> {
     let parts: RenderedSheetPart[] = [];
     for (let content of customContents) {
@@ -58,7 +58,7 @@ export class CustomContentRendererV2 {
   async renderTabContents(
     tabs: Tab[],
     context: unknown,
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<RenderedSheetPart[]> {
     // prepare tabs for render
 
@@ -105,7 +105,7 @@ export class CustomContentRendererV2 {
             options,
           });
         }
-      }
+      },
     );
 
     return (await Promise.all(promises)).filter((t) => !!t);
@@ -115,7 +115,7 @@ export class CustomContentRendererV2 {
     parts: RenderedSheetPart[],
     sheet: any,
     context: unknown,
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ) {
     sheet.element
       .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
@@ -134,7 +134,7 @@ export class CustomContentRendererV2 {
         error(
           'An error occurred while invoking the onContentReady callback for custom content',
           false,
-          { error: e, part, sheet }
+          { error: e, part, sheet },
         );
       }
 
@@ -144,13 +144,13 @@ export class CustomContentRendererV2 {
 
       if (canInsertHtml) {
         const anchorElements = Array.from<HTMLElement>(
-          sheet.element.querySelectorAll(part.selector)
+          sheet.element.querySelectorAll(part.selector),
         );
 
         if (part.tabSelector && part.renderScheme === 'handlebars') {
           // Handlebars tab content
           const tabContentsElement = sheet.element.querySelector(
-            part.tabSelector
+            part.tabSelector,
           );
           tabContentsElement.innerHTML = part.content;
         } else if (part.tabSelector) {
@@ -158,7 +158,7 @@ export class CustomContentRendererV2 {
           for (let el of anchorElements) {
             el.insertAdjacentHTML(
               part.position as InsertPosition,
-              part.content
+              part.content,
             );
           }
         } else {
@@ -168,7 +168,7 @@ export class CustomContentRendererV2 {
               el,
               part.position as InsertPosition,
               part.content,
-              part.renderScheme
+              part.renderScheme,
             );
 
             injectedNodes.push(...injectedNodes);
@@ -188,7 +188,7 @@ export class CustomContentRendererV2 {
         error(
           'An error occurred while invoking the onRender callback for custom content',
           false,
-          { error: e, part, sheet }
+          { error: e, part, sheet },
         );
       }
     }

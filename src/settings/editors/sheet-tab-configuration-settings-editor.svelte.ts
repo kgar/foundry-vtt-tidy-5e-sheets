@@ -1,4 +1,4 @@
-import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
 import type { SettingsEditor } from './settings-editors.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
@@ -15,7 +15,7 @@ import {
   buildTabConfigMap,
   getActorTabContext,
   getItemTabContext,
-} from 'src/applications/tab-configuration/tab-configuration-functions';
+} from 'src/applications/settings/tab-configuration/tab-configuration-functions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { error } from 'src/utils/logging';
 

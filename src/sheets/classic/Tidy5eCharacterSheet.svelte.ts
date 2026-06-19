@@ -38,7 +38,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,

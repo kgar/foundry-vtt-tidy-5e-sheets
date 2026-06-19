@@ -27,7 +27,7 @@ import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';

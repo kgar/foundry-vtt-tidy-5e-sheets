@@ -15,7 +15,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { settings } from 'src/settings/settings.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/classic-actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';

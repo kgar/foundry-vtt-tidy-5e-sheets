@@ -1,5 +1,5 @@
-import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/ClassicTabSelectionFormApplication.svelte';
-import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
+import ClassicTabSelectionFormApplication from 'src/applications/classic-tab-selection/ClassicTabSelectionFormApplication.svelte';
+import { ThemeSettingsFormApplication } from 'src/applications/classic-theme/ThemeSettingsFormApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   actorUsesActionFeature,

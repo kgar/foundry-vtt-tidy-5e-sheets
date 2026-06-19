@@ -12,7 +12,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { getItemContextOptionsQuadrone } from './tidy5e-item-context-menu-quadrone';
 

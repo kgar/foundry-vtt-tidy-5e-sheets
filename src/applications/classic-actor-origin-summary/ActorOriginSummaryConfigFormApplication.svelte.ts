@@ -9,7 +9,7 @@ import type {
   DocumentSheetApplicationConfiguration,
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 
 export type ActorOriginSummaryContext = {
   isCharacter: boolean;

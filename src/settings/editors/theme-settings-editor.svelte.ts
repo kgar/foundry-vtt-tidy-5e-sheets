@@ -1,9 +1,9 @@
-import type { ThemeColorSettingConfigEntry } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   PortraitShape,
+  ThemeColorSetting,
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
@@ -11,6 +11,10 @@ import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import type { SettingsEditor } from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
+  label: string;
+};
 
 export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
   actorHeaderBackgroundSupportedActorTypes: Set<string>;

@@ -10,8 +10,8 @@
 - [x] // Do we need canonical snapshotting? Nah
 - [x] Implement GetActivePane for world settings - Goal: get the appropriate setting editor for the current tab
 - [x] Wire up settings footer properly for world settings
-- [ ] Remove apps like ThemeSettingsQuadrone
-- [ ] Bring disparate files together for Settings
+- [x] Remove apps like ThemeSettingsQuadrone
+- [x] Bring disparate files together for Settings
 - [ ] Sheet Settings - on initial open, look for tabs where the Save Changes button lights up prematurely. Fix hasChanges for those
   - [ ] Theme Settings
   - [ ] Configure Tabs
@@ -31,3 +31,4 @@
 - [ ] World Settings - check all tabs for correct resetToDefault handling
 - [ ] TODO: Migrate off legacy fields
 - [ ] ...
+- [ ] // TODO: Put on base Actor and Item sheets

@@ -23,7 +23,7 @@ import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';

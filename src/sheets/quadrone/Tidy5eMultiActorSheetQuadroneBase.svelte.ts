@@ -35,9 +35,10 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
-  TContext extends MultiActorQuadroneContext<any>
+  TContext extends MultiActorQuadroneContext<any>,
 >(sheetType: string) {
-  const TidyActorSheetBase = getTidy5eActorSheetQuadroneBase<TContext>(sheetType);
+  const TidyActorSheetBase =
+    getTidy5eActorSheetQuadroneBase<TContext>(sheetType);
 
   abstract class Tidy5eMultiActorSheetQuadroneBase extends TidyActorSheetBase {
     static DEFAULT_OPTIONS: Partial<
@@ -46,7 +47,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       actions: {
         placeMembers: Tidy5eMultiActorSheetQuadroneBase.#onPlaceMembers,
         removeMember: Tidy5eMultiActorSheetQuadroneBase.#onRemoveMember,
-      }
+      },
     };
 
     async _renderFrame(options: ApplicationRenderOptions) {
@@ -65,11 +66,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     }
 
     async _prepareContext(
-      options: ApplicationRenderOptions
+      options: ApplicationRenderOptions,
     ): Promise<MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase>> {
-      const actorContext = (await super._prepareContext(
-        options
-      ));
+      const actorContext = await super._prepareContext(options);
 
       const currencies: CurrencyContext[] = [];
       Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
@@ -79,14 +78,15 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           abbr:
             CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
               ?.abbreviation ?? key,
-        })
+        }),
       );
 
-      const context: MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase> = {
-        currencies,
-        inventory: [],
-        ...actorContext,
-      };
+      const context: MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase> =
+        {
+          currencies,
+          inventory: [],
+          ...actorContext,
+        };
 
       // Prepare owned items
       this._prepareItems(context);
@@ -102,7 +102,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
       const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
         context,
-        { hasActionsTab: false, canEquip: false }
+        { hasActionsTab: false, canEquip: false },
       );
 
       const inventory: ActorInventoryTypes =
@@ -120,7 +120,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
           return inventoryItems;
         },
-        [] as Item5e[]
+        [] as Item5e[],
       );
 
       const inventoryTypes = Inventory.getInventoryTypes();
@@ -136,7 +136,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
       SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
         context.actor,
-        CONSTANTS.TAB_ACTOR_INVENTORY
+        CONSTANTS.TAB_ACTOR_INVENTORY,
       ).forEach((s) => {
         inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
           canCreate: true,
@@ -151,7 +151,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           this.actor,
           this.actor.isOwner,
           context.unlocked,
-          section
+          section,
         );
       });
     }
@@ -195,12 +195,11 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     _prepareMemberLanguages(
       actor: any,
-      languages: Map<string, MeasurableGroupTrait<number>>
+      languages: Map<string, MeasurableGroupTrait<number>>,
     ) {
-      let memberLanguages =
-        actor.system.isCharacter
-          ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
-          : actor.system.isNPC
+      let memberLanguages = actor.system.isCharacter
+        ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
+        : actor.system.isNPC
           ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
           : [];
 
@@ -218,7 +217,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           () => ({
             identifiers: new Map<string, MeasurableGroupTrait<number>>(),
             ...actorLanguageTrait,
-          })
+          }),
         );
 
         groupLanguage.identifiers.set(actor.uuid, actorLanguageTrait);
@@ -229,7 +228,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 actorLanguageTrait.value,
                 actorLanguageTrait.unitsKey,
-                'ft'
+                'ft',
               )
             : undefined;
 
@@ -239,7 +238,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 groupLanguage.value,
                 groupLanguage.unitsKey,
-                'ft'
+                'ft',
               )
             : undefined;
 
@@ -262,7 +261,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
                 () => ({
                   label: customLanguage,
                   identifiers: new Map<string, GroupTraitBase<number>>(),
-                })
+                }),
               );
 
               entry?.identifiers.set(actor.uuid, { label: customLanguage });
@@ -273,17 +272,22 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     _prepareMemberSpeeds(
       actor: any,
-      speeds: Map<string, MeasurableGroupTrait<number>>
+      speeds: Map<string, MeasurableGroupTrait<number>>,
     ) {
       let unitsKey = actor.system.attributes.movement.units;
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
       let units = unitsConfig?.abbreviation ?? unitsKey;
 
       Object.entries<number | unknown>(
-        actor.system.attributes.movement
+        actor.system.attributes.movement,
       ).forEach(([key, speed]) => {
         const movementType = CONFIG.DND5E.movementTypes[key];
-        if (typeof speed !== 'number' || speed <= 0 || !movementType || movementType.hidden) {
+        if (
+          typeof speed !== 'number' ||
+          speed <= 0 ||
+          !movementType ||
+          movementType.hidden
+        ) {
           return;
         }
 
@@ -307,7 +311,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 actorSpeedTrait.value,
                 actorSpeedTrait.unitsKey,
-                'ft'
+                'ft',
               )
             : undefined;
 
@@ -316,7 +320,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 groupSpeed.value,
                 groupSpeed.unitsKey,
-                'ft'
+                'ft',
               )
             : undefined;
 
@@ -333,7 +337,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     _prepareMemberSenses(
       actor: any,
-      senses: Map<string, MeasurableGroupTrait<number>>
+      senses: Map<string, MeasurableGroupTrait<number>>,
     ) {
       let unitsKey = actor.system.attributes.movement.units;
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
@@ -366,7 +370,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
               ? dnd5e.utils.convertLength(
                   actorSenseTrait.value,
                   actorSenseTrait.unitsKey,
-                  'ft'
+                  'ft',
                 )
               : undefined;
 
@@ -375,7 +379,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
               ? dnd5e.utils.convertLength(
                   groupSense.value,
                   groupSense.unitsKey,
-                  'ft'
+                  'ft',
                 )
               : undefined;
 
@@ -387,7 +391,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             groupSense.units = actorSenseTrait.units;
             groupSense.unitsKey = actorSenseTrait.unitsKey;
           }
-        }
+        },
       );
 
       if (!isNil(actor.system.attributes.senses?.special, '')) {
@@ -418,7 +422,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             () => ({
               label: customEntry,
               identifiers: new Set<string>(),
-            })
+            }),
           );
 
           groupSpecial.identifiers.add(actor.uuid);
@@ -485,8 +489,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
               name: skill.label,
               passive: -Infinity,
               proficient: false,
-              reference: SettingsProvider.settings.referenceTooltipSkill.get() 
-                ? skill.reference 
+              reference: SettingsProvider.settings.referenceTooltipSkill.get()
+                ? skill.reference
                 : undefined,
             },
           ],
@@ -545,7 +549,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             saveValue: saveData.value,
             score: ability.value,
             scoreValue: scoreData.value,
-            scoreSign: scoreData.sign
+            scoreSign: scoreData.sign,
           });
 
           groupAbility.proficient ||= ability.proficient > 0;
@@ -587,14 +591,14 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           groupSkill.proficient ||= skill.proficient > 0;
 
           groupSkill.passive = Math.max(groupSkill.passive, skill.passive);
-        }
+        },
       );
     }
 
     /* -------------------------------------------- */
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
-    
+
     /**
      * Handle placing group members.
      * @this {MultiActorSheet}
@@ -617,13 +621,13 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       );
       return this.actor.system.removeMember(member);
     }
-    
+
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
     _onDragStart(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     ): void {
       const memberId = event.currentTarget
         .closest('[data-tidy-draggable][data-member-id]')
@@ -654,7 +658,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     async _onDropActor(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: Actor5e
+      data: Actor5e,
     ): Promise<object | boolean | undefined> {
       if (!this.isEditable) {
         return false;
@@ -675,7 +679,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       }
 
       const dropTarget = event.target?.closest<HTMLElement>(
-        '[data-tidy-draggable][data-member-id]'
+        '[data-tidy-draggable][data-member-id]',
       );
       const targetMemberId = dropTarget?.getAttribute('data-member-id');
 
@@ -707,7 +711,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
       return this.actor.system.members.find(
-        (m: MultiActor5eMember) => m.actor.id === actorId
+        (m: MultiActor5eMember) => m.actor.id === actorId,
       )?.actor;
     }
 
@@ -715,10 +719,10 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       const membersCollection: MultiActor5eMember[] =
         this.actor.system.toObject().members;
       const sourceIndex = membersCollection.findIndex(
-        (m) => m.actor === sourceActor.id
+        (m) => m.actor === sourceActor.id,
       );
       const targetIndex = membersCollection.findIndex(
-        (m) => m.actor === targetActor.id
+        (m) => m.actor === targetActor.id,
       );
 
       const sortBefore = sourceIndex > targetIndex;
@@ -737,7 +741,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
     async _onDropFolder(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: Record<string, any>
+      data: Record<string, any>,
     ) {
       if (!this.isEditable) {
         return false;
@@ -759,12 +763,12 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     /** @inheritDoc */
     async _onDropItem(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      item: Item5e
+      item: Item5e,
     ) {
       const { uuid } =
         event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
       const target = await fromUuid(uuid);
-      
+
       if (target instanceof foundry.documents.Actor) {
         return target.sheet._onDropCreateItems(event, [item]);
       }
@@ -776,13 +780,13 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     async _onDropCreateItems(
       event: DragEvent,
       items: Item5e[],
-      behavior?: DropEffectValue | null
+      behavior?: DropEffectValue | null,
     ) {
       let foundNonPhysical = false;
       items = items.filter((item) => {
         if (
           !item.system.constructor._schemaTemplates?.includes(
-            dnd5e.dataModels.item.PhysicalItemTemplate
+            dnd5e.dataModels.item.PhysicalItemTemplate,
           )
         ) {
           foundNonPhysical = true;

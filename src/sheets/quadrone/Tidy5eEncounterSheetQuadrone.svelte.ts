@@ -24,7 +24,6 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
@@ -43,7 +42,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
-  CONSTANTS.SHEET_TYPE_ENCOUNTER
+  CONSTANTS.SHEET_TYPE_ENCOUNTER,
 ) {
   static DEFAULT_ENCOUNTER_PLACEHOLDER_ICON = 'icons/svg/mystery-man.svg';
 
@@ -60,18 +59,18 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-      position: {
-        width: 740,
-        height: 810,
-      },
-    };
+    position: {
+      width: 740,
+      height: 810,
+    },
+  };
 
   static _lockedSkillAllowlist = new Set<string>(['ins', 'per']);
 
@@ -94,14 +93,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<EncounterSheetQuadroneContext> {
     if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
     }
 
     const actorContext = (await super._prepareContext(
-      options
+      options,
     )) as MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
     const enrichmentArgs = {
@@ -114,11 +113,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       .filter((x: Actor5e) => x.type === 'group')
       .map(
         (x: Actor5e) =>
-        ({
-          id: x.id,
-          name: x.name,
-          primary: x.id === game.actors.party?.id,
-        } satisfies DifficultyTarget)
+          ({
+            id: x.id,
+            name: x.name,
+            primary: x.id === game.actors.party?.id,
+          }) satisfies DifficultyTarget,
       );
 
     if (!game.actors.party) {
@@ -130,7 +129,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     }
 
     let difficultyTargetId = TidyFlags.encounterDifficultyTargetGroupId.get(
-      game.user
+      game.user,
     );
 
     if (!difficultyTargets.find((t) => t.id === difficultyTargetId)) {
@@ -161,7 +160,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           high: high ? (med / high) * 100 : 0,
         },
         availableTargets: difficultyTargets.sort((a, b) =>
-          a.name.localeCompare(b.name, game.i18n.lang)
+          a.name.localeCompare(b.name, game.i18n.lang),
         ),
         targetId: difficultyTargetId,
       },
@@ -169,11 +168,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
             this.actor.system.description.full,
-            enrichmentArgs
+            enrichmentArgs,
           ),
           summary: await foundry.applications.ux.TextEditor.enrichHTML(
             this.actor.system.description.summary,
-            enrichmentArgs
+            enrichmentArgs,
           ),
         },
       },
@@ -184,9 +183,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       ...actorContext,
     };
 
-    context.customContent = await EncounterSheetQuadroneRuntime.getContent(
-      context
-    );
+    context.customContent =
+      await EncounterSheetQuadroneRuntime.getContent(context);
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
@@ -196,7 +194,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   }
 
   async _prepareMemberDependentContext(
-    context: ActorSheetQuadroneContext
+    context: ActorSheetQuadroneContext,
   ): Promise<{
     combatants: (
       | EncounterMemberQuadroneContext
@@ -229,7 +227,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       members.map(async ({ actor, quantity }) => {
         const combatantSettings = CombatantSettings.getEntry(
           this.actor,
-          actor.uuid
+          actor.uuid,
         );
 
         const accentColor = coalesce(
@@ -237,7 +235,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           TidyFlags.sheetThemeSettings.get(actor)?.accentColor,
           // Else, use the group sheet's accent color, with fallback to world default accent color
           // Else, use the encounter sheet's accent color, with fallback to world default accent color
-          context.themeSettings.accentColor
+          context.themeSettings.accentColor,
         );
 
         this._prepareMemberSkills(actor, skills);
@@ -271,14 +269,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         combatants.push(memberContext);
 
         return memberContext;
-      })
+      }),
     );
 
     Object.values(TidyFlags.placeholders.get(this.actor)).forEach(
       (placeholder) => {
         const combatantSettings = CombatantSettings.getEntry(
           this.actor,
-          placeholder.id
+          placeholder.id,
         );
 
         combatants.push({
@@ -289,37 +287,37 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           name: placeholder.name,
           visible: combatantSettings.visible,
         });
-      }
+      },
     );
 
     return {
       combatants: combatants.sort(
         (a, b) =>
           (b.initiative ?? 0) - (a.initiative ?? 0) ||
-          a.name.localeCompare(b.name, game.i18n.lang)
+          a.name.localeCompare(b.name, game.i18n.lang),
       ),
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
-        a.label.localeCompare(b.label, game.i18n.lang)
+        a.label.localeCompare(b.label, game.i18n.lang),
       ),
       members: {
         npc: memberContexts,
         all: npcMap,
       },
       skills: [...skills.values()].sort((a, b) =>
-        a.name.localeCompare(b.name, game.i18n.lang)
+        a.name.localeCompare(b.name, game.i18n.lang),
       ),
       traits: {
         languages: [...languages.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         senses: [...senses.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         specials: [...specials.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         speeds: [...speeds.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
       },
     };
@@ -334,7 +332,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   private _prepareMemberCreatureType(
     actor: any,
     creatureTypeCountMap: Map<string, EncounterCreatureTypeContext>,
-    quantity: any
+    quantity: any,
   ) {
     const details = actor.system.details;
 
@@ -393,7 +391,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   updatePlaceholderField<K extends keyof EncounterPlaceholder>(
     placeholder: EncounterPlaceholderQuadroneContext,
     key: K,
-    value: EncounterPlaceholder[K]
+    value: EncounterPlaceholder[K],
   ) {
     const data: EncounterPlaceholder = {
       id: placeholder.id,
@@ -431,7 +429,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         members.map(async ({ actor }) => {
           const total = await this.getPrerolledInitiative(ev, actor);
           return [actor.uuid, total];
-        })
+        }),
       )
     ).reduce<Record<string, Partial<EncounterCombatantSettings>>>(
       (prev, [uuid, initiative]) => {
@@ -441,7 +439,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         };
         return prev;
       },
-      {}
+      {},
     );
 
     CombatantSettings.bulkInsertOrUpdate(this.actor, initiatives);
@@ -449,7 +447,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
   updateMember(
     uuid: string,
-    memberUpdateCallback: (member: any) => void
+    memberUpdateCallback: (member: any) => void,
   ): Promise<any> | undefined {
     const members: any[] = this.actor.system.toObject().members;
 
@@ -465,24 +463,29 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   }
 
   async award() {
-    this._renderChild(new dnd5e.applications.Award({
-      award: {
-        currency: { ...this.actor.system.currency },
-        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
-        xp: await this.actor.system.getXPValue(),
-      },
-    }));
+    this._renderChild(
+      new dnd5e.applications.Award({
+        award: {
+          currency: { ...this.actor.system.currency },
+          savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+          xp: await this.actor.system.getXPValue(),
+        },
+      }),
+    );
   }
 
   async _browseAddNpc() {
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters: {
-        locked: {
-          documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
-          types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
+            types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
+          },
         },
       },
-    }, this._detachOptions());
+      this._detachOptions(),
+    );
 
     if (result) {
       const actor = await fromUuid(result);
@@ -492,7 +495,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
   async addNewPlaceholder(
     data?: Partial<EncounterPlaceholder>,
-    combatantSettings?: Partial<EncounterCombatantSettings>
+    combatantSettings?: Partial<EncounterCombatantSettings>,
   ): Promise<void> {
     data ??= {};
     const newPlaceholder = FoundryAdapter.mergeObject(
@@ -501,12 +504,12 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
         name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
       },
-      data
+      data,
     );
 
     const result = await TidyFlags.placeholders.insertOrUpdateEntry(
       this.actor,
-      newPlaceholder
+      newPlaceholder,
     );
 
     if (combatantSettings) {
@@ -531,7 +534,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         .filter(
           ({ actor }) =>
             combatantSettings[actor.uuid]?.include ??
-            defaultCombatantSettings.include
+            defaultCombatantSettings.include,
         )
         .map(({ actor, quantity }) => ({
           name:
@@ -551,7 +554,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       ...Object.values(placeholders)
         .filter(
           (p) =>
-            combatantSettings[p.id]?.include ?? defaultCombatantSettings.include
+            combatantSettings[p.id]?.include ??
+            defaultCombatantSettings.include,
         )
         .map((p) => ({
           name: p.name,
@@ -582,7 +586,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           ?.getAttribute('data-member-uuid') ?? '';
 
       const actorMember = this.actor.system.members.find(
-        (m: any) => m.uuid === uuid
+        (m: any) => m.uuid === uuid,
       );
 
       const combatantSettings = CombatantSettings.getEntry(this.actor, uuid);
@@ -613,7 +617,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
       const combatantSettings = CombatantSettings.getEntry(
         this.actor,
-        placeholderId
+        placeholderId,
       );
 
       if (!combatantSettings.include) {
@@ -639,13 +643,13 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       img: string;
       initiative: number | undefined;
       hidden: boolean;
-    }[]
+    }[],
   ): Promise<void> | undefined {
     if (!game.combat) {
       ui.notifications.warn(
         FoundryAdapter.localize(
-          'TIDY5E.Encounter.AddCombatants.MustHaveEncounter.Message'
-        )
+          'TIDY5E.Encounter.AddCombatants.MustHaveEncounter.Message',
+        ),
       );
       return;
     }

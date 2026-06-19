@@ -3,12 +3,12 @@ import {
   getActorTabContext,
   getCanonicalTabSelection,
   getItemTabContext,
-} from 'src/applications/tab-configuration/tab-configuration-functions';
+} from 'src/applications/settings/tab-configuration/tab-configuration-functions';
 import type {
   ConfigTabInfo,
   TabConfigContextEntry,
   VisibilityLevelConfig,
-} from 'src/applications/tab-configuration/tab-configuration.types';
+} from 'src/applications/settings/tab-configuration/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';

@@ -7,10 +7,10 @@
   import BasicTabSettingsPane from './tabs/BasicTabSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
-  import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
-  import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
-  import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
+  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
+  import SheetTabConfigurationQuadrone from 'src/applications/settings/tab-configuration/SheetTabConfigurationQuadrone.svelte';
+  import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
+  import ConfigureSections from 'src/applications/settings/configure-sections/ConfigureSections.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
   import { CONSTANTS } from 'src/constants';
   import { arrayMove } from 'src/utils/array';

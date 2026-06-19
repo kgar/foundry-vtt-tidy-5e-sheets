@@ -16,7 +16,7 @@
   import { Inventory } from 'src/features/sections/Inventory';
   import { CONSTANTS } from 'src/constants';
   import { isUserInteractable } from 'src/utils/element';
-  import { DetachedInfoCardApplication } from 'src/applications/info-card/DetachedInfoCardApplication';
+  import { DetachedInfoCardApplication } from 'src/applications/classic-info-card/DetachedInfoCardApplication';
   import { settings } from 'src/settings/settings.svelte';
   import { componentWithProps } from 'src/utils/component';
 

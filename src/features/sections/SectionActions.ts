@@ -9,7 +9,7 @@ import type {
   SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';
-import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
 import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
