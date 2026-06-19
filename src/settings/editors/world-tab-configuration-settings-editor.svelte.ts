@@ -199,7 +199,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       (i) =>
         i.documentName === entry.documentName &&
         i.documentType === entry.documentType &&
-        i.docTypeKeyOverride === entry.docTypeKeyOverride,
+        (i.docTypeKeyOverride ?? null) === (entry.docTypeKeyOverride ?? null),
     );
 
     if (!initialEntry) {
@@ -265,13 +265,15 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       documentType: string,
       docTypeKeyOverride: string | null = null,
     ) {
-      for (const [index, entry] of this.value.entries()) {
+      for (const entry of this.value) {
         if (
           entry.documentName === documentName &&
           entry.documentType === documentType &&
           (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
         ) {
-          this.value[index] = getDefaultEntry(entry);
+          const defaultEntry = getDefaultEntry(entry);
+          entry.tabs = defaultEntry.tabs;
+          entry.visibilityLevels = defaultEntry.visibilityLevels;
 
           return;
         }
@@ -324,16 +326,18 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         typeof snapshotConfig
       >;
 
-      for (const [index, entry] of this.value.entries()) {
+      for (const entry of this.value) {
         if (
           entry.documentName === documentName &&
           entry.documentType === documentType &&
           (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
         ) {
-          this.value[index] = getInitialEntry(initial, entry);
+          const initialEntry = getInitialEntry(initial, entry);
+          entry.tabs = initialEntry.tabs;
+          entry.visibilityLevels = initialEntry.visibilityLevels;
           break;
         }
-      }
+      }  
     },
 
     get value() {

@@ -142,12 +142,13 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
         return;
       }
 
-      for (const [index, entry] of this.value.entries()) {
+      for (const entry of this.value) {
         if (
           documentName === entry.documentName &&
           documentType === entry.documentType
         ) {
-          this.value[index] = defaultEntry;
+          entry.controlSettings = defaultEntry.controlSettings;
+          break;
         }
       }
     },
@@ -247,12 +248,13 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
         return;
       }
 
-      for (const [index, entry] of this.value.entries()) {
+      for (const entry of this.value) {
         if (
-          entry.documentName === documentName &&
-          entry.documentType === documentType
+          documentName === entry.documentName &&
+          documentType === entry.documentType
         ) {
-          this.value[index] = initialEntry;
+          entry.controlSettings = initialEntry.controlSettings;
+          break;
         }
       }
     },
