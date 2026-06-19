@@ -298,6 +298,7 @@ export function mapTabConfigContextEntryToSnapshot(
     documentName: entry.documentName,
     documentType: entry.documentType,
     docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
+    sidebarExpandedByTabId: entry.sidebarExpandedByTabId,
     ...getCanonicalTabSelection(entry),
   };
 }
@@ -364,6 +365,7 @@ export function getInitialTabConfigContextEntry(
 
   return {
     ...entry,
+    sidebarExpandedByTabId: initialEntry.sidebarExpandedByTabId,
     tabs: tabs,
     visibilityLevels: visibilityLevels,
   };

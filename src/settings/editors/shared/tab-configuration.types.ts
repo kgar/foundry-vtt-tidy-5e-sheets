@@ -41,4 +41,5 @@ export type TabConfigSnapshot = {
   docTypeKeyOverride: string | null;
   tabs: { id: string; show: boolean }[];
   visibilityLevels: Record<string, number | null>;
+  sidebarExpandedByTabId?: Record<string, boolean>;
 };
