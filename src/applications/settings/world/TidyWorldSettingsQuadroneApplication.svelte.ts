@@ -144,38 +144,33 @@ export class WorldSettingsQuadroneApplication
   /**
    * The pane for undo/use defaults.
    */
-  // getActivePane(): SettingsEditor<unknown> | undefined {
-  //   const currentTabId = this.currentTabId;
-  //   switch (currentTabId) {
-  //     case WorldSettingsTabIds.theme:
-  //       return this.editors.themeSettingsTab;
-  //     case WorldSettingsTabIds.sheetPreferences:
-  //       return this.editors.sheetPreferencesTab;
-  //     case WorldSettingsTabIds.homebrew:
-  //       return this.editors.homebrewTab;
-  //   }
+  getActivePane(): SettingsEditor<unknown> | undefined {
+    const currentTabId = this.currentTabId;
+    switch (currentTabId) {
+      case WorldSettingsTabIds.theme:
+        return this.editors.themeSettingsTab;
+      case WorldSettingsTabIds.sheetPreferences:
+        return this.editors.sheetPreferencesTab;
+      case WorldSettingsTabIds.homebrew:
+        return this.editors.homebrewTab;
+    }
 
-  //   // Sheet Settings
-  //   const sheetConfig = this.editors.headerControlsTab.value.find(
-  //     (config) =>
-  //       currentTabId ===
-  //       this.getSheetConfigTabId(config.documentName, config.documentType),
-  //   );
+    // Sheet Settings
+    if (currentTabId) {
+      const sheetConfigEditor = this.sheetConfigEditors[currentTabId];
+      if (sheetConfigEditor) {
+        return sheetConfigEditor;
+      }
+    }
+  }
 
-  //   const sheetConfigEditor = this.;
-  //   if (sheetConfig) {
-  //     return sheetConfig;
-  //   }
-  // }
+  canUndo = $derived(!!this.getActivePane()?.hasChanges);
 
-  // canUndo = $derived(!!this.getActivePane()?.hasChanges);
-  canUndo = true;
-
-  // canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
-  canUseDefault = true;
+  canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
 
   // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
   // this forces them to remount and re-read the reset config. See WorldSheetSettings.
+  // TODO: Can I get around the need for tabPaneVersion?
   tabPaneVersion = $state(0);
 
   /** Revert every deferred-save page to its last-saved state (staged). */

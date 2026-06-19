@@ -201,18 +201,8 @@
     {/if}
   </section>
 
-  <!-- One shared footer. Deferred-save pages drive it through the dialog.
-       Overview/Defaults and About have no settings, so they get none. -->
-  {const FOOTERLESS_TABS = new Set<string>([WorldSettingsTabIds.defaults])}
-  {let showFooter = $derived(!FOOTERLESS_TABS.has(activeSelectedId))}
-  
-  {#if showFooter}
-    <SettingsFooter host={app} onSave={() => app.save()} />
-  {/if}
-  <!-- 
-  TODO: make this possible     
   {const activePane = $derived(app.getActivePane())}
   {#if activePane}
     <SettingsFooter host={activePane} onSave={() => app.save()} />
-  {/if} -->
+  {/if}
 </div>
