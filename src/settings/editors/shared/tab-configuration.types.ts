@@ -33,3 +33,12 @@ export type TabConfigContextEntry = {
   docTypeKeyOverride?: string;
   sidebarExpandedByTabId?: Record<string, boolean>;
 };
+
+export type TabConfigSnapshot = {
+  title: string;
+  documentName: string;
+  documentType: string;
+  docTypeKeyOverride: string | null;
+  tabs: { id: string; show: boolean }[];
+  visibilityLevels: Record<string, number | null>;
+};

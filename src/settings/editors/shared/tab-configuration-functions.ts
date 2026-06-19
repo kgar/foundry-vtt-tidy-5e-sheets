@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ConfigTabInfo,
   TabConfigContextEntry,
+  TabConfigSnapshot,
   TabInfo,
   VisibilityLevelConfig,
 } from './tab-configuration.types';
@@ -18,7 +19,7 @@ import type { CustomTabTitle } from 'src/api';
 
 /**
  * {@link TabConfigContextEntry} stores the tab order and who can see them.
- * It contains the full list of tabs (with their ids and show/hide state) 
+ * It contains the full list of tabs (with their ids and show/hide state)
  * and a map of viewer visibility levels by tab ID.
  */
 export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
@@ -28,7 +29,7 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
   const visibilityLevels: Record<string, number | null> = {};
 
   for (const level of [...entry.visibilityLevels].sort((a, b) =>
-    a.id.localeCompare(b.id)
+    a.id.localeCompare(b.id),
   )) {
     visibilityLevels[level.id] = level.visibilityLevel;
   }
@@ -42,15 +43,15 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
 export function getItemTabContext(
   type: string,
   settings: SheetTabConfiguration | undefined | null,
-  useWorldSettings: boolean
+  useWorldSettings: boolean,
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
   let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
   let worldDefaultSelectedIds = useWorldSettings
-    ? getWorldDefaultSelectedTabIds(documentName, type) ?? [
+    ? (getWorldDefaultSelectedTabIds(documentName, type) ?? [
         ...defaultSelectedIds,
-      ]
+      ])
     : undefined;
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
@@ -60,7 +61,7 @@ export function getItemTabContext(
     allRegisteredTabs,
     settings,
     defaultSelectedIds,
-    worldDefaultSelectedIds
+    worldDefaultSelectedIds,
   );
 }
 
@@ -69,15 +70,17 @@ export function getActorTabContext(
   type: string,
   settings: SheetTabConfiguration | undefined | null,
   useWorldSettings: boolean,
-  docTypeKeyOverride?: string
+  docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const allRegisteredTabs = runtime.getAllRegisteredTabs();
   let defaultSelectedIds = runtime.getDefaultTabIds();
   let worldDefaultSelectedIds = useWorldSettings
-    ? getWorldDefaultSelectedTabIds(documentName, type, docTypeKeyOverride) ?? [
-        ...defaultSelectedIds,
-      ]
+    ? (getWorldDefaultSelectedTabIds(
+        documentName,
+        type,
+        docTypeKeyOverride,
+      ) ?? [...defaultSelectedIds])
     : undefined;
 
   return buildTabConfigContextEntry(
@@ -87,19 +90,19 @@ export function getActorTabContext(
     settings,
     defaultSelectedIds,
     worldDefaultSelectedIds,
-    docTypeKeyOverride
+    docTypeKeyOverride,
   );
 }
 
 function getWorldDefaultSelectedTabIds(
   documentName: string,
   type: string,
-  typeOverride?: string
+  typeOverride?: string,
 ): string[] | undefined {
   const selected = getSelectedTabIds(
     SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
       typeOverride ?? type
-    ]
+    ],
   );
 
   if (selected.length > 0) {
@@ -110,14 +113,18 @@ function getWorldDefaultSelectedTabIds(
 export function buildTabConfigContextEntry(
   documentName: string,
   type: string,
-  allRegisteredTabs: { id: string; title: CustomTabTitle; iconClass?: string }[],
+  allRegisteredTabs: {
+    id: string;
+    title: CustomTabTitle;
+    iconClass?: string;
+  }[],
   settings: SheetTabConfiguration | undefined | null,
   defaultSelectedIds: string[],
   worldDefaultSelectedIds?: string[],
-  docTypeKeyOverride?: string
+  docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
-    `TYPES.${documentName}.${type}`
+    `TYPES.${documentName}.${type}`,
   );
 
   // Registry of every currently-registered tab (title/icon lookup).
@@ -126,13 +133,13 @@ export function buildTabConfigContextEntry(
       prev[tab.id] = {
         id: tab.id,
         title: FoundryAdapter.localize(
-          typeof tab.title === 'function' ? tab.title() : tab.title
+          typeof tab.title === 'function' ? tab.title() : tab.title,
         ).titleCase(),
         iconClass: tab.iconClass,
       };
       return prev;
     },
-    {}
+    {},
   );
 
   // Check world defaults when present.
@@ -187,7 +194,7 @@ export function buildTabConfigContextEntry(
       prev[tab.id] = { ...tab, show: showById.get(tab.id) ?? false };
       return prev;
     },
-    {}
+    {},
   );
 
   // Per-tab visibility levels: prefer the value folded into the saved tabs map,
@@ -197,7 +204,7 @@ export function buildTabConfigContextEntry(
     Object.values(savedTabs ?? {}).map((entry) => [
       entry.key,
       entry.visibilityLevel,
-    ])
+    ]),
   );
   const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs)
     .map((t) => ({
@@ -206,8 +213,8 @@ export function buildTabConfigContextEntry(
       iconClass: t.iconClass,
       show: t.show,
       visibilityLevel: savedLevelByKey.has(t.id)
-        ? savedLevelByKey.get(t.id) ?? null
-        : settings?.visibilityLevels[t.id] ?? null,
+        ? (savedLevelByKey.get(t.id) ?? null)
+        : (settings?.visibilityLevels[t.id] ?? null),
     }))
     .sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
 
@@ -229,10 +236,10 @@ export function buildTabConfigContextEntry(
  */
 export function buildTabConfigMap(
   tabs: { id: string; show: boolean }[],
-  visibilityLevels: { id: string; visibilityLevel: number | null }[]
+  visibilityLevels: { id: string; visibilityLevel: number | null }[],
 ): Record<string, SheetTabConfigEntry> {
   const levelById = new Map(
-    visibilityLevels.map((l) => [l.id, l.visibilityLevel])
+    visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
   );
   return tabs.reduce<Record<string, SheetTabConfigEntry>>(
     (prev, tab, order) => {
@@ -244,7 +251,7 @@ export function buildTabConfigMap(
       };
       return prev;
     },
-    {}
+    {},
   );
 }
 
@@ -255,7 +262,7 @@ export function buildTabConfigMap(
  */
 function buildOrderedTabs(
   all: Record<string, TabInfo>,
-  selectedIds: string[]
+  selectedIds: string[],
 ): ConfigTabInfo[] {
   const selectedSet = new Set(selectedIds);
 
@@ -278,4 +285,86 @@ function buildOrderedTabs(
     }));
 
   return [...selected, ...unselected];
+}
+
+/**
+ * Given a tab config entry, create a stable snapshot model.
+ */
+export function mapTabConfigContextEntryToSnapshot(
+  entry: TabConfigContextEntry,
+): TabConfigSnapshot {
+  return {
+    title: entry.title,
+    documentName: entry.documentName,
+    documentType: entry.documentType,
+    docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
+    ...getCanonicalTabSelection(entry),
+  };
+}
+
+/**
+ * Searches an array of initial snapshot entries, finds a match by
+ * tab ID, and rebuilds the tab configurations from the initial data.
+ * Returns the rebuilt context entry restored to the found initial
+ * settings, else returns the config that was provided when no initial entry
+ * is found.
+ */
+export function getInitialTabConfigContextEntry(
+  initialEntries: TabConfigSnapshot[],
+  entry: TabConfigContextEntry,
+): TabConfigContextEntry {
+  const initialEntry = initialEntries.find(
+    (i) =>
+      i.documentName === entry.documentName &&
+      i.documentType === entry.documentType &&
+      (i.docTypeKeyOverride ?? null) === (entry.docTypeKeyOverride ?? null),
+  );
+
+  if (!initialEntry) {
+    return entry;
+  }
+
+  // Rebuild tabs and replace
+  const currentTabs = new Map<string, ConfigTabInfo>(
+    entry.tabs.map((tab) => [tab.id, tab]),
+  );
+
+  const tabs = initialEntry.tabs.reduce<ConfigTabInfo[]>((prev, tab) => {
+    const currentTab = currentTabs.get(tab.id);
+
+    if (currentTab) {
+      prev.push({
+        ...currentTab,
+        ...tab,
+      });
+    }
+
+    return prev;
+  }, []);
+
+  // Rebuild visibilityLevels and replace
+  const currentVisibilityLevels = new Map<string, VisibilityLevelConfig>(
+    entry.visibilityLevels.map((level) => [level.id, level]),
+  );
+
+  const visibilityLevels = Object.entries(initialEntry.visibilityLevels).reduce<
+    VisibilityLevelConfig[]
+  >((prev, [tabId, level]) => {
+    const currentLevel = currentVisibilityLevels.get(tabId);
+
+    if (currentLevel) {
+      prev.push({
+        ...currentLevel,
+        visibilityLevel: level,
+      });
+    }
+
+    return prev;
+  }, []);
+
+  return {
+    ...entry,
+    tabs: tabs,
+    visibilityLevels: visibilityLevels,
+  };
 }

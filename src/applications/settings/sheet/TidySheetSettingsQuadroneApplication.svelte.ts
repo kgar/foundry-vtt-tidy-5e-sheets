@@ -18,7 +18,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { getActorTabContext } from 'src/applications/settings/tab-configuration/tab-configuration-functions';
+import { getActorTabContext } from 'src/settings/editors/shared/tab-configuration-functions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';

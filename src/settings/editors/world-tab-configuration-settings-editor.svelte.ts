@@ -1,14 +1,11 @@
 import {
   buildTabConfigMap,
   getActorTabContext,
-  getCanonicalTabSelection,
+  getInitialTabConfigContextEntry,
   getItemTabContext,
-} from 'src/applications/settings/tab-configuration/tab-configuration-functions';
-import type {
-  ConfigTabInfo,
-  TabConfigContextEntry,
-  VisibilityLevelConfig,
-} from 'src/applications/settings/tab-configuration/tab-configuration.types';
+  mapTabConfigContextEntryToSnapshot,
+} from 'src/settings/editors/shared/tab-configuration-functions';
+import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
@@ -50,13 +47,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
    * raw JSON.stringify of `_config` would always look dirty.
    */
   function snapshotConfig(config: TabConfigContextEntry[]) {
-    return $state.snapshot(config).map((entry) => ({
-      title: entry.title,
-      documentName: entry.documentName,
-      documentType: entry.documentType,
-      docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
-      ...getCanonicalTabSelection(entry),
-    }));
+    return $state.snapshot(config).map(mapTabConfigContextEntryToSnapshot);
   }
 
   function getConfig(settingOverride?: TabConfiguration) {
@@ -191,66 +182,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     await FoundryAdapter.setTidySetting('tabConfiguration', toSave);
   }
 
-  function getInitialEntry(
-    initial: ReturnType<typeof snapshotConfig>,
-    entry: TabConfigContextEntry,
-  ) {
-    const initialEntry = initial.find(
-      (i) =>
-        i.documentName === entry.documentName &&
-        i.documentType === entry.documentType &&
-        (i.docTypeKeyOverride ?? null) === (entry.docTypeKeyOverride ?? null),
-    );
-
-    if (!initialEntry) {
-      return entry;
-    }
-
-    // Rebuild tabs and replace
-    const currentTabs = new Map<string, ConfigTabInfo>(
-      entry.tabs.map((tab) => [tab.id, tab]),
-    );
-
-    const tabs = initialEntry.tabs.reduce<ConfigTabInfo[]>((prev, tab) => {
-      const currentTab = currentTabs.get(tab.id);
-
-      if (currentTab) {
-        prev.push({
-          ...currentTab,
-          ...tab,
-        });
-      }
-
-      return prev;
-    }, []);
-
-    // Rebuild visibilityLevels and replace
-    const currentVisibilityLevels = new Map<string, VisibilityLevelConfig>(
-      entry.visibilityLevels.map((level) => [level.id, level]),
-    );
-
-    const visibilityLevels = Object.entries(
-      initialEntry.visibilityLevels,
-    ).reduce<VisibilityLevelConfig[]>((prev, [tabId, level]) => {
-      const currentLevel = currentVisibilityLevels.get(tabId);
-
-      if (currentLevel) {
-        prev.push({
-          ...currentLevel,
-          visibilityLevel: level,
-        });
-      }
-
-      return prev;
-    }, []);
-
-    return {
-      ...entry,
-      tabs: tabs,
-      visibilityLevels: visibilityLevels,
-    };
-  }
-
   return {
     get hasChanges() {
       return hasChanges;
@@ -314,7 +245,9 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         typeof snapshotConfig
       >;
 
-      this.value = this.value.map((entry) => getInitialEntry(initial, entry));
+      this.value = this.value.map((entry) =>
+        getInitialTabConfigContextEntry(initial, entry),
+      );
     },
 
     undoEntryChanges(
@@ -332,12 +265,12 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
           entry.documentType === documentType &&
           (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
         ) {
-          const initialEntry = getInitialEntry(initial, entry);
+          const initialEntry = getInitialTabConfigContextEntry(initial, entry);
           entry.tabs = initialEntry.tabs;
           entry.visibilityLevels = initialEntry.visibilityLevels;
           break;
         }
-      }   
+      }
     },
 
     get value() {
