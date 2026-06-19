@@ -115,6 +115,10 @@
   function selectTab(id: string) {
     app.selectTab(id);
   }
+
+  function incrementTabPaneVersion(): void | Promise<void> {
+      app.tabPaneVersion++;
+  }
 </script>
 
 <div class="tidy-sheet-settings">
@@ -203,6 +207,9 @@
 
   {const activePane = $derived(app.getActivePane())}
   {#if activePane}
-    <SettingsFooter host={activePane} onSave={() => app.save()} />
+    <SettingsFooter host={activePane} 
+      save={() => app.save()} 
+      onResetDefault={incrementTabPaneVersion} 
+      onUndo={incrementTabPaneVersion} />
   {/if}
 </div>

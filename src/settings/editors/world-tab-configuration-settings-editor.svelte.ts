@@ -337,7 +337,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
           entry.visibilityLevels = initialEntry.visibilityLevels;
           break;
         }
-      }  
+      }   
     },
 
     get value() {
