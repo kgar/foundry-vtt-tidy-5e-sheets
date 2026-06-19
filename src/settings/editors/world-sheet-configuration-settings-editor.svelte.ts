@@ -62,13 +62,15 @@ export function getWorldSheetConfigurationSettingsEditor(
     ),
   });
 
-  const original = getConfigSnapshot(current);
+  const original = snapshotConfig(current);
 
   let initialSnapshot = $state<string>(JSON.stringify(original));
 
-  const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
+  const hasChanges = $derived(
+    JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
+  );
 
-  function getConfigSnapshot(config: WorldSheetConfigurationContext) {
+  function snapshotConfig(config: WorldSheetConfigurationContext) {
     const snapshotConfig = $state.snapshot(config);
     const data = {
       tabConfig: {
@@ -105,7 +107,11 @@ export function getWorldSheetConfigurationSettingsEditor(
     resetToDefault() {
       headerControlsEditor.resetEntryToDefault(documentName, documentType);
       tabConfigEditor.resetEntryToDefault(documentName, documentType);
-      sidebarTabConfigEditor?.resetEntryToDefault(documentName, documentType);
+      sidebarTabConfigEditor?.resetEntryToDefault(
+        documentName,
+        documentType,
+        CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+      );
     },
 
     async save() {
@@ -117,7 +123,11 @@ export function getWorldSheetConfigurationSettingsEditor(
     undoChanges() {
       headerControlsEditor.undoEntryChanges(documentName, documentType);
       tabConfigEditor.undoEntryChanges(documentName, documentType);
-      sidebarTabConfigEditor?.undoEntryChanges(documentName, documentType);
+      sidebarTabConfigEditor?.undoEntryChanges(
+        documentName,
+        documentType,
+        CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+      );
     },
 
     async useDefault() {

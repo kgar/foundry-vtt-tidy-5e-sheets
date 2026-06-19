@@ -25,8 +25,16 @@ import type { SettingsEditor } from './settings-editors.svelte';
 export type WorldTabConfigurationSettingsEditor = SettingsEditor<
   TabConfigContextEntry[]
 > & {
-  resetEntryToDefault(documentName: string, documentType: string): void;
-  undoEntryChanges(documentName: string, documentType: string): void;
+  resetEntryToDefault(
+    documentName: string,
+    documentType: string,
+    docTypeKeyOverride?: string | null,
+  ): void;
+  undoEntryChanges(
+    documentName: string,
+    documentType: string,
+    docTypeKeyOverride?: string | null,
+  ): void;
 };
 
 export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationSettingsEditor {
@@ -43,6 +51,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
    */
   function snapshotConfig(config: TabConfigContextEntry[]) {
     return $state.snapshot(config).map((entry) => ({
+      title: entry.title,
       documentName: entry.documentName,
       documentType: entry.documentType,
       docTypeKeyOverride: entry.docTypeKeyOverride ?? null,
@@ -254,14 +263,13 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     resetEntryToDefault(
       documentName: string,
       documentType: string,
-      // docTypeKeyOverride?: string,
+      docTypeKeyOverride: string | null = null,
     ) {
       for (const [index, entry] of this.value.entries()) {
         if (
           entry.documentName === documentName &&
-          entry.documentType === documentType
-          // &&
-          // entry.docTypeKeyOverride === docTypeKeyOverride
+          entry.documentType === documentType &&
+          (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
         ) {
           this.value[index] = getDefaultEntry(entry);
 
@@ -307,7 +315,11 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       this.value = this.value.map((entry) => getInitialEntry(initial, entry));
     },
 
-    undoEntryChanges(documentName: string, documentType: string) {
+    undoEntryChanges(
+      documentName: string,
+      documentType: string,
+      docTypeKeyOverride: string | null = null,
+    ) {
       const initial = JSON.parse(initialSnapshot) as ReturnType<
         typeof snapshotConfig
       >;
@@ -315,7 +327,8 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       for (const [index, entry] of this.value.entries()) {
         if (
           entry.documentName === documentName &&
-          entry.documentType === documentType
+          entry.documentType === documentType &&
+          (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
         ) {
           this.value[index] = getInitialEntry(initial, entry);
           break;
