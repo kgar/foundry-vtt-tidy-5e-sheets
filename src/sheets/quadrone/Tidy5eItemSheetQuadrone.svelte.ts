@@ -40,8 +40,10 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import {
+  TidySheetSettingsQuadroneApplication,
+  TidySheetSettingsTabIds,
+} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -127,11 +129,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         );
       },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this._renderChild(
-          new ThemeSettingsQuadroneApplication({
-            document: this.document,
-          }),
-        );
+        const settings = new TidySheetSettingsQuadroneApplication({
+          document: this.document,
+        });
+        settings.selectTab(TidySheetSettingsTabIds.theme);
+        return this._renderChild(settings);
       },
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },

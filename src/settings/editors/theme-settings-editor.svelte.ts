@@ -1,9 +1,9 @@
-import type { ThemeColorSettingConfigEntry } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   PortraitShape,
+  ThemeColorSetting,
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
@@ -11,6 +11,10 @@ import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import type { SettingsEditor } from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
+  label: string;
+};
 
 export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
   actorHeaderBackgroundSupportedActorTypes: Set<string>;
@@ -47,25 +51,14 @@ export type ThemeSettingsContext = {
 };
 
 export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
-  const current = $state<ThemeSettingsContext>({
-    accentColor: '',
-    useBasicTheme: null,
-    useHeaderBackground: null,
-    headerColor: '',
-    actorHeaderBackground: '',
-    headerBackgroundColor: '',
-    itemSidebarBackground: '',
-    portraitShape: undefined,
-    rarityColors: [],
-    spellPreparationMethodColors: [],
-  });
+  const current = $state<ThemeSettingsContext>(getSettings());
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: ThemeSettingsContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function mapFromSettings(
@@ -176,11 +169,6 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
       return hasChanges;
     },
 
-    initialize() {
-      this.value = getSettings();
-      initialSnapshot = snapshotConfig(this.value);
-    },
-
     mapContextToChangedSettings: mapContextToChangedSettings,
 
     mapFromSettings: mapFromSettings,
@@ -207,7 +195,7 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
         );
       }
 
-      snapshotConfig(this.value);
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {

@@ -42,7 +42,7 @@
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
-  import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+  import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';

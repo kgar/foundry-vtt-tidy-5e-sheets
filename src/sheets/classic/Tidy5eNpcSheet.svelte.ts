@@ -28,7 +28,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';

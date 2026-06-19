@@ -38,16 +38,14 @@ export type SpellSourceItemAssignmentsSettingsEditor =
 export function getSpellSourceItemAssignmentsSettingsEditor(
   document: Actor5e,
 ): SpellSourceItemAssignmentsSettingsEditor {
-  const current = $state<SpellSourceItemAssignmentsContext>({
-    assignments: [],
-  });
+  const current = $state<SpellSourceItemAssignmentsContext>(getConfig());
 
-  let initialSnapshot = $state('');
+  let initialSnapshot = $state(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: SpellSourceItemAssignmentsContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function getConfig(): SpellSourceItemAssignmentsContext {
@@ -78,14 +76,11 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
       return hasChanges;
     },
 
-    get canUndo() { return this.hasChanges },
+    get canUndo() {
+      return this.hasChanges;
+    },
 
     canUseDefault: true,
-
-    initialize() {
-      this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
-    },
 
     resetToDefault() {
       // TODO: find out - '' or undefined?
@@ -101,6 +96,8 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
       }));
 
       await document.updateEmbeddedDocuments('Item', updateData);
+
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {

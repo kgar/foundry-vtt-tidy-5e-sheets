@@ -7,10 +7,10 @@
   import BasicTabSettingsPane from './tabs/BasicTabSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/theme/ThemeSettingsQuadrone.svelte';
-  import SheetTabConfigurationQuadrone from 'src/applications/tab-configuration/SheetTabConfigurationQuadrone.svelte';
-  import SheetHeaderControlConfig from 'src/applications/header-control-configuration/SheetHeaderControlConfig.svelte';
-  import ConfigureSections from 'src/applications-quadrone/configure-sections/ConfigureSections.svelte';
+  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
+  import SheetTabConfigurationQuadrone from 'src/applications/settings/tab-configuration/SheetTabConfigurationQuadrone.svelte';
+  import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
+  import ConfigureSections from 'src/applications/settings/configure-sections/ConfigureSections.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
   import { CONSTANTS } from 'src/constants';
   import { arrayMove } from 'src/utils/array';
@@ -99,21 +99,9 @@
       : []),
   ]);
 
-  // Tab lists come from singular `tabs`array in order with a visibility property.
-  let tabConfigEntry = $derived(app.tabDisplaySettingsTab.value.entry);
-
-  let tabConfigOptions: SettingsTab[] = $derived(
-    (tabConfigEntry?.tabs ?? []).map((t) => ({
-      id: `sheet:${t.id}`,
-      title: t.title,
-      iconClass: t.iconClass,
-      tabHidden: !t.show,
-    })),
-  );
-
   let allAvailableTabs: SettingsTab[] = $derived([
     ...sheetConfigOptions,
-    ...tabConfigOptions,
+    ...app.tabConfigOptions,
   ]);
 
   let selectedId: string = $derived(app.currentTabId ?? SETTINGS_THEME);
@@ -133,7 +121,7 @@
   );
 
   let configureSectionsApp = $derived(
-    app.getConfigureSectionsConfigTab(selectedSheetTabId),
+    app.configureSectionsChildAppByTabId.get(selectedSheetTabId),
   );
 
   function selectTab(id: string) {
@@ -155,12 +143,12 @@
       return null;
     }
 
-    if (dropIndicatorIndex < tabConfigOptions.length) {
+    if (dropIndicatorIndex < app.tabConfigOptions.length) {
       const el = rowElements[dropIndicatorIndex];
       return el ? el.offsetTop - ROW_GAP / 2 : null;
     }
 
-    const el = rowElements[tabConfigOptions.length - 1];
+    const el = rowElements[app.tabConfigOptions.length - 1];
     return el ? el.offsetTop + el.offsetHeight + ROW_GAP / 2 : null;
   });
 
@@ -177,8 +165,8 @@
     ev.preventDefault();
 
     const y = ev.clientY;
-    let gap = tabConfigOptions.length;
-    for (let i = 0; i < tabConfigOptions.length; i++) {
+    let gap = app.tabConfigOptions.length;
+    for (let i = 0; i < app.tabConfigOptions.length; i++) {
       const rect = rowElements[i]?.getBoundingClientRect();
       if (rect && y < rect.top + rect.height / 2) {
         gap = i;
@@ -269,7 +257,7 @@
       <h3 class="nav-group-header">
         {localize('TIDY5E.SheetSettings.Group.Tabs')}
       </h3>
-      {#if tabConfigOptions.length === 0}
+      {#if app.tabConfigOptions.length === 0}
         <div class="nav-empty hint">
           {localize('TIDY5E.SheetSettings.NoTabsHint')}
         </div>
@@ -280,7 +268,7 @@
           ondragover={onListDragOver}
           ondrop={onTabDrop}
         >
-          {#each tabConfigOptions as entry, i (entry.id)}
+          {#each app.tabConfigOptions as entry, i (entry.id)}
             <button
               bind:this={rowElements[i]}
               type="button"
@@ -406,7 +394,8 @@
 
   <!-- One footer for the deferred-save panes. Section editors / spell
        assignments report no active pane and keep their own in-pane controls. -->
-  {#if app.getActivePane()}
-    <SettingsFooter host={app} />
+  {const activePane = $derived(app.getActivePane())}
+  {#if activePane}
+    <SettingsFooter host={activePane} onSave={() => app.save()} />
   {/if}
 </div>

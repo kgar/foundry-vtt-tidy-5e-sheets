@@ -106,11 +106,30 @@ export function getConfigureSectionsSettingsEditor(
     sections: mapSectionBaseToConfig(settings.sections),
   });
 
+  // initialize the option group values
+  for (const group of current.optionsGroups) {
+    for (const setting of group.settings) {
+      if (setting.type === 'button' || setting.type === 'navigationButton') {
+        continue;
+      }
+
+      const doc = setting.doc ?? document;
+      if (setting.type === 'boolean') {
+        setting.checked =
+          foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
+      } else if (setting.type === 'radio') {
+        const selected =
+          foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
+        setting.selected = selected;
+      }
+    }
+  }
+
   const original = snapshotConfig(current);
 
   const defaultSections = mapSectionBaseToConfig(settings.defaultSections);
 
-  let initialSnapshot = $state<string>('');
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(
     JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
@@ -185,31 +204,6 @@ export function getConfigureSectionsSettingsEditor(
     document,
 
     formTitle: settings.formTitle,
-
-    initialize() {
-      for (const group of current.optionsGroups) {
-        for (const setting of group.settings) {
-          if (
-            setting.type === 'button' ||
-            setting.type === 'navigationButton'
-          ) {
-            continue;
-          }
-
-          const doc = setting.doc ?? document;
-          if (setting.type === 'boolean') {
-            setting.checked =
-              foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
-          } else if (setting.type === 'radio') {
-            const selected =
-              foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
-            setting.selected = selected;
-          }
-        }
-      }
-
-      initialSnapshot = JSON.stringify(snapshotConfig(current));
-    },
 
     navigator: navigator,
 

@@ -10,7 +10,7 @@ import SectionSelector from './SectionSelector.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Tab } from 'src/types/types';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import { coalesce } from 'src/utils/formatting';
 

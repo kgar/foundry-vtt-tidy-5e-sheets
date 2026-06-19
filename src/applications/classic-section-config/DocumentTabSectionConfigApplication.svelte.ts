@@ -7,7 +7,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 
 type SectionConfigConstructorArgs = {
   sections: TidySectionBase[];

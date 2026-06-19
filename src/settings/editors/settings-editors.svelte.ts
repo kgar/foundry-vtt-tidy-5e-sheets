@@ -1,12 +1,17 @@
-export type SettingsEditor<T> = {
+export type SettingsEditor<T> = SettingsEditorController & {
+  /** Get the current staged value. */
+  get value(): T;
+
+  /** Set the current staged value. */
+  set value(v: T);
+};
+
+export type SettingsEditorController = {
   /**
    * Denotes whether the in‑memory state differs from
    * the persisted state.
    */
   hasChanges: boolean;
-
-  /** Load initial state from its source. */
-  initialize(): Promise<void> | void;
 
   /** Set initial state to the value-less default. */
   resetToDefault(): Promise<void> | void;
@@ -31,10 +36,4 @@ export type SettingsEditor<T> = {
 
   /** Overrides the default "Use Global Defaults" label. */
   useDefaultLabel?: string;
-
-  /** Get the current staged value. */
-  get value(): T;
-
-  /** Set the current staged value. */
-  set value(v: T);
 };

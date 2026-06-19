@@ -1,6 +1,6 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 import { CONSTANTS } from 'src/constants';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';

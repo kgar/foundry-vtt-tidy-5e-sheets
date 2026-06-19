@@ -5,7 +5,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
-  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+  import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';

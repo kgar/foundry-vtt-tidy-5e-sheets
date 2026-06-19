@@ -21,7 +21,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
+  import SpellSourceItemAssignmentsFormApplication from 'src/applications/classic-spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,

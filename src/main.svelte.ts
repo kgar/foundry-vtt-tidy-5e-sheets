@@ -1,11 +1,7 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './less/tidy5e.less';
-import {
-  SettingsProvider,
-  initSettings,
-  settings,
-} from './settings/settings.svelte';
+import { SettingsProvider, initSettings } from './settings/settings.svelte';
 import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
 import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
 import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svelte';
@@ -52,7 +48,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_CHARACTER],
         label: 'TIDY5E.Tidy5eCharacterSheetClassic',
-      }
+      },
     );
 
     documentSheetConfig.registerSheet(
@@ -62,7 +58,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_NPC],
         label: 'TIDY5E.Tidy5eNpcSheetClassic',
-      }
+      },
     );
 
     documentSheetConfig.registerSheet(
@@ -72,7 +68,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_VEHICLE],
         label: 'TIDY5E.Tidy5eVehicleSheetClassic',
-      }
+      },
     );
 
     const supportedItemTypes = [
@@ -97,7 +93,7 @@ Hooks.once('init', () => {
       {
         types: supportedItemTypes,
         label: 'TIDY5E.Tidy5eItemSheetClassic',
-      }
+      },
     );
 
     documentSheetConfig.registerSheet(
@@ -107,7 +103,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_CONTAINER],
         label: 'TIDY5E.Tidy5eContainerSheetClassic',
-      }
+      },
     );
 
     documentSheetConfig.registerSheet(
@@ -117,7 +113,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_GROUP],
         label: 'TIDY5E.Tidy5eGroupSheetClassic',
-      }
+      },
     );
 
     documentSheetConfig.registerSheet(
@@ -127,7 +123,7 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
         label: 'TIDY5E.Tidy5eEncounterSheetClassic',
-      }
+      },
     );
   }
 
@@ -138,7 +134,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_CHARACTER],
       label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
-    }
+    },
   );
 
   initRuntime();
@@ -166,7 +162,7 @@ Hooks.once('init', () => {
     {
       types: betaQuadroneItemTypes,
       label: 'TIDY5E.Tidy5eItemSheetQuadrone',
-    }
+    },
   );
 
   documentSheetConfig.registerSheet(
@@ -176,7 +172,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_CONTAINER],
       label: 'TIDY5E.Tidy5eContainerSheetQuadrone',
-    }
+    },
   );
 
   documentSheetConfig.registerSheet(
@@ -186,7 +182,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_NPC],
       label: 'TIDY5E.Tidy5eNpcSheetQuadrone',
-    }
+    },
   );
 
   documentSheetConfig.registerSheet(
@@ -196,7 +192,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_GROUP],
       label: 'TIDY5E.Tidy5eGroupSheetQuadrone',
-    }
+    },
   );
 
   documentSheetConfig.registerSheet(
@@ -206,7 +202,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
       label: 'TIDY5E.Tidy5eEncounterSheetQuadrone',
-    }
+    },
   );
 
   documentSheetConfig.registerSheet(
@@ -216,7 +212,7 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_VEHICLE],
       label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
-    }
+    },
   );
 });
 
@@ -256,8 +252,8 @@ Hooks.once('setup', async () => {
     .map(
       ([key, val]) =>
         `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${formatResourcePathForCss(
-          val.icon
-        )}"); }`
+          val.icon,
+        )}"); }`,
     )
     .join('\n\n');
 });
@@ -267,14 +263,15 @@ function registerCustomTidyRollRequests() {
     actor,
     request,
     config,
-    { event } = {}
+    { event } = {},
   ) => {
     const data = {};
     foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
       actorUuid: actor.uuid,
       requestId: request.id,
     });
-    const [roll] = (await actor.rollAbilityCheck({ ...config, event }, {}, { data })) ?? [];
+    const [roll] =
+      (await actor.rollAbilityCheck({ ...config, event }, {}, { data })) ?? [];
     return roll?.parent ?? null;
   };
 
@@ -282,14 +279,15 @@ function registerCustomTidyRollRequests() {
     actor,
     request,
     config,
-    { event } = {}
+    { event } = {},
   ) => {
     const data = {};
     foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
       actorUuid: actor.uuid,
       requestId: request.id,
     });
-    const [roll] = (await actor.rollSavingThrow({ ...config, event }, {}, { data })) ?? [];
+    const [roll] =
+      (await actor.rollSavingThrow({ ...config, event }, {}, { data })) ?? [];
     return roll?.parent ?? null;
   };
 }
@@ -299,7 +297,7 @@ function handleMigrationNotification() {
 
   if (FoundryAdapter.userIsGm() && tally === 0) {
     debug(
-      'Skipping migration notification because this appears to be a new Tidy installation.'
+      'Skipping migration notification because this appears to be a new Tidy installation.',
     );
     tally = MigrationTally;
   }
@@ -320,7 +318,7 @@ function handleMigrationNotification() {
 
     FoundryAdapter.setTidySetting(
       'migrationsConfirmationTally',
-      MigrationTally
+      MigrationTally,
     );
   }
 }

@@ -15,7 +15,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/classic-actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { isNil } from 'src/utils/data';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
+  import ThemeSettingColorFormGroupQuadrone from './parts/ThemeSettingColorFormGroupQuadrone.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
@@ -13,10 +13,10 @@
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
   import type {
+    ThemeColorSettingConfigEntry,
     ThemeSettingsContext,
     ThemeSettingsEditor,
   } from 'src/settings/editors/theme-settings-editor.svelte';
-    import type { ThemeColorSettingConfigEntry } from './ThemeSettingsQuadroneApplication.svelte';
 
   interface Props {
     app: ThemeSettingsEditor;

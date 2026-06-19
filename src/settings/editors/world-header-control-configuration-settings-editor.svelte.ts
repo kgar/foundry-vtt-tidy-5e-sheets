@@ -7,9 +7,13 @@ import type { SheetHeaderControlPosition } from 'src/api/api.types';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { settings } from 'src/settings/settings.svelte';
 import { coalesce } from 'src/utils/formatting';
+import { warn } from 'src/utils/logging';
 
 export type WorldHeaderControlConfigurationSettingsEditor =
-  SettingsEditor<WorldHeaderControlConfigContext>;
+  SettingsEditor<WorldHeaderControlConfigContext> & {
+    resetEntryToDefault(documentName: string, documentType: string): void;
+    undoEntryChanges(documentName: string, documentType: string): void;
+  };
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
@@ -39,16 +43,17 @@ export type WorldHeaderControlConfigScope = {
 };
 
 export function getWorldHeaderControlConfigurationSettingsEditor(
+  // TODO: We are going to use a composite editor in place of this. Eliminate when able.
   scope?: WorldHeaderControlConfigScope,
 ): WorldHeaderControlConfigurationSettingsEditor {
-  const current = $state<WorldHeaderControlConfigContext>([]);
+  const current = $state<WorldHeaderControlConfigContext>(getConfigs());
 
-  let initialSnapshot = $state('');
+  let initialSnapshot = $state(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: WorldHeaderControlConfigContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function getConfigs(
@@ -118,37 +123,33 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
     };
   }
 
-  async function save() {
-    const toSave = current.reduce((prev, curr) => {
-      prev[curr.documentName] ??= {};
-      prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
-      prev[curr.documentName][curr.documentType].header = [
-        ...Iterator.from(curr.controlSettings)
-          .filter((s) => s.location === 'header')
-          .map((s) => s.id),
-      ];
-      prev[curr.documentName][curr.documentType].menu = [
-        ...Iterator.from(curr.controlSettings)
-          .filter((s) => s.location === 'menu')
-          .map((s) => s.id),
-      ];
-
-      return prev;
-    }, {} as HeaderControlConfiguration);
-
-    await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
-
-    initialSnapshot = snapshotConfig(current);
-  }
-
   return {
     get hasChanges() {
       return hasChanges;
     },
 
-    initialize() {
-      this.value = getConfigs();
-      initialSnapshot = snapshotConfig(this.value);
+    resetEntryToDefault(documentName: string, documentType: string) {
+      const defaults = getConfigs({});
+      const defaultEntry = defaults.find(
+        (d) =>
+          d.documentName === documentName && d.documentType === documentType,
+      );
+
+      if (!defaultEntry) {
+        warn(
+          `Default world header control entry not found for ${documentName} ${documentType}. Unable to reset to default.`,
+        );
+        return;
+      }
+
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          documentName === entry.documentName &&
+          documentType === entry.documentType
+        ) {
+          this.value[index] = defaultEntry;
+        }
+      }
     },
 
     resetToDefault() {
@@ -202,12 +203,58 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
       this.resetToDefault();
     },
 
-    save() {
-      return save();
+    async save() {
+      const toSave = current.reduce((prev, curr) => {
+        prev[curr.documentName] ??= {};
+        prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
+        prev[curr.documentName][curr.documentType].header = [
+          ...Iterator.from(curr.controlSettings)
+            .filter((s) => s.location === 'header')
+            .map((s) => s.id),
+        ];
+        prev[curr.documentName][curr.documentType].menu = [
+          ...Iterator.from(curr.controlSettings)
+            .filter((s) => s.location === 'menu')
+            .map((s) => s.id),
+        ];
+
+        return prev;
+      }, {} as HeaderControlConfiguration);
+
+      await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
+
+      initialSnapshot = JSON.stringify(snapshotConfig(current));
     },
 
     undoChanges() {
       this.value = JSON.parse(initialSnapshot);
+    },
+
+    undoEntryChanges(documentName: string, documentType: string) {
+      const initial = JSON.parse(
+        initialSnapshot,
+      ) as WorldHeaderControlConfigContext;
+      const initialEntry = initial.find(
+        (entry) =>
+          entry.documentName === documentName &&
+          entry.documentType === documentType,
+      );
+
+      if (!initialEntry) {
+        warn(
+          `Initial world header control entry not found for ${documentName} ${documentType}. Unable to reset to default.`,
+        );
+        return;
+      }
+
+      for (const [index, entry] of this.value.entries()) {
+        if (
+          entry.documentName === documentName &&
+          entry.documentType === documentType
+        ) {
+          this.value[index] = initialEntry;
+        }
+      }
     },
 
     get value() {
