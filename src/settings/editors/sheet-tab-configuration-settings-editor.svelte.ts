@@ -88,14 +88,6 @@ export function getSheetTabConfigurationSettingsEditor(
     return $state.snapshot(config);
   }
 
-  // Do we need canonical snapshotting?
-  //   function snapshotConfig(entry: TabConfigContextEntry): string {
-  //     return JSON.stringify({
-  //       ...getCanonicalTabSelection(entry),
-  //       sidebarExpandedByTabId: entry.sidebarExpandedByTabId ?? null,
-  //     });
-  //   }
-
   function getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
