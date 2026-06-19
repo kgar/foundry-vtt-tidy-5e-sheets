@@ -4,8 +4,7 @@
 - [x] // TODO: Implement undoChanges
 - [x] // TODO: Implement undoEntryChanges
 - [x] Init the sheet config composite editor map in world settings constructor
-- [ ] Test and fix
-  - [ ] When "Undo Changes", player character Sidebar tabs vanish
+- [x] Test and fix - When "Undo Changes", player character Sidebar tabs vanish
 - [ ] Refactor - move JSON.stringify() outside of snapshot config. Make callers invoke it if needed. The snapshot is actual data.
 - [ ] Implement GetActivePane for world settings - Goal: get the appropriate setting editor for the current tab
 - [ ] Wire up settings footer properly for world settings

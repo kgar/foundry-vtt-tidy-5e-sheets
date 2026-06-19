@@ -189,7 +189,8 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     const initialEntry = initial.find(
       (i) =>
         i.documentName === entry.documentName &&
-        i.documentType === entry.documentType,
+        i.documentType === entry.documentType &&
+        i.docTypeKeyOverride === entry.docTypeKeyOverride,
     );
 
     if (!initialEntry) {
