@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { TabConfigContextEntry } from 'src/applications/settings/tab-configuration/tab-configuration.types';
+import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
   import { CONSTANTS } from 'src/constants';
 
