@@ -49,12 +49,12 @@ export type ThemeSettingsContext = {
 export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   const current = $state<ThemeSettingsContext>(getSettings());
 
-  let initialSnapshot = $state<string>(snapshotConfig(current));
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: ThemeSettingsContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function mapFromSettings(
@@ -191,7 +191,7 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
         );
       }
 
-      snapshotConfig(this.value);
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {

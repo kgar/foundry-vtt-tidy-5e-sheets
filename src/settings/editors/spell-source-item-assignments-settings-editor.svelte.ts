@@ -40,12 +40,12 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
 ): SpellSourceItemAssignmentsSettingsEditor {
   const current = $state<SpellSourceItemAssignmentsContext>(getConfig());
 
-  let initialSnapshot = $state(snapshotConfig(current));
+  let initialSnapshot = $state(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: SpellSourceItemAssignmentsContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function getConfig(): SpellSourceItemAssignmentsContext {

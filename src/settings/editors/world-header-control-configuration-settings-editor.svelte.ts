@@ -48,12 +48,12 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
 ): WorldHeaderControlConfigurationSettingsEditor {
   const current = $state<WorldHeaderControlConfigContext>(getConfigs());
 
-  let initialSnapshot = $state(snapshotConfig(current));
+  let initialSnapshot = $state(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: WorldHeaderControlConfigContext) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function getConfigs(
@@ -143,7 +143,7 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
 
     await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
 
-    initialSnapshot = snapshotConfig(current);
+    initialSnapshot = JSON.stringify(snapshotConfig(current));
   }
 
   return {

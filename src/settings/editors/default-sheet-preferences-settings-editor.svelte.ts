@@ -16,12 +16,12 @@ export type DefaultSheetPreferencesSettingsEditor = SettingsEditor<
 export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferencesSettingsEditor {
   const current = $state<SheetPreferenceOption[]>(getConfig());
 
-  let initialSnapshot = $state<string>(snapshotConfig(current));
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
   function snapshotConfig(config: SheetPreferenceOption[]) {
-    return JSON.stringify($state.snapshot(config));
+    return $state.snapshot(config);
   }
 
   function getConfig() {
@@ -73,7 +73,7 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
 
     await game.settings.set('core', 'sheetClasses', settings);
 
-    initialSnapshot = snapshotConfig(current);
+    initialSnapshot = JSON.stringify(snapshotConfig(current));
 
     // Sheet class changes only take effect after a reload.
     const proceed = await foundry.applications.api.DialogV2.confirm({

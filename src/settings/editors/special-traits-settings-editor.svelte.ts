@@ -22,15 +22,14 @@ export function getSpecialTraitsSettingsEditor(
 ): SpecialTraitsSettingsEditor {
   const current = $state<SpecialTraitsContext>(getConfig());
 
-  let initialSnapshot = $state<string>(snapshotConfig(current));
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(
     JSON.stringify(buildDocumentUpdateObject(current)) !== initialSnapshot,
   );
 
   function snapshotConfig(config: SpecialTraitsContext) {
-    const toSerialize = buildDocumentUpdateObject(config);
-    return JSON.stringify(toSerialize);
+    return buildDocumentUpdateObject(config);
   }
 
   function buildDocumentUpdateObject(config: SpecialTraitsContext) {
@@ -160,7 +159,7 @@ export function getSpecialTraitsSettingsEditor(
 
     undoChanges() {
       this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     async useDefault() {

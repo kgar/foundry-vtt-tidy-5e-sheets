@@ -80,12 +80,12 @@ export function getSheetTabConfigurationSettingsEditor(
 
   const current = $state<SheetTabConfigurationContext>(getConfig());
 
-  let initialSnapshot = $state<string>(snapshotConfig(current));
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
   const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
 
-  function snapshotConfig(config: SheetTabConfigurationContext): string {
-    return JSON.stringify($state.snapshot(config));
+  function snapshotConfig(config: SheetTabConfigurationContext) {
+    return $state.snapshot(config);
   }
 
   // Do we need canonical snapshotting?
@@ -281,7 +281,7 @@ export function getSheetTabConfigurationSettingsEditor(
       await applySidebarExpanded(curr);
 
       this.value = getConfig();
-      initialSnapshot = snapshotConfig(this.value);
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {
