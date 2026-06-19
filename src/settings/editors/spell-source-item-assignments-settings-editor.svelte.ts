@@ -96,6 +96,8 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
       }));
 
       await document.updateEmbeddedDocuments('Item', updateData);
+
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {

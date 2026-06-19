@@ -155,6 +155,8 @@ export function getSpecialTraitsSettingsEditor(
     async save() {
       const toSave: Record<string, any> = buildDocumentUpdateObject(current);
       await document.update(toSave);
+
+      initialSnapshot = JSON.stringify(snapshotConfig(this.value));
     },
 
     undoChanges() {

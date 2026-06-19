@@ -123,29 +123,6 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
     };
   }
 
-  async function save() {
-    const toSave = current.reduce((prev, curr) => {
-      prev[curr.documentName] ??= {};
-      prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
-      prev[curr.documentName][curr.documentType].header = [
-        ...Iterator.from(curr.controlSettings)
-          .filter((s) => s.location === 'header')
-          .map((s) => s.id),
-      ];
-      prev[curr.documentName][curr.documentType].menu = [
-        ...Iterator.from(curr.controlSettings)
-          .filter((s) => s.location === 'menu')
-          .map((s) => s.id),
-      ];
-
-      return prev;
-    }, {} as HeaderControlConfiguration);
-
-    await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
-
-    initialSnapshot = JSON.stringify(snapshotConfig(current));
-  }
-
   return {
     get hasChanges() {
       return hasChanges;
@@ -226,8 +203,27 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
       this.resetToDefault();
     },
 
-    save() {
-      return save();
+    async save() {
+      const toSave = current.reduce((prev, curr) => {
+        prev[curr.documentName] ??= {};
+        prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
+        prev[curr.documentName][curr.documentType].header = [
+          ...Iterator.from(curr.controlSettings)
+            .filter((s) => s.location === 'header')
+            .map((s) => s.id),
+        ];
+        prev[curr.documentName][curr.documentType].menu = [
+          ...Iterator.from(curr.controlSettings)
+            .filter((s) => s.location === 'menu')
+            .map((s) => s.id),
+        ];
+
+        return prev;
+      }, {} as HeaderControlConfiguration);
+
+      await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
+
+      initialSnapshot = JSON.stringify(snapshotConfig(current));
     },
 
     undoChanges() {
