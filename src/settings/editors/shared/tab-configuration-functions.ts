@@ -8,7 +8,7 @@ import type {
 } from './tab-configuration.types';
 import type {
   SheetTabConfigEntry,
-  SheetTabConfiguration,
+  SheetTabsConfiguration,
 } from 'src/settings/settings.types';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -42,7 +42,7 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
 
 export function getItemTabContext(
   type: string,
-  settings: SheetTabConfiguration | undefined | null,
+  settings: SheetTabsConfiguration | undefined | null,
   useWorldSettings: boolean,
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
@@ -68,7 +68,7 @@ export function getItemTabContext(
 export function getActorTabContext(
   runtime: ActorSheetQuadroneRuntime<any>,
   type: string,
-  settings: SheetTabConfiguration | undefined | null,
+  settings: SheetTabsConfiguration | undefined | null,
   useWorldSettings: boolean,
   docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
@@ -118,7 +118,7 @@ export function buildTabConfigContextEntry(
     title: CustomTabTitle;
     iconClass?: string;
   }[],
-  settings: SheetTabConfiguration | undefined | null,
+  settings: SheetTabsConfiguration | undefined | null,
   defaultSelectedIds: string[],
   worldDefaultSelectedIds?: string[],
   docTypeKeyOverride?: string,

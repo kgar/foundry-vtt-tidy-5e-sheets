@@ -50,7 +50,7 @@ export type ButtonNavigation = {
   label?: string;
   onclick: (
     ev: MouseEvent & { currentTarget: HTMLElement },
-    application: ConfigureSectionsSettingsEditor,
+    application: SheetTabOptionsSettingsEditor,
   ) => void;
 };
 
@@ -65,7 +65,7 @@ export type SectionOptionGroup = {
   settings: SectionSetting[];
 };
 
-export type ConfigureSectionsSettingsEditorParams = {
+export type SheetTabOptionsSettingsEditorParams = {
   document: Actor5e | Item5e;
   settings: {
     optionsGroups?: SectionOptionGroup[];
@@ -74,7 +74,7 @@ export type ConfigureSectionsSettingsEditorParams = {
     tabId: string;
     formTitle: string;
   };
-  onSave?: (config: ConfigureSectionsSettingsEditorContext) => Promise<void>;
+  onSave?: (config: SheetTabOptionsSettingsEditorContext) => Promise<void>;
   navigator: SettingsTabNavigator;
 };
 
@@ -84,24 +84,24 @@ export type SectionConfigItem = {
   show: boolean;
 };
 
-export type ConfigureSectionsSettingsEditorContext = {
+export type SheetTabOptionsSettingsEditorContext = {
   sections: SectionConfigItem[];
   optionsGroups: SectionOptionGroup[];
 };
 
-export type ConfigureSectionsSettingsEditor =
-  SettingsEditor<ConfigureSectionsSettingsEditorContext> & {
+export type SheetTabOptionsSettingsEditor =
+  SettingsEditor<SheetTabOptionsSettingsEditorContext> & {
     formTitle: string;
     document: Actor5e | Item5e;
     navigator: SettingsTabNavigator;
   };
 
-export function getConfigureSectionsSettingsEditor(
-  params: ConfigureSectionsSettingsEditorParams,
-): ConfigureSectionsSettingsEditor {
+export function getSheetTabOptionsSettingsEditor(
+  params: SheetTabOptionsSettingsEditorParams,
+): SheetTabOptionsSettingsEditor {
   let { document, settings, onSave, navigator } = params;
 
-  const current = $state<ConfigureSectionsSettingsEditorContext>({
+  const current = $state<SheetTabOptionsSettingsEditorContext>({
     optionsGroups: settings.optionsGroups ?? [],
     sections: mapSectionBaseToConfig(settings.sections),
   });
@@ -167,7 +167,7 @@ export function getConfigureSectionsSettingsEditor(
     }));
   }
 
-  function snapshotConfig(config: ConfigureSectionsSettingsEditorContext) {
+  function snapshotConfig(config: SheetTabOptionsSettingsEditorContext) {
     return {
       sections: $state.snapshot(config.sections),
       optionsGroups: snapshotOptionGroupValues(config.optionsGroups),
@@ -176,7 +176,7 @@ export function getConfigureSectionsSettingsEditor(
 
   function applyOptionGroupValues(
     baseline: ReturnType<typeof snapshotOptionGroupValues>,
-    target: ConfigureSectionsSettingsEditorContext,
+    target: SheetTabOptionsSettingsEditorContext,
   ) {
     target.optionsGroups.forEach((group, groupIndex) => {
       const values = baseline[groupIndex]?.values ?? [];

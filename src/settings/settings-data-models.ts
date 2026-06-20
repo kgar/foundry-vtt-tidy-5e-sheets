@@ -1,6 +1,6 @@
 import type {
   SheetTabConfigEntry,
-  SheetTabConfiguration,
+  SheetTabsConfiguration,
 } from './settings.types';
 
 export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
@@ -101,7 +101,7 @@ export function deriveTabsFromLegacyTabConfiguration(
  * TODO: Migrate off the legacy tab settings, then drop the fallback.
  */
 export function getSelectedTabIds(
-  config: SheetTabConfiguration | undefined | null
+  config: SheetTabsConfiguration | undefined | null
 ): string[] {
   const tabs = config?.tabs;
   if (tabs && Object.keys(tabs).length) {
@@ -119,7 +119,7 @@ export function getSelectedTabIds(
  * TODO: Migrate off the legacy tab settings, then drop the fallback.
  */
 export function getTabVisibilityLevels(
-  config: SheetTabConfiguration | undefined | null
+  config: SheetTabsConfiguration | undefined | null
 ): Record<string, number | null> {
   const tabs = config?.tabs;
   if (tabs && Object.keys(tabs).length) {

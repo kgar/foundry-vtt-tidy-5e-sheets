@@ -1,11 +1,11 @@
 <script lang="ts">
   import type {
-    SheetTabConfigurationSettingsEditor,
-  } from 'src/settings/editors/sheet-tab-configuration-settings-editor.svelte';
+    SheetTabsConfigurationSettingsEditor,
+  } from 'src/settings/editors/sheet-tabs-configuration-settings-editor.svelte';
   import SortableListbox from './parts/SortableListbox.svelte';
 
   interface Props {
-    app: SheetTabConfigurationSettingsEditor;
+    app: SheetTabsConfigurationSettingsEditor;
   }
 
   let { app }: Props = $props();

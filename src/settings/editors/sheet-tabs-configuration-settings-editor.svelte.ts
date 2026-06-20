@@ -3,7 +3,7 @@ import type {
   TabConfigSnapshot,
 } from 'src/settings/editors/shared/tab-configuration.types';
 import type { SettingsEditor } from './settings-editors.svelte';
-import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -24,26 +24,26 @@ import {
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { error } from 'src/utils/logging';
 
-export type SheetTabConfigurationContext = {
+export type SheetTabsConfigurationContext = {
   entry: TabConfigContextEntry;
 };
 
-type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
+type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 type SetTabConfigFn = (
   actor: any,
-  config: SheetTabConfiguration,
+  config: SheetTabsConfiguration,
 ) => Promise<void> | undefined;
 type GetTabContextFn = (
   doc: any,
-  setting: SheetTabConfiguration,
+  setting: SheetTabsConfiguration,
 ) => TabConfigContextEntry | undefined;
 
-export type SheetTabConfigurationSettingsEditor =
-  SettingsEditor<SheetTabConfigurationContext> & {
+export type SheetTabsConfigurationSettingsEditor =
+  SettingsEditor<SheetTabsConfigurationContext> & {
     inclusionTabTitle: string;
   };
 
-type SheetTabConfigurationSettingsEditorParams = {
+type SheetTabsConfigurationSettingsEditorParams = {
   document: Actor5e | Item5e;
   customTabConfigProvider?: {
     getTabConfig: GetTabConfigFn;
@@ -60,9 +60,9 @@ export const SIDEBAR_EXPANDABLE_SHEET_TYPES: ReadonlySet<string> = new Set([
   CONSTANTS.SHEET_TYPE_VEHICLE,
 ]);
 
-export function getSheetTabConfigurationSettingsEditor(
-  params: SheetTabConfigurationSettingsEditorParams,
-): SheetTabConfigurationSettingsEditor {
+export function getSheetTabsConfigurationSettingsEditor(
+  params: SheetTabsConfigurationSettingsEditorParams,
+): SheetTabsConfigurationSettingsEditor {
   const { document, customTabConfigProvider, docTypeKeyOverride, title } =
     params;
 
@@ -83,7 +83,7 @@ export function getSheetTabConfigurationSettingsEditor(
       ),
     });
 
-  const current = $state<SheetTabConfigurationContext>(getConfig());
+  const current = $state<SheetTabsConfigurationContext>(getConfig());
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
@@ -91,12 +91,12 @@ export function getSheetTabConfigurationSettingsEditor(
     JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
   );
 
-  function snapshotConfig(config: SheetTabConfigurationContext) {
+  function snapshotConfig(config: SheetTabsConfigurationContext) {
     const entry = $state.snapshot(config).entry;
     return mapTabConfigContextEntryToSnapshot(entry);
   }
 
-  function getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
+  function getConfigFromRuntime(doc: any, setting: SheetTabsConfiguration) {
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
@@ -179,7 +179,7 @@ export function getSheetTabConfigurationSettingsEditor(
    * update the initial state.
    */
   async function applySidebarExpanded(entry: TabConfigContextEntry) {
-    const initial = JSON.parse(initialSnapshot) as SheetTabConfigurationContext;
+    const initial = JSON.parse(initialSnapshot) as SheetTabsConfigurationContext;
 
     const staged = entry.sidebarExpandedByTabId;
     if (!staged || !supportsSidebarExpanded()) {
@@ -200,7 +200,7 @@ export function getSheetTabConfigurationSettingsEditor(
     }
   }
 
-  function getConfig(): SheetTabConfigurationContext {
+  function getConfig(): SheetTabsConfigurationContext {
     let setting = getTabConfig(document);
     setting ??= { selected: [], visibilityLevels: {} };
     setting.selected ??= [];

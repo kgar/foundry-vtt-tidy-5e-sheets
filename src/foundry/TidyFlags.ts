@@ -17,7 +17,7 @@ import type {
   SheetPinFlag,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import {
   deriveTabsFromLegacyTabConfiguration,
   TabConfigurationSchema,
@@ -1448,8 +1448,8 @@ export class TidyFlags {
     key: 'sidebar-tab-configuration',
     prop: TidyFlags.getFlagPropertyPath('sidebar-tab-configuration'),
     /** Gets sidebar tab configuration. */
-    get(doc: any): SheetTabConfiguration | null | undefined {
-      let config = TidyFlags.tryGetFlag<SheetTabConfiguration>(
+    get(doc: any): SheetTabsConfiguration | null | undefined {
+      let config = TidyFlags.tryGetFlag<SheetTabsConfiguration>(
         doc,
         TidyFlags.sidebarTabConfiguration.key
       );
@@ -1476,7 +1476,7 @@ export class TidyFlags {
       return config;
     },
     /** Sets sidebar tab configuration. */
-    set(doc: any, config: SheetTabConfiguration) {
+    set(doc: any, config: SheetTabsConfiguration) {
       const toSave = TabConfigurationSchema.clean(config);
       TabConfigurationSchema.validate(toSave, { fallback: true });
 
@@ -1499,8 +1499,8 @@ export class TidyFlags {
     key: 'tab-configuration',
     prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
     /** Gets tab configuration. */
-    get(doc: any): SheetTabConfiguration | null | undefined {
-      let config = TidyFlags.tryGetFlag<SheetTabConfiguration>(
+    get(doc: any): SheetTabsConfiguration | null | undefined {
+      let config = TidyFlags.tryGetFlag<SheetTabsConfiguration>(
         doc,
         TidyFlags.tabConfiguration.key
       );
@@ -1527,7 +1527,7 @@ export class TidyFlags {
       return config;
     },
     /** Sets tab configuration. */
-    set(doc: any, config: SheetTabConfiguration) {
+    set(doc: any, config: SheetTabsConfiguration) {
       const toSave = TabConfigurationSchema.clean(config);
       TabConfigurationSchema.validate(toSave, { fallback: true });
 

@@ -24,7 +24,7 @@ export type SheetTabConfigEntry = {
   visibilityLevel: number | null;
 };
 
-export type SheetTabConfiguration = {
+export type SheetTabsConfiguration = {
   selected: string[];
   visibilityLevels: Record<string, number | null>;
   /**
@@ -37,7 +37,7 @@ export type SheetTabConfiguration = {
 
 export type TabConfiguration = {
   [documentName: string]: {
-    [documentType: string]: SheetTabConfiguration;
+    [documentType: string]: SheetTabsConfiguration;
   };
 };
 

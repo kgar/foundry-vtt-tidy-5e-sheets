@@ -1,19 +1,19 @@
 <script lang="ts">
   import SortableListbox from 'src/applications/settings/tab-configuration/parts/SortableListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ConfigurableSection } from './configure-sections.types';
+  import type { ConfigurableSection } from './sheet-tab-options.types';
   import { isNil } from 'src/utils/data';
   import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
   import type {
-    ConfigureSectionsSettingsEditor,
+    SheetTabOptionsSettingsEditor,
     SectionOptionGroup,
-  } from 'src/settings/editors/configure-sections-settings-editor.svelte';
+  } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
-    application: ConfigureSectionsSettingsEditor;
+    application: SheetTabOptionsSettingsEditor;
     title: string;
     tabConfigEntry?: TabConfigContextEntry;
     tabId: string;

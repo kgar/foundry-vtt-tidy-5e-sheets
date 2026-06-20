@@ -11,7 +11,7 @@ import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
-import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import {
   getSelectedTabIds,
   getTabVisibilityLevels,
@@ -19,7 +19,7 @@ import {
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import { CONSTANTS } from 'src/constants';
 
-type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
+type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 
 export class ActorSheetQuadroneRuntime<
   TSheetContext extends ActorSheetQuadroneContext
