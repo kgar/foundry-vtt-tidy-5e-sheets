@@ -8,6 +8,8 @@ import type {
   SheetTabSectionConfigs,
 } from 'src/features/sections/sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { SheetTabsConfigurationSettingsEditor } from './sheet-tabs-configuration-settings-editor.svelte';
+import type { SheetTabConfigurationContextV2 } from './shared/tab-configuration.types';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -76,6 +78,7 @@ export type SheetTabOptionsSettingsEditorParams = {
   };
   onSave?: (config: SheetTabOptionsSettingsEditorContext) => Promise<void>;
   navigator: SettingsTabNavigator;
+  sheetTabsConfigurationSettingsEditor?: SheetTabsConfigurationSettingsEditor;
 };
 
 export type SectionConfigItem = {
@@ -87,6 +90,7 @@ export type SectionConfigItem = {
 export type SheetTabOptionsSettingsEditorContext = {
   sections: SectionConfigItem[];
   optionsGroups: SectionOptionGroup[];
+  tabConfig?: SheetTabConfigurationContextV2;
 };
 
 export type SheetTabOptionsSettingsEditor =
@@ -218,6 +222,9 @@ export function getSheetTabOptionsSettingsEditor(
         }
       }
       this.value.sections = defaultSections;
+      params.sheetTabsConfigurationSettingsEditor?.resetEntryToDefault(
+        params.settings.tabId,
+      );
     },
 
     async save() {
@@ -291,6 +298,9 @@ export function getSheetTabOptionsSettingsEditor(
     undoChanges() {
       current.sections = original.sections.map((section) => ({ ...section }));
       applyOptionGroupValues(original.optionsGroups, current);
+      params.sheetTabsConfigurationSettingsEditor?.undoEntryChanges(
+        params.settings.tabId,
+      );
     },
 
     async useDefault() {

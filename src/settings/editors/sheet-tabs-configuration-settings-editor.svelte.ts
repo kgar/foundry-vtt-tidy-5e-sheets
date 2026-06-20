@@ -41,6 +41,8 @@ type GetTabContextFn = (
 export type SheetTabsConfigurationSettingsEditor =
   SettingsEditor<SheetTabsConfigurationContext> & {
     inclusionTabTitle: string;
+    undoEntryChanges: (tabId: string) => void;
+    resetEntryToDefault: (tabId: string) => void;
   };
 
 type SheetTabsConfigurationSettingsEditorParams = {
@@ -179,7 +181,7 @@ export function getSheetTabsConfigurationSettingsEditor(
    * update the initial state.
    */
   async function applySidebarExpanded(entry: TabConfigContextEntry) {
-    const initial = JSON.parse(initialSnapshot) as SheetTabsConfigurationContext;
+    const initial = JSON.parse(initialSnapshot) as TabConfigSnapshot;
 
     const staged = entry.sidebarExpandedByTabId;
     if (!staged || !supportsSidebarExpanded()) {
@@ -187,7 +189,7 @@ export function getSheetTabsConfigurationSettingsEditor(
     }
 
     const type = document.type;
-    const baseline = initial.entry.sidebarExpandedByTabId ?? {};
+    const baseline = initial.sidebarExpandedByTabId ?? {};
     for (const [tabId, expanded] of Object.entries(staged)) {
       if (baseline[tabId] !== expanded) {
         await UserSheetPreferencesService.setDocumentTypeTabPreference(
@@ -247,6 +249,19 @@ export function getSheetTabsConfigurationSettingsEditor(
       }
     },
 
+    resetEntryToDefault(tabId: string) {
+      const defaultEntry = getTabContext(document, {
+        selected: [],
+        visibilityLevels: {},
+      });
+
+      if (defaultEntry) {
+        // Assign Sidebar Expanded
+        // Assign visibility
+        // Assign show/hide
+      }
+    },
+
     async save() {
       let curr = this.value.entry;
 
@@ -291,6 +306,14 @@ export function getSheetTabsConfigurationSettingsEditor(
         [initial],
         this.value.entry,
       );
+    },
+
+    undoEntryChanges(tabId: string) {
+      const initial = JSON.parse(initialSnapshot) as TabConfigSnapshot;
+
+      // Assign Show
+      // Assign Visibility Level
+      // Assign Sidebar Show
     },
 
     async useDefault() {

@@ -34,6 +34,24 @@ export type TabConfigContextEntry = {
   sidebarExpandedByTabId?: Record<string, boolean>;
 };
 
+export type SheetTabConfigurationContextV2 = {
+  id: string;
+  title: string;
+  iconClass?: string;
+  show: boolean;
+  visibilityLevel: number | null;
+  sidebarExpanded?: boolean;
+  order: number;
+};
+
+export type SheetTabsConfigurationContextV2 = {
+  documentName: string;
+  documentType: string;
+  title: string;
+  docTypeKeyOverride?: string;
+  tabs: SheetTabConfigurationContextV2[];
+};
+
 export type TabConfigSnapshot = {
   title: string;
   documentName: string;
