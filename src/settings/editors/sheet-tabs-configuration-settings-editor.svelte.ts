@@ -203,10 +203,7 @@ export function getSheetTabsConfigurationSettingsEditor(
   }
 
   function getConfig(): SheetTabsConfigurationContext {
-    let setting = getTabConfig(document);
-    setting ??= { selected: [], visibilityLevels: {} };
-    setting.selected ??= [];
-    setting.visibilityLevels ??= {};
+    let setting = getTabConfig(document) ?? { tabs: {} };
 
     const context = getTabContext(document, setting);
 
@@ -238,8 +235,7 @@ export function getSheetTabsConfigurationSettingsEditor(
 
     resetToDefault() {
       const defaultEntry = getTabContext(document, {
-        selected: [],
-        visibilityLevels: {},
+        tabs: {},
       });
 
       if (defaultEntry) {
@@ -251,8 +247,7 @@ export function getSheetTabsConfigurationSettingsEditor(
 
     resetEntryToDefault(tabId: string) {
       const defaultEntry = getTabContext(document, {
-        selected: [],
-        visibilityLevels: {},
+        tabs: {},
       });
 
       if (defaultEntry) {
@@ -277,16 +272,6 @@ export function getSheetTabsConfigurationSettingsEditor(
         });
 
       await setTabConfig(document, {
-        // Legacy fields kept in sync for the sheet runtimes (visible tabs, in order).
-        // TODO: Migrate off legacy selected/unselected arrays.
-        selected: matchesDefault ? [] : selectedIds,
-        visibilityLevels: this.value.entry.visibilityLevels.reduce(
-          (prev, curr) => {
-            prev[curr.id] = curr.visibilityLevel;
-            return prev;
-          },
-          {} as Record<string, number | null>,
-        ),
         // Full per-tab arrangement (preserves hidden-tab order).
         tabs: matchesDefault
           ? {}

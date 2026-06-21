@@ -159,17 +159,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         const selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
 
         docName[docTypeKey] = {
-          // Legacy fields kept in sync for any sheets not yet migrated.
-          // TODO: Drop these once all reads go through the keyed `tabs` map.
-          selected: matchesDefault ? [] : selectedIds,
-          visibilityLevels: curr.visibilityLevels.reduce(
-            (levels, level) => {
-              levels[level.id] = level.visibilityLevel;
-              return levels;
-            },
-            {} as Record<string, number | null>,
-          ),
-
           tabs: matchesDefault
             ? {}
             : buildTabConfigMap(curr.tabs, curr.visibilityLevels),

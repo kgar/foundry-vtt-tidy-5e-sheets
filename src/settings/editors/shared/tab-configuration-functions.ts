@@ -181,7 +181,9 @@ export function buildTabConfigContextEntry(
     }
   } else {
     const effectiveSelections =
-      settings?.selected.filter((tabId) => registry[tabId]) ?? [];
+      Object.entries(settings?.tabs ?? {})
+        .filter(([tabId, setting]) => registry[tabId] && setting.show)
+        .map(([tabId]) => tabId) ?? [];
     const effectiveSelectedIds = effectiveSelections.length
       ? effectiveSelections
       : defaultSelectedIdsEffective;
@@ -214,7 +216,7 @@ export function buildTabConfigContextEntry(
       show: t.show,
       visibilityLevel: savedLevelByKey.has(t.id)
         ? (savedLevelByKey.get(t.id) ?? null)
-        : (settings?.visibilityLevels[t.id] ?? null),
+        : (settings?.tabs[t.id]?.visibilityLevel ?? null),
     }))
     .sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
 

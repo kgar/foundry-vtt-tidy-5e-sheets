@@ -25,6 +25,7 @@ import {
 } from './settings-data-models';
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
+import { SettingsShims } from './settings-shims';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -371,9 +372,11 @@ export function createSettings() {
           default: {},
         },
         get() {
-          return FoundryAdapter.getTidySetting<TabConfiguration>(
+          const setting = FoundryAdapter.getTidySetting<Partial<TabConfiguration>>(
             'tabConfiguration'
           );
+
+          return SettingsShims.tabConfiguration(setting);
         },
       },
 

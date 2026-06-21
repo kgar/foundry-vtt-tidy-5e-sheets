@@ -17,11 +17,15 @@ import type {
   SheetPinFlag,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-import type { SheetTabsConfiguration } from 'src/settings/settings.types';
+import type {
+  SheetTabsConfiguration,
+  SheetTabsConfigurationLegacyV1,
+} from 'src/settings/settings.types';
 import {
   deriveTabsFromLegacyTabConfiguration,
   TabConfigurationSchema,
 } from 'src/settings/settings-data-models';
+import { SettingsShims } from 'src/settings/settings-shims';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -42,7 +46,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           item,
-          TidyFlags.actionFilterOverride.key
+          TidyFlags.actionFilterOverride.key,
         ) ?? undefined
       );
     },
@@ -72,7 +76,7 @@ export class TidyFlags {
     get(item: Item5e): string | undefined {
       const actionSectionValue = TidyFlags.tryGetFlag(
         item,
-        TidyFlags.actionSection.key
+        TidyFlags.actionSection.key,
       );
 
       const actionSection =
@@ -104,7 +108,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<EncounterCombatantsSettings>(
           encounter,
-          TidyFlags.combatantSettings.key
+          TidyFlags.combatantSettings.key,
         ) ?? {}
       );
     },
@@ -117,12 +121,12 @@ export class TidyFlags {
         { [`flags.tidy5e-sheet.combatantSettings`]: null },
         {
           render: false,
-        }
+        },
       );
       return await TidyFlags.setFlag(
         encounter,
         TidyFlags.combatantSettings.key,
-        settings
+        settings,
       );
     },
   };
@@ -137,7 +141,7 @@ export class TidyFlags {
     get(user: any): string | null | undefined {
       return TidyFlags.tryGetFlag<string>(
         user,
-        TidyFlags.encounterDifficultyTargetGroupId.key
+        TidyFlags.encounterDifficultyTargetGroupId.key,
       );
     },
     /** Sets the group ID. */
@@ -145,7 +149,7 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         user,
         TidyFlags.encounterDifficultyTargetGroupId.key,
-        groupActorId
+        groupActorId,
       );
     },
   };
@@ -161,7 +165,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<DocumentJournalEntries>(
           doc,
-          TidyFlags.documentJournal.key
+          TidyFlags.documentJournal.key,
         ) ?? {}
       );
     },
@@ -231,7 +235,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<AttributePinFlag[]>(
           actor,
-          TidyFlags.attributePins.key
+          TidyFlags.attributePins.key,
         ) ?? []
       );
     },
@@ -325,9 +329,7 @@ export class TidyFlags {
    */
   static characterSheetTabSortOrder = {
     key: 'characterSheetTabSortOrder' as const,
-    prop: TidyFlags.getFlagPropertyPath(
-      'characterSheetTabSortOrder',
-    ),
+    prop: TidyFlags.getFlagPropertyPath('characterSheetTabSortOrder'),
     /** Gets Character Sheet Tab sort order. */
     get(item: Item5e): number {
       return (
@@ -505,7 +507,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           document,
-          TidyFlags.includeRitualsInCanCast.key
+          TidyFlags.includeRitualsInCanCast.key,
         ) === true
       );
     },
@@ -514,14 +516,14 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         document,
         TidyFlags.includeRitualsInCanCast.key,
-        value
+        value,
       );
     },
     /** Clears whether to include rituals in the "Can Cast" spell filter. */
     unset(document: any) {
       return TidyFlags.unsetFlag(
         document,
-        TidyFlags.includeRitualsInCanCast.key
+        TidyFlags.includeRitualsInCanCast.key,
       );
     },
   };
@@ -534,7 +536,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           document,
-          TidyFlags.showLegendariesOnNpcStatblock.key
+          TidyFlags.showLegendariesOnNpcStatblock.key,
         ) ?? null
       );
     },
@@ -543,14 +545,14 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         document,
         TidyFlags.showLegendariesOnNpcStatblock.key,
-        value
+        value,
       );
     },
     /** Clears whether to show legendary panels in the NPC Statblock tab. */
     unset(document: any) {
       return TidyFlags.unsetFlag(
         document,
-        TidyFlags.showLegendariesOnNpcStatblock.key
+        TidyFlags.showLegendariesOnNpcStatblock.key,
       );
     },
   };
@@ -563,7 +565,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           document,
-          TidyFlags.includeSpellbookInNpcStatblockTab.key
+          TidyFlags.includeSpellbookInNpcStatblockTab.key,
         ) ?? null
       );
     },
@@ -572,14 +574,14 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         document,
         TidyFlags.includeSpellbookInNpcStatblockTab.key,
-        value
+        value,
       );
     },
     /** Clears whether to include spellbook sections in the NPC Statblock tab. */
     unset(document: any) {
       return TidyFlags.unsetFlag(
         document,
-        TidyFlags.includeSpellbookInNpcStatblockTab.key
+        TidyFlags.includeSpellbookInNpcStatblockTab.key,
       );
     },
   };
@@ -597,7 +599,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<string>(
           document,
-          TidyFlags.inspirationSource.key
+          TidyFlags.inspirationSource.key,
         ) ?? ''
       );
     },
@@ -606,7 +608,7 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         document,
         TidyFlags.inspirationSource.key,
-        itemId
+        itemId,
       );
     },
     /** Clears an actor's inspiration source, indicating to use the regular boolean tracker. */
@@ -672,7 +674,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<TidyFlagUnnamedNotes>(
           actor,
-          TidyFlags.notes.key
+          TidyFlags.notes.key,
         ) ?? undefined
       );
     },
@@ -695,7 +697,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes.members.value.key
+              TidyFlags.notes.members.value.key,
             ) ?? undefined
           );
         },
@@ -704,7 +706,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes.members.value.key,
-            value
+            value,
           );
         },
         /** Clears the actor's notes HTML. */
@@ -749,7 +751,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes1.members.name.key
+              TidyFlags.notes1.members.name.key,
             ) ?? undefined
           );
         },
@@ -758,7 +760,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes1.members.name.key,
-            value
+            value,
           );
         },
         /** Clears the actor's first named journal notes name. */
@@ -775,7 +777,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes1.members.value.key
+              TidyFlags.notes1.members.value.key,
             ) ?? undefined
           );
         },
@@ -784,7 +786,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes1.members.value.key,
-            value
+            value,
           );
         },
         /** Clears the actor's first named journal notes HTML. */
@@ -829,7 +831,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes2.members.name.key
+              TidyFlags.notes2.members.name.key,
             ) ?? undefined
           );
         },
@@ -838,7 +840,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes2.members.name.key,
-            value
+            value,
           );
         },
         /** Clears the actor's second named journal notes name. */
@@ -855,7 +857,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes2.members.value.key
+              TidyFlags.notes2.members.value.key,
             ) ?? undefined
           );
         },
@@ -864,7 +866,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes2.members.value.key,
-            value
+            value,
           );
         },
         /** Clears the actor's second named journal notes HTML. */
@@ -907,7 +909,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes3.members.name.key
+              TidyFlags.notes3.members.name.key,
             ) ?? undefined
           );
         },
@@ -916,7 +918,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes3.members.name.key,
-            value
+            value,
           );
         },
         /** Clears the actor's third named journal notes name. */
@@ -932,7 +934,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes3.members.value.key
+              TidyFlags.notes3.members.value.key,
             ) ?? undefined
           );
         },
@@ -941,7 +943,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes3.members.value.key,
-            value
+            value,
           );
         },
         /** Clears the actor's third named journal notes HTML. */
@@ -986,7 +988,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes4.members.name.key
+              TidyFlags.notes4.members.name.key,
             ) ?? undefined
           );
         },
@@ -995,7 +997,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes4.members.name.key,
-            value
+            value,
           );
         },
         /** Clears the actor's fourth named journal notes name. */
@@ -1012,7 +1014,7 @@ export class TidyFlags {
           return (
             TidyFlags.tryGetFlag<string>(
               actor,
-              TidyFlags.notes4.members.value.key
+              TidyFlags.notes4.members.value.key,
             ) ?? undefined
           );
         },
@@ -1021,7 +1023,7 @@ export class TidyFlags {
           return TidyFlags.setFlag(
             actor,
             TidyFlags.notes4.members.value.key,
-            value
+            value,
           );
         },
         /** Clears the actor's fourth named journal notes HTML. */
@@ -1045,7 +1047,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<EncounterPlaceholders>(
           actor,
-          TidyFlags.placeholders.key
+          TidyFlags.placeholders.key,
         ) ?? {}
       );
     },
@@ -1056,7 +1058,7 @@ export class TidyFlags {
     /** Inserts or updates a single entry in the current placeholders for the specified actor */
     insertOrUpdateEntry(
       actor: Actor5e,
-      placeholder: EncounterPlaceholder
+      placeholder: EncounterPlaceholder,
     ): Promise<void> {
       const placeholders = TidyFlags.placeholders.get(actor);
       placeholders[placeholder.id] = placeholder;
@@ -1140,7 +1142,7 @@ export class TidyFlags {
     get(document: any): SheetTabSectionConfigs | undefined {
       const sectionConfigs = TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
         document,
-        TidyFlags.sectionConfig.key
+        TidyFlags.sectionConfig.key,
       );
 
       if (!sectionConfigs) {
@@ -1205,7 +1207,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<DocumentSectionAssignments>(
           document,
-          TidyFlags.sections.key
+          TidyFlags.sections.key,
         ) ?? {}
       );
     },
@@ -1277,7 +1279,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           actor,
-          TidyFlags.showContainerPanel.key
+          TidyFlags.showContainerPanel.key,
         ) ?? undefined
       );
     },
@@ -1302,7 +1304,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           actor,
-          TidyFlags.showGroupMemberTabInfoPanel.key
+          TidyFlags.showGroupMemberTabInfoPanel.key,
         ) ?? false
       );
     },
@@ -1311,14 +1313,14 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         actor,
         TidyFlags.showGroupMemberTabInfoPanel.key,
-        value
+        value,
       );
     },
     /** Clears whether the group member tab info panel should be shown for a group. */
     unset(actor: Actor5e) {
       return TidyFlags.unsetFlag(
         actor,
-        TidyFlags.showGroupMemberTabInfoPanel.key
+        TidyFlags.showGroupMemberTabInfoPanel.key,
       );
     },
   };
@@ -1335,7 +1337,7 @@ export class TidyFlags {
       return (
         TidyFlags.tryGetFlag<boolean>(
           actor,
-          TidyFlags.showNpcPersonalityInfo.key
+          TidyFlags.showNpcPersonalityInfo.key,
         ) ?? undefined
       );
     },
@@ -1344,7 +1346,7 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         actor,
         TidyFlags.showNpcPersonalityInfo.key,
-        value
+        value,
       );
     },
     /** Clears whether the additional personality info should be shown for an NPC. */
@@ -1430,11 +1432,16 @@ export class TidyFlags {
     get(doc: any): ThemeSettingsV3 | null | undefined {
       return TidyFlags.tryGetFlag<ThemeSettingsV3>(
         doc,
-        TidyFlags.sheetThemeSettings.key
+        TidyFlags.sheetThemeSettings.key,
       );
     },
     set(doc: any, settings: ThemeSettingsV3) {
-      return TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings, true);
+      return TidyFlags.setFlag(
+        doc,
+        TidyFlags.sheetThemeSettings.key,
+        settings,
+        true,
+      );
     },
     unset(doc: any) {
       return TidyFlags.unsetFlag(doc, TidyFlags.sheetThemeSettings.key);
@@ -1449,31 +1456,14 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('sidebar-tab-configuration'),
     /** Gets sidebar tab configuration. */
     get(doc: any): SheetTabsConfiguration | null | undefined {
-      let config = TidyFlags.tryGetFlag<SheetTabsConfiguration>(
+      let rawConfig = TidyFlags.tryGetFlag<Partial<SheetTabsConfiguration>>(
         doc,
-        TidyFlags.sidebarTabConfiguration.key
-      );
+        TidyFlags.sidebarTabConfiguration.key,
+      ) ?? { tabs: {} };
 
-      if (!config) {
-        return null;
-      }
+      rawConfig.tabs ??= {};
 
-      config = TabConfigurationSchema.clean(config);
-      TabConfigurationSchema.validate(config, { fallback: true });
-      // Populate the new keyed structure from the legacy fields on load. Only
-      // when there is a real saved selection — an empty selection means the
-      // document is tracking defaults, so there is nothing to migrate.
-      if (
-        config &&
-        config.selected?.length &&
-        (!config.tabs || Object.keys(config.tabs).length === 0)
-      ) {
-        config.tabs = deriveTabsFromLegacyTabConfiguration(
-          config.selected,
-          config.visibilityLevels
-        );
-      }
-      return config;
+      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(rawConfig);
     },
     /** Sets sidebar tab configuration. */
     set(doc: any, config: SheetTabsConfiguration) {
@@ -1483,7 +1473,7 @@ export class TidyFlags {
       return TidyFlags.setFlag(
         doc,
         TidyFlags.sidebarTabConfiguration.key,
-        toSave
+        toSave,
       );
     },
     /** Clears sidebar tab configuration. */
@@ -1499,32 +1489,15 @@ export class TidyFlags {
     key: 'tab-configuration',
     prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
     /** Gets tab configuration. */
-    get(doc: any): SheetTabsConfiguration | null | undefined {
-      let config = TidyFlags.tryGetFlag<SheetTabsConfiguration>(
+    get(doc: any): SheetTabsConfiguration {
+      let rawConfig = TidyFlags.tryGetFlag<Partial<SheetTabsConfiguration>>(
         doc,
-        TidyFlags.tabConfiguration.key
-      );
+        TidyFlags.tabConfiguration.key,
+      ) ?? { tabs: {} };
 
-      if (!config) {
-        return null;
-      }
+      rawConfig.tabs ??= {};
 
-      config = TabConfigurationSchema.clean(config);
-      TabConfigurationSchema.validate(config, { fallback: true });
-      // Populate the new keyed structure from the legacy fields on load. Only
-      // when there is a real saved selection — an empty selection means the
-      // document is tracking defaults, so there is nothing to migrate.
-      if (
-        config &&
-        config.selected?.length &&
-        (!config.tabs || Object.keys(config.tabs).length === 0)
-      ) {
-        config.tabs = deriveTabsFromLegacyTabConfiguration(
-          config.selected,
-          config.visibilityLevels
-        );
-      }
-      return config;
+      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(rawConfig);
     },
     /** Sets tab configuration. */
     set(doc: any, config: SheetTabsConfiguration) {
@@ -1611,7 +1584,7 @@ export class TidyFlags {
    * @param flagged A document to set the flag on.
    * @param flagName The name of the flag to set.
    * @param value The value to set the flag to.
-   * @param replace Assign the flag to value without inner recursion. 
+   * @param replace Assign the flag to value without inner recursion.
    *          (game.release.generation < 14: unset the flag and then reapply it, to prevent inner recursion)
    * @returns A promise that resolves when the flag is set.
    */
@@ -1619,16 +1592,15 @@ export class TidyFlags {
     flagged: any,
     flagName: string,
     value: unknown,
-    replace: boolean = false
+    replace: boolean = false,
   ): Promise<void> {
-    const toSave = replace && game.release.generation > 13
-      ? _replace(value)
-      : value;
+    const toSave =
+      replace && game.release.generation > 13 ? _replace(value) : value;
 
     if (replace && game.release.generation < 14) {
       await TidyFlags.unsetFlag(flagged, flagName);
     }
-    
+
     await flagged.setFlag(CONSTANTS.MODULE_ID, flagName, toSave);
   }
 
