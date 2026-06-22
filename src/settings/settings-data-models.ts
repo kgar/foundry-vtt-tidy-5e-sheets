@@ -1,3 +1,4 @@
+import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type {
   SheetTabConfigEntry,
   SheetTabsConfiguration,
@@ -5,6 +6,13 @@ import type {
 
 export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
   {
+    // TODO: Determine if we want to commit to this approach
+    // version: new foundry.data.fields.StringField({
+    //   required: true,
+    //   nullable: false,
+    //   blank: false,
+    //   initial: "1"
+    // }),
     tabs: new foundry.data.fields.TypedObjectField(
       new foundry.data.fields.SchemaField({
         key: new foundry.data.fields.StringField({
@@ -35,46 +43,6 @@ export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
   { initial: {} },
   { name: 'Tab Configuration' },
 );
-
-/**
- * Build the tabs from legacy `selected` + * `visibilityLevels`. Visible tabs
- * come first in saved order, then any remaining known tabs (hidden), preserving
- * each tab's visibility level.
- * TODO: Migrate off the legacy tab settings.
- */
-export function deriveTabsFromLegacyTabConfiguration(
-  selected: string[] | undefined | null,
-  visibilityLevels: Record<string, number | null> | undefined | null,
-): Record<string, SheetTabConfigEntry> {
-  const result: Record<string, SheetTabConfigEntry> = {};
-  let order = 0;
-
-  for (const key of selected ?? []) {
-    if (result[key]) {
-      continue;
-    }
-    result[key] = {
-      key,
-      order: order++,
-      show: true,
-      visibilityLevel: visibilityLevels?.[key] ?? null,
-    };
-  }
-
-  for (const key of Object.keys(visibilityLevels ?? {})) {
-    if (result[key]) {
-      continue;
-    }
-    result[key] = {
-      key,
-      order: order++,
-      show: false,
-      visibilityLevel: visibilityLevels?.[key] ?? null,
-    };
-  }
-
-  return result;
-}
 
 /**
  * Visible tab IDs in display order. Use the new `tabs` map first then

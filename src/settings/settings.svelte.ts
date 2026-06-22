@@ -173,7 +173,7 @@ export const systemSettings = {
 export function createSettings() {
   return {
     menus: {
-      worldSettings: {
+      worldSettingsClassic: {
         options: {
           hideClassic: true,
           name: `TIDY5E.WorldSettings.Menu.name`,
@@ -195,7 +195,7 @@ export function createSettings() {
           restricted: false,
         },
       },
-      worldThemeSettingsMenu: {
+      worldSettings: {
         options: {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
           label: 'TIDY5E.SettingsMenu.TidySettings.label',

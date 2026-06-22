@@ -1,3 +1,4 @@
+import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type {
   SheetTabConfigEntry,
   SheetTabsConfiguration,
@@ -16,7 +17,7 @@ export const SettingsShims = {
         shimmed[docName] ??= {};
         shimmed[docName][docType] ??= { tabs: {} };
         shimmed[docName][docType] =
-          this.tryMapSheetTabConfigurationFromLegacyV1(docTypeValue);
+          this.tryMapSheetTabConfigurationFromLegacyV1(docTypeValue, docName);
       }
     }
 
@@ -36,11 +37,15 @@ export const SettingsShims = {
     config: Partial<
       SheetTabsConfiguration & Partial<SheetTabsConfigurationLegacyV1>
     >,
+    documentName: string,
   ): SheetTabsConfiguration {
     // If has the new tabs prop, return only that prop.
     if (config.tabs) {
       return { tabs: config.tabs };
     }
+
+    const defaultVisibility =
+      VisibilityLevels.getDefaultLevelValue(documentName);
 
     // If has original arrays and not the new tabs prop, map.
     const tabs = config.selected
@@ -50,7 +55,8 @@ export const SettingsShims = {
           key: tabId,
           order: index,
           show: true,
-          visibilityLevel: config.visibilityLevels?.[tabId] ?? null,
+          visibilityLevel:
+            config.visibilityLevels?.[tabId] ?? defaultVisibility,
         };
 
         return obj;

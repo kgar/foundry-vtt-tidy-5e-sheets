@@ -22,7 +22,7 @@ import { CONSTANTS } from 'src/constants';
 type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 
 export class ActorSheetQuadroneRuntime<
-  TSheetContext extends ActorSheetQuadroneContext
+  TSheetContext extends ActorSheetQuadroneContext,
 > {
   private _content = $state<RegisteredContent<TSheetContext>[]>([]);
   private _tabs = $state<RegisteredTab<TSheetContext>[]>([]);
@@ -37,7 +37,7 @@ export class ActorSheetQuadroneRuntime<
     overrides?: {
       getTabConfig?: GetTabConfigFn;
       docTypeKeyOverride?: string;
-    }
+    },
   ) {
     this._tabs = [...nativeTabs];
 
@@ -68,7 +68,7 @@ export class ActorSheetQuadroneRuntime<
       let defaultTabs = getSelectedTabIds(
         settings.value.tabConfiguration[context.document.documentName]?.[
           this._docTypeKeyOverride ?? context.document.type
-        ]
+        ],
       );
 
       if (!defaultTabs.length) {
@@ -86,11 +86,11 @@ export class ActorSheetQuadroneRuntime<
 
     let renderableTabs = await TabManager.prepareTabsForRender(
       context,
-      tabsToPrepare
+      tabsToPrepare,
     );
 
     return renderableTabs.filter(
-      (t) => !t.condition || t.condition(context.document)
+      (t) => !t.condition || t.condition(context.document),
     );
   }
 
@@ -104,24 +104,24 @@ export class ActorSheetQuadroneRuntime<
     const worldTabConfig = getTabVisibilityLevels(
       settings.value.tabConfiguration[context.document.documentName]?.[
         this._docTypeKeyOverride ?? context.document.type
-      ]
+      ],
     );
 
     const sheetTabConfig = getTabVisibilityLevels(
-      this._getTabConfig(context.document)
+      this._getTabConfig(context.document),
     );
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
     const defaultVisibilityLevel = VisibilityLevels.getDefaultLevelValue(
-      CONSTANTS.DOCUMENT_NAME_ACTOR
+      CONSTANTS.DOCUMENT_NAME_ACTOR,
     );
 
     return [
       ...tabIds.filter((tabId) => {
         const minOwnershipLevel = Math.max(
           worldTabConfig[tabId] ?? defaultVisibilityLevel,
-          sheetTabConfig[tabId] ?? defaultVisibilityLevel
+          sheetTabConfig[tabId] ?? defaultVisibilityLevel,
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),
@@ -129,7 +129,18 @@ export class ActorSheetQuadroneRuntime<
   }
 
   getAllRegisteredTabs(): RegisteredTab<TSheetContext>[] {
-    return [...this._tabs];
+    return [
+      // Default, ordered tabs
+      ...this._tabs
+        .filter((tab) => this._defaultTabIds.includes(tab.id))
+        .toSorted(
+          (a, b) =>
+            this._defaultTabIds.indexOf(a.id) -
+            this._defaultTabIds.indexOf(b.id),
+        ),
+      // Remaining tabs
+      ...this._tabs.filter((tab) => !this._defaultTabIds.includes(tab.id)),
+    ];
   }
 
   getDefaultTabIds(): string[] {
@@ -142,10 +153,10 @@ export class ActorSheetQuadroneRuntime<
 
   registerTab(
     tab: RegisteredTab<TSheetContext>,
-    options?: ActorTabRegistrationOptions
+    options?: ActorTabRegistrationOptions,
   ) {
     const tabExists = this._tabs.some(
-      (existingTab) => existingTab.id === tab.id
+      (existingTab) => existingTab.id === tab.id,
     );
 
     if (tabExists && !options?.overrideExisting) {

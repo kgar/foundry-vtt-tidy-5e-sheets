@@ -3,12 +3,13 @@
    * Item using `key` as the identity. Sections already have it, tabs
    * map to it using `id`.
    */
-  export type SortableListboxItem = {
+  export type SortableListboxItemOld = {
     key: string;
     label: string;
     iconClass?: string;
     show: boolean;
-    visibilityLevel?: number | null;
+    visibilityLevel: number;
+    order: number;
   };
 </script>
 
@@ -31,11 +32,11 @@
     /** Tab-config mode: bind a {@link TabConfigContextEntry}; rows map to/from its `tabs`/`visibilityLevels`. */
     tabConfigContext?: TabConfigContextEntry;
     /** Items mode: bind a list of `key`-identified items directly (e.g. sections). */
-    items?: SortableListboxItem[];
+    items?: SortableListboxItemOld[];
     /** Show the per-row user-visibility column. Hidden for section configuration. */
     showUserVisibility?: boolean;
     /** Visibility level `<select>` options; defaults to the entry's document name options. */
-    visibilityLevelOptions?: { key: any; value: any; label: string }[];
+    visibilityLevelOptions?: { key: string; value: number; label: string }[];
     headerLabels?: HeaderLabels;
   }
 
@@ -62,18 +63,15 @@
   // Collapse source into editable rows. In tabs mode the list is
   // already ordered (visible first, then hidden) and visibility lives in a
   // separate array; in items mode the items are the rows.
-  function buildRows(): SortableListboxItem[] {
+  function buildRows(): SortableListboxItemOld[] {
     if (tabConfigContext) {
-      const viewerLevelById = new Map(
-        tabConfigContext.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
-      );
-
       return tabConfigContext.tabs.map((tab) => ({
         key: tab.id,
         label: tabConfigContext!.allTabs[tab.id]?.title ?? tab.title,
         iconClass: tabConfigContext!.allTabs[tab.id]?.iconClass ?? tab.iconClass,
         show: tab.show,
-        visibilityLevel: viewerLevelById.get(tab.id) ?? null,
+        visibilityLevel: tab.visibilityLevel,
+        order: tab.order,
       }));
     }
 
@@ -81,7 +79,7 @@
     return (items ?? []).map((item) => ({ ...item }));
   }
 
-  let rows = $state<SortableListboxItem[]>(buildRows());
+  let rows = $state<SortableListboxItemOld[]>(buildRows());
   let selectedIndex = $state<number | null>(null);
 
   // Rebuild rows when a new source is applied from undo/reset
@@ -108,12 +106,8 @@
         title: row.label,
         iconClass: row.iconClass,
         show: row.show,
-      }));
-      tabConfigContext.visibilityLevels = rows.map((row) => ({
-        id: row.key,
-        title: row.label,
-        show: row.show,
-        visibilityLevel: row.visibilityLevel ?? null,
+        visibilityLevel: row.visibilityLevel,
+        order: row.order,
       }));
     } else if (items) {
       const next = rows.map((row) => ({ ...row }));
@@ -247,10 +241,17 @@
       return;
     }
 
-    arrayMove(rows, draggedIdx, target);
-    rows = rows;
+    const rowsToReorder = [...rows];
+    arrayMove(rowsToReorder, draggedIdx, target);
+
+    rowsToReorder.entries().forEach(([index, row]) => {
+      row.order = index + 1;
+    });
+
     selectedIndex = target;
   }
+
+  const sortedRows = $derived(rows.toSorted((a, b) => a.order - b.order));
 </script>
 
 <fieldset class="tab-selection-list" class:no-user-visibility={!showUserVisibility}>
@@ -298,7 +299,7 @@
       ondragover={onListDragOver}
       ondrop={onDrop}
     >
-      {#each rows as item, i (item.key)}
+      {#each sortedRows as item, i (item.key)}
         {const canConfigureViewers =
           $derived(userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM)}
         <li

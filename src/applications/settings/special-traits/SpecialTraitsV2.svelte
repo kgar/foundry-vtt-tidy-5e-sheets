@@ -67,9 +67,7 @@
         groupClasses={{ slim: isCheckbox }}
         disableOverriddenInputs
         onChange={(value) => {
-          console.log(fieldContext.value);
           fieldContext.value = value;
-          console.log(fieldContext.value);
         }}
       />
     {/each}

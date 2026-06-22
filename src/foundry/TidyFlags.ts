@@ -17,14 +17,8 @@ import type {
   SheetPinFlag,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-import type {
-  SheetTabsConfiguration,
-  SheetTabsConfigurationLegacyV1,
-} from 'src/settings/settings.types';
-import {
-  deriveTabsFromLegacyTabConfiguration,
-  TabConfigurationSchema,
-} from 'src/settings/settings-data-models';
+import type { SheetTabsConfiguration } from 'src/settings/settings.types';
+import { TabConfigurationSchema } from 'src/settings/settings-data-models';
 import { SettingsShims } from 'src/settings/settings-shims';
 
 /** Manages Tidy flags. */
@@ -1463,7 +1457,10 @@ export class TidyFlags {
 
       rawConfig.tabs ??= {};
 
-      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(rawConfig);
+      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(
+        rawConfig,
+        doc.documentName,
+      );
     },
     /** Sets sidebar tab configuration. */
     set(doc: any, config: SheetTabsConfiguration) {
@@ -1497,7 +1494,10 @@ export class TidyFlags {
 
       rawConfig.tabs ??= {};
 
-      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(rawConfig);
+      return SettingsShims.tryMapSheetTabConfigurationFromLegacyV1(
+        rawConfig,
+        doc.documentName,
+      );
     },
     /** Sets tab configuration. */
     set(doc: any, config: SheetTabsConfiguration) {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SortableListbox from 'src/applications/settings/tab-configuration/parts/SortableListbox.svelte';
+  import SortableListboxOld from 'src/applications/settings/tab-configuration/parts/SortableListboxOld.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './sheet-tab-options.types';
   import { isNil } from 'src/utils/data';
@@ -100,10 +100,11 @@
       {localize('TIDY5E.Section.LabelPl')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
-    <SortableListbox
+    <!-- TODO: Make sortable listbox generic and use the generic one here -->
+    <!-- <SortableListboxOld
       bind:items={sections}
       showUserVisibility={false}
       headerLabels={{ primary: 'Section', show: 'Show Section' }}
-    />
+    /> -->
   </fieldset>
 </div>

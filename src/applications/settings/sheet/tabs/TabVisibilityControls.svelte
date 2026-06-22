@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
   import { CONSTANTS } from 'src/constants';
 
@@ -14,12 +14,10 @@ import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-conf
 
   const localize = FoundryAdapter.localize;
 
-  let isVisible = $derived(
-    entry.tabs.some((t) => t.id === tabId && t.show),
-  );
+  let isVisible = $derived(entry.tabs.some((t) => t.id === tabId && t.show));
 
   let visibilityLevelIndex = $derived(
-    entry.visibilityLevels.findIndex((v) => v.id === tabId),
+    entry.tabs.findIndex((v) => v.id === tabId),
   );
 
   let visibilityLevelOptions = $derived(
@@ -31,7 +29,7 @@ import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-conf
   let canConfigureViewers = $derived(
     visibilityLevelIndex >= 0 &&
       (userIsGm ||
-        entry.visibilityLevels[visibilityLevelIndex].visibilityLevel !==
+        entry.tabs[visibilityLevelIndex].visibilityLevel !==
           CONSTANTS.VISIBILITY_LEVEL_GM),
   );
 
@@ -65,13 +63,6 @@ import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-conf
         t.id === tabId ? { ...t, show: visible } : t,
       );
       return;
-    }
-
-    // Tab isn't in the list yet (shouldn't normally happen); add it from the
-    // registry when turning it on.
-    const info = entry.allTabs[tabId];
-    if (visible && info) {
-      entry.tabs = [...entry.tabs, { ...info, show: true }];
     }
   }
 
@@ -129,7 +120,7 @@ import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-conf
       <div class="form-fields">
         <select
           id={viewersId()}
-          bind:value={entry.visibilityLevels[visibilityLevelIndex].visibilityLevel}
+          bind:value={entry.tabs[visibilityLevelIndex].visibilityLevel}
         >
           {#each visibilityLevelOptions as option (option.key)}
             <option value={option.value}>{option.label}</option>

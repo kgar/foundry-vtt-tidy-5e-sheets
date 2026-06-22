@@ -222,7 +222,6 @@ export class TidySheetSettingsQuadroneApplication
                 CharacterSheetQuadroneSidebarRuntime,
                 doc.documentName,
                 setting,
-                true,
                 CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
               ),
           },

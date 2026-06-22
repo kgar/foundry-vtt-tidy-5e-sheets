@@ -21,7 +21,7 @@ export type SheetTabConfigEntry = {
   key: string;
   order: number;
   show: boolean;
-  visibilityLevel: number | null;
+  visibilityLevel: number;
 };
 
 export type SheetTabsConfiguration = {
