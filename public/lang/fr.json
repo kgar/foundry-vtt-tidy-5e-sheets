@@ -459,7 +459,12 @@
         "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
         "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis.",
         "SelectionTab.Title": "Sélection de l'onglet",
-        "VisibilityTab.Title": "Visibilité des onglets"
+        "VisibilityTab.Title": "Visibilité des onglets",
+        "showTabTooltip": "",
+        "hideTabTooltip": "",
+        "buttonLabel": "",
+        "options.viewers": "",
+        "options.visibility": ""
     },
     "TIDY5E.Listbox": {
         "MoveRight": "Déplacer vers la droite (Espace)",
@@ -527,7 +532,8 @@
         "name": "Paramètres du monde",
         "hint": "Ajustez les paramètres au niveau du monde pour personnaliser l'expérience de Tidy 5e Sheets. Ces paramètres sont enregistrés dans ce monde de Foundry et s'appliquent à tous les contenus pertinents de Tidy 5e Sheets.",
         "label": "Paramètres du monde",
-        "title": "Paramètres du monde (MD seulement)"
+        "title": "Paramètres du monde (MD seulement)",
+        "tabLabel": ""
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Utiliser la tabulation par défaut du clavier pour les PV",
@@ -741,7 +747,13 @@
         "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
         "name": "Définir Tidy5e comme feuille par défaut",
         "disableAll": "A utiliser sur aucunes feuilles",
-        "enableAll": "À utiliser pour toutes les feuilles"
+        "enableAll": "À utiliser pour toutes les feuilles",
+        "TidySheets": "",
+        "Sheet": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "SystemSheets": ""
     },
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
@@ -1068,5 +1080,97 @@
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Couleur d'arrière-plan de l'en-tête"
     },
-    "TIDY5E.AbbrProficiency": "Comp"
+    "TIDY5E.AbbrProficiency": "Comp",
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.UseGlobalDefaults": ""
 }
