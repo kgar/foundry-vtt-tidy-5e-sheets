@@ -47,30 +47,31 @@ export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
 /**
  * Visible tab IDs in display order. Use the new `tabs` map first then
  * fall back to the legacy `selected` array.
- * TODO: Migrate off the legacy tab settings, then drop the fallback.
  */
 export function getSelectedTabIds(
-  config: SheetTabsConfiguration | undefined | null
+  config: SheetTabsConfiguration | undefined | null,
 ): string[] {
   const tabs = config?.tabs;
+
   if (tabs && Object.keys(tabs).length) {
     return Object.values(tabs)
       .filter((t) => t.show)
       .sort((a, b) => a.order - b.order)
       .map((t) => t.key);
   }
+
   return [];
 }
 
 /**
  * Per-tab viewer visibility levels by tab ID. Use the new `tabs` map first
  * then fall back to `visibilityLevels`
- * TODO: Migrate off the legacy tab settings, then drop the fallback.
  */
 export function getTabVisibilityLevels(
-  config: SheetTabsConfiguration | undefined | null
+  config: SheetTabsConfiguration | undefined | null,
 ): Record<string, number | null> {
   const tabs = config?.tabs;
+
   if (tabs && Object.keys(tabs).length) {
     return Object.values(tabs).reduce<Record<string, number | null>>(
       (prev, t) => {
@@ -80,6 +81,7 @@ export function getTabVisibilityLevels(
       {},
     );
   }
+
   return {};
 }
 

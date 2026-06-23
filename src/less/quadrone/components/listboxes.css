@@ -1,17 +1,25 @@
 .tidy5e-sheet.application:where(.quadrone) {
-  .sorting-listbox {
+  .sortable-listbox {
     display: flex;
+    flex-direction: column;
     flex: 1;
     gap: 0.5rem;
     min-height: 0;
 
-    > .controls {
+    .sortable-listbox-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      gap: 0.5rem;
+    }
+
+    .controls {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       align-self: flex-start;
 
-      > .control {
+      > .button {
         --size: 2rem;
         padding: 0;
         width: var(--size);
@@ -27,162 +35,185 @@
       }
     }
 
-    > .listbox {
-      flex: 1;
+    .sortable-listbox-items-list {
+      position: relative;
       list-style: none;
       margin: 0;
-      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.375rem;
-      overflow-y: auto;
-      padding: 0.125rem;
-      padding-block-end: 0.5rem;
-
-      > .listbox-item {
-        display: flex;
-        align-items: center;
-        margin: 0;
-        padding-inline-start: 0.375rem;
-        gap: 0.5rem;
-        background: var(--t5e-component-field-background);
-        border-radius: 0.125rem;
-        border: 0.0625rem solid var(--t5e-component-field-border);
-        color: var(--t5e-color-text-default);
-
-        .section-config-item-label {
-          flex: 1;
-          padding-block: 0.25rem;
-
-          &.marked-as-hidden {
-            color: var(--t5e-color-text-lighter);
-            font-style: italic;
-          }
-        }
-
-        &:has(.marked-as-hidden) {
-          background-color: var(--t5e-card-color-darker);
-
-          .drag-grip {
-            color: var(--t5e-color-text-lighter);
-          }
-        }
-
-        &.focused {
-          border-color: var(--t5e-component-field-border-hover);
-          box-shadow: var(--t5e-drop-shadow-field-hover);
-          background: var(--t5e-theme-color-darker);
-
-          &:has(.marked-as-hidden) {
-            background-color: var(--t5e-theme-color-darkest);
-          }
-        }
-
-        .listbox-option-button {
-          border-top: 0;
-          border-inline-end: 0;
-          border-block-end: 0;
-          box-shadow: none;
-          background: transparent;
-          border-radius: 0;
-          height: 100%;
-        }
-
-        .option-hide {
-          font-style: italic;
-          border-color: var(--t5e-color-text-disabled);
-          color: var(--t5e-color-text-lighter);
-
-          i {
-            color: var(--t5e-color-icon-disabled);
-          }
-        }
-      }
-    }
-  }
-
-  .selection-listbox {
-    flex: 1;
-    min-height: 0;
-    max-height: inherit;
-    gap: 0.5rem;
-    align-items: stretch;
-
-    h3 {
-      font-size: var(--font-size-18);
-      line-height: var(--font-size-18);
-    }
-
-    > * {
-      align-items: flex-start;
-      height: 100%;
-    }
-
-    .selection-listbox-toolbar {
-      padding-block-start: 1.5rem;
-      justify-content: flex-start;
-    }
-
-    .listbox {
-      list-style: none;
-      padding: 0;
+      gap: 0.25rem;
+      padding-left: 0;
+      overflow-y: visible;
+      min-height: 0;
       flex: 1;
-      width: 100%;
-      margin: var(--t5e-size-2x) 0 0;
     }
 
-    .listbox-selected {
-      .listbox-item i {
-        color: var(--t5e-color-text-default);
+    .sortable-listbox-header {
+      display: flex;
+      flex-direction: row;
+
+      .tabs-label {
+        padding-left: 3rem;
+        flex: 1;
       }
     }
 
     .listbox-item {
-      align-content: center;
-      background: var(--t5e-component-field-background);
-      border-radius: var(--t5e-size-halfx);
       display: flex;
       align-items: center;
       min-height: var(--t5e-field-size-default);
+      padding: 0 0 0 0.375rem;
+      background: var(--t5e-component-field-background);
+      border-radius: var(--t5e-size-halfx);
       outline: 0.0625rem solid var(--t5e-component-field-border);
-      outline-offset: -0.0625rem;
-      padding: 0 var(--t5e-size-2x);
-      flex: 1;
-      gap: 0.375rem;
-      transition: background-color var(--t5e-transition-default),
+      color: var(--t5e-color-text-default);
+      cursor: grab;
+      transition:
+        background-color var(--t5e-transition-default),
         outline-color var(--t5e-transition-default);
 
-      &:hover,
-      &:focus-within,
-      &:active {
-        background-color: var(--t5e-theme-color-darker);
-        color: var(--t5e-theme-color-foreground);
-        outline: 0.0625rem solid var(--t5e-component-field-border-hover);
+      > i {
+        width: 1rem;
+        margin-right: 0.375rem;
+      }
 
-        i {
+      .sortable-listbox-item-label {
+        flex: 3;
+        padding-block: 0.25rem;
+      }
+
+      &:hover {
+        outline-color: var(--t5e-component-field-border-hover);
+      }
+
+      &.focused {
+        background-color: var(--t5e-theme-color-darker);
+        outline-color: var(--t5e-component-field-border-hover);
+        box-shadow: var(--t5e-drop-shadow-field-hover);
+
+        .drag-grip {
+          color: var(--t5e-theme-color-foreground-disabled);
+        }
+
+        .tab-row-icon {
+          color: var(--t5e-theme-color-foreground-diminished);
+        }
+
+        .sortable-listbox-item-label {
           color: var(--t5e-theme-color-foreground);
+        }
+
+        .field-toggle {
+          border-color: var(--t5e-theme-color-foreground-disabled);
+        }
+      }
+
+      &.dragging {
+        opacity: 0.5;
+      }
+    }
+
+    .drop-line {
+      position: absolute;
+      left: 0.125rem;
+      right: 0.125rem;
+      height: 0.1875rem;
+      margin: 0;
+      padding: 0;
+      border-radius: 0.125rem;
+      background-color: var(--t5e-theme-color-highlight);
+      pointer-events: none;
+    }
+
+    .drag-grip {
+      flex: 0 0 auto;
+      color: var(--t5e-color-text-lightest);
+      cursor: grab;
+    }
+  }
+
+  /* --------------------------------------------- */
+  /* Tab/Section Selection                         */
+  /* --------------------------------------------- */
+
+  .tab-configuration-tabs {
+    margin-bottom: var(--t5e-size-3x);
+    margin-top: var(--t5e-size-1x);
+
+    .golden-fade {
+      margin: 0;
+    }
+  }
+
+  .sortable-listbox {
+    .sortable-listbox-header {
+      .viewers-label {
+        width: 7rem;
+        padding-left: 0.5rem;
+      }
+
+      .visibility-label {
+        width: 5rem;
+        text-align: center;
+      }
+    }
+
+    .tab-row-icon {
+      flex: 0 0 auto;
+      color: var(--t5e-color-text-lighter);
+    }
+
+    .listbox-item {
+      &.marked-as-hidden {
+        background-color: var(--t5e-card-color-darker);
+
+        .drag-grip {
+          color: var(--t5e-color-text-lighter);
         }
       }
 
       &.focused {
-        background-color: var(--t5e-theme-color-darkest);
-        outline: 0.0625rem solid var(--t5e-component-field-border-hover);
-
-        i {
+        .tab-viewers-button {
           color: var(--t5e-theme-color-foreground);
         }
       }
     }
 
-    .focused {
-      background-color: fuchsia;
-      color: white;
+    .listbox-item.marked-as-hidden .sortable-listbox-item-label {
+      color: var(--t5e-color-text-lighter);
+      font-style: italic;
     }
 
-    .selection-listbox-toolbar {
+    .tab-row-viewers {
+      flex: 0 0 auto;
+      width: auto;
+    }
+
+    select.tab-viewers-button {
+      --t5e-component-field-focus: var(--t5e-theme-color-foreground);
+      border-top: none;
+      border-bottom: none;
+      border-right: none;
+      background-color: transparent;
+      width: 7rem;
+    }
+
+    .tab-visibility-switch {
+      width: 5rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      border-left: 0.0625rem solid var(--t5e-component-field-border);
+      height: var(--t5e-field-size-default);
+    }
+
+    .option-hide {
+      font-style: italic;
+      color: var(--t5e-color-text-lighter);
+
+      i {
+        color: var(--t5e-color-icon-disabled);
+      }
     }
   }
 }

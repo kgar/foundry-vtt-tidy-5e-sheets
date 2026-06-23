@@ -12,8 +12,6 @@ import type {
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import { SettingsProvider } from 'src/settings/settings.svelte';
-import { getSelectedTabIds } from 'src/settings/settings-data-models';
 import type { CustomTabTitle } from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 
@@ -70,22 +68,6 @@ export function getActorTabContext(
     settings,
     docTypeKeyOverride,
   );
-}
-
-function getWorldDefaultSelectedTabIds(
-  documentName: string,
-  type: string,
-  typeOverride?: string,
-): string[] | undefined {
-  const selected = getSelectedTabIds(
-    SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
-      typeOverride ?? type
-    ],
-  );
-
-  if (selected.length > 0) {
-    return selected;
-  }
 }
 
 export function buildTabConfigContextEntry(
@@ -145,7 +127,7 @@ export function buildTabConfigContextEntry(
     const defaultVisibility =
       VisibilityLevels.getDefaultLevelValue(documentName);
     const afterMaxConfiguredOrder =
-      tabs.reduce<number>((prev, curr) => Math.max(prev, curr.order), 0) + 1000;
+      tabs.reduce<number>((prev, curr) => Math.max(prev, curr.order), 0) + 1;
 
     // Append any newly-registered tabs not yet in the saved config
     for (const tab of Object.values(registry)) {
@@ -230,8 +212,8 @@ function buildTabConfigEntries(
   );
 
   const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
-  const afterMaxConfiguredOrder =
-    configured.reduce((prev, curr) => Math.max(prev, curr.order), 0) + 1000;
+  let nextOrder =
+    configured.reduce((prev, curr) => Math.max(prev, curr.order), 0) + 1;
 
   const additional = Object.values(all).reduce<TabConfig[]>((tabs, tab) => {
     // Include tab info if it was not configured already
@@ -240,8 +222,9 @@ function buildTabConfigEntries(
         ...tab,
         show: true,
         visibilityLevel: defaultVisibility,
-        order: afterMaxConfiguredOrder + tabs.length + 1,
+        order: nextOrder,
       });
+      nextOrder++;
     }
 
     return tabs;

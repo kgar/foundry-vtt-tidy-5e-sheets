@@ -24,11 +24,11 @@
   - [x] SheetTabConfigurationQuadrone.svelte listbox titles
   - [x] SheetTabOptions.svelte
 - [x] Determine if pane version can be removed now that the new sortable listbox is born. It was accounting for undo/reset and rerendering the list.
-- [ ] Eliminate getSelectedTabIds()
-- [ ] Eliminate getTabVisibilityLevels()
-- [ ] Simplify callers receiving settings.
-- [ ] `<!-- TODO: Share the item name snippet? -->` / `<-- [ ] <!-- TODO: Share the item show snippet? -->`
-  - There is some common HTML between some of the cell snippets which we could share.
+- [x] ~~Eliminate getSelectedTabIds()~~ I could clean up a little, but this is used by the runtimes.
+- [x] ~~Eliminate getTabVisibilityLevels()~~ Ditto, could not.
+- [x] ~~Simplify callers receiving settings.~~ I regrettably didn't leave myself enough context to remember what this was about.
+- [x] `<!-- TODO: Share the item name snippet? -->` / `<-- [ ] <!-- TODO: Share the item show snippet? -->`
+- [x] listboxes.css - generalize as much of the SortableListbox CSS as possible, leaving the column-specific / width-specific details as custom styles atop the generic, in a followup commented segment of the stylesheet.
 
 ## Research on TabConfigContextEntry
 

@@ -10,6 +10,7 @@
   } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
   import SortableListbox from '../tab-configuration/parts/SortableListbox.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+  import { listboxSnippets } from '../tab-configuration/parts/SortableListboxSnippets.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
@@ -102,15 +103,9 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    <!-- TODO: Share the item name snippet? -->
     {#snippet listboxItemName(item: ConfigurableSection)}
-      <span
-        data-section-key={item.key}
-        data-testid="section-config-item-label"
-        class="section-config-item-label font-label-medium">{item.label}</span
-      >
+      {@render listboxSnippets.primaryHeader(item.key, item.label)}
     {/snippet}
-    <!-- TODO: Share the item show snippet? -->
     {#snippet listboxItemShow(item: ConfigurableSection)}
       <div class="tab-visibility-switch">
         <FieldToggle

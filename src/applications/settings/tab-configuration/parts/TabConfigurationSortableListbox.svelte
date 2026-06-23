@@ -8,6 +8,7 @@
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
   import { CONSTANTS } from 'src/constants';
   import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+  import { listboxSnippets } from './SortableListboxSnippets.svelte';
 
   type Props = {
     tabConfigEntry: TabConfigContextEntry;
@@ -23,11 +24,7 @@
 </script>
 
 {#snippet listboxItemName(item: TabConfig)}
-  <span
-    data-section-key={item.id}
-    data-testid="section-config-item-label"
-    class="section-config-item-label font-label-medium">{item.title}</span
-  >
+  {@render listboxSnippets.primaryHeader(item.id, item.title)}
 {/snippet}
 {#snippet listboxItemVisibility(item: TabConfig)}
   {#if item.show}

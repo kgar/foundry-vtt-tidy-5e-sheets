@@ -40,7 +40,7 @@
       return;
     }
 
-    reorderItems(selectedIndex, selectedIndex + 1);
+    reorderItems(selectedIndex, selectedIndex - 1);
   }
 
   function moveDown() {
@@ -153,18 +153,7 @@
       return;
     }
 
-    if (orderConfig) {
-      const rowsToReorder = [...items];
-      arrayMove(rowsToReorder, draggedIdx, target);
-
-      rowsToReorder.entries().forEach(([index, row]) => {
-        orderConfig.setOrder(row, index + 1);
-      });
-
-      selectedIndex = target;
-    } else {
-      arrayMove(items, draggedIdx, target);
-    }
+    reorderItems(draggedIdx, target);
   }
 
   const sortedItems = $derived(
@@ -177,9 +166,11 @@
 
   function reorderItems(fromIndex: number, toIndex: number) {
     if (orderConfig) {
-      arrayMove(items, fromIndex, toIndex);
+      const rowsToReorder = [...sortedItems];
 
-      items.entries().forEach(([index, row]) => {
+      arrayMove(rowsToReorder, fromIndex, toIndex);
+
+      rowsToReorder.entries().forEach(([index, row]) => {
         orderConfig.setOrder(row, index + 1);
       });
     } else {
@@ -192,12 +183,12 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset class={['tab-selection-list', listboxClasses]}>
-  <div class={['tab-selection-header', headerClasses]}>
+<fieldset class={['sortable-listbox', listboxClasses]}>
+  <div class={['sortable-listbox-header', headerClasses]}>
     {#each columns as column}
       <span
         class={[
-          'tab-selection-header-label font-label-medium',
+          'sortable-listbox-header-label font-label-medium',
           column.titleClasses,
         ]}
       >
@@ -207,7 +198,7 @@
       </span>
     {/each}
   </div>
-  <div class="tab-selection-body">
+  <div class="sortable-listbox-body">
     <div class="controls">
       <button
         type="button"
@@ -231,7 +222,7 @@
       </button>
     </div>
     <ul
-      class="tab-selection-listbox"
+      class="sortable-listbox-items-list"
       role="listbox"
       tabindex="0"
       onkeydown={onListKeydown}
@@ -242,10 +233,15 @@
         {const listItemClasses = $derived(listItemClassesFn?.(item))}
         <li
           bind:this={rowElements[i]}
-          class={['listbox-item', listItemClasses]}
-          class:focused={selectedIndex === i}
-          class:theme-dark={selectedIndex === i}
-          class:dragging={draggedIndex === i}
+          class={[
+            'listbox-item',
+            listItemClasses,
+            {
+              focused: selectedIndex === i,
+              'theme-dark': selectedIndex === i,
+              dragging: draggedIndex === i,
+            },
+          ]}
           role="option"
           aria-selected={selectedIndex === i}
           draggable="true"
