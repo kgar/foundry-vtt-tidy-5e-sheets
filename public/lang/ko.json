@@ -149,7 +149,14 @@
         "SelectedHeader": "선택한 탭",
         "UnsupportedDocumentErrorMessage": "{documentType} 문서 유형은 탭 선택으로 설정되지 않았습니다.",
         "AtLeastOneRequiredErrorMessage": "최소 한 개의 탭을 활성화해야 합니다.",
-        "Explanation": "사용자 또는 시트가 표시되지 않도록 설정된 모든 탭(예: 설정 지정에서 저널 비활성화)은 선택하더라도 시트에 표시되지 않습니다."
+        "Explanation": "사용자 또는 시트가 표시되지 않도록 설정된 모든 탭(예: 설정 지정에서 저널 비활성화)은 선택하더라도 시트에 표시되지 않습니다.",
+        "showTabTooltip": "",
+        "hideTabTooltip": "",
+        "buttonLabel": "",
+        "options.viewers": "",
+        "VisibilityTab.Title": "",
+        "options.visibility": "",
+        "SelectionTab.Title": ""
     },
     "TIDY5E.ButtonConfirm.Text": "확인",
     "TIDY5E.Listbox": {
@@ -256,7 +263,8 @@
         "name": "월드 세팅",
         "hint": "월드 레벨 설정을 조정하여 Tidy 5e Sheets 환경을 사용자 지정합니다. 이러한 설정은 이 Foundry 월드에 저장되며 모든 관련 Tidy 5e 시트 콘텐츠에 적용됩니다.",
         "label": "월드 세팅",
-        "title": "월드 세팅(GM 한정)"
+        "title": "월드 세팅(GM 한정)",
+        "tabLabel": ""
     },
     "TIDY5E.UserSettings.Menu": {
         "name": "사용자 세팅",
@@ -664,7 +672,15 @@
         "name": "Tidy를 기본 시트로 설정",
         "hint": "하나 이상의 문서 유형에 대해 Tidy 5e 시트를 기본값으로 설정하고 싶지만 핵심 기본 시트 구성 메뉴가 예상대로 작동하지 않는 경우 이 메뉴를 사용하여 기본 설정을 선택하세요.",
         "buttonLabel": "Tidy를 기본 시트로 설정",
-        "explanation": "Tidy 5e 시트를 기본값으로 설정할 모든 문서 유형을 선택합니다."
+        "explanation": "Tidy 5e 시트를 기본값으로 설정할 모든 문서 유형을 선택합니다.",
+        "enableAll": "",
+        "TidySheets": "",
+        "Sheet": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "disableAll": "",
+        "SystemSheets": ""
     },
     "TIDY5E.Settings.About": {
         "name": "소개",
@@ -718,12 +734,24 @@
             "title": "{type} 포트레이트 형태",
             "option.round": "원형",
             "option.transparent": "투명",
-            "option.square": "사각형"
+            "option.square": "사각형",
+            "option.token": ""
         },
         "RarityColors.title": "Rarity Colors",
         "SheetTheme.title": "시트 테마",
         "SheetTheme.hint": "최적화를 위해, 색상 팔레트 중앙 주변의 색상을 선택하십시오.",
-        "SpellcastingMethodColors.title": "주문 준비 모드 색상"
+        "SpellcastingMethodColors.title": "주문 준비 모드 색상",
+        "HeaderBackgroundColor": {
+            "title": "",
+            "hint": ""
+        },
+        "UseHeaderBackground.title": "",
+        "UseBasicTheme.title": "",
+        "UseBasicTheme.hint": "",
+        "AccentColor": {
+            "hint": ""
+        },
+        "UseHeaderBackground.hint": ""
     },
     "TIDY5E.FavoriteSpellLevelLabel": "주문 레벨 {number}",
     "TIDY5E.ApplyChanges": "변경 적용",
@@ -786,7 +814,8 @@
         "SectionSelectorExistingSections": "존재하는 항목",
         "SectionSelectorCreateNewSection": "새 항목 생성",
         "SectionSelectorNewSectionName": "새 항목 이름",
-        "SectionSelectorSaveNewSection": "새 항목 저장"
+        "SectionSelectorSaveNewSection": "새 항목 저장",
+        "SectionSelectorChooseTabSectionTooltip": ""
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "확인: 기본값 사용",
@@ -833,5 +862,235 @@
     "TIDY5E.HitDice.Current.Label": "현재 체력 주사위",
     "TIDY5E.HitDice.Max.Label": "최대 체력 주사위",
     "TIDY5E.CharacterTraits.Title": "캐릭터 특성에",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Tidy 5e 시트에 오신 것을 환영합니다! 시작하려면 {sheetLinkStart}시트 하나{sheetLinkEnd}(또는 {allSheetsLinkStart}모든 시트{allSheetsLinkEnd}!)를 변경하여 Tidy 버전을 사용해야 합니다. 이 모듈과 이 모듈의 기능에 대한 자세한 내용은 {wikiLinkStart}공식 위키{wikiLinkEnd}에서 알아보세요."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Tidy 5e 시트에 오신 것을 환영합니다! 시작하려면 {sheetLinkStart}시트 하나{sheetLinkEnd}(또는 {allSheetsLinkStart}모든 시트{allSheetsLinkEnd}!)를 변경하여 Tidy 버전을 사용해야 합니다. 이 모듈과 이 모듈의 기능에 대한 자세한 내용은 {wikiLinkStart}공식 위키{wikiLinkEnd}에서 알아보세요.",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "",
+    "TIDY5E.Encounter": {
+        "AddMember.Label": "",
+        "DeletePlaceholder.Label": "",
+        "Combat.ExcludeFromCombat.Tooltip": "",
+        "AddPlaceholder.Label": "",
+        "CombatVisibility.Hidden.Label": "",
+        "AddAllPlaceholders.Label": "",
+        "NewPlaceholder.SubtitlePlaceholderText": "",
+        "PrerollInitiative": "",
+        "AddPlaceholderToCombatTracker.Label": "",
+        "CombatantsSection.Title": "",
+        "DifficultyTarget.Label": "",
+        "CombatVisibility.Visible.Label": "",
+        "Combat.IncludeInCombat.Tooltip": "",
+        "NewPlaceholder.Name": "",
+        "PlaceholderNameField.PlaceholderText": "",
+        "PlaceholderNotesField.PlaceholderText": "",
+        "InitiativeCount.Label": "",
+        "AddCombatants.MustHaveEncounter.Message": ""
+    },
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.EmptyFavorites": "",
+    "TIDY5E.SheetMode.Play": "",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "",
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.AbbrProficiency": "",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollMutation": "",
+            "clear": "",
+            "rollDeepHazeSave": "",
+            "rolledMutation": "",
+            "rollSave": "",
+            "none": ""
+        }
+    },
+    "TIDY5E.ContextMenuActionAssignToEntity": "",
+    "TIDY5E.CompendiumBrowser": "",
+    "TIDY5E.EmptyTools": "",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "",
+    "TIDY5E.SheetMode.Edit": "",
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.Group.PrimaryParty.Label": "",
+    "TIDY5E.CombatTabName": "",
+    "TIDY5E.SectionOrganization": "",
+    "TIDY5E.GenericDefaultPrefix": "",
+    "TIDY5E.SpellbookSections": "",
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "",
+            "name": "",
+            "label": "",
+            "hint": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.SheetLock.Empty.Hint": "",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "",
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "option.origin": "",
+        "hint": "",
+        "option.action": "",
+        "name": ""
+    },
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.Utilities.ShowSheetPins": "",
+    "TIDY5E.Character.Sidebar.Title": "",
+    "TIDY5E.UseSpecificDefaultValue.Label": "",
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.AggregateSkill.HighMeasure": "",
+    "TIDY5E.InspirationAdd": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.Tidy5eEncounterSheetClassic": "",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "",
+    "TIDY5E.ContextMenuActionUnassign": "",
+    "TIDY5E.Utilities.HideSheetPins": "",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "",
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.LairAbbr": "",
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Member.Passenger.Label": "",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "",
+    "TIDY5E.Vehicle.Repair.Label": "",
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Member.Assigned.Label": "",
+    "TIDY5E.Notifications.ClassicsRetired": "",
+    "TIDY5E.AggregateSkill.LowMeasure": "",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "",
+    "TIDY5E.Show": "",
+    "TIDY5E.Difficulty": "",
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "",
+    "TIDY5E.Hide": "",
+    "TIDY5E.ContextMenuActionPin": "",
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.AbilityRoll": "",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "",
+        "LocationHeader": ""
+    },
+    "TIDY5E.Utilities.CastActivityMissingSpell": "",
+    "TIDY5E.LegendaryAbbr": "",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "",
+    "TIDY5E.UseGlobalDefaults": "",
+    "TIDY5E.AddCustom": "",
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": ""
+    },
+    "TIDY5E.InspirationRemove": "",
+    "TIDY5E.DisplayOptionsActor.Title": "",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "",
+    "TIDY5E.ContextMenuActionUnpin": "",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "",
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "",
+    "TIDY5E.UserDefaultPrefix": "",
+    "TIDY5E.LegendaryLairToolbar": "",
+    "TIDY5E.SheetPin": {
+        "LabelPl": "",
+        "Label": ""
+    },
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "",
+    "TIDY5E.RemoveSpecific": "",
+    "TIDY5E.Vehicle.Features.EmptyState": "",
+    "TIDY5E.GMOnly.Title": "",
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "",
+    "TIDY5E.Actor.Characteristics": "",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": ""
 }
