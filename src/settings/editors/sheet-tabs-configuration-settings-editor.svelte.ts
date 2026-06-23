@@ -84,7 +84,7 @@ export function getSheetTabsConfigurationSettingsEditor(
 
   const current = $state<SheetTabsConfigurationContext>(getConfig());
 
-  const defaultConfig = getTabContext(document, getWorldConfigOrDefault());
+  const defaultConfig = getDefaultTabContext();
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
@@ -112,6 +112,16 @@ export function getSheetTabsConfigurationSettingsEditor(
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
       return getItemTabContext(doc.type, setting);
     }
+  }
+
+  function getDefaultTabContext() {
+    const context = getTabContext(document, getWorldConfigOrDefault());
+
+    if (context) {
+      seedSidebarExpanded(context, { useDefaults: true });
+    }
+
+    return context;
   }
 
   function getActorRuntime(type: string) {

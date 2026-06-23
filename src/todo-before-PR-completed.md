@@ -15,10 +15,11 @@
 - [x] Migrate all callers to new listbox, then remove the old one.
 - [x] Convert Sheet Tabs Config to use the V2 tab config model
 - [x] ~~Plan and resolve errors from the change in the components~~
-- [ ] Make Undo/Reset work for sheet tab options editor's Tab Visibility fields
-  - [ ] // TODO: flatten sidebarExpanded into the TabConfig model and have an easier time managing it.
-  - [ ] // TODO: Determine if Derived will cause changes to bubble up here from the tabs config editor's value.
-- [ ] Apply this update to world tab config
+- [x] Make Undo/Reset work for sheet tab options editor's Tab Visibility fields
+  - [x] ~~// TODO: flatten sidebarExpanded into the TabConfig model and have an easier time managing it.~~ 
+  - [x] ~~// TODO: Determine if Derived will cause changes to bubble up here from the tabs config editor's value.~~ It doesn't! Found a better way.
+- [x] Apply this update to world tab config
+- [x] Tab config - Hide visibility column when show is false
 - [ ] Localize 😱
   - [ ] SheetTabConfigurationQuadrone.svelte listbox titles
   - [ ] SheetTabOptions.svelte

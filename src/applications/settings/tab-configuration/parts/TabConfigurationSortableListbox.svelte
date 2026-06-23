@@ -30,15 +30,17 @@
   >
 {/snippet}
 {#snippet listboxItemVisibility(item: TabConfig)}
-  <select
-    class="tab-viewers-button"
-    title={localize('TIDY5E.TabConfiguration.options.viewers')}
-    bind:value={item.visibilityLevel}
-  >
-    {#each visibilityLevels as option (option.key)}
-      <option value={option.value}>{option.label}</option>
-    {/each}
-  </select>
+  {#if item.show}
+    <select
+      class="tab-viewers-button"
+      title={localize('TIDY5E.TabConfiguration.options.viewers')}
+      bind:value={item.visibilityLevel}
+    >
+      {#each visibilityLevels as option (option.key)}
+        <option value={option.value}>{option.label}</option>
+      {/each}
+    </select>
+  {/if}
 {/snippet}
 {#snippet listboxItemShow(item: TabConfig)}
   {const canConfigureViewers = $derived(

@@ -9,7 +9,6 @@ import type {
 } from 'src/features/sections/sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SheetTabsConfigurationSettingsEditor } from './sheet-tabs-configuration-settings-editor.svelte';
-import type { SheetTabConfigurationContextV2 } from './shared/tab-configuration.types';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -90,7 +89,6 @@ export type SectionConfigItem = {
 export type SheetTabOptionsSettingsEditorContext = {
   sections: SectionConfigItem[];
   optionsGroups: SectionOptionGroup[];
-  tabConfig?: SheetTabConfigurationContextV2;
 };
 
 export type SheetTabOptionsSettingsEditor =
@@ -175,6 +173,13 @@ export function getSheetTabOptionsSettingsEditor(
     return {
       sections: $state.snapshot(config.sections),
       optionsGroups: snapshotOptionGroupValues(config.optionsGroups),
+      tabConfig:
+        params.sheetTabsConfigurationSettingsEditor?.value.entry.tabs.find(
+          (t) => t.id === params.settings.tabId,
+        ),
+      sidebar:
+        params.sheetTabsConfigurationSettingsEditor?.value.entry
+          .sidebarExpandedByTabId?.[params.settings.tabId],
     };
   }
 
