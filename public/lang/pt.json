@@ -154,7 +154,12 @@
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma guia.",
         "Explanation": "Qualquer guia que o utilizador ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada.",
         "SelectionTab.Title": "Seleção de Guias",
-        "VisibilityTab.Title": "Visibilidade de Guias"
+        "VisibilityTab.Title": "Visibilidade de Guias",
+        "showTabTooltip": "",
+        "hideTabTooltip": "",
+        "buttonLabel": "",
+        "options.viewers": "",
+        "options.visibility": ""
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -261,7 +266,8 @@
         "name": "Configurações do Mundo",
         "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Estas configurações são gravadas nesse mundo do Foundry e aplicam-se a todo o conteúdo relevante ao Tidy 5e Sheets.",
         "label": "Configurações do Mundo",
-        "title": "Configurações do Mundo (Apenas Mestre)"
+        "title": "Configurações do Mundo (Apenas Mestre)",
+        "tabLabel": ""
     },
     "TIDY5E.UserSettings.Menu": {
         "name": "Configurações de Utilizador",
@@ -671,7 +677,13 @@
         "buttonLabel": "Definir Tidy como Ficha Padrão",
         "explanation": "Selecione todos os tipos de documentos onde prefere que o Tidy 5e Sheets seja o padrão.",
         "disableAll": "Uso para nenhuma ficha",
-        "enableAll": "Use para todas as fichas"
+        "enableAll": "Use para todas as fichas",
+        "TidySheets": "",
+        "Sheet": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "SystemSheets": ""
     },
     "TIDY5E.Settings.About": {
         "name": "Sobre",
@@ -740,8 +752,10 @@
         "SpellcastingMethodColors.title": "Cores do Modo de Preparação de Magias",
         "UseBasicTheme.title": "Use o Tema Básico",
         "HeaderBackgroundColor": {
-            "title": "Cor do Cabeçalho do Ator"
-        }
+            "title": "Cor do Cabeçalho do Ator",
+            "hint": ""
+        },
+        "UseBasicTheme.hint": ""
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -989,5 +1003,97 @@
     },
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Cor de Fundo do Cabeçalho"
-    }
+    },
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.UseGlobalDefaults": ""
 }
