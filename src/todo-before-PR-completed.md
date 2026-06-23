@@ -23,7 +23,7 @@
 - [x] Localize 😱
   - [x] SheetTabConfigurationQuadrone.svelte listbox titles
   - [x] SheetTabOptions.svelte
-- [ ] Determine if pane version can be removed now that the new sortable listbox is born. It was accounting for undo/reset and rerendering the list.
+- [x] Determine if pane version can be removed now that the new sortable listbox is born. It was accounting for undo/reset and rerendering the list.
 - [ ] Eliminate getSelectedTabIds()
 - [ ] Eliminate getTabVisibilityLevels()
 - [ ] Simplify callers receiving settings.

@@ -132,7 +132,6 @@ export class WorldSettingsQuadroneApplication
 
   resetToDefault(): Promise<void> | void {
     Object.values(this.editors).forEach((e) => e.resetToDefault());
-    this.tabPaneVersion++;
   }
 
   useDefaultLabel?: string | undefined;
@@ -168,15 +167,9 @@ export class WorldSettingsQuadroneApplication
 
   canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
 
-  // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
-  // this forces them to remount and re-read the reset config. See WorldSheetSettings.
-  // TODO: Can I get around the need for tabPaneVersion?
-  tabPaneVersion = $state(0);
-
   /** Revert every deferred-save page to its last-saved state (staged). */
   undoChanges() {
     Object.values(this.editors).forEach((e) => e.undoChanges());
-    this.tabPaneVersion++;
   }
 
   /** Confirm once, then stage system defaults across every page. */

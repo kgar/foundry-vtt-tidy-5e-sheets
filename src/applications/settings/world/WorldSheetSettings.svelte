@@ -99,13 +99,9 @@
       sheetName: title,
     })}
   </p>
-  <!-- Tab/header panes mount once (TabContent.onMount); remount them when the
-       dialog stages an Undo / Use Global Defaults so they re-read the config. -->
-  {#key app.tabPaneVersion}
-    <div class="tabs-row tab-configuration-tabs">
-      <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
-      <hr class="golden-fade" />
-    </div>
-    <TabContents {selectedTabId} {tabs} cssClass="flex1" />
-  {/key}
+  <div class="tabs-row tab-configuration-tabs">
+    <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
+    <hr class="golden-fade" />
+  </div>
+  <TabContents {selectedTabId} {tabs} cssClass="flex1" />
 </div>

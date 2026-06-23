@@ -109,15 +109,11 @@
   );
 
   let selectedSheetConfigEditor = $derived(
-    app.sheetConfigEditors[activeSelectedId]
+    app.sheetConfigEditors[activeSelectedId],
   );
 
   function selectTab(id: string) {
     app.selectTab(id);
-  }
-
-  function incrementTabPaneVersion(): void | Promise<void> {
-      app.tabPaneVersion++;
   }
 </script>
 
@@ -198,18 +194,12 @@
         options={app.editors.sheetPreferencesTab.value}
       />
     {:else if selectedSheetConfigEditor}
-      <WorldSheetSettings
-        {app}
-        editor={selectedSheetConfigEditor}
-      />
+      <WorldSheetSettings {app} editor={selectedSheetConfigEditor} />
     {/if}
   </section>
 
   {const activePane = $derived(app.getActivePane())}
   {#if activePane}
-    <SettingsFooter host={activePane} 
-      save={() => app.save()} 
-      onResetDefault={incrementTabPaneVersion} 
-      onUndo={incrementTabPaneVersion} />
+    <SettingsFooter host={activePane} save={() => app.save()} />
   {/if}
 </div>
