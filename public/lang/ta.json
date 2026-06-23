@@ -30,7 +30,12 @@
         "UnsupportedDocumentErrorMessage": "ஆவண வகை {documentType} தற்போது தாவல் தேர்வுக்கு அமைக்கப்படவில்லை.",
         "Explanation": "பார்க்கக்கூடாது என்று பயனர் அல்லது தாள் கட்டமைக்கப்பட்ட எந்த தாவல்களும் (எ.கா., பத்திரிகையை கட்டமைப்பு அமைப்புகளில் முடக்குவது) தேர்ந்தெடுக்கப்பட்டாலும் கூட தாளில் இன்னும் தோன்றாது.",
         "SelectionTab.Title": "தாவல் தேர்வு",
-        "VisibilityTab.Title": "தாவல் தெரிவுநிலை"
+        "VisibilityTab.Title": "தாவல் தெரிவுநிலை",
+        "showTabTooltip": "",
+        "hideTabTooltip": "",
+        "buttonLabel": "",
+        "options.viewers": "",
+        "options.visibility": ""
     },
     "TIDY5E.Listbox": {
         "MoveLeft": "இடதுபுறம் நகர்த்தவும் (இடம்)",
@@ -66,7 +71,8 @@
         "label": "உலக அமைப்புகள்",
         "title": "உலக அமைப்புகள் (GM மட்டும்)",
         "name": "உலக அமைப்புகள்",
-        "hint": "நேர்த்தியான 5e தாள்களின் அனுபவத்தைத் தனிப்பயனாக்க உலக அளவிலான அமைப்புகளை சரிசெய்யவும். இந்த அமைப்புகள் இந்த ஃபவுண்டரி உலகில் சேமிக்கப்படுகின்றன மற்றும் தொடர்புடைய அனைத்து நேர்த்தியான 5e தாள்கள் உள்ளடக்கத்திற்கும் பொருந்தும்."
+        "hint": "நேர்த்தியான 5e தாள்களின் அனுபவத்தைத் தனிப்பயனாக்க உலக அளவிலான அமைப்புகளை சரிசெய்யவும். இந்த அமைப்புகள் இந்த ஃபவுண்டரி உலகில் சேமிக்கப்படுகின்றன மற்றும் தொடர்புடைய அனைத்து நேர்த்தியான 5e தாள்கள் உள்ளடக்கத்திற்கும் பொருந்தும்.",
+        "tabLabel": ""
     },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "வீரர்கள்",
@@ -301,7 +307,13 @@
         "HeaderColor": {
             "title": "தலைப்பு பின்னணி நிறம்",
             "hint": "தாள் தலைப்பிற்கு தாள் உச்சரிப்பு நிறத்தை விட வேறு நிறத்தைப் பயன்படுத்தவும்."
-        }
+        },
+        "HeaderBackgroundColor": {
+            "title": "",
+            "hint": ""
+        },
+        "UseBasicTheme.title": "",
+        "UseBasicTheme.hint": ""
     },
     "TIDY5E.ReminderToBackUp": "உங்கள் உலகத்தை காப்புப் பிரதி எடுக்க எப்போதும் நினைவில் கொள்ளுங்கள்.",
     "TIDY5E.Utilities.ConfigureSections": "பிரிவுகளை உள்ளமைக்கவும்",
@@ -723,7 +735,13 @@
         "buttonLabel": "இயல்புநிலை தாளாக நேர்த்தியாக அமைக்கவும்",
         "explanation": "நேர்த்தியான 5e தாள்களை இயல்புநிலையாக நீங்கள் விரும்பும் அனைத்து ஆவண வகைகளையும் தேர்ந்தெடுக்கவும்.",
         "disableAll": "தாள்கள் இல்லாமல் பயன்படுத்தவும்",
-        "enableAll": "அனைத்து தாள்களுக்கும் பயன்படுத்தவும்"
+        "enableAll": "அனைத்து தாள்களுக்கும் பயன்படுத்தவும்",
+        "TidySheets": "",
+        "Sheet": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "SystemSheets": ""
     },
     "TIDY5E.Settings.Debug": {
         "name": "பிழைத்திருத்தத்தை இயக்கவும்",
@@ -998,7 +1016,123 @@
             "rollMutation": "பிறழ்வுக்கான ரோல்",
             "rolledMutation": "மாசு அளவு {level} கொண்ட பிறழ்வுக்காக {name} உருட்டப்பட்டது.",
             "clear": "தெளிவான மாசுபாடு",
-            "none": "மாசு அல்லது அறிகுறிகள் இல்லை."
+            "none": "மாசு அல்லது அறிகுறிகள் இல்லை.",
+            "rollDeepHazeSave": ""
         }
+    },
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.AbbrProficiency": "",
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "",
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.AbilityRoll": "",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "",
+    "TIDY5E.UseGlobalDefaults": "",
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": ""
+    },
+    "TIDY5E.DisplayOptionsActor.Title": "",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": ""
     }
 }
