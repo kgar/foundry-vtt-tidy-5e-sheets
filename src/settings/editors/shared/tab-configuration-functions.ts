@@ -102,6 +102,8 @@ export function buildTabConfigContextEntry(
 
   const defaultTabs = buildTabConfigEntries(registry, {}, documentName);
 
+  const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
+  
   // Effective ordered tabs. Prefer the new per-tab config that with order and
   // player visibility, otherwise get from the old model (visible in order with a
   // second array for hidden).
@@ -120,12 +122,10 @@ export function buildTabConfigContextEntry(
           iconClass: registry[entry.key].iconClass,
           show: entry.show,
           order: entry.order,
-          visibilityLevel: entry.visibilityLevel,
+          visibilityLevel: entry.visibilityLevel ?? defaultVisibility,
         };
       });
 
-    const defaultVisibility =
-      VisibilityLevels.getDefaultLevelValue(documentName);
     const afterMaxConfiguredOrder =
       tabs.reduce<number>((prev, curr) => Math.max(prev, curr.order), 0) + 1;
 
