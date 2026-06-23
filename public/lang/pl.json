@@ -19,7 +19,12 @@
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone.",
         "SelectionTab.Title": "Wybór zakładki",
-        "VisibilityTab.Title": "Widoczność zakładki"
+        "VisibilityTab.Title": "Widoczność zakładki",
+        "showTabTooltip": "",
+        "hideTabTooltip": "",
+        "buttonLabel": "",
+        "options.viewers": "",
+        "options.visibility": ""
     },
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Pojazdy",
@@ -351,7 +356,13 @@
         "HeaderColor": {
             "title": "Kolor tła nagłówka",
             "hint": "Użyj innego koloru niż kolor akcentu karty dla nagłówka karty."
-        }
+        },
+        "HeaderBackgroundColor": {
+            "title": "",
+            "hint": ""
+        },
+        "UseBasicTheme.title": "",
+        "UseBasicTheme.hint": ""
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
         "name": "Wrodzone - akcent"
@@ -411,7 +422,13 @@
         "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów kart, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
         "name": "Ustaw Tidy 5e jako domyślną kartę",
         "disableAll": "Nie używaj dla żadnej karty",
-        "enableAll": "Używaj dla wszystkich kart"
+        "enableAll": "Używaj dla wszystkich kart",
+        "TidySheets": "",
+        "Sheet": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "SystemSheets": ""
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
     "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
@@ -720,7 +737,8 @@
         "title": "Ustawienia świata (tylko MG)",
         "name": "Ustawienia świata",
         "hint": "Zmień ustawienia na poziomie świata, aby spersonalizować korzystanie z Tidy 5e Sheets. Ustawienia te są zapisywane w tym świecie Foundry i mają zastosowanie do całej zawartości związanej z Tidy 5e Sheets.",
-        "label": "Ustawienia świata"
+        "label": "Ustawienia świata",
+        "tabLabel": ""
     },
     "TIDY5E.Settings.ShowClassList": {
         "name": "Pokaż listę klas",
@@ -992,7 +1010,8 @@
             "rollMutation": "Rzut na mutację",
             "rolledMutation": "{name} rzucił na mutację przy poziomie skażenia {level}.",
             "clear": "Usuń skażenie",
-            "none": "Brak skażenia ani objawów."
+            "none": "Brak skażenia ani objawów.",
+            "rollDeepHazeSave": ""
         }
     },
     "TIDY5E.SectionOrganization": "Organizacja sekcji",
@@ -1013,5 +1032,115 @@
     "TIDY5E.AbbrProficiency": "Prof.",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrzostwo broni: {mastery}",
     "TIDY5E.Utilities.CastActivityMissingSpell": "Z tą czynnością nie wiąże się żadne zaklęcie.",
-    "TIDY5E.DisplayOptionsActor.Title": "Opcje wyświetlania aktorów"
+    "TIDY5E.DisplayOptionsActor.Title": "Opcje wyświetlania aktorów",
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.UseGlobalDefaults": "",
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": ""
+    }
 }
