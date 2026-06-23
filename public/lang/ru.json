@@ -55,5 +55,1032 @@
     "TIDY5E.JournalMisc": "Прочее",
     "TIDY5E.JournalEntries": "Личные Записи",
     "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}",
-    "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности"
+    "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности",
+    "TIDY5E.Utilities.GMTools": "",
+    "TIDY5E.UserSettings.Menu": {
+        "label": "",
+        "title": "",
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.ThemeSettings": {
+        "SheetMenu": {
+            "buttonLabel": "",
+            "hint": "",
+            "name": ""
+        },
+        "Sheet": {
+            "importSuccess": "",
+            "useDefaultDarkColors": "",
+            "importDropHint": "",
+            "import": "",
+            "explanation": "",
+            "useDefaultLightColors": "",
+            "menuLabel": "",
+            "header": "",
+            "importError": "",
+            "export": "",
+            "title": ""
+        },
+        "ActorHeaderBackground.title": "",
+        "PortraitShape": {
+            "option.transparent": "",
+            "option.token": "",
+            "title": "",
+            "option.round": "",
+            "option.square": ""
+        },
+        "hint": "",
+        "ItemSidebarBackground.title": "",
+        "RarityColors.title": "",
+        "HeaderBackgroundColor": {
+            "title": "",
+            "hint": ""
+        },
+        "UseHeaderBackground.title": "",
+        "UseBasicTheme.title": "",
+        "UseBasicTheme.hint": "",
+        "AccentColor": {
+            "title": "",
+            "hint": ""
+        },
+        "SheetTheme.title": "",
+        "SpellcastingMethodColors.title": "",
+        "UseHeaderBackground.hint": ""
+    },
+    "TIDY5E.WorldSettings.Menu": {
+        "name": "",
+        "title": "",
+        "tabLabel": "",
+        "hint": "",
+        "label": ""
+    },
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "",
+    "TIDY5E.Settings.About": {
+        "FinancialSupportHeader": "",
+        "LocalizationParagraph": "",
+        "logoAltText": "",
+        "name": "",
+        "buttonLabel": "",
+        "MaintainerParagraph": "",
+        "DiscordParagraph": "",
+        "hint": "",
+        "FinancialSupportParagraph": "",
+        "KoFiLink": "",
+        "BuyMeACoffeeLink": "",
+        "GithubParagraph": "",
+        "dialogTitle": ""
+    },
+    "TIDY5E.Encounter": {
+        "AddMember.Label": "",
+        "DeletePlaceholder.Label": "",
+        "Combat.ExcludeFromCombat.Tooltip": "",
+        "AddPlaceholder.Label": "",
+        "CombatVisibility.Hidden.Label": "",
+        "AddAllPlaceholders.Label": "",
+        "NewPlaceholder.SubtitlePlaceholderText": "",
+        "PrerollInitiative": "",
+        "AddPlaceholderToCombatTracker.Label": "",
+        "CombatantsSection.Title": "",
+        "DifficultyTarget.Label": "",
+        "CombatVisibility.Visible.Label": "",
+        "Combat.IncludeInCombat.Tooltip": "",
+        "NewPlaceholder.Name": "",
+        "PlaceholderNameField.PlaceholderText": "",
+        "PlaceholderNotesField.PlaceholderText": "",
+        "InitiativeCount.Label": "",
+        "AddCombatants.MustHaveEncounter.Message": ""
+    },
+    "TIDY5E.WorldSettings.label": "",
+    "TIDY5E.Settings.ShowInspirationOnHover": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.Reset": {
+        "dialogs": {
+            "title": "",
+            "cancel": "",
+            "content": "",
+            "confirm": ""
+        },
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.InfoCardInspectHint": "",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
+    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.TabConfiguration": {
+        "showTabTooltip": "",
+        "SelectedHeader": "",
+        "Explanation": "",
+        "hideTabTooltip": "",
+        "MenuOptionText": "",
+        "Title": "",
+        "AvailableHeader": "",
+        "AtLeastOneRequiredErrorMessage": "",
+        "buttonLabel": "",
+        "UnsupportedDocumentErrorMessage": "",
+        "options.viewers": "",
+        "VisibilityTab.Title": "",
+        "options.visibility": "",
+        "SelectionTab.Title": ""
+    },
+    "TIDY5E.ContextMenuActionUnattune": "",
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "top": "",
+        "name": "",
+        "hint": "",
+        "bottom": ""
+    },
+    "TIDY5E.ActorSpellAttackFlavorText": "",
+    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+        "linked": "",
+        "both": "",
+        "default": "",
+        "unlinked": "",
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ShowPlayerName": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.EmptyFavorites": "",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "",
+    "TIDY5E.SheetMode.Play": "",
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "SelectedHeader": "",
+        "AvailableHeader": "",
+        "hint": "",
+        "AtLeastOneTabRequiredErrorMessage": "",
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ButtonConfirm.Text": "",
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": ""
+    },
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "",
+    "TIDY5E.ContextMenuActionDelete": "",
+    "TIDY5E.Settings.AllowHpMaxOverride": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Class.Warlock": "",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "",
+    "TIDY5E.ContextMenuActionView": "",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.Migrations": {
+        "migrationBeginningMessage": "",
+        "migrateConfirmButtonNo": "",
+        "buttonLabel": "",
+        "CcssToTidy": {
+            "deleteFlagsTooltip": "",
+            "section": "",
+            "sectionTitle": "",
+            "overwrite": "",
+            "overwriteTooltip": "",
+            "selectionDialogTitle": "",
+            "ccss": "",
+            "deleteFlags": "",
+            "explanation1": ""
+        },
+        "OptionOverwrite.Text": "",
+        "Journal": {
+            "explanation1": ""
+        },
+        "Selection": {
+            "TotalSelectedLabel": "",
+            "SelectAllNoneTooltip": "",
+            "ToMigrate": ""
+        },
+        "migrationErrorMessage": "",
+        "migrateDocumentFlagsButtonLabel": "",
+        "migrateConfirmButtonYes": "",
+        "MigrateCompendia.CompendiumLabel": "",
+        "OptionOverwrite.Tooltip": "",
+        "OptionDeleteFlags.Tooltip": "",
+        "MigrateCompendia.TotalEntriesLabel": "",
+        "chatNotification": "",
+        "OptionDeleteFlags.Text": "",
+        "hint": "",
+        "ButtonMigration.Text": "",
+        "Parent": "",
+        "migrateConfirmMessage2": "",
+        "dialogTitle": "",
+        "migrateConfirmTitle": "",
+        "migrateGmSettingsButtonLabel": "",
+        "MigrateCompendia.SelectionDialogTitle": "",
+        "UnlinkedExplanation": "",
+        "migrateConfirmMessage1": "",
+        "OptionsHeader": "",
+        "MigrateCompendia.Title": "",
+        "migrationCompleteMessage": "",
+        "name": ""
+    },
+    "TIDY5E.Section": {
+        "ConfigDialog": {
+            "showTooltip": "",
+            "title": "",
+            "hideTooltip": ""
+        },
+        "Tooltip": "",
+        "SectionSelectorSaveNewSection": "",
+        "SectionSelectorTitle": "",
+        "SectionSelectorChooseActionSectionTooltip": "",
+        "SectionSelectorChooseSectionTooltip": "",
+        "SectionSelectorCreateNewSection": "",
+        "LabelPl": "",
+        "SectionSelectorNewSectionName": "",
+        "SectionSelectorExistingSections": "",
+        "ActionTooltip": "",
+        "Default": "",
+        "Label": "",
+        "ActionLabel": "",
+        "SectionSelectorChooseTabSectionTooltip": ""
+    },
+    "TIDY5E.SaveChanges": "",
+    "TIDY5E.Settings.HideIfZero": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "",
+    "TIDY5E.Class.Druid": "",
+    "TIDY5E.Ability.EditScore.label": "",
+    "TIDY5E.SheetEdit.Disable.Hint": "",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "",
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.Debug": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Hidden": "",
+    "TIDY5E.Settings.UseEffectCards": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.SheetEdit.Enable.Hint": "",
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": ""
+    },
+    "TIDY5E.Settings.AllowCantripsToBePrepared": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "",
+        "hint": "",
+        "revertToSystemSheets": "",
+        "switchToTidySheets": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.UseHpBar": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.AbbrProficiency": "",
+    "TIDY5E.SpellSourceIdentifierSelectText": "",
+    "TIDY5E.Settings.ActionList.Header": "",
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Class.Artificer": "",
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "",
+    "TIDY5E.Settings.LockExpChanges": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollMutation": "",
+            "clear": "",
+            "rollDeepHazeSave": "",
+            "rolledMutation": "",
+            "rollSave": "",
+            "none": ""
+        }
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "enableAll": "",
+        "buttonLabel": "",
+        "TidySheets": "",
+        "Sheet": "",
+        "hint": "",
+        "name": "",
+        "explanation": "",
+        "dialogMessage": "",
+        "RevertToSystemSheets": "",
+        "dialogTitle": "",
+        "disableAll": "",
+        "SystemSheets": ""
+    },
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": ""
+    },
+    "TIDY5E.Settings.UseContextMenu": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.AlwaysShowSkills": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ContextMenuActionAssignToEntity": "",
+    "TIDY5E.Settings.UseCircularPortraitStyle": {
+        "none": "",
+        "all": "",
+        "pc": "",
+        "name": "",
+        "npc": "",
+        "hint": ""
+    },
+    "TIDY5E.Utilities.ConfigureSections": "",
+    "TIDY5E.Utilities.Tools": "",
+    "TIDY5E.Settings.InfoCardsInspectKey": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowNPCSpellbookTab": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.AbbrSavingThrow": "",
+    "TIDY5E.Class.Wizard": "",
+    "TIDY5E.SettingsMenu": {
+        "TabConfiguration": {
+            "label": "",
+            "name": "",
+            "hint": ""
+        },
+        "Defaults": {
+            "name": "",
+            "hint": "",
+            "label": ""
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "",
+            "name": "",
+            "label": "",
+            "hint": ""
+        },
+        "TidySettings": {
+            "hint": "",
+            "name": "",
+            "label": ""
+        }
+    },
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "Header": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.AbbrMod": "",
+    "TIDY5E.VehicleInMotion": "",
+    "TIDY5E.Settings.ShowClassList": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.EmptySection": "",
+    "TIDY5E.Listbox": {
+        "MoveUp": "",
+        "MoveDown": "",
+        "MoveLeft": "",
+        "MoveRight": "",
+        "MoveAllRight": "",
+        "MoveAllLeft": ""
+    },
+    "TIDY5E.SortMenu.OptionManual": "",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "",
+    "TIDY5E.Settings.LockItemQuantity": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Exhaustion": {
+        "Header": "",
+        "hint": "",
+        "options.open.text": "",
+        "name": "",
+        "options.open.explanation": "",
+        "options.specific.levels.name": "",
+        "options.specific.text": "",
+        "AtLeastOneLevelRequiredErrorMessage": "",
+        "options.specific.levels.tooltip.name": "",
+        "options.specific.levels.hint": "",
+        "options.specific.levels.tooltip.hint": ""
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "",
+    "TIDY5E.CompendiumBrowser": "",
+    "TIDY5E.ItemFilters.CanCast": "",
+    "TIDY5E.SearchClear": "",
+    "TIDY5E.EmptyTools": "",
+    "TIDY5E.ShowNotProficientSkills": "",
+    "TIDY5E.Abilities": "",
+    "TIDY5E.SheetLock.Description": "",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "",
+    "TIDY5E.Activities.Cast.SourceHintText": "",
+    "TIDY5E.Commands.CollapseAll": "",
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ItemCardsDelay": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseInspiration": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "",
+    "TIDY5E.ActiveEffectsMarkerTitle": "",
+    "TIDY5E.SheetMode.Edit": "",
+    "TIDY5E.Settings.LimitEffectsManagementToGM": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": ""
+    },
+    "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "",
+    "TIDY5E.WorldSettings.Homebrew": {
+        "tabLabel": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "useTidyHint": "",
+        "resetHint": "",
+        "intro": ""
+    },
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "",
+    "TIDY5E.Group.PrimaryParty.Label": "",
+    "TIDY5E.Settings.ItemCardsForAllItems": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.CombatTabName": "",
+    "TIDY5E.Settings.ShowActiveEffectsMarker": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SectionOrganization": "",
+    "TIDY5E.Commands.ShowContainerPanel": "",
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.UseClassicControls": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.TabSheetLock": {
+        "tabLabel": "",
+        "labelGeneralLocks": "",
+        "labelInventoryLocks": "",
+        "labelFeaturesLocks": "",
+        "header": "",
+        "hint2": "",
+        "hint": ""
+    },
+    "TIDY5E.Utilities.IdentifyAll": "",
+    "TIDY5E.GenericDefaultPrefix": "",
+    "TIDY5E.ContextMenuActionAttune": "",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "",
+    "TIDY5E.SpellbookSections": "",
+    "TIDY5E.UndoChanges": "",
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "options.GmOnly": "",
+        "name": "",
+        "hint": "",
+        "options.GmAndOwners": ""
+    },
+    "TIDY5E.BrokenLink": "",
+    "TIDY5E.SheetLock.Empty.Hint": "",
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "",
+        "ItemSheets": "",
+        "TidySettings": ""
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "option.origin": "",
+        "hint": "",
+        "option.action": "",
+        "name": ""
+    },
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
+    "TIDY5E.TokenUnlinked": "",
+    "TIDY5E.SheetSettings": {
+        "HeaderControls": {
+            "OpenWorldSettings": "",
+            "MoveAllToHeader": "",
+            "WorldSettingHint": "",
+            "ShowControl": "",
+            "MoveAllToMenu": "",
+            "Preview": ""
+        },
+        "Sidebar": {
+            "title": "",
+            "Hint": ""
+        },
+        "Group": {
+            "Tabs": "",
+            "SheetSettings": ""
+        },
+        "ConfigureTab": {
+            "hint": "",
+            "title": ""
+        },
+        "AssignSpellsToClasses": {
+            "hint": ""
+        },
+        "hint": "",
+        "title": "",
+        "NoTabsHint": ""
+    },
+    "TIDY5E.ApplyChanges": "",
+    "TIDY5E.MaxPreparedSpellsConfig": {
+        "ExamplesHeader": "",
+        "ButtonTooltip": "",
+        "MoreFormulas": "",
+        "Title": ""
+    },
+    "TIDY5E.Utilities.ShowSheetPins": "",
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": ""
+    },
+    "TIDY5E.Inventory.Weight.Tooltip": "",
+    "TIDY5E.SortMode.ActionListDefault": "",
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.Character.Sidebar.Title": "",
+    "TIDY5E.SortMenu.OptionPriority": "",
+    "TIDY5E.UseSpecificDefaultValue.Label": "",
+    "TIDY5E.WorldSettings.hint": "",
+    "TIDY5E.Settings.ShowNPCRestInChat": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "",
+    "TIDY5E.InspirationAdd": "",
+    "TIDY5E.Environment": "",
+    "TIDY5E.ContextMenuActionPinToAttributes": "",
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "",
+        "name": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.ShowTraitLabels": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.GMOnlyEdit": "",
+    "TIDY5E.Visible": "",
+    "TIDY5E.Settings.LockLevelSelector": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Encumbrance": "",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "",
+    "TIDY5E.Settings.UseVehicleMotion": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Facilities": {
+        "ContextMenuActionRemove": "",
+        "Defenders.Label": "",
+        "Progress.OrderAndCraftLabel": "",
+        "Hirelings.Label": "",
+        "Creatures.Label": "",
+        "RosterMember.Label": ""
+    },
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "",
+    "TIDY5E.Inventory.Weight.Text": "",
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ContextMenuActionUnassign": "",
+    "TIDY5E.Utilities.HideSheetPins": "",
+    "TIDY5E.SheetMenu": {
+        "themeLabel": "",
+        "label": ""
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "",
+    "TIDY5E.Settings.InitialSheetTab": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "ShowWhenEmptyTooltip": "",
+        "LimitToSpecificTabsLabel": "",
+        "CustomizedIndicatorLabel": "",
+        "ShowWhenEmptyLabel": "",
+        "LimitToSpecificSheetsLabel": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "",
+    "TIDY5E.Settings.ItemCardsAreFloating": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.SheetLock.Unlock.Hint": "",
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": ""
+    },
+    "TIDY5E.HitDice.Max.Label": "",
+    "TIDY5E.LairAbbr": "",
+    "TIDY5E.UserSettings.TabPlayers": {
+        "tabLabel": "",
+        "header": ""
+    },
+    "TIDY5E.Utilities.SpellValueMax": "",
+    "TIDY5E.HitDice.Current.Label": "",
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.Filter.Other": "",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "",
+    "TIDY5E.Vehicle.Repair.Label": "",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "",
+    "TIDY5E.UserSettings.TabVehicles": {
+        "header": "",
+        "tabLabel": ""
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": ""
+    },
+    "TIDY5E.EnvironmentTooltip": "",
+    "TIDY5E.AttunementMax": "",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "",
+    "TIDY5E.Notifications.ClassicsRetired": "",
+    "TIDY5E.Settings.InspirationAnimation": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ActorSpellAttackTitle": "",
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": ""
+    },
+    "TIDY5E.ActorMeleeSpellAttackTitle": "",
+    "TIDY5E.OriginSummaryConfig": "",
+    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Class.Barbarian": "",
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Settings.ShowExhaustionOnHover": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Class.Bard": "",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "",
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": ""
+    },
+    "TIDY5E.SearchHint": "",
+    "TIDY5E.ListLayout": "",
+    "TIDY5E.Commands.ExpandAll": "",
+    "TIDY5E.Class.Fighter": "",
+    "TIDY5E.AggregateSkill.LowMeasure": "",
+    "TIDY5E.TotalCrewCount": "",
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": ""
+    },
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "",
+    "TIDY5E.Class.Custom": "",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "",
+    "TIDY5E.Show": "",
+    "TIDY5E.Difficulty": "",
+    "TIDY5E.Class.Ranger": "",
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.MeleeSpellAttackMod": "",
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "name": "",
+        "hint": ""
+    },
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "",
+    "TIDY5E.Hide": "",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "",
+    "TIDY5E.UseDefaultDialog": {
+        "text": "",
+        "title": ""
+    },
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "",
+    "TIDY5E.UserSettings.TabNPCs": {
+        "tabLabel": "",
+        "header": ""
+    },
+    "TIDY5E.ContextMenuActionPin": "",
+    "TIDY5E.Search": "",
+    "TIDY5E.Settings.BankedInspiration.title": "",
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "",
+            "name": ""
+        }
+    },
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "hint": "",
+        "name": "",
+        "AddSection": ""
+    },
+    "TIDY5E.AbilityRoll": "",
+    "TIDY5E.Commands.HideContainerPanel": "",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "",
+    "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "",
+        "LocationHeader": ""
+    },
+    "TIDY5E.Settings.UseTotalSheetLock": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.CanUse": "",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "",
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": ""
+    },
+    "TIDY5E.CharacterTraits.Title": "",
+    "TIDY5E.Class.Paladin": "",
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "",
+    "TIDY5E.Settings.UseExhaustion": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Options.Title": "",
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": ""
+    },
+    "TIDY5E.LegendaryAbbr": "",
+    "TIDY5E.Containers.HoldsNumberUnits": "",
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Equipment.EmptyState": "",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "",
+    "TIDY5E.Utilities.SpellPips": "",
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": ""
+    },
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ContextMenuActionShowLimitedUses": "",
+    "TIDY5E.ContextMenuActionShowQuantity": "",
+    "TIDY5E.SheetEdit.Description": "",
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": ""
+    },
+    "TIDY5E.ContextMenuActionUnequip": "",
+    "TIDY5E.Class.Cleric": "",
+    "TIDY5E.UseGlobalDefaults": "",
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": ""
+    },
+    "TIDY5E.RollRecharge.Label": "",
+    "TIDY5E.VehicleMotionless": "",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "",
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": ""
+    },
+    "TIDY5E.AddCustom": "",
+    "TIDY5E.SpellAttackMod": "",
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": ""
+    },
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "",
+    "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.InspirationRemove": "",
+    "TIDY5E.PreparedSpells": "",
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": ""
+    },
+    "TIDY5E.DisplayOptionsActor.Title": "",
+    "TIDY5E.DisplayOptions.Title": "",
+    "TIDY5E.Class.Monk": "",
+    "TIDY5E.ConfigureTab.Title": "",
+    "TIDY5E.Class.Sorcerer": "",
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": ""
+    },
+    "TIDY5E.ContextMenuActionUnprepare": "",
+    "TIDY5E.GenericErrorNotification": "",
+    "TIDY5E.Commands.ShowLegendaryToolbar": "",
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "",
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.ContextMenuActionUnpin": "",
+    "TIDY5E.Favorite": "",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "",
+    "TIDY5E.RangedSpellAttackMod": "",
+    "TIDY5E.HideNotProficientSkills": "",
+    "TIDY5E.AttunementWarning": "",
+    "TIDY5E.Settings.UseHpOverlay": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": ""
+    },
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "",
+    "TIDY5E.Class.Rogue": "",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.ContextMenuActionEdit": "",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "",
+    "TIDY5E.ContextMenuActionEquip": "",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "",
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": ""
+    },
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "",
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": ""
+    },
+    "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "",
+    "TIDY5E.LayoutNotSupported": "",
+    "TIDY5E.GMOnly.Message": "",
+    "TIDY5E.UserDefaultPrefix": "",
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": ""
+    },
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "",
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "",
+    "TIDY5E.Utilities.AssignSpellsToClasses": "",
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": ""
+    },
+    "TIDY5E.AddFavorite": "",
+    "TIDY5E.AttackMod": "",
+    "TIDY5E.GridLayout": "",
+    "TIDY5E.LegendaryLairToolbar": "",
+    "TIDY5E.HitDice.Abbreviation": "",
+    "TIDY5E.Commands.HideLegendaryToolbar": "",
+    "TIDY5E.UseDefault": "",
+    "TIDY5E.FavoriteSpellLevelLabel": "",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "",
+    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
+        "hint": "",
+        "name": ""
+    },
+    "TIDY5E.SortMenu.OptionAlphabetical": "",
+    "TIDY5E.SheetPin": {
+        "LabelPl": "",
+        "Label": ""
+    },
+    "TIDY5E.ActorRangedSpellAttackTitle": "",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "",
+    "TIDY5E.RemoveSpecific": "",
+    "TIDY5E.ReminderToBackUp": "",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "",
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Features.EmptyState": "",
+    "TIDY5E.GMOnly.Title": "",
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": ""
+    },
+    "TIDY5E.AttunementItems": "",
+    "TIDY5E.SheetLock.Lock.Hint": "",
+    "TIDY5E.ActionsPerTurn": "",
+    "TIDY5E.Reset": "",
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": ""
+    },
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "",
+    "TIDY5E.TokenLinked": "",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "",
+    "TIDY5E.Actor.Characteristics": "",
+    "TIDY5E.RemoveFavorite": "",
+    "TIDY5E.ItemFilters.ClearAll": "",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "",
+    "TIDY5E.ItemCardsMouseHint": "",
+    "TIDY5E.ContextMenuActionPrepare": "",
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": ""
+    }
 }
