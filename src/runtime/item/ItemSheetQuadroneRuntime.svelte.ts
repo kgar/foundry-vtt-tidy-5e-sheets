@@ -48,7 +48,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import {
   getSelectedTabIds,
-  getTabVisibilityLevels, 
+  getTabVisibilityLevels,
 } from 'src/settings/settings-data-models';
 import type {
   ItemTabRegistrationOptions,
@@ -76,7 +76,7 @@ class ItemSheetQuadroneRuntimeImpl {
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
-    nativeSheets: [string, ItemSheetInfo][]
+    nativeSheets: [string, ItemSheetInfo][],
   ) {
     this._tabs = nativeTabs;
     this._sheetMap = new SvelteMap(nativeSheets);
@@ -87,7 +87,7 @@ class ItemSheetQuadroneRuntimeImpl {
   async registerItemSheet(
     type: string,
     info: ItemSheetInfo,
-    existingTabIds?: string[]
+    existingTabIds?: string[],
   ) {
     this._sheetMap.set(type, info);
 
@@ -106,22 +106,22 @@ class ItemSheetQuadroneRuntimeImpl {
   }
 
   async getContent(
-    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext,
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
-      this._content
+      this._content,
     );
   }
 
   async getTabs(
-    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext,
   ) {
     let tabsForType = this._getVisibleTabs(context);
     let tabIds = tabsForType.map((t) => t.id);
 
     const selectedTabs = getSelectedTabIds(
-      TidyFlags.tabConfiguration.get(context.item)
+      TidyFlags.tabConfiguration.get(context.item),
     );
 
     if (selectedTabs?.length) {
@@ -134,7 +134,7 @@ class ItemSheetQuadroneRuntimeImpl {
       let defaultTabs = getSelectedTabIds(
         settings.value.tabConfiguration[context.document.documentName]?.[
           context.document.type
-        ]
+        ],
       );
 
       if (!defaultTabs.length) {
@@ -156,10 +156,10 @@ class ItemSheetQuadroneRuntimeImpl {
   }
 
   private _getVisibleTabs(
-    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext,
   ) {
     const tabs = Iterator.from(this._tabs).filter(
-      (x) => !x.types || x.types.has(context.document.type)
+      (x) => !x.types || x.types.has(context.document.type),
     );
 
     if (FoundryAdapter.userIsGm()) {
@@ -169,24 +169,24 @@ class ItemSheetQuadroneRuntimeImpl {
     const worldTabConfig = getTabVisibilityLevels(
       settings.value.tabConfiguration[context.document.documentName]?.[
         context.document.type
-      ]
+      ],
     );
 
     const sheetTabConfig = getTabVisibilityLevels(
-      TidyFlags.tabConfiguration.get(context.document)
+      TidyFlags.tabConfiguration.get(context.document),
     );
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
     const defaultVisibilityLevel = VisibilityLevels.getDefaultLevelValue(
-      CONSTANTS.DOCUMENT_NAME_ITEM
+      CONSTANTS.DOCUMENT_NAME_ITEM,
     );
 
     return [
       ...tabs.filter((tab) => {
         const minOwnershipLevel = Math.max(
           worldTabConfig[tab.id] ?? defaultVisibilityLevel,
-          sheetTabConfig[tab.id] ?? defaultVisibilityLevel
+          sheetTabConfig[tab.id] ?? defaultVisibilityLevel,
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),
@@ -195,14 +195,14 @@ class ItemSheetQuadroneRuntimeImpl {
 
   isSubtypeTabEnabled(
     context: ItemSheetQuadroneContext,
-    enabledFn: RegisteredTab<ItemSheetQuadroneContext>['enabled']
+    enabledFn: RegisteredTab<ItemSheetQuadroneContext>['enabled'],
   ) {
     let enabled =
       isNil(enabledFn) ||
       (typeof enabledFn === 'function' && enabledFn(context));
 
     const subtypePredicates = this._registeredSubtypeTabConditions.get(
-      context.document.type
+      context.document.type,
     );
 
     if (!subtypePredicates) {
@@ -228,14 +228,25 @@ class ItemSheetQuadroneRuntimeImpl {
 
         return prev;
       },
-      enabled
+      enabled,
     );
   }
 
   getAllRegisteredTabs(
-    type: string
+    type: string,
   ): RegisteredTab<ItemSheetQuadroneContext>[] {
-    return this._tabs.filter((t) => t.types?.has(type) ?? true);
+    const defaultTabs = this._sheetMap.get(type)?.defaultTabs ?? [];
+    const eligibleTabs = this._tabs.filter((t) => t.types?.has(type) ?? true);
+    return [
+      // Default, ordered tabs
+      ...eligibleTabs
+        .filter((tab) => defaultTabs.includes(tab.id))
+        .toSorted(
+          (a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id),
+        ),
+      // Remaining tabs
+      ...eligibleTabs.filter((tab) => !defaultTabs.includes(tab.id)),
+    ];
   }
 
   getSheet(type: string) {
@@ -243,7 +254,7 @@ class ItemSheetQuadroneRuntimeImpl {
 
     if (!component) {
       error(
-        'Sheet not found in Item Sheet Quadrone Runtime sheet map. Native sheets must be passed to the runtime constructor, and new sheets must be registered via the sheet registration function.'
+        'Sheet not found in Item Sheet Quadrone Runtime sheet map. Native sheets must be passed to the runtime constructor, and new sheets must be registered via the sheet registration function.',
       );
     }
 
@@ -255,14 +266,14 @@ class ItemSheetQuadroneRuntimeImpl {
   }
 
   registerContent(
-    registeredContent: RegisteredContent<ItemSheetQuadroneContext>
+    registeredContent: RegisteredContent<ItemSheetQuadroneContext>,
   ) {
     this._content.push(registeredContent);
   }
 
   registerTab(
     tab: RegisteredTab<ItemSheetQuadroneContext>,
-    options?: ItemTabRegistrationOptions
+    options?: ItemTabRegistrationOptions,
   ) {
     this._tabs.push(tab);
 
@@ -292,7 +303,7 @@ class ItemSheetQuadroneRuntimeImpl {
     options?: {
       includeAsDefault?: boolean;
       tabCondition?: TabEnabledCallbackFunctionOverrideOptions;
-    }
+    },
   ) {
     const tab = this._tabs.find((t) => t.id === tabId);
 
@@ -304,7 +315,7 @@ class ItemSheetQuadroneRuntimeImpl {
       const subtypePredicates = mapGetOrInsertComputed(
         this._registeredSubtypeTabConditions,
         subtype,
-        () => []
+        () => [],
       );
 
       if (!this._tabIdsWithSubtypeConditions.has(tabId)) {
@@ -330,7 +341,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
         (context.document.system.activities ?? []).filter((a: Activity5e) =>
-          Activities.isConfigurable(a)
+          Activities.isConfigurable(a),
         ).length,
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
@@ -731,5 +742,5 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         ],
       },
     ],
-  ]
+  ],
 );

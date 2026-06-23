@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type {
-    SheetTabConfigurationSettingsEditor,
-  } from 'src/settings/editors/sheet-tab-configuration-settings-editor.svelte';
-  import SortableListbox from './parts/SortableListbox.svelte';
+  import type { SheetTabsConfigurationSettingsEditor } from 'src/settings/editors/sheet-tabs-configuration-settings-editor.svelte';
+  import TabConfigurationSortableListbox from './parts/TabConfigurationSortableListbox.svelte';
 
   interface Props {
-    app: SheetTabConfigurationSettingsEditor;
+    app: SheetTabsConfigurationSettingsEditor;
   }
 
   let { app }: Props = $props();
@@ -16,5 +14,5 @@
 
 <div class="dialog-content-container sheet-tab-configuration flexcol">
   <h2>{title}</h2>
-  <SortableListbox bind:tabConfigContext={config.entry} />
+  <TabConfigurationSortableListbox tabConfigEntry={config.entry} />
 </div>

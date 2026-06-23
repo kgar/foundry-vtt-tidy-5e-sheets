@@ -25,6 +25,7 @@ import {
 } from './settings-data-models';
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
+import { SettingsShims } from './settings-shims';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -172,7 +173,7 @@ export const systemSettings = {
 export function createSettings() {
   return {
     menus: {
-      worldSettings: {
+      worldSettingsClassic: {
         options: {
           hideClassic: true,
           name: `TIDY5E.WorldSettings.Menu.name`,
@@ -194,7 +195,7 @@ export function createSettings() {
           restricted: false,
         },
       },
-      worldThemeSettingsMenu: {
+      worldSettings: {
         options: {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
           label: 'TIDY5E.SettingsMenu.TidySettings.label',
@@ -371,9 +372,11 @@ export function createSettings() {
           default: {},
         },
         get() {
-          return FoundryAdapter.getTidySetting<TabConfiguration>(
+          const setting = FoundryAdapter.getTidySetting<Partial<TabConfiguration>>(
             'tabConfiguration'
           );
+
+          return SettingsShims.tabConfiguration(setting);
         },
       },
 

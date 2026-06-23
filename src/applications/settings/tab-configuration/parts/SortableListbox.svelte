@@ -1,152 +1,60 @@
-<script lang="ts" module>
-  /**
-   * Item using `key` as the identity. Sections already have it, tabs
-   * map to it using `id`.
-   */
-  export type SortableListboxItem = {
-    key: string;
-    label: string;
-    iconClass?: string;
-    show: boolean;
-    visibilityLevel?: number | null;
-  };
-</script>
-
-<script lang="ts">
-  import { untrack } from 'svelte';
-  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+<script lang="ts" generics="Item">
+  import type { ClassValue } from 'svelte/elements';
+  import type { SortableListboxColumn } from './sortable-listbox.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
-  import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
   import { arrayMove } from 'src/utils/array';
-  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 
-  type HeaderLabels = {
-    primary?: string;
-    userVisibility?: string;
-    show?: string;
+  type Props = {
+    items: Item[];
+    iconClass?: keyof Item;
+    key: keyof Item;
+    orderConfig?: {
+      getOrder: (item: Item) => number;
+      setOrder: (item: Item, value: number) => void;
+    };
+    columns: SortableListboxColumn<Item>[];
+    listboxClasses?: ClassValue;
+    listItemClassesFn?: (item: Item) => ClassValue;
+    headerClasses?: ClassValue;
   };
-
-  interface Props {
-    /** Tab-config mode: bind a {@link TabConfigContextEntry}; rows map to/from its `tabs`/`visibilityLevels`. */
-    tabConfigContext?: TabConfigContextEntry;
-    /** Items mode: bind a list of `key`-identified items directly (e.g. sections). */
-    items?: SortableListboxItem[];
-    /** Show the per-row user-visibility column. Hidden for section configuration. */
-    showUserVisibility?: boolean;
-    /** Visibility level `<select>` options; defaults to the entry's document name options. */
-    visibilityLevelOptions?: { key: any; value: any; label: string }[];
-    headerLabels?: HeaderLabels;
-  }
 
   let {
-    tabConfigContext = $bindable(),
-    items = $bindable(),
-    showUserVisibility = true,
-    visibilityLevelOptions: visibilityLevelOptionsProp,
-    headerLabels,
+    items,
+    key,
+    iconClass,
+    orderConfig,
+    columns,
+    listboxClasses,
+    listItemClassesFn,
+    headerClasses,
   }: Props = $props();
 
-  const localize = FoundryAdapter.localize;
-  const userIsGm = FoundryAdapter.userIsGm();
+  let selectedIndex = $state<number | null>(null);
 
   // Vertical gap between rows, in px (keep in sync with the listbox `gap`).
   // This moves the offset for the drag indicator.
   const ROW_GAP = 8;
 
-  let visibilityLevelOptions = $derived(
-    visibilityLevelOptionsProp ??
-      (tabConfigContext ? VisibilityLevels.getOptions(tabConfigContext.documentName) : []),
-  );
-
-  // Collapse source into editable rows. In tabs mode the list is
-  // already ordered (visible first, then hidden) and visibility lives in a
-  // separate array; in items mode the items are the rows.
-  function buildRows(): SortableListboxItem[] {
-    if (tabConfigContext) {
-      const viewerLevelById = new Map(
-        tabConfigContext.visibilityLevels.map((l) => [l.id, l.visibilityLevel]),
-      );
-
-      return tabConfigContext.tabs.map((tab) => ({
-        key: tab.id,
-        label: tabConfigContext!.allTabs[tab.id]?.title ?? tab.title,
-        iconClass: tabConfigContext!.allTabs[tab.id]?.iconClass ?? tab.iconClass,
-        show: tab.show,
-        visibilityLevel: viewerLevelById.get(tab.id) ?? null,
-      }));
-    }
-
-    // Items mode: the items are already `key`-identified rows.
-    return (items ?? []).map((item) => ({ ...item }));
-  }
-
-  let rows = $state<SortableListboxItem[]>(buildRows());
-  let selectedIndex = $state<number | null>(null);
-
-  // Rebuild rows when a new source is applied from undo/reset
-  let trackedTabConfigContext = tabConfigContext;
-  let trackedItems = items;
-  $effect(() => {
-    const sourceChanged = tabConfigContext
-      ? tabConfigContext !== trackedTabConfigContext
-      : items !== trackedItems;
-    if (sourceChanged) {
-      trackedTabConfigContext = tabConfigContext;
-      trackedItems = items;
-      rows = buildRows();
-      selectedIndex = null;
-    }
-  });
-
-  // Write any change (reorder, show/hide, viewer level) back to the bound
-  // source so the host reads it when saving.
-  $effect(() => {
-    if (tabConfigContext) {
-      tabConfigContext.tabs = rows.map((row) => ({
-        id: row.key,
-        title: row.label,
-        iconClass: row.iconClass,
-        show: row.show,
-      }));
-      tabConfigContext.visibilityLevels = rows.map((row) => ({
-        id: row.key,
-        title: row.label,
-        show: row.show,
-        visibilityLevel: row.visibilityLevel ?? null,
-      }));
-    } else if (items) {
-      const next = rows.map((row) => ({ ...row }));
-      // Mutate the bound array in place (untracked) so its reference stays
-      // stable — reassigning a $bindable array loops endlessly
-      untrack(() => {
-        items!.splice(0, items!.length, ...next);
-      });
-    }
-  });
-
   function moveUp() {
     if (selectedIndex === null || selectedIndex === 0) {
       return;
     }
-    arrayMove(rows, selectedIndex, selectedIndex - 1);
-    rows = rows;
-    selectedIndex -= 1;
+
+    reorderItems(selectedIndex, selectedIndex - 1);
   }
 
   function moveDown() {
-    if (selectedIndex === null || selectedIndex >= rows.length - 1) {
+    if (selectedIndex === null || selectedIndex >= items.length - 1) {
       return;
     }
-    arrayMove(rows, selectedIndex, selectedIndex + 1);
-    rows = rows;
-    selectedIndex += 1;
+
+    reorderItems(selectedIndex, selectedIndex + 1);
   }
 
   function onListKeydown(ev: KeyboardEvent) {
     ev.stopPropagation();
 
-    if (rows.length === 0) {
+    if (items.length === 0) {
       return;
     }
 
@@ -162,12 +70,10 @@
       selectedIndex = Math.max(0, current - 1);
       ev.preventDefault();
     } else if (ev.key === 'ArrowDown') {
-      selectedIndex = Math.min(rows.length - 1, current + 1);
+      selectedIndex = Math.min(items.length - 1, current + 1);
       ev.preventDefault();
     }
   }
-
-  // --- Drag to reorder, with a drop indicator that lies in the gap between rows ---
 
   let rowElements: HTMLLIElement[] = $state([]);
   let draggedIndex = $state<number | null>(null);
@@ -179,12 +85,12 @@
       return null;
     }
 
-    if (dropIndicatorIndex < rows.length) {
+    if (dropIndicatorIndex < items.length) {
       const el = rowElements[dropIndicatorIndex];
       return el ? el.offsetTop - ROW_GAP + 2 : null;
     }
 
-    const el = rowElements[rows.length - 1];
+    const el = rowElements[items.length - 1];
     return el ? el.offsetTop + el.offsetHeight + ROW_GAP / 2 : null;
   });
 
@@ -202,8 +108,8 @@
     ev.preventDefault();
 
     const y = ev.clientY;
-    let gap = rows.length;
-    for (let i = 0; i < rows.length; i++) {
+    let gap = items.length;
+    for (let i = 0; i < items.length; i++) {
       const rect = rowElements[i]?.getBoundingClientRect();
       if (rect && y < rect.top + rect.height / 2) {
         gap = i;
@@ -247,27 +153,52 @@
       return;
     }
 
-    arrayMove(rows, draggedIdx, target);
-    rows = rows;
-    selectedIndex = target;
+    reorderItems(draggedIdx, target);
   }
+
+  const sortedItems = $derived(
+    orderConfig?.getOrder
+      ? items.toSorted(
+          (a, b) => orderConfig.getOrder(a) - orderConfig.getOrder(b),
+        )
+      : items,
+  );
+
+  function reorderItems(fromIndex: number, toIndex: number) {
+    if (orderConfig) {
+      const rowsToReorder = [...sortedItems];
+
+      arrayMove(rowsToReorder, fromIndex, toIndex);
+
+      rowsToReorder.entries().forEach(([index, row]) => {
+        orderConfig.setOrder(row, index + 1);
+      });
+    } else {
+      arrayMove(items, fromIndex, toIndex);
+    }
+
+    selectedIndex = toIndex;
+  }
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset class="tab-selection-list" class:no-user-visibility={!showUserVisibility}>
-  <div class="tab-selection-header">
-    <span class="tab-selection-header-label tabs-label font-label-medium">
-      {headerLabels?.primary ?? 'Tab'}
-    </span>
-    {#if showUserVisibility}
-      <span class="tab-selection-header-label viewers-label font-label-medium">
-        {headerLabels?.userVisibility ?? 'User Visibility'}
+<fieldset class={['sortable-listbox', listboxClasses]}>
+  <div class={['sortable-listbox-header', headerClasses]}>
+    {#each columns as column}
+      <span
+        class={[
+          'sortable-listbox-header-label font-label-medium',
+          column.titleClasses,
+        ]}
+      >
+        {#if column.title}
+          {localize(column.title)}
+        {/if}
       </span>
-    {/if}
-    <span class="tab-selection-header-label visibility-label font-label-medium">
-      {headerLabels?.show ?? 'Show Tab'}
-    </span>
+    {/each}
   </div>
-  <div class="tab-selection-body">
+  <div class="sortable-listbox-body">
     <div class="controls">
       <button
         type="button"
@@ -284,30 +215,33 @@
         class="button button-primary button-icon-only"
         title={localize('TIDY5E.Listbox.MoveDown')}
         aria-keyshortcuts="Alt+ArrowDown"
-        disabled={selectedIndex === null || selectedIndex >= rows.length - 1}
+        disabled={selectedIndex === null || selectedIndex >= items.length - 1}
         onclick={moveDown}
       >
         <i class="fas fa-arrow-down"></i>
       </button>
     </div>
     <ul
-      class="tab-selection-listbox"
+      class="sortable-listbox-items-list"
       role="listbox"
       tabindex="0"
       onkeydown={onListKeydown}
       ondragover={onListDragOver}
       ondrop={onDrop}
     >
-      {#each rows as item, i (item.key)}
-        {const canConfigureViewers =
-          $derived(userIsGm || item.visibilityLevel !== CONSTANTS.VISIBILITY_LEVEL_GM)}
+      {#each sortedItems as item, i (item[key])}
+        {const listItemClasses = $derived(listItemClassesFn?.(item))}
         <li
           bind:this={rowElements[i]}
-          class="listbox-item"
-          class:marked-as-hidden={!item.show}
-          class:focused={selectedIndex === i}
-          class:theme-dark={selectedIndex === i}
-          class:dragging={draggedIndex === i}
+          class={[
+            'listbox-item',
+            listItemClasses,
+            {
+              focused: selectedIndex === i,
+              'theme-dark': selectedIndex === i,
+              dragging: draggedIndex === i,
+            },
+          ]}
           role="option"
           aria-selected={selectedIndex === i}
           draggable="true"
@@ -318,35 +252,12 @@
         >
           <i class="drag-grip fa-solid fa-grip-lines fa-fw" aria-hidden="true"
           ></i>
-          {#if item.iconClass}
-            <i class="{item.iconClass} fa-fw tab-row-icon"></i>
+          {#if iconClass}
+            <i class="{item[iconClass]} fa-fw tab-row-icon"></i>
           {/if}
-          <span
-            data-section-key={item.key}
-            data-testid="section-config-item-label"
-            class="section-config-item-label font-label-medium">{item.label}</span
-          >
-          {#if showUserVisibility && item.show && canConfigureViewers}
-            <select
-              class="tab-viewers-button"
-              title={localize('TIDY5E.TabConfiguration.options.viewers')}
-              bind:value={item.visibilityLevel}
-            >
-              {#each visibilityLevelOptions as option (option.key)}
-                <option value={option.value}>{option.label}</option>
-              {/each}
-            </select>
-          {/if}
-          <div class="tab-visibility-switch">
-            <FieldToggle
-              checked={item.show}
-              onchange={(ev) => {
-                item.show = (ev.currentTarget as HTMLInputElement).checked;
-                selectedIndex = i;
-              }}
-              disabled={showUserVisibility && !canConfigureViewers}
-            />
-          </div>
+          {#each columns as column}
+            {@render column.cellSnippet?.(item)}
+          {/each}
         </li>
       {/each}
       {#if dropLineTop !== null}

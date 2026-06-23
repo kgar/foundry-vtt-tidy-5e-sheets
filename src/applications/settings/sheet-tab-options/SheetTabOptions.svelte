@@ -1,19 +1,21 @@
 <script lang="ts">
-  import SortableListbox from 'src/applications/settings/tab-configuration/parts/SortableListbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ConfigurableSection } from './configure-sections.types';
+  import type { ConfigurableSection } from './sheet-tab-options.types';
   import { isNil } from 'src/utils/data';
   import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import TabVisibilityControls from 'src/applications/settings/sheet/tabs/TabVisibilityControls.svelte';
   import type {
-    ConfigureSectionsSettingsEditor,
+    SheetTabOptionsSettingsEditor,
     SectionOptionGroup,
-  } from 'src/settings/editors/configure-sections-settings-editor.svelte';
+  } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
+  import SortableListbox from '../tab-configuration/parts/SortableListbox.svelte';
+  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+  import { listboxSnippets } from '../tab-configuration/parts/SortableListboxSnippets.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
     sections: ConfigurableSection[];
-    application: ConfigureSectionsSettingsEditor;
+    application: SheetTabOptionsSettingsEditor;
     title: string;
     tabConfigEntry?: TabConfigContextEntry;
     tabId: string;
@@ -100,10 +102,37 @@
       {localize('TIDY5E.Section.LabelPl')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
+
+    {#snippet listboxItemName(item: ConfigurableSection)}
+      {@render listboxSnippets.primaryHeader(item.key, item.label)}
+    {/snippet}
+    {#snippet listboxItemShow(item: ConfigurableSection)}
+      <div class="tab-visibility-switch">
+        <FieldToggle
+          checked={item.show}
+          onchange={(ev) => {
+            item.show = (ev.currentTarget as HTMLInputElement).checked;
+          }}
+        />
+      </div>
+    {/snippet}
+
     <SortableListbox
-      bind:items={sections}
-      showUserVisibility={false}
-      headerLabels={{ primary: 'Section', show: 'Show Section' }}
+      items={sections}
+      columns={[
+        {
+          title: 'TIDY5E.Section.Label',
+          titleClasses: 'tabs-label',
+          cellSnippet: listboxItemName,
+        },
+        {
+          title: 'TIDY5E.Section.ShowSection',
+          titleClasses: 'visibility-label',
+          cellSnippet: listboxItemShow,
+        },
+      ]}
+      key="key"
+      listItemClassesFn={(item) => ({ 'marked-as-hidden': !item.show })}
     />
   </fieldset>
 </div>

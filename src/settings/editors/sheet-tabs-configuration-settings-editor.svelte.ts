@@ -1,9 +1,6 @@
-import type {
-  TabConfigContextEntry,
-  TabConfigSnapshot,
-} from 'src/settings/editors/shared/tab-configuration.types';
+import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import type { SettingsEditor } from './settings-editors.svelte';
-import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -17,33 +14,35 @@ import { CONSTANTS } from 'src/constants';
 import {
   buildTabConfigMap,
   getActorTabContext,
-  getInitialTabConfigContextEntry,
   getItemTabContext,
-  mapTabConfigContextEntryToSnapshot,
 } from 'src/settings/editors/shared/tab-configuration-functions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { error } from 'src/utils/logging';
+import { isNil } from 'src/utils/data';
+import { SettingsProvider } from '../settings.svelte';
 
-export type SheetTabConfigurationContext = {
+export type SheetTabsConfigurationContext = {
   entry: TabConfigContextEntry;
 };
 
-type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
+type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 type SetTabConfigFn = (
   actor: any,
-  config: SheetTabConfiguration,
+  config: SheetTabsConfiguration,
 ) => Promise<void> | undefined;
 type GetTabContextFn = (
   doc: any,
-  setting: SheetTabConfiguration,
+  setting: SheetTabsConfiguration,
 ) => TabConfigContextEntry | undefined;
 
-export type SheetTabConfigurationSettingsEditor =
-  SettingsEditor<SheetTabConfigurationContext> & {
+export type SheetTabsConfigurationSettingsEditor =
+  SettingsEditor<SheetTabsConfigurationContext> & {
     inclusionTabTitle: string;
+    undoEntryChanges: (tabId: string) => void;
+    resetEntryToDefault: (tabId: string) => void;
   };
 
-type SheetTabConfigurationSettingsEditorParams = {
+type SheetTabsConfigurationSettingsEditorParams = {
   document: Actor5e | Item5e;
   customTabConfigProvider?: {
     getTabConfig: GetTabConfigFn;
@@ -60,9 +59,9 @@ export const SIDEBAR_EXPANDABLE_SHEET_TYPES: ReadonlySet<string> = new Set([
   CONSTANTS.SHEET_TYPE_VEHICLE,
 ]);
 
-export function getSheetTabConfigurationSettingsEditor(
-  params: SheetTabConfigurationSettingsEditorParams,
-): SheetTabConfigurationSettingsEditor {
+export function getSheetTabsConfigurationSettingsEditor(
+  params: SheetTabsConfigurationSettingsEditorParams,
+): SheetTabsConfigurationSettingsEditor {
   const { document, customTabConfigProvider, docTypeKeyOverride, title } =
     params;
 
@@ -83,7 +82,9 @@ export function getSheetTabConfigurationSettingsEditor(
       ),
     });
 
-  const current = $state<SheetTabConfigurationContext>(getConfig());
+  const current = $state<SheetTabsConfigurationContext>(getConfig());
+
+  const defaultConfig = getDefaultTabContext();
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
@@ -91,12 +92,11 @@ export function getSheetTabConfigurationSettingsEditor(
     JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
   );
 
-  function snapshotConfig(config: SheetTabConfigurationContext) {
-    const entry = $state.snapshot(config).entry;
-    return mapTabConfigContextEntryToSnapshot(entry);
+  function snapshotConfig(config: SheetTabsConfigurationContext) {
+    return $state.snapshot(config);
   }
 
-  function getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
+  function getConfigFromRuntime(doc: any, setting: SheetTabsConfiguration) {
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
@@ -104,15 +104,24 @@ export function getSheetTabConfigurationSettingsEditor(
           runtime,
           doc.type,
           setting,
-          true,
           docTypeKeyOverride,
         );
       }
     }
 
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return getItemTabContext(doc.type, setting, true);
+      return getItemTabContext(doc.type, setting);
     }
+  }
+
+  function getDefaultTabContext() {
+    const context = getTabContext(document, getWorldConfigOrDefault());
+
+    if (context) {
+      seedSidebarExpanded(context, { useDefaults: true });
+    }
+
+    return context;
   }
 
   function getActorRuntime(type: string) {
@@ -179,7 +188,7 @@ export function getSheetTabConfigurationSettingsEditor(
    * update the initial state.
    */
   async function applySidebarExpanded(entry: TabConfigContextEntry) {
-    const initial = JSON.parse(initialSnapshot) as SheetTabConfigurationContext;
+    const initial = JSON.parse(initialSnapshot) as TabConfigContextEntry;
 
     const staged = entry.sidebarExpandedByTabId;
     if (!staged || !supportsSidebarExpanded()) {
@@ -187,7 +196,7 @@ export function getSheetTabConfigurationSettingsEditor(
     }
 
     const type = document.type;
-    const baseline = initial.entry.sidebarExpandedByTabId ?? {};
+    const baseline = initial.sidebarExpandedByTabId ?? {};
     for (const [tabId, expanded] of Object.entries(staged)) {
       if (baseline[tabId] !== expanded) {
         await UserSheetPreferencesService.setDocumentTypeTabPreference(
@@ -200,11 +209,8 @@ export function getSheetTabConfigurationSettingsEditor(
     }
   }
 
-  function getConfig(): SheetTabConfigurationContext {
-    let setting = getTabConfig(document);
-    setting ??= { selected: [], visibilityLevels: {} };
-    setting.selected ??= [];
-    setting.visibilityLevels ??= {};
+  function getConfig(): SheetTabsConfigurationContext {
+    let setting = getTabConfig(document) ?? getWorldConfigOrDefault();
 
     const context = getTabContext(document, setting);
 
@@ -217,10 +223,19 @@ export function getSheetTabConfigurationSettingsEditor(
       );
     }
 
-    // Set sidebar-expanded state from saved config and capture the niitial
+    // Set sidebar-expanded state from saved config and capture the initial
     seedSidebarExpanded(context, { useDefaults: false });
 
     return { entry: context };
+  }
+
+  /** Gets the world tab configuration or empty world default sheet tabs configuration. */
+  function getWorldConfigOrDefault(): SheetTabsConfiguration {
+    return (
+      SettingsProvider.settings.tabConfiguration.get()?.[
+        document.documentName
+      ]?.[document.type] ?? { tabs: {} }
+    );
   }
 
   return {
@@ -235,15 +250,35 @@ export function getSheetTabConfigurationSettingsEditor(
     canUseDefault: true,
 
     resetToDefault() {
-      const defaultEntry = getTabContext(document, {
-        selected: [],
-        visibilityLevels: {},
-      });
-
-      if (defaultEntry) {
+      if (defaultConfig) {
         // Re-seed initial expanded state on reset.
-        seedSidebarExpanded(defaultEntry, { useDefaults: true });
-        this.value.entry = defaultEntry;
+        seedSidebarExpanded(defaultConfig, { useDefaults: true });
+        this.value.entry = defaultConfig;
+      }
+    },
+
+    resetEntryToDefault(tabId: string) {
+      const defaultConfigEntry = defaultConfig?.tabs.find(
+        (tab) => tab.id === tabId,
+      );
+      const currentEntry = this.value.entry.tabs.find(
+        (tab) => tab.id === tabId,
+      );
+
+      if (defaultConfigEntry && currentEntry) {
+        Object.assign(currentEntry, defaultConfigEntry);
+      }
+
+      const defaultSidebarSetting =
+        defaultConfig?.sidebarExpandedByTabId?.[tabId];
+
+      if (!isNil(defaultSidebarSetting)) {
+        this.value.entry.sidebarExpandedByTabId ??= {};
+        this.value.entry.sidebarExpandedByTabId[tabId] = defaultSidebarSetting;
+      } else {
+        const toUpdate = { ...this.value.entry.sidebarExpandedByTabId };
+        delete toUpdate[tabId];
+        this.value.entry.sidebarExpandedByTabId = toUpdate;
       }
     },
 
@@ -262,20 +297,8 @@ export function getSheetTabConfigurationSettingsEditor(
         });
 
       await setTabConfig(document, {
-        // Legacy fields kept in sync for the sheet runtimes (visible tabs, in order).
-        // TODO: Migrate off legacy selected/unselected arrays.
-        selected: matchesDefault ? [] : selectedIds,
-        visibilityLevels: this.value.entry.visibilityLevels.reduce(
-          (prev, curr) => {
-            prev[curr.id] = curr.visibilityLevel;
-            return prev;
-          },
-          {} as Record<string, number | null>,
-        ),
         // Full per-tab arrangement (preserves hidden-tab order).
-        tabs: matchesDefault
-          ? {}
-          : buildTabConfigMap(curr.tabs, curr.visibilityLevels),
+        tabs: matchesDefault ? {} : buildTabConfigMap(curr.tabs),
       });
 
       await applySidebarExpanded(curr);
@@ -285,12 +308,38 @@ export function getSheetTabConfigurationSettingsEditor(
     },
 
     undoChanges() {
-      const initial = JSON.parse(initialSnapshot) as TabConfigSnapshot;
+      const initial = JSON.parse(
+        initialSnapshot,
+      ) as SheetTabsConfigurationContext;
 
-      this.value.entry = getInitialTabConfigContextEntry(
-        [initial],
-        this.value.entry,
+      this.value.entry = initial.entry;
+    },
+
+    undoEntryChanges(tabId: string) {
+      const initial = JSON.parse(
+        initialSnapshot,
+      ) as SheetTabsConfigurationContext;
+
+      const initialEntry = initial.entry.tabs.find((tab) => tab.id === tabId);
+      const currentEntry = this.value.entry.tabs.find(
+        (tab) => tab.id === tabId,
       );
+
+      if (initialEntry && currentEntry) {
+        Object.assign(currentEntry, initialEntry);
+      }
+
+      const initialSidebarSetting =
+        initial?.entry.sidebarExpandedByTabId?.[tabId];
+
+      if (!isNil(initialSidebarSetting)) {
+        this.value.entry.sidebarExpandedByTabId ??= {};
+        this.value.entry.sidebarExpandedByTabId[tabId] = initialSidebarSetting;
+      } else {
+        const toUpdate = { ...this.value.entry.sidebarExpandedByTabId };
+        delete toUpdate[tabId];
+        this.value.entry.sidebarExpandedByTabId = toUpdate;
+      }
     },
 
     async useDefault() {

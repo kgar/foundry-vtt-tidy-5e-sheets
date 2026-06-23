@@ -236,7 +236,10 @@
     "options.viewers": "User Access",
     "options.visibility": "Show Tab",
     "showTabTooltip": "Show this tab",
-    "hideTabTooltip": "Hide this tab"
+    "hideTabTooltip": "Hide this tab",
+    "headers.tab": "Tab",
+    "headers.userVisibility": "User Visibility",
+    "headers.showTab": "Show Tab"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -1021,6 +1024,7 @@
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
+    "ShowSection": "Show Section",
     "LabelPl": "Sections",
     "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",

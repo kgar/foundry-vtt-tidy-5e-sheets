@@ -39,7 +39,9 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
-  const hasChanges = $derived(JSON.stringify(current) !== initialSnapshot);
+  const hasChanges = $derived(
+    JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
+  );
 
   /**
    * Canonical, order-independent snapshot of every sheet type's tab selection.
@@ -47,7 +49,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
    * raw JSON.stringify of `_config` would always look dirty.
    */
   function snapshotConfig(config: TabConfigContextEntry[]) {
-    return $state.snapshot(config).map(mapTabConfigContextEntryToSnapshot);
+    return $state.snapshot(config);
   }
 
   function getConfig(settingOverride?: TabConfiguration) {
@@ -62,7 +64,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         CharacterSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_CHARACTER,
         actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER],
-        false,
       ),
     );
 
@@ -70,7 +71,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       CharacterSheetQuadroneSidebarRuntime,
       CONSTANTS.SHEET_TYPE_CHARACTER,
       actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
-      false,
       CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
     );
 
@@ -85,7 +85,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         NpcSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_NPC,
         actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC],
-        false,
       ),
     );
 
@@ -94,7 +93,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         GroupSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_GROUP,
         actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP],
-        false,
       ),
     );
 
@@ -103,7 +101,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         EncounterSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_ENCOUNTER,
         actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER],
-        false,
       ),
     );
 
@@ -112,7 +109,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         VehicleSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_VEHICLE,
         actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
-        false,
       ),
     );
 
@@ -120,7 +116,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
 
     let allItemTypes = ItemSheetQuadroneRuntime.getSheetTypes();
     for (let type of allItemTypes) {
-      config.push(getItemTabContext(type, itemConfigs?.[type], false));
+      config.push(getItemTabContext(type, itemConfigs?.[type]));
     }
 
     return config;
@@ -130,10 +126,6 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     return {
       ...entry,
       tabs: entry.defaultTabs.map((t) => ({ ...t })),
-      visibilityLevels: entry.visibilityLevels.map((l) => ({
-        ...l,
-        visibilityLevel: null,
-      })),
     };
   }
 
@@ -150,29 +142,15 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
           return d && d.id === t.id && d.show === t.show;
         });
 
-      const hasVisibilityOverride = curr.visibilityLevels.some(
+      const hasVisibilityOverride = curr.tabs.some(
         (l) => l.visibilityLevel != null,
       );
 
       if (!matchesDefault || hasVisibilityOverride) {
         const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
-        const selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
 
         docName[docTypeKey] = {
-          // Legacy fields kept in sync for any sheets not yet migrated.
-          // TODO: Drop these once all reads go through the keyed `tabs` map.
-          selected: matchesDefault ? [] : selectedIds,
-          visibilityLevels: curr.visibilityLevels.reduce(
-            (levels, level) => {
-              levels[level.id] = level.visibilityLevel;
-              return levels;
-            },
-            {} as Record<string, number | null>,
-          ),
-
-          tabs: matchesDefault
-            ? {}
-            : buildTabConfigMap(curr.tabs, curr.visibilityLevels),
+          tabs: matchesDefault ? {} : buildTabConfigMap(curr.tabs),
         };
       }
 
@@ -196,19 +174,18 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       documentType: string,
       docTypeKeyOverride: string | null = null,
     ) {
-      for (const entry of this.value) {
-        if (
-          entry.documentName === documentName &&
-          entry.documentType === documentType &&
-          (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
-        ) {
-          const defaultEntry = getDefaultEntry(entry);
-          entry.tabs = defaultEntry.tabs;
-          entry.visibilityLevels = defaultEntry.visibilityLevels;
+      const entry = this.value.find(
+        (x) =>
+          x.documentName === documentName &&
+          x.documentType === documentType &&
+          (x.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null),
+      );
 
-          return;
-        }
+      if (!entry) {
+        return;
       }
+
+      entry.tabs = getDefaultEntry(entry).tabs;
     },
 
     async save() {
@@ -241,13 +218,9 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     },
 
     undoChanges() {
-      const initial = JSON.parse(initialSnapshot) as ReturnType<
-        typeof snapshotConfig
-      >;
+      const initial = JSON.parse(initialSnapshot) as TabConfigContextEntry[];
 
-      this.value = this.value.map((entry) =>
-        getInitialTabConfigContextEntry(initial, entry),
-      );
+      this.value = initial;
     },
 
     undoEntryChanges(
@@ -255,22 +228,28 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       documentType: string,
       docTypeKeyOverride: string | null = null,
     ) {
-      const initial = JSON.parse(initialSnapshot) as ReturnType<
-        typeof snapshotConfig
-      >;
+      const entry = this.value.find(
+        (x) =>
+          x.documentName === documentName &&
+          x.documentType === documentType &&
+          (x.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null),
+      );
 
-      for (const entry of this.value) {
-        if (
-          entry.documentName === documentName &&
-          entry.documentType === documentType &&
-          (entry.docTypeKeyOverride ?? null) === (docTypeKeyOverride ?? null)
-        ) {
-          const initialEntry = getInitialTabConfigContextEntry(initial, entry);
-          entry.tabs = initialEntry.tabs;
-          entry.visibilityLevels = initialEntry.visibilityLevels;
-          break;
-        }
+      if (!entry) {
+        return;
       }
+
+      const initial = JSON.parse(initialSnapshot) as TabConfigContextEntry[];
+      const initialEntry =
+        initial.find(
+          (x) =>
+            x.documentName === entry.documentName &&
+            x.documentType === entry.documentType &&
+            (x.docTypeKeyOverride ?? null) ===
+              (entry.docTypeKeyOverride ?? null),
+        ) ?? entry;
+
+      entry.tabs = initialEntry.tabs;
     },
 
     get value() {
