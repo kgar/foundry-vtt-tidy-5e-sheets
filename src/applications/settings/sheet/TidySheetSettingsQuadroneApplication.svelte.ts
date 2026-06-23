@@ -179,12 +179,16 @@ export class TidySheetSettingsQuadroneApplication
       );
     }
 
-    this.sheetTabsConfigurationSettingsTab = getSheetTabsConfigurationSettingsEditor({
-      document: this.document,
-    });
+    this.sheetTabsConfigurationSettingsTab =
+      getSheetTabsConfigurationSettingsEditor({
+        document: this.document,
+      });
 
     this.sheetTabsConfigurationSettingsTab.value.entry.tabs.forEach((tab) => {
-      const config = this.createSheetTabOptionsSettingsEditor(tab.id);
+      const config = this.createSheetTabOptionsSettingsEditor(
+        tab.id,
+        this.sheetTabsConfigurationSettingsTab,
+      );
 
       if (config) {
         this.sheetTabOptionsEditorByTabId.set(tab.id, config);
@@ -398,6 +402,7 @@ export class TidySheetSettingsQuadroneApplication
    */
   createSheetTabOptionsSettingsEditor(
     tabId: string,
+    sheetTabsConfigurationSettingsEditor: SheetTabsConfigurationSettingsEditor,
   ): SheetTabOptionsSettingsEditor | undefined {
     const input =
       this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
@@ -419,6 +424,7 @@ export class TidySheetSettingsQuadroneApplication
       onSave: async () => {
         this.sheetTabsConfigurationSettingsTab.save();
       },
+      sheetTabsConfigurationSettingsEditor,
     });
 
     return app;

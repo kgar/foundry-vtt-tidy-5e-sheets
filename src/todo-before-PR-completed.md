@@ -8,12 +8,26 @@
 - [x] Ensure sheet tab settings will render the world setting (when present) when the sheet has no tab config for a section.
 - [x] Ensure sheet tab settings will render the world default when the sheet has no tab config for a section and there is not a world setting in place for the tab.
 - [x] Ensure sheet tab settings will render tab config for a section when available
-- [ ] Make generalized sortable listbox the features and promote separation of concerns.
-- [ ] Migrate all callers to new listbox, then remove the old one.
-- [ ] Convert Sheet Tabs Config to use the V2 tab config model
-- [ ] Convert Sheet Tab Options to use the V2 tab config model
-- [ ] Plan and resolve errors from the change in the components
+- [x] Make generalized sortable listbox the features and promote separation of concerns.
+- [x] generalized sortable listbox - fix ondrop
+- [x] generalized sortable listbox - fix drag over
+- [x] generalized sortable listbox - fix moveUp / moveDown
+- [x] Migrate all callers to new listbox, then remove the old one.
+- [x] Convert Sheet Tabs Config to use the V2 tab config model
+- [x] ~~Plan and resolve errors from the change in the components~~
+- [ ] Make Undo/Reset work for sheet tab options editor's Tab Visibility fields
+  - [ ] // TODO: flatten sidebarExpanded into the TabConfig model and have an easier time managing it.
+  - [ ] // TODO: Determine if Derived will cause changes to bubble up here from the tabs config editor's value.
 - [ ] Apply this update to world tab config
+- [ ] Localize 😱
+  - [ ] SheetTabConfigurationQuadrone.svelte listbox titles
+  - [ ] SheetTabOptions.svelte
+- [ ] Determine if pane version can be removed now that the new sortable listbox is born. It was accounting for undo/reset and rerendering the list.
+- [ ] Eliminate getSelectedTabIds()
+- [ ] Eliminate getTabVisibilityLevels()
+- [ ] Simplify callers receiving settings.
+- [ ] `<!-- TODO: Share the item name snippet? -->` / `<-- [ ] <!-- TODO: Share the item show snippet? -->`
+  - There is some common HTML between some of the cell snippets which we could share.
 
 ## Research on TabConfigContextEntry
 

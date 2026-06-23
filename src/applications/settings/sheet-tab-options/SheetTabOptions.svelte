@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SortableListboxOld from 'src/applications/settings/tab-configuration/parts/SortableListboxOld.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ConfigurableSection } from './sheet-tab-options.types';
   import { isNil } from 'src/utils/data';
@@ -9,6 +8,8 @@
     SheetTabOptionsSettingsEditor,
     SectionOptionGroup,
   } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
+  import SortableListbox from '../tab-configuration/parts/SortableListbox.svelte';
+  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
@@ -100,11 +101,43 @@
       {localize('TIDY5E.Section.LabelPl')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
-    <!-- TODO: Make sortable listbox generic and use the generic one here -->
-    <!-- <SortableListboxOld
-      bind:items={sections}
-      showUserVisibility={false}
-      headerLabels={{ primary: 'Section', show: 'Show Section' }}
-    /> -->
+
+    <!-- TODO: Share the item name snippet? -->
+    {#snippet listboxItemName(item: ConfigurableSection)}
+      <span
+        data-section-key={item.key}
+        data-testid="section-config-item-label"
+        class="section-config-item-label font-label-medium">{item.label}</span
+      >
+    {/snippet}
+    <!-- TODO: Share the item show snippet? -->
+    {#snippet listboxItemShow(item: ConfigurableSection)}
+      <div class="tab-visibility-switch">
+        <FieldToggle
+          checked={item.show}
+          onchange={(ev) => {
+            item.show = (ev.currentTarget as HTMLInputElement).checked;
+          }}
+        />
+      </div>
+    {/snippet}
+
+    <SortableListbox
+      items={sections}
+      columns={[
+        {
+          title: 'Section',
+          titleClasses: 'tabs-label',
+          cellSnippet: listboxItemName,
+        },
+        {
+          title: 'Show Section',
+          titleClasses: 'visibility-label',
+          cellSnippet: listboxItemShow,
+        },
+      ]}
+      key="key"
+      listItemClassesFn={(item) => ({ 'marked-as-hidden': !item.show })}
+    />
   </fieldset>
 </div>

@@ -39,18 +39,16 @@
     if (selectedIndex === null || selectedIndex === 0) {
       return;
     }
-    arrayMove(items, selectedIndex, selectedIndex - 1);
-    items = items;
-    selectedIndex -= 1;
+
+    reorderItems(selectedIndex, selectedIndex + 1);
   }
 
   function moveDown() {
     if (selectedIndex === null || selectedIndex >= items.length - 1) {
       return;
     }
-    arrayMove(items, selectedIndex, selectedIndex + 1);
-    items = items;
-    selectedIndex += 1;
+
+    reorderItems(selectedIndex, selectedIndex + 1);
   }
 
   function onListKeydown(ev: KeyboardEvent) {
@@ -155,7 +153,6 @@
       return;
     }
 
-    // TODO: switch sorting technique based on whether an orderFn is provided
     if (orderConfig) {
       const rowsToReorder = [...items];
       arrayMove(rowsToReorder, draggedIdx, target);
@@ -177,6 +174,20 @@
         )
       : items,
   );
+
+  function reorderItems(fromIndex: number, toIndex: number) {
+    if (orderConfig) {
+      arrayMove(items, fromIndex, toIndex);
+
+      items.entries().forEach(([index, row]) => {
+        orderConfig.setOrder(row, index + 1);
+      });
+    } else {
+      arrayMove(items, fromIndex, toIndex);
+    }
+
+    selectedIndex = toIndex;
+  }
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -228,6 +239,7 @@
       {#each sortedItems as item, i (item[key])}
         {const listItemClasses = $derived(listItemClassesFn?.(item))}
         <li
+          bind:this={rowElements[i]}
           class={['listbox-item', listItemClasses]}
           class:focused={selectedIndex === i}
           class:theme-dark={selectedIndex === i}
@@ -246,7 +258,7 @@
             <i class="{item[iconClass]} fa-fw tab-row-icon"></i>
           {/if}
           {#each columns as column}
-            {@render column.snippet?.(item)}
+            {@render column.cellSnippet?.(item)}
           {/each}
         </li>
       {/each}
