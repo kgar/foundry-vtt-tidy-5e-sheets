@@ -108,11 +108,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
       sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this._renderChild(
-          new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-          }),
-        );
+        this.openSheetSettings();
       },
       showIcon: async function (this: Tidy5eItemSheetQuadrone) {
         const title =
@@ -129,11 +125,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         );
       },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        const settings = new TidySheetSettingsQuadroneApplication({
-          document: this.document,
-        });
-        settings.selectTab(TidySheetSettingsTabIds.theme);
-        return this._renderChild(settings);
+        return this.openSheetSettings(TidySheetSettingsTabIds.theme);
       },
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },

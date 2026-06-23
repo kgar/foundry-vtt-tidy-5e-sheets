@@ -9,7 +9,6 @@
     tabId: string;
   }
 
-  // Passed in a TabConfigContextEntry and the settings tab ID
   let { entry = $bindable(), tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;

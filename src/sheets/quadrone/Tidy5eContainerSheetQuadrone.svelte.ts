@@ -117,11 +117,7 @@ export class Tidy5eContainerSheetQuadrone
     },
     actions: {
       sheetSettings: async function (this: Tidy5eContainerSheetQuadrone) {
-        this._renderChild(
-          new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-          }),
-        );
+        this.openSheetSettings();
       },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {

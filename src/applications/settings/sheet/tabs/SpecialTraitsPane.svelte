@@ -10,11 +10,11 @@
     tabId?: string;
   }
 
-  let { app = $bindable(), tabConfigEntry = $bindable(), tabId }: Props = $props();
+  let { app, tabConfigEntry = $bindable(), tabId }: Props = $props();
 </script>
 
 <div class="dialog-content-container flexcol">
-  <SpecialTraitsV2 actor={app.document} bind:config={app.value} />
+  <SpecialTraitsV2 actor={app.document} config={app.value} />
 
   {#if tabConfigEntry && tabId}
     <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />
