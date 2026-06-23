@@ -126,12 +126,12 @@
       items={sections}
       columns={[
         {
-          title: 'Section',
+          title: 'TIDY5E.Section.Label',
           titleClasses: 'tabs-label',
           cellSnippet: listboxItemName,
         },
         {
-          title: 'Show Section',
+          title: 'TIDY5E.Section.ShowSection',
           titleClasses: 'visibility-label',
           cellSnippet: listboxItemShow,
         },

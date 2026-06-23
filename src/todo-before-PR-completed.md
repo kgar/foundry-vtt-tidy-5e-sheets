@@ -20,9 +20,9 @@
   - [x] ~~// TODO: Determine if Derived will cause changes to bubble up here from the tabs config editor's value.~~ It doesn't! Found a better way.
 - [x] Apply this update to world tab config
 - [x] Tab config - Hide visibility column when show is false
-- [ ] Localize 😱
-  - [ ] SheetTabConfigurationQuadrone.svelte listbox titles
-  - [ ] SheetTabOptions.svelte
+- [x] Localize 😱
+  - [x] SheetTabConfigurationQuadrone.svelte listbox titles
+  - [x] SheetTabOptions.svelte
 - [ ] Determine if pane version can be removed now that the new sortable listbox is born. It was accounting for undo/reset and rerendering the list.
 - [ ] Eliminate getSelectedTabIds()
 - [ ] Eliminate getTabVisibilityLevels()

@@ -201,7 +201,9 @@
           column.titleClasses,
         ]}
       >
-        {column.title}
+        {#if column.title}
+          {localize(column.title)}
+        {/if}
       </span>
     {/each}
   </div>

@@ -62,17 +62,17 @@
   items={tabConfigEntry.tabs}
   columns={[
     {
-      title: 'Tab',
+      title: 'TIDY5E.TabConfiguration.headers.tab',
       titleClasses: 'tabs-label',
       cellSnippet: listboxItemName,
     },
     {
-      title: 'User Visibility',
+      title: 'TIDY5E.TabConfiguration.headers.userVisibility',
       titleClasses: 'viewers-label',
       cellSnippet: listboxItemVisibility,
     },
     {
-      title: 'Show Tab',
+      title: 'TIDY5E.TabConfiguration.headers.showTab',
       titleClasses: 'visibility-label',
       cellSnippet: listboxItemShow,
     },
