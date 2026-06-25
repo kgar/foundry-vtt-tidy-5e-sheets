@@ -37,7 +37,10 @@ import {
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
-import { getDragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
+import {
+  getDragAndDropMixin,
+  type DropEffectValue,
+} from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
@@ -60,7 +63,7 @@ export function getTidyExtensibleDocumentSheetMixin<
   TContext extends Partial<{
     tabs: Tab[];
     customContent: CustomContent[];
-  }>
+  }>,
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends getDragAndDropMixin(BaseApplication) {
     // TODO: Remove _fixedMode when classic sheets are gone
@@ -124,7 +127,12 @@ export function getTidyExtensibleDocumentSheetMixin<
     #focusedInputSelector: string | undefined = '';
 
     async _onChangeForm(formConfig: unknown, event: any) {
-      if ( FoundryAdapter.isElementInstanceOf(event.target, foundry.applications.elements.HTMLSecretBlockElement) ) {
+      if (
+        FoundryAdapter.isElementInstanceOf(
+          event.target,
+          foundry.applications.elements.HTMLSecretBlockElement,
+        )
+      ) {
         return this._onRevealSecret(event);
       }
 
@@ -155,7 +163,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         super._onChangeForm(formConfig, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
-          ui.notifications.error(failure.message)
+          ui.notifications.error(failure.message),
         );
       }
     }
@@ -203,7 +211,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         await UserSheetPreferencesService.setDocumentTypePreference(
           sheetType,
           'width',
-          width
+          width,
         );
       }
 
@@ -211,14 +219,14 @@ export function getTidyExtensibleDocumentSheetMixin<
         await UserSheetPreferencesService.setDocumentTypePreference(
           sheetType,
           'height',
-          height
+          height,
         );
       }
     }
 
     #debouncePersistSheetPositionPreferences = FoundryAdapter.debounce(
       this.#persistSheetPositionPreferences.bind(this),
-      1000
+      1000,
     );
 
     _onPosition(position: ApplicationPosition) {
@@ -241,7 +249,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     async _prepareContext(
-      options: Partial<TidyDocumentSheetRenderOptions>
+      options: Partial<TidyDocumentSheetRenderOptions>,
     ): Promise<DocumentSheetV2Context> {
       const context = await super._prepareContext(options);
 
@@ -253,7 +261,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       TidyHooks.tidy5eSheetsSheetModeConfiguring(
         this,
         this.element,
-        sheetModeConfig
+        sheetModeConfig,
       );
 
       return {
@@ -265,7 +273,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     async _renderHTML(
       context: TContext,
-      options: TidyDocumentSheetRenderOptions
+      options: TidyDocumentSheetRenderOptions,
     ): Promise<RenderResult<TContext>> {
       const result = await super._renderHTML(context, options);
 
@@ -277,7 +285,7 @@ export function getTidyExtensibleDocumentSheetMixin<
           ? await this._customContentRenderer.renderTabContents(
               context.tabs,
               context,
-              options
+              options,
             )
           : [];
 
@@ -285,13 +293,13 @@ export function getTidyExtensibleDocumentSheetMixin<
           ? await this._customContentRenderer.renderCustomContent(
               context.customContent,
               context,
-              options
+              options,
             )
           : [];
 
         const implementationCustomContents = await this._getCustomContents(
           context,
-          options
+          options,
         );
 
         result.customContents = [
@@ -303,7 +311,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         error(
           'An error occurred while rendering custom tabs and content.',
           false,
-          e
+          e,
         );
       }
 
@@ -319,7 +327,7 @@ export function getTidyExtensibleDocumentSheetMixin<
      */
     _getCustomContents(
       context: TContext,
-      options: TidyDocumentSheetRenderOptions
+      options: TidyDocumentSheetRenderOptions,
     ): Promise<RenderedSheetPart[]> {
       return Promise.resolve([]);
     }
@@ -337,7 +345,7 @@ export function getTidyExtensibleDocumentSheetMixin<
           this.document.documentName,
           this.document.uuid,
           this.document.type,
-          element
+          element,
         );
 
         this._applySheetModeClass(element);
@@ -345,7 +353,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         error(
           'An error occurred while preparing the rendered frame of the application.',
           false,
-          { error: e, sheet: this }
+          { error: e, sheet: this },
         );
       }
 
@@ -357,7 +365,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       // Update header control position settings
       this._headerControlSettings = this._getHeaderControlSettings(
-        this.document
+        this.document,
       );
 
       // Remove header bar controls
@@ -380,7 +388,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     async _onEmbeddedDocumentInputChange(
-      event: InputEvent & { target: HTMLInputElement }
+      event: InputEvent & { target: HTMLInputElement },
     ) {
       const itemId =
         event.target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
@@ -404,7 +412,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     private async _processEmbeddedDocumentChange(
       event: InputEvent & { target: HTMLInputElement },
-      doc: any
+      doc: any,
     ) {
       event.stopImmediatePropagation();
 
@@ -417,7 +425,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         valueToSave = processInputChangeDelta(
           event.target.value,
           doc,
-          field
+          field,
         )?.toString();
       }
 
@@ -456,7 +464,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     _replaceHTML(
       result: RenderResult<TContext>,
       content: HTMLElement,
-      options: TidyDocumentSheetRenderOptions
+      options: TidyDocumentSheetRenderOptions,
     ) {
       super._replaceHTML(result, content, options);
 
@@ -468,13 +476,13 @@ export function getTidyExtensibleDocumentSheetMixin<
           result.customContents,
           this,
           result.context,
-          options
+          options,
         );
       } catch (e) {
         error(
           'An error occured while replacing custom content on the sheet.',
           false,
-          e
+          e,
         );
       }
     }
@@ -486,7 +494,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     /**
      * Is the sheet in edit mode?
      */
-     get isEditMode() {
+    get isEditMode() {
       return this._mode === CONSTANTS.SHEET_MODE_EDIT;
     }
 
@@ -566,7 +574,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     async _onRender(
       context: TContext,
-      options: TidyDocumentSheetRenderOptions
+      options: TidyDocumentSheetRenderOptions,
     ) {
       await super._onRender(context, options);
 
@@ -607,7 +615,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       >((state, sel) => {
         const scrollableElements = element.querySelectorAll<HTMLElement>(sel);
         state[sel] = Array.from(
-          scrollableElements
+          scrollableElements,
         ).map<PriorElementScrollPosition>((el) => ({
           scrollTop: el.scrollTop,
           scrollLeft: el.scrollLeft,
@@ -675,13 +683,13 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     _initializeApplicationOptions(options: DocumentSheetConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
-        options
+        options,
       ) as DocumentSheetConfiguration;
 
       const headerControls = new Map<string, CustomHeaderControlsEntry>();
 
       [...(updatedOptions.window?.controls ?? [])].forEach((c) =>
-        headerControls.set(c.label, c)
+        headerControls.set(c.label, c),
       );
 
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
@@ -701,7 +709,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         }
 
         const customControls = this._getCustomHeaderControls(
-          updatedOptions.document
+          updatedOptions.document,
         );
 
         customControls.controls.forEach((c) => headerControls.set(c.label, c));
@@ -719,7 +727,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         updatedOptions.window.controls = [...headerControls.values()];
 
         this._headerControlSettings = this._getHeaderControlSettings(
-          options.document
+          options.document,
         );
 
         updatedOptions.window.controls.forEach((c) => {
@@ -746,12 +754,11 @@ export function getTidyExtensibleDocumentSheetMixin<
     private _getHeaderControlSettings(document: any) {
       // SettingsProvider is assigned in initSettings(); optional chaining covers
       // circular-import / ordering edge cases. Fall back to the raw game setting.
-      const settings = (
-        SettingsProvider.settings.headerControlConfiguration.get() ??
-        FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
-          'headerControlConfiguration'
-        )
-      )?.[document.documentName]?.[document.type];
+      const settings =
+        (SettingsProvider.settings.headerControlConfiguration.get() ??
+          FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
+            'headerControlConfiguration',
+          ))?.[document.documentName]?.[document.type];
 
       if (!settings) {
         return new Map();
@@ -815,13 +822,13 @@ export function getTidyExtensibleDocumentSheetMixin<
         hookResponse: true,
       }).forEach(
         (c: ApplicationHeaderControlsEntry) =>
-          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c),
       );
 
       // Some controls, such as Portrait Artwork, do not show when calling the event.
       this.options.window.controls?.forEach(
         (c: ApplicationHeaderControlsEntry) =>
-          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c),
       );
 
       return [...uniqueControls.values()];
@@ -841,7 +848,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       for (const c of super._headerControlButtons()) {
         const id = coalesce(c.label, c.icon);
-        
+
         if (uniqueControls.has(id)) {
           continue;
         }
@@ -857,7 +864,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     private _headerControlIsConfiguredForPosition(
       c: CustomHeaderControlsEntry,
       id: string,
-      position: string
+      position: string,
     ) {
       return (
         this._headerControlSettings.get(id) === position ||
@@ -918,7 +925,6 @@ export function getTidyExtensibleDocumentSheetMixin<
       });
       await fp.browse();
     }
-      
 
     /**
      * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
@@ -938,7 +944,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     ) {
       return new dnd5e.applications.CurrencyManager({
         document: this.document,
-      }).render({ force: true });    
+      }).render({ force: true });
     }
 
     /**
@@ -957,17 +963,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const tabId = target.dataset.tabId;
-      if (!tabId) {
-        return;
-      }
-
-      this._renderChild(
-        new TidySheetSettingsQuadroneApplication({
-          document: this.document,
-          initialTabId: tabId,
-        }),
-      );
+      this.openSheetSettings(target.dataset.tabId);
     }
 
     /**
@@ -998,7 +994,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     async _deleteDocument(event: Event, target: HTMLElement): Promise<any> {}
 
     /**
-     * Handle triggering a context menu. [data-target-selector] on the sheet action node 
+     * Handle triggering a context menu. [data-target-selector] on the sheet action node
      * indicates the closest node (self or ancestor) where the
      * context menu to look for context-menu-specific data.
      * @this {PrimarySheet5e}
@@ -1041,7 +1037,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         }),
       );
     }
-    
+
     /**
      * Handle opening a document sheet.
      * @this {PrimarySheet5e}
@@ -1104,7 +1100,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       const { itemId } =
         target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
       const item = await this.getItem(itemId);
-      
+
       if (!item) {
         return;
       }
@@ -1130,7 +1126,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       const { activityId } =
         target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
       const item = await this.getItem(itemId);
-      
+
       if (!item) {
         return;
       }
@@ -1139,7 +1135,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     /* -------------------------------------------- */
-    
+
     static async #toggle(
       this: TidyDocumentSheet,
       event: Event,
@@ -1170,6 +1166,15 @@ export function getTidyExtensibleDocumentSheetMixin<
       // todo etc.
     }
 
+    openSheetSettings(tabId?: string) {
+      const settings = new TidySheetSettingsQuadroneApplication({
+        document: this.document,
+        initialTabId: tabId,
+      });
+
+      return this._renderChild(settings);
+    }
+
     /* -------------------------------------------- */
     /*  Form Handling                               */
     /* -------------------------------------------- */
@@ -1186,7 +1191,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     _processFormData(
       event: SubmitEvent | null,
       form: HTMLFormElement,
-      formData: /*FormDataExtended*/ unknown
+      formData: /*FormDataExtended*/ unknown,
     ) {
       const submitData = super._processFormData(event, form, formData);
 
@@ -1233,7 +1238,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       target: HTMLElement,
     ) {
       const currencyKeys = Object.keys(CONFIG.DND5E.currencies);
-      const { itemId } = target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+      const { itemId } =
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
 
       const actor = this.actor;
 
@@ -1248,7 +1254,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         warn(`Container ${itemId} not found on this actor.`);
         return;
       }
-      
+
       // Build update objects for both documents
       const containerUpdate: Record<string, number> = {};
       const actorUpdate: Record<string, number> = {};
@@ -1299,7 +1305,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     _defaultDropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: any
+      data: any,
     ): DropEffectValue {
       if (!data.uuid) {
         return 'copy';

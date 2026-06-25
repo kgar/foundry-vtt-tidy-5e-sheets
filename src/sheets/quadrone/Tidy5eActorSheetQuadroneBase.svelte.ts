@@ -169,11 +169,7 @@ export function getTidy5eActorSheetQuadroneBase<
           this.actor.revertOriginalForm();
         },
         sheetSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          this._renderChild(
-            new TidySheetSettingsQuadroneApplication({
-              document: this.document,
-            }),
-          );
+          this.openSheetSettings();
         },
         rest: async function (
           this: Tidy5eActorSheetQuadroneBase,
@@ -195,11 +191,7 @@ export function getTidy5eActorSheetQuadroneBase<
           );
         },
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          const settings = new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-          });
-          settings.selectTab(TidySheetSettingsTabIds.theme);
-          return this._renderChild(settings);
+          this.openSheetSettings(TidySheetSettingsTabIds.theme);
         },
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
       },
@@ -2343,12 +2335,7 @@ export function getTidy5eActorSheetQuadroneBase<
         case 'skills':
           return FoundryAdapter.renderSkillsConfig(this.actor);
         case 'special-traits':
-          // TODO: Put on base Actor and Item sheets
-          const settings = new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-          });
-          settings.selectTab(TidySheetSettingsTabIds.specialTraits);
-          return this._renderChild(settings);
+          this.openSheetSettings(TidySheetSettingsTabIds.specialTraits);
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
 

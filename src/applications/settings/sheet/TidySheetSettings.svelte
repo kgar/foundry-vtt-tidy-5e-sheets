@@ -323,9 +323,10 @@
         app={app.themeSettingsTab}
         placeholders={undefined}
       />
-      <!-- TODO: Deal with the undefined placeholders. They are unused. -->
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.sheetTabsConfigurationSettingsTab}
-      <SheetTabConfigurationQuadrone app={app.sheetTabsConfigurationSettingsTab} />
+      <SheetTabConfigurationQuadrone
+        app={app.sheetTabsConfigurationSettingsTab}
+      />
     {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
       <div class="dialog-content-container flexcol">
         <h2>

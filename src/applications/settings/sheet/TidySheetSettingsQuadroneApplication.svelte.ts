@@ -55,6 +55,7 @@ import {
   type SectionOptionGroup,
 } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import type { TidySectionBase } from 'src/types/types';
+import { WorldSettingsQuadroneApplication } from '../world/TidyWorldSettingsQuadroneApplication.svelte';
 
 type SheetSettingsRuntimeAdapter = {
   getAllRegisteredTabs(): RegisteredTab<any>[];
@@ -350,8 +351,6 @@ export class TidySheetSettingsQuadroneApplication
    * Open the world settings dialog focused on this sheet type's configuration.
    */
   async openWorldHeaderControlSettings() {
-    const { WorldSettingsQuadroneApplication } =
-      await import('src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte');
 
     new WorldSettingsQuadroneApplication({
       initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(

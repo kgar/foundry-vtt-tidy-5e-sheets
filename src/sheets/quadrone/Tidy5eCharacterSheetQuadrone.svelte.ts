@@ -95,12 +95,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       openSidebarTabConfiguration: async function (
         this: Tidy5eCharacterSheetQuadrone,
       ) {
-        this._renderChild(
-          new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-            initialTabId: TidySheetSettingsTabIds.sidebarTabConfig,
-          }),
-        );
+        this.openSheetSettings(TidySheetSettingsTabIds.sidebarTabConfig);
       },
     },
   };
