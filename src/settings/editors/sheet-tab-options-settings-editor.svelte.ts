@@ -150,7 +150,6 @@ export function getSheetTabOptionsSettingsEditor(
       key: s.key,
       label: FoundryAdapter.localize(s.label),
       show: s.show,
-      // order: s.order, // TODO: order all the way through
     }));
   }
 

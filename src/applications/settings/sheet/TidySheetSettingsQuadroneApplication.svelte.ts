@@ -23,7 +23,10 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { RegisteredTab, SheetSectionConfiguration } from 'src/runtime/types';
+import type {
+  RegisteredTab,
+  SheetSectionConfiguration,
+} from 'src/runtime/types';
 import {
   getThemeSettingsEditor,
   type ThemeSettingsEditor,
@@ -191,12 +194,15 @@ export class TidySheetSettingsQuadroneApplication
     });
 
     this.tabConfigOptions = $derived(
-      this.sheetTabsConfigurationSettingsTab.value.entry.tabs.map((t) => ({
-        id: `sheet:${t.id}`,
-        title: t.title,
-        iconClass: t.iconClass,
-        tabHidden: !t.show,
-      })),
+      this.sheetTabsConfigurationSettingsTab.value.entry.tabs
+        .map((t) => ({
+          id: `sheet:${t.id}`,
+          title: t.title,
+          iconClass: t.iconClass,
+          tabHidden: !t.show,
+          order: t.order,
+        }))
+        .toSorted((a, b) => a.order - b.order),
     );
 
     if (

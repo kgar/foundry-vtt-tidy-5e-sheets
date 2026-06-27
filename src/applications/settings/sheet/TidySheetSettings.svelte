@@ -215,13 +215,16 @@
       return;
     }
 
-    // Reorder the tab list so hidden tabs keep their relative before `apply()`
-    const entry = tabApp.value.entry;
-    arrayMove(entry.tabs, draggedIndex, target);
-    entry.tabs = entry.tabs;
+    // Reorder the tab list based on the dragged and target
+    const rowsToReorder = [
+      ...tabApp.value.entry.tabs.toSorted((a, b) => a.order - b.order),
+    ];
 
-    // Reordering persists immediately rather than waiting for a Save click.
-    await tabApp.save();
+    arrayMove(rowsToReorder, draggedIndex, target);
+
+    rowsToReorder.entries().forEach(([index, row]) => {
+      row.order = index + 1;
+    });
   }
 </script>
 
