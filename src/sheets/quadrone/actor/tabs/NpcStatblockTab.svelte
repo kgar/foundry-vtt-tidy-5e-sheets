@@ -17,7 +17,7 @@
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { buildNpcStatblockTabOptions } from '../../../../settings/tab-options/NpcStatblockTabOptions';
+  import { buildNpcStatblockSections } from '../../../../settings/tab-options/NpcStatblockTabOptions';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
@@ -36,7 +36,7 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(
-    buildNpcStatblockTabOptions(context, tabId).sections as (
+    buildNpcStatblockSections(context, tabId) as (
       | FeatureSection
       | SpellbookSection
     )[],
