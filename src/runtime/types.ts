@@ -37,7 +37,6 @@ export type SheetSectionConfiguration = {
   key: string;
   label: string;
   show: boolean;
-  // order: number; // TODO: always have `order` on hand with tidy section base.
 }
 
 export type TabOptions = {
