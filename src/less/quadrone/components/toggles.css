@@ -7,13 +7,13 @@
         0.3s);
 
     [role='switch'] {
-      width: calc(2.625rem * var(--tidy-switch-scale-internal));
-      height: calc(1.375rem * var(--tidy-switch-scale-internal));
+      width: 2.3125rem;
+      height: 1.25rem;
       position: relative;
       background-color: rgba(0, 0, 0, 0.50);
       border: none;
       transition: background-color 0.5s ease, border-color 0.5s ease;
-      border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
+      border-radius: 2rem;
       border: 0.0625rem solid var(--t5e-component-field-border);
 
       i {
@@ -29,12 +29,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: calc(1.125rem * var(--tidy-switch-scale-internal));
-        height: calc(1.125rem * var(--tidy-switch-scale-internal));
+        width: 1rem;
+        height: 1rem;
         top: 0;
         bottom: 0;
         align-self: center;
-        right: calc(1.375rem * var(--tidy-switch-scale-internal) - var(--tidy-border-width));
+        left: 0.125rem;
         transition: all var(--t5e-transition-default);
       }
 
@@ -44,8 +44,7 @@
 
         &::before,
         .thumb-icon {
-          transform: translateX(calc(1.25rem * var(--tidy-switch-scale-internal)));
-          transition: transform var(--t5e-transition-default);
+          transform: translateX(1rem);
         }
 
         &:hover {
@@ -80,7 +79,7 @@
     }
 
     .tidy-switch {
-      --tidy-switch-scale: 0.825;
+      --tidy-switch-scale: 0.875;
     }
   }
 

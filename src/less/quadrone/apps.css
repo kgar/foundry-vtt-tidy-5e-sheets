@@ -95,13 +95,24 @@
     }
 
     button.header-control {
+      --button-size: var(--t5e-field-size-default);
+      border-radius: 100%;
       color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
       &:hover {
         color: var(--t5e-theme-color-foreground);
-        border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
+
+        &:active,
+        &:focus-within {
+          background: rgba(0, 0, 0, 0.32);
+        }
+      }
+
+      &:active {
+        background: rgba(0, 0, 0, 0.12);
+        border: none;
       }
 
       /* TODO: Figure out how to make the header UUID control use a copy cursor. */
@@ -136,31 +147,6 @@
     &.expanded {
       border: 0.0625rem solid var(--t5e-component-field-border);
       box-shadow: var(--t5e-drop-shadow-card);
-    }
-
-    .header-control > button {
-      gap: 0.5rem;
-      justify-content: flex-start;
-      min-height: var(--t5e-field-size-default);
-      --button-text-color: var(--t5e-color-text-default);
-      --button-hover-text-color: var(--t5e-color-text-default);
-
-      .control-label {
-        color: var(--t5e-color-text-default);
-        font: var(--t5e-font-default-medium);
-      }
-
-      i {
-        color: var(--t5e-color-text-lighter);
-      }
-
-      &:hover {
-        background: var(--t5e-component-field-background-hover);
-
-        i {
-          color: var(--t5e-color-icon-default);
-        }
-      }
     }
   }
 

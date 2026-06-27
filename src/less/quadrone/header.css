@@ -24,7 +24,9 @@
     --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_dark.webp');
     --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp');
     --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_dark.webp');
+    --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_dark_hover.webp');
     --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_dark_prof.webp');
+    --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_dark_prof_hover.webp');
     --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg');
     --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_dark.webp');
     --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp');
@@ -157,7 +159,9 @@
         --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
         --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
         --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
+        --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_hover.webp');
         --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
+        --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_prof_hover.webp');
         --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
         --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_light.webp');
         --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp');
@@ -192,15 +196,14 @@
 
       .sheet-header-actions {
         .button-gold {
-          --t5e-button-text-color: var(--t5e-color-palette-gold-56);
+          --t5e-button-text-color: var(--t5e-color-text-gold-emphasis);
           border-color: var(--t5e-color-palette-gold-62);
           box-shadow: var(--t5e-drop-shadow-field);
-          color: var(--t5e-color-palette-gold-62);
 
           &:hover,
           &:active,
           &:focus {
-            --t5e-button-text-color: var(--t5e-color-palette-gold-56);
+            --t5e-button-text-color: var(--t5e-color-palette-gold-35);
             border-color: var(--t5e-color-palette-gold-56);
             box-shadow: var(--t5e-drop-shadow-field-hover);
           }
