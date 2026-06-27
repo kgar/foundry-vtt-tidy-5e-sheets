@@ -23,7 +23,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { RegisteredTab } from 'src/runtime/types';
+import type { RegisteredTab, SheetSectionConfiguration } from 'src/runtime/types';
 import {
   getThemeSettingsEditor,
   type ThemeSettingsEditor,
@@ -65,8 +65,8 @@ export type TidySheetSettingsContext = {};
 
 export type SheetTabOptionsInput = {
   tabId: string;
-  sections: TidySectionBase[];
-  defaultSections: TidySectionBase[];
+  sections: SheetSectionConfiguration[];
+  defaultSections: SheetSectionConfiguration[];
   optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };

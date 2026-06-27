@@ -1,5 +1,5 @@
 import type { Component } from 'svelte';
-import type { SheetSectionConfigurationTabBuilder } from 'src/runtime/types';
+import type { TabOptionsBuilder } from 'src/runtime/types';
 import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
@@ -80,5 +80,5 @@ export class SvelteTab extends CustomTabBase {
   /**
    * Optional builder for the per-tab section configuration shown in sheet settings.
    */
-  tabOptionsBuilder?: SheetSectionConfigurationTabBuilder<any>;
+  tabOptionsBuilder?: TabOptionsBuilder<any>;
 }

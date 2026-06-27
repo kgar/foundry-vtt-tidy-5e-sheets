@@ -33,18 +33,25 @@ export type RegisteredContent<TContext> = {
   renderScheme?: RenderScheme;
 };
 
-export type SheetSectionConfigurationTab = {
+export type SheetSectionConfiguration = {
+  key: string;
+  label: string;
+  show: boolean;
+  // order: number; // TODO: always have `order` on hand with tidy section base.
+}
+
+export type TabOptions = {
   tabId: string;
-  sections: TidySectionBase[];
-  defaultSections: TidySectionBase[];
+  sections: SheetSectionConfiguration[];
+  defaultSections: SheetSectionConfiguration[];
   optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };
 
-export type SheetSectionConfigurationTabBuilder<TContext> = (
+export type TabOptionsBuilder<TContext> = (
   context: TContext,
   tabId: string,
-) => SheetSectionConfigurationTab | undefined;
+) => TabOptions | undefined;
 
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
@@ -61,7 +68,7 @@ export type RegisteredTab<TContext> = {
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
   types?: Set<string>;
-  tabOptionsBuilder?: SheetSectionConfigurationTabBuilder<TContext>;
+  tabOptionsBuilder?: TabOptionsBuilder<TContext>;
 };
 
 /**

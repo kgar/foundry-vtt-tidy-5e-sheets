@@ -7,7 +7,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import type {
@@ -32,7 +32,7 @@ export function buildNpcStatblockSections(
 export function buildNpcStatblockTabOptions(
   context: NpcSheetQuadroneContext,
   tabId: string
-): SheetSectionConfigurationTab {
+): TabOptions {
   const localize = FoundryAdapter.localize;
   const sections = buildNpcStatblockSections(context, tabId);
 

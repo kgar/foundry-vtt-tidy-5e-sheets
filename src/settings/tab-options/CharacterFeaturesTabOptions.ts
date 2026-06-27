@@ -4,13 +4,13 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 
 export function buildCharacterFeaturesTabOptions(
   context: CharacterSheetQuadroneContext,
   tabId: string
-): SheetSectionConfigurationTab {
+): TabOptions {
   const localize = FoundryAdapter.localize;
 
   const sections = SheetSections.configureFeatures(

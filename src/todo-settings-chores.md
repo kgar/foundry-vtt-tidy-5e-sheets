@@ -10,9 +10,8 @@
     - [x] settingsTabBuilder -> getTabOptions
   - [ ] 
 
-### settingsTabBuilder
+### tabOptionsBuilder
 
-**Problem**: it uses the raw context data to derive default sections.  
-
-**Solution**: somehow clone/map the necessary data and don't hold the full context reference
+- [x] Solve problem: tabOptionsBuilder uses the raw context data to derive default sections.  
+  - somehow clone/map the necessary data and don't hold the full context reference
 

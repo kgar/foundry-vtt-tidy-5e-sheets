@@ -6,14 +6,14 @@ import { CONSTANTS } from 'src/constants';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 
 export function buildCharacterSheetTabOptions(
   context: CharacterSheetQuadroneContext,
   tabId: string,
-): SheetSectionConfigurationTab {
+): TabOptions {
   const localize = FoundryAdapter.localize;
 
   const organization =

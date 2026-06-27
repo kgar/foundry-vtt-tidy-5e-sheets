@@ -3,7 +3,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type {
   ActorSheetQuadroneContext,
@@ -88,7 +88,7 @@ export function buildMcdmPowersSections(
 export function buildMcdmPowersSettingsTab(
   context: ActorSheetQuadroneContext,
   tabId: string,
-): SheetSectionConfigurationTab {
+): TabOptions {
   const localize = FoundryAdapter.localize;
   const sections = buildMcdmPowersSections(context, tabId);
   const defaultSections = buildMcdmPowersSections(context, tabId, {
