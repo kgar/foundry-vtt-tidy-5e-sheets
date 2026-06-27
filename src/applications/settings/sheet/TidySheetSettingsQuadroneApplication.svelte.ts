@@ -23,7 +23,10 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { RegisteredTab } from 'src/runtime/types';
+import type {
+  RegisteredTab,
+  SheetSectionConfiguration,
+} from 'src/runtime/types';
 import {
   getThemeSettingsEditor,
   type ThemeSettingsEditor,
@@ -65,8 +68,8 @@ export type TidySheetSettingsContext = {};
 
 export type SheetTabOptionsInput = {
   tabId: string;
-  sections: TidySectionBase[];
-  defaultSections: TidySectionBase[];
+  sections: SheetSectionConfiguration[];
+  defaultSections: SheetSectionConfiguration[];
   optionsGroups?: SectionOptionGroup[];
   formTitle?: string;
 };
@@ -74,9 +77,6 @@ export type SheetTabOptionsInput = {
 export type TidySheetSettingsApplicationConfiguration =
   DocumentSheetApplicationConfiguration & {
     initialTabId?: string;
-    tabSettings?: {
-      [tabId: string]: SheetTabOptionsInput;
-    };
   };
 
 export class TidySheetSettingsQuadroneApplication
@@ -90,8 +90,6 @@ export class TidySheetSettingsQuadroneApplication
 
   initialTabId?: string;
   currentTabId = $state<string | undefined>(undefined);
-
-  tabSettings: Record<string, SheetTabOptionsInput>;
 
   themeSettingsTab: ThemeSettingsEditor;
   sheetTabsConfigurationSettingsTab: SheetTabsConfigurationSettingsEditor;
@@ -166,7 +164,6 @@ export class TidySheetSettingsQuadroneApplication
       this.initialTabId = `sheet:${initial}`;
     }
     this.currentTabId = this.initialTabId;
-    this.tabSettings = options.tabSettings ?? {};
 
     this.themeSettingsTab = getThemeSettingsEditor(this.document);
 
@@ -197,12 +194,15 @@ export class TidySheetSettingsQuadroneApplication
     });
 
     this.tabConfigOptions = $derived(
-      this.sheetTabsConfigurationSettingsTab.value.entry.tabs.map((t) => ({
-        id: `sheet:${t.id}`,
-        title: t.title,
-        iconClass: t.iconClass,
-        tabHidden: !t.show,
-      })),
+      this.sheetTabsConfigurationSettingsTab.value.entry.tabs
+        .map((t) => ({
+          id: `sheet:${t.id}`,
+          title: t.title,
+          iconClass: t.iconClass,
+          tabHidden: !t.show,
+          order: t.order,
+        }))
+        .toSorted((a, b) => a.order - b.order),
     );
 
     if (
@@ -351,7 +351,6 @@ export class TidySheetSettingsQuadroneApplication
    * Open the world settings dialog focused on this sheet type's configuration.
    */
   async openWorldHeaderControlSettings() {
-
     new WorldSettingsQuadroneApplication({
       initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(
         this.document.documentName,
@@ -382,18 +381,22 @@ export class TidySheetSettingsQuadroneApplication
     tabId: string,
   ): SheetTabOptionsInput | undefined {
     const runtime = this._getRuntime();
+
     if (!runtime) {
       return undefined;
     }
+
     const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
-    if (!tab?.settingsTabBuilder) {
+    if (!tab?.tabOptionsBuilder) {
       return undefined;
     }
+
     const sheetContext = this.document?.sheet?._context?.data;
     if (!sheetContext) {
       return undefined;
     }
-    return tab.settingsTabBuilder(sheetContext, tabId);
+
+    return tab.tabOptionsBuilder(sheetContext, tabId);
   }
 
   /**
@@ -403,8 +406,7 @@ export class TidySheetSettingsQuadroneApplication
     tabId: string,
     sheetTabsConfigurationSettingsEditor: SheetTabsConfigurationSettingsEditor,
   ): SheetTabOptionsSettingsEditor | undefined {
-    const input =
-      this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+    const input = this._buildTabSettingsFromRuntime(tabId);
 
     if (!input) {
       return undefined;

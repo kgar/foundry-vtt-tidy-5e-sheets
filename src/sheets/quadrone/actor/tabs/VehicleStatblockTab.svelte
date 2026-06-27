@@ -26,13 +26,16 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { buildVehicleStatblockSettingsTab } from '../settings/VehicleStatblockSettingsTab';
+  import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -52,7 +55,7 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(
-    buildVehicleStatblockSettingsTab(context, tabId).sections as (
+    buildVehicleStatblockSections(context, tabId) as (
       | InventorySection
       | DraftAnimalSection
     )[],
@@ -277,20 +280,23 @@
             Only hide empty tables at the component rendering level, so that 
             the derived hidden state doesn't propagate to the section config window. 
           -->
-        {const emptyAndShouldHide =
-          $derived(section.key === CONSTANTS.ITEM_TYPE_SPELL &&
-          section.items.length === 0)}
+        {const emptyAndShouldHide = $derived(
+          section.key === CONSTANTS.ITEM_TYPE_SPELL &&
+            section.items.length === 0,
+        )}
         {#if section.show && !emptyAndShouldHide}
-          {const columns = $derived(new ColumnsLoadout(
-            ItemColumnRuntime.getConfiguredColumnSpecifications({
-              sheetType: context.document.type,
-              tabId: tabId,
-              sectionKey: section.key,
-              rowActions: section.rowActions,
-              section: section,
-              sheetDocument: context.document,
-            }),
-          ))}
+          {const columns = $derived(
+            new ColumnsLoadout(
+              ItemColumnRuntime.getConfiguredColumnSpecifications({
+                sheetType: context.document.type,
+                tabId: tabId,
+                sectionKey: section.key,
+                rowActions: section.rowActions,
+                section: section,
+                sheetDocument: context.document,
+              }),
+            ),
+          )}
 
           <TidyItemTable
             {section}
@@ -311,8 +317,8 @@
                       ? 'TIDY5E.Vehicle.Features.EmptyState'
                       : section.key === CONSTANTS.ITEM_TYPE_WEAPON
                         ? 'TIDY5E.Vehicle.Weapons.EmptyState'
-                        : null
-                  )}
+                        : null,
+                )}
 
                 {#if buttonTextKey}
                   <div class="inventory-empty empty-state-container">
@@ -342,20 +348,24 @@
         {/if}
       {:else if section.type === 'draft'}
         {#if section.show}
-          {const columns = $derived(new ColumnsLoadout(
-            VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
-              sheetType: context.document.type,
-              tabId: tabId,
-              sectionKey: section.key,
-              rowActions: section.rowActions,
-              section: section,
-              sheetDocument: context.document,
-            }),
-          ))}
-          {const hiddenColumns = $derived(ItemColumnRuntime.determineHiddenColumns(
-            sectionsInlineWidth,
-            columns,
-          ))}
+          {const columns = $derived(
+            new ColumnsLoadout(
+              VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
+                sheetType: context.document.type,
+                tabId: tabId,
+                sectionKey: section.key,
+                rowActions: section.rowActions,
+                section: section,
+                sheetDocument: context.document,
+              }),
+            ),
+          )}
+          {const hiddenColumns = $derived(
+            ItemColumnRuntime.determineHiddenColumns(
+              sectionsInlineWidth,
+              columns,
+            ),
+          )}
           <TidyTable
             key={section.key}
             data-custom-section={section.custom ? true : null}

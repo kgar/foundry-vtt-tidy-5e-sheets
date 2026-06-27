@@ -11,10 +11,10 @@ import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeatur
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 import CharacterSheetTab from 'src/sheets/quadrone/actor/tabs/CharacterSheetTab.svelte';
-import { buildCharacterSheetSettingsTab } from 'src/sheets/quadrone/actor/settings/CharacterSheetSettingsTab';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
-import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/settings/ActorSpellbookSettingsTab';
-import { buildCharacterFeaturesSettingsTab } from 'src/sheets/quadrone/actor/settings/CharacterFeaturesSettingsTab';
+import { buildCharacterSheetTabOptions } from 'src/settings/tab-options/CharacterSheetTabOptions';
+import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
+import { buildActorSpellbookTabOptions } from 'src/settings/tab-options/ActorSpellbookTabOptions';
+import { buildCharacterFeaturesTabOptions } from 'src/settings/tab-options/CharacterFeaturesTabOptions';
 
 export const CharacterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
@@ -38,7 +38,7 @@ export const CharacterSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
-        settingsTabBuilder: buildActorInventorySettingsTab,
+        tabOptionsBuilder: buildActorInventoryTabOptions,
       },
       {
         title: 'TIDY5E.JournalTabName',
@@ -59,7 +59,7 @@ export const CharacterSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-book-sparkles',
-        settingsTabBuilder: buildActorSpellbookSettingsTab,
+        tabOptionsBuilder: buildActorSpellbookTabOptions,
       },
       {
         title: 'TIDY5E.WorldSettings.TabCharacter.tabLabel',
@@ -90,7 +90,7 @@ export const CharacterSheetQuadroneRuntime =
         id: CONSTANTS.TAB_CHARACTER_FEATURES,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-cards-blank',
-        settingsTabBuilder: buildCharacterFeaturesSettingsTab,
+        tabOptionsBuilder: buildCharacterFeaturesTabOptions,
       },
       {
         title: 'DND5E.Bastion.Label',
@@ -121,7 +121,7 @@ export const CharacterSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_ACTIONS,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-chess-knight-piece',
-        settingsTabBuilder: buildCharacterSheetSettingsTab,
+        tabOptionsBuilder: buildCharacterSheetTabOptions,
       },
     ],
     [

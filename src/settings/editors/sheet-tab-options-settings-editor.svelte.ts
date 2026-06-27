@@ -1,4 +1,4 @@
-import type { Actor5e, TidySectionBase } from 'src/types/types';
+import type { Actor5e } from 'src/types/types';
 import type { SettingsEditor } from './settings-editors.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { mapGetOrInsert } from 'src/utils/map';
@@ -9,6 +9,7 @@ import type {
 } from 'src/features/sections/sections.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SheetTabsConfigurationSettingsEditor } from './sheet-tabs-configuration-settings-editor.svelte';
+import type { SheetSectionConfiguration } from 'src/runtime/types';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -70,8 +71,8 @@ export type SheetTabOptionsSettingsEditorParams = {
   document: Actor5e | Item5e;
   settings: {
     optionsGroups?: SectionOptionGroup[];
-    sections: TidySectionBase[];
-    defaultSections: TidySectionBase[];
+    sections: SheetSectionConfiguration[];
+    defaultSections: SheetSectionConfiguration[];
     tabId: string;
     formTitle: string;
   };
@@ -144,7 +145,7 @@ export function getSheetTabOptionsSettingsEditor(
     );
   }
 
-  function mapSectionBaseToConfig(sections: TidySectionBase[]) {
+  function mapSectionBaseToConfig(sections: SheetSectionConfiguration[]) {
     return sections.map((s) => ({
       key: s.key,
       label: FoundryAdapter.localize(s.label),

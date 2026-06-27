@@ -3,22 +3,25 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { TabOptions } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
-import type { CharacterSheetQuadroneContext } from 'src/types/types';
+import type { ActorSheetQuadroneContext } from 'src/types/types';
 
-export function buildCharacterFeaturesSettingsTab(
-  context: CharacterSheetQuadroneContext,
-  tabId: string
-): SheetSectionConfigurationTab {
+type InventoryTabContext = ActorSheetQuadroneContext & {
+  inventory: any;
+};
+
+export function buildActorInventoryTabOptions(
+  context: InventoryTabContext,
+  tabId: string,
+): TabOptions {
   const localize = FoundryAdapter.localize;
 
-  const sections = SheetSections.configureFeatures(
-    context.features,
-    context,
+  const sections = SheetSections.configureInventory(
+    context.inventory,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
-    TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
 
   const optionsGroups: SectionOptionGroup[] = [
@@ -35,13 +38,13 @@ export function buildCharacterFeaturesSettingsTab(
   const resolvedTitle =
     typeof rawTitle === 'function'
       ? (rawTitle as () => string)()
-      : (rawTitle as string | undefined) ?? '';
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {
     tabId,
     sections,
-    defaultSections: context.features,
+    defaultSections: context.inventory,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };

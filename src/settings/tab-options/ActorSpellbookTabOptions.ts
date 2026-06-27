@@ -4,7 +4,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { SheetSectionConfigurationTab } from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/sheet-settings-ids';
 import type { Item5e } from 'src/types/item.types';
 import type {
@@ -12,10 +12,10 @@ import type {
   NpcSheetQuadroneContext,
 } from 'src/types/types';
 
-export function buildActorSpellbookSettingsTab(
+export function buildActorSpellbookTabOptions(
   context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
   tabId: string
-): SheetSectionConfigurationTab {
+): TabOptions {
   const localize = FoundryAdapter.localize;
 
   const sections = SheetSections.configureSpellbook(

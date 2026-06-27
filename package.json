@@ -41,5 +41,8 @@
   "dependencies": {
     "@melloware/coloris": "^0.25.0",
     "chroma-js": "^3.2.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }

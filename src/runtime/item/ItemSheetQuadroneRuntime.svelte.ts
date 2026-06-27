@@ -411,7 +411,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         component: ItemContainerContentsQuadroneTab,
         type: 'svelte',
       },
-      settingsTabBuilder: (context, tabId) =>
+      tabOptionsBuilder: (context, tabId) =>
         buildContainerContentsSettingsTab(
           context as unknown as ContainerSheetQuadroneContext,
           tabId,
