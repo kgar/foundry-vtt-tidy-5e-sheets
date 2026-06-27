@@ -2,9 +2,6 @@
   .tidy-switch {
     display: flex;
     align-items: center;
-    --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
-    --tidy-switch-thumb-transform-duration-internal: var(--tidy-switch-thumb-transform-duration,
-        0.3s);
 
     [role='switch'] {
       width: 2.3125rem;
@@ -23,7 +20,7 @@
       .thumb-icon {
         background-color: var(--t5e-color-palette-white);
         border-radius: 100%;
-        font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
+        font-size: calc(0.6875rem);
         position: absolute;
         color: var(--t5e-color-palette-black);
         display: flex;
@@ -31,10 +28,10 @@
         align-items: center;
         width: 1rem;
         height: 1rem;
-        top: 0;
-        bottom: 0;
+        inset-block-start: 0;
+        inset-block-end: 0;
         align-self: center;
-        left: 0.125rem;
+        inset-inline-start: 0.125rem;
         transition: all var(--t5e-transition-default);
       }
 
@@ -42,7 +39,6 @@
         border-color: var(--t5e-component-toggle-toggled-border, transparent);
         background-color: oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h);
 
-        &::before,
         .thumb-icon {
           transform: translateX(1rem);
         }
@@ -122,8 +118,8 @@
       width: var(--check-indicator-size);
       height: var(--check-indicator-size);
       fill: var(--field-toggle-unchecked-color);
-      top: var(--padding);
-      right: calc(var(--padding) + var(--border-width));
+      inset-block-start: var(--padding);
+      inset-inline-end: calc(var(--padding) + var(--border-width));
     }
 
     .checked-icon {
@@ -132,8 +128,8 @@
       height: var(--check-indicator-size);
       fill: var(--field-toggle-checked-color);
       opacity: 0;
-      top: var(--padding);
-      left: calc(var(--padding) + var(--border-width));
+      inset-block-start: var(--padding);
+      inset-inline-start: calc(var(--padding) + var(--border-width));
     }
 
     .thumb {
@@ -141,8 +137,8 @@
       width: var(--thumb-size);
       height: var(--thumb-size);
       fill: var(--field-toggle-unchecked-thumb-color);
-      top: var(--padding);
-      left: var(--padding);
+      inset-block-start: var(--padding);
+      inset-inline-start: var(--padding);
     }
 
     &:has(.toggle:checked) {
