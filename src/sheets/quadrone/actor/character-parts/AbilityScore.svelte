@@ -7,16 +7,14 @@
 
   type Props = {
     ability: ActorAbilityContextEntry;
-    unlocked: boolean;
+    bigScore?: boolean;
     disabled: boolean;
+    unlocked: boolean;
     onScoreChanged?: (newValue: number) => Promise<void>;
   };
-  let {
-    ability,
-    unlocked,
-    disabled,
-    onScoreChanged,
-  }: Props = $props();
+
+  // TODO: rename bigScore accordingly, and update callers to pass down the appropriate value.
+  let { ability, bigScore = true, unlocked, disabled, onScoreChanged }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -66,10 +64,20 @@
   }
 </script>
 
-<div class={['ability', ability.key, { 'has-proficiency': ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT }]} data-tidy-sheet-part="ability-container">
+<div
+  class={[
+    'ability',
+    ability.key,
+    {
+      'has-proficiency':
+        ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT,
+    },
+  ]}
+  data-tidy-sheet-part="ability-container"
+>
   <div
     class={[
-      'ability-bonus-container',
+      'ability-primary-container',
       { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
     ]}
     data-tidy-sheet-part="ability-mod-container"
@@ -89,7 +97,20 @@
     >
       <span class="ability-abbr color-text-gold">{ability.abbr}</span>
       <span class="ability-label-container">
-        <span class="modifier font-label-xlarge color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span><span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+        {#if bigScore}
+          <span
+            class="value bonus font-data-xlarge color-text-default"
+            data-tidy-sheet-part="ability-value">{ability.value}</span
+          >
+        {:else}
+          <span
+            class="modifier font-label-xlarge color-text-lightest"
+            data-tidy-sheet-part="ability-mod">{mod.sign}</span
+          ><span
+            class="value bonus font-data-xlarge color-text-default"
+            data-tidy-sheet-part="ability-value">{mod.value}</span
+          >
+        {/if}
       </span>
     </button>
     {#if unlocked}
@@ -115,7 +136,7 @@
       </span>
     {/if}
   </div>
-  <div class="ability-score-container">
+  <div class="ability-sub-container">
     <label
       class={['ability-score', { invisible: editingScore }]}
       data-tooltip={localize('DND5E.ABILITY.SECTIONS.Score', {
@@ -124,9 +145,23 @@
       for={abilityInputId}
       data-tidy-sheet-part="ability-score"
     >
-      <span class="font-title-small color-text-default">{ability.value}</span>
+      {#if bigScore}
+        <span
+          class="modifier color-text-lightest"
+          data-tidy-sheet-part="ability-mod">{mod.sign}</span
+        ><span
+          class="value bonus color-text-default"
+          data-tidy-sheet-part="ability-value">{mod.value}</span
+        >
+      {:else}
+        <span class="font-title-small color-text-default">{ability.value}</span>
+      {/if}
       {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
-        <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
+        <span
+          class="ability-proficiency-indicator {unlocked
+            ? 'config-button-visible'
+            : ''}"
+        ></span>
       {/if}
     </label>
     {#if unlocked}

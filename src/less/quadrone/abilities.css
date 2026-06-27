@@ -87,12 +87,12 @@
       justify-content: center;
     }
 
-    .ability-bonus-container {
+    .ability-primary-container {
       min-width: 3.625rem;
       max-width: 4rem;
     }
 
-    .ability-score-container {
+    .ability-sub-container {
       position: relative;
       flex-direction: row;
       height: 2rem;
@@ -109,7 +109,7 @@
       right: -0.25rem;
     }
 
-    .ability-bonus-container {
+    .ability-primary-container {
       aspect-ratio: 1/1.125;
       background: var(--t5e-ability-image) top center / auto no-repeat;
       background-size: contain;
@@ -229,7 +229,7 @@
   }
 
   .ability.has-proficiency {
-    .ability-bonus-container {
+    .ability-primary-container {
       background: var(--t5e-ability-proficient-image) top center / auto no-repeat;
       background-size: contain;
     }
@@ -380,12 +380,12 @@
   .abilities-size-small {
     --collapse-font-medium: 1.4375rem;
 
-    .ability-bonus-container {
+    .ability-primary-container {
       min-width: 3.25rem;
     }
 
-    .ability .ability-bonus-container,
-    .ability .ability-bonus-container.proficient,
+    .ability .ability-primary-container,
+    .ability .ability-primary-container.proficient,
     .ac-container .shield,
     .ability .initiative-score-container {
       width: 100%;
@@ -400,7 +400,7 @@
       }
     }
 
-    .ability-bonus-container,
+    .ability-primary-container,
     .initiative-bonus {
 
       .modifier,
@@ -422,7 +422,7 @@
   /* ------------------------------------------------------------ */
   .abilities-container.abilities-size-compact {
 
-    .ability-bonus-container,
+    .ability-primary-container,
     .ac-container .shield,
     .ability.initiative .initiative-score-container {
       aspect-ratio: 1/1.125;
@@ -450,8 +450,8 @@
       position: relative;
     }
 
-    .ability .ability-bonus-container,
-    .ability .ability-bonus-container.proficient,
+    .ability .ability-primary-container,
+    .ability .ability-primary-container.proficient,
     .ac-container .shield,
     .ability.initiative .initiative-score-container {
       background: none;
@@ -485,7 +485,7 @@
       padding-bottom: 0.25rem;
     }
 
-    .ability-bonus-container,
+    .ability-primary-container,
     .initiative-bonus {
 
       .modifier,
@@ -500,7 +500,7 @@
         margin-top: -0.25rem;
       }
 
-      .ability-bonus-container .ability-score-input {
+      .ability-primary-container .ability-score-input {
         background: var(--t5e-component-field-background-hover);
         border: 0.0625rem solid var(--t5e-component-field-border-hover);
         bottom: 0.375rem;
@@ -517,7 +517,7 @@
       }
     }
 
-    .ability-score-container {
+    .ability-sub-container {
       align-items: center;
       display: flex;
       height: 2rem;
@@ -590,7 +590,7 @@
       }
     }
 
-    .ability-bonus-container,
+    .ability-primary-container,
     .ac-container .shield,
     .ability.initiative .initiative-score-container {
       aspect-ratio: unset;

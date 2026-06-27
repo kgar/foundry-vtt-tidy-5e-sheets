@@ -254,6 +254,9 @@ export const CONSTANTS = {
     /** A repeating list of ability information and potentially interactive elements. */
     ABILITIES_LIST: 'abilities-list',
         
+    /** A container for a given ability modifier (e.g., "str", "dex", "wis", etc.). */
+    ABILITY_BONUS_CONTAINER: 'ability-bonus-container',
+
     /** An interactable control that can open configuration settings for a target ability. */
     ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
 
