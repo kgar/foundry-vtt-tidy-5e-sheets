@@ -61,7 +61,7 @@ export type RegisteredTab<TContext> = {
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
   types?: Set<string>;
-  settingsTabBuilder?: SheetSectionConfigurationTabBuilder<TContext>;
+  tabOptionsBuilder?: SheetSectionConfigurationTabBuilder<TContext>;
 };
 
 /**

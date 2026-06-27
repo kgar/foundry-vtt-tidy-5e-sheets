@@ -7,9 +7,9 @@ import ActorSpellbookTab from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
 import NpcBiographyTab from 'src/sheets/quadrone/actor/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
-import { buildActorInventorySettingsTab } from 'src/sheets/quadrone/actor/settings/ActorInventorySettingsTab';
-import { buildActorSpellbookSettingsTab } from 'src/sheets/quadrone/actor/settings/ActorSpellbookSettingsTab';
-import { buildNpcStatblockSettingsTab } from 'src/sheets/quadrone/actor/settings/NpcStatblockSettingsTab';
+import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
+import { buildActorSpellbookTabOptions } from 'src/settings/tab-options/ActorSpellbookTabOptions';
+import { buildNpcStatblockTabOptions } from 'src/settings/tab-options/NpcStatblockTabOptions';
 
 export const NpcSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(
@@ -23,7 +23,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_STATBLOCK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-wreath-laurel',
-        settingsTabBuilder: buildNpcStatblockSettingsTab,
+        tabOptionsBuilder: buildNpcStatblockTabOptions,
       },
       {
         title: 'DND5E.Inventory',
@@ -34,7 +34,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
-        settingsTabBuilder: buildActorInventorySettingsTab,
+        tabOptionsBuilder: buildActorInventoryTabOptions,
       },
       {
         title: 'DND5E.Spellbook',
@@ -45,7 +45,7 @@ export const NpcSheetQuadroneRuntime =
         id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-book-sparkles',
-        settingsTabBuilder: buildActorSpellbookSettingsTab,
+        tabOptionsBuilder: buildActorSpellbookTabOptions,
       },
       {
         title: 'DND5E.Effects',

@@ -137,7 +137,7 @@ export class TabManager {
             renderScheme: 'force',
             tabContentsClasses: tab.tabContentsClasses,
             types,
-            settingsTabBuilder: tab.settingsTabBuilder,
+            tabOptionsBuilder: tab.tabOptionsBuilder,
           });
         }
       }

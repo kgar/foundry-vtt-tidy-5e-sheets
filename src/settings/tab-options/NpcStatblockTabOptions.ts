@@ -29,7 +29,7 @@ export function buildNpcStatblockSections(
   );
 }
 
-export function buildNpcStatblockSettingsTab(
+export function buildNpcStatblockTabOptions(
   context: NpcSheetQuadroneContext,
   tabId: string
 ): SheetSectionConfigurationTab {

@@ -26,7 +26,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { buildVehicleStatblockSettingsTab } from '../settings/VehicleStatblockSettingsTab';
+  import { buildVehicleStatblockTabOptions } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
@@ -52,7 +52,7 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(
-    buildVehicleStatblockSettingsTab(context, tabId).sections as (
+    buildVehicleStatblockTabOptions(context, tabId).sections as (
       | InventorySection
       | DraftAnimalSection
     )[],

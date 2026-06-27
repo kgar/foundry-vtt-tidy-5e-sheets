@@ -63,7 +63,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       tabId: this.powersTabId,
       component: McdmPowersTab,
       iconClass: 'fa-solid fa-brain',
-      settingsTabBuilder: buildMcdmPowersSettingsTab,
+      tabOptionsBuilder: buildMcdmPowersSettingsTab,
     });
     
     api.registerCharacterTab(powersTab, {

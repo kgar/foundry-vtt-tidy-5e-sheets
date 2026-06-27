@@ -379,15 +379,18 @@ export class TidySheetSettingsQuadroneApplication
     if (!runtime) {
       return undefined;
     }
+
     const tab = runtime.getAllRegisteredTabs().find((t) => t.id === tabId);
-    if (!tab?.settingsTabBuilder) {
+    if (!tab?.tabOptionsBuilder) {
       return undefined;
     }
+
     const sheetContext = this.document?.sheet?._context?.data;
     if (!sheetContext) {
       return undefined;
     }
-    return tab.settingsTabBuilder(sheetContext, tabId);
+
+    return tab.tabOptionsBuilder(sheetContext, tabId);
   }
 
   /**

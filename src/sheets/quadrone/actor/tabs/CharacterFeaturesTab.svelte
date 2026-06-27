@@ -12,7 +12,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { buildCharacterFeaturesSettingsTab } from '../settings/CharacterFeaturesSettingsTab';
+  import { buildCharacterFeaturesTabOptions } from '../../../../settings/tab-options/CharacterFeaturesTabOptions';
   import type { FeatureSection } from 'src/types/types';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -29,7 +29,8 @@
   setSearchResultsContext(searchResults);
 
   let features = $derived(
-    buildCharacterFeaturesSettingsTab(context, tabId).sections as FeatureSection[],
+    buildCharacterFeaturesTabOptions(context, tabId)
+      .sections as FeatureSection[],
   );
 
   let showSheetPins = $derived(
@@ -48,7 +49,6 @@
       tabId: tabId,
     });
   });
-
 </script>
 
 <ItemsActionBar bind:searchCriteria sections={features} {tabId} />

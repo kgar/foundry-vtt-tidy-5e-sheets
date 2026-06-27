@@ -12,7 +12,7 @@ import type {
   NpcSheetQuadroneContext,
 } from 'src/types/types';
 
-export function buildActorSpellbookSettingsTab(
+export function buildActorSpellbookTabOptions(
   context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
   tabId: string
 ): SheetSectionConfigurationTab {

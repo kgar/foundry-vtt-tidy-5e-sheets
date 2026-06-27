@@ -3,7 +3,6 @@ import {
   type SectionOptionGroup,
 } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
-import { getCharacterSheetTabActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -11,7 +10,7 @@ import type { SheetSectionConfigurationTab } from 'src/runtime/types';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 
-export function buildCharacterSheetSettingsTab(
+export function buildCharacterSheetTabOptions(
   context: CharacterSheetQuadroneContext,
   tabId: string,
 ): SheetSectionConfigurationTab {

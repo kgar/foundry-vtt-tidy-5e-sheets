@@ -5,24 +5,26 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SheetSectionConfigurationTab } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import type { ActorSheetQuadroneContext } from 'src/types/types';
+import type { VehicleSheetQuadroneContext } from 'src/types/types';
 
-type InventoryTabContext = ActorSheetQuadroneContext & {
-  inventory: any;
-};
-
-export function buildActorInventorySettingsTab(
-  context: InventoryTabContext,
+export function buildVehicleStatblockSections(
+  context: VehicleSheetQuadroneContext,
   tabId: string,
-): SheetSectionConfigurationTab {
-  const localize = FoundryAdapter.localize;
-
-  const sections = SheetSections.configureInventory(
-    context.inventory,
+) {
+  return SheetSections.configureVehicleStatblockSections(
+    context.statblock,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
     TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
+}
+
+export function buildVehicleStatblockTabOptions(
+  context: VehicleSheetQuadroneContext,
+  tabId: string,
+): SheetSectionConfigurationTab {
+  const localize = FoundryAdapter.localize;
+  const sections = buildVehicleStatblockSections(context, tabId);
 
   const optionsGroups: SectionOptionGroup[] = [
     {
@@ -44,7 +46,7 @@ export function buildActorInventorySettingsTab(
   return {
     tabId,
     sections,
-    defaultSections: context.inventory,
+    defaultSections: context.statblock,
     optionsGroups,
     formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
   };
