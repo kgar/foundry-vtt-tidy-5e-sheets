@@ -103,7 +103,7 @@
       <!-- Swapped: score display at top; editing via overlay input -->
       {#if unlocked}
         <label
-          class="button-borderless ability-roll-button"
+          class="button-borderless ability-roll-button modifier-swapped"
           for={abilityInputId}
           data-tooltip={primaryTooltip}
           data-tidy-sheet-part="ability-score"
@@ -115,7 +115,7 @@
         </label>
       {:else}
         <div
-          class="button-borderless ability-roll-button"
+          class="button-borderless ability-roll-button modifier-swapped"
           data-tooltip={primaryTooltip}
           data-tidy-sheet-part="ability-score"
         >
@@ -168,7 +168,7 @@
       </span>
     {/if}
   </div>
-  <div class="ability-score-container">
+  <div class={['ability-score-container', { 'modifier-swapped': swapAbilityScoreAndBonusEnabled }]}>
     {#if swapAbilityScoreAndBonusEnabled}
       <!-- Swapped: modifier roller in the middle -->
       <button
@@ -178,7 +178,7 @@
         data-ability={ability.key}
         data-tooltip={secondaryTooltip}
         class={[
-          'button-borderless ability-score',
+          'button-borderless ability-score modifier-swapped',
           { invisible: editingScore },
         ]}
         data-tidy-sheet-part="ability-roller"
