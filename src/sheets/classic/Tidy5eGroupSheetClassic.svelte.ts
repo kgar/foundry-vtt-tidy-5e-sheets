@@ -30,20 +30,20 @@ import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
-import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
+import { getTidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { debug, warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
@@ -51,7 +51,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
@@ -64,10 +64,10 @@ type MemberStats = {
   vehicleCount: number;
 };
 
-export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
-  TidyExtensibleDocumentSheetMixin(
+export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
+  getTidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_GROUP,
-    SvelteApplicationMixin<
+    getSvelteApplicationMixin<
       ApplicationConfiguration | undefined,
       GroupSheetClassicContext
     >(foundry.applications.sheets.ActorSheetV2)

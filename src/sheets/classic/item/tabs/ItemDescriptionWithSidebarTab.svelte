@@ -12,7 +12,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+  import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
   import PropertyTag from 'src/components/properties/PropertyTag.svelte';
   import SpellBlock from 'src/sheets/quadrone/item/parts/SpellBlock.svelte';
 
@@ -147,7 +147,7 @@
         {/if}
 
         {#each context.labels.damages ?? [] as damage}
-          {@const label = damage.label}
+          {const label = $derived(damage.label)}
           <li>
             {label}
           </li>

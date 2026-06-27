@@ -127,7 +127,7 @@
     </li>
     <ol class="item-list">
       {#each data.items as advancement}
-        {@const isSvgIcon = isSvg(advancement.icon)}
+        {const isSvgIcon = $derived(isSvg(advancement.icon))}
         <li
           class="advancement-item item flexrow"
           data-tidy-always-draggable

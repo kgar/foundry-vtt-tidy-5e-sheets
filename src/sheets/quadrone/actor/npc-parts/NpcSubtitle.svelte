@@ -107,7 +107,7 @@
     {/if}
     {#if context.saves.concentration}
       <div class="divider-dot"></div>
-      {@const save = context.saves.concentration}
+      {const save = $derived(context.saves.concentration)}
       <div class="concentration flexrow">
         <div class="flexrow concentration-bonus">
           <button
@@ -145,9 +145,9 @@
             </span>
           </button>
           {#if context.unlocked}
-            {@const tooltip = localize('DND5E.AbilityConfigure', {
+            {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
               ability: context.saves.concentration.label,
-            })}
+            }))}
             <div class="config-container">
               <button
                 aria-label={tooltip}

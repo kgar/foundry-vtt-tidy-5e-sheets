@@ -20,10 +20,10 @@ import { CONSTANTS } from 'src/constants';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
-export class WorldSettingsFormApplication extends SvelteApplicationMixin<
+export class WorldSettingsFormApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   WorldSettingsContext
 >(foundry.applications.api.ApplicationV2) {

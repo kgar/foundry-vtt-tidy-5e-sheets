@@ -105,7 +105,7 @@
   {#snippet body()}
     <div class="items">
       {#each itemEntries as { item, ctx } (item.id)}
-        {@const hidden = !searchResults.show(item.uuid)}
+        {const hidden = $derived(!searchResults.show(item.uuid))}
         <a
           class="item {getInventoryRowClasses(item)}"
           class:hidden

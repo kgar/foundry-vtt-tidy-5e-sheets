@@ -232,7 +232,7 @@
     field: string,
   )}
     {#if enriched !== '' || context.unlocked}
-      {@const expanded = expansionTracker.isExpanded(field, tabId, location)}
+      {const expanded = $derived(expansionTracker.isExpanded(field, tabId, location))}
       <article class="biography-editor-container collapsible-editor">
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">

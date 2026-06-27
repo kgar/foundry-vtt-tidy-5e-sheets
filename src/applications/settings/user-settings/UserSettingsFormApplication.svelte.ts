@@ -13,10 +13,10 @@ import type {
   UserSettingsFunctions,
 } from './UserSettings.types';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
-export class UserSettingsFormApplication extends SvelteApplicationMixin<
+export class UserSettingsFormApplication extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   UserSettingsContext
 >(foundry.applications.api.ApplicationV2) {

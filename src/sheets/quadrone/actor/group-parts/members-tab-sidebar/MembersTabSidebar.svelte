@@ -67,17 +67,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.languages as language}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                language.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
+              {const isEmphasized =
+                $derived(emphasizedMember !== undefined &&
+                language.identifiers.has(emphasizedActorUuid))}
+              {const pillState: ClassValue = $derived({
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
                 'trait-language': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
-              {@const pill =
-                language.identifiers.get(emphasizedActorUuid) ?? language}
+              })}
+              {const pill =
+                $derived(language.identifiers.get(emphasizedActorUuid) ?? language)}
 
               <GroupTraitPill
                 class={pillState}
@@ -110,17 +110,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.speeds as speed}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                speed.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
+              {const isEmphasized =
+                $derived(emphasizedMember !== undefined &&
+                speed.identifiers.has(emphasizedActorUuid))}
+              {const pillState: ClassValue = $derived({
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
                 'trait-speed': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
-              {@const pill =
-                speed.identifiers.get(emphasizedActorUuid) ?? speed}
+              })}
+              {const pill =
+                $derived(speed.identifiers.get(emphasizedActorUuid) ?? speed)}
 
               <GroupTraitPill
                 class={pillState}
@@ -152,17 +152,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.senses as sense}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                sense.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
+              {const isEmphasized =
+                $derived(emphasizedMember !== undefined &&
+                sense.identifiers.has(emphasizedActorUuid))}
+              {const pillState: ClassValue = $derived({
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
                 'trait-sense': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
-              {@const pill =
-                sense.identifiers.get(emphasizedActorUuid) ?? sense}
+              })}
+              {const pill =
+                $derived(sense.identifiers.get(emphasizedActorUuid) ?? sense)}
 
               <GroupTraitPill
                 class={pillState}
@@ -203,15 +203,15 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.specials as special}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                special.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
+              {const isEmphasized =
+                $derived(emphasizedMember !== undefined &&
+                special.identifiers.has(emphasizedActorUuid))}
+              {const pillState: ClassValue = $derived({
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
                 'trait-special': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+              })}
 
               <GroupTraitPill
                 class={pillState}
@@ -244,15 +244,15 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.tools as tool}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                tool.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
+              {const isEmphasized =
+                $derived(emphasizedMember !== undefined &&
+                tool.identifiers.has(emphasizedActorUuid))}
+              {const pillState: ClassValue = $derived({
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
                 'trait-tool': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+              })}
               <GroupTraitPill
                 class={pillState}
                 label={tool.label}

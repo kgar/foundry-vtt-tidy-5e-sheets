@@ -36,8 +36,6 @@ export class VisibilityLevels {
   static getOptions(documentName: string): VisibilityLevelOption[] {
     const levels = VisibilityLevels.getLevels();
 
-    levels[VisibilityLevels.getDefaultLevelKey(documentName)].value = null;
-
     let options = [];
 
     if (documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {

@@ -80,15 +80,11 @@
       {member.actor.name}
     </h4>
     {#if member.actor.system.details.cr}
-      {@const formattedCr = dnd5e.utils.formatCR(
-        member.actor.system.details.cr,
-      )}
+      {const size =
+        $derived(CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
+        member.actor.system.traits.size)}
 
-      {@const size =
-        CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
-        member.actor.system.traits.size}
-
-      {@const creatureType = member.actor.system.details.type.label}
+      {const creatureType = $derived(member.actor.system.details.type.label)}
 
       <span class="separated-list">
         <!-- <span class="cr">

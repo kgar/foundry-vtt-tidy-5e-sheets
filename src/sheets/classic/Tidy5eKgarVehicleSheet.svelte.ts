@@ -23,7 +23,7 @@ import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -34,12 +34,12 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eVehicleSheet
-  extends GetTidy5eActorSheetClassicV2Base<VehicleSheetContext>(
+  extends getTidy5eActorSheetClassicV2Base<VehicleSheetContext>(
     CONSTANTS.SHEET_TYPE_VEHICLE
   )
   implements

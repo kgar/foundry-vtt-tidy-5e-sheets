@@ -28,7 +28,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -42,12 +42,12 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { splitSemicolons } from 'src/utils/array';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eNpcSheet
-  extends GetTidy5eActorSheetClassicV2Base<NpcSheetContext>(
+  extends getTidy5eActorSheetClassicV2Base<NpcSheetContext>(
     CONSTANTS.SHEET_TYPE_NPC
   )
   implements

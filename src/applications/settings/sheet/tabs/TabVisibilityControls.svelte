@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
   import { CONSTANTS } from 'src/constants';
 
@@ -9,17 +9,14 @@
     tabId: string;
   }
 
-  // Passed in a TabConfigContextEntry and the settings tab ID
   let { entry = $bindable(), tabId }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let isVisible = $derived(
-    entry.tabs.some((t) => t.id === tabId && t.show),
-  );
+  let isVisible = $derived(entry.tabs.some((t) => t.id === tabId && t.show));
 
   let visibilityLevelIndex = $derived(
-    entry.visibilityLevels.findIndex((v) => v.id === tabId),
+    entry.tabs.findIndex((v) => v.id === tabId),
   );
 
   let visibilityLevelOptions = $derived(
@@ -31,11 +28,11 @@
   let canConfigureViewers = $derived(
     visibilityLevelIndex >= 0 &&
       (userIsGm ||
-        entry.visibilityLevels[visibilityLevelIndex].visibilityLevel !==
+        entry.tabs[visibilityLevelIndex].visibilityLevel !==
           CONSTANTS.VISIBILITY_LEVEL_GM),
   );
 
-  const sidebarExpandableSheetTypes = new Set([
+  const sidebarExpandableSheetTypes = new Set<string>([
     CONSTANTS.SHEET_TYPE_CHARACTER,
     CONSTANTS.SHEET_TYPE_NPC,
     CONSTANTS.SHEET_TYPE_VEHICLE,
@@ -43,7 +40,7 @@
 
   let showSidebarExpandedControl = $derived(
     entry.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
-      sidebarExpandableSheetTypes.has(entry.documentType as 'character' | 'npc' | 'vehicle'),
+      sidebarExpandableSheetTypes.has(entry.documentType),
   );
 
   // The value is staged on the shared tab-config entry (seeded from the user's
@@ -65,13 +62,6 @@
         t.id === tabId ? { ...t, show: visible } : t,
       );
       return;
-    }
-
-    // Tab isn't in the list yet (shouldn't normally happen); add it from the
-    // registry when turning it on.
-    const info = entry.allTabs[tabId];
-    if (visible && info) {
-      entry.tabs = [...entry.tabs, { ...info, show: true }];
     }
   }
 
@@ -129,7 +119,7 @@
       <div class="form-fields">
         <select
           id={viewersId()}
-          bind:value={entry.visibilityLevels[visibilityLevelIndex].visibilityLevel}
+          bind:value={entry.tabs[visibilityLevelIndex].visibilityLevel}
         >
           {#each visibilityLevelOptions as option (option.key)}
             <option value={option.value}>{option.label}</option>

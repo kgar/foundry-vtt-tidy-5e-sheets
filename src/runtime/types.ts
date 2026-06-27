@@ -20,7 +20,7 @@ import type {
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-import type { SectionOptionGroup } from 'src/applications/settings/editors/configure-sections-settings-editor.svelte';
+import type { SectionOptionGroup } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;

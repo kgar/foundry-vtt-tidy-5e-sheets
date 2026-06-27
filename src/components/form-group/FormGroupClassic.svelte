@@ -210,7 +210,7 @@
 <FormGroupBuilder {inputs} {...builderProps} />
 
 {#snippet StringChoices(field: StringField)}
-  {@const options = enumerateChoices(field.choices!)}
+  {const options = $derived(enumerateChoices(field.choices!))}
   <SelectOptions
     blank={field.blank ? '' : null}
     labelProp="label"
@@ -220,6 +220,6 @@
 {/snippet}
 
 {#snippet NumberChoices(field: NumberField)}
-  {@const options = enumerateChoices(field.choices!)}
+  {const options = $derived(enumerateChoices(field.choices!))}
   <SelectOptions labelProp="label" valueProp="value" data={options} />
 {/snippet}

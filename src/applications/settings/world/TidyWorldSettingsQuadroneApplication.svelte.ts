@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -7,15 +7,21 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import TidyWorldSettings from './TidyWorldSettings.svelte';
-import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import { getThemeSettingsEditor } from '../editors/theme-settings-editor.svelte';
-import { getWorldTabConfigurationSettingsEditor } from '../editors/world-tab-configuration-settings-editor.svelte';
-import { getWorldHeaderControlConfigurationSettingsEditor } from '../editors/world-header-control-configuration-settings-editor.svelte';
-import { getHomebrewSettingsEditor } from '../editors/homebrew-settings-editor.svelte';
-import { getDefaultSheetPreferencesSettingsEditor } from '../editors/default-sheet-preferences-settings-editor.svelte';
-import type { SettingsEditor } from '../editors/settings-editors.svelte';
+import { getThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
+import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/world-tab-configuration-settings-editor.svelte';
+import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
+import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
+import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
+import type {
+  SettingsEditor,
+  SettingsEditorController,
+} from 'src/settings/editors/settings-editors.svelte';
+import {
+  getWorldSheetConfigurationSettingsEditor,
+  type WorldSheetConfigurationSettingsEditor,
+} from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -41,11 +47,11 @@ export type WorldSettingsApplicationConfiguration =
   };
 
 export class WorldSettingsQuadroneApplication
-  extends SvelteApplicationMixin<
+  extends getSvelteApplicationMixin<
     WorldSettingsApplicationConfiguration,
     WorldSettingsContext
   >(foundry.applications.api.ApplicationV2)
-  implements SettingsFooterHost
+  implements SettingsEditorController
 {
   _config: WorldSettingsContext = $state({});
 
@@ -54,6 +60,7 @@ export class WorldSettingsQuadroneApplication
 
   /** All settings editors */
   editors;
+  sheetConfigEditors;
 
   // The dialog persists every settings page with a single shared Save. Sheet
   // Preferences is excluded: it is an immediate apply-and-reload action that
@@ -87,6 +94,7 @@ export class WorldSettingsQuadroneApplication
     this.initialTabId = options.initialTabId;
     this.currentTabId = this.initialTabId;
 
+    // Create base editors
     this.editors = {
       themeSettingsTab: getThemeSettingsEditor(),
       tabConfigTab: getWorldTabConfigurationSettingsEditor(),
@@ -95,28 +103,73 @@ export class WorldSettingsQuadroneApplication
       sheetPreferencesTab: getDefaultSheetPreferencesSettingsEditor(),
     } satisfies Record<string, SettingsEditor<unknown>>;
 
+    // Create composite sheet editors
+    this.sheetConfigEditors = this.editors.headerControlsTab.value.reduce<
+      Record<string, WorldSheetConfigurationSettingsEditor>
+    >((prev, curr) => {
+      const tabId = this.getSheetConfigTabId(
+        curr.documentName,
+        curr.documentType,
+      );
+
+      prev[tabId] = getWorldSheetConfigurationSettingsEditor({
+        documentName: curr.documentName,
+        documentType: curr.documentType,
+        headerControlsEditor: this.editors.headerControlsTab,
+        tabConfigEditor: this.editors.tabConfigTab,
+        title: curr.title,
+        sidebarTabConfigEditor: this.editors.tabConfigTab,
+      });
+
+      return prev;
+    }, {}) satisfies Record<string, WorldSheetConfigurationSettingsEditor>;
+
     this.hasChanges = $derived(
-      Object.values(this.editors).some((e) => e.hasChanges),
+      Object.values(this.editors).some((e) => e.hasChanges) ||
+        Object.values(this.sheetConfigEditors).some((e) => e.hasChanges),
     );
   }
+
+  resetToDefault(): Promise<void> | void {
+    Object.values(this.editors).forEach((e) => e.resetToDefault());
+  }
+
+  useDefaultLabel?: string | undefined;
 
   selectTab(id: string) {
     this.currentTabId = id;
   }
 
-  // World pages don't map to a single pane, so Undo / Use Global Defaults act
-  // on the whole dialog anDd stay enabled. All changes are staged until Save.
-  canUndo = true;
-  canUseDefault = true;
+  /**
+   * The pane for undo/use defaults.
+   */
+  getActivePane(): SettingsEditor<unknown> | undefined {
+    const currentTabId = this.currentTabId;
+    switch (currentTabId) {
+      case WorldSettingsTabIds.theme:
+        return this.editors.themeSettingsTab;
+      case WorldSettingsTabIds.sheetPreferences:
+        return this.editors.sheetPreferencesTab;
+      case WorldSettingsTabIds.homebrew:
+        return this.editors.homebrewTab;
+    }
 
-  // The per-sheet tab/header panes mount once (TabContent.onMount), so bumping
-  // this forces them to remount and re-read the reset config. See WorldSheetSettings.
-  tabPaneVersion = $state(0);
+    // Sheet Settings
+    if (currentTabId) {
+      const sheetConfigEditor = this.sheetConfigEditors[currentTabId];
+      if (sheetConfigEditor) {
+        return sheetConfigEditor;
+      }
+    }
+  }
+
+  canUndo = $derived(!!this.getActivePane()?.hasChanges);
+
+  canUseDefault = $derived(!!this.getActivePane()?.canUseDefault);
 
   /** Revert every deferred-save page to its last-saved state (staged). */
   undoChanges() {
     Object.values(this.editors).forEach((e) => e.undoChanges());
-    this.tabPaneVersion++;
   }
 
   /** Confirm once, then stage system defaults across every page. */
@@ -134,8 +187,7 @@ export class WorldSettingsQuadroneApplication
       return;
     }
 
-    Object.values(this.editors).forEach((e) => e.resetToDefault());
-    this.tabPaneVersion++;
+    this.resetToDefault();
   }
 
   /** Persist every deferred-save settings page in one shot, then close. */
@@ -172,10 +224,11 @@ export class WorldSettingsQuadroneApplication
     return this._config;
   }
 
-  async _preFirstRender(
-    _context: ApplicationWindowRenderOptions,
-    _options: ApplicationRenderOptions,
-  ) {
-    Object.values(this.editors).forEach((e) => e.initialize());
+  // TODO: organize
+  static readonly SETTINGS_SHEET_PREFIX = 'settings:sheet';
+
+  // TODO: organize
+  getSheetConfigTabId(documentName: string, documentType: string) {
+    return `${this.SETTINGS_SHEET_PREFIX}:${documentName}:${documentType}`;
   }
 }

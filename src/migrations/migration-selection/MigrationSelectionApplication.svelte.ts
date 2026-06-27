@@ -6,10 +6,10 @@ import type {
   SelectableMigrationSelectionParams,
 } from './migration-selection.types';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { CONSTANTS } from 'src/constants';
 
-export class MigrationSelectionApplication<T> extends SvelteApplicationMixin<
+export class MigrationSelectionApplication<T> extends getSvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   {}
 >(foundry.applications.api.ApplicationV2) {

@@ -76,10 +76,10 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITIES_LIST}
   >
     {#each context.abilities as ability}
-      {@const memberAbility = ability.identifiers.get(
+      {const memberAbility = $derived(ability.identifiers.get(
         emphasizedMember?.actor.uuid ?? '',
-      )}
-      {@const memberProficient = (memberAbility?.proficient ?? 0) > 0}
+      ))}
+      {const memberProficient = $derived((memberAbility?.proficient ?? 0) > 0)}
 
       <li
         class={[

@@ -113,7 +113,7 @@
     <div class="form-fields">
       {#each types as { value, label, selected }}
         <!-- TODO: remove inline localization when https://github.com/foundryvtt/dnd5e/issues/6850 is resolved -->
-        {@const locLabel = localize(label)}
+        {const locLabel = $derived(localize(label))}
         {#if value}
           <label class="checkbox" for="{idPrefix}types-{value?.slugify()}">
             <CheckboxQuadrone

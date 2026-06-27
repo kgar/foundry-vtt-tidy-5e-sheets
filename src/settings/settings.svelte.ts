@@ -7,7 +7,6 @@ import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
-import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
   GlobalCustomSectionsetting,
@@ -25,6 +24,8 @@ import {
   TabConfigurationSchema,
 } from './settings-data-models';
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
+import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
+import { SettingsShims } from './settings-shims';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -172,7 +173,7 @@ export const systemSettings = {
 export function createSettings() {
   return {
     menus: {
-      worldSettings: {
+      worldSettingsClassic: {
         options: {
           hideClassic: true,
           name: `TIDY5E.WorldSettings.Menu.name`,
@@ -194,7 +195,7 @@ export function createSettings() {
           restricted: false,
         },
       },
-      worldThemeSettingsMenu: {
+      worldSettings: {
         options: {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
           label: 'TIDY5E.SettingsMenu.TidySettings.label',
@@ -215,16 +216,13 @@ export function createSettings() {
           restricted: true,
         },
       },
-      applyTidySheetPreferences: {
+      makeAllSheetsTidy: {
         options: {
-          // TODO: Change this out with verbiage explaining that we're going to change them all in one go.
           name: `TIDY5E.SettingsMenu.Defaults.name`,
           label: 'TIDY5E.SettingsMenu.Defaults.label',
           hint: `TIDY5E.SettingsMenu.Defaults.hint`,
           icon: 'fa-solid fa-scroll',
-          // TODO: Change this out with a confirmation dialog that will set all sheets to tidy
-          // Then delete ApplyTidySheetPreferencesApplication
-          type: ApplyTidySheetPreferencesApplication,
+          type: MakeAllSheetsTidyDialog,
           restricted: true,
         },
       },
@@ -374,9 +372,11 @@ export function createSettings() {
           default: {},
         },
         get() {
-          return FoundryAdapter.getTidySetting<TabConfiguration>(
+          const setting = FoundryAdapter.getTidySetting<Partial<TabConfiguration>>(
             'tabConfiguration'
           );
+
+          return SettingsShims.tabConfiguration(setting);
         },
       },
 
@@ -2200,10 +2200,10 @@ export function createSettings() {
 
       hideClassic: {
         options: {
-          name: 'Tidy 5e Hide Classic Sheets',
-          hint: 'Hide Tidy Classic sheets from the world.',
+          name: 'TIDY5E.WorldSettings.HideClassic.name',
+          hint: 'TIDY5E.WorldSettings.HideClassic.hint',
           scope: 'world',
-          config: false,
+          config: true,
           default: false,
           type: Boolean,
           requiresReload: true,

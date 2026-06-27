@@ -266,8 +266,8 @@
       </div>
 
       {#if pinType === 'container'}
-        {@const capacity =
-          context.itemContext[ctx.document.id].containerCapacity}
+        {const capacity =
+          $derived(context.itemContext[ctx.document.id].containerCapacity)}
         {#if capacity}
           <ContainerCapacityTooltip
             bind:this={containerCapacityTooltip}

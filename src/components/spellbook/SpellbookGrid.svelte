@@ -97,7 +97,7 @@
     {#snippet body()}
       <div class="spells">
         {#each spellEntries as { item, ctx, spellImgUrl } (item.id)}
-          {@const hidden = !searchResultContext.show(item.uuid)}
+          {const hidden = $derived(!searchResultContext.show(item.uuid))}
           <a
             class="spell {FoundryAdapter.getSpellRowClasses(item)}"
             class:hidden

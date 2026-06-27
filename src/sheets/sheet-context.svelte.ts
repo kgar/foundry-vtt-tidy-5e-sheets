@@ -25,13 +25,15 @@ import { getContext } from 'svelte';
 
 export function tryGetSheetContext<TContext = any>(): TContext | undefined {
   return getContext<CoarseReactivityProvider<TContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   )?.data;
 }
 
-export function getSheetContext<TContext = TidyExtensibleDocumentSheetMixinInstance>(): TContext {
+export function getSheetContext<
+  TContext = TidyExtensibleDocumentSheetMixinInstance,
+>(): TContext {
   return getContext<CoarseReactivityProvider<TContext>>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   ).data;
 }
 

@@ -58,10 +58,10 @@
     <!-- </ul> -->
     <!-- Concentration here -->
     {#if 'spellcasting' in context && context.spellcasting?.length > 0 && context.saves.concentration}
-      {@const conc = context.saves.concentration}
-      {@const tooltip = localize('DND5E.AbilityConfigure', {
+      {const conc = $derived(context.saves.concentration)}
+      {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
         ability: context.saves.concentration.label,
-      })}
+      }))}
       <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
       <li style="order: 50">
         {#if context.isConcentrating}
@@ -112,10 +112,10 @@
 </FiligreeCard>
 
 {#snippet savingThrowRow(ability: ActorAbilityContextEntry)}
-  {@const modifier = getModifierData(ability.save.value)}
-  {@const tooltip = localize('DND5E.AbilityConfigure', {
+  {const modifier = $derived(getModifierData(ability.save.value))}
+  {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
     ability: ability.label,
-  })}
+  }))}
   <ProficiencyCycle
     actor={context.actor}
     aria-label={localize(ability.hover)}

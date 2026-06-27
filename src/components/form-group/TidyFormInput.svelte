@@ -333,8 +333,8 @@
 {/if}
 
 {#snippet StringChoices(stringChoices: Choices<string>)}
-  {@const options = enumerateChoices(stringChoices)}
-  {@const blankLabel = getBlankValue()}
+  {const options = $derived(enumerateChoices(stringChoices))}
+  {const blankLabel = $derived(getBlankValue())}
   <SelectOptions
     blank={blankLabel}
     labelProp="label"
@@ -345,8 +345,8 @@
 
 {#snippet NumberChoices(numberChoices: Choices<number>)}
   {#if numberChoices}
-    {@const options = enumerateChoices(numberChoices)}
-    {@const blankLabel = getBlankValue()}
+    {const options = $derived(enumerateChoices(numberChoices))}
+    {const blankLabel = $derived(getBlankValue())}
     <SelectOptions
       blank={blankLabel}
       labelProp="label"

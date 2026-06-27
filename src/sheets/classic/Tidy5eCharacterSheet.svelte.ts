@@ -38,7 +38,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
+import { DocumentTabSectionConfigApplication } from 'src/applications/classic-section-config/DocumentTabSectionConfigApplication.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import type {
   CharacterFavorite,
@@ -56,12 +56,12 @@ import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { GetTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
+import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eCharacterSheet
-  extends GetTidy5eActorSheetClassicV2Base<CharacterSheetContext>(
+  extends getTidy5eActorSheetClassicV2Base<CharacterSheetContext>(
     CONSTANTS.SHEET_TYPE_CHARACTER
   )
   implements

@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type {
   ApplicationConfiguration,
@@ -35,25 +35,27 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { formatAsModifier } from 'src/utils/formatting';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import {
-  TidyExtensibleDocumentSheetMixin,
+  getTidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import {
+  TidySheetSettingsQuadroneApplication,
+  TidySheetSettingsTabIds,
+} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
-export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
+export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
   ItemSheetQuadroneContext
 >(
   CONSTANTS.SHEET_TYPE_ITEM,
-  SvelteApplicationMixin<
+  getSvelteApplicationMixin<
     DocumentSheetApplicationConfiguration | undefined,
     ItemSheetQuadroneContext
   >(foundry.applications.sheets.ItemSheetV2),
@@ -106,11 +108,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
       sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this._renderChild(
-          new TidySheetSettingsQuadroneApplication({
-            document: this.document,
-          }),
-        );
+        this.openSheetSettings();
       },
       showIcon: async function (this: Tidy5eItemSheetQuadrone) {
         const title =
@@ -127,11 +125,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         );
       },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this._renderChild(
-          new ThemeSettingsQuadroneApplication({
-            document: this.document,
-          }),
-        );
+        return this.openSheetSettings(TidySheetSettingsTabIds.theme);
       },
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },

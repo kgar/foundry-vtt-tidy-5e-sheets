@@ -123,7 +123,7 @@
     <label for="">{localize('DND5E.Type')}</label>
     {#each types as { value, label, selected }}
       <!-- TODO: remove inline localization when https://github.com/foundryvtt/dnd5e/issues/6850 is resolved -->
-      {@const locLabel = localize(label)}
+      {const locLabel = $derived(localize(label))}
       {#if value}
         <Checkbox
           id="{idPrefix}types-{value?.slugify()}"

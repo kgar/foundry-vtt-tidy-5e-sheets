@@ -23,7 +23,6 @@ import type {
 import GroupSheet from './actor/GroupSheet.svelte';
 import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import type { GroupMemberContext } from 'src/types/group.types';
@@ -35,7 +34,7 @@ import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
-import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
+import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -43,8 +42,8 @@ import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 
-export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
-  CONSTANTS.SHEET_TYPE_GROUP
+export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
+  CONSTANTS.SHEET_TYPE_GROUP,
 ) {
   currentTabId: string;
   emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
@@ -60,11 +59,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-      position: {
-        width: 740,
-        height: 810,
-      },
-    };
+    position: {
+      width: 740,
+      height: 810,
+    },
+  };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -85,7 +84,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<GroupSheetQuadroneContext> {
     if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
@@ -93,18 +92,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
     // TODO: figure out and fix the type error that necessitates the `as` cast here
     const actorContext = (await super._prepareContext(
-      options
+      options,
     )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
     const paces: TravelPaceConfigEntry[] = Object.entries(
-      CONFIG.DND5E.travelPace
+      CONFIG.DND5E.travelPace,
     )
       .toSorted((a, b) => a[1].multiplier - b[1].multiplier)
       .map(([key, config], index) => ({ key, config, index }));
 
     const currentPace =
       paces.find(
-        (pace) => pace.key === this.actor.system.attributes.travel.pace
+        (pace) => pace.key === this.actor.system.attributes.travel.pace,
       ) ?? paces[0];
 
     const enrichmentArgs = {
@@ -118,11 +117,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
             this.actor.system.description.full,
-            enrichmentArgs
+            enrichmentArgs,
           ),
           summary: await foundry.applications.ux.TextEditor.enrichHTML(
             this.actor.system.description.summary,
-            enrichmentArgs
+            enrichmentArgs,
           ),
         },
       },
@@ -137,9 +136,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
               : 2, // Normal
         units: {
           label:
-            CONFIG.DND5E.travelUnits[
-              this.actor.system.attributes.travel.units
-            ]?.abbreviationDay ?? this.actor.system.attributes.travel.units,
+            CONFIG.DND5E.travelUnits[this.actor.system.attributes.travel.units]
+              ?.abbreviationDay ?? this.actor.system.attributes.travel.units,
         },
       },
       type: 'group',
@@ -158,7 +156,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   async _prepareMemberDependentContext(
-    actorContext: ActorSheetQuadroneContext
+    actorContext: ActorSheetQuadroneContext,
   ): Promise<{
     abilities: GroupAbility[];
     members: GroupMembersQuadroneContext;
@@ -169,7 +167,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
     const rowActions = TableRowActionsRuntime.getGroupMemberRowActions(
       actorContext.document,
-      actorContext.unlocked
+      actorContext.unlocked,
     );
 
     const sections = new Map<string, GroupMemberSection>([
@@ -261,14 +259,14 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           },
           rowActions,
           sectionActions: [],
-        })
+        }),
       );
 
       const accentColor = coalesce(
         // Use the actor's accent color, if configured, which references global themes if configured
         TidyFlags.sheetThemeSettings.get(actor)?.accentColor,
         // Else, use the group sheet's accent color, with fallback to world default accent color
-        actorContext.themeSettings.accentColor
+        actorContext.themeSettings.accentColor,
       );
 
       const canObserve =
@@ -286,13 +284,15 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
         highlightColor: !isNil(accentColor, '')
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
           : undefined,
-        inspirationSource:
-          actor.system.isCharacter
-            ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
-            : undefined,
+        inspirationSource: actor.system.isCharacter
+          ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
+          : undefined,
         portrait: await this._preparePortrait(actor),
-        gold: FoundryAdapter.formatNumber(this.getDefaultCurrencySummary(actor)),
-        goldAbbreviation: FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
+        gold: FoundryAdapter.formatNumber(
+          this.getDefaultCurrencySummary(actor),
+        ),
+        goldAbbreviation:
+          FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
       };
 
       section.members.push(groupMemberContext);
@@ -327,9 +327,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
         this._prepareMemberTools(actor, tools);
       }
 
-      const prepareSpeed =
-        prepareCreatureInformation ||
-        actor.system.isVehicle;
+      const prepareSpeed = prepareCreatureInformation || actor.system.isVehicle;
 
       if (prepareSpeed) {
         // Speeds
@@ -341,7 +339,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       section.sectionActions = SectionActions.getGroupMemberHeaderActions(
         this.actor,
         actorContext.unlocked,
-        section
+        section,
       );
     });
 
@@ -349,15 +347,15 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       ...skilled.values().reduce((prev, curr) => {
         return prev.concat(
           curr.toSorted((a, b) =>
-            a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
-          )
+            a.actor.name.localeCompare(b.actor.name, game.i18n.lang),
+          ),
         );
-      }, [])
+      }, []),
     );
 
     let groupAbilities = [...abilities.values()];
     let groupSkills = [...skills.values()].toSorted((a, b) =>
-      a.name.localeCompare(b.name, game.i18n.lang)
+      a.name.localeCompare(b.name, game.i18n.lang),
     );
 
     membersContext.sections = [...sections.values()];
@@ -368,19 +366,19 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       skills: groupSkills,
       traits: {
         languages: [...languages.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         senses: [...senses.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         specials: [...specials.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         speeds: [...speeds.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
         tools: [...tools.values()].sort((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
+          a.label.localeCompare(b.label, game.i18n.lang),
         ),
       },
     };
@@ -399,12 +397,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       max: dnd5e.utils.convertWeight(
         max,
         baseUnits[systemUnits],
-        defaultUnits[systemUnits]
+        defaultUnits[systemUnits],
       ),
       value: dnd5e.utils.convertWeight(
         value,
         baseUnits[systemUnits],
-        defaultUnits[systemUnits]
+        defaultUnits[systemUnits],
       ),
     };
   }
@@ -443,7 +441,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     if (Number.isNaN(increment)) return;
     const paces = Object.keys(CONFIG.DND5E.travelPace);
     const current = paces.indexOf(
-      this.actor.system._source.attributes.travel.pace
+      this.actor.system._source.attributes.travel.pace,
     );
     const next =
       (((current + increment) % paces.length) + paces.length) % paces.length;
@@ -451,23 +449,25 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   award() {
-    this._renderChild(new dnd5e.applications.Award({
-      award: {
-        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
-      },
-      origin: this.actor,
-    }));
+    this._renderChild(
+      new dnd5e.applications.Award({
+        award: {
+          savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+        },
+        origin: this.actor,
+      }),
+    );
   }
 
-  _rollAbilityCheck(args: { ability: string, event: Event }) {
+  _rollAbilityCheck(args: { ability: string; event: Event }) {
     return this.onRollAbility(args);
   }
 
-  _rollSavingThrow(args: { ability: string, event: Event }) {
+  _rollSavingThrow(args: { ability: string; event: Event }) {
     return this.onRollSavingThrow(args);
   }
 
-  _rollSkill(args: { event: Event, skill: string }) {
+  _rollSkill(args: { event: Event; skill: string }) {
     return this.onRollSkill(args);
   }
 
@@ -513,7 +513,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       system: {
         button: {
           icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, { ability: abilityLabel }),
+          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, {
+            ability: abilityLabel,
+          }),
         },
         data: { ...config },
         handler: CONSTANTS.ROLL_REQUEST_ABILITY_KEY,
@@ -532,7 +534,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   onRollSavingThrow(options: { ability: string; event: Event }) {
     if (
       !FoundryAdapter.userIsGm() ||
-      TidyHooks.tidy5eSheetsPrePromptGroupSavingThrowRoll(this, options) === false
+      TidyHooks.tidy5eSheetsPrePromptGroupSavingThrowRoll(this, options) ===
+        false
     ) {
       return;
     }
@@ -592,7 +595,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
   async _renderHTML(
     context: GroupSheetQuadroneContext,
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ) {
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {

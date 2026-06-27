@@ -130,7 +130,7 @@
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
     {#if combatants.length}
-      {@const columns = new ColumnsLoadout(
+      {const columns = $derived(new ColumnsLoadout(
         EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
           tabId: CONSTANTS.TAB_ACTOR_COMBAT,
@@ -140,13 +140,13 @@
           section: { ...SheetSections.EMPTY, rowActions },
           sheetDocument: context.actor,
         }),
-      )}
-      {@const visibleItemCount = combatants.length}
-      {@const hiddenColumns =
-        EncounterMemberColumnRuntime.determineHiddenColumns(
+      ))}
+      {const visibleItemCount = $derived(combatants.length)}
+      {const hiddenColumns =
+        $derived(EncounterMemberColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth,
           columns,
-        )}
+        ))}
 
       <TidyTable key="npcs">
         {#snippet header()}
@@ -189,8 +189,8 @@
   columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
 )}
-  {@const member = combatant.type === 'member' ? combatant : null}
-  {@const placeholder = combatant.type === 'placeholder' ? combatant : null}
+  {const member = $derived(combatant.type === 'member' ? combatant : null)}
+  {const placeholder = $derived(combatant.type === 'placeholder' ? combatant : null)}
   <div
     class={[
       'tidy-table-row group-member',

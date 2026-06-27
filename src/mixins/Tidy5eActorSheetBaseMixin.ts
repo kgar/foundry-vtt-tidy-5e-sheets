@@ -9,11 +9,11 @@ import type {
 } from 'src/types/application.types';
 import type { Actor5e } from 'src/types/types';
 import { settings } from 'src/settings/settings.svelte';
-import ClassicTabSelectionFormApplication from 'src/applications/tab-selection/ClassicTabSelectionFormApplication.svelte';
+import ClassicTabSelectionFormApplication from 'src/applications/classic-tab-selection/ClassicTabSelectionFormApplication.svelte';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
-export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
+export function getTidy5eActorSheetBaseMixin(BaseApplication: any) {
   class Tidy5eActorSheetBase extends BaseApplication {
     _supportedItemTypes: Set<string> = new Set();
     _currentDragEvent: (DragEvent & { currentTarget: HTMLElement }) | undefined;

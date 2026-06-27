@@ -158,10 +158,10 @@
     </div>
     <div class={['journal-entry-viewer']}>
       {#if selected}
-        {@const title = coalesce(
+        {const title = $derived(coalesce(
           selected.title,
           getFallbackTitle(selectedIndex),
-        )}
+        ))}
 
         <div class="title-container">
           <h2 class="title flexrow">

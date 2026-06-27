@@ -103,10 +103,10 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each inventory as section (section.key)}
-      {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
         section.items,
         searchResults.uuids,
-      )}
+      ))}
       {#if section.show}
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}

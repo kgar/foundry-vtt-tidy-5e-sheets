@@ -21,7 +21,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
+  import SpellSourceItemAssignmentsFormApplication from 'src/applications/classic-spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -153,10 +153,10 @@
   {:else}
     {#each spellbook as section (section.key)}
       {#if section.show}
-        {@const visibleItemCount = ItemVisibility.countVisibleItems(
+        {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
           section.items,
           searchResults.uuids,
-        )}
+        ))}
 
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}
           {#if layoutMode === 'list'}

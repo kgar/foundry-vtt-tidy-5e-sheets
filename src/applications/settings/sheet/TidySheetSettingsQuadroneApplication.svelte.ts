@@ -1,4 +1,4 @@
-import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationRenderOptions,
@@ -18,43 +18,44 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { getActorTabContext } from 'src/settings/editors/shared/tab-configuration-functions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
-import type { SettingsFooterHost } from 'src/applications/settings/settings-pane.types';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { RegisteredTab } from 'src/runtime/types';
 import {
   getThemeSettingsEditor,
   type ThemeSettingsEditor,
-} from '../editors/theme-settings-editor.svelte';
+} from 'src/settings/editors/theme-settings-editor.svelte';
 import {
   getWorldHeaderControlConfigurationSettingsEditor,
   type HeaderControlConfigContextItem,
   type WorldHeaderControlConfigurationSettingsEditor,
-} from '../editors/world-header-control-configuration-settings-editor.svelte';
-import type { SettingsEditor } from '../editors/settings-editors.svelte';
+} from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
+import type {
+  SettingsEditor,
+  SettingsEditorController,
+} from 'src/settings/editors/settings-editors.svelte';
 import {
-  getSheetTabConfigurationSettingsEditor,
-  SIDEBAR_EXPANDABLE_SHEET_TYPES,
-  type SheetTabConfigurationSettingsEditor,
-} from '../editors/sheet-tab-configuration-settings-editor.svelte';
+  getSheetTabsConfigurationSettingsEditor,
+  type SheetTabsConfigurationSettingsEditor,
+} from 'src/settings/editors/sheet-tabs-configuration-settings-editor.svelte';
 import {
   getSpecialTraitsSettingsEditor,
   type SpecialTraitsSettingsEditor,
-} from '../editors/special-traits-settings-editor.svelte';
+} from 'src/settings/editors/special-traits-settings-editor.svelte';
 import {
   getSpellSourceItemAssignmentsSettingsEditor,
   type SpellSourceItemAssignmentsSettingsEditor,
-} from '../editors/spell-source-item-assignments-settings-editor.svelte';
+} from 'src/settings/editors/spell-source-item-assignments-settings-editor.svelte';
 import {
-  getConfigureSectionsSettingsEditor,
-  type ConfigureSectionsSettingsEditor,
+  getSheetTabOptionsSettingsEditor,
+  type SheetTabOptionsSettingsEditor,
   type SectionOptionGroup,
-} from '../editors/configure-sections-settings-editor.svelte';
+} from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import type { TidySectionBase } from 'src/types/types';
+import { WorldSettingsQuadroneApplication } from '../world/TidyWorldSettingsQuadroneApplication.svelte';
 
 type SheetSettingsRuntimeAdapter = {
   getAllRegisteredTabs(): RegisteredTab<any>[];
@@ -62,7 +63,7 @@ type SheetSettingsRuntimeAdapter = {
 
 export type TidySheetSettingsContext = {};
 
-export type ConfigureSectionsInput = {
+export type SheetTabOptionsInput = {
   tabId: string;
   sections: TidySectionBase[];
   defaultSections: TidySectionBase[];
@@ -74,7 +75,7 @@ export type TidySheetSettingsApplicationConfiguration =
   DocumentSheetApplicationConfiguration & {
     initialTabId?: string;
     tabSettings?: {
-      [tabId: string]: ConfigureSectionsInput;
+      [tabId: string]: SheetTabOptionsInput;
     };
   };
 
@@ -83,29 +84,25 @@ export class TidySheetSettingsQuadroneApplication
     TidySheetSettingsApplicationConfiguration,
     TidySheetSettingsContext
   >()
-  implements SettingsFooterHost
+  implements SettingsEditorController
 {
   _config: TidySheetSettingsContext = $state({});
 
   initialTabId?: string;
   currentTabId = $state<string | undefined>(undefined);
 
-  tabSettings: Record<string, ConfigureSectionsInput>;
+  tabSettings: Record<string, SheetTabOptionsInput>;
 
   themeSettingsTab: ThemeSettingsEditor;
-  tabDisplaySettingsTab: SheetTabConfigurationSettingsEditor;
+  sheetTabsConfigurationSettingsTab: SheetTabsConfigurationSettingsEditor;
   headerControlsTab?: WorldHeaderControlConfigurationSettingsEditor;
-  sidebarTabDisplaySettingsTab?: SheetTabConfigurationSettingsEditor;
-  specialTraitsChildApp: SpecialTraitsSettingsEditor;
+  sidebarTabDisplaySettingsTab?: SheetTabsConfigurationSettingsEditor;
+  specialTraitsChildApp?: SpecialTraitsSettingsEditor;
   spellSourceItemAssignmentsChildApp?: SpellSourceItemAssignmentsSettingsEditor;
-  configureSectionsChildAppByTabId = new Map<
+  sheetTabOptionsEditorByTabId = new Map<
     string,
-    ConfigureSectionsSettingsEditor
+    SheetTabOptionsSettingsEditor
   >();
-
-  themePlaceholders?: ReturnType<
-    ThemeSettingsQuadroneApplication['_mapSettings']
-  >;
 
   // Check changes across all tabs
   hasChanges = $derived.by(() => {
@@ -113,12 +110,12 @@ export class TidySheetSettingsQuadroneApplication
     this.currentTabId;
     return (
       !!this.themeSettingsTab.hasChanges ||
-      !!this.tabDisplaySettingsTab.hasChanges ||
+      !!this.sheetTabsConfigurationSettingsTab.hasChanges ||
       !!this.headerControlsTab?.hasChanges ||
       !!this.sidebarTabDisplaySettingsTab?.hasChanges ||
-      !!this.specialTraitsChildApp.hasChanges ||
+      !!this.specialTraitsChildApp?.hasChanges ||
       !!this.spellSourceItemAssignmentsChildApp?.hasChanges ||
-      [...this.configureSectionsChildAppByTabId.values()].some(
+      [...this.sheetTabOptionsEditorByTabId.values()].some(
         (app) => app.hasChanges,
       )
     );
@@ -172,7 +169,6 @@ export class TidySheetSettingsQuadroneApplication
     this.tabSettings = options.tabSettings ?? {};
 
     this.themeSettingsTab = getThemeSettingsEditor(this.document);
-    this.themeSettingsTab.initialize();
 
     // Header control placement is world-level, so only GMs can persist changes.
     if (!this.headerControlsTab && FoundryAdapter.userIsGm()) {
@@ -182,20 +178,46 @@ export class TidySheetSettingsQuadroneApplication
           documentType: this.document.type,
         },
       );
-      this.headerControlsTab.initialize();
     }
 
-    this.tabDisplaySettingsTab = getSheetTabConfigurationSettingsEditor({
-      document: this.document,
-    });
-    this.tabDisplaySettingsTab.initialize();
+    this.sheetTabsConfigurationSettingsTab =
+      getSheetTabsConfigurationSettingsEditor({
+        document: this.document,
+      });
 
-    this.specialTraitsChildApp = getSpecialTraitsSettingsEditor(this.document);
-    this.specialTraitsChildApp.initialize();
+    this.sheetTabsConfigurationSettingsTab.value.entry.tabs.forEach((tab) => {
+      const config = this.createSheetTabOptionsSettingsEditor(
+        tab.id,
+        this.sheetTabsConfigurationSettingsTab,
+      );
+
+      if (config) {
+        this.sheetTabOptionsEditorByTabId.set(tab.id, config);
+      }
+    });
+
+    this.tabConfigOptions = $derived(
+      this.sheetTabsConfigurationSettingsTab.value.entry.tabs.map((t) => ({
+        id: `sheet:${t.id}`,
+        title: t.title,
+        iconClass: t.iconClass,
+        tabHidden: !t.show,
+      })),
+    );
+
+    if (
+      [CONSTANTS.SHEET_TYPE_CHARACTER, CONSTANTS.SHEET_TYPE_NPC].includes(
+        this.document.type,
+      )
+    ) {
+      this.specialTraitsChildApp = getSpecialTraitsSettingsEditor(
+        this.document,
+      );
+    }
 
     if (this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       this.sidebarTabDisplaySettingsTab =
-        getSheetTabConfigurationSettingsEditor({
+        getSheetTabsConfigurationSettingsEditor({
           document: this.document,
           customTabConfigProvider: {
             getTabConfig: TidyFlags.sidebarTabConfiguration.get,
@@ -205,7 +227,6 @@ export class TidySheetSettingsQuadroneApplication
                 CharacterSheetQuadroneSidebarRuntime,
                 doc.documentName,
                 setting,
-                true,
                 CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
               ),
           },
@@ -216,14 +237,16 @@ export class TidySheetSettingsQuadroneApplication
           }),
           docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
         });
-      this.sidebarTabDisplaySettingsTab.initialize();
     }
 
     if (this.document?.itemTypes?.spell?.length) {
       this.spellSourceItemAssignmentsChildApp =
         getSpellSourceItemAssignmentsSettingsEditor(this.document);
-      this.spellSourceItemAssignmentsChildApp.initialize();
     }
+  }
+
+  resetToDefault(): Promise<void> | void {
+    this.getActivePane()?.resetToDefault();
   }
 
   selectTab(id: string) {
@@ -231,8 +254,7 @@ export class TidySheetSettingsQuadroneApplication
   }
 
   /**
-   * The pane for undo/use global defaults. Undefined for pages that act
-   * immediately (spell assignments, special traits).
+   * The pane for undo/use defaults.
    */
   getActivePane(): SettingsEditor<unknown> | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
@@ -244,7 +266,7 @@ export class TidySheetSettingsQuadroneApplication
       case TidySheetSettingsTabIds.spellAssignments:
         return this.spellSourceItemAssignmentsChildApp;
       case TidySheetSettingsTabIds.tabConfig:
-        return this.tabDisplaySettingsTab;
+        return this.sheetTabsConfigurationSettingsTab;
       case TidySheetSettingsTabIds.headerControls:
         return this.headerControlsTab;
       case TidySheetSettingsTabIds.sidebarTabConfig:
@@ -261,8 +283,8 @@ export class TidySheetSettingsQuadroneApplication
         // Fall back to tabDisplaySettingsTab for tabs that only have visibility
         // controls (the placeholder pane) — changes land there either way.
         return (
-          this.getConfigureSectionsConfigTab(tabId) ??
-          this.tabDisplaySettingsTab
+          this.sheetTabOptionsEditorByTabId.get(tabId) ??
+          this.sheetTabsConfigurationSettingsTab
         );
       }
     }
@@ -283,19 +305,21 @@ export class TidySheetSettingsQuadroneApplication
    */
   get useDefaultLabel(): string | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
-    return currentTabId.startsWith('sheet:') ? 'TIDY5E.UseDefault' : undefined;
+    if (
+      currentTabId.startsWith('sheet:') ||
+      currentTabId === TidySheetSettingsTabIds.headerControls
+    ) {
+      return 'TIDY5E.UseDefault';
+    }
+    return undefined;
   }
 
   undoChanges() {
     this.getActivePane()?.undoChanges();
   }
 
+  // TODO: Aren't the individual editors also prompting for Use Default?
   async useDefault() {
-    const pane = this.getActivePane();
-    if (!pane) {
-      return;
-    }
-
     const proceed = await foundry.applications.api.DialogV2.confirm({
       window: {
         title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
@@ -309,7 +333,7 @@ export class TidySheetSettingsQuadroneApplication
       return;
     }
 
-    pane.resetToDefault();
+    this.resetToDefault();
   }
 
   /**
@@ -327,8 +351,6 @@ export class TidySheetSettingsQuadroneApplication
    * Open the world settings dialog focused on this sheet type's configuration.
    */
   async openWorldHeaderControlSettings() {
-    const { WorldSettingsQuadroneApplication } =
-      await import('src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte');
 
     new WorldSettingsQuadroneApplication({
       initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(
@@ -358,7 +380,7 @@ export class TidySheetSettingsQuadroneApplication
 
   _buildTabSettingsFromRuntime(
     tabId: string,
-  ): ConfigureSectionsInput | undefined {
+  ): SheetTabOptionsInput | undefined {
     const runtime = this._getRuntime();
     if (!runtime) {
       return undefined;
@@ -375,24 +397,20 @@ export class TidySheetSettingsQuadroneApplication
   }
 
   /**
-   *  Get the Configure Sections config tab for a given tab ID. This is used within every
-   *  tab settings pane for the section configuration.
+   *  Creates the Configure Sections config tab for a given tab ID.
    */
-  getConfigureSectionsConfigTab(
+  createSheetTabOptionsSettingsEditor(
     tabId: string,
-  ): ConfigureSectionsSettingsEditor | undefined {
-    const cached = this.configureSectionsChildAppByTabId.get(tabId);
-    if (cached) {
-      return cached;
-    }
-
+    sheetTabsConfigurationSettingsEditor: SheetTabsConfigurationSettingsEditor,
+  ): SheetTabOptionsSettingsEditor | undefined {
     const input =
       this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+
     if (!input) {
       return undefined;
     }
 
-    const app = getConfigureSectionsSettingsEditor({
+    const app = getSheetTabOptionsSettingsEditor({
       document: this.document,
       settings: {
         tabId: input.tabId,
@@ -403,13 +421,10 @@ export class TidySheetSettingsQuadroneApplication
       },
       navigator: this,
       onSave: async () => {
-        this.tabDisplaySettingsTab.save();
+        this.sheetTabsConfigurationSettingsTab.save();
       },
+      sheetTabsConfigurationSettingsEditor,
     });
-
-    app.initialize();
-
-    this.configureSectionsChildAppByTabId.set(tabId, app);
 
     return app;
   }
@@ -461,13 +476,13 @@ export class TidySheetSettingsQuadroneApplication
   async save() {
     try {
       await this.themeSettingsTab?.save();
-      await this.tabDisplaySettingsTab?.save();
+      await this.sheetTabsConfigurationSettingsTab?.save();
       await this.headerControlsTab?.save();
       await this.sidebarTabDisplaySettingsTab?.save();
-      await this.specialTraitsChildApp.save();
+      await this.specialTraitsChildApp?.save();
       await this.spellSourceItemAssignmentsChildApp?.save();
 
-      for (const helper of this.configureSectionsChildAppByTabId.values()) {
+      for (const helper of this.sheetTabOptionsEditorByTabId.values()) {
         await helper.save();
       }
       this._persisted = true;

@@ -55,7 +55,7 @@
     />
   {/if}
   {#if useSenses && context.senses}
-    {@const senses = getTags(context.senses)}
+    {const senses = $derived(getTags(context.senses))}
     <TraitSection
       title={localize('DND5E.Senses')}
       iconCssClass="fas fa-eye"
@@ -101,7 +101,7 @@
   {/if}
 
   {#if context.traits.traits?.di}
-    {@const damageImmunities = getTags(context.traits.traits.di.selected)}
+    {const damageImmunities = $derived(getTags(context.traits.traits.di.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.di?.cssClass ?? ''}
       title={localize('DND5E.DamImm')}
@@ -119,7 +119,7 @@
   {/if}
 
   {#if context.traits.traits?.dr}
-    {@const damageResistances = getTags(context.traits.traits.dr.selected)}
+    {const damageResistances = $derived(getTags(context.traits.traits.dr.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.dr?.cssClass ?? ''}
       title={localize('DND5E.DamRes')}
@@ -137,7 +137,7 @@
   {/if}
 
   {#if context.traits.traits?.dv}
-    {@const vulnerabilities = getTags(context.traits.traits.dv.selected)}
+    {const vulnerabilities = $derived(getTags(context.traits.traits.dv.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.dv?.cssClass ?? ''}
       title={localize('DND5E.DamVuln')}
@@ -171,7 +171,7 @@
   {/if}
 
   {#if context.traits.traits?.ci}
-    {@const conditionImmunities = getTags(context.traits.traits.ci.selected)}
+    {const conditionImmunities = $derived(getTags(context.traits.traits.ci.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.ci?.cssClass ?? ''}
       title={localize('DND5E.ConImm')}
@@ -189,7 +189,7 @@
   {/if}
 
   {#if context.traits.traits?.weaponProf}
-    {@const weaponProfs = getTags(context.traits.traits.weaponProf.selected)}
+    {const weaponProfs = $derived(getTags(context.traits.traits.weaponProf.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.weaponProf?.cssClass ?? ''}
       title={localize('DND5E.TraitWeaponProf')}
@@ -229,7 +229,7 @@
   {/if}
 
   {#if context.traits.traits?.armorProf}
-    {@const armorProfs = getTags(context.traits.traits.armorProf.selected)}
+    {const armorProfs = $derived(getTags(context.traits.traits.armorProf.selected))}
     <TraitSection
       traitCssClass={context.traits.traits?.armorProf?.cssClass ?? ''}
       title={localize('DND5E.TraitArmorProf')}
@@ -258,7 +258,7 @@
   {/if}
 
   {#if context.traits.tools}
-    {@const tools = Object.entries(context.tools)}
+    {const tools = $derived(Object.entries(context.tools))}
     <TraitSection
       traitCssClass={context.traits.tools?.toolProf?.cssClass ?? ''}
       title={localize('DND5E.TraitToolProf')}

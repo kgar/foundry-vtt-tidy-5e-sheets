@@ -43,7 +43,7 @@
   <div class="">
     <span class="primary">
       {#if !isNil(modifier)}
-        {@const mod = getModifierData(modifier)}
+        {const mod = $derived(getModifierData(modifier))}
         <span class="modifier">
           <span class="sign">
             {mod.sign}

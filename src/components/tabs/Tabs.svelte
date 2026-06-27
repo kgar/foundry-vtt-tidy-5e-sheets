@@ -122,7 +122,7 @@
   bind:this={nav}
 >
   {#each tabs as tab, i (tab.id)}
-    {@const title = localize(tab.title)}
+    {const title = $derived(localize(tab.title))}
     <svelte:boundary
       onerror={(e) => {
         error('An error occurred while rendering a tab', false, {
@@ -131,10 +131,10 @@
         });
       }}
     >
-      {@const tabIsSelected =
-        tab.id === selectedTabId || extraTabs?.has(tab.id)}
-      {@const tabindex = tabIsSelected ? 0 : -1}
-      {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
+      {const tabIsSelected =
+        $derived(tab.id === selectedTabId || extraTabs?.has(tab.id))}
+      {const tabindex = $derived(tabIsSelected ? 0 : -1)}
+      {const itemCount = $derived(tab.itemCount?.(itemCountContext) ?? 0)}
       <!-- svelte-ignore a11y_missing_attribute -->
       <a
         class={[

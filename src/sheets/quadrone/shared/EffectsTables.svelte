@@ -44,7 +44,7 @@
 </script>
 
 {#each sections as section (section.key)}
-  {@const columns = new ColumnsLoadout(
+  {const columns = $derived(new ColumnsLoadout(
     EffectColumnRuntime.getConfiguredColumnSpecifications({
       sheetType: context.document.type,
       tabId: tabId,
@@ -53,13 +53,13 @@
       section: section,
       sheetDocument: context.document,
     }),
-  )}
+  ))}
 
-  {@const hiddenColumns = EffectColumnRuntime.determineHiddenColumns(
+  {const hiddenColumns = $derived(EffectColumnRuntime.determineHiddenColumns(
     inlineWidth,
     columns,
     10,
-  )}
+  ))}
   {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
@@ -84,11 +84,11 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {@const effectEntries = section.effects.map(
+        {const effectEntries = $derived(section.effects.map(
           (effect: ActiveEffectContext) => ({
             effect,
           }),
-        )}
+        ))}
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,

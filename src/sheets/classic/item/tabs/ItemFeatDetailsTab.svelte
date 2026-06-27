@@ -37,8 +37,8 @@
 </div>
 
 {#if context.itemSubtypes}
-  {@const category =
-    context.config.featureTypes[context.system.type.value]?.label}
+  {const category =
+    $derived(context.config.featureTypes[context.system.type.value]?.label)}
 
   <div class="form-group">
     <label for="{appId}-type-subtype"

@@ -77,7 +77,7 @@
   {#if context.tools.length}
     <ul class="tool-list unlist use-ability-list">
       {#each context.tools as tool (tool.key)}
-        {@const modTotal = getModifierData(tool.total)}
+        {const modTotal = $derived(getModifierData(tool.total))}
 
         <li data-reference-tooltip={references[tool.key]}>
           {#if showProficiency}

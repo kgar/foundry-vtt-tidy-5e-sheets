@@ -16,7 +16,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
-  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/classic-actor-origin-summary/ActorOriginSummaryConfigFormApplication.svelte';
   import ActorName from '../actor/ActorName.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
 

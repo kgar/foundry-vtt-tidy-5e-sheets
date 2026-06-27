@@ -119,15 +119,20 @@
         "MoreFormulas": "Mais Fórmulas"
     },
     "TIDY5E.TabConfiguration": {
-        "Title": "Seleção de Aba: {documentName}",
-        "MenuOptionText": "Seleção de Aba",
+        "Title": "Configurar Abas da Ficha de {documentName}",
+        "MenuOptionText": "Configurar Aba",
         "AvailableHeader": "Abas Ocultas",
         "SelectedHeader": "Abas Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de aba.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
         "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada.",
         "SelectionTab.Title": "Seleção de Abas",
-        "VisibilityTab.Title": "Visibilidade de Abas"
+        "VisibilityTab.Title": "Visibilidade de Abas",
+        "buttonLabel": "Configurar Abas",
+        "options.viewers": "Acesso de Usuário",
+        "options.visibility": "Exibir Aba",
+        "showTabTooltip": "Mostra essa aba",
+        "hideTabTooltip": "Oculta esta aba"
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -199,10 +204,11 @@
     },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Grimório Multiclasse",
     "TIDY5E.WorldSettings.Menu": {
-        "name": "Configurações do Mundo",
+        "name": "Visão Geral",
         "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Essas configurações são salvas nesse mundo do Foundry e se aplicam a todo o conteúdo relevante ao Tidy 5e Sheets.",
         "label": "Configurações do Mundo",
-        "title": "Configurações do Mundo (Apenas Mestre)"
+        "title": "Configurações do Mundo (Apenas Mestre)",
+        "tabLabel": "Visão Geral"
     },
     "TIDY5E.UserSettings.Menu": {
         "name": "Configurações de Usuário",
@@ -622,10 +628,16 @@
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
         "hint": "Se você deseja definir o Tidy 5e Sheets como padrão para um ou mais tipos de documentos, mas o menu de configuração principal das fichas padrão não está funcionando conforme o esperado, use este menu para selecionar suas preferências.",
-        "buttonLabel": "Definir Tidy como Ficha Padrão",
+        "buttonLabel": "Fichas Padrão",
         "explanation": "Selecione todos os tipos de documentos onde você prefere que o Tidy 5e Sheets seja o padrão.",
-        "disableAll": "Uso para nenhuma ficha",
-        "enableAll": "Use para todas as fichas"
+        "disableAll": "Trocar para Fichas do Sistema",
+        "enableAll": "Trocar para Fichas Tidy",
+        "RevertToSystemSheets": "Reverter para Fichas do Sistema",
+        "Sheet": "Tipo de Documento",
+        "TidySheets": "Fichas Tidy",
+        "SystemSheets": "Fichas do Sistema",
+        "dialogTitle": "Definir Tidy como Ficha Padrão",
+        "dialogMessage": "Tem certeza que deseja definir o padrão de todas as fichas para o Tidy?"
     },
     "TIDY5E.Settings.About": {
         "name": "Sobre",
@@ -830,7 +842,7 @@
     "TIDY5E.Utilities.SpellPips": "Marcador de Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",
     "TIDY5E.RollRecharge.Label": "Recarregar",
-    "TIDY5E.ConfigureTab.Title": "Configurar {tabName}",
+    "TIDY5E.ConfigureTab.Title": "Configurar Aba {tabName}",
     "TIDY5E.Hidden": "Oculto",
     "TIDY5E.DisplayOptions.Title": "Opções de Exibição",
     "TIDY5E.Options.Title": "Opções",
@@ -942,13 +954,13 @@
         "LocationHeader": "Cabeçalho"
     },
     "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Controles de Cabeçalho",
+        "name": "Configurar Controles de Cabeçalho",
         "label": "Configurar Controles de Cabeçalho",
         "hint": "Apenas Novas Fichas Tidy: Configurar a localização dos controles do cabeçalho da ficha."
     },
     "TIDY5E.GMOnly.Title": "Apenas Mestre",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opções Globais de Exibição Padrão",
-    "TIDY5E.Character.Sidebar.Title": "Barra Lateral do Personagem de Jogador",
+    "TIDY5E.Character.Sidebar.Title": "Configurar Barra Lateral",
     "TIDY5E.SheetPin": {
         "Label": "Fixado da Ficha",
         "LabelPl": "Fixados da Ficha"
@@ -1001,8 +1013,8 @@
     "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
         "name": "Organização da Seção de Abas da Ficha de Personagem",
         "hint": "Determina como as seções devem ser organizadas na aba Ficha de Personagem por padrão.",
-        "option.action": "Grupo por economia de ação",
-        "option.origin": "Grupo por item ou tipo de característica"
+        "option.action": "Agrupar por Economia de Ação",
+        "option.origin": "Agrupar por Item ou Tipo de Característica"
     },
     "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
         "name": "Aba Ficha de Personagem: Incluir Itens Utilizáveis Automaticamente",
@@ -1031,5 +1043,97 @@
     },
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Cor de Fundo do Cabeçalho"
-    }
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Configurações de Homebrew",
+        "tabLabel": "Homebrew"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "Ocultar Fichas Clássicas Tidy 5e",
+        "hint": "Oculta as Fichas Clássicas Tidy 5e deste mundo."
+    },
+    "TIDY5E.WorldSettings.label": "Configurações da Ficha Tidy",
+    "TIDY5E.WorldSettings.hint": "Configure as definições globais das Fichas Tidy.",
+    "TIDY5E.WorldSettings.Group": {
+        "TidySettings": "Configurações Tidy",
+        "ActorSheets": "Fichas de Ator",
+        "ItemSheets": "Fichas de Item"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "Configuração da Ficha de {sheetName}",
+        "hint": "Configure as definições das fichas {sheetName}. Oculte ou exiba controles do cabeçalho e escolha quais abas serão exibidas na ficha, em que ordem e para quem."
+    },
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "Configuração da Aba {tabName}",
+        "hint": "Configure quais abas serão exibidas na ficha de {tabName}, em que ordem e para quem."
+    },
+    "TIDY5E.SheetSettings": {
+        "title": "Configurações da Ficha Tidy",
+        "hint": "Configure as definições da ficha.",
+        "Group": {
+            "SheetSettings": "Configurações da Ficha",
+            "Tabs": "Abas"
+        },
+        "Sidebar": {
+            "title": "Barra Lateral",
+            "Hint": "Configure as definições das abas da barra lateral."
+        },
+        "HeaderControls": {
+            "ShowControl": "Exibir em {location}",
+            "Preview": "Visualização dos Controles do Cabeçalho",
+            "MoveAllToMenu": "Mover Todos para o Menu",
+            "MoveAllToHeader": "Mover Todos para o Cabeçalho",
+            "WorldSettingHint": "O posicionamento dos controles do cabeçalho é uma configuração global do mundo compartilhada por todas as fichas de {sheetName}. As alterações feitas aqui serão aplicadas a todas elas.",
+            "OpenWorldSettings": "Abrir Configurações do Mundo"
+        },
+        "ConfigureTab": {
+            "title": "Configurar Aba {tabName}",
+            "hint": "Configure as definições, a visibilidade e as seções da aba {tabName}."
+        },
+        "AssignSpellsToClasses": {
+            "hint": "Atribua magias à classe de origem para atualizar o agrupamento e os indicadores visuais das magias na aba Grimório."
+        },
+        "NoTabsHint": "Nenhuma aba está visível no momento. Ajuste a Configuração de Abas para habilitar as abas."
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "name": "Barra Lateral Expandida",
+            "label": "Exibir Barra Lateral"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "TidySettings": {
+            "name": "Configurações da Ficha Tidy",
+            "label": "Configurar Definições do Tidy",
+            "hint": "Configure as fichas Tidy para o seu jogo. Defina fichas padrão, personalize temas e configure padrões globais para seus jogadores."
+        },
+        "Defaults": {
+            "name": "Definir Tidy como Ficha Padrão",
+            "label": "Definir Tidy como Ficha Padrão",
+            "hint": "Atualize aqui as fichas padrão de atores e itens caso o menu Configurações → Fichas Padrão não esteja funcionando conforme esperado."
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Controles de Cabeçalho"
+        }
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "name": "Configurar Definições Globais de Tema",
+        "tabLabel": "Configurações de Tema",
+        "hint": "Configure as definições de tema padrão para o seu mundo de jogo. Elas serão aplicadas a todas as fichas. Você também pode configurar definições de tema para fichas específicas."
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "name": "Definir Tidy como Ficha Padrão",
+        "tabLabel": "Fichas Padrão",
+        "switchToTidySheets": "Trocar para Fichas Tidy",
+        "revertToSystemSheets": "Reverter para Fichas do Sistema",
+        "chooseSpecific": "Escolher tipos específicos de ficha em vez disso",
+        "hint": "Selecione todos os tipos de documento que você prefere que as Fichas Tidy 5e sejam o padrão."
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Bem-vindo ao <span>Tidy 5e Sheets</span>. Defina aqui as configurações padrão para todo o mundo e, em seguida, utilize as abas à esquerda para ajustar temas, abas das fichas e muito mais.",
+        "useTidyHint": "Defina as Fichas Tidy 5e como padrão para todos os tipos de atores e itens deste mundo.",
+        "resetHint": "Redefine todas as configurações globais do Tidy 5e Sheets para seus padrões. Esta ação não pode ser desfeita."
+    },
+    "TIDY5E.UseGlobalDefaults": "Usar Padrões Globais",
+    "TIDY5E.UndoChanges": "Desfazer Alterações"
 }

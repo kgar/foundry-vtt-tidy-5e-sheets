@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { TabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration.types';
+  import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
   import TabVisibilityControls from './TabVisibilityControls.svelte';
-  import SpecialTraitsV2 from 'src/applications-quadrone/special-traits/SpecialTraitsV2.svelte';
-  import type { SpecialTraitsSettingsEditor } from '../../editors/special-traits-settings-editor.svelte';
+  import SpecialTraitsV2 from 'src/applications/settings/special-traits/SpecialTraitsV2.svelte';
+  import type { SpecialTraitsSettingsEditor } from 'src/settings/editors/special-traits-settings-editor.svelte';
 
   interface Props {
     app: SpecialTraitsSettingsEditor;
@@ -10,11 +10,11 @@
     tabId?: string;
   }
 
-  let { app = $bindable(), tabConfigEntry = $bindable(), tabId }: Props = $props();
+  let { app, tabConfigEntry = $bindable(), tabId }: Props = $props();
 </script>
 
 <div class="dialog-content-container flexcol">
-  <SpecialTraitsV2 actor={app.document} bind:config={app.value} />
+  <SpecialTraitsV2 actor={app.document} config={app.value} />
 
   {#if tabConfigEntry && tabId}
     <TabVisibilityControls bind:entry={tabConfigEntry} {tabId} />

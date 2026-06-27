@@ -54,12 +54,12 @@
       <div class="info-card-states">
         <span>{leftSubtitle ?? ''}</span>
         {#if owner}
-          {@const rightSubtitle = [
+          {const rightSubtitle = $derived([
             FoundryAdapter.getSpellMethodConfig(item)?.getLabel({
               level: method?.slots ? item.system.level || 0 : 1,
               format: 'short',
             }),
-          ].filterJoin(', ')}
+          ].filterJoin(', '))}
           <span>{rightSubtitle ?? ''}</span>
         {/if}
       </div>
