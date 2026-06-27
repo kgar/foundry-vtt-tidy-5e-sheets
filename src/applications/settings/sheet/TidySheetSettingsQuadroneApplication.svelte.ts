@@ -74,9 +74,6 @@ export type SheetTabOptionsInput = {
 export type TidySheetSettingsApplicationConfiguration =
   DocumentSheetApplicationConfiguration & {
     initialTabId?: string;
-    tabSettings?: {
-      [tabId: string]: SheetTabOptionsInput;
-    };
   };
 
 export class TidySheetSettingsQuadroneApplication
@@ -90,8 +87,6 @@ export class TidySheetSettingsQuadroneApplication
 
   initialTabId?: string;
   currentTabId = $state<string | undefined>(undefined);
-
-  tabSettings: Record<string, SheetTabOptionsInput>;
 
   themeSettingsTab: ThemeSettingsEditor;
   sheetTabsConfigurationSettingsTab: SheetTabsConfigurationSettingsEditor;
@@ -166,7 +161,6 @@ export class TidySheetSettingsQuadroneApplication
       this.initialTabId = `sheet:${initial}`;
     }
     this.currentTabId = this.initialTabId;
-    this.tabSettings = options.tabSettings ?? {};
 
     this.themeSettingsTab = getThemeSettingsEditor(this.document);
 
@@ -351,7 +345,6 @@ export class TidySheetSettingsQuadroneApplication
    * Open the world settings dialog focused on this sheet type's configuration.
    */
   async openWorldHeaderControlSettings() {
-
     new WorldSettingsQuadroneApplication({
       initialTabId: TidySheetSettingsQuadroneApplication.settingsSheetTabId(
         this.document.documentName,
@@ -382,6 +375,7 @@ export class TidySheetSettingsQuadroneApplication
     tabId: string,
   ): SheetTabOptionsInput | undefined {
     const runtime = this._getRuntime();
+
     if (!runtime) {
       return undefined;
     }
@@ -403,8 +397,7 @@ export class TidySheetSettingsQuadroneApplication
     tabId: string,
     sheetTabsConfigurationSettingsEditor: SheetTabsConfigurationSettingsEditor,
   ): SheetTabOptionsSettingsEditor | undefined {
-    const input =
-      this.tabSettings[tabId] ?? this._buildTabSettingsFromRuntime(tabId);
+    const input = this._buildTabSettingsFromRuntime(tabId);
 
     if (!input) {
       return undefined;
