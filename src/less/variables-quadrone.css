@@ -7,6 +7,8 @@
   --t5e-font-family-title: 'Modesto Condensed', 'Palatino Linotype', serif;
   --t5e-font-roboto-condensed: 'Roboto Condensed', Roboto, Arial, sans-serif;
   --t5e-font-family-default: 'Roboto Condensed', Roboto, Arial, sans-serif;
+  --t5e-font-family-longform: 'Signika', Roboto, Arial, sans-serif;
+  --t5e-font-family-forms: 'Signika', Roboto, Arial, sans-serif;
   /* Font sizes */
   --font-size-56: 3.5rem;
   --font-size-46: 2.875rem;
@@ -26,7 +28,7 @@
   --t5e-lineheight-small: 0.75rem;
   /* Fonts */
   --t5e-font-default-medium: 400 var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
-  --t5e-font-default-longform: 400 var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-default);
+  --t5e-font-default-longform: 400 var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-longform);
   --t5e-font-default-small: 400 var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
   --t5e-font-label-xlarge: 500 var(--font-size-28) var(--t5e-font-family-default);
   --t5e-font-label-large: 500 var(--font-size-18)/var(--t5e-lineheight-default) var(--t5e-font-family-default);

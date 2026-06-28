@@ -1,6 +1,8 @@
 .tidy5e-sheet.application:where(.quadrone) {
+
   /* Quadrone-style buttons */
-  :is(button, .button):where( :not(.header-control):not(.controls-dropdown .control)) {
+  :is(button, .button) {
+    /* :where( :not(.header-control):not(.controls-dropdown .control))*/
     --button-padding-block-start: 0.5rem;
     --button-padding-block-end: 0.5rem;
     --button-padding-inline-start: 0.75rem;

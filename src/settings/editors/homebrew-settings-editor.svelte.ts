@@ -5,6 +5,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 export type HomebrewConfigContext = {
   enableBankedInspiration: boolean;
   bankedInspirationGmOnly: boolean;
+  swapAbilityScoreAndBonus: boolean;
 };
 
 export type HomebrewSettingsEditor = SettingsEditor<HomebrewConfigContext>;
@@ -24,6 +25,7 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
     return {
       enableBankedInspiration: settings.value.enableBankedInspiration,
       bankedInspirationGmOnly: settings.value.bankedInspirationGmOnly,
+      swapAbilityScoreAndBonus: settings.value.swapAbilityScoreAndBonus,
     };
   }
 
@@ -36,6 +38,7 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
       this.value = {
         bankedInspirationGmOnly: false,
         enableBankedInspiration: false,
+        swapAbilityScoreAndBonus: false,
       };
     },
 
@@ -47,6 +50,10 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
       await FoundryAdapter.setTidySetting(
         'bankedInspirationGmOnly',
         this.value.bankedInspirationGmOnly,
+      );
+      await FoundryAdapter.setTidySetting(
+        'swapAbilityScoreAndBonus',
+        this.value.swapAbilityScoreAndBonus,
       );
 
       initialSnapshot = JSON.stringify(snapshotConfig(this.value));
