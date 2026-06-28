@@ -240,7 +240,6 @@ Hooks.once('ready', async () => {
   registerCustomTidyRollRequests();
 
   preloadSheetImages();
-  console.log('Sheet images preloaded');
 });
 
 Hooks.once('setup', async () => {
