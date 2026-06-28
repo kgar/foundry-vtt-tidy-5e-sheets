@@ -136,7 +136,11 @@
       class:active={0 === contaminationLevel}
       class="symptom level-0"
       onclick={() => clearContamination()}
-      onkeydown={(ev) => clearContamination()}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          clearContamination();
+        }
+      }}
     >
     <span class="level-icon">
       <i class="fa-solid fa-heart"></i>
@@ -145,8 +149,16 @@
       {localize('TIDY5E.Drakkenheim.Contamination.none')}
     </span>
     {#if contaminationLevel > 0}
-      <div onclick={clearContamination}
-      class="button button-icon-only button-secondary clear-contamination">
+      <div 
+        onclick={() => clearContamination()}
+        tabindex={0}
+        role="button"
+        onkeydown={(ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            clearContamination();
+          }
+        }}
+        class="button button-secondary clear-contamination">
         <i class="fa-solid fa-syringe"></i>
         {localize('TIDY5E.Drakkenheim.Contamination.clear')}
       </div>
