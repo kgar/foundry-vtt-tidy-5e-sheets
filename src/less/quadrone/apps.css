@@ -41,6 +41,11 @@
       display: grid;
     }
 
+    .window-header {
+      gap: var(--t5e-size-halfx);
+      padding-block-end: var(--t5e-size-halfx);
+    }
+
     .window-title {
       color: var(--t5e-color-text-default);
       font: var(--t5e-font-label-medium);
@@ -635,7 +640,6 @@
 
     &.minimized .window-header {
       background: var(--t5e-component-card-darker);
-      padding-block-end: var(--t5e-size-1x);
     }
 
     .window-header {
