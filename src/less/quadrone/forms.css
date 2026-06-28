@@ -72,7 +72,7 @@
   :is(.form-group, .form-fields) .label-top {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.125rem;
+    gap: var(--t5e-size-halfx);
 
     > * {
       flex: unset;
@@ -122,7 +122,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: var(--t5e-size-1x);
     margin: 0;
 
     > label {
@@ -174,7 +174,7 @@
 
     /* Icon-Only Labels */
     > label.icon {
-      flex: 0 0 1rem;
+      flex: 0 0 var(--t5e-size-4x);
 
       > i {
         margin: 0;
@@ -259,10 +259,10 @@
 
     /* Split Groups */
     &.split-group {
-      gap: 0 0.25rem;
+      gap: 0 var(--t5e-size-1x);
 
       > label {
-        margin-block-start: calc(var(--font-size-small) + 0.25rem);
+        margin-block-start: calc(var(--font-size-small) + var(--t5e-size-1x));
       }
 
       > .form-fields {
@@ -270,7 +270,7 @@
           flex-wrap: nowrap;
 
           &:not(.label-top):not(.checkbox) {
-            gap: 0.25rem;
+            gap: var(--t5e-size-1x);
           }
 
           > * {
@@ -302,7 +302,7 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--t5e-size-1x);
 
     > * {
       flex: 1;
@@ -320,7 +320,7 @@
     }
 
     input[type='checkbox'] {
-      --checkbox-size: 1rem;
+      --checkbox-size: var(--t5e-size-4x);
     }
 
     &.flexcol {
@@ -331,7 +331,7 @@
       align-items: stretch;
       flex-direction: column;
       justify-content: flex-start;
-      padding-block-start: 0.25rem;
+      padding-block-start: var(--t5e-size-1x);
     }
 
     > *:only-child {
@@ -341,9 +341,9 @@
 
   /** Hint Text */
   .hint {
-    margin-inline: 0.25rem 0;
+    margin-inline: var(--t5e-size-1x) 0;
     margin-block: 0;
-    margin-block: 0.125rem 0.25rem;
+    margin-block: var(--t5e-size-halfx) var(--t5e-size-1x);
     margin-inline: 0;
     color: var(--t5e-color-text-lighter);
     flex: 0 0 100%;
@@ -355,7 +355,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--t5e-size-2x);
 
     > button,
     a.button {
@@ -383,7 +383,7 @@
 
       .checkbox {
         line-height: var(--t5e-line-height-small);
-        gap: 0.25rem;
+        gap: var(--t5e-size-1x);
         min-height: var(--t5e-field-size-small);
       }
 
