@@ -586,7 +586,6 @@
         justify-content: center;
 
         .button.button-borderless {
-          --size: var(--t5e-size-5x);
           min-width: var(--size);
           border-radius: 100%;
           position: relative;
@@ -634,25 +633,26 @@
   }
 
   .actor-vitals-container {
+    --vitals-width: 11.25rem;
     display: block;
     margin-inline-start: var(--t5e-size-2x);
     margin-block-end: auto;
     position: relative;
     padding-block: var(--t5e-size-1x) var(--t5e-size-8x);
-    max-width: 11.25rem;
+    max-width: var(--vitals-width);
 
     .actor-image {
       --inset: 0.3125rem;
       min-width: 10rem;
-      max-width: 11.25rem;
+      max-width: var(--vitals-width);
       background-position: center;
       width: 100%;
 
       img {
         border: none;
         display: block;
-        height: 11.25rem;
-        width: 11.25rem;
+        height: var(--vitals-width);
+        width: var(--vitals-width);
         object-fit: cover;
         object-position: top center;
       }
