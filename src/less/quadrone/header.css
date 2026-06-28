@@ -772,10 +772,8 @@
           }
         }
       }
-    }
 
-    &:has(.death-saves-overlay) {
-      .actor-image {
+      &.death-saves-open {
         &:not(.transparent) {
           background-color: var(--t5e-component-card-dark-darker);
 
@@ -801,11 +799,6 @@
           }
         }
       }
-
-      .death-saves-overlay .death-save-roll-button {
-        opacity: 0.2;
-        animation: death-saves-pulse 2.5s ease-in-out infinite;
-      }
     }
 
     .death-saves-overlay {
@@ -817,6 +810,11 @@
 
       > * {
         pointer-events: all;
+      }
+
+      .death-save-roll-button {
+        opacity: 0.2;
+        animation: death-saves-pulse 2.5s ease-in-out infinite;
       }
 
       :where(.successes, .failures) button:not(:disabled) {
@@ -961,7 +959,7 @@
     }
 
     /* Death saves overlay styling when character is dead */
-    &:has(.dead) .death-saves-overlay {
+    .dead + .death-saves-overlay {
       .death-save-roll-button {
         opacity: 1;
 
