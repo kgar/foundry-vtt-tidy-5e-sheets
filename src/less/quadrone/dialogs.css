@@ -510,6 +510,7 @@
       }
 
       .sheet-preferences-label {
+        color: var(--t5e-theme-color-foreground-darker);
         font-size: var(--font-size-18);
       }
 

@@ -57,13 +57,12 @@
 
     &.active,
     &:active:not(:disabled) {
-      --icon-fill: var(--button-icon);
+      --icon-fill: var(--t5e-theme-color-foreground-diminished);
       color: var(--button-text);
       border: 0.0625rem solid var(--button-border);
       background: var(--button-background);
 
       :where(i) {
-        --icon-fill: var(--t5e-color-icon-light);
         color: var(--icon-fill);
       }
 
@@ -508,10 +507,10 @@
 
       &.button-toggle,
       &.button-primary {
-        --button-border: var(--t5e-component-field-border);
+        --button-border: var(--button-background);
 
         &:hover:not(:disabled) {
-          --button-border-hover: var(--t5e-component-field-border-hover);
+          --button-border-hover: var(--button-background-hover);
         }
       }
 
