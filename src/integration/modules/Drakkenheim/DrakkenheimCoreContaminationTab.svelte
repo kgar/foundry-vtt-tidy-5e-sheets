@@ -94,18 +94,18 @@
   <div class="contamination-actions flexrow">
     <button type="button" 
       onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC)}
-      class="button button-icon-only button-secondary">
+      class="button button-secondary">
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
     </button>
     <button type="button" 
       onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC)}
-      class="button button-icon-only button-secondary">
+      class="button button-secondary">
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
     </button>
     <button type="button" onclick={rollMutation}
-      class="button button-icon-only button-secondary">
+      class="button button-secondary">
       <i class="fa-solid fa-bacteria"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollMutation')}
     </button>
