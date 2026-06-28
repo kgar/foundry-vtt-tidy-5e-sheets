@@ -241,9 +241,8 @@
     }
   }
 
-  .abilities-container:not(.abilities-size-compact) {
+  &:not(.theme-basic) .abilities-container:not(.abilities-size-compact) {
     .ability-score.modifier-swapped {
-
       &:hover,
       &:focus-within {
         background: var(--t5e-score-image-hover) top center / auto no-repeat;
