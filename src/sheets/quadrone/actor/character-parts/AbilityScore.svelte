@@ -12,12 +12,7 @@
     disabled: boolean;
     onScoreChanged?: (newValue: number) => Promise<void>;
   };
-  let {
-    ability,
-    unlocked,
-    disabled,
-    onScoreChanged,
-  }: Props = $props();
+  let { ability, unlocked, disabled, onScoreChanged }: Props = $props();
 
   const swapAbilityScoreAndBonusEnabled = $derived(
     settings.value.swapAbilityScoreAndBonus,
@@ -91,7 +86,17 @@
   }
 </script>
 
-<div class={['ability', ability.key, { 'has-proficiency': ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT }]} data-tidy-sheet-part="ability-container">
+<div
+  class={[
+    'ability',
+    ability.key,
+    {
+      'has-proficiency':
+        ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT,
+    },
+  ]}
+  data-tidy-sheet-part="ability-container"
+>
   <div
     class={[
       'ability-bonus-container',
@@ -110,7 +115,10 @@
         >
           <span class="ability-abbr color-text-gold">{ability.abbr}</span>
           <span class="ability-label-container">
-            <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{ability.value}</span>
+            <span
+              class="value bonus font-data-xlarge color-text-default"
+              data-tidy-sheet-part="ability-value">{ability.value}</span
+            >
           </span>
         </label>
       {:else}
@@ -121,7 +129,10 @@
         >
           <span class="ability-abbr color-text-gold">{ability.abbr}</span>
           <span class="ability-label-container">
-            <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{ability.value}</span>
+            <span
+              class="value bonus font-data-xlarge color-text-default"
+              data-tidy-sheet-part="ability-value">{ability.value}</span
+            >
           </span>
         </div>
       {/if}
@@ -140,8 +151,14 @@
       >
         <span class="ability-abbr color-text-gold">{ability.abbr}</span>
         <span class="ability-label-container">
-          <span class="modifier font-label-xlarge color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span>
-          <span class="value bonus font-data-xlarge color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+          <span
+            class="modifier font-label-xlarge color-text-lightest"
+            data-tidy-sheet-part="ability-mod">{mod.sign}</span
+          >
+          <span
+            class="value bonus font-data-xlarge color-text-default"
+            data-tidy-sheet-part="ability-value">{mod.value}</span
+          >
         </span>
       </button>
     {/if}
@@ -168,7 +185,12 @@
       </span>
     {/if}
   </div>
-  <div class={['ability-score-container', { 'modifier-swapped': swapAbilityScoreAndBonusEnabled }]}>
+  <div
+    class={[
+      'ability-score-container',
+      { 'modifier-swapped': swapAbilityScoreAndBonusEnabled },
+    ]}
+  >
     {#if swapAbilityScoreAndBonusEnabled}
       <!-- Swapped: modifier roller in the middle -->
       <button
@@ -185,10 +207,20 @@
         data-has-roll-modes
         {disabled}
       >
-        <span class="modifier font-default-large color-text-lightest" data-tidy-sheet-part="ability-mod">{mod.sign}</span>
-        <span class="font-label-large color-text-default" data-tidy-sheet-part="ability-value">{mod.value}</span>
+        <span
+          class="modifier font-default-large color-text-lightest"
+          data-tidy-sheet-part="ability-mod">{mod.sign}</span
+        >
+        <span
+          class="font-label-large color-text-default"
+          data-tidy-sheet-part="ability-value">{mod.value}</span
+        >
         {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
-          <span class="ability-proficiency-indicator {unlocked ? 'config-button-visible' : ''}"></span>
+          <span
+            class="ability-proficiency-indicator {unlocked
+              ? 'config-button-visible'
+              : ''}"
+          ></span>
         {/if}
       </button>
     {:else if unlocked}
@@ -200,7 +232,8 @@
       >
         <span class="font-title-small color-text-default">{ability.value}</span>
         {#if ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT}
-          <span class="ability-proficiency-indicator config-button-visible"></span>
+          <span class="ability-proficiency-indicator config-button-visible"
+          ></span>
         {/if}
       </label>
     {:else}
