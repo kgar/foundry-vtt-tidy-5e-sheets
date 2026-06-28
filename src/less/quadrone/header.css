@@ -35,7 +35,7 @@
     --t5e-badge-border-color: var(--t5e-color-gold);
     --t5e-badge-text-color: var(--t5e-color-text-oninverse-default);
     --header-padding: 1rem;
-    --header-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.64);
+    --header-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.64);
     --portrait-border-color: var(--t5e-color-gold);
     --portrait-border-color-hover: var(--t5e-color-palette-gold-75);
   }
@@ -71,9 +71,7 @@
       mix-blend-mode: color-burn;
       content: '';
       position: absolute;
-      inset-block-start: 0;
-      inset-inline: 0;
-      inset-block-end: 0;
+      inset: 0;
       z-index: -1;
       width: 100%;
       height: 100%;
@@ -194,14 +192,15 @@
 
       .sheet-header-actions {
         .button-gold {
-          --t5e-button-text-color: var(--t5e-color-text-gold-emphasis);
+          --t5e-button-text-color: var(--t5e-color-palette-gold-56);
           border-color: var(--t5e-color-palette-gold-62);
           box-shadow: var(--t5e-drop-shadow-field);
+          color: var(--t5e-color-palette-gold-62);
 
           &:hover,
           &:active,
           &:focus {
-            --t5e-button-text-color: var(--t5e-color-palette-gold-35);
+            --t5e-button-text-color: var(--t5e-color-palette-gold-56);
             border-color: var(--t5e-color-palette-gold-56);
             box-shadow: var(--t5e-drop-shadow-field-hover);
           }
@@ -219,7 +218,7 @@
   /* ------------------------------------------------------------ */
   .sheet-header {
     align-content: flex-start;
-    border-bottom: 0.0625rem solid var(--t5e-color-gold);
+    border-bottom: var(--t5e-size-1) solid var(--t5e-color-gold);
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-2x);
@@ -252,13 +251,13 @@
 
     /* Header input styles */
     input[type="text"]:not(:disabled):not(.uninput) {
-      border: 0.0625rem solid transparent;
+      border: var(--t5e-size-1) solid transparent;
       background-color: transparent;
 
       &.actor-name {
         flex: 1;
         margin-block: 0 var(--t5e-size-halfx);
-        margin-inline: 0.5rem var(--t5e-size-2x);
+        margin-inline: var(--t5e-size-2x);
         height: 2.75rem;
       }
 
@@ -300,7 +299,7 @@
     .actor-name {
       flex-grow: 1;
       margin-block: 0;
-      margin-inline: var(--header-padding) 0;
+      margin-inline-start: var(--header-padding);
       text-shadow: var(--header-shadow);
       line-height: 100%;
       text-wrap: nowrap;
@@ -321,7 +320,7 @@
     }
 
     .dc {
-      margin-inline-start: 0.125rem;
+      margin-inline-start: var(--t5e-size-halfx);
     }
 
     button {
@@ -336,7 +335,7 @@
         border: none;
 
         span {
-          text-shadow: 0 0 0.5rem var(--t5e-color-text-gold);
+          text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-text-gold);
         }
       }
     }
@@ -344,8 +343,8 @@
 
   .xp-container {
     flex: 0 1 auto;
-    margin-block: 0 0.125rem;
-    margin-inline: 0 0.5rem;
+    margin-block: 0 var(--t5e-size-halfx);
+    margin-inline: 0 var(--t5e-size-2x);
     gap: var(--t5e-size-1x);
     display: flex;
     flex-direction: column;
@@ -374,15 +373,14 @@
   }
 
   .sheet-header-actions {
-    margin-inline-end: var(--t5e-size-3x);
-    margin-inline-start: var(--t5e-size-2x);
+    margin-inline: var(--t5e-size-2x) var(--t5e-size-3x);
     align-items: center;
     gap: var(--t5e-size-2x);
     flex: 0 0 fit-content;
 
     .button-gold {
       --t5e-button-text-color: var(--t5e-color-palette-gold-75);
-      border: 0.125rem solid var(--t5e-color-palette-gold-62);
+      border: var(--t5e-size-halfx) solid var(--t5e-color-palette-gold-62);
       border-radius: 0.1875rem;
       box-shadow: var(--header-shadow);
       color: var(--t5e-button-text-color);
@@ -395,7 +393,7 @@
       &:focus,
       &:active {
         --t5e-button-text-color: var(--t5e-color-palette-gold-89);
-        border: 0.125rem solid var(--t5e-color-palette-gold-75);
+        border: var(--t5e-size-halfx) solid var(--t5e-color-palette-gold-75);
       }
 
       &:disabled {
@@ -498,18 +496,18 @@
         &::before {
           transition: all var(--t5e-transition-default);
           /* TODO: Fix weird hover behavior. */
-          box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-inspiration-highlight-color);
+          box-shadow: 0 0 var(--t5e-size-2x) 0.1875rem var(--t5e-inspiration-highlight-color);
           display: block;
           width: 0.75rem;
           height: 0.75rem;
           background-color: var(--t5e-color-palette-white);
-          border: 0.0625rem solid var(--t5e-inspiration-highlight-color);
+          border: var(--t5e-size-1) solid var(--t5e-inspiration-highlight-color);
           outline: none;
           transform: translate(-50%, -50%) rotate(45deg);
           z-index: 0;
           position: absolute;
-          inset-inline-start: 50%;
           inset-block-start: 50%;
+          inset-inline-start: 50%;
         }
 
         &:hover,
@@ -526,7 +524,7 @@
         &:hover::before {
           width: 0.75rem;
           height: 0.75rem;
-          border-width: 0.0625rem;
+          border-width: var(--t5e-size-1);
           box-shadow: 0 0 0.75rem 0.1875rem var(--t5e-inspiration-highlight-color);
         }
       }
@@ -538,10 +536,10 @@
         height: 2.75rem;
 
         .inspiration-level {
-          width: 1.25rem;
-          height: 1.25rem;
+          width: var(--t5e-size-5x);
+          height: var(--t5e-size-5x);
           border-radius: 100%;
-          border: 0.0625rem solid transparent;
+          border: var(--t5e-size-1) solid transparent;
           transition: all var(--t5e-transition-default);
           outline: none;
           display: flex;
@@ -556,7 +554,7 @@
         }
 
         &.inspired .inspiration-level {
-          box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-inspiration-highlight-color);
+          box-shadow: 0 0 var(--t5e-size-2x) 0.1875rem var(--t5e-inspiration-highlight-color);
           content: '';
           background-color: var(--t5e-color-palette-white);
           border-color: var(--t5e-inspiration-highlight-color);
@@ -580,15 +578,15 @@
         display: flex;
         position: absolute;
         inset-inline-start: 0;
-        inset-block-end: 0.25rem;
-        gap: 0.25rem;
+        inset-block-end: var(--t5e-size-1x);
+        gap: var(--t5e-size-1x);
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
 
         .button.button-borderless {
-          --size: 1.25rem;
+          --size: var(--t5e-size-5x);
           min-width: var(--size);
           border-radius: 100%;
           position: relative;
@@ -610,14 +608,14 @@
             inset-inline-start: 50%;
             transform: translateY(-50%) translateX(-50%);
             background: rgba(0, 0, 0, 0.32);
-            width: 1.25rem;
-            height: 1.25rem;
+            width: var(--t5e-size-5x);
+            height: var(--t5e-size-5x);
             border-radius: 100%;
           }
 
           &:not(:disabled):hover::before {
-            width: 1.25rem;
-            height: 1.25rem;
+            width: var(--t5e-size-5x);
+            height: var(--t5e-size-5x);
             background: rgba(0, 0, 0, 0.64);
           }
 
@@ -640,8 +638,7 @@
     margin-inline-start: var(--t5e-size-2x);
     margin-block-end: auto;
     position: relative;
-    padding-block-end: 2rem;
-    padding-block-start: 0.25rem;
+    padding-block: var(--t5e-size-1x) var(--t5e-size-8x);
     max-width: 11.25rem;
 
     .actor-image {
@@ -691,7 +688,7 @@
         --inset: 0.5625rem;
 
         &::before {
-          border-width: 0.0625rem;
+          border-width: var(--t5e-size-1);
         }
 
         img {
@@ -703,7 +700,7 @@
         &::before {
           border-color: var(--t5e-color-palette-gold-62);
           border-radius: 100%;
-          border-width: 0.125rem;
+          border-width: var(--t5e-size-halfx);
           z-index: -1;
         }
 
@@ -731,7 +728,7 @@
           .dead-overlay {
             content: '';
             position: absolute;
-      inset: 0;
+            inset: 0;
             background-color: var(--t5e-color-palette-red-100);
             opacity: 0.6;
             mix-blend-mode: multiply;
@@ -739,7 +736,7 @@
             &::after {
               content: '';
               position: absolute;
-      inset: 0;
+              inset: 0;
               background-color: var(--t5e-color-gold);
               opacity: 0.2;
               mix-blend-mode: lighten;
@@ -780,7 +777,7 @@
           &::after {
             content: '';
             position: absolute;
-      inset: 0;
+            inset: 0;
             background-color: var(--t5e-color-palette-red-100);
             opacity: 0.6;
             mix-blend-mode: multiply;
@@ -804,9 +801,8 @@
     .death-saves-overlay {
       /* TODO: Somehow move this to the component to load on-demand only? The css doesn't quite work when I try it right now. */
       position: absolute;
-      inset-block-start: 0;
+      inset-block: 0 var(--t5e-size-8x);
       inset-inline: 0;
-      inset-block-end: var(--t5e-size-8x);
 
       > * {
         pointer-events: all;
@@ -820,7 +816,7 @@
       :where(.successes, .failures) button:not(:disabled) {
         cursor: pointer;
         border-radius: 100%;
-        border: 0.125rem solid var(--t5e-color-gold);
+        border: var(--t5e-size-halfx) solid var(--t5e-color-gold);
         background-color: var(--t5e-component-card-dark-darker);
         height: 1.5rem;
         min-height: 1.5rem;
@@ -845,7 +841,7 @@
         &:active,
         &:focus-within,
         &:hover {
-          border: 0.125rem solid var(--t5e-color-palette-white);
+          border: var(--t5e-size-halfx) solid var(--t5e-color-palette-white);
           box-shadow: 0 0 0.3125rem var(--t5e-color-gold);
           background-color: var(--t5e-color-palette-black);
 
@@ -860,7 +856,7 @@
         position: absolute;
         inset-block-start: 50%;
         transform: translateY(-50%);
-        gap: 0.25rem;
+        gap: var(--t5e-size-1x);
         flex-direction: column-reverse;
       }
 
@@ -903,7 +899,7 @@
         inset-inline-end: 0;
 
         .button:hover {
-          box-shadow: 0 0 0.5rem var(--t5e-color-gold);
+          box-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-gold);
         }
 
         .checked {
@@ -912,7 +908,7 @@
 
           i {
             color: var(--t5e-color-text-default);
-            text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.24);
+            text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
           }
 
           &:active,
@@ -928,11 +924,11 @@
         inset-inline-start: 0;
 
         i {
-          margin-block-end: 0.0625rem;
+          margin-block-end: var(--t5e-size-1);
         }
 
         .button:hover {
-          box-shadow: 0 0 0.5rem var(--t5e-color-palette-red-100);
+          box-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-red-100);
         }
 
         .checked {
@@ -941,7 +937,7 @@
 
           i {
             color: var(--t5e-color-text-default);
-            text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.24);
+            text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
           }
 
           &:active,
@@ -973,8 +969,8 @@
 
   .actor-vitals {
     margin-block-start: -1.5rem;
-    border-radius: 0.125rem;
-    border: 0.125rem solid var(--t5e-color-gold);
+    border-radius: var(--t5e-size-halfx);
+    border: var(--t5e-size-halfx) solid var(--t5e-color-gold);
     background-color: var(--t5e-component-card-dark-darker);
     box-shadow: var(--header-shadow);
     position: absolute;
@@ -999,7 +995,7 @@
         font-size: var(--font-size-18);
         padding-inline-start: var(--t5e-size-2x);
         background-color: var(--t5e-color-hp-dark);
-        border: 0.125rem solid var(--t5e-color-hp-medium);
+        border: var(--t5e-size-halfx) solid var(--t5e-color-hp-medium);
         caret-color: #ffffff;
       }
 
@@ -1054,8 +1050,8 @@
 
         i {
           font-size: var(--font-size-14);
-          margin-block-end: 0.0625rem;
-          margin-inline-start: 0.0625rem;
+          margin-block-end: var(--t5e-size-1);
+          margin-inline-start: var(--t5e-size-1);
         }
 
         &.temp-hp {
@@ -1083,7 +1079,7 @@
 
         &.label {
           background-color: var(--t5e-color-hp-temp);
-          border-left: 0.0625rem dashed var(--t5e-color-palette-white);
+          border-left: var(--t5e-size-1) dashed var(--t5e-color-palette-white);
         }
 
         &.label:hover {
@@ -1101,7 +1097,7 @@
 
     .actor-vitals-row {
       --t5e-vitals-button-icon-color: var(--t5e-color-palette-gold-89);
-      border-top: 0.125rem solid var(--t5e-color-gold);
+      border-top: var(--t5e-size-halfx) solid var(--t5e-color-gold);
       box-sizing: content-box;
       padding: 0;
       height: var(--t5e-size-6x);
@@ -1126,16 +1122,16 @@
       > *:not(:first-child)::before {
         content: '';
         position: absolute;
-        inset-inline-start: -0.125rem;
+        inset-inline-start: calc(-1 * var(--t5e-size-halfx));
         inset-block-start: 50%;
         transform: translateY(-50%);
-        height: calc(100% + 0.125rem);
-        width: 0.125rem;
+        height: calc(100% + var(--t5e-size-halfx));
+        width: var(--t5e-size-halfx);
         background-color: var(--t5e-color-gold);
       }
 
       input[type="text"].max-hp {
-        height: calc(var(--t5e-field-size-default) - 0.125rem);
+        height: calc(var(--t5e-field-size-default) - var(--t5e-size-halfx));
         color: var(--t5e-color-text-default);
         font-size: var(--font-size-15);
         font-weight: var(--font-weight-label);
@@ -1161,7 +1157,7 @@
 
         .button {
           padding-block: 0;
-          padding-inline-start: 0.0625rem;
+          padding-inline: var(--t5e-size-1) 0;
           width: 1.5rem;
 
           i {
@@ -1179,12 +1175,12 @@
           i,
           .value {
             color: var(--t5e-color-icon-default);
-            text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+            text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
           }
 
           .button {
-            padding-block: 0 0.0625rem;
-            padding-inline: 0.5rem 0.25rem;
+            padding-block: 0 var(--t5e-size-1);
+            padding-inline: var(--t5e-size-2x) var(--t5e-size-1x);
             width: auto;
           }
 
@@ -1216,7 +1212,7 @@
 
           i {
             color: var(--t5e-color-icon-default);
-            text-shadow: 0 0 0.5rem var(--t5e-color-palette-red-100);
+            text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-red-100);
           }
 
           .button:hover {
@@ -1229,8 +1225,8 @@
         border-left: none;
         border-radius: 0;
         box-sizing: border-box;
-        padding-block-end: 0.0625rem;
-        padding-inline-start: 0.0625rem;
+        padding-block: 0 var(--t5e-size-1);
+        padding-inline: var(--t5e-size-1) 0;
         --size: 1.5rem;
         min-height: var(--size);
         height: var(--size);
@@ -1267,14 +1263,13 @@
       .button-config {
         align-self: center;
         position: absolute;
-        inset-block-start: 0;
+        inset-block: 0;
         inset-inline-end: 0;
-        inset-block-end: 0;
       }
     }
 
     .hd-row {
-      padding-block-start: 0.125rem;
+      padding-block-start: var(--t5e-size-halfx);
       flex: 1;
 
       &:hover .hit-die {
@@ -1315,7 +1310,7 @@
         font-size: var(--font-size-16);
         padding-inline-start: var(--t5e-size-2x);
         background-color: var(--t5e-color-hp-hd-dark);
-        border: 0.125rem solid var(--t5e-color-hp-hd-medium);
+        border: var(--t5e-size-halfx) solid var(--t5e-color-hp-hd-medium);
         caret-color: var(--t5e-color-text-default);
       }
 
@@ -1327,15 +1322,14 @@
 
     .exhaustion-bar {
       position: absolute;
-      inset-block-end: -0.125rem;
-      inset-inline-start: -0.125rem;
-      inset-block-start: -0.125rem;
+      inset-block: calc(-1 * var(--t5e-size-halfx));
+      inset-inline-start: calc(-1 * var(--t5e-size-halfx));
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      border-radius: 0.125rem;
-      border: 0.125rem solid var(--t5e-color-gold);
+      border-radius: var(--t5e-size-halfx);
+      border: var(--t5e-size-halfx) solid var(--t5e-color-gold);
       height: 1.75rem;
       width: max-content;
       background-color: var(--t5e-component-card-dark-darker);
@@ -1349,25 +1343,23 @@
           font-weight: var(--font-weight-bold);
           background-color: var(--t5e-color-palette-orange-40);
           color: var(--t5e-color-icon-default);
-          text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+          text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
         }
       }
     }
 
     .hp-overlay-bar {
       position: absolute;
-      inset-block-end: -0.125rem;
-      inset-inline-start: -0.125rem;
-      inset-inline-end: calc((var(--t5e-field-size-default) + 0.125rem)*-1);
-      inset-block-start: -0.125rem;
+      inset-block: calc(-1 * var(--t5e-size-halfx));
+      inset-inline: calc(-1 * var(--t5e-size-halfx)) calc((var(--t5e-field-size-default) + var(--t5e-size-halfx))*-1);
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      border-radius: 0.125rem;
-      border: 0.125rem solid var(--t5e-color-gold);
+      border-radius: var(--t5e-size-halfx);
+      border: var(--t5e-size-halfx) solid var(--t5e-color-gold);
       padding-block: 0;
-      padding-inline-start: 0.5rem;
+      padding-inline: var(--t5e-size-2x) 0;
       background-color: var(--t5e-component-card-dark-darker);
       z-index: 1;
 
@@ -1383,7 +1375,7 @@
           font-weight: var(--font-weight-bold);
           background-color: var(--t5e-color-palette-orange-40);
           color: var(--t5e-color-icon-default);
-          text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+          text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
         }
       }
 
@@ -1391,12 +1383,11 @@
       .button-config:hover,
       .button-config:focus,
       .button-config:active {
-        border-left: 0.125rem solid var(--t5e-color-gold);
+        border-left: var(--t5e-size-halfx) solid var(--t5e-color-gold);
       }
 
       input[type="text"] {
-        padding-inline-start: 0.25rem;
-        padding-inline-end: 0.25rem;
+        padding-inline: var(--t5e-size-1x);
         text-align: left;
         padding-block-end: 0;
         outline: none;
@@ -1418,7 +1409,7 @@
       position: relative;
       height: 100%;
       align-items: center;
-      padding-block-end: 0.25rem;
+      padding-block-end: var(--t5e-size-1x);
 
       i {
         font-size: var(--font-size-10);
@@ -1457,7 +1448,8 @@
 
     .editor-rendered-content {
       border: none;
-      margin-block: var(--t5e-size-4x) 0;
+      margin-block: var(--t5e-size-4x);
+      margin-inline: 0;
       padding-block: 0;
       padding-inline: var(--t5e-size-4x);
     }
@@ -1505,8 +1497,8 @@
           }
 
           .meter .label {
-            gap: 0.125rem;
-            padding-inline-end: 0.25rem;
+            gap: var(--t5e-size-halfx);
+            padding-inline-end: var(--t5e-size-1x);
           }
 
           .meter .label,
@@ -1516,11 +1508,11 @@
 
           .temp-hp {
             padding-block: 0;
-            padding-inline: 0.25rem;
+            padding-inline: var(--t5e-size-1x);
           }
 
           input[type="text"].hp-temp-input {
-            padding-inline-start: 0.25rem;
+            padding-inline-start: var(--t5e-size-1x);
             max-width: 3.5rem;
           }
 
@@ -1529,8 +1521,8 @@
 
             .max-hp-override-indicator {
               font-size: 0.375rem;
-              margin-block-end: 0.5rem;
-              margin-inline-start: -0.0625rem;
+              margin-block: 0 var(--t5e-size-2x);
+              margin-inline-start: calc(-1 * var(--t5e-size-1));
             }
           }
         }
@@ -1568,7 +1560,7 @@
           position: absolute;
           height: 4.25rem;
           width: 3.5rem;
-          inset-inline-start: -0.5rem;
+          inset-inline-start: calc(-1 * var(--t5e-size-2x));
           inset-block-end: -0.375rem;
           text-align: center;
           align-items: center;
@@ -1577,7 +1569,7 @@
 
           .button-config {
             position: absolute;
-            inset-block-start: 0.125rem;
+            inset-block-start: var(--t5e-size-halfx);
             inset-inline-start: -0.1875rem;
           }
         }
@@ -1593,13 +1585,13 @@
         }
 
         .ac-value {
-          margin-block: -0.125rem 0.1875rem;
-          margin-inline: -0.125rem 0;
+          margin-block: calc(-1 * var(--t5e-size-halfx)) 0.1875rem;
+          margin-inline: calc(-1 * var(--t5e-size-halfx)) 0;
         }
       }
 
       .actor-name {
-        margin-block-start: -0.25rem;
+        margin-block-start: calc(-1 * var(--t5e-size-1x));
       }
 
       .actor-details-subtitle-row {
@@ -1614,7 +1606,7 @@
 
       input[type="text"]:not(:disabled):not(.uninput) {
         &.actor-name {
-          margin-block-start: -0.25rem;
+          margin-block-start: calc(-1 * var(--t5e-size-1x));
         }
 
         &.xp-value,
@@ -1685,7 +1677,7 @@
         }
 
         .label {
-          margin-inline-end: 0.25rem;
+          margin-inline-end: var(--t5e-size-1x);
         }
       }
     }
