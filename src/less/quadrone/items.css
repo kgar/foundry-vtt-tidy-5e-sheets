@@ -341,8 +341,8 @@
 
     .subtitle {
       color: var(--t5e-color-text-gold-emphasis);
-      /* title/small */
-      font: var(--t5e-font-body-medium);
+      font: var(--t5e-font-label-medium);
+      margin-block-start: var(--t5e-size-halfx);
 
       .advancement-class-indicator {
         font-size: var(--font-size-14);

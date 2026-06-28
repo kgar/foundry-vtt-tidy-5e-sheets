@@ -1,10 +1,10 @@
 .tidy5e-sheet.application:where(.quadrone) {
   &:not(.theme-basic) .gold-header-underline {
+    --line-color: var(--t5e-color-gold);
     display: flex;
     align-items: center;
     flex-basis: 100%;
-    --line-color: var(--t5e-color-gold);
-    margin-top: -0.125rem;
+    height: var(--t5e-size-1x);
 
     svg {
       flex: 0 0 auto;
@@ -20,18 +20,21 @@
 
   &.theme-basic {
     &.theme-light {
+
       .gold-header-underline,
       header:has(.gold-header-underline) {
         border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.16);
       }
     }
+
     .gold-header-underline {
       border-bottom: 0.0625rem solid var(--t5e-component-card-default);
-    
+
       svg {
         display: none;
       }
     }
+
     header:has(.gold-header-underline) {
       border-bottom: 0.0625rem solid var(--t5e-component-card-default);
     }
@@ -107,6 +110,5 @@
       block-size: calc(100% - 3.5rem);
       inset-block: 1.75rem;
     }
-
   }
 }

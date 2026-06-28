@@ -206,8 +206,9 @@
 
     .tidy-table-button {
       i {
-        display: flex;
         align-items: center;
+        color: var(--t5e-theme-color-foreground);
+        display: flex;
         justify-content: center;
         transition: background-color var(--t5e-transition-default);
         border-radius: 100%;

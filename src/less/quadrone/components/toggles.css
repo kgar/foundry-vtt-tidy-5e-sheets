@@ -150,12 +150,13 @@
       }
 
       .checked-icon {
+        fill: var(--t5e-theme-color-foreground);
         opacity: 1;
       }
 
       .thumb {
         transform: translateX(var(--thumb-checked-translateX));
-        fill: var(--field-toggle-checked-thumb-color);
+        fill: var(--t5e-theme-color-foreground);
       }
 
       &:hover {

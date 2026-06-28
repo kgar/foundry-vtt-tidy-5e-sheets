@@ -10,6 +10,7 @@
       }
     }
   }
+
   .collapsible-editor {
     header {
       display: flex;
@@ -26,26 +27,15 @@
     }
 
     .title {
-      color: var(--t5e-color-text-lightest);
-
       font-family: var(--t5e-font-family-title);
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
       line-height: normal;
-
       flex: 1;
       display: flex;
       align-items: center;
       gap: 0.25rem;
       transition: color var(--t5e-transition-default);
-
-      &:has(.expand-indicator) {
-        color: var(--t5e-color-text-lighter);
-
-        &:hover {
-          color: var(--t5e-color-text-default);
-        }
-      }
 
       .expand-indicator {
         color: var(--t5e-color-icon-disabled);
@@ -58,6 +48,12 @@
           color: var(--t5e-color-icon-disabled);
           padding: 0 0 0.125rem 0.25rem;
         }
+      }
+    }
+
+    &.no-content {
+      .title {
+        color: var(--t5e-color-text-lightest);
       }
     }
 

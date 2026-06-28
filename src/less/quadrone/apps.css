@@ -95,24 +95,14 @@
     }
 
     button.header-control {
-      --button-size: var(--t5e-field-size-default);
       border-radius: 100%;
       color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
       &:hover {
         color: var(--t5e-theme-color-foreground);
+        border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
-
-        &:active,
-        &:focus-within {
-          background: rgba(0, 0, 0, 0.32);
-        }
-      }
-
-      &:active {
-        background: rgba(0, 0, 0, 0.12);
-        border: none;
       }
 
       /* TODO: Figure out how to make the header UUID control use a copy cursor. */
@@ -147,6 +137,31 @@
     &.expanded {
       border: 0.0625rem solid var(--t5e-component-field-border);
       box-shadow: var(--t5e-drop-shadow-card);
+    }
+
+    .header-control > button {
+      gap: 0.5rem;
+      justify-content: flex-start;
+      min-height: var(--t5e-field-size-default);
+      --button-text-color: var(--t5e-color-text-default);
+      --button-hover-text-color: var(--t5e-color-text-default);
+
+      .control-label {
+        color: var(--t5e-color-text-default);
+        font: var(--t5e-font-default-medium);
+      }
+
+      i {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      &:hover {
+        background: var(--t5e-component-field-background-hover);
+
+        i {
+          color: var(--t5e-color-icon-default);
+        }
+      }
     }
   }
 
@@ -354,11 +369,17 @@
           }
 
           &:active,
-          &:focus {
+          &:focus-within {
             background-color: var(--t5e-component-field-background-active);
 
             i {
               color: var(--t5e-color-icon-button);
+            }
+
+            &:hover {
+              i {
+                color: var(--t5e-theme-color-foreground);
+              }
             }
           }
 
@@ -371,6 +392,10 @@
         &.active {
           button {
             background-color: var(--t5e-component-field-background-active);
+
+            &:hover i {
+              color: var(--t5e-theme-color-foreground);
+            }
           }
         }
       }
@@ -421,11 +446,12 @@
     /* TODO: Cleanup this section. */
     --icon-fill: var(--t5e-color-text-gold-emphasis);
     border: none;
-    font-weight: 500;
     color: var(--t5e-color-default);
     background: var(--t5e-enricher-background);
-    padding-left: var(--t5e-size-halfx);
-    padding: 0.0625rem 0.125rem 0.125rem;
+    padding-block: var(--t5e-size-1) var(--t5e-size-halfx);
+    padding-inline: 0.1875rem;
+    text-decoration: underline;
+    text-underline-offset: var(--t5e-size-halfx);
 
     a {
       background: none;
@@ -434,7 +460,6 @@
 
     i {
       color: var(--icon-fill);
-      transition: all var(--t5e-transition-default);
       margin-right: var(--t5e-size-1x);
     }
 
@@ -444,15 +469,20 @@
     }
   }
 
+  .broken {
+    i {
+      color: var(--t5e-color-orange);
+    }
+  }
+
   .roll-link-group {
     border: none;
     background: var(--t5e-enricher-background);
-    padding-top: 0.0625rem;
-    padding-right: 0.125rem;
-    padding-left: 0.125rem;
+    padding-block-start: var(--t5e-size-1) var(--t5e-size-halfx);
+    padding-inline: 0.1875rem;
 
     &:has(.enricher-action) {
-      padding-right: 0;
+      padding-inline-end: 0;
     }
 
     &:hover {
@@ -472,8 +502,7 @@
 
   .enricher-action {
     margin-inline: var(--t5e-size-1);
-    padding-left: var(--t5e-size-1x);
-    padding-right: var(--t5e-size-1x);
+    padding-inline: var(--t5e-size-1x);
 
     i {
       margin: 0;
@@ -481,17 +510,17 @@
   }
 
   .roll-link {
-    padding-left: 0.125rem;
+    padding-inline-start: var(--t5e-size-halfx);
   }
 
   /* Item Summary */
   /* TODO: Remove this if not used. Moved to .editor-rendered-content in editors.less */
   .item-summary {
     flex: 0 0 100%;
-    padding-top: var(--item-summary-padding-top, 0);
-    padding-right: var(--item-summary-padding-right, 0.5rem);
-    padding-bottom: var(--item-summary-padding-bottom, 0.25rem);
-    padding-left: var(--item-summary-padding-left, 0.5rem);
+    padding-block-start: var(--item-summary-padding-top, 0);
+    padding-inline-end: var(--item-summary-padding-right, 0.5rem);
+    padding-block-end: var(--item-summary-padding-bottom, 0.25rem);
+    padding-inline-start: var(--item-summary-padding-left, 0.5rem);
     border-width: 0 0 0.0625rem 0;
     border-style: solid;
     border-image: linear-gradient(to right,
@@ -510,8 +539,8 @@
     }
 
     .inline-wrapped-elements {
-      margin-top: var(--t5e-size-3x);
-      margin-bottom: var(--t5e-size-1x);
+      margin-block-start: var(--t5e-size-3x);
+      margin-block-end: var(--t5e-size-1x);
     }
 
     .left-aligned-elements {
@@ -519,7 +548,7 @@
       flex-grow: 1;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: var(--t5e-size-1x);
     }
 
     .right-aligned-elements {
@@ -527,7 +556,7 @@
       flex-grow: 0;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: var(--t5e-size-1x);
     }
   }
 
@@ -583,7 +612,7 @@
 
   #context-menu.tidy5e-sheet {
     background: var(--t5e-component-card-darker);
-    border: 0.0625rem solid var(--t5e-component-field-border);
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
     box-shadow: var(--t5e-drop-shadow-card);
   }
 
@@ -606,7 +635,7 @@
 
     &.minimized .window-header {
       background: var(--t5e-component-card-darker);
-      padding-bottom: 0.1875rem;
+      padding-block-end: var(--t5e-size-1x);
     }
 
     .window-header {
@@ -630,7 +659,7 @@
     }
 
     .editor.prosemirror menu {
-      border: 0.0625rem solid var(--t5e-color-palette-gold-89);
+      border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
 
       li button {
         &.active {

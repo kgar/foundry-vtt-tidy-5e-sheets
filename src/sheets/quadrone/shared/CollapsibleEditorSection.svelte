@@ -3,6 +3,9 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+  const localize = FoundryAdapter.localize;
 
   interface Props {
     expanded: boolean;
@@ -23,16 +26,26 @@
     disabled,
   }: Props = $props();
 
-  let showIndicator = $derived(!isNil(itemDescription.enriched, ''));
+  let hasContent = $derived(!isNil(itemDescription.content, ''));
 </script>
 
-<section class="collapsible-editor">
+<section class={['collapsible-editor', hasContent ? undefined : 'no-content']}>
   <!-- Header -->
   <header>
-    <a class="title" onclick={() => (expanded = !expanded)}>
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a class="title" 
+      onclick={() => (expanded = !expanded)}
+      role="button"
+      tabindex="0"
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          expanded = !expanded;
+        }
+      }}
+    >
       <!-- Title -->
       {itemDescription.label}
-      {#if showIndicator}
+      {#if hasContent}
         <!-- Expand Indicator, if there's nonblank content -->
         <i class={['fas fa-angle-right fa-fw expand-indicator', { expanded }]}
         ></i>
@@ -40,9 +53,18 @@
     </a>
     {#if !disabled}
       <!-- Journal Edit Button -->
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
         class={['edit', 'button-icon-only']}
+        aria-label={localize('EDITOR.DND5E.DescriptionEdit', { description: localize('DND5E.Description') })}
         onclick={() => onEdit?.({ document, itemDescription })}
+        role="button"
+        tabindex="0"
+        onkeydown={(ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            onEdit?.({ document, itemDescription });
+          }
+        }}
       >
         <i class="fas fa-feather fa-fw"></i>
       </a>

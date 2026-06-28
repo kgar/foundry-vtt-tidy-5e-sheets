@@ -2,6 +2,7 @@
 
   .editor,
   .editor-rendered-content {
+    font: var(--t5e-font-default-longform);
     word-wrap: anywhere;
 
     h1,
@@ -47,10 +48,6 @@
       font-size: var(--font-size-12);
       margin-top: var(--t5e-size-3x);
       margin-bottom: var(--t5e-size-2x);
-    }
-
-    p {
-      font: var(--t5e-font-default-longform);
     }
 
     li {
