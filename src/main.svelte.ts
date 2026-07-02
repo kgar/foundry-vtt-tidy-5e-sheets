@@ -1,6 +1,7 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './less/tidy5e.less';
+import './less/tidy5e.css';
 import { SettingsProvider, initSettings } from './settings/settings.svelte';
 import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
 import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
