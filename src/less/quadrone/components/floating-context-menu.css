@@ -1,0 +1,117 @@
+/* Quadrone Sheet Context Menu */
+body #context-menu.tidy5e-sheet.quadrone {
+  --icon-width: var(--t5e-size-4x);
+  --icon-fill: var(--t5e-color-icon-button);
+  --t5e-warning-accent-color: var(--t5e-color-palette-red-60);
+  z-index: var(--z-index-tooltip);
+  background: var(--t5e-component-card-darker);
+  border-radius: 0.3125rem;
+  box-shadow: var(--t5e-drop-shadow-card);
+  border: 1px solid var(--t5e-component-field-border);
+  color: var(--t5e-color-text-default);
+  padding: 0;
+  width: max-content;
+  min-width: 11.25rem;
+  position: absolute;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  menu.context-items {
+    > :first-child {
+      margin-block-start: var(--t5e-size-1x);
+
+      &::before {
+        border: none;
+      }
+    }
+  }
+
+  .context-group {
+    border: none;
+
+    &:has(ol) {
+      &::before {
+        inset-inline: 0;
+        margin: 0.0625rem 0 0 0;
+        border-block-start: 0.0625rem solid var(--t5e-component-card-lighter);
+        border-bottom: none;
+      }
+    }
+
+    i {
+      color: var(--icon-fill);
+    }
+
+    .color-text-lighter {
+      color: var(--t5e-color-text-lighter);
+    }
+  }
+
+  a,
+  li.context-item {
+    --button-text-color: var(--t5e-color-text-default);
+    --button-hover-text-color: var(--t5e-color-text-default);
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    font: var(--t5e-font-label-medium);
+    gap: 0.5rem;
+    min-height: var(--t5e-field-size-default);
+    margin: var(--t5e-size-1x);
+    padding: 0 var(--t5e-size-2x);
+    text-wrap-mode: wrap;
+    text-wrap: wrap;
+    transition: all var(--t5e-transition-default);
+    white-space: nowrap;
+
+    &.active {
+      color: var(--t5e-attunement-required-color);
+
+      &:hover {
+        background: var(--t5e-warning-accent-color);
+      }
+    }
+
+    .icon-on,
+    &.active .icon-off {
+      display: none;
+    }
+
+    .icon-off,
+    &.active .icon-on {
+      display: inline-block;
+    }
+
+    i,
+    dnd5e-icon {
+      --icon-fill: var(--t5e-color-icon-button);
+      margin: 0;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: var(--t5e-component-field-text-hover);
+      background: var(--t5e-component-field-background-hover);
+      border: none;
+      text-shadow: none;
+      --t5e-warning-accent-color: var(--t5e-color-palette-red-45);
+
+      i {
+        --icon-fill: var(--t5e-color-icon-default);
+      }
+    }
+  }
+
+  &.theme-dark {
+    background: var(--t5e-component-card-darker);
+
+    li.context-item:hover {
+      background: rgba(0, 0, 0, 1);
+      --t5e-warning-accent-color: var(--t5e-color-palette-red-100);
+    }
+  }
+}
