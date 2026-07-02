@@ -42,9 +42,15 @@
 </script>
 
 <div
+  role="button"
+  tabindex="0"
   class={[
     'list-entry favorite',
-    { suppressed: favorite.effect.isSuppressed, toggleable },
+    {
+      suppressed: favorite.effect.isSuppressed,
+      toggleable,
+      'effect-disabled': favorite.effect.disabled,
+    },
   ]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}

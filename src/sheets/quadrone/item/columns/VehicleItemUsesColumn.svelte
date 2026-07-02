@@ -50,43 +50,45 @@
 </script>
 
 {#if item.hasLimitedUses && !conceal}
-  <div
-    class="meter meter-small progress uses"
-    style="--bar-percentage: {pct.toFixed(0)}%"
-  ></div>
-  {#if item.hasRecharge && item.isOnCooldown}
-    <a
-      class={['item-list-button', { disabled: !item.isOwner }]}
-      data-tooltip={rechargeLabel}
-      onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
-    >
-      <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
-      <span class="recharge-range-text text-data">
-        {rechargeRange}
+  <div class="meter-container inline-uses-container">
+    <div
+      class="meter meter-small progress uses"
+      style="--bar-percentage: {pct.toFixed(0)}%"
+    ></div>
+    {#if item.hasRecharge && item.isOnCooldown}
+      <a
+        class={['item-list-button', { disabled: !item.isOwner }]}
+        data-tooltip={rechargeLabel}
+        onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
+      >
+        <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
+        <span class="recharge-range-text text-data">
+          {rechargeRange}
+        </span>
+      </a>
+    {:else if item.hasRecharge && !item.isOnCooldown}
+      <span class="charged-text">
+        {#if item.system.uses.value > 1}
+          <span>{item.system.uses.value}</span>
+        {/if}
+        <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
       </span>
-    </a>
-  {:else if item.hasRecharge && !item.isOnCooldown}
-    <span class="charged-text">
-      {#if item.system.uses.value > 1}
-        <span>{item.system.uses.value}</span>
-      {/if}
-      <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
-    </span>
-  {:else}
-    <div class="inline-uses flexrow">
-      <input
-        type="text"
-        value={item.system.uses.value}
-        {@attach InputAttachments.selectOnFocus}
-        onchange={(event) =>
-          FoundryAdapter.handleDocumentUsesChanged(event, item)}
-        class="uninput uses-value color-text-default"
-        disabled={!context.editable}
-      />
-      <span class="divider color-text-gold flexshrink">/</span>
-      <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
-    </div>
-  {/if}
+    {:else}
+      <div class="inline-uses flexrow">
+        <input
+          type="text"
+          value={item.system.uses.value}
+          {@attach InputAttachments.selectOnFocus}
+          onchange={(event) =>
+            FoundryAdapter.handleDocumentUsesChanged(event, item)}
+          class="uninput uses-value color-text-default"
+          disabled={!context.editable}
+        />
+        <span class="divider color-text-gold flexshrink">/</span>
+        <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
+      </div>
+    {/if}
+  </div>
 {:else if item.system.linkedActivity}
   {const ctx = $derived(Activities.getActivityItemContext(item.system.linkedActivity))}
   <ActivityUsesColumn
