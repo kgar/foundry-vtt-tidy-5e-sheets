@@ -582,11 +582,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      &.expanded {
-        transform: rotate(90deg);
-        color: var(--t5e-color-icon-diminished);
-      }
     }
 
     /* Hovering on the button itself */
@@ -596,8 +591,13 @@
       }
     }
 
-    &:has(.expanded) {
+    &.expanded {
       opacity: 1;
+
+      i {
+        transform: rotate(90deg);
+        color: var(--t5e-color-icon-diminished);
+      }
     }
   }
 
