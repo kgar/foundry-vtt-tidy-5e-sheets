@@ -132,7 +132,10 @@
         "options.viewers": "Acesso de Usuário",
         "options.visibility": "Exibir Aba",
         "showTabTooltip": "Mostra essa aba",
-        "hideTabTooltip": "Oculta esta aba"
+        "hideTabTooltip": "Oculta esta aba",
+        "headers.tab": "Aba",
+        "headers.userVisibility": "Visibilidade para Usuários",
+        "headers.showTab": "Mostrar Aba"
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -764,7 +767,8 @@
         "SectionSelectorNewSectionName": "Nome da nova seção",
         "SectionSelectorSaveNewSection": "Salvar nova seção",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
-        "SectionSelectorChooseTabSectionTooltip": "Escolha a Seção {tabName}"
+        "SectionSelectorChooseTabSectionTooltip": "Escolha a Seção {tabName}",
+        "ShowSection": "Exibir Seção"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar Padrão",
@@ -1135,5 +1139,10 @@
         "resetHint": "Redefine todas as configurações globais do Tidy 5e Sheets para seus padrões. Esta ação não pode ser desfeita."
     },
     "TIDY5E.UseGlobalDefaults": "Usar Padrões Globais",
-    "TIDY5E.UndoChanges": "Desfazer Alterações"
+    "TIDY5E.UndoChanges": "Desfazer Alterações",
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "title": "Trocar Valor de Atributo e Modificador",
+        "name": "Trocar Valor de Atributo e Modificador",
+        "hint": "Troca o valor do atributo e o modificador nos cabeçalhos da ficha."
+    }
 }
