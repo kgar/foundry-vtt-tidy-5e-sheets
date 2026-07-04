@@ -468,7 +468,10 @@
         "options.viewers": "Accesso Utente",
         "options.visibility": "Mostra Tab",
         "showTabTooltip": "Mostra questa tab",
-        "hideTabTooltip": "Nascondi questa tab"
+        "hideTabTooltip": "Nascondi questa tab",
+        "headers.tab": "Tab",
+        "headers.userVisibility": "Visibilità Utente",
+        "headers.showTab": "Mostra Tab"
     },
     "TIDY5E.Listbox": {
         "MoveDown": "Muovi Giù (Alt + Freccia Giù)",
@@ -775,7 +778,8 @@
         "SectionSelectorCreateNewSection": "Crea nuova sezione",
         "SectionSelectorNewSectionName": "Nome nuova sezione",
         "SectionSelectorSaveNewSection": "Salva nuova sezione",
-        "SectionSelectorChooseTabSectionTooltip": "Scegli Sezione {tabName}"
+        "SectionSelectorChooseTabSectionTooltip": "Scegli Sezione {tabName}",
+        "ShowSection": "Mostra Sezione"
     },
     "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
@@ -1111,7 +1115,7 @@
         "hint": "Configura impostazioni per la scheda.",
         "Group": {
             "SheetSettings": "Impostazioni Scheda",
-            "Tabs": "Tab"
+            "Tabs": "Tabs"
         },
         "Sidebar": {
             "title": "Barra Laterale",
@@ -1174,5 +1178,10 @@
         "resetHint": "Ripristina tutte le impostazioni del mondo in Scheda Tidy 5e ai valori predefiniti. Questa operazione è irreversibile."
     },
     "TIDY5E.UseGlobalDefaults": "Usa Predefiniti Globali",
-    "TIDY5E.UndoChanges": "Annulla Modifiche"
+    "TIDY5E.UndoChanges": "Annulla Modifiche",
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "title": "Scambia Punteggio Caratteristica e Modificatore",
+        "name": "Scambia Punteggio Caratteristica e Modificatore",
+        "hint": "Scambia punteggio caratteristica e modificatore nelle intestazioni scheda."
+    }
 }
