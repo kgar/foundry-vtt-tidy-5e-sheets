@@ -53,8 +53,15 @@
     });
   }
 
-  async function rollContaminationSave(dc: number): Promise<void> {
-    const roll = new Roll('1d20');
+  async function rollContaminationSave(
+    event: MouseEvent,
+    dc: number,
+  ): Promise<void> {
+    const rollMode = FoundryAdapter.getRollModeState(event);
+
+    const rollModifier = rollMode.disadvantage ? 'dis' : rollMode.advantage ? 'adv' : '';
+
+    const roll = new Roll(`1d20${rollModifier}`);
     await roll.evaluate();
     const success = roll.total >= dc;
     const resultKey = success
@@ -92,15 +99,27 @@
 
 <div class="tab-content">
   <div class="contamination-actions flexrow">
-    <button type="button" 
-      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC)}
-      class="button button-secondary">
+    <button
+      type="button"
+      onclick={(event) =>
+        rollContaminationSave(
+          event,
+          DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC,
+        )}
+      class="button button-secondary"
+    >
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
     </button>
-    <button type="button" 
-      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC)}
-      class="button button-secondary">
+    <button
+      type="button"
+      onclick={(event) =>
+        rollContaminationSave(
+          event,
+          DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC,
+        )}
+      class="button button-secondary"
+    >
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
     </button>
