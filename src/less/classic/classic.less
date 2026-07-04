@@ -1,9 +1,10 @@
-@parchment-texture-top : '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
-@parchment-texture-bottom : '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+@parchment-texture-top: '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
+@parchment-texture-bottom: '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+
+@import '../variables';
 
 :where(.tidy5e-sheet.classic) {
   @import './partials/_reset-v2.less';
-
 
   // Light Mode Variables
   --t5e-title-font-family: 'Modesto Condensed', 'Palatino Linotype', serif;
@@ -97,10 +98,10 @@
     255,
     1
   );
-  --t5e-item-info-card-background: url('@{parchment-texture-top}')
-      no-repeat top center / 150% auto,
-    #f1ebe8 url('@{parchment-texture-bottom}')
-      no-repeat bottom center / 150% auto;
+  --t5e-item-info-card-background:
+    url('@{parchment-texture-top}') no-repeat top center / 150% auto,
+    #f1ebe8 url('@{parchment-texture-bottom}') no-repeat bottom center / 150%
+      auto;
   --t5e-content-entity-link-color: var(--t5e-primary-font-color);
   --t5e-content-entity-link-hover-color: var(--t5e-white);
   --t5e-content-entity-link-background: var(--t5e-faintest-color);
@@ -124,7 +125,8 @@
   --t5e-button-menu-background: var(--t5e-background);
   --t5e-button-menu-hover-color: var(--t5e-faint-color);
   --t5e-button-menu-divider-color: var(--t5e-separator-color);
-  --t5e-focus-visible-box-shadow: -0.0625rem -0.0625rem 0 var(--t5e-primary-accent-color),
+  --t5e-focus-visible-box-shadow:
+    -0.0625rem -0.0625rem 0 var(--t5e-primary-accent-color),
     -0.0625rem 0.0625rem 0 var(--t5e-primary-accent-color),
     0.0625rem 0.0625rem 0 var(--t5e-primary-accent-color),
     0.0625rem -0.0625rem 0 var(--t5e-primary-accent-color);
@@ -199,10 +201,10 @@
 }
 
 .tidy5e-sheet.application:where(.classic) {
-  --t5e-parchment-background: url('@{parchment-texture-top}')
-      no-repeat top center / 150% auto,
-    #f1ebe8 url('@{parchment-texture-bottom}')
-      no-repeat bottom center / 150% auto;
+  --t5e-parchment-background:
+    url('@{parchment-texture-top}') no-repeat top center / 150% auto,
+    #f1ebe8 url('@{parchment-texture-bottom}') no-repeat bottom center / 150%
+      auto;
 
   // Document V2 sheets need more width to be readable.
   --minimized-width: 18.75rem;
@@ -518,7 +520,10 @@
   /* Use this class on the parent of an `.conceal-content` element, and it will add a transition animation. */
   .concealed-content-animation-container > *,
   .animate-concealed-content {
-    transition: filter 0.75s ease, transform 0.75s ease, padding 0.75s ease;
+    transition:
+      filter 0.75s ease,
+      transform 0.75s ease,
+      padding 0.75s ease;
   }
 
   .unidentified-glyph {
@@ -541,8 +546,12 @@
 
     i {
       color: white;
-      text-shadow: black 0 0 0.25rem, black 0 0 0.25rem, black 0 0 0.25rem,
-        black 0 0 0.5rem, black 0 0 0.5rem;
+      text-shadow:
+        black 0 0 0.25rem,
+        black 0 0 0.25rem,
+        black 0 0 0.25rem,
+        black 0 0 0.5rem,
+        black 0 0 0.5rem;
     }
   }
 
@@ -768,7 +777,9 @@
   /* Expand Indicator */
   .expand-indicator {
     color: var(--t5e-tertiary-color);
-    transition: color 0.3s, transform 0.15s;
+    transition:
+      color 0.3s,
+      transform 0.15s;
     align-self: center;
     justify-self: center;
 
@@ -1037,3 +1048,7 @@
     }
   }
 }
+
+@import './components/info-card.less';
+@import './components/floating-context-menu.less';
+@import './dnd5e-ports.classic.less';
