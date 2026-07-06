@@ -103,7 +103,6 @@
             tabId: CONSTANTS.TAB_MEMBERS,
             sectionKey: section.key,
             rowActions: section.rowActions,
-            section,
             sheetDocument: context.actor,
           }),
         ))}

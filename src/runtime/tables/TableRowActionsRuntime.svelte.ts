@@ -1,24 +1,13 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type {
-  ContainerItemContext,
-  ContainerSection,
-  Item5e,
-} from 'src/types/item.types';
+import type { ContainerItemContext, Item5e } from 'src/types/item.types';
 import type {
   ActiveEffect5e,
-  ActiveEffectSection,
   Actor5e,
   ActorSheetQuadroneContext,
-  CharacterFeatureSection,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
   EncounterSheetQuadroneContext,
-  FeatureSection,
-  InventorySection,
   NpcSheetQuadroneContext,
-  SpellbookSection,
-  TidyItemSectionBase,
-  TidySectionBase,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
 import type { Component } from 'svelte';
@@ -53,12 +42,11 @@ type RowActionConfig = {
 class TableRowActionsRuntime {
   getInventoryRowActions(
     context: ActorSheetQuadroneContext,
-    config?: RowActionConfig
+    config?: RowActionConfig,
   ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      InventorySection
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -89,7 +77,10 @@ class TableRowActionsRuntime {
           if (config?.hasActionsTab) {
             result.push({
               component: CharacterSheetTabToggleButton,
-              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+              props: (args) => ({
+                doc: args.data,
+                itemContext: context.itemContext,
+              }),
             } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
@@ -111,8 +102,7 @@ class TableRowActionsRuntime {
   getCharacterFeatureRowActions(context: CharacterSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      CharacterFeatureSection
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -134,7 +124,10 @@ class TableRowActionsRuntime {
         } else {
           result.push({
             component: CharacterSheetTabToggleButton,
-            props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+            props: (args) => ({
+              doc: args.data,
+              itemContext: context.itemContext,
+            }),
           } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
         }
       }
@@ -154,12 +147,11 @@ class TableRowActionsRuntime {
 
   getSpellRowActions(
     context: ActorSheetQuadroneContext,
-    config?: RowActionConfig
+    config?: RowActionConfig,
   ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      SpellbookSection
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -203,7 +195,10 @@ class TableRowActionsRuntime {
           if (config?.hasActionsTab) {
             result.push({
               component: CharacterSheetTabToggleButton,
-              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+              props: (args) => ({
+                doc: args.data,
+                itemContext: context.itemContext,
+              }),
             } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
@@ -229,8 +224,7 @@ class TableRowActionsRuntime {
   ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      ContainerSection
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -248,10 +242,7 @@ class TableRowActionsRuntime {
             doc: args.data,
           }),
         } satisfies TableAction<typeof DeleteButton>);
-      } else if (
-        context.hasActor &&
-        itemParent?.system.isCharacter
-      ) {
+      } else if (context.hasActor && itemParent?.system.isCharacter) {
         result.push({
           component: CharacterSheetTabToggleButton,
           props: (args) => ({ doc: args.data, itemContext: itemContext }),
@@ -274,8 +265,7 @@ class TableRowActionsRuntime {
   getActionsRowActions(owner: boolean, unlocked: boolean) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      TidyItemSectionBase
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -313,8 +303,7 @@ class TableRowActionsRuntime {
   getEffectsRowActions(context: DocumentSheetQuadroneContext<any>) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      ActiveEffect5e,
-      ActiveEffectSection
+      ActiveEffect5e
     >;
 
     let result: TableAction<any>[] = [];
@@ -327,7 +316,7 @@ class TableRowActionsRuntime {
       }),
       condition: (args) =>
         context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
-        !args.section.isEnchantment,
+        args.data.type !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT,
     } satisfies TableAction<typeof EffectToggleButton>);
 
     if (context.unlocked) {
@@ -357,8 +346,7 @@ class TableRowActionsRuntime {
   getActivityRowActions(owner: boolean, unlocked: boolean) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      TidySectionBase
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -396,8 +384,7 @@ class TableRowActionsRuntime {
   getStatblockRowActions(context: NpcSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Item5e,
-      FeatureSection
+      Item5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -435,8 +422,7 @@ class TableRowActionsRuntime {
   getGroupMemberRowActions(actor: Actor5e, unlocked: boolean) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -474,8 +460,7 @@ class TableRowActionsRuntime {
   getEncounterMemberRowActions(context: EncounterSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -513,8 +498,7 @@ class TableRowActionsRuntime {
   getDraftAnimalRowActions(context: VehicleSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let result: TableAction<any>[] = [];
@@ -531,7 +515,7 @@ class TableRowActionsRuntime {
           doc: context.document,
           tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
             name: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Member.DraftAnimal.Label'
+              'TIDY5E.Vehicle.Member.DraftAnimal.Label',
             ),
           }),
         }),
@@ -550,12 +534,11 @@ class TableRowActionsRuntime {
 
   getUnassignedCrewPassengerRowActions(
     context: VehicleSheetQuadroneContext,
-    area: CrewArea5e
+    area: CrewArea5e,
   ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let result: TableAction<any>[] = [];
@@ -565,8 +548,8 @@ class TableRowActionsRuntime {
         area === 'crew'
           ? 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label'
           : area === 'passengers'
-          ? 'DND5E.VEHICLE.Crew.Passengers'
-          : '';
+            ? 'DND5E.VEHICLE.Crew.Passengers'
+            : '';
 
       result.push({
         component: DeleteButton,
@@ -601,8 +584,7 @@ class TableRowActionsRuntime {
   getAssignedCrewRowActions(context: VehicleSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let result: TableAction<any>[] = [];
@@ -614,7 +596,7 @@ class TableRowActionsRuntime {
           callback: () => {
             return context.sheet._unassignCrew(
               args.data,
-              args.rowContext.assignedTo
+              args.rowContext.assignedTo,
             );
           },
           iconClasses: 'fa-solid fa-user-minus',
@@ -636,8 +618,7 @@ class TableRowActionsRuntime {
   getEncounterCombatRowActions(context: EncounterSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
-      Actor5e,
-      TidySectionBase
+      Actor5e
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {

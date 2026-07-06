@@ -1,5 +1,7 @@
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ContainerCapacityContext,
@@ -7,16 +9,17 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Inventory {
   static getInventoryDataModelEntries(): [string, any][] {
     return Object.entries<any>(CONFIG.Item.dataModels)
       .filter(
-        ([type, model]) => 'inventorySection' in model && type !== 'backpack'
+        ([type, model]) => 'inventorySection' in model && type !== 'backpack',
       )
       .toSorted(
         ([, lhs], [, rhs]) =>
-          lhs.inventorySection.order - rhs.inventorySection.order
+          lhs.inventorySection.order - rhs.inventorySection.order,
       );
   }
 
@@ -33,7 +36,7 @@ export class Inventory {
   }
 
   static getDefaultInventorySections(
-    options: Partial<InventorySection> = {}
+    options: Partial<InventorySection> = {},
   ): Record<string, InventorySection> {
     const inventoryTypes = Inventory.getInventoryTypes();
 
@@ -54,6 +57,11 @@ export class Inventory {
         isExternal: false,
         rowActions: [],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          this,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          type,
+        ),
         ...options,
       };
     }
@@ -61,7 +69,7 @@ export class Inventory {
     return inventory;
   }
 
-  // TODO: switch to object param 
+  // TODO: switch to object param
   static applyInventoryItemToSection(
     inventory: Record<string, InventorySection>,
     item: Item5e,
@@ -69,12 +77,16 @@ export class Inventory {
     customSectionOptions: Partial<InventorySection>,
     fallbackInventoryKey: string = '',
     customSectionFlag: 'section' | 'actionSection' = 'section',
+    rowActions: TidyTableAction<any, any>[],
   ) {
     const customSectionName = TidyFlags[customSectionFlag].get(item);
 
     if (!customSectionName) {
       let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];
       partition?.items.push(item);
+
+      ItemColumnRuntime.applyDynamicColumnWidths(partition, rowActions);
+
       return;
     }
 
@@ -82,16 +94,18 @@ export class Inventory {
       Inventory.createInventorySection(
         customSectionName,
         defaultInventoryTypes,
-        customSectionOptions
+        customSectionOptions,
       ));
 
     customSection.items.push(item);
+
+    ItemColumnRuntime.applyDynamicColumnWidths(customSection, rowActions);
   }
 
   static createInventorySection(
     customSectionName: string,
     defaultInventoryTypes: string[],
-    customSectionOptions: Partial<InventorySection>
+    customSectionOptions: Partial<InventorySection>,
   ): InventorySection {
     return {
       type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -107,6 +121,11 @@ export class Inventory {
       show: true,
       rowActions: [],
       sectionActions: [],
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        this,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        customSectionName,
+      ),
       ...customSectionOptions,
     };
   }
@@ -130,7 +149,7 @@ export class Inventory {
       error(
         'An error occurred while preparing containers for the container panel',
         false,
-        e
+        e,
       );
     }
     return containerPanelItems;
@@ -138,9 +157,10 @@ export class Inventory {
 
   static async getContainerContentsInventory(
     container: Item5e,
+    rowActions: TidyTableAction<any, any>[],
     options: Partial<InventorySection> = {
       canCreate: false,
-    }
+    },
   ): Promise<InventorySection[]> {
     const containerItems = (await container.system.contents).values();
 
@@ -153,7 +173,10 @@ export class Inventory {
         inventory,
         item,
         inventoryTypes,
-        options
+        options,
+        undefined,
+        undefined,
+        rowActions,
       );
     }
 

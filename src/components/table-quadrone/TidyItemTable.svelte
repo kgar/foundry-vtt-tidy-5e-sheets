@@ -27,6 +27,7 @@
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
   import type { Item5e } from 'src/types/item.types';
+  import type { SectionColumnContext } from 'src/runtime/types';
 
   interface Props {
     section: TidySectionBase;
@@ -37,7 +38,8 @@
     sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
-    columns: ColumnsLoadout;
+    columns?: ColumnsLoadout;
+    columnsV2?: SectionColumnContext;
     headerRowClasses?: ClassValue;
     headerRowAttributes?: Omit<HTMLAttributes<HTMLElement>, 'class'>;
     rowClassFunction?: (entry: TEntry) => ClassValue;
@@ -61,6 +63,7 @@
     entryToggleMap,
     tabId,
     columns,
+    columnsV2,
     rowClassFunction,
     subtitle,
     afterInlineActivities,
@@ -87,11 +90,19 @@
   const localize = FoundryAdapter.localize;
 
   let hiddenColumns = $derived(
-    ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
+    columnsV2
+      ? ItemColumnRuntime.determineHiddenColumnsV2(
+          sectionsInlineWidth,
+          columnsV2,
+        )
+      : new Set<string>(),
   );
   // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
-  
-  const isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+
+  const isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 </script>
 
 <TidyTable
@@ -123,15 +134,19 @@
   {/snippet}
 
   {#snippet body()}
-    {const entriesWithContext = $derived(entries.map((entry) => ({
-      entry,
-      ctx: entryContext[entry.id],
-    })))}
+    {const entriesWithContext = $derived(
+      entries.map((entry) => ({
+        entry,
+        ctx: entryContext[entry.id],
+      })),
+    )}
 
     {#if entriesWithContext.length}
       {#each entriesWithContext as { entry, ctx }, i (entry.uuid)}
         {const expanded = $derived(!!entryToggleMap.get(tabId)?.has(entry.id))}
-        {const classes = $derived(rowClassFunction ? rowClassFunction(entry) : {})}
+        {const classes = $derived(
+          rowClassFunction ? rowClassFunction(entry) : {},
+        )}
 
         <TidyItemTableRow
           item={entry}
@@ -171,8 +186,7 @@
                 tabindex="0"
                 onclick={(ev) => toggleSummary()}
                 onkeydown={(ev) =>
-                  ev.key === 'Enter' ||
-                  (ev.key === ' ' && toggleSummary())}
+                  ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
               >
                 <span class="cell-text">
                   <span class="cell-name">{entry.name}</span>

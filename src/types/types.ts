@@ -15,6 +15,7 @@ import type {
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
   RegisteredPortraitMenuCommand,
+  SectionColumnContext,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -193,9 +194,9 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
-  // columns: ColumnsLoadout[];
-  rowActions: TidyTableAction<any, any, any>[];
+  rowActions: TidyTableAction<any, any>[];
   sectionActions: SectionCommand[];
+  columns: SectionColumnContext;
 };
 
 export type SectionCommand = {
@@ -359,7 +360,7 @@ export type ActivityItemContext = {
 
 export type ActivityItemSpellContext = {
   uuid?: string;
-}
+};
 
 // TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {
@@ -400,8 +401,7 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
+  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -413,8 +413,7 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  | SheetPinItemContext
-  | SheetPinActivityContext
+  SheetPinItemContext | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -878,11 +877,7 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'rounded';
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1021,8 +1016,7 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  | HTMLElement
-  | { get(index: number): HTMLElement };
+  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1108,7 +1102,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  // TODO: Merge more universal item context here before PR
+  rowActions?: TidyTableAction<any, any>[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1656,8 +1650,7 @@ export type EncounterDifficultyContext = {
 
 export type EncounterSheetQuadroneContext = {
   combatants: (
-    | EncounterMemberQuadroneContext
-    | EncounterPlaceholderQuadroneContext
+    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
   )[];
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: EncounterDifficultyContext;

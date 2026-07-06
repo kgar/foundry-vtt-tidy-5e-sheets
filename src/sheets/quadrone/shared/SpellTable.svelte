@@ -60,7 +60,6 @@
           tabId: tabId,
           sectionKey: section.key,
           rowActions: section.rowActions,
-          section: section,
           sheetDocument: sheetDocument,
         }),
       ),

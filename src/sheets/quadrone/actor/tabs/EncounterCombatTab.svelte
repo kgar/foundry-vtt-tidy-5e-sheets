@@ -137,7 +137,6 @@
           /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
           sectionKey: CONSTANTS.SHEET_TYPE_NPC,
           rowActions: rowActions,
-          section: { ...SheetSections.EMPTY, rowActions },
           sheetDocument: context.actor,
         }),
       ))}
