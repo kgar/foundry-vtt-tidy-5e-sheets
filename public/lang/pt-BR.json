@@ -1031,19 +1031,19 @@
     "TIDY5E.DisplayOptionsActor.Title": "Opções de Exibição do Ator",
     "TIDY5E.Utilities.CastActivityMissingSpell": "Nenhuma magia está anexada a esta atividade.",
     "TIDY5E.Settings.ShowTooltipCondition": {
-        "name": "Mostrar dicas de Condição do sistema"
+        "name": "Mostrar Dicas de Condição do Sistema"
     },
     "TIDY5E.Settings.ShowTooltipCreatureType": {
-        "name": "Mostrar dicas de Tipo de Criatura do sistema"
+        "name": "Mostrar Dicas de Tipo de Criatura do Sistema"
     },
     "TIDY5E.Settings.ShowTooltipMastery": {
-        "name": "Mostrar dicas de Weapon Mastery do sistema"
+        "name": "Mostrar Dicas de Weapon Mastery do Sistema"
     },
     "TIDY5E.Settings.ShowTooltipSkill": {
-        "name": "Mostrar dicas Perícias do sistema"
+        "name": "Mostrar Dicas Perícias do Sistema"
     },
     "TIDY5E.Settings.ShowTooltipTool": {
-        "name": "Mostrar dicas Ferramentas do sistema"
+        "name": "Mostrar Dicas Ferramentas do Sistema"
     },
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Cor de Fundo do Cabeçalho"
