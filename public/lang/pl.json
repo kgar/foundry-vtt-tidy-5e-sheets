@@ -1057,7 +1057,8 @@
         "hint": "Skonfiguruj ustawienia dla kart {sheetName}. Ukryj lub pokaż przyciski nagłówka i wybierz które zakładki maja być widoczne na karcie, w jakiej kolejności i dla kogo."
     },
     "TIDY5E.WorldSettings.TabConfiguration": {
-        "label": "Konfiguracja zakładki {tabName}"
+        "label": "Konfiguracja zakładki {tabName}",
+        "hint": "Konfiguruj które zakładki wyświetlać w karcie {tabName}, w jakiej kolejności i komu."
     },
     "TIDY5E.SheetSettings": {
         "title": "Ustawienia kart Tidy",
