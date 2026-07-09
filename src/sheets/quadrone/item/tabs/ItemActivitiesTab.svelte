@@ -60,7 +60,6 @@
         tabId: tabId,
         sectionKey: 'activities',
         rowActions: tableActions,
-        section: section,
         sheetDocument: context.item,
       }),
     ),

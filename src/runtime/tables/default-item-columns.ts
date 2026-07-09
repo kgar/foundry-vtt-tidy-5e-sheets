@@ -34,10 +34,10 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: DocumentActionsColumn,
       },
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
+      widthRems: (args: ColumnSpecificationCalculatedWidthArgs) => {
         let paddingX = 0.1875;
         let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
+        return buttonWidth * args.rowActions.length + paddingX;
       },
     },
     capacityTracker: {

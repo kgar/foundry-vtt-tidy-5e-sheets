@@ -214,7 +214,6 @@
           tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
           sectionKey: section.key,
           rowActions: section.rowActions,
-          section: section,
           sheetDocument: context.document,
         }),
       ))}

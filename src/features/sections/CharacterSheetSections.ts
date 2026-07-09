@@ -15,7 +15,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
-import { Inventory } from './Inventory';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(
@@ -25,7 +25,7 @@ export class CharacterSheetSections {
     backgrounds: any[],
     classes: any[],
     feats: any[],
-    options: Partial<CharacterFeatureSection>
+    options: Partial<CharacterFeatureSection>,
   ): Record<string, CharacterFeatureSection> {
     const customFeats = feats.filter((f) => TidyFlags.section.get(f));
     feats = feats.filter((f) => !TidyFlags.section.get(f));
@@ -43,6 +43,11 @@ export class CharacterSheetSections {
         show: true,
         rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
+        ),
         ...options,
       },
       background: {
@@ -57,6 +62,11 @@ export class CharacterSheetSections {
         show: true,
         rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
+        ),
         ...options,
       },
       classes: {
@@ -72,6 +82,11 @@ export class CharacterSheetSections {
         show: true,
         rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
+        ),
         ...options,
       },
       active: {
@@ -91,6 +106,11 @@ export class CharacterSheetSections {
         show: true,
         rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
+        ),
         ...options,
       },
       passive: {
@@ -107,35 +127,49 @@ export class CharacterSheetSections {
         show: true,
         rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
+        ),
         ...options,
       },
     };
 
     customFeats.forEach((f) =>
       CharacterSheetSections.applyCharacterFeatureToSection(
+        actor,
+        tabId,
         features,
         f,
-        options
-      )
+        options,
+      ),
     );
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       actor,
-      tabId
+      tabId,
     ).forEach((s) => {
-      features[s] ??= CharacterSheetSections.createFeatureSection(s, {
-        canCreate: true,
-        ...options,
-      });
+      features[s] ??= CharacterSheetSections.createFeatureSection(
+        actor,
+        tabId,
+        s,
+        {
+          canCreate: true,
+          ...options,
+        },
+      );
     });
 
     return features;
   }
 
   static applyCharacterFeatureToSection(
+    sheetDocument: Actor5e,
+    tabId: string,
     features: Record<string, CharacterFeatureSection>,
     feat: Item5e,
-    customSectionOptions: Partial<CharacterFeatureSection>
+    customSectionOptions: Partial<CharacterFeatureSection>,
   ) {
     const customSectionName = TidyFlags.section.get(feat);
 
@@ -146,16 +180,20 @@ export class CharacterSheetSections {
     const customSection: CharacterFeatureSection = (features[
       customSectionName
     ] ??= CharacterSheetSections.createFeatureSection(
+      sheetDocument,
+      tabId,
       customSectionName,
-      customSectionOptions
+      customSectionOptions,
     ));
 
     customSection.items.push(feat);
   }
 
   static createFeatureSection(
+    sheetDocument: Actor5e,
+    tabId: string,
     customSectionName: string,
-    customSectionOptions: Partial<CharacterFeatureSection>
+    customSectionOptions: Partial<CharacterFeatureSection>,
   ): CharacterFeatureSection {
     return {
       type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -179,6 +217,11 @@ export class CharacterSheetSections {
       show: true,
       rowActions: [], // for the UI Overhaul
       sectionActions: [], // for the UI Overhaul
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        sheetDocument,
+        tabId,
+        customSectionName,
+      ),
       ...customSectionOptions,
     };
   }
@@ -200,7 +243,7 @@ export class CharacterSheetSections {
     function buildOriginSection(
       key: string,
       item: Item5e,
-      options: Partial<CharacterFeatureSection>
+      options: Partial<CharacterFeatureSection>,
     ) {
       return CharacterSheetSections.createQuadroneFeatureSection({
         key,
@@ -260,7 +303,7 @@ export class CharacterSheetSections {
           section = featuresMap[key] = buildOriginSection(
             key,
             originItem,
-            options
+            options,
           );
         }
 
@@ -288,7 +331,7 @@ export class CharacterSheetSections {
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       actor,
-      tabId
+      tabId,
     ).forEach((s) => {
       featuresMap[s] ??= CharacterSheetSections.createQuadroneFeatureSection({
         key: s,
@@ -335,7 +378,7 @@ export class CharacterSheetSections {
 
     const features = Object.values(featuresMap).toSorted(
       (a, b) =>
-        (sectionSort[a.key] ?? Infinity) - (sectionSort[b.key] ?? Infinity)
+        (sectionSort[a.key] ?? Infinity) - (sectionSort[b.key] ?? Infinity),
     );
 
     return features;
@@ -372,7 +415,7 @@ export class CharacterSheetSections {
   static partitionItem(
     item: Item5e,
     partitions: CharacterItemPartitions,
-    inventory: ActorInventoryTypes
+    inventory: ActorInventoryTypes,
   ) {
     // Suppress riders for disabled enchantments
     if (item.dependentOrigin?.active === false) {
@@ -439,7 +482,7 @@ export class CharacterSheetSections {
 
   static createGenericFavoriteSection(
     key: string,
-    items: Item5e[]
+    items: Item5e[],
   ): CharacterFeatureSection {
     return {
       type: 'feature',

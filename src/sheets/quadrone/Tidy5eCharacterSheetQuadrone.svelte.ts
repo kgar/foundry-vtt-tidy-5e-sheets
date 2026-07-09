@@ -66,6 +66,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -412,16 +413,23 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
     // Inventory
     for (let item of partitions.items) {
+      const ctx = context.itemContext[item.id];
+      const rowActions = inventoryRowActions.filter(
+        (action) =>
+          !action.condition ||
+          action.condition({ data: item, rowContext: ctx }),
+      );
+
       Inventory.applyInventoryItemToSection(
         inventory,
         item,
         inventoryTypes,
         {
           canCreate: true,
-          rowActions: inventoryRowActions,
         },
         '',
         'actionSection',
+        rowActions,
       );
     }
 
@@ -486,6 +494,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     ];
 
     function createGenericSheetTabSection(
+      sheet: Tidy5eCharacterSheetQuadrone,
       key: string,
       items: Item5e[],
     ): CustomItemSectionQuadrone {
@@ -517,6 +526,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           },
         ],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          sheet.document,
+          CONSTANTS.TAB_ACTOR_ACTIONS,
+          key,
+        ),
       };
     }
 
@@ -534,10 +548,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
-        sectionsMap[section.key] = createGenericSheetTabSection(section.key, [
-          ...incomingItems,
-          ...mappedItems,
-        ]);
+        sectionsMap[section.key] = createGenericSheetTabSection(
+          this,
+          section.key,
+          [...incomingItems, ...mappedItems],
+        );
 
         continue;
       }
@@ -861,12 +876,26 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
+
     for (let item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      ctx.rowActions = inventoryRowActions.filter(
+        (action) =>
+          !action.condition ||
+          action.condition({ data: item, rowContext: ctx }),
+      );
+
+      Inventory.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+        },
+        undefined,
+        undefined,
+        inventoryRowActions,
+      );
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(

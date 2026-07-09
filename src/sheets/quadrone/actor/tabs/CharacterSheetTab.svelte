@@ -131,7 +131,6 @@
                   tabId: tabId,
                   sectionKey: section.key,
                   rowActions: section.rowActions,
-                  section: section,
                   sheetDocument: context.document,
                 }),
               ))}
@@ -155,7 +154,6 @@
                   tabId: tabId,
                   sectionKey: section.key,
                   rowActions: section.rowActions,
-                  section: section,
                   sheetDocument: context.document,
                 }),
               ))}
@@ -185,7 +183,6 @@
                   tabId,
                   sectionKey: section.key,
                   rowActions: section.rowActions,
-                  section: section,
                   sheetDocument: context.document,
                 }),
               ))}

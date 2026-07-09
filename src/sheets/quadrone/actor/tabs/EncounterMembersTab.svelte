@@ -67,7 +67,6 @@
           tabId: CONSTANTS.TAB_MEMBERS,
           sectionKey: CONSTANTS.SHEET_TYPE_NPC,
           rowActions: rowActions,
-          section: { ...SheetSections.EMPTY, rowActions },
           sheetDocument: context.actor,
         }),
       ))}
