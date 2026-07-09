@@ -12,14 +12,22 @@
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabConfiguration": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
-        "Title": "Wybór zakładki dla {documentName}",
-        "MenuOptionText": "Ustawienia zakładki",
+        "Title": "Skonfiguruj zakładki dla {documentName}",
+        "MenuOptionText": "Ustawienia zakładek",
         "AvailableHeader": "Ukryte zakładki",
         "SelectedHeader": "Widoczne zakładki",
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone.",
         "SelectionTab.Title": "Wybór zakładki",
-        "VisibilityTab.Title": "Widoczność zakładki"
+        "VisibilityTab.Title": "Widoczność zakładki",
+        "buttonLabel": "Ustawienia zakładek",
+        "options.viewers": "Dostęp użytkowników",
+        "options.visibility": "Pokaż zakładkę",
+        "showTabTooltip": "Pokaż tę zakładkę",
+        "hideTabTooltip": "Ukryj tę zakładkę",
+        "headers.tab": "Zakładka",
+        "headers.userVisibility": "Widoczne dla",
+        "headers.showTab": "Pokaż zakładkę"
     },
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Pojazdy",
@@ -330,8 +338,8 @@
         },
         "hint": "Spersonalizuj swoją kartę, aby stworzyć immersyjne doświadczenie, dopasowane do twojej gry.",
         "AccentColor.title": "Kolor akcentu",
-        "ActorHeaderBackground.title": "Tło nagłówka postaci",
-        "ItemSidebarBackground.title": "Tło bocznego panelu przedmiotu",
+        "ActorHeaderBackground.title": "Grafika nagłówka postaci",
+        "ItemSidebarBackground.title": "Grafika bocznego panelu przedmiotu",
         "PortraitShape": {
             "title": "Kształt portretu {type}",
             "option.round": "Okrągły",
@@ -340,7 +348,7 @@
             "option.token": "Token"
         },
         "RarityColors.title": "Kolory rzadkości",
-        "SheetTheme.title": "Motyw karty",
+        "SheetTheme.title": "Kolor motywu karty",
         "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
         "SpellcastingMethodColors.title": "Kolory stanu przygotowania zaklęć",
         "UseHeaderBackground.title": "Użyj tła nagłówka",
@@ -351,6 +359,12 @@
         "HeaderColor": {
             "title": "Kolor tła nagłówka",
             "hint": "Użyj innego koloru niż kolor akcentu karty dla nagłówka karty."
+        },
+        "UseBasicTheme.title": "Użyj podstawowego motywu",
+        "UseBasicTheme.hint": "Użyj klasycznego stylu pergaminu bez stylizowanych nagłówków kart i tabel.",
+        "HeaderBackgroundColor": {
+            "title": "Kolor nagłówka postaci",
+            "hint": "Użyj innego koloru niż kolor akcentu karty dla jej nagłówka."
         }
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
@@ -407,11 +421,17 @@
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Oznacz wszystkie przedmioty jako niezidentyfikowane",
     "TIDY5E.Settings.SheetPreferences": {
         "explanation": "Zaznacz wszystkie typy kart, dla których chcesz, aby Tidy 5e było używane domyślnie.",
-        "buttonLabel": "Ustaw Tidy 5e jako domyślną kartę",
+        "buttonLabel": "Karty domyślne",
         "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów kart, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
         "name": "Ustaw Tidy 5e jako domyślną kartę",
-        "disableAll": "Nie używaj dla żadnej karty",
-        "enableAll": "Używaj dla wszystkich kart"
+        "disableAll": "Przełącz na karty systemowe",
+        "enableAll": "Przełącz na karty Tidy",
+        "RevertToSystemSheets": "Przywróć do kart systemowych",
+        "Sheet": "Typ dokumentu",
+        "TidySheets": "Karty Tidy",
+        "SystemSheets": "Karty systemowe",
+        "dialogTitle": "Ustaw Tidy jako karty domyślne",
+        "dialogMessage": "Czy na pewno chcesz ustawić Tidy jako domyślne dla wszystkich kart?"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
     "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
@@ -694,7 +714,8 @@
         "SectionSelectorCreateNewSection": "Stwórz nową sekcję",
         "SectionSelectorNewSectionName": "Nazwa nowej sekcji",
         "SectionSelectorSaveNewSection": "Zapisz nową sekcję",
-        "SectionSelectorChooseTabSectionTooltip": "Wybierz sekcję {tabName}"
+        "SectionSelectorChooseTabSectionTooltip": "Wybierz sekcję {tabName}",
+        "ShowSection": "Pokaż sekcję"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+kliknij, aby pominąć rzut i natychmiast odnowić) ",
     "TIDY5E.UseDefaultDialog": {
@@ -718,9 +739,10 @@
     },
     "TIDY5E.WorldSettings.Menu": {
         "title": "Ustawienia świata (tylko MG)",
-        "name": "Ustawienia świata",
+        "name": "Przegląd",
         "hint": "Zmień ustawienia na poziomie świata, aby spersonalizować korzystanie z Tidy 5e Sheets. Ustawienia te są zapisywane w tym świecie Foundry i mają zastosowanie do całej zawartości związanej z Tidy 5e Sheets.",
-        "label": "Ustawienia świata"
+        "label": "Ustawienia świata",
+        "tabLabel": "Przegląd"
     },
     "TIDY5E.Settings.ShowClassList": {
         "name": "Pokaż listę klas",
@@ -838,7 +860,7 @@
     "TIDY5E.Visible": "Widoczne",
     "TIDY5E.Hidden": "Ukryte",
     "TIDY5E.Options.Title": "Opcje",
-    "TIDY5E.ConfigureTab.Title": "Konfiguruj {tabName}",
+    "TIDY5E.ConfigureTab.Title": "Skonfiguruj zakładkę {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opcje wyświetlania",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Pokarz wiersz pojemnika",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Karta NPC Tidy 5e",
@@ -893,7 +915,7 @@
     "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki Karta",
     "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki Karta",
     "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie",
-    "TIDY5E.SheetLock.Empty.Hint": "Zacznij od dodania klasy i pierwszych przedmiotów. Następnie skorzystaj z menu przedmiotu lub kliknij prawym przyciskiem myszy i wybierz „Dodaj do zakładki Karta”, aby dodać je tutaj.",
+    "TIDY5E.SheetLock.Empty.Hint": "<h3>Jak zacząć</h3><p>Zacznij od dodania klasy i pierwszych przedmiotów w zakładce <i class='fa-solid fa-wreath-laurel'></i> <strong>Postać</strong>. Następnie skorzystaj z menu przedmiotu lub kliknij prawym przyciskiem myszy i wybierz <strong>Dodaj do zakładki Karta</strong>, aby dodać je tutaj.</p><h3>Dostosuj swoją kartę</h3><p>Wybierz motyw karty Stylowy lub Podstawowy, zmień kolor akcentu karty albo obraz nagłówka, otwierając menu <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Dodatkowych opcji</strong> i wybierając <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Ustawienia motywu Tidy</strong></a>.</p><h3>Panel boczny</h3><p>Zapisz dowolny element w <i class='fa-solid fa-sidebar'></i> <strong>Panelu bocznym</strong> żeby użyć go później. Użyj menu <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Dodatkowych opcji</strong> lub kliknij prawym przyciskiem myszy dowolny element, a następnie wybierz <i class='fa-solid fa-star'></i> <strong>Dodaj do ulubionych</strong>, żeby dodać go do panelu bocznego.</p><h3>Ustawienia</h3><p>Aktualizuj ustawienia dla każdej zakładki i dostosuj sekcje, korzystając z przycisku <i class='fa-solid fa-gear'></i> <strong>Konfiguracja</strong> w każdej zakładce.</p>",
     "TIDY5E.EmptyFavorites": "Kliknij prawym przyciskiem myszy i Dodaj do ulubionych lub przeciągnij dowolny element z karty tutaj, żeby mieć do nich szybki dostęp.",
     "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami.",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
@@ -942,13 +964,13 @@
         "LocationHeader": "Nagłówek"
     },
     "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Przyciski nagłówka",
+        "name": "Skonfiguruj przyciski nagłówka",
         "label": "Konfiguruj przyciski nagłówka",
         "hint": "Tylko Nowe Karty Tidy: Skonfiguruj położenie przycisków nagłówka karty."
     },
     "TIDY5E.GMOnly.Title": "Tylko MG",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globalne domyślne opcje wyświetlania",
-    "TIDY5E.Character.Sidebar.Title": "Panel boczny postaci",
+    "TIDY5E.Character.Sidebar.Title": "Skonfiguruj panel boczny",
     "TIDY5E.Utilities.ShowSheetPins": "Pokaż przypięcia karty",
     "TIDY5E.SheetPin": {
         "Label": "Przypięcie karty",
@@ -992,7 +1014,8 @@
             "rollMutation": "Rzut na mutację",
             "rolledMutation": "{name} rzucił na mutację przy poziomie skażenia {level}.",
             "clear": "Usuń skażenie",
-            "none": "Brak skażenia ani objawów."
+            "none": "Brak skażenia ani objawów.",
+            "rollDeepHazeSave": "Rzut obronny przeciw Głębokiej Mgle"
         }
     },
     "TIDY5E.SectionOrganization": "Organizacja sekcji",
@@ -1013,5 +1036,119 @@
     "TIDY5E.AbbrProficiency": "Prof.",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrzostwo broni: {mastery}",
     "TIDY5E.Utilities.CastActivityMissingSpell": "Z tą czynnością nie wiąże się żadne zaklęcie.",
-    "TIDY5E.DisplayOptionsActor.Title": "Opcje wyświetlania aktorów"
+    "TIDY5E.DisplayOptionsActor.Title": "Opcje wyświetlania aktorów",
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Ustawienia zasad domowych",
+        "tabLabel": "Zasady domowe"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "Ukryj Klasyczne Karty Tidy 5e",
+        "hint": "Ukryj klasyczne karty Tidy w tym świecie."
+    },
+    "TIDY5E.WorldSettings.label": "Ustawienia kart Tidy",
+    "TIDY5E.WorldSettings.hint": "Konfiguruj globalne ustawienia kart Tidy.",
+    "TIDY5E.WorldSettings.Group": {
+        "TidySettings": "Ustawienia Tidy",
+        "ItemSheets": "Karty przedmiotu",
+        "ActorSheets": "Karty postaci"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "Konfiguracja karty {sheetName}",
+        "hint": "Skonfiguruj ustawienia dla kart {sheetName}. Ukryj lub pokaż przyciski nagłówka i wybierz które zakładki maja być widoczne na karcie, w jakiej kolejności i dla kogo."
+    },
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "Konfiguracja zakładki {tabName}"
+    },
+    "TIDY5E.SheetSettings": {
+        "title": "Ustawienia kart Tidy",
+        "hint": "Skonfiguruj ustawienia dla karty.",
+        "Group": {
+            "SheetSettings": "Ustawienia karty",
+            "Tabs": "Zakładki"
+        },
+        "Sidebar": {
+            "title": "Panel boczny",
+            "Hint": "Skonfiguruj ustawienia panelu bocznego."
+        },
+        "HeaderControls": {
+            "ShowControl": "Pokaż w {location}",
+            "Preview": "Podgląd przycisków nagłówka",
+            "MoveAllToMenu": "Przenieś wszystko do menu",
+            "MoveAllToHeader": "Przenieś wszystko do nagłówka",
+            "WorldSettingHint": "Rozmieszczenie przycisków nagłówka jest ustawieniem na poziomie świata i dotyczy wszystkich kart {sheetName}. Zmiany wprowadzone tutaj zostaną zastosowane do każdej z nich.",
+            "OpenWorldSettings": "Otwórz ustawienia świata"
+        },
+        "ConfigureTab": {
+            "title": "Skonfiguruj zakładkę {tabName}",
+            "hint": "Skonfiguruj ustawienia, widoczność i sekcje zakładki {tabName}."
+        },
+        "AssignSpellsToClasses": {
+            "hint": "Przypisz zaklęcia do klasy źródłowej, aby zaktualizować grupowanie i wskaźniki wizualne zaklęć w zakładce Księga czarów."
+        },
+        "NoTabsHint": "Obecnie nie są widoczne żadne zakładki. Dostosuj konfigurację zakładek, aby je włączyć."
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "Pokaż panel boczny",
+            "name": "Rozwinięty panel boczny"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "TidySettings": {
+            "name": "Ustawienia kart Tidy",
+            "label": "Skonfiguruj ustawienia Tidy",
+            "hint": "Skonfiguruj karty Tidy dla twojej gry. Ustaw domyślne karty, dostosuj motywy i globalne ustawienia domyślne dla swoich graczy."
+        },
+        "Defaults": {
+            "name": "Ustaw TIdy jako domyślna kartę",
+            "label": "Ustaw Tidy 5e jako domyślną kartę",
+            "hint": "Zaktualizuj tutaj domyślne karty postaci i przedmiotów, jeśli menu Podstawowe → Domyślne karty, nie działa zgodnie z oczekiwaniami."
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Przyciski nagłówka"
+        }
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "name": "Skonfiguruj globalne ustawienia motywu",
+        "tabLabel": "Ustawienia motywu",
+        "hint": "Skonfiguruj domyślne ustawienia motywu dla twojego świata gry. Zostaną one zastosowane dla wszystkich kart. Możesz również skonfigurować ustawienia motywu dla poszczególnych kart."
+    },
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "title": "Zamień wartość cechy z modyfikatorem",
+        "name": "Zamień wartość cechy z modyfikatorem",
+        "hint": "Zamień miejscami wartość cechy z modyfikatorem na nagłówku karty."
+    },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Kolor tła nagłówka"
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "name": "Ustaw Tidy jako domyślną kartę",
+        "tabLabel": "Domyślne karty",
+        "switchToTidySheets": "Przełącz na karty Tidy",
+        "revertToSystemSheets": "Przywróć do kart systemowych",
+        "chooseSpecific": "Zamiast tego wybierz konkretne typy kart",
+        "hint": "Wybierz wszystkie typy dokumentów, dla których chcesz, aby Tidy 5e Sheets były domyślną kartą."
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Witaj w <span>Tidy 5e Sheets</span>. Wybierz tutaj domyślne ustawienia dla świata, a następnie użyj zakładek po lewej stronie, aby dostosować motywy, zakładki kart i inne opcje.",
+        "useTidyHint": "Ustaw Tidy 5e Sheets jako domyślną kartę dla każdego typu postaci i przedmiotu w tym świecie.",
+        "resetHint": "Zresetuj wszystkie ustawienia świata Tidy 5e Sheets do wartości domyślnych. Tej operacji nie można cofnąć."
+    },
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "Pokaż systemowe podpowiedzi stanów"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "Pokaż systemowe podpowiedzi rodzaju stworzenia"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "Pokaż systemowe podpowiedzi mistrzostwa broni"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "Pokaż systemowe podpowiedzi umiejętności"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "Pokaż systemowe podpowiedzi narzędzi"
+    },
+    "TIDY5E.UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
+    "TIDY5E.UndoChanges": "Cofnij zmiany"
 }
