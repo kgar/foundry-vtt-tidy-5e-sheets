@@ -38,32 +38,32 @@
     </div>
 
     <div class="list-content">
-        <button
-          aria-label={localize('TIDY5E.CompendiumBrowser', {
-            name: localize('TYPES.Item.class'),
-          })}
-          type="button"
-          class="button button-primary"
-          data-tooltip
-          data-action="findItem"
-          data-item-type="class"
-        >
-          <i class="fa-solid fa-book-atlas"></i>
-          {localize('DND5E.ClassAdd')}
-        </button>
-        <button
-          aria-label={localize('TIDY5E.AddCustom', {
-            name: localize('TYPES.Item.class'),
-          })}
-          type="button"
-          class="button button-secondary"
-          onclick={(ev) =>
-            FoundryAdapter.createItem({ type: 'class' }, context.actor)}
-        >
-          {localize('TIDY5E.AddCustom', {
-            name: localize('TYPES.Item.class'),
-          })}
-        </button>
+      <button
+        aria-label={localize('TIDY5E.CompendiumBrowser', {
+          name: localize('TYPES.Item.class'),
+        })}
+        type="button"
+        class="button button-primary"
+        data-tooltip
+        data-action="findItem"
+        data-item-type="class"
+      >
+        <i class="fa-solid fa-book-atlas"></i>
+        {localize('DND5E.ClassAdd')}
+      </button>
+      <button
+        aria-label={localize('TIDY5E.AddCustom', {
+          name: localize('TYPES.Item.class'),
+        })}
+        type="button"
+        class="button button-secondary"
+        onclick={(ev) =>
+          FoundryAdapter.createItem({ type: 'class' }, context.actor)}
+      >
+        {localize('TIDY5E.AddCustom', {
+          name: localize('TYPES.Item.class'),
+        })}
+      </button>
     </div>
   </div>
 {:else}
@@ -84,9 +84,9 @@
 
       {@render classContent(firstClass)}
     </div>
-  {/if}
 
-  {@render subclassRow(firstClass)}
+    {@render subclassRow(firstClass)}
+  {/if}
 
   {#each restClasses as cls (cls.uuid)}
     <div
@@ -272,7 +272,7 @@
   {#if cls?.subclass}
     {@render subclassListEntry(cls.subclass, orphaned)}
   {:else if cls?.needsSubclass}
-    {@render needsSubclassListEntry(firstClass.item)}
+    {@render needsSubclassListEntry(cls.item)}
   {/if}
 {/snippet}
 
