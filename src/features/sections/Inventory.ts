@@ -4,6 +4,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  Actor5e,
   ContainerCapacityContext,
   ContainerPanelItemContext,
   InventorySection,
@@ -36,6 +37,7 @@ export class Inventory {
   }
 
   static getDefaultInventorySections(
+    sheetDocument: Actor5e | Item5e,
     options: Partial<InventorySection> = {},
   ): Record<string, InventorySection> {
     const inventoryTypes = Inventory.getInventoryTypes();
@@ -58,7 +60,7 @@ export class Inventory {
         rowActions: [],
         sectionActions: [],
         columns: ItemColumnRuntime.getColumnSpecifications(
-          this,
+          sheetDocument,
           CONSTANTS.TAB_ACTOR_INVENTORY,
           type,
         ),
@@ -103,6 +105,7 @@ export class Inventory {
   }
 
   static createInventorySection(
+    sheetDocument: Actor5e | Item5e,
     customSectionName: string,
     defaultInventoryTypes: string[],
     customSectionOptions: Partial<InventorySection>,
@@ -122,7 +125,7 @@ export class Inventory {
       rowActions: [],
       sectionActions: [],
       columns: ItemColumnRuntime.getColumnSpecifications(
-        this,
+        sheetDocument,
         CONSTANTS.TAB_ACTOR_INVENTORY,
         customSectionName,
       ),

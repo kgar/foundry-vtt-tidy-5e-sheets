@@ -527,7 +527,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         ],
         sectionActions: [],
         columns: ItemColumnRuntime.getColumnSpecifications(
-          sheet,
+          sheet.document,
           CONSTANTS.TAB_ACTOR_ACTIONS,
           key,
         ),

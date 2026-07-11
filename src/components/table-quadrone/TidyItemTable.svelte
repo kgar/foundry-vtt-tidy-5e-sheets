@@ -124,6 +124,7 @@
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells
         {columns}
+        {columnsV2}
         {hiddenColumns}
         {section}
         {context}
