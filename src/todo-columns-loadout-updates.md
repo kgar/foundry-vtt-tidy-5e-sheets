@@ -28,6 +28,7 @@
 - [ ] Apply custom column setup to activities
   - [ ] (across all tabs) Activities
 - [ ] test and fix
+- [ ] Remove rowActions from base section definition
 - [ ] Resolve remaining check errors
 - [ ] Ensure each tab tables invocation is properly looking for columnsV2
   - [ ] ... (enumerate)

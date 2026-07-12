@@ -19,7 +19,9 @@
     section: TidyItemSectionBase;
     itemContext: Record<
       string,
-      CharacterItemQuadroneContext | NpcItemQuadroneContext | VehicleItemQuadroneContext
+      | CharacterItemQuadroneContext
+      | NpcItemQuadroneContext
+      | VehicleItemQuadroneContext
     >;
     inlineToggleService: InlineToggleService;
     sheetDocument: Actor5e | Item5e;
@@ -67,6 +69,7 @@
   entryToggleMap={itemToggleMap}
   {tabId}
   {columns}
+  columnsV2={section.columns}
 >
   {#snippet subtitle(item, ctx)}
     {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}

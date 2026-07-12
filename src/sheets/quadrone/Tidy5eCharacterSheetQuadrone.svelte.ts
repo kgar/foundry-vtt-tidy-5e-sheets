@@ -296,7 +296,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       // skills/tools, and spell slots and churns out sections and any side-effecting context changes
       // (like pinning skills/tools/slots(?) when in Origin mode).
 
-      await this.prepareSheetTabSections(context);
+      this.prepareSheetTabSections(context);
     }
 
     context.customContent =
@@ -338,12 +338,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const actionSections = getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
         context,
-        {
-          rowActions: TableRowActionsRuntime.getActionsRowActions(
-            this.actor.isOwner,
-            context.unlocked,
-          ),
-        },
       );
 
       actionSections.forEach((section) => {
@@ -861,6 +855,14 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           // Classify items into types
           if (!isWithinContainer) {
             CharacterSheetSections.partitionItem(item, obj, inventory);
+          } else {
+            // TODO: Find a cleaner way to handle all tabled documents' row actions.
+            // Contained items get row actions like any other item
+            ctx.rowActions = inventoryRowActions.filter(
+              (action) =>
+                !action.condition ||
+                action.condition({ data: item, rowContext: ctx }),
+            );
           }
 
           return obj;
@@ -881,8 +883,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     // Organize items
     // Section the items by type
 
-    for (let item of items) {
+    for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
+
       ctx.rowActions = inventoryRowActions.filter(
         (action) =>
           !action.condition ||

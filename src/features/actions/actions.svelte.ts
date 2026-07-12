@@ -8,6 +8,7 @@ import type {
   ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
+  CharacterItemQuadroneContext,
   CharacterSheetQuadroneContext,
   CustomItemSectionQuadrone,
   TidyItemSectionBase,
@@ -162,6 +163,7 @@ export function getCharacterSheetTabActionSectionsQuadrone(
 
     return buildActionSectionsQuadrone(
       actor,
+      context.itemContext,
       CONSTANTS.TAB_ACTOR_ACTIONS,
       eligibleItems,
       options,
@@ -174,6 +176,7 @@ export function getCharacterSheetTabActionSectionsQuadrone(
 
 function buildActionSectionsQuadrone(
   actor: Actor5e,
+  itemContext: Record<string, CharacterItemQuadroneContext>,
   tabId: string,
   items: Item5e[],
   options?: Partial<CustomItemSectionQuadrone>,
@@ -226,7 +229,13 @@ function buildActionSectionsQuadrone(
         ),
         ...options,
       });
+
       customSection.items.push(item);
+
+      ItemColumnRuntime.applyRowActionColumnWidth(
+        customSection,
+        itemContext[item.id]?.rowActions,
+      );
     } else {
       const activationType = getActivationType(
         item.system.activities?.contents[0]?.activation?.type,
@@ -250,6 +259,11 @@ function buildActionSectionsQuadrone(
         ...options,
       });
       section.items.push(item);
+
+      ItemColumnRuntime.applyRowActionColumnWidth(
+        section,
+        itemContext[item.id]?.rowActions,
+      );
     }
   }
 
