@@ -1008,6 +1008,7 @@ export type ActiveEffectContext = {
   uuid: string;
   effect: ActiveEffect5e;
   riders: ActiveEffectContext[];
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &

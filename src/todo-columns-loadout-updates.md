@@ -8,7 +8,7 @@
   - [x] Inventory
   - [x] Spellbook
   - [x] Features
-  - [ ] Effects
+  - [x] Effects
 - [x] Ensure column show/hide works properly
 - [x] Ensure Row Actions render properly
 - [x] Ensure SectionActionsColumnHeader / Section Base is aware of row actions count so it can mirror.

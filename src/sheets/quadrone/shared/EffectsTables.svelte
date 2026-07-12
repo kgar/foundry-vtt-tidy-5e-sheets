@@ -33,8 +33,10 @@
       >(),
     );
 
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
-
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let sections = $derived(context.effects);
 
@@ -44,26 +46,27 @@
 </script>
 
 {#each sections as section (section.key)}
-  {const columns = $derived(new ColumnsLoadout(
-    EffectColumnRuntime.getConfiguredColumnSpecifications({
-      sheetType: context.document.type,
-      tabId: tabId,
-      sectionKey: section.key,
-      rowActions: section.rowActions,
-      sheetDocument: context.document,
-    }),
-  ))}
+  {const columns = $derived(
+    new ColumnsLoadout(
+      EffectColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: context.document.type,
+        tabId: tabId,
+        sectionKey: section.key,
+        rowActions: section.rowActions,
+        sheetDocument: context.document,
+      }),
+    ),
+  )}
 
-  {const hiddenColumns = $derived(EffectColumnRuntime.determineHiddenColumns(
-    inlineWidth,
-    columns,
-    10,
-  ))}
+  {const hiddenColumns = $derived(
+    EffectColumnRuntime.determineHiddenColumns(inlineWidth, columns, 10),
+  )}
   {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
         <TidyTableHeaderRow
-          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type === 'suppressed' || section.disabled
+          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
+            'suppressed' || section.disabled
             ? 'diminished'
             : ''}"
         >
@@ -76,6 +79,7 @@
 
           <TidyTableCustomHeaderCells
             {columns}
+            columnsV2={section.columns}
             {context}
             {hiddenColumns}
             {section}
@@ -83,11 +87,11 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {const effectEntries = $derived(section.effects.map(
-          (effect: ActiveEffectContext) => ({
+        {const effectEntries = $derived(
+          section.effects.map((effect: ActiveEffectContext) => ({
             effect,
-          }),
-        ))}
+          })),
+        )}
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,
@@ -115,7 +119,8 @@
     {#snippet children({ toggleSummary, expanded })}
       {#if isRider}
         <span class="inline-activity-arrow">
-          <i class="fa-solid fa-turn-up fa-fw fa-rotate-90 color-text-disabled"></i>
+          <i class="fa-solid fa-turn-up fa-fw fa-rotate-90 color-text-disabled"
+          ></i>
         </span>
       {/if}
       <span class="tidy-table-row-use-button disabled">
@@ -127,13 +132,15 @@
       </span>
       <TidyTableCell primary={true}>
         <!--svelte-ignore a11y_missing_attribute-->
-        <a 
-          class="item-name" 
+        <a
+          class="item-name"
           onclick={(ev) => toggleSummary()}
-          onkeydown={(ev) => ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
+          onkeydown={(ev) =>
+            ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
           role="button"
           tabindex="0"
-          data-keyboard-focus>
+          data-keyboard-focus
+        >
           <span class="cell-text">
             <span class="cell-name">{ctx.effect.name}</span>
           </span>
@@ -146,6 +153,7 @@
 
       <TidyTableCustomCells
         {columns}
+        columnsV2={section.columns}
         {context}
         {ctx}
         entry={ctx}

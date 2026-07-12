@@ -84,6 +84,7 @@ export class ConditionsAndEffects {
             uuid: effect.uuid,
             effect: effect,
             riders: [],
+            rowActions: [], // for quadrone only
           });
           return arr;
         },
@@ -125,9 +126,11 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
+    const allEffectRowActions =
+      TableRowActionsRuntime.getEffectsRowActions(context);
     const sectionActions: SectionCommand[] = [];
+    const newCategories: ActiveEffectSection[] = [];
 
-    let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
         ...category,
@@ -172,6 +175,11 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
+              rowActions: allEffectRowActions.filter(
+                (action) =>
+                  !action.condition ||
+                  action.condition({ data: effect, rowContext: undefined }),
+              ),
             });
             return arr;
           },
@@ -182,7 +190,7 @@ export class ConditionsAndEffects {
           context.editable && !category.isEnchantment && !category.disabled,
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
-        rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        rowActions: [], // to be removed
         sectionActions,
         columns: EffectColumnRuntime.getColumnSpecifications(
           context.document,
@@ -190,6 +198,16 @@ export class ConditionsAndEffects {
           key,
         ),
       });
+    }
+
+    // TODO: Avoid additional looping
+    for (const section of newCategories) {
+      for (const effect of section.effects) {
+        EffectColumnRuntime.applyRowActionColumnWidth(
+          section,
+          effect.rowActions,
+        );
+      }
     }
 
     return {
@@ -202,8 +220,10 @@ export class ConditionsAndEffects {
     context: DocumentSheetQuadroneContext<any>,
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<ActiveEffectSection[]> {
-    let newCategories: ActiveEffectSection[] = [];
+    const newCategories: ActiveEffectSection[] = [];
     const sectionActions: SectionCommand[] = [];
+    const allEffectRowActions =
+      TableRowActionsRuntime.getEffectsRowActions(context);
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -231,6 +251,11 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
+              rowActions: allEffectRowActions.filter(
+                (action) =>
+                  !action.condition ||
+                  action.condition({ data: effect, rowContext: undefined }),
+              ),
             });
             return arr;
           },
@@ -241,7 +266,7 @@ export class ConditionsAndEffects {
         canCreate: context.editable && !category.isEnchantment,
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
-        rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        rowActions: [], // to be removed
         sectionActions,
         columns: EffectColumnRuntime.getColumnSpecifications(
           context.document,
@@ -249,6 +274,16 @@ export class ConditionsAndEffects {
           key,
         ),
       });
+    }
+
+    // TODO: Avoid additional looping
+    for (const section of newCategories) {
+      for (const effect of section.effects) {
+        EffectColumnRuntime.applyRowActionColumnWidth(
+          section,
+          effect.rowActions,
+        );
+      }
     }
 
     return newCategories;
