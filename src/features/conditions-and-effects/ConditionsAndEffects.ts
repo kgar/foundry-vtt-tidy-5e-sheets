@@ -11,19 +11,21 @@ import type {
 } from 'src/types/types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
     actor: Actor5e,
     object: any,
-    effectSections: Record<string, EffectCategory<ActiveEffect5e>>
+    effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<{
     conditions: Dnd5eActorCondition[];
     effects: Record<string, EffectCategory<ActiveEffectContext>>;
   }> {
     const conditionIds = new Set();
     const conditions = Object.entries<ConditionType>(
-      CONFIG.DND5E.conditionTypes
+      CONFIG.DND5E.conditionTypes,
     ).reduce<Dnd5eActorCondition[]>((arr, [k, c]) => {
       if (c.pseudo) return arr; // Filter out pseudo-conditions.
       const { name, img, reference } = c;
@@ -33,8 +35,8 @@ export class ConditionsAndEffects {
       const { disabled, img: existingImg } = existing ?? {};
       arr.push({
         name,
-        reference: SettingsProvider.settings.referenceTooltipCondition.get() 
-          ? reference 
+        reference: SettingsProvider.settings.referenceTooltipCondition.get()
+          ? reference
           : undefined,
         id: k,
         icon: existingImg ?? img,
@@ -81,11 +83,11 @@ export class ConditionsAndEffects {
             hasTooltip: source instanceof dnd5e.documents.Item5e,
             uuid: effect.uuid,
             effect: effect,
-            riders: []
+            riders: [],
           });
           return arr;
         },
-        []
+        [],
       );
     }
 
@@ -98,14 +100,14 @@ export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActorQuadrone(
     context: DocumentSheetQuadroneContext<any>,
     object: any,
-    effectSections: Record<string, EffectCategory<ActiveEffect5e>>
+    effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<{
     conditions: Dnd5eActorCondition[];
     effects: ActiveEffectSection[];
   }> {
     const conditionIds = new Set();
     const conditions = Object.entries<ConditionType>(
-      CONFIG.DND5E.conditionTypes
+      CONFIG.DND5E.conditionTypes,
     ).reduce<Dnd5eActorCondition[]>((arr, [k, c]) => {
       if (c.pseudo) return arr; // Filter out pseudo-conditions.
       const { name, img, reference } = c;
@@ -169,11 +171,11 @@ export class ConditionsAndEffects {
               hasTooltip: source instanceof dnd5e.documents.Item5e,
               uuid: effect.uuid,
               effect: effect,
-              riders: []
+              riders: [],
             });
             return arr;
           },
-          []
+          [],
         ),
         key: key,
         canCreate:
@@ -182,6 +184,11 @@ export class ConditionsAndEffects {
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
         sectionActions,
+        columns: EffectColumnRuntime.getColumnSpecifications(
+          context.document,
+          CONSTANTS.TAB_EFFECTS,
+          key,
+        ),
       });
     }
 
@@ -193,7 +200,7 @@ export class ConditionsAndEffects {
 
   static async getEffectsForItem(
     context: DocumentSheetQuadroneContext<any>,
-    effectSections: Record<string, EffectCategory<ActiveEffect5e>>
+    effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
     const sectionActions: SectionCommand[] = [];
@@ -223,12 +230,12 @@ export class ConditionsAndEffects {
               hasTooltip: true,
               uuid: effect.uuid,
               effect: effect,
-              riders: []
+              riders: [],
             });
             return arr;
           },
 
-          []
+          [],
         ),
         key: key,
         canCreate: context.editable && !category.isEnchantment,
@@ -236,6 +243,11 @@ export class ConditionsAndEffects {
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
         sectionActions,
+        columns: EffectColumnRuntime.getColumnSpecifications(
+          context.document,
+          CONSTANTS.TAB_EFFECTS,
+          key,
+        ),
       });
     }
 

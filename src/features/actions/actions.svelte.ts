@@ -18,6 +18,8 @@ import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from '../containers/Container';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -102,6 +104,7 @@ function buildActionSections(
       show: true,
       rowActions: [],
       sectionActions: [],
+      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
     };
   });
 
@@ -121,6 +124,7 @@ function buildActionSections(
         },
         rowActions: [],
         sectionActions: [],
+        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       customSection.actions.push(actionItem);
     } else {
@@ -136,6 +140,7 @@ function buildActionSections(
         show: true,
         rowActions: [],
         sectionActions: [],
+        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       section.actions.push(actionItem);
     }
@@ -155,7 +160,12 @@ export function getCharacterSheetTabActionSectionsQuadrone(
         context.itemContext[item.id]?.includeInCharacterSheetTab,
     );
 
-    return buildActionSectionsQuadrone(eligibleItems, options);
+    return buildActionSectionsQuadrone(
+      actor,
+      CONSTANTS.TAB_ACTOR_ACTIONS,
+      eligibleItems,
+      options,
+    );
   } catch (e) {
     error('An error occurred while getting actions', false, e);
     return [];
@@ -163,6 +173,8 @@ export function getCharacterSheetTabActionSectionsQuadrone(
 }
 
 function buildActionSectionsQuadrone(
+  actor: Actor5e,
+  tabId: string,
   items: Item5e[],
   options?: Partial<CustomItemSectionQuadrone>,
 ): CustomItemSectionQuadrone[] {
@@ -181,6 +193,11 @@ function buildActionSectionsQuadrone(
       show: true,
       rowActions: [],
       sectionActions: [],
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        actor,
+        tabId,
+        activationType,
+      ),
       ...options,
     };
   });
@@ -202,6 +219,11 @@ function buildActionSectionsQuadrone(
         },
         rowActions: [],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          customSectionName,
+        ),
         ...options,
       });
       customSection.items.push(item);
@@ -220,6 +242,11 @@ function buildActionSectionsQuadrone(
         show: true,
         rowActions: [],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          activationType,
+        ),
         ...options,
       });
       section.items.push(item);
@@ -502,14 +529,13 @@ export function actorUsesActionFeature(actor: Actor5e) {
     return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
   }
 
-  const defaultTabIds =
-    actor.system.isCharacter
-      ? settings.value.defaultCharacterSheetTabs
-      : actor.system.isNPC
-        ? settings.value.defaultNpcSheetTabs
-        : actor.system.isVehicle
-          ? settings.value.defaultVehicleSheetTabs
-          : [];
+  const defaultTabIds = actor.system.isCharacter
+    ? settings.value.defaultCharacterSheetTabs
+    : actor.system.isNPC
+      ? settings.value.defaultNpcSheetTabs
+      : actor.system.isVehicle
+        ? settings.value.defaultVehicleSheetTabs
+        : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
 }

@@ -28,8 +28,9 @@
   }: Props = $props();
 </script>
 
-{#if columns}
-  {#each columns.ordered as column}
+{#if columnsV2}
+  {#each columnsV2.sorted as key}
+    {const column = $derived(columnsV2.map[key])}
     {const hidden = $derived(hiddenColumns.has(column.key))}
 
     <TidyTableHeaderCell
@@ -52,12 +53,8 @@
       {/if}
     </TidyTableHeaderCell>
   {/each}
-{/if}
-
-{#if columnsV2}
-  <h2>COLUMNS V2</h2>
-  {#each columnsV2.sorted as key}
-    {const column = $derived(columnsV2.map[key])}
+{:else if columns}
+  {#each columns.ordered as column}
     {const hidden = $derived(hiddenColumns.has(column.key))}
 
     <TidyTableHeaderCell

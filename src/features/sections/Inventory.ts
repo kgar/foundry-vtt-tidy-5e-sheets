@@ -73,6 +73,8 @@ export class Inventory {
 
   // TODO: switch to object param
   static applyInventoryItemToSection(
+    sheetDocument: Actor5e | Item5e,
+    tabId: string,
     inventory: Record<string, InventorySection>,
     item: Item5e,
     defaultInventoryTypes: string[],
@@ -87,13 +89,14 @@ export class Inventory {
       let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];
       partition?.items.push(item);
 
-      ItemColumnRuntime.applyDynamicColumnWidths(partition, rowActions);
-
+      ItemColumnRuntime.applyRowActionColumnWidth(partition, rowActions);
       return;
     }
 
     const customSection: InventorySection = (inventory[customSectionName] ??=
       Inventory.createInventorySection(
+        sheetDocument,
+        tabId,
         customSectionName,
         defaultInventoryTypes,
         customSectionOptions,
@@ -101,11 +104,12 @@ export class Inventory {
 
     customSection.items.push(item);
 
-    ItemColumnRuntime.applyDynamicColumnWidths(customSection, rowActions);
+    ItemColumnRuntime.applyRowActionColumnWidth(customSection, rowActions);
   }
 
   static createInventorySection(
     sheetDocument: Actor5e | Item5e,
+    tabId: string,
     customSectionName: string,
     defaultInventoryTypes: string[],
     customSectionOptions: Partial<InventorySection>,
@@ -126,7 +130,7 @@ export class Inventory {
       sectionActions: [],
       columns: ItemColumnRuntime.getColumnSpecifications(
         sheetDocument,
-        CONSTANTS.TAB_ACTOR_INVENTORY,
+        tabId,
         customSectionName,
       ),
       ...customSectionOptions,
@@ -173,6 +177,8 @@ export class Inventory {
 
     for (let item of containerItems) {
       Inventory.applyInventoryItemToSection(
+        container,
+        CONSTANTS.TAB_CONTAINER_CONTENTS,
         inventory,
         item,
         inventoryTypes,

@@ -116,6 +116,7 @@
   entryToggleMap={itemToggleMap}
   {tabId}
   {columns}
+  columnsV2={section.columns}
   {rowClassFunction}
   {headerRowClasses}
   {headerRowAttributes}

@@ -212,6 +212,7 @@
             {@render afterFirstCell?.(entry, ctx)}
             <TidyTableCustomCells
               {columns}
+              columnsV2={section.columns}
               {hiddenColumns}
               {ctx}
               {entry}

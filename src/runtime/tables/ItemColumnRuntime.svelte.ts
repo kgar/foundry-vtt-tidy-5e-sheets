@@ -16,7 +16,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
 
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
     const standardItemActionsColumn: ColumnSpecification = {
-      ...columns.actions,
+      ...columns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
       order: 1000,
       priority: 1000,
     };
@@ -28,7 +28,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         priority: 200,
       },
       capacityBar: { ...columns.capacityBar, order: 200, priority: 100 },
-      actions: standardItemActionsColumn,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
@@ -57,7 +57,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 500,
         priority: 200,
       },
-      actions: standardItemActionsColumn,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardWeaponColumns = {
@@ -96,7 +96,8 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 700,
         priority: 200,
       },
-      actions: standardInventoryColumns.actions,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]:
+        standardInventoryColumns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
     } satisfies Record<string, ColumnSpecification>;
 
     const standardSpellColumns = {
@@ -135,7 +136,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 600,
         priority: 700,
       },
-      actions: standardItemActionsColumn,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardLootColumns = {
@@ -154,7 +155,8 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 300,
         priority: 100,
       },
-      actions: standardInventoryColumns.actions,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]:
+        standardInventoryColumns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
     } satisfies Record<string, ColumnSpecification>;
 
     const standardConsumableColumns = {
@@ -183,7 +185,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 500,
         priority: 100,
       },
-      actions: standardItemActionsColumn,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const creatureInventorySections = {
@@ -234,7 +236,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         order: 30,
         priority: 80,
       },
-      actions: standardItemActionsColumn,
+      [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     return {
@@ -261,7 +263,11 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
               order: 500,
               priority: 100,
             },
-            actions: { ...columns.actions, order: 1000, priority: 1000 },
+            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
+              ...columns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
+              order: 1000,
+              priority: 1000,
+            },
           },
         },
       },
@@ -275,7 +281,11 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
             range: { ...columns.range, order: 500, priority: 300 },
             target: { ...columns.target, order: 600, priority: 800 },
             time: { ...columns.time, order: 700, priority: 800 },
-            actions: { ...columns.actions, order: 1000, priority: 1000 },
+            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
+              ...columns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
+              order: 1000,
+              priority: 1000,
+            },
           },
         },
         [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
@@ -296,7 +306,11 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
             range: { ...columns.range, order: 500, priority: 300 },
             target: { ...columns.target, order: 600, priority: 800 },
             time: { ...columns.time, order: 700, priority: 800 },
-            actions: { ...columns.actions, order: 1000, priority: 1000 },
+            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
+              ...columns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
+              order: 1000,
+              priority: 1000,
+            },
           },
         },
       },
@@ -315,7 +329,11 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
             range: { ...columns.range, order: 400, priority: 300 },
             target: { ...columns.target, order: 500, priority: 200 },
             time: { ...columns.time, order: 600, priority: 250 },
-            actions: { ...columns.actions, order: 1000, priority: 1000 },
+            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
+              ...columns[CONSTANTS.COLUMN_KEY_ROW_ACTIONS],
+              order: 1000,
+              priority: 1000,
+            },
           },
         },
       },

@@ -21,15 +21,13 @@
 
   const menuAction = SectionActions.getMenuActionCommand();
 
-  const sectionActionLimit = $derived(section.rowActions.length);
-
   // Reverse section actions so that the most important action is on the far right.
   const reversedSectionActions = $derived(
     iterateReversed(section.sectionActions),
   );
 </script>
 
-{#if section.sectionActions.length <= sectionActionLimit}
+{#if section.sectionActions.length <= section.columns.maxRowActionsCount}
   {#each reversedSectionActions as action}
     <SectionActionHeaderControl
       {action}

@@ -8,10 +8,11 @@ import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeCol
 import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import ActivityActionsColumnHeader from 'src/sheets/quadrone/item/columns/ActivityActionsColumnHeader.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export function getDefaultActivityColumns() {
   return {
-    actions: {
+    [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
       headerClasses: 'header-cell-actions',
       headerContent: {
         type: 'component',

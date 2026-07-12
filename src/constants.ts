@@ -13,6 +13,7 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP: 'xp',
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
+  COLUMN_KEY_ROW_ACTIONS: 'actions',
   COLUMN_SPEC_SECTION_KEY_DEFAULT:
     'default section key fallback for column specs',
   COLUMN_SPEC_TAB_KEY_DEFAULT: 'default tab key fallback for column specs',

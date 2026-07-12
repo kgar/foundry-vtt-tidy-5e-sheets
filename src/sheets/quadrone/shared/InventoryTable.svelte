@@ -86,6 +86,7 @@
   entryToggleMap={containerToggleMap}
   {tabId}
   {columns}
+  columnsV2={section.columns}
   {root}
 >
   {#snippet subtitle(_item, ctx)}
@@ -123,23 +124,28 @@
   {/snippet}
 
   {#snippet afterFirstCell(entry, ctx)}
-    {const mastered = $derived(actor?.system.traits?.weaponProf?.mastery?.value?.has(
-      entry.system.type?.baseItem ?? '',
-    ))}
+    {const mastered = $derived(
+      actor?.system.traits?.weaponProf?.mastery?.value?.has(
+        entry.system.type?.baseItem ?? '',
+      ),
+    )}
 
     {#if mastered}
-      {const mastery = $derived(CONFIG.DND5E.weaponMasteries[entry.system.mastery])}
-      {const reference =
-        $derived(SettingsProvider.settings.referenceTooltipMastery.get()
+      {const mastery = $derived(
+        CONFIG.DND5E.weaponMasteries[entry.system.mastery],
+      )}
+      {const reference = $derived(
+        SettingsProvider.settings.referenceTooltipMastery.get()
           ? mastery?.reference
-          : undefined)}
+          : undefined,
+      )}
       {const tooltip = $derived(
         !isNil(mastery?.label, '')
           ? FoundryAdapter.localize('TIDY5E.Weapon.Mastery.LabelWithMastery', {
-            mastery: mastery.label,
-          })
-          : game.i18n.format('DND5E.WEAPON.Mastery.Label')
-        )}
+              mastery: mastery.label,
+            })
+          : game.i18n.format('DND5E.WEAPON.Mastery.Label'),
+      )}
 
       <i
         class="fa-solid fa-circle-star color-icon-theme-highlight highlighted mastery item-state-indicator"
@@ -152,7 +158,7 @@
       {const iconClass = $derived(
         entry.system.attuned
           ? 'fa-solid fa-sun color-icon-theme-highlight highlighted'
-          : 'fa-regular fa-sun color-text-lightest'
+          : 'fa-regular fa-sun color-text-lightest',
       )}
 
       {const title = $derived(localize(ctx.attunement.title))}

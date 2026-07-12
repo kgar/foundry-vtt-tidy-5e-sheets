@@ -13,6 +13,15 @@ import type { TidySectionBase } from 'src/types/types';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export abstract class TableColumnRuntimeBase {
+  static readonly getEmptyColumnSpecs = () =>
+    ({
+      dynamicWidths: [],
+      map: {},
+      prioritized: [],
+      sorted: [],
+      maxRowActionsCount: 0,
+    }) satisfies SectionColumnContext;
+
   _registeredColumns: ColumnSpecDocumentTypesToTabs = $state({});
 
   _minWidthRems: number = CONSTANTS.COLUMN_PRIMARY_MIN_WIDTH_REMS;
@@ -23,10 +32,11 @@ export abstract class TableColumnRuntimeBase {
 
   abstract getDefaultColumns(): ColumnSpecDocumentTypesToTabs;
 
-  applyDynamicColumnWidths(
+  applyRowActionColumnWidth(
     section: TidySectionBase,
     rowActions: TidyTableAction<any, any>[] = [],
   ) {
+    // TODO: replace with direct reference to row actions column
     for (const dynamicColumn of section.columns.dynamicWidths) {
       const spec = section.columns.map[dynamicColumn];
 
@@ -37,6 +47,11 @@ export abstract class TableColumnRuntimeBase {
 
       spec.widthRems = Math.max(calculatedWidth, spec.widthRems);
     }
+
+    section.columns.maxRowActionsCount = Math.max(
+      section.columns.maxRowActionsCount,
+      rowActions.length,
+    );
   }
 
   getColumnSpecifications(
@@ -93,7 +108,7 @@ export abstract class TableColumnRuntimeBase {
             .toSorted((a, b) => a.order - b.order)
             .map((s) => s.key);
           const prioritized = allSpecs
-            .toSorted((a, b) => a.priority - b.priority)
+            .toSorted((a, b) => b.priority - a.priority)
             .map((s) => s.key);
 
           return {
@@ -101,6 +116,7 @@ export abstract class TableColumnRuntimeBase {
             prioritized,
             map,
             dynamicWidths,
+            maxRowActionsCount: 1,
           };
         }
       }
@@ -111,6 +127,7 @@ export abstract class TableColumnRuntimeBase {
       dynamicWidths: [],
       map: {},
       prioritized: [],
+      maxRowActionsCount: 1,
     };
   }
 

@@ -29,6 +29,7 @@ import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-but
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import GenericActionButton from 'src/components/table-quadrone/table-buttons/GenericActionButton.svelte';
+import AttuneButton from 'src/components/table-quadrone/table-buttons/AttuneButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -53,6 +54,12 @@ class TableRowActionsRuntime {
       let result: TableAction<any>[] = [];
 
       if (context.owner) {
+        result.push({
+          component: AttuneButton,
+          condition: (args) => FoundryAdapter.isAttunementApplicable(args.data),
+          props: (args) => ({ doc: args.data, itemContext: args.rowContext }),
+        });
+
         if (context.unlocked) {
           result.push({
             component: EditButton,

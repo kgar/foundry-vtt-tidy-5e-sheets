@@ -282,6 +282,7 @@ export type SectionColumnSpecifications = {
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredColumnSpecification>;
   dynamicWidths: (keyof SectionColumnContext['map'])[];
+  maxRowActionsCount: number;
 };
 
 export type SectionColumnContext = {
@@ -289,6 +290,7 @@ export type SectionColumnContext = {
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredSectionColumnSpecification>;
   dynamicWidths: (keyof SectionColumnContext['map'])[]; // try to eliminate this when items are being sorted through section data preparers.
+  maxRowActionsCount: number;
 };
 
 /** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */

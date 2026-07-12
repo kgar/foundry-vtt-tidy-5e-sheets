@@ -20,10 +20,11 @@ import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpel
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
 import ItemRecoveryColumn from 'src/sheets/quadrone/item/columns/ItemRecoveryColumn.svelte';
 import ItemFeatureSourceColumn from 'src/sheets/quadrone/item/columns/ItemFeatureSourceColumn.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export function getDefaultItemColumns() {
   return {
-    actions: {
+    [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
       headerClasses: 'header-cell-actions',
       headerContent: {
         type: 'component',

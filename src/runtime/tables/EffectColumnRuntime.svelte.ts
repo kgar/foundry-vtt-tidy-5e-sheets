@@ -46,7 +46,7 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
               order: 200,
               priority: 200,
             },
-            actions: {
+            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
               headerClasses: 'header-cell-actions',
               headerContent: {
                 type: 'component',

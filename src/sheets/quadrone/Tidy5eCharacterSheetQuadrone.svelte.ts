@@ -421,6 +421,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       );
 
       Inventory.applyInventoryItemToSection(
+        this.actor,
+        // TODO: This is a test to see if we can have inventory columns in the sheet tab for free.
+        CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory,
         item,
         inventoryTypes,
@@ -451,6 +454,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         partitions.feats,
@@ -886,6 +890,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       );
 
       Inventory.applyInventoryItemToSection(
+        this.actor,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory,
         item,
         inventoryTypes,
@@ -894,7 +900,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         },
         undefined,
         undefined,
-        inventoryRowActions,
+        ctx.rowActions,
       );
     }
 
@@ -902,13 +908,32 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       context.actor,
       CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      inventory[s] ??= Inventory.createInventorySection(
+        context.actor,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        s,
+        inventoryTypes,
+        {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        },
+      );
     });
 
     // Section spells
+    // TODO: Avoid having to loop over items again.
+    const spellRowActions = TableRowActionsRuntime.getSpellRowActions(context, {
+      hasActionsTab: true,
+    });
+    for (const item of spells) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.rowActions = spellRowActions.filter(
+        (action) =>
+          !action.condition ||
+          action.condition({ data: item, rowContext: ctx }),
+      );
+    }
+
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
       CONSTANTS.TAB_ACTOR_SPELLBOOK,
@@ -940,9 +965,22 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     }
 
     // Section Features
+    // TODO: Avoid having to loop over items again.
+    const featureRowActions =
+      TableRowActionsRuntime.getCharacterFeatureRowActions(context);
+    for (const item of feats) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.rowActions = featureRowActions.filter(
+        (action) =>
+          !action.condition ||
+          action.condition({ data: item, rowContext: ctx }),
+      );
+    }
+
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         feats,
