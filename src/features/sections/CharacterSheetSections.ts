@@ -321,11 +321,19 @@ export class CharacterSheetSections {
 
         featuresMap[key].items.push(feat);
 
+        const rowActions = itemContext[feat.id]?.rowActions;
+        ItemColumnRuntime.applyRowActionColumnWidth(
+          featuresMap[key],
+          rowActions,
+        );
+
         continue;
       }
 
       let section = (featuresMap[otherFeaturesKey] ??= otherFeaturesSection);
       section.items.push(feat);
+      const rowActions = itemContext[feat.id]?.rowActions;
+      ItemColumnRuntime.applyRowActionColumnWidth(section, rowActions);
     }
 
     if (unlocked) {

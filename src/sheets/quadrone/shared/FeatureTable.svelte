@@ -64,6 +64,7 @@
   entryToggleMap={itemToggleMap}
   {tabId}
   {columns}
+  columnsV2={section.columns}
 >
   {#snippet afterFirstCell(entry)}
     {#if 'inspirationSource' in context && context.inspirationSource?.itemId === entry.id}
