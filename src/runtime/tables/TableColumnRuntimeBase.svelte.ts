@@ -15,7 +15,6 @@ import type { TidyTableAction } from 'src/components/table-quadrone/table-button
 export abstract class TableColumnRuntimeBase {
   static readonly getEmptyColumnSpecs = () =>
     ({
-      dynamicWidths: [],
       map: {},
       prioritized: [],
       sorted: [],
@@ -36,18 +35,6 @@ export abstract class TableColumnRuntimeBase {
     section: TidySectionBase,
     rowActions: TidyTableAction<any, any>[] = [],
   ) {
-    // TODO: replace with direct reference to row actions column
-    for (const dynamicColumn of section.columns.dynamicWidths) {
-      const spec = section.columns.map[dynamicColumn];
-
-      const calculatedWidth =
-        spec.widthRemsFn?.({
-          rowActions: rowActions,
-        }) ?? 0;
-
-      spec.widthRems = Math.max(calculatedWidth, spec.widthRems);
-    }
-
     section.columns.maxRowActionsCount = Math.max(
       section.columns.maxRowActionsCount,
       rowActions.length,
@@ -60,10 +47,6 @@ export abstract class TableColumnRuntimeBase {
     sectionKey: string,
   ): SectionColumnSpecifications {
     const map: Record<string, ConfiguredSectionColumnSpecification> = {};
-    const dynamicWidths: (keyof Record<
-      string,
-      ConfiguredSectionColumnSpecification
-    >)[] = [];
     const allSpecs: ConfiguredSectionColumnSpecification[] = [];
 
     for (let type of [
@@ -82,22 +65,10 @@ export abstract class TableColumnRuntimeBase {
           }
 
           for (const [key, spec] of Object.entries(specs)) {
-            let widthRems: number;
-            let widthRemsFn: ConfiguredSectionColumnSpecification['widthRemsFn'];
-            if (typeof spec.widthRems === 'function') {
-              dynamicWidths.push(key);
-              // Defer dynamic width calculation to actual item processing
-              widthRems = 0;
-              widthRemsFn = spec.widthRems;
-            } else {
-              widthRems = spec.widthRems;
-            }
-
             const configuredSpec: ConfiguredSectionColumnSpecification = {
               key,
               ...spec,
-              widthRems,
-              widthRemsFn,
+              widthRems: spec.widthRems,
             };
             map[key] = configuredSpec;
 
@@ -115,7 +86,6 @@ export abstract class TableColumnRuntimeBase {
             sorted,
             prioritized,
             map,
-            dynamicWidths,
             maxRowActionsCount: 1,
           };
         }
@@ -124,13 +94,13 @@ export abstract class TableColumnRuntimeBase {
 
     return {
       sorted: [],
-      dynamicWidths: [],
       map: {},
       prioritized: [],
       maxRowActionsCount: 1,
     };
   }
 
+  // TODO: Eliminate
   getConfiguredColumnSpecifications(
     args: GetConfiguredColumnSpecificationsArgs,
   ): ConfiguredColumnSpecification[] {
@@ -152,10 +122,7 @@ export abstract class TableColumnRuntimeBase {
               .map(([key, spec]) => ({
                 key,
                 ...spec,
-                widthRems:
-                  typeof spec.widthRems === 'number'
-                    ? spec.widthRems
-                    : spec.widthRems(args),
+                widthRems: spec.widthRems,
               }));
           }
         }
@@ -165,6 +132,7 @@ export abstract class TableColumnRuntimeBase {
     return [];
   }
 
+  // TODO: Eliminate
   determineHiddenColumns(
     inlineSizePx: number,
     schematics: ColumnsLoadout,

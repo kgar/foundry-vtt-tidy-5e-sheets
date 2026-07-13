@@ -171,7 +171,7 @@ export class Inventory {
   ): Promise<InventorySection[]> {
     const containerItems = (await container.system.contents).values();
 
-    const inventory = Inventory.getDefaultInventorySections(options);
+    const inventory = Inventory.getDefaultInventorySections(container, options);
 
     const inventoryTypes = Inventory.getInventoryTypes();
 

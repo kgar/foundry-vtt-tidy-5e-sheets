@@ -28,6 +28,10 @@
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
   import type { Item5e } from 'src/types/item.types';
   import type { SectionColumnContext } from 'src/runtime/types';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
+  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
   interface Props {
     section: TidySectionBase;
@@ -89,10 +93,20 @@
 
   const localize = FoundryAdapter.localize;
 
+  const rowActionsColumnWidthRems = $derived(
+    TableRowActionsRuntime.calculateRowActionWidthRems(
+      section.columns.maxRowActionsCount,
+    ),
+  );
+
+  const rowActionsColumnWidthPx = $derived(
+    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+  );
+
   let hiddenColumns = $derived(
     columnsV2
       ? ItemColumnRuntime.determineHiddenColumnsV2(
-          sectionsInlineWidth,
+          sectionsInlineWidth - rowActionsColumnWidthPx,
           columnsV2,
         )
       : new Set<string>(),
@@ -131,6 +145,17 @@
         {expanded}
         {root}
       />
+      <TidyTableHeaderCell
+        class="header-cell-actions"
+        columnWidth="{rowActionsColumnWidthRems}rem"
+        data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+      >
+        <SectionActionsColumnHeader
+          {section}
+          sheetContext={context}
+          sheetDocument={context.document}
+        />
+      </TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}
 
@@ -219,6 +244,19 @@
               {section}
               {context}
             />
+            <TidyTableCell
+              columnWidth="{rowActionsColumnWidthRems}rem"
+              class="tidy-table-actions"
+              attributes={{
+                ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+              }}
+            >
+              <DocumentActionsColumn
+                {section}
+                rowDocument={entry}
+                rowContext={ctx}
+              />
+            </TidyTableCell>
           {/snippet}
         </TidyItemTableRow>
 

@@ -12,6 +12,7 @@ import { CONSTANTS } from 'src/constants';
 
 export function getDefaultActivityColumns() {
   return {
+    // TODO: Inline to activity table(s)
     [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
       headerClasses: 'header-cell-actions',
       headerContent: {
@@ -23,11 +24,7 @@ export function getDefaultActivityColumns() {
         type: 'component',
         component: DocumentActionsColumn,
       },
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
+      widthRems: 0,
     },
     uses: {
       headerContent: {

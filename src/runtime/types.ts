@@ -253,8 +253,7 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  widthRems:
-    number | ((args: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
+  widthRems: number; // default: 5 (rem)
   priority: number;
   order: number;
   headerClasses?: ClassValue;
@@ -272,16 +271,12 @@ export type GetConfiguredColumnSpecificationsArgs = {
 } & ColumnSpecificationCalculatedWidthArgs;
 
 export type ConfiguredSectionColumnSpecification =
-  ConfiguredColumnSpecification & {
-    /** Optional widthRems function that is used by the sheet to calculate the actual width of the column. */
-    widthRemsFn?: (args: ColumnSpecificationCalculatedWidthArgs) => number;
-  };
+  ConfiguredColumnSpecification;
 
 export type SectionColumnSpecifications = {
   sorted: (keyof SectionColumnContext['map'])[];
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredColumnSpecification>;
-  dynamicWidths: (keyof SectionColumnContext['map'])[];
   maxRowActionsCount: number;
 };
 
@@ -289,7 +284,6 @@ export type SectionColumnContext = {
   sorted: (keyof SectionColumnContext['map'])[];
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredSectionColumnSpecification>;
-  dynamicWidths: (keyof SectionColumnContext['map'])[]; // try to eliminate this when items are being sorted through section data preparers.
   maxRowActionsCount: number;
 };
 

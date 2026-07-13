@@ -85,6 +85,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 4,
     };
 
+    // TODO: Inline to activity table(s)
     const actionsColumn: ColumnSpecificationBase = {
       headerClasses: 'header-cell-actions',
       headerContent: {
@@ -96,11 +97,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         component: DocumentActionsColumn,
       },
       cellClasses: 'tidy-table-actions',
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
+      widthRems: 0,
     };
 
     const initiativeColumn: ColumnSpecificationBase = {

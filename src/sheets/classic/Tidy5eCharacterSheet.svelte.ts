@@ -59,10 +59,11 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
+import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
 
 export class Tidy5eCharacterSheet
   extends getTidy5eActorSheetClassicV2Base<CharacterSheetContext>(
-    CONSTANTS.SHEET_TYPE_CHARACTER
+    CONSTANTS.SHEET_TYPE_CHARACTER,
   )
   implements
     SheetTabCacheable,
@@ -104,7 +105,7 @@ export class Tidy5eCharacterSheet
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
@@ -152,7 +153,7 @@ export class Tidy5eCharacterSheet
         [
           CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
-            this.itemTableTogglesCache
+            this.itemTableTogglesCache,
           ),
         ],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
@@ -179,7 +180,7 @@ export class Tidy5eCharacterSheet
     const defaultDocumentContext = await super._prepareContext(options);
 
     const characterPreferences = UserSheetPreferencesService.getByType(
-      this.actor.type
+      this.actor.type,
     );
 
     const attributesSortMode =
@@ -209,7 +210,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: attributesSortMode === 'a',
@@ -223,7 +224,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: attributesSortMode === 'm',
@@ -235,7 +236,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                true
+                true,
               ),
           },
           {
@@ -245,13 +246,13 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-                false
+                false,
               ),
           },
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -261,12 +262,12 @@ export class Tidy5eCharacterSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                   tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+                    CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -283,7 +284,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: inventorySortMode === 'a',
@@ -297,7 +298,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: inventorySortMode === 'm',
@@ -305,7 +306,7 @@ export class Tidy5eCharacterSheet
           {
             id: 'hide-container-panel',
             title: FoundryAdapter.localize(
-              'TIDY5E.Commands.HideContainerPanel'
+              'TIDY5E.Commands.HideContainerPanel',
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
@@ -316,7 +317,7 @@ export class Tidy5eCharacterSheet
           {
             id: 'show-container-panel',
             title: FoundryAdapter.localize(
-              'TIDY5E.Commands.ShowContainerPanel'
+              'TIDY5E.Commands.ShowContainerPanel',
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
@@ -331,7 +332,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_INVENTORY,
-                true
+                true,
               ),
           },
           {
@@ -341,7 +342,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_INVENTORY,
-                false
+                false,
               ),
           },
           {
@@ -365,7 +366,7 @@ export class Tidy5eCharacterSheet
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -374,12 +375,12 @@ export class Tidy5eCharacterSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
                   tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_ACTOR_INVENTORY
+                    CONSTANTS.TAB_ACTOR_INVENTORY,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -396,7 +397,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: spellbookSortMode === 'a',
@@ -410,7 +411,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_SPELLBOOK,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: spellbookSortMode === 'm',
@@ -423,7 +424,7 @@ export class Tidy5eCharacterSheet
               await UserSheetPreferencesService.setDocumentTypePreference(
                 this.actor.type,
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
-                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
               );
             },
             visible:
@@ -439,7 +440,7 @@ export class Tidy5eCharacterSheet
               await UserSheetPreferencesService.setDocumentTypePreference(
                 this.actor.type,
                 CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
-                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
               );
             },
             visible:
@@ -453,7 +454,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                true
+                true,
               ),
           },
           {
@@ -463,7 +464,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_SPELLBOOK,
-                false
+                false,
               ),
           },
           {
@@ -487,7 +488,7 @@ export class Tidy5eCharacterSheet
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -496,12 +497,12 @@ export class Tidy5eCharacterSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_ACTOR_SPELLBOOK,
                   tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_ACTOR_SPELLBOOK
+                    CONSTANTS.TAB_ACTOR_SPELLBOOK,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -518,7 +519,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: featureSortMode === 'a',
@@ -532,7 +533,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: featureSortMode === 'm',
@@ -544,7 +545,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_CHARACTER_FEATURES,
-                true
+                true,
               ),
           },
           {
@@ -554,13 +555,13 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_CHARACTER_FEATURES,
-                false
+                false,
               ),
           },
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -569,12 +570,12 @@ export class Tidy5eCharacterSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                   tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_CHARACTER_FEATURES
+                    CONSTANTS.TAB_CHARACTER_FEATURES,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -591,7 +592,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: actionListSortMode === 'a',
@@ -605,7 +606,7 @@ export class Tidy5eCharacterSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: actionListSortMode === 'm',
@@ -617,7 +618,7 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_ACTIONS,
-                true
+                true,
               ),
           },
           {
@@ -627,13 +628,13 @@ export class Tidy5eCharacterSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_ACTIONS,
-                false
+                false,
               ),
           },
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -642,12 +643,12 @@ export class Tidy5eCharacterSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                   tabTitle: CharacterSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_ACTOR_ACTIONS
+                    CONSTANTS.TAB_ACTOR_ACTIONS,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -660,7 +661,7 @@ export class Tidy5eCharacterSheet
       await ConditionsAndEffects.getConditionsAndEffectsForActor(
         this.actor,
         this.object,
-        defaultDocumentContext.effects
+        defaultDocumentContext.effects,
       );
 
     const context: CharacterSheetContext = {
@@ -674,7 +675,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       attributePins: [],
       bastion: {
@@ -684,7 +685,7 @@ export class Tidy5eCharacterSheet
             secrets: this.actor.isOwner,
             rollData: defaultDocumentContext.rollData,
             relativeTo: this.actor,
-          }
+          },
         ),
       },
       biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -693,7 +694,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       bondEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.bond,
@@ -701,11 +702,11 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
-        defaultDocumentContext.items
+        defaultDocumentContext.items,
       ),
       defenders: [],
       epicBoonsEarned: undefined,
@@ -721,7 +722,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.ideal,
@@ -729,7 +730,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       inventory: [],
       languages: [],
@@ -739,7 +740,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes2.members.value.get(this.actor) ?? '',
@@ -747,7 +748,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes3.members.value.get(this.actor) ?? '',
@@ -755,7 +756,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes4.members.value.get(this.actor) ?? '',
@@ -763,7 +764,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       notesEnrichedHtml: await FoundryAdapter.enrichHtml(
         TidyFlags.notes.members.value.get(this.actor) ?? '',
@@ -771,12 +772,12 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
         Array.from(defaultDocumentContext.items).some(
-          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
+          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER,
         ),
       spellbook: [],
       spellcastingInfo: FoundryAdapter.getSpellcastingInfo(this.actor),
@@ -790,7 +791,7 @@ export class Tidy5eCharacterSheet
           secrets: this.actor.isOwner,
           rollData: defaultDocumentContext.rollData,
           relativeTo: this.actor,
-        }
+        },
       ),
       useActionsFeature: actorUsesActionFeature(this.actor),
       utilities: utilities,
@@ -803,33 +804,34 @@ export class Tidy5eCharacterSheet
     context.allowEffectsManagement =
       FoundryAdapter.allowCharacterEffectsManagement(this.actor);
 
-    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraitsLegacy({
-      context,
-      app: this,
-      element: this.element,
-    });
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraitsLegacy(
+      {
+        context,
+        app: this,
+        element: this.element,
+      },
+    );
 
     context.effects = enhancedEffectSections;
 
     context.useClassicControls = settings.value.useClassicControlsForCharacter;
 
-    context.customContent = await CharacterSheetClassicRuntime.getContent(
-      context
-    );
+    context.customContent =
+      await CharacterSheetClassicRuntime.getContent(context);
 
     if (context.system.details.xp.boonsEarned !== undefined) {
       const pluralRules = new Intl.PluralRules(game.i18n.lang);
 
       context.epicBoonsEarned = FoundryAdapter.localize(
         `DND5E.ExperiencePoints.Boons.${pluralRules.select(
-          this.actor.system.details.xp.boonsEarned ?? 0
+          this.actor.system.details.xp.boonsEarned ?? 0,
         )}`,
         {
           number: dnd5e.utils.formatNumber(
             this.actor.system.details.xp.boonsEarned ?? 0,
-            { signDisplay: 'always' }
+            { signDisplay: 'always' },
           ),
-        }
+        },
       );
     }
 
@@ -840,7 +842,7 @@ export class Tidy5eCharacterSheet
         {
           hasActor: true,
           unlocked: context.unlocked,
-        }
+        },
       );
     }
 
@@ -856,7 +858,7 @@ export class Tidy5eCharacterSheet
       tabs = tabs
         .filter((t) => selectedTabs?.includes(t.id))
         .sort(
-          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id),
         );
     } else {
       const defaultTabs = settings.value.defaultCharacterSheetTabs;
@@ -880,8 +882,9 @@ export class Tidy5eCharacterSheet
       key: 'tidy-favorite-effects',
       label: 'DND5E.Effects',
       show: true,
-      rowActions: [], // for the UI Overhaul
-      sectionActions: [], // for the UI Overhaul
+      rowActions: [], // quadrone only
+      sectionActions: [], // quadrone only
+      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
     };
     const favoriteEffects = (
       this.actor.system.favorites as CharacterFavorite[]
@@ -924,8 +927,9 @@ export class Tidy5eCharacterSheet
       label: 'DND5E.ACTIVITY.Title.other',
       show: true,
       type: CONSTANTS.SECTION_TYPE_ACTIVITY,
-      rowActions: [], // for the UI Overhaul
-      sectionActions: [], // for the UI Overhaul
+      rowActions: [], // quadrone only
+      sectionActions: [], // quadrone only
+      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
     };
 
     const favoriteActivities = (
@@ -946,7 +950,9 @@ export class Tidy5eCharacterSheet
 
     // Favorites
     context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
-      context.favorites
+      this.document,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+      context.favorites,
     );
 
     if (effectsSection.effects.length) {
@@ -963,7 +969,7 @@ export class Tidy5eCharacterSheet
     await this.setExpandedItemData();
     SheetSections.accountForExternalSections(
       ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
-      context
+      context,
     );
 
     debug('Character Sheet context data', context);
@@ -974,9 +980,9 @@ export class Tidy5eCharacterSheet
   _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections();
+      Inventory.getDefaultInventorySections(this.document);
     const favoriteInventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
+      Inventory.getDefaultInventorySections(this.document, {
         canCreate: false,
       });
 
@@ -996,7 +1002,7 @@ export class Tidy5eCharacterSheet
     } = Array.from(this.actor.items).reduce(
       (
         obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
-        item: Item5e
+        item: Item5e,
       ) => {
         const { quantity } = item.system;
 
@@ -1047,14 +1053,14 @@ export class Tidy5eCharacterSheet
         }
 
         const favoritedItem = favoritesIdMap.get(
-          item.getRelativeUUID(this.actor)
+          item.getRelativeUUID(this.actor),
         );
         if (favoritedItem?.type === 'item') {
           ctx.favoriteId = favoritedItem.id;
           CharacterSheetSections.partitionItem(
             item,
             obj.favorites,
-            favoriteInventory
+            favoriteInventory,
           );
         }
 
@@ -1079,7 +1085,7 @@ export class Tidy5eCharacterSheet
           classes: [] as Item5e[],
           subclasses: [] as Item5e[],
         },
-      }
+      },
     );
 
     const inventoryTypes = Inventory.getInventoryTypes();
@@ -1088,18 +1094,34 @@ export class Tidy5eCharacterSheet
     for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-      });
+      Inventory.applyInventoryItemToSection(
+        this.document,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+        },
+        undefined,
+        undefined,
+        [], // quadrone only
+      );
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
-      CONSTANTS.TAB_ACTOR_INVENTORY
+      CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-      });
+      inventory[s] ??= Inventory.createInventorySection(
+        this.document,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        s,
+        inventoryTypes,
+        {
+          canCreate: true,
+        },
+      );
     });
 
     // Section favorite items by type
@@ -1107,12 +1129,17 @@ export class Tidy5eCharacterSheet
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(
+        this.document,
+        CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favoriteInventory,
         item,
         inventoryTypes,
         {
           canCreate: false,
-        }
+        },
+        undefined,
+        undefined,
+        [], // quadrone only
       );
     }
 
@@ -1126,7 +1153,7 @@ export class Tidy5eCharacterSheet
       spells,
       {
         canCreate: true,
-      }
+      },
     );
 
     // Section Favorite Spells
@@ -1136,7 +1163,7 @@ export class Tidy5eCharacterSheet
       favorites.spells,
       {
         canCreate: false,
-      }
+      },
     );
 
     // Process Special Feature Item Context
@@ -1144,7 +1171,7 @@ export class Tidy5eCharacterSheet
       context,
       classes,
       subclasses,
-      this.actor
+      this.actor,
     );
 
     // Put unmatched subclasses into features so they don't disappear
@@ -1162,7 +1189,7 @@ export class Tidy5eCharacterSheet
       context,
       favorites.classes,
       favorites.subclasses,
-      this.actor
+      this.actor,
     );
 
     for (const subclass of favorites.subclasses) {
@@ -1180,7 +1207,7 @@ export class Tidy5eCharacterSheet
         feats,
         {
           canCreate: true,
-        }
+        },
       );
 
     // Section favorite features
@@ -1192,7 +1219,7 @@ export class Tidy5eCharacterSheet
         favorites.backgrounds,
         favorites.classes,
         favorites.feats,
-        { canCreate: false }
+        { canCreate: false },
       );
 
     // Facility Favorites
@@ -1208,8 +1235,9 @@ export class Tidy5eCharacterSheet
         key: 'tidy-favorite-bastion-facilities',
         label: bastionFacilitiesLabel,
         show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
+        rowActions: [], // quadrone only
+        sectionActions: [], // quadrone only
+        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
     ];
 
@@ -1287,12 +1315,12 @@ export class Tidy5eCharacterSheet
       subtitle.push(
         building.built
           ? CONFIG.DND5E.facilities.sizes[size].label
-          : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt')
+          : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt'),
       );
 
       if (!isNil(level)) {
         subtitle.push(
-          FoundryAdapter.localize('DND5E.LevelNumber', { level: level })
+          FoundryAdapter.localize('DND5E.LevelNumber', { level: level }),
         );
       }
 
@@ -1321,7 +1349,7 @@ export class Tidy5eCharacterSheet
             const { img, name, uuid } = actor;
             return { img, name, uuid, facility: facility.id };
           })
-          .filter((_) => _)
+          .filter((_) => _),
       );
 
       if (chosenFacilityContext.isSpecial) {
@@ -1350,16 +1378,16 @@ export class Tidy5eCharacterSheet
               return level <= this.actor.system.details.level;
             }) ?? [];
         facilities.value = facilities.chosen.filter(
-          ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free
+          ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free,
         ).length;
         facilities.max = available ?? 0;
         available = (available ?? 0) - facilities.value;
         facilities.available = Array.fromRange(Math.max(0, available)).map(
           () => {
             return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
-          }
+          },
         );
-      }
+      },
     );
 
     if (!context.facilities.basic.available.length) {
@@ -1373,7 +1401,7 @@ export class Tidy5eCharacterSheet
    * Prepare facility occupants for display.
    */
   _prepareFacilityOccupants(
-    occupants: FacilityOccupants
+    occupants: FacilityOccupants,
   ): Promise<FacilityOccupantContext[]> {
     const { max, value } = occupants;
     return Promise.all(
@@ -1390,7 +1418,7 @@ export class Tidy5eCharacterSheet
           actor: undefined,
           uuid: undefined,
         };
-      })
+      }),
     );
   }
 
@@ -1420,7 +1448,7 @@ export class Tidy5eCharacterSheet
       } else {
         // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
         debug(
-          `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`
+          `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`,
         );
       }
     }
@@ -1434,7 +1462,7 @@ export class Tidy5eCharacterSheet
         map.set(f.id, f);
         return map;
       },
-      new Map<string, CharacterFavorite>()
+      new Map<string, CharacterFavorite>(),
     );
   }
 
@@ -1460,7 +1488,7 @@ export class Tidy5eCharacterSheet
     // Activities
     context.activities = Activities.getVisibleActivities(
       item,
-      item.system.activities
+      item.system.activities,
     )?.map(Activities.getActivityItemContext);
 
     context.linkedUses = Activities.getLinkedUses(item);
@@ -1476,7 +1504,7 @@ export class Tidy5eCharacterSheet
       if (item) {
         this.expandedItemData.set(
           id,
-          await item.getChatData({ secrets: this.actor.isOwner })
+          await item.getChatData({ secrets: this.actor.isOwner }),
         );
       }
     }
@@ -1484,7 +1512,7 @@ export class Tidy5eCharacterSheet
 
   async _onDropSingleItem(
     itemData: any,
-    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
   ) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
@@ -1499,7 +1527,7 @@ export class Tidy5eCharacterSheet
 
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
         itemData,
-        options
+        options,
       );
 
       return scroll.toObject();
@@ -1527,7 +1555,7 @@ export class Tidy5eCharacterSheet
   }
 
   async _onDrop(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ) {
     if (!event.target.closest('[data-tidy-favorites], [data-pin-id]')) {
       return await super._onDrop(event);
@@ -1582,7 +1610,7 @@ export class Tidy5eCharacterSheet
   /** @inheritDoc */
   async _onDropActor(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    data: any,
   ) {
     if (!event.target.closest('.facility-occupants') || !data.uuid) {
       return await super._onDropActor(event, data);
@@ -1627,7 +1655,7 @@ export class Tidy5eCharacterSheet
 
   async _onDropPin(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: { id: string; doc: any }
+    data: { id: string; doc: any },
   ) {
     // If not pinned, then pin it
     const currentPins = TidyFlags.attributePins.get(this.actor);
@@ -1636,8 +1664,8 @@ export class Tidy5eCharacterSheet
       data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
         ? 'item'
         : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
-        ? 'activity'
-        : undefined;
+          ? 'activity'
+          : undefined;
 
     if (!pinType) {
       return;
@@ -1653,7 +1681,7 @@ export class Tidy5eCharacterSheet
 
   async _onSortPins(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    srcId: string
+    srcId: string,
   ) {
     const targetId = event.target
       ?.closest('[data-pin-id]')
@@ -1684,7 +1712,7 @@ export class Tidy5eCharacterSheet
       .reduce(
         (map: Map<string, AttributePinFlag>, f: AttributePinFlag) =>
           map.set(f.id, { ...f }),
-        new Map<string, AttributePinFlag>()
+        new Map<string, AttributePinFlag>(),
       );
 
     for (const { target, update } of updates) {
@@ -1696,7 +1724,7 @@ export class Tidy5eCharacterSheet
 
     return await TidyFlags.attributePins.set(
       this.actor,
-      Array.from(pins.values())
+      Array.from(pins.values()),
     );
   }
 
@@ -1713,7 +1741,7 @@ export class Tidy5eCharacterSheet
    */
   async _onDropFavorite(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    favorite: UnsortedCharacterFavorite
+    favorite: UnsortedCharacterFavorite,
   ) {
     if (this.actor.system.hasFavorite(favorite.id))
       return await this._onSortFavorites(event, favorite.id);
@@ -1730,7 +1758,7 @@ export class Tidy5eCharacterSheet
    */
   async _onSortFavorites(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    srcId: string
+    srcId: string,
   ) {
     const targetId = event.target
       ?.closest('[data-favorite-id]')
@@ -1747,7 +1775,7 @@ export class Tidy5eCharacterSheet
         if (f.id === targetId) target = f;
         else if (f.id === srcId) source = f;
         return f.id !== srcId;
-      }
+      },
     );
     const updates = foundry.utils.performIntegerSort(source, {
       target,
@@ -1756,7 +1784,7 @@ export class Tidy5eCharacterSheet
     const favorites = this.actor.system.favorites.reduce(
       (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
         map.set(f.id, { ...f }),
-      new Map<string, CharacterFavorite>()
+      new Map<string, CharacterFavorite>(),
     );
     for (const { target, update } of updates) {
       const favorite = favorites.get(target.id);
@@ -1783,7 +1811,7 @@ export class Tidy5eCharacterSheet
     const locationSet = mapGetOrInsert(
       this.expandedItems,
       itemId,
-      new Set<string>()
+      new Set<string>(),
     );
 
     if (isVisible) {

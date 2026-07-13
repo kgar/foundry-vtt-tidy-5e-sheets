@@ -106,7 +106,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       );
 
       const inventory: ActorInventoryTypes =
-        Inventory.getDefaultInventorySections({
+        Inventory.getDefaultInventorySections(this.document, {
           rowActions: inventoryRowActions,
         });
 
@@ -128,20 +128,36 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       // Section the items by type
       for (let item of inventoryItems) {
         const ctx = (context.itemContext[item.id] ??= {});
-        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
+        Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory,
+          item,
+          inventoryTypes,
+          {
+            canCreate: true,
+            rowActions: inventoryRowActions,
+          },
+          undefined,
+          undefined,
+          ctx.rowActions ?? [],
+        );
       }
 
       SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
         context.actor,
         CONSTANTS.TAB_ACTOR_INVENTORY,
       ).forEach((s) => {
-        inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
+        inventory[s] ??= Inventory.createInventorySection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          s,
+          inventoryTypes,
+          {
+            canCreate: true,
+            rowActions: inventoryRowActions,
+          },
+        );
       });
 
       context.inventory = Object.values(inventory);

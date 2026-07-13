@@ -1,9 +1,4 @@
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
-import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-import type {
-  ColumnSpecificationCalculatedWidthArgs,
-  DefaultTableColumns,
-} from '../types';
+import type { DefaultTableColumns } from '../types';
 import InlineCapacityBarColumn from 'src/sheets/quadrone/item/columns/InlineCapacityBarColumn.svelte';
 import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
@@ -20,27 +15,9 @@ import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpel
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
 import ItemRecoveryColumn from 'src/sheets/quadrone/item/columns/ItemRecoveryColumn.svelte';
 import ItemFeatureSourceColumn from 'src/sheets/quadrone/item/columns/ItemFeatureSourceColumn.svelte';
-import { CONSTANTS } from 'src/constants';
 
 export function getDefaultItemColumns() {
   return {
-    [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-      headerClasses: 'header-cell-actions',
-      headerContent: {
-        type: 'component',
-        component: SectionActionsColumnHeader,
-      },
-      cellClasses: 'tidy-table-actions',
-      cellContent: {
-        type: 'component',
-        component: DocumentActionsColumn,
-      },
-      widthRems: (args: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * args.rowActions.length + paddingX;
-      },
-    },
     capacityTracker: {
       cellContent: {
         type: 'component',

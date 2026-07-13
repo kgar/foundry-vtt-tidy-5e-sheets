@@ -38,6 +38,7 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC,
@@ -327,7 +328,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     );
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
+      Inventory.getDefaultInventorySections(this.document, {
         rowActions: inventoryRowActions,
       });
 
@@ -369,6 +370,12 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         dataset[TidyFlags.section.prop] = customSectionName;
       }
 
+      const columns = ItemColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_STATBLOCK,
+        id,
+      );
+
       return {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         label,
@@ -379,6 +386,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         sectionActions: [],
         dataset: dataset,
         canCreate: true,
+        columns,
       };
     };
 
@@ -477,20 +485,36 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     // Section the items by type
     for (let item of inventoryItems) {
       const ctx = (context.itemContext[item.id] ??= {});
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      Inventory.applyInventoryItemToSection(
+        this.document,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        },
+        undefined,
+        undefined,
+        ctx.rowActions ?? [],
+      );
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
       CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      inventory[s] ??= Inventory.createInventorySection(
+        this.document,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        s,
+        inventoryTypes,
+        {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        },
+      );
     });
 
     const spellbook = SheetSections.prepareTidySpellbook(

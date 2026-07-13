@@ -194,6 +194,7 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
+  // TODO: Eliminate
   rowActions: TidyTableAction<any, any>[];
   sectionActions: SectionCommand[];
   columns: SectionColumnContext;

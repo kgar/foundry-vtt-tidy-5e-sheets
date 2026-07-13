@@ -22,14 +22,16 @@
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   const localize = FoundryAdapter.localize;
 
   type TableAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    Activity5e,
-    any
+    Activity5e
   >;
 
   let tableActions: TableAction<any>[] = $derived(

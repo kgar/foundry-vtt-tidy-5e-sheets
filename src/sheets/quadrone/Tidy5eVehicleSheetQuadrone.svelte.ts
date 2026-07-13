@@ -34,6 +34,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -416,6 +417,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
+          CONSTANTS.ITEM_TYPE_FEAT,
+        ),
       },
       [CONSTANTS.ITEM_TYPE_SPELL]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -427,6 +433,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         rowActions: statblockSpellRowActions,
         sectionActions: [],
         show: true,
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
+          CONSTANTS.ITEM_TYPE_SPELL,
+        ),
       },
       [CONSTANTS.ITEM_TYPE_WEAPON]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -441,6 +452,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
+          CONSTANTS.ITEM_TYPE_WEAPON,
+        ),
       },
       [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -455,6 +471,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
+          CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        ),
       },
     };
 
@@ -464,7 +485,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     );
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
+      Inventory.getDefaultInventorySections(this.document, {
         rowActions: inventoryRowActions,
       });
 
@@ -484,15 +505,27 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       // partition to section
       if (Inventory.isItemInventoryType(item) && !item.system.isMountable) {
         // Cargo
-        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
+        Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory,
+          item,
+          inventoryTypes,
+          {
+            canCreate: true,
+            rowActions: inventoryRowActions,
+          },
+          undefined,
+          undefined,
+          ctx.rowActions ?? [],
+        );
       } else if (
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.linkedActivity
       ) {
         Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
           statblock,
           item,
           statblockTypes,
@@ -501,9 +534,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             rowActions: statblockSpellRowActions,
           },
           CONSTANTS.ITEM_TYPE_SPELL,
+          undefined,
+          ctx.rowActions ?? [],
         );
       } else {
         Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_STATBLOCK,
           statblock,
           item,
           statblockTypes,
@@ -512,6 +549,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             rowActions: statblockRowActions,
           },
           CONSTANTS.ITEM_TYPE_FEAT,
+          undefined,
+          ctx.rowActions ?? [],
         );
       }
     }
@@ -522,10 +561,16 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       context.actor,
       CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      inventory[s] ??= Inventory.createInventorySection(
+        this.document,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        s,
+        inventoryTypes,
+        {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        },
+      );
     });
 
     context.inventory = Object.values(inventory);

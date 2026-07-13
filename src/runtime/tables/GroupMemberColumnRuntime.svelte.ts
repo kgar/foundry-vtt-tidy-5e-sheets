@@ -111,6 +111,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 3.75,
     };
 
+    // TODO: Inline to activity table(s)
     const actionsColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'component',
@@ -122,11 +123,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
       cellClasses: 'tidy-table-actions',
       headerClasses: 'header-cell-actions',
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
+      widthRems: 0,
     };
 
     return {

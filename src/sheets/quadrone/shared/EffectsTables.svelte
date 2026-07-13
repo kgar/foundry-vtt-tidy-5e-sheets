@@ -19,6 +19,11 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { foundryCoreSettings } from 'src/settings/settings.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import type { SectionColumnSpecifications } from 'src/runtime/types';
+  import DocumentActionsColumn from '../item/columns/DocumentActionsColumn.svelte';
+  import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -58,9 +63,25 @@
     ),
   )}
 
-  {const hiddenColumns = $derived(
-    EffectColumnRuntime.determineHiddenColumns(inlineWidth, columns, 10),
+  {const rowActionsColumnWidthRems = $derived(
+    TableRowActionsRuntime.calculateRowActionWidthRems(
+      section.columns.maxRowActionsCount,
+    ),
   )}
+
+  {const rowActionsColumnWidthPx = $derived(
+    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+  )}
+
+  {const hiddenColumns = $derived(
+    section.columns
+      ? EffectColumnRuntime.determineHiddenColumnsV2(
+          inlineWidth - rowActionsColumnWidthPx,
+          section.columns,
+        )
+      : EffectColumnRuntime.determineHiddenColumns(inlineWidth, columns, 10),
+  )}
+
   {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
@@ -84,6 +105,17 @@
             {hiddenColumns}
             {section}
           />
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            columnWidth="{rowActionsColumnWidthRems}rem"
+            data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+          >
+            <EffectActionsColumnHeader
+              {section}
+              sheetContext={context}
+              sheetDocument={context.document}
+            />
+          </TidyTableHeaderCell>
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
@@ -95,12 +127,20 @@
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,
-            columns,
+            section.columns,
             hiddenColumns,
             section,
+            rowActionsColumnWidthRems,
           )}
           {#each effectContext.effect.riders as rider}
-            {@render EffectRow(rider, columns, hiddenColumns, section, true)}
+            {@render EffectRow(
+              rider,
+              section.columns,
+              hiddenColumns,
+              section,
+              rowActionsColumnWidthRems,
+              true,
+            )}
           {/each}
         {/each}
       {/snippet}
@@ -110,9 +150,10 @@
 
 {#snippet EffectRow(
   ctx: ActiveEffectContext,
-  columns: ColumnsLoadout,
+  columns: SectionColumnSpecifications,
   hiddenColumns: Set<string>,
   section: ActiveEffectSection,
+  rowActionsColumnWidthRems: number,
   isRider?: boolean,
 )}
   <TidyEffectTableRow effectContext={ctx}>
@@ -152,14 +193,23 @@
       </TidyTableCell>
 
       <TidyTableCustomCells
-        {columns}
-        columnsV2={section.columns}
+        columnsV2={columns}
         {context}
         {ctx}
         entry={ctx}
         {hiddenColumns}
         {section}
       />
+
+      <TidyTableCell
+        columnWidth="{rowActionsColumnWidthRems}rem"
+        class="tidy-table-actions"
+        attributes={{
+          ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+        }}
+      >
+        <DocumentActionsColumn {section} rowDocument={ctx} rowContext={ctx} />
+      </TidyTableCell>
     {/snippet}
   </TidyEffectTableRow>
 {/snippet}

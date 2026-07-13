@@ -375,7 +375,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     );
     const inventoryTypes = Inventory.getInventoryTypes();
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
+      Inventory.getDefaultInventorySections(this.document, {
         rowActions: inventoryRowActions,
       });
 
@@ -791,7 +791,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
+      Inventory.getDefaultInventorySections(this.document, {
         rowActions: inventoryRowActions,
       });
 

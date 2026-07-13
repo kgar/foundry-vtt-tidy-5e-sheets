@@ -23,15 +23,17 @@
 
   let localize = FoundryAdapter.localize;
 
-  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());  
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let advancements = $derived(Object.entries(context.advancement));
 
   type TableAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    AdvancementItemContext,
-    {}
+    AdvancementItemContext
   >;
 
   let tableRowActions: TableAction<any>[] = $derived.by(() => {
@@ -50,7 +52,9 @@
         props: (args) => ({
           doc: context.item.system.advancement?.get(args.data.id),
           deleteFn: () =>
-            context.item.system.advancement?.get(args.data.id)?.deleteDialog({ sheet: context.item }),
+            context.item.system.advancement
+              ?.get(args.data.id)
+              ?.deleteDialog({ sheet: context.item }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }
@@ -60,8 +64,7 @@
 
   type TableHeaderAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    { key: string },
-    AdvancementSectionContext
+    { key: string }
   >;
 
   let tableHeaderActions: TableHeaderAction<any>[] = $derived.by(() => {
@@ -158,7 +161,7 @@
             {...columnSpecs.actions}
           >
             {#each tableHeaderActions as headerAction}
-              {#if headerAction.condition?.( { data: { key }, section: section, rowContext: undefined }, ) ?? true}
+              {#if headerAction.condition?.( { data: { key }, section: section, rowContext: undefined } ) ?? true}
                 <headerAction.component
                   {...headerAction.props({
                     data: { key },
@@ -234,7 +237,7 @@
                         data: advancement,
                         section,
                         rowContext: undefined,
-                      })
+                      }),
                     )}
                     <action.component {...props} />
                   {/each}
