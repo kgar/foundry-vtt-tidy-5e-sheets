@@ -17,7 +17,6 @@ import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-b
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import type { ContainerContentsRowActionsContext } from '../types';
-import ChooseAButton from 'src/components/table-quadrone/table-buttons/ChooseAButton.svelte';
 import OpenActivityButton from 'src/components/table-quadrone/table-buttons/OpenActivityButton.svelte';
 import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
 import { CONSTANTS } from 'src/constants';
@@ -167,6 +166,7 @@ class TableRowActionsRuntime {
       if (context.owner) {
         result.push({
           component: SpellButton,
+          condition: (args) => !args.data.system.linkedActivity,
           props: (args) => ({ doc: args.data }),
         } satisfies TableAction<typeof SpellButton>);
 
@@ -176,28 +176,22 @@ class TableRowActionsRuntime {
             props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
-          result.push({
-            component: ChooseAButton,
-            props: (args) => ({
-              doc: args.data,
-              buttons: [
-                {
-                  component: DeleteButton,
-                  props: {
-                    doc: args.data,
-                  },
-                  condition: (doc: any) => !doc.system.linkedActivity,
-                },
-                {
-                  component: OpenActivityButton,
-                  props: {
-                    doc: args.data,
-                  },
-                  condition: (doc: any) => !!doc.system.linkedActivity,
-                },
-              ],
-            }),
-          } satisfies TableAction<typeof ChooseAButton>);
+          result.push(
+            {
+              component: DeleteButton,
+              props: (args) => ({
+                doc: args.data,
+              }),
+              condition: (args) => !args.data.system.linkedActivity,
+            } satisfies TableAction<typeof DeleteButton>,
+            {
+              component: OpenActivityButton,
+              props: (args) => ({
+                doc: args.data,
+              }),
+              condition: (args) => !!args.data.system.linkedActivity,
+            } satisfies TableAction<typeof OpenActivityButton>,
+          );
         } else {
           if (config?.hasActionsTab) {
             result.push({

@@ -10,7 +10,6 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
@@ -19,6 +18,9 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import { foundryCoreSettings } from 'src/settings/settings.svelte';
+  import ActivityActionsColumnHeader from '../columns/ActivityActionsColumnHeader.svelte';
+  import DocumentActionsColumn from '../columns/DocumentActionsColumn.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -34,7 +36,7 @@
     Activity5e
   >;
 
-  let tableActions: TableAction<any>[] = $derived(
+  let rowActions: TableAction<any>[] = $derived(
     TableRowActionsRuntime.getActivityRowActions(
       context.owner,
       context.unlocked,
@@ -43,10 +45,20 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let section = $derived({
-    ...SheetSections.EMPTY,
-    canCreate: context.editable,
-    rowActions: tableActions,
+  let section = $derived.by(() => {
+    const result = {
+      ...SheetSections.EMPTY,
+      canCreate: context.editable,
+      columns: ActivityColumnRuntime.getColumnSpecifications(
+        context.document,
+        tabId,
+        'activities',
+      ),
+    };
+
+    result.columns.maxRowActionsCount = rowActions.length;
+
+    return result;
   });
 
   let sectionsInlineWidth: number = $state(0);
@@ -55,20 +67,21 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  let columns = $derived(
-    new ColumnsLoadout(
-      ActivityColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: context.item.type,
-        tabId: tabId,
-        sectionKey: 'activities',
-        rowActions: tableActions,
-        sheetDocument: context.item,
-      }),
+  const rowActionsColumnWidthRems = $derived(
+    TableRowActionsRuntime.calculateRowActionWidthRems(
+      section.columns.maxRowActionsCount,
     ),
   );
 
+  const rowActionsColumnWidthPx = $derived(
+    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+  );
+
   let hiddenColumns = $derived(
-    ActivityColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
+    ActivityColumnRuntime.determineHiddenColumnsV2(
+      sectionsInlineWidth - rowActionsColumnWidthPx,
+      section.columns,
+    ),
   );
 </script>
 
@@ -82,15 +95,35 @@
         </TidyTableHeaderCell>
 
         <TidyTableCustomHeaderCells
-          {columns}
+          columnsV2={section.columns}
           {context}
           {hiddenColumns}
           {section}
         />
+
+        <TidyTableHeaderCell
+          class="header-cell-actions"
+          columnWidth="{rowActionsColumnWidthRems}rem"
+          data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+        >
+          <ActivityActionsColumnHeader
+            {section}
+            sheetContext={context}
+            sheetDocument={context.document}
+          />
+        </TidyTableHeaderCell>
       </TidyTableHeaderRow>
     {/snippet}
     {#snippet body()}
       {#each context.activities as ctx (ctx.id)}
+        {const ctxWithRowActions = $derived({
+          ...ctx,
+          rowActions: rowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: ctx.activity, rowContext: ctx }),
+          ),
+        })}
         <TidyActivityTableRow {ctx}>
           {#snippet children()}
             <!-- svelte-ignore a11y_missing_attribute -->
@@ -142,13 +175,21 @@
             </TidyTableCell>
 
             <TidyTableCustomCells
-              {columns}
+              columnsV2={section.columns}
               {context}
-              {ctx}
+              ctx={ctxWithRowActions}
               entry={ctx.activity}
               {hiddenColumns}
               {section}
             />
+
+            <TidyTableCell columnWidth="{rowActionsColumnWidthRems}rem">
+              <DocumentActionsColumn
+                rowDocument={ctx.activity}
+                rowContext={ctxWithRowActions}
+                {section}
+              />
+            </TidyTableCell>
           {/snippet}
         </TidyActivityTableRow>
       {/each}

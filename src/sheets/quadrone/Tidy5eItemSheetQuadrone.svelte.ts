@@ -29,6 +29,7 @@ import type {
   ActiveEffectSection,
   GroupableSelectOption,
   ActiveEffectContext,
+  DocumentSheetQuadroneContext,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -40,15 +41,13 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import {
-  TidySheetSettingsQuadroneApplication,
-  TidySheetSettingsTabIds,
-} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -408,7 +407,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         documentSheetContext.unlocked,
       ),
 
-      effects: await this._getEffectsSections(),
+      effects: await this._getEffectsSections(documentSheetContext),
 
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -655,7 +654,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   /* -------------------------------------------- */
 
-  async _getEffectsSections() {
+  async _getEffectsSections(context: DocumentSheetQuadroneContext<any>) {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
     const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);
@@ -691,6 +690,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               hasTooltip: true,
               effect: effect,
               riders: [],
+              rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
             });
             if (riderIds.has(id)) riders.push(ctx);
             else arr.push(ctx);
@@ -718,7 +718,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       }
     });
 
-    return Object.entries(effects).map(
+    const result = Object.entries(effects).map(
       ([key, value]) =>
         ({
           ...value,
@@ -727,9 +727,26 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           show: !value.hidden || !!value.effects.length,
           rowActions: [],
           sectionActions: [],
+          columns: EffectColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_EFFECTS,
+            value.key,
+          ),
           key,
         }) satisfies ActiveEffectSection,
     );
+
+    // TODO: Avoid additional looping
+    for (const section of result) {
+      for (const effect of section.effects) {
+        EffectColumnRuntime.applyRowActionColumnWidth(
+          section,
+          effect.rowActions,
+        );
+      }
+    }
+
+    return result;
   }
 
   /* -------------------------------------------- */

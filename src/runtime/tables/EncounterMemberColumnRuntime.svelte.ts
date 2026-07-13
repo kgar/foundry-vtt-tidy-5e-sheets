@@ -85,7 +85,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 4,
     };
 
-    // TODO: Inline to activity table(s)
+    // TODO: Inline actions column
     const actionsColumn: ColumnSpecificationBase = {
       headerClasses: 'header-cell-actions',
       headerContent: {

@@ -106,6 +106,12 @@ export class Container {
           inclusionMode,
           sheetTabOrganization,
         );
+
+      ctx.rowActions = TableRowActionsRuntime.getContainerContentsRowActions(
+        context,
+        itemContext,
+        item.parent,
+      );
     }
 
     return itemContext;

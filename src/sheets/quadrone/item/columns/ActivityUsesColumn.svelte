@@ -1,5 +1,6 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { Activities } from 'src/features/activities/activities';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -28,9 +29,11 @@
   let { rechargeRange, diceIconClass } = $derived(
     getUsesRechargeDiceRange(activity.uses),
   );
+
+  const configurable = $derived(Activities.isConfigurable(ctx.activity));
 </script>
 
-{#if ctx.hasLimitedUses && !conceal}
+{#if configurable && ctx.hasLimitedUses && !conceal}
   {#if ctx.hasRecharge && ctx.isOnCooldown}
     <a
       class={['item-list-button', { disabled: !activity.item.isOwner }]}

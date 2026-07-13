@@ -111,7 +111,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 3.75,
     };
 
-    // TODO: Inline to activity table(s)
+    // TODO: Inline actions column
     const actionsColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'component',

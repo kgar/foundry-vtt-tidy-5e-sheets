@@ -26,11 +26,6 @@ class ActivityColumnRuntimeImpl extends TableColumnRuntimeBase {
               order: 300,
               priority: 300,
             },
-            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-              ...columns.actions,
-              order: 1000,
-              priority: 1000,
-            },
           },
         },
       },

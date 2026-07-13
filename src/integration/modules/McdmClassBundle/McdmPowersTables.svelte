@@ -102,6 +102,7 @@
       { ...defaultColumns.target, key: 'target', order: 600, priority: 400 },
       { ...defaultColumns.range, key: 'range', order: 700, priority: 600 },
       { ...defaultColumns.roll, key: 'roll', order: 800, priority: 700 },
+      // TODO: Inline actions column
       {
         ...defaultColumns.actions,
         widthRems: defaultColumns.actions.widthRems(sections[0]),

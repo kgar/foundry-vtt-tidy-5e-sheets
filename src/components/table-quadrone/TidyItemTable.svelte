@@ -20,7 +20,7 @@
     NpcSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
-  import { getContext, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
   import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
