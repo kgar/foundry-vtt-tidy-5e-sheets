@@ -309,14 +309,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     return {
       combat: [
         {
-          key: 'npcs',
+          key: CONSTANTS.SHEET_TYPE_NPC,
           dataset: {},
           label: 'TIDY5E.Encounter.CombatantsSection.Title',
           show: true,
           columns: EncounterMemberColumnRuntime.getColumnSpecifications(
             this.document,
             CONSTANTS.TAB_ACTOR_COMBAT,
-            'npcs',
+            CONSTANTS.SHEET_TYPE_NPC,
           ),
           combatants: combatants.sort(
             (a, b) =>
@@ -335,7 +335,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       },
       members: [
         {
-          key: 'npcs',
+          key: CONSTANTS.SHEET_TYPE_NPC,
           label: 'DND5E.ENCOUNTER.Tab.Members',
           members: memberContexts,
           sectionActions: [],
@@ -344,7 +344,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           columns: EncounterMemberColumnRuntime.getColumnSpecifications(
             context.document,
             CONSTANTS.TAB_MEMBERS,
-            'npcs',
+            CONSTANTS.SHEET_TYPE_NPC,
           ),
         },
       ],

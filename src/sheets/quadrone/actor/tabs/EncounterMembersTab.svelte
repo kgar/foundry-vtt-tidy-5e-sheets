@@ -22,6 +22,7 @@
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
+  import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -120,23 +121,17 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {context}
-                section={{
-                  ...SheetSections.EMPTY,
-                }}
-                {hiddenColumns}
-              />
+              <TidyTableCustomHeaderCells {context} {section} {hiddenColumns} />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
                 columnWidth="{rowActionInfo.widthRems}rem"
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
-                <SectionActionsColumnHeader
+                <MemberActionsColumnHeader
                   {section}
                   sheetDocument={context.document}
-                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                  sheetContext={context}
                 />
               </TidyTableHeaderCell>
             </TidyTableHeaderRow>
@@ -158,9 +153,7 @@
                   {context}
                   ctx={member}
                   entry={member.actor}
-                  section={{
-                    ...SheetSections.EMPTY,
-                  }}
+                  {section}
                   {hiddenColumns}
                 />
 

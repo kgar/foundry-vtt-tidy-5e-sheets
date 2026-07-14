@@ -85,21 +85,6 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 4,
     };
 
-    // TODO: Inline actions column
-    const actionsColumn: ColumnSpecificationBase = {
-      headerClasses: 'header-cell-actions',
-      headerContent: {
-        type: 'component',
-        component: MemberActionsColumnHeader,
-      },
-      cellContent: {
-        type: 'component',
-        component: DocumentActionsColumn,
-      },
-      cellClasses: 'tidy-table-actions',
-      widthRems: 0,
-    };
-
     const initiativeColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
@@ -125,7 +110,6 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             },
             hp: { ...hpColumn, order: 300, priority: 300 },
             npcXp: { ...npcXpColumn, order: 400, priority: 500 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
         [CONSTANTS.TAB_ACTOR_COMBAT]: {
@@ -133,7 +117,6 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             cr: { ...crColumn, order: 100, priority: 100 },
             quantity: { ...quantityColumn, order: 400, priority: 200 },
             initiative: { ...initiativeColumn, order: 300, priority: 300 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
       },
