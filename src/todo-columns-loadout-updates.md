@@ -14,6 +14,21 @@
   - [x] Effects
   - [x] Activities
   - [x] Container Contents
+- [ ] Vehicle - add columns for draft animals
+- [ ] Vehicle - add row actions for draft animals
+- [x] Vehicle - add row actions for features
+- [x] Vehicle - add row actions for spells
+- [x] Vehicle - add row actions for cargo/inventory
+- [ ] Vehicle - add row actions for assigned crew
+- [ ] Vehicle - add row actions for unassigned crew
+- [ ] Vehicle - add row actions for passengers
+- [ ] ...?
+- [ ] Make vehicle tabs load properly
+  - [ ] Statblock
+  - [ ] Crew & Passengers
+- [ ] TidyTableCustomCells - eliminate columnsV2. It should just use the section columns
+- [ ] TidyItemTable - eliminate columnsV2. It should just use the section columns
+- [ ] TidyTableCustomHeaderCells - eliminate columnsV2. It should just use the section columns
 - [ ] Create proper section for EncounterMembersTab.svelte content
 - [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: NPC
   - [ ] Statblock

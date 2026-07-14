@@ -99,28 +99,6 @@ export abstract class TableColumnRuntimeBase {
     };
   }
 
-  // TODO: Eliminate
-  determineHiddenColumns(
-    inlineSizePx: number,
-    schematics: ColumnsLoadout,
-    minWidthRemsOverride?: number,
-  ): Set<string> {
-    let minWidthRems = minWidthRemsOverride ?? this._minWidthRems;
-    let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
-
-    let toHide = new Set<string>();
-
-    for (const col of schematics.prioritized) {
-      availableRems -= col.widthRems;
-
-      if (availableRems < minWidthRems) {
-        toHide.add(col.key);
-      }
-    }
-
-    return toHide;
-  }
-
   determineHiddenColumnsV2(
     inlineSizePx: number,
     schematics: SectionColumnContext,

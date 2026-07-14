@@ -300,7 +300,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         context,
         'crew',
       );
-      
+
     context.crew.unassigned.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
 
@@ -477,7 +477,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
 
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
-      { hasActionsTab: true },
+      { hasActionsTab: false, canEquip: true },
     );
 
     const inventory: ActorInventoryTypes =
@@ -496,8 +496,16 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       const ctx = (context.itemContext[item.id] ??= {});
       await this._prepareItem(item, ctx, context);
 
+      const itemIsInventoryType = Inventory.isItemInventoryType(item);
+
       // partition to section
-      if (Inventory.isItemInventoryType(item) && !item.system.isMountable) {
+      if (itemIsInventoryType && !item.system.isMountable) {
+        ctx.rowActions = inventoryRowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: item, rowContext: ctx }),
+        );
+
         // Cargo
         Inventory.applyInventoryItemToSection(
           this.document,
@@ -516,6 +524,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.linkedActivity
       ) {
+        ctx.rowActions = statblockRowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: item, rowContext: ctx }),
+        );
+
         Inventory.applyInventoryItemToSection(
           this.document,
           CONSTANTS.TAB_STATBLOCK,
@@ -530,6 +544,16 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           ctx.rowActions ?? [],
         );
       } else {
+        const rowActions = itemIsInventoryType
+          ? inventoryRowActions
+          : statblockRowActions;
+
+        ctx.rowActions = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: item, rowContext: ctx }),
+        );
+
         Inventory.applyInventoryItemToSection(
           this.document,
           CONSTANTS.TAB_STATBLOCK,

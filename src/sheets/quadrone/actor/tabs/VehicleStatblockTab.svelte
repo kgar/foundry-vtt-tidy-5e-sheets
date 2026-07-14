@@ -5,7 +5,6 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -13,7 +12,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
@@ -28,6 +26,8 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
+  import { foundryCoreSettings } from 'src/settings/settings.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -56,8 +56,7 @@
 
   let sections = $derived(
     buildVehicleStatblockSections(context, tabId) as (
-      | InventorySection
-      | DraftAnimalSection
+      InventorySection | DraftAnimalSection
     )[],
   );
 
@@ -285,18 +284,6 @@
             section.items.length === 0,
         )}
         {#if section.show && !emptyAndShouldHide}
-          {const columns = $derived(
-            new ColumnsLoadout(
-              ItemColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                sheetDocument: context.document,
-              }),
-            ),
-          )}
-
           <TidyItemTable
             {section}
             entries={section.items}
@@ -305,7 +292,7 @@
             {sectionsInlineWidth}
             entryToggleMap={itemToggleMap}
             {tabId}
-            {columns}
+            columnsV2={section.columns}
           >
             {#snippet bodyNoEntries()}
               {#if !hideEmptyStates}
@@ -347,21 +334,20 @@
         {/if}
       {:else if section.type === 'draft'}
         {#if section.show}
-          {const columns = $derived(
-            new ColumnsLoadout(
-              VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                sheetDocument: context.document,
-              }),
+          {const rowActionsColumnWidthRems = $derived(
+            TableRowActionsRuntime.calculateRowActionWidthRems(
+              section.columns.maxRowActionsCount,
             ),
           )}
+
+          {const rowActionsColumnWidthPx = $derived(
+            rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+          )}
+
           {const hiddenColumns = $derived(
-            ItemColumnRuntime.determineHiddenColumns(
-              sectionsInlineWidth,
-              columns,
+            ItemColumnRuntime.determineHiddenColumnsV2(
+              sectionsInlineWidth - rowActionsColumnWidthPx,
+              section.columns,
             ),
           )}
           <TidyTable
@@ -380,7 +366,7 @@
                 </TidyTableHeaderCell>
 
                 <TidyTableCustomHeaderCells
-                  {columns}
+                  columnsV2={section.columns}
                   {context}
                   {hiddenColumns}
                   {section}
@@ -457,7 +443,7 @@
                         </TidyTableCell>
 
                         <TidyTableCustomCells
-                          {columns}
+                          columnsV2={section.columns}
                           {context}
                           ctx={member}
                           entry={member.actor}
