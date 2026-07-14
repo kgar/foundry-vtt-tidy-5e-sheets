@@ -289,12 +289,10 @@
           <TidyItemTable
             {section}
             entries={section.items}
-            sheetDocument={context.document}
             entryContext={context.itemContext}
             {sectionsInlineWidth}
             entryToggleMap={itemToggleMap}
             {tabId}
-            columnsV2={section.columns}
           >
             {#snippet bodyNoEntries()}
               {#if !hideEmptyStates}
@@ -365,7 +363,6 @@
                 </TidyTableHeaderCell>
 
                 <TidyTableCustomHeaderCells
-                  columnsV2={section.columns}
                   {context}
                   {hiddenColumns}
                   {section}
@@ -454,7 +451,6 @@
                         </TidyTableCell>
 
                         <TidyTableCustomCells
-                          columnsV2={section.columns}
                           {context}
                           ctx={member}
                           entry={member.actor}

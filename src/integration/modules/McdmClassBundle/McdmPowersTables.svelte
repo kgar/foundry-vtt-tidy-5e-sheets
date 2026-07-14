@@ -95,7 +95,6 @@
               {expanded}
               {hiddenColumns}
               {context}
-              columnsV2={section.columns}
             />
 
             <TidyTableHeaderCell
@@ -174,7 +173,6 @@
 
                 <TidyTableCustomCells
                   {section}
-                  columnsV2={section.columns}
                   {ctx}
                   entry={item}
                   {hiddenColumns}

@@ -4,12 +4,10 @@
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
@@ -24,7 +22,10 @@
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
@@ -61,21 +62,7 @@
     {/if}
 
     {#if npcs.length}
-      {const columns = $derived(new ColumnsLoadout(
-        EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-          tabId: CONSTANTS.TAB_MEMBERS,
-          sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-          rowActions: rowActions,
-          sheetDocument: context.actor,
-        }),
-      ))}
       {const visibleItemCount = $derived(npcs.length)}
-      {const hiddenColumns =
-        $derived(EncounterMemberColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth,
-          columns,
-        ))}
 
       {#if context.difficulty?.label}
         <div class="difficulty-row flexrow">
@@ -112,9 +99,8 @@
     {/if}
   </div>
 </div>
-{#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
+{#snippet headerColumns(hiddenColumns: Set<string>)}
   <TidyTableCustomHeaderCells
-    {columns}
     {context}
     section={{
       ...SheetSections.EMPTY,
@@ -125,7 +111,6 @@
 
 {#snippet tableRow(
   member: EncounterMemberQuadroneContext,
-  columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
 )}
   <div
@@ -141,12 +126,10 @@
 
     <TidyTableCustomCells
       {context}
-      {columns}
       ctx={member}
       entry={member.actor}
       section={{
         ...SheetSections.EMPTY,
-        rowActions: rowActions,
       }}
       {hiddenColumns}
     />

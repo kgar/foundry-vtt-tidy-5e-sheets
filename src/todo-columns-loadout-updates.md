@@ -31,10 +31,13 @@
 - [x] Make vehicle tabs load properly
   - [x] Statblock
   - [x] Crew & Passengers
-- [ ] TidyTableCustomCells - eliminate columnsV2. It should just use the section columns
-- [ ] TidyItemTable - eliminate columnsV2. It should just use the section columns
-- [ ] TidyTableCustomHeaderCells - eliminate columnsV2. It should just use the section columns
+- [x] TidyTableCustomCells - eliminate columnsV2. It should just use the section columns
+- [x] Remove all references to ColumnsLoadout
+- [x] TidyItemTable - eliminate columnsV2. It should just use the section columns
+- [x] TidyTableCustomHeaderCells - eliminate columnsV2. It should just use the section columns
 - [ ] Create proper section for EncounterMembersTab.svelte content
+- [ ] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
+- [ ] `<TidyItemTable` -> no sheetDocument anymore
 - [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: NPC
   - [ ] Statblock
   - [ ] Inventory

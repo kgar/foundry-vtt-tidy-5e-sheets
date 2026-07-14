@@ -77,12 +77,7 @@
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
 
-          <TidyTableCustomHeaderCells
-            columnsV2={section.columns}
-            {context}
-            {hiddenColumns}
-            {section}
-          />
+          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
           <TidyTableHeaderCell
             class="header-cell-actions"
             columnWidth="{rowActionInfo.widthRems}rem"
@@ -171,7 +166,6 @@
       </TidyTableCell>
 
       <TidyTableCustomCells
-        columnsV2={columns}
         {context}
         {ctx}
         entry={ctx}

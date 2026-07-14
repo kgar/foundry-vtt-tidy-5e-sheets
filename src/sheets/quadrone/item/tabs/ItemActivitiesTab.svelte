@@ -105,12 +105,7 @@
           <span class="table-header-count">{context.activities.length}</span>
         </TidyTableHeaderCell>
 
-        <TidyTableCustomHeaderCells
-          columnsV2={section.columns}
-          {context}
-          {hiddenColumns}
-          {section}
-        />
+        <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
         <TidyTableHeaderCell
           class="header-cell-actions"
@@ -187,7 +182,6 @@
             </TidyTableCell>
 
             <TidyTableCustomCells
-              columnsV2={section.columns}
               {context}
               ctx={ctxWithRowActions}
               entry={ctx.activity}

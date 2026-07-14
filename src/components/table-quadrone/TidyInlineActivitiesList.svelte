@@ -90,12 +90,7 @@
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>
-      <TidyTableCustomHeaderCells
-        columnsV2={section.columns}
-        {hiddenColumns}
-        {section}
-        {context}
-      />
+      <TidyTableCustomHeaderCells {hiddenColumns} {section} {context} />
       <TidyTableHeaderCell columnWidth="{rowActionInfo.widthRems}rem"
       ></TidyTableHeaderCell>
     </TidyTableHeaderRow>
@@ -145,7 +140,6 @@
         </TidyTableCell>
 
         <TidyTableCustomCells
-          columnsV2={section.columns}
           {hiddenColumns}
           ctx={ctxWithRowActions}
           entry={ctx.activity}

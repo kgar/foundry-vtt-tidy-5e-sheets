@@ -239,7 +239,6 @@
             </TidyTableHeaderCell>
 
             <TidyTableCustomHeaderCells
-              columnsV2={section.columns}
               {context}
               {hiddenColumns}
               {section}
@@ -298,7 +297,6 @@
                 </a>
               </TidyTableCell>
               <TidyTableCustomCells
-                columnsV2={section.columns}
                 {context}
                 ctx={member}
                 entry={member.actor}

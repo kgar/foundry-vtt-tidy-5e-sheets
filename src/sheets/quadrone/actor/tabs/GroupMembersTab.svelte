@@ -5,7 +5,6 @@
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type {
@@ -15,7 +14,6 @@
     TidySectionBase,
   } from 'src/types/types';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
-  import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -30,7 +28,10 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getGroupSheetQuadroneContext());
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
@@ -93,24 +94,12 @@
     {/if}
 
     {#each sections as section (section.key)}
-      {const hasViewableItems =
-        $derived(!searchResults.uuids ||
-        section.members.some((m) => searchResults.uuids?.has(m.actor.uuid)))}
+      {const hasViewableItems = $derived(
+        !searchResults.uuids ||
+          section.members.some((m) => searchResults.uuids?.has(m.actor.uuid)),
+      )}
       {#if section.show && hasViewableItems}
-        {const columns = $derived(new ColumnsLoadout(
-          GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-            sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-            tabId: CONSTANTS.TAB_MEMBERS,
-            sectionKey: section.key,
-            rowActions: section.rowActions,
-            sheetDocument: context.actor,
-          }),
-        ))}
         {const visibleItemCount = $derived(section.members.length)}
-        {const hiddenColumns = $derived(GroupMemberColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth,
-          columns,
-        ))}
 
         <TidyTable key={section.key} data-custom-section={section.custom}>
           {#snippet header()}
@@ -121,12 +110,12 @@
                   <span class="table-header-count">{visibleItemCount}</span>
                 </h3>
               </TidyTableHeaderCell>
-              {@render headerColumns(columns, hiddenColumns, section)}
+              {@render headerColumns(hiddenColumns, section)}
             </TidyTableHeaderRow>
           {/snippet}
           {#snippet body()}
             {#each section.members as member}
-              {@render tableRow(member, columns, hiddenColumns, section)}
+              {@render tableRow(member, hiddenColumns, section)}
             {/each}
           {/snippet}
         </TidyTable>
@@ -141,17 +130,12 @@
   </div>
 </div>
 
-{#snippet headerColumns(
-  columns: ColumnsLoadout,
-  hiddenColumns: Set<string>,
-  section: TidySectionBase,
-)}
-  <TidyTableCustomHeaderCells {columns} {context} {hiddenColumns} {section} />
+{#snippet headerColumns(hiddenColumns: Set<string>, section: TidySectionBase)}
+  <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 {/snippet}
 
 {#snippet tableRow(
   member: GroupMemberQuadroneContext,
-  columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
   section: TidySectionBase,
 )}
@@ -172,7 +156,6 @@
     <GroupMemberNameCell {member} />
     {#if member.canObserve}
       <TidyTableCustomCells
-        {columns}
         {context}
         ctx={member}
         entry={member.actor}

@@ -2,7 +2,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -21,7 +20,10 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
 
   let context = $derived(getEncounterSheetQuadroneContext());
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
   let combatants = $derived(context.combatants);
 
   const localize = FoundryAdapter.localize;
@@ -130,22 +132,9 @@
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
     {#if combatants.length}
-      {const columns = $derived(new ColumnsLoadout(
-        EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-          tabId: CONSTANTS.TAB_ACTOR_COMBAT,
-          /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
-          sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-          rowActions: rowActions,
-          sheetDocument: context.actor,
-        }),
-      ))}
+      <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
+
       {const visibleItemCount = $derived(combatants.length)}
-      {const hiddenColumns =
-        $derived(EncounterMemberColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth,
-          columns,
-        ))}
 
       <TidyTable key="npcs">
         {#snippet header()}
@@ -156,12 +145,12 @@
                 <span class="table-header-count">{visibleItemCount}</span>
               </h3>
             </TidyTableHeaderCell>
-            {@render headerColumns(columns, hiddenColumns)}
+            {@render headerColumns(hiddenColumns)}
           </TidyTableHeaderRow>
         {/snippet}
         {#snippet body()}
           {#each combatants as member}
-            {@render tableRow(member, columns, hiddenColumns)}
+            {@render tableRow(member, hiddenColumns)}
           {/each}
         {/snippet}
       </TidyTable>
@@ -169,27 +158,25 @@
   </section>
 </div>
 
-{#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
+{#snippet headerColumns(hiddenColumns: Set<string>)}
   <TidyTableCustomHeaderCells
-    {columns}
     {context}
     {hiddenColumns}
     section={{
       ...SheetSections.EMPTY,
-      rowActions: rowActions,
     }}
   />
 {/snippet}
 
 {#snippet tableRow(
   combatant:
-    | EncounterMemberQuadroneContext
-    | EncounterPlaceholderQuadroneContext,
-  columns: ColumnsLoadout,
+    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext,
   hiddenColumns: Set<string>,
 )}
   {const member = $derived(combatant.type === 'member' ? combatant : null)}
-  {const placeholder = $derived(combatant.type === 'placeholder' ? combatant : null)}
+  {const placeholder = $derived(
+    combatant.type === 'placeholder' ? combatant : null,
+  )}
   <div
     class={[
       'tidy-table-row group-member',
@@ -212,12 +199,10 @@
     {/if}
 
     <TidyTableCustomCells
-      {columns}
       {context}
       ctx={combatant}
       section={{
         ...SheetSections.EMPTY,
-        rowActions: rowActions,
       }}
       entry={member?.actor}
       {hiddenColumns}

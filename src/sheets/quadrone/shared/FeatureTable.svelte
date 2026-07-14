@@ -1,7 +1,6 @@
 <script lang="ts">
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
@@ -17,7 +16,6 @@
     sheetDocument: Actor5e;
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
-    columns?: ColumnsLoadout;
   }
 
   let {
@@ -40,12 +38,10 @@
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={context.itemContext}
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  columnsV2={section.columns}
 >
   {#snippet afterFirstCell(entry)}
     {#if 'inspirationSource' in context && context.inspirationSource?.itemId === entry.id}

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
@@ -23,7 +22,6 @@
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId?: string;
-    columns?: ColumnsLoadout;
   }
 
   let {
@@ -32,7 +30,6 @@
     sectionsInlineWidth,
     itemToggleMap,
     tabId: tabIdOverride,
-    columns: columnsOverride,
   }: Props = $props();
 
   const tabId = $derived(
@@ -89,12 +86,10 @@
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={context.itemContext}
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  columnsV2={section.columns}
   {rowClassFunction}
   {headerRowClasses}
   {headerRowAttributes}

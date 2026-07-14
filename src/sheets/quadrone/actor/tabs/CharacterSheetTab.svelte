@@ -16,8 +16,6 @@
   import FeatureTable from '../../shared/FeatureTable.svelte';
   import InventoryTable from '../../shared/InventoryTable.svelte';
   import ActionTable from '../../shared/ActionTable.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';

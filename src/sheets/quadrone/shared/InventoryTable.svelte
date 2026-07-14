@@ -7,7 +7,6 @@
     NpcItemQuadroneContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
@@ -34,7 +33,6 @@
     sheetDocument: Actor5e | Item5e;
     tabId: string;
     columnsEffectiveTabId?: string;
-    columns?: ColumnsLoadout;
   };
 
   let {
@@ -63,12 +61,10 @@
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
   entryToggleMap={containerToggleMap}
   {tabId}
-  columnsV2={section.columns}
   {root}
 >
   {#snippet subtitle(_item, ctx)}

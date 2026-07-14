@@ -10,17 +10,14 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    Actor5e,
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
     TidyItemSectionBase,
-    TidySectionBase,
   } from 'src/types/types';
   import { type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
@@ -28,24 +25,17 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-  import type { Item5e } from 'src/types/item.types';
-  import type { SectionColumnContext } from 'src/runtime/types';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
     entries: TEntry[];
     entryContext: Record<string, ActorItemQuadroneContext>;
-    /** Actor or item (e.g. nested container inventory); theme is resolved per document. */
-    sheetDocument: Actor5e | Item5e;
     sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
-    columns?: ColumnsLoadout;
-    columnsV2?: SectionColumnContext;
     headerRowClasses?: ClassValue;
     headerRowAttributes?: Omit<HTMLAttributes<HTMLElement>, 'class'>;
     rowClassFunction?: (entry: TEntry) => ClassValue;
@@ -63,13 +53,10 @@
   let {
     entries,
     section,
-    sheetDocument,
     entryContext,
     sectionsInlineWidth,
     entryToggleMap,
     tabId,
-    columns,
-    columnsV2,
     rowClassFunction,
     subtitle,
     afterInlineActivities,
@@ -103,13 +90,12 @@
   );
 
   let hiddenColumns = $derived(
-    columnsV2
-      ? ItemColumnRuntime.determineHiddenColumnsV2(
-          sectionsInlineWidth - rowActionInfo.widthPx,
-          columnsV2,
-        )
-      : new Set<string>(),
+    ItemColumnRuntime.determineHiddenColumnsV2(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
   );
+
   // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
 
   const isBasicTheme = $derived(
@@ -136,8 +122,6 @@
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells
-        {columns}
-        {columnsV2}
         {hiddenColumns}
         {section}
         {context}
@@ -235,8 +219,6 @@
             </TidyTableCell>
             {@render afterFirstCell?.(entry, ctx)}
             <TidyTableCustomCells
-              {columns}
-              columnsV2={section.columns}
               {hiddenColumns}
               {ctx}
               {entry}

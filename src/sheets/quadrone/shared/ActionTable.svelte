@@ -39,12 +39,10 @@
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  columnsV2={section.columns}
 >
   {#snippet subtitle(item, ctx)}
     {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}
