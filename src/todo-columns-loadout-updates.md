@@ -19,10 +19,9 @@
 - [x] Vehicle - add row actions for features
 - [x] Vehicle - add row actions for spells
 - [x] Vehicle - add row actions for cargo/inventory
-- [ ] Vehicle - add row actions for assigned crew
-- [ ] Vehicle - add row actions for unassigned crew
-- [ ] Vehicle - add row actions for passengers
-- [ ] ...?
+- [x] Vehicle - add row actions for assigned crew
+- [x] Vehicle - add row actions for unassigned crew
+- [x] Vehicle - add row actions for passengers
 - [ ] Refactor: calculate the max row actions per table as a derived rune at the location where it is needed, as opposed to bookkeeping during data prep. i.e., `<!-- TODO: Collapse all this common content down into a single derived call. -->`
   - [ ] Remove the max row actions prop from section base
   - [ ] Find all max row action width calcs and replace with single derived function call
