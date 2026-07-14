@@ -17,7 +17,7 @@
 
   let showSpecificMemberValues = $derived(
     emphasizedMember &&
-      !![...context.members.all.values()].find(
+      !![...context.memberContext.all.values()].find(
         (m) => m.actor.uuid === emphasizedMember?.actor.uuid,
       ),
   );
@@ -96,7 +96,7 @@
           tooltip?.tryShow(ev, {
             key: ability.key,
             label: ability.name,
-            members: Array.from(context.members.all.values()),
+            members: Array.from(context.memberContext.all.values()),
           })}
       >
         <button

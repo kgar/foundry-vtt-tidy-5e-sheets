@@ -18,13 +18,15 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
     ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
-  let combatants = $derived(context.combatants);
 
   const localize = FoundryAdapter.localize;
   let rowActions: any[] = $derived(
@@ -131,81 +133,104 @@
 
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
-    {#if combatants.length}
-      <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
+    {#each context.combat as section (section.key)}
+      {#if section.combatants.length}
+        {const visibleItemCount = $derived(section.combatants.length)}
 
-      {const visibleItemCount = $derived(combatants.length)}
+        {const rowActionInfo = $derived(
+          TableRowActionsRuntime.getRowActionWidthInfo(
+            section.combatants,
+            (entry) => entry.rowActions,
+          ),
+        )}
 
-      <TidyTable key="npcs">
-        {#snippet header()}
-          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-            <TidyTableHeaderCell primary={true}>
-              <h3>
-                {localize('TIDY5E.Encounter.CombatantsSection.Title')}
-                <span class="table-header-count">{visibleItemCount}</span>
-              </h3>
-            </TidyTableHeaderCell>
-            {@render headerColumns(hiddenColumns)}
-          </TidyTableHeaderRow>
-        {/snippet}
-        {#snippet body()}
-          {#each combatants as member}
-            {@render tableRow(member, hiddenColumns)}
-          {/each}
-        {/snippet}
-      </TidyTable>
-    {/if}
+        {const hiddenColumns = $derived(
+          EncounterMemberColumnRuntime.determineHiddenColumnsV2(
+            sectionsInlineWidth - rowActionInfo.widthPx,
+            section.columns,
+          ),
+        )}
+
+        <TidyTable key={section.key}>
+          {#snippet header()}
+            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+              <TidyTableHeaderCell primary={true}>
+                <h3>
+                  {localize(section.label)}
+                  <span class="table-header-count">{visibleItemCount}</span>
+                </h3>
+              </TidyTableHeaderCell>
+
+              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
+              <TidyTableHeaderCell
+                class="header-cell-actions"
+                columnWidth="{rowActionInfo.widthRems}rem"
+                data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+              >
+                <SectionActionsColumnHeader
+                  {section}
+                  sheetDocument={context.document}
+                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                />
+              </TidyTableHeaderCell>
+            </TidyTableHeaderRow>
+          {/snippet}
+          {#snippet body()}
+            {#each section.combatants as combatant}
+              {const member = $derived(
+                combatant.type === 'member' ? combatant : null,
+              )}
+              {const placeholder = $derived(
+                combatant.type === 'placeholder' ? combatant : null,
+              )}
+              <div
+                class={[
+                  'tidy-table-row group-member',
+                  { 'include-in-combat': !combatant.includeInCombat },
+                ]}
+                style:--t5e-theme-color-default={member?.accentColor}
+                style:--t5e-theme-color-highlight={member?.highlightColor}
+                style:--t5e-member-color-hover={member?.highlightColor}
+                data-combatant-type={combatant.type}
+                data-member-uuid={member?.actor.uuid}
+                data-placeholder-id={placeholder?.id}
+                data-context-menu={!!member
+                  ? CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER
+                  : CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER}
+              >
+                {#if combatant.type === 'placeholder'}
+                  <EncounterPlaceholderNameColumn placeholder={combatant} />
+                {:else if member}
+                  <EncounterMemberNameCell {member} />
+                {/if}
+
+                <TidyTableCustomCells
+                  {context}
+                  ctx={combatant}
+                  {section}
+                  entry={member?.actor}
+                  {hiddenColumns}
+                />
+
+                <TidyTableCell
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  class="tidy-table-actions"
+                  attributes={{
+                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                  }}
+                >
+                  <DocumentActionsColumn
+                    {section}
+                    rowDocument={member?.actor}
+                    rowContext={member ?? placeholder}
+                  />
+                </TidyTableCell>
+              </div>
+            {/each}
+          {/snippet}
+        </TidyTable>
+      {/if}
+    {/each}
   </section>
 </div>
-
-{#snippet headerColumns(hiddenColumns: Set<string>)}
-  <TidyTableCustomHeaderCells
-    {context}
-    {hiddenColumns}
-    section={{
-      ...SheetSections.EMPTY,
-    }}
-  />
-{/snippet}
-
-{#snippet tableRow(
-  combatant:
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext,
-  hiddenColumns: Set<string>,
-)}
-  {const member = $derived(combatant.type === 'member' ? combatant : null)}
-  {const placeholder = $derived(
-    combatant.type === 'placeholder' ? combatant : null,
-  )}
-  <div
-    class={[
-      'tidy-table-row group-member',
-      { 'include-in-combat': !combatant.includeInCombat },
-    ]}
-    style:--t5e-theme-color-default={member?.accentColor}
-    style:--t5e-theme-color-highlight={member?.highlightColor}
-    style:--t5e-member-color-hover={member?.highlightColor}
-    data-combatant-type={combatant.type}
-    data-member-uuid={member?.actor.uuid}
-    data-placeholder-id={placeholder?.id}
-    data-context-menu={!!member
-      ? CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER
-      : CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER}
-  >
-    {#if combatant.type === 'placeholder'}
-      <EncounterPlaceholderNameColumn placeholder={combatant} />
-    {:else if member}
-      <EncounterMemberNameCell {member} />
-    {/if}
-
-    <TidyTableCustomCells
-      {context}
-      ctx={combatant}
-      section={{
-        ...SheetSections.EMPTY,
-      }}
-      entry={member?.actor}
-      {hiddenColumns}
-    />
-  </div>
-{/snippet}

@@ -14,8 +14,8 @@
   - [x] Effects
   - [x] Activities
   - [x] Container Contents
-- [ ] Vehicle - add columns for draft animals
-- [ ] Vehicle - add row actions for draft animals
+- [x] Vehicle - add columns for draft animals
+- [x] Vehicle - add row actions for draft animals
 - [x] Vehicle - add row actions for features
 - [x] Vehicle - add row actions for spells
 - [x] Vehicle - add row actions for cargo/inventory
@@ -35,26 +35,15 @@
 - [x] Remove all references to ColumnsLoadout
 - [x] TidyItemTable - eliminate columnsV2. It should just use the section columns
 - [x] TidyTableCustomHeaderCells - eliminate columnsV2. It should just use the section columns
-- [ ] Create proper section for EncounterMembersTab.svelte content
-- [ ] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
-- [ ] `<TidyItemTable` -> no sheetDocument anymore
-- [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: NPC
-  - [ ] Statblock
-  - [ ] Inventory
-  - [ ] Spellbook
-  - [ ] Effects
-- [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: Vehicle
-  - [ ] ...
-- [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: Group
-  - [ ] ...
-- [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: Encounter
-  - [ ] ...
-- [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: Container
-  - [ ] ...
+- [x] `<TidyItemTable` -> no sheetDocument anymore
 - [x] Ensure column show/hide works properly
 - [x] Ensure Row Actions render properly
 - [x] Ensure SectionActionsColumnHeader / Section Base is aware of row actions count so it can mirror.
+- [x] Create proper section for EncounterMembersTab.svelte content
+- [x] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
+- [ ] Row actions needed for Encounter inventory
 - [ ] DocumentActionsColumn -> RowActionsColumn
+  - [ ] The only arg should be `data`, typed to a TData generic. Could be a document, could be context object of some sort. But it's only one thing.
 - [ ] // TODO: Inline actions column
 - [ ] Dismantle the `widthRems()` function. We will do special handling for row actions / table actions, utilizing a constant for the column key.
   - [ ] Section base should have `maxRowActionsCount` to compare against its section actions. For now, this should be a loop after the section has been prepared and items/activities/effects partitioned into it. Later, this will be moved to a section preparer.
@@ -73,7 +62,6 @@
   - [x] Effect table
   - [x] Container Contents table
   - [x] Activity table
-- [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions.
 - [x] Handle special case: Additional Spells row actions. Might be using the "ChooseAButton"
 - [x] Eliminate ChooseAButton
 - [ ] Apply custom column setup to activities
@@ -92,6 +80,8 @@
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
 - [ ] This happens a lot with row actions: `!action.condition || action.condition(...)` ; can we either create a helper or somehow have the condition function defaulted to a universal return true copy when not specified?
 - [ ] // TODO: This happens twice. Where should this data prep go?
+- [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
+- [ ] Upgrade TableRowActionsRuntime to 
 
 ## WIP changes
 

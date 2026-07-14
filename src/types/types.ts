@@ -1442,7 +1442,6 @@ export type GroupMemberSection = {
 } & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
-  sections: GroupMemberSection[];
   character: GroupMemberQuadroneContext[];
   all: Map<string, GroupMemberQuadroneContext>;
   skilled: GroupMemberQuadroneContext[];
@@ -1566,7 +1565,8 @@ export type GroupSheetQuadroneContext = {
       summary: string;
     };
   };
-  members: GroupMembersQuadroneContext;
+  memberContext: GroupMembersQuadroneContext;
+  members: GroupMemberSection[];
   skills: GroupSkill[];
   travel: {
     currentPace: TravelPaceConfigEntry;
@@ -1603,6 +1603,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1611,7 +1612,18 @@ export type EncounterPlaceholderQuadroneContext = {
   name: string;
   visible: boolean;
   type: 'placeholder';
+  rowActions: TidyTableAction<any, any>[];
 } & EncounterPlaceholder;
+
+export type EncounterMemberSection = TidySectionBase & {
+  members: EncounterMemberQuadroneContext[];
+};
+
+export type EncounterCombatSection = TidySectionBase & {
+  combatants: (
+    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+  )[];
+};
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
@@ -1649,9 +1661,6 @@ export type EncounterDifficultyContext = {
 };
 
 export type EncounterSheetQuadroneContext = {
-  combatants: (
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
-  )[];
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: EncounterDifficultyContext;
   enriched: {
@@ -1660,7 +1669,9 @@ export type EncounterSheetQuadroneContext = {
       summary: string;
     };
   };
-  members: EncounterMembersQuadroneContext;
+  memberContext: EncounterMembersQuadroneContext;
+  members: EncounterMemberSection[];
+  combat: EncounterCombatSection[];
   skills: GroupSkill[];
   totalCurrency: number;
   totalXp: number;

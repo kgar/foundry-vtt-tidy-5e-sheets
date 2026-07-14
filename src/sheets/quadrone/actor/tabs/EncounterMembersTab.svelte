@@ -6,7 +6,6 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { EncounterMemberQuadroneContext } from 'src/types/types';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
@@ -19,9 +18,13 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
-  let npcs = $derived(context.members.npc);
+
   let isBasicTheme = $derived(
     ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
@@ -61,77 +64,124 @@
       <SheetPins />
     {/if}
 
-    {#if npcs.length}
-      {const visibleItemCount = $derived(npcs.length)}
-
-      {#if context.difficulty?.label}
-        <div class="difficulty-row flexrow">
-          <div
-            class="pill pill-medium flexshrink"
-            data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
-              .label}"
-          >
-            {context.difficulty.label}
-          </div>
-
-          <EncounterXPBudgetBar difficulty={context.difficulty} />
+    {#if context.memberContext.npc.length && context.difficulty?.label}
+      <div class="difficulty-row flexrow">
+        <div
+          class="pill pill-medium flexshrink"
+          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
+            .label}"
+        >
+          {context.difficulty.label}
         </div>
-      {/if}
 
-      <TidyTable key="npcs">
-        {#snippet header()}
-          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-            <TidyTableHeaderCell primary={true}>
-              <h3>
-                {localize('DND5E.ENCOUNTER.Tab.Members')}
-                <span class="table-header-count">{visibleItemCount}</span>
-              </h3>
-            </TidyTableHeaderCell>
-            {@render headerColumns(columns, hiddenColumns)}
-          </TidyTableHeaderRow>
-        {/snippet}
-        {#snippet body()}
-          {#each npcs as member}
-            {@render tableRow(member, columns, hiddenColumns)}
-          {/each}
-        {/snippet}
-      </TidyTable>
+        <EncounterXPBudgetBar difficulty={context.difficulty} />
+      </div>
     {/if}
+
+    {#if context.memberContext.npc.length && context.difficulty?.label}
+      <div class="difficulty-row flexrow">
+        <div
+          class="pill pill-medium flexshrink"
+          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
+            .label}"
+        >
+          {context.difficulty.label}
+        </div>
+
+        <EncounterXPBudgetBar difficulty={context.difficulty} />
+      </div>
+    {/if}
+
+    {#each context.members as section (section.key)}
+      {#if section.members.length}
+        {const visibleItemCount = $derived(section.members.length)}
+
+        {const rowActionInfo = $derived(
+          TableRowActionsRuntime.getRowActionWidthInfo(
+            section.members,
+            (entry) => entry.rowActions,
+          ),
+        )}
+
+        {const hiddenColumns = $derived(
+          EncounterMemberColumnRuntime.determineHiddenColumnsV2(
+            sectionsInlineWidth - rowActionInfo.widthPx,
+            section.columns,
+          ),
+        )}
+
+        <TidyTable key={section.key}>
+          {#snippet header()}
+            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+              <TidyTableHeaderCell primary={true}>
+                <h3>
+                  {localize(section.label)}
+                  <span class="table-header-count">{visibleItemCount}</span>
+                </h3>
+              </TidyTableHeaderCell>
+
+              <TidyTableCustomHeaderCells
+                {context}
+                section={{
+                  ...SheetSections.EMPTY,
+                }}
+                {hiddenColumns}
+              />
+
+              <TidyTableHeaderCell
+                class="header-cell-actions"
+                columnWidth="{rowActionInfo.widthRems}rem"
+                data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+              >
+                <SectionActionsColumnHeader
+                  {section}
+                  sheetDocument={context.document}
+                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                />
+              </TidyTableHeaderCell>
+            </TidyTableHeaderRow>
+          {/snippet}
+          {#snippet body()}
+            {#each section.members as member}
+              <div
+                class="tidy-table-row group-member"
+                style:--t5e-theme-color-default={member.accentColor}
+                style:--t5e-theme-color-highlight={member.highlightColor}
+                style:--t5e-member-color-hover={member.highlightColor}
+                data-tidy-draggable
+                data-member-uuid={member.actor.uuid}
+                data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
+              >
+                <EncounterMemberNameCell {member} />
+
+                <TidyTableCustomCells
+                  {context}
+                  ctx={member}
+                  entry={member.actor}
+                  section={{
+                    ...SheetSections.EMPTY,
+                  }}
+                  {hiddenColumns}
+                />
+
+                <TidyTableCell
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  class="tidy-table-actions"
+                  attributes={{
+                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                  }}
+                >
+                  <DocumentActionsColumn
+                    {section}
+                    rowDocument={member.actor}
+                    rowContext={member}
+                  />
+                </TidyTableCell>
+              </div>
+            {/each}
+          {/snippet}
+        </TidyTable>
+      {/if}
+    {/each}
   </div>
 </div>
-{#snippet headerColumns(hiddenColumns: Set<string>)}
-  <TidyTableCustomHeaderCells
-    {context}
-    section={{
-      ...SheetSections.EMPTY,
-    }}
-    {hiddenColumns}
-  />
-{/snippet}
-
-{#snippet tableRow(
-  member: EncounterMemberQuadroneContext,
-  hiddenColumns: Set<string>,
-)}
-  <div
-    class="tidy-table-row group-member"
-    style:--t5e-theme-color-default={member.accentColor}
-    style:--t5e-theme-color-highlight={member.highlightColor}
-    style:--t5e-member-color-hover={member.highlightColor}
-    data-tidy-draggable
-    data-member-uuid={member.actor.uuid}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
-  >
-    <EncounterMemberNameCell {member} />
-
-    <TidyTableCustomCells
-      {context}
-      ctx={member}
-      entry={member.actor}
-      section={{
-        ...SheetSections.EMPTY,
-      }}
-      {hiddenColumns}
-    />
-  </div>
-{/snippet}

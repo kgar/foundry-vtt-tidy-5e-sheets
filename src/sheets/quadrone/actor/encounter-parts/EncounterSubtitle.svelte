@@ -11,7 +11,7 @@
 
   // TODO: To context prop
   let memberCount = $derived(
-    context.members.npc.reduce(
+    context.memberContext.npc.reduce(
       (prev, curr) => prev + (curr.quantity.value ?? 0),
       0,
     ),

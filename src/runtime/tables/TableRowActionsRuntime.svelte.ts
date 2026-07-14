@@ -459,7 +459,7 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getEncounterMemberRowActions(context: EncounterSheetQuadroneContext) {
+  getEncounterMemberRowActions(context: ActorSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Actor5e
@@ -617,7 +617,7 @@ class TableRowActionsRuntime {
     return result;
   }
 
-  getEncounterCombatRowActions(context: EncounterSheetQuadroneContext) {
+  getEncounterCombatRowActions(context: ActorSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Actor5e

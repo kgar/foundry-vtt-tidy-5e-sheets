@@ -12,6 +12,8 @@ import type {
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
   DifficultyTarget,
+  EncounterMemberSection,
+  EncounterCombatSection,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
@@ -40,6 +42,8 @@ import {
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -196,12 +200,10 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   async _prepareMemberDependentContext(
     context: ActorSheetQuadroneContext,
   ): Promise<{
-    combatants: (
-      | EncounterMemberQuadroneContext
-      | EncounterPlaceholderQuadroneContext
-    )[];
+    combat: EncounterCombatSection[];
     creatureTypes: EncounterCreatureTypeContext[];
-    members: {
+    members: EncounterMemberSection[];
+    memberContext: {
       npc: EncounterMemberQuadroneContext[];
       all: Map<string, EncounterMemberQuadroneContext>;
     };
@@ -214,14 +216,18 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     const npcMap = new Map<string, EncounterMemberQuadroneContext>();
     const combatants: (
-      | EncounterMemberQuadroneContext
-      | EncounterPlaceholderQuadroneContext
+      EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
     )[] = [];
     const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
     const languages = new Map<string, MeasurableGroupTrait<number>>();
     const senses = new Map<string, MeasurableGroupTrait<number>>();
     const specials = new Map<string, GroupTrait>();
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
+
+    const memberRowActions =
+      TableRowActionsRuntime.getEncounterMemberRowActions(context);
+    const combatRowActions =
+      TableRowActionsRuntime.getEncounterCombatRowActions(context);
 
     const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
@@ -262,6 +268,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
+          rowActions: memberRowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: actor, rowContext: undefined }),
+          ),
         };
 
         npcMap.set(actor.uuid, memberContext);
@@ -286,23 +297,57 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           name: placeholder.name,
           visible: combatantSettings.visible,
+          rowActions: combatRowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: undefined, rowContext: undefined }),
+          ),
         });
       },
     );
 
     return {
-      combatants: combatants.sort(
-        (a, b) =>
-          (b.initiative ?? 0) - (a.initiative ?? 0) ||
-          a.name.localeCompare(b.name, game.i18n.lang),
-      ),
+      combat: [
+        {
+          key: 'npcs',
+          dataset: {},
+          label: 'TIDY5E.Encounter.CombatantsSection.Title',
+          show: true,
+          columns: EncounterMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_ACTOR_COMBAT,
+            'npcs',
+          ),
+          combatants: combatants.sort(
+            (a, b) =>
+              (b.initiative ?? 0) - (a.initiative ?? 0) ||
+              a.name.localeCompare(b.name, game.i18n.lang),
+          ),
+          sectionActions: [],
+        },
+      ],
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang),
       ),
-      members: {
+      memberContext: {
         npc: memberContexts,
         all: npcMap,
       },
+      members: [
+        {
+          key: 'npcs',
+          label: 'DND5E.ENCOUNTER.Tab.Members',
+          members: memberContexts,
+          sectionActions: [],
+          show: true,
+          dataset: {},
+          columns: EncounterMemberColumnRuntime.getColumnSpecifications(
+            context.document,
+            CONSTANTS.TAB_MEMBERS,
+            'npcs',
+          ),
+        },
+      ],
       skills: [...skills.values()].sort((a, b) =>
         a.name.localeCompare(b.name, game.i18n.lang),
       ),
