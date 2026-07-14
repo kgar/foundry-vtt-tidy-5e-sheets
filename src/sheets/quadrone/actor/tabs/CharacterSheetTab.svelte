@@ -125,21 +125,11 @@
             ))}
 
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId: tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <SpellTable
                 {section}
                 sheetDocument={context.document}
                 {sectionsInlineWidth}
                 {itemToggleMap}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
@@ -148,15 +138,6 @@
               searchResults.uuids,
             ))}
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId: tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <InventoryTable
                 containingDocument={context.document}
                 editable={context.editable}
@@ -168,7 +149,6 @@
                 {sectionsInlineWidth}
                 sheetDocument={context.document}
                 {tabId}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
@@ -177,21 +157,11 @@
               searchResults.uuids,
             ))}
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <FeatureTable
                 {section}
                 {itemToggleMap}
                 {sectionsInlineWidth}
                 sheetDocument={context.document}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}

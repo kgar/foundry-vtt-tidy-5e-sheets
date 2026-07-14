@@ -10,12 +10,10 @@
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -46,23 +44,9 @@
   let sections = $derived(context.effects);
 
   const localize = FoundryAdapter.localize;
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 </script>
 
 {#each sections as section (section.key)}
-  {const columns = $derived(
-    new ColumnsLoadout(
-      EffectColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: context.document.type,
-        tabId: tabId,
-        sectionKey: section.key,
-        rowActions: section.rowActions,
-        sheetDocument: context.document,
-      }),
-    ),
-  )}
-
   {const rowActionsColumnWidthRems = $derived(
     TableRowActionsRuntime.calculateRowActionWidthRems(
       section.columns.maxRowActionsCount,
@@ -74,12 +58,11 @@
   )}
 
   {const hiddenColumns = $derived(
-    section.columns
-      ? EffectColumnRuntime.determineHiddenColumnsV2(
-          inlineWidth - rowActionsColumnWidthPx,
-          section.columns,
-        )
-      : EffectColumnRuntime.determineHiddenColumns(inlineWidth, columns, 10),
+    EffectColumnRuntime.determineHiddenColumnsV2(
+      inlineWidth - rowActionsColumnWidthPx,
+      section.columns,
+      10,
+    ),
   )}
 
   {#if section.show}
@@ -99,7 +82,6 @@
           </TidyTableHeaderCell>
 
           <TidyTableCustomHeaderCells
-            {columns}
             columnsV2={section.columns}
             {context}
             {hiddenColumns}

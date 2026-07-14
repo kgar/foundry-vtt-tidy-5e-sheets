@@ -641,10 +641,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
     await this.item.system.getSheetData?.(context);
 
-    context.effects.forEach((s) => {
-      s.rowActions = TableRowActionsRuntime.getEffectsRowActions(context);
-    });
-
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
@@ -725,7 +721,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           canCreate: this.isEditable && !value.isEnchantment && !value.disabled,
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
-          rowActions: [],
           sectionActions: [],
           columns: EffectColumnRuntime.getColumnSpecifications(
             this.document,

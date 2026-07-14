@@ -112,7 +112,6 @@ export class SheetSections {
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
       },
       show: true,
-      rowActions: [], // for the UI Overhaul
       sectionActions: [], // for the UI Overhaul
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
@@ -196,7 +195,6 @@ export class SheetSections {
         key: s.slot,
         method: s.id,
         show: true,
-        rowActions: options.rowActions ?? [], // for the UI Overhaul
         sectionActions: options.sectionActions ?? [], // for the UI Overhaul
         columns: ItemColumnRuntime.getColumnSpecifications(
           context.document,

@@ -57,7 +57,6 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
-        rowActions: [],
         sectionActions: [],
         columns: ItemColumnRuntime.getColumnSpecifications(
           sheetDocument,
@@ -126,7 +125,6 @@ export class Inventory {
         creationItemTypes: [...defaultInventoryTypes],
       },
       show: true,
-      rowActions: [],
       sectionActions: [],
       columns: ItemColumnRuntime.getColumnSpecifications(
         sheetDocument,

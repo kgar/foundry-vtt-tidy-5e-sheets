@@ -190,7 +190,6 @@ export class ConditionsAndEffects {
           context.editable && !category.isEnchantment && !category.disabled,
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
-        rowActions: [], // to be removed
         sectionActions,
         columns: EffectColumnRuntime.getColumnSpecifications(
           context.document,
@@ -266,7 +265,6 @@ export class ConditionsAndEffects {
         canCreate: context.editable && !category.isEnchantment,
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
-        rowActions: [], // to be removed
         sectionActions,
         columns: EffectColumnRuntime.getColumnSpecifications(
           context.document,

@@ -2,7 +2,6 @@
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
@@ -18,7 +17,6 @@
     sheetDocument: Actor5e;
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
-    tabId?: string;
     columns?: ColumnsLoadout;
   }
 
@@ -27,12 +25,9 @@
     sheetDocument,
     sectionsInlineWidth,
     itemToggleMap,
-    tabId: tabIdOverride,
-    columns: columnsOverride,
   }: Props = $props();
 
-  const tabId =
-    tabIdOverride ?? getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+  const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let context =
     $derived(
@@ -40,19 +35,6 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
-
-  let columns = $derived(
-    columnsOverride ??
-      new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: sheetDocument.type,
-          tabId: tabId,
-          sectionKey: section.key,
-          rowActions: section.rowActions,
-          sheetDocument: context.document,
-        }),
-      ),
-  );
 </script>
 
 <TidyItemTable
@@ -63,7 +45,6 @@
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  {columns}
   columnsV2={section.columns}
 >
   {#snippet afterFirstCell(entry)}

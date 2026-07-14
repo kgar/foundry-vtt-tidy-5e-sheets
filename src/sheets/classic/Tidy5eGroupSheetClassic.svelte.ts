@@ -595,7 +595,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: false,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -608,7 +607,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -621,7 +619,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: false,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },

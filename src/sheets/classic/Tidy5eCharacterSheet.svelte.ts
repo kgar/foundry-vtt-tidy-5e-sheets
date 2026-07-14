@@ -882,7 +882,6 @@ export class Tidy5eCharacterSheet
       key: 'tidy-favorite-effects',
       label: 'DND5E.Effects',
       show: true,
-      rowActions: [], // quadrone only
       sectionActions: [], // quadrone only
       columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
     };
@@ -927,7 +926,6 @@ export class Tidy5eCharacterSheet
       label: 'DND5E.ACTIVITY.Title.other',
       show: true,
       type: CONSTANTS.SECTION_TYPE_ACTIVITY,
-      rowActions: [], // quadrone only
       sectionActions: [], // quadrone only
       columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
     };
@@ -1235,7 +1233,6 @@ export class Tidy5eCharacterSheet
         key: 'tidy-favorite-bastion-facilities',
         label: bastionFacilitiesLabel,
         show: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },

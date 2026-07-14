@@ -1,9 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
@@ -49,25 +47,6 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
-
-  const localize = FoundryAdapter.localize;
-
-  let columns = $derived(
-    columnsOverride ??
-      new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: sheetDocument.type,
-          tabId: tabId,
-          sectionKey: section.key,
-          rowActions: section.rowActions,
-          sheetDocument: sheetDocument,
-        }),
-      ),
-  );
-
-  let hiddenColumns = $derived(
-    ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
-  );
 
   function rowClassFunction(entry: Item5e) {
     return {
@@ -115,7 +94,6 @@
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  {columns}
   columnsV2={section.columns}
   {rowClassFunction}
   {headerRowClasses}

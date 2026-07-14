@@ -862,7 +862,6 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'weapons',
         show: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -878,7 +877,6 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'actions',
         show: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -891,7 +889,6 @@ export class Tidy5eNpcSheet
         key: 'passive',
         show: true,
         hasUses: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -903,7 +900,6 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'equipment',
         show: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
@@ -916,7 +912,6 @@ export class Tidy5eNpcSheet
         key: 'classes',
         show: true,
         isClass: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },

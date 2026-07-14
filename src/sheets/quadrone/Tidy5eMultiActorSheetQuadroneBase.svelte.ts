@@ -106,9 +106,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       );
 
       const inventory: ActorInventoryTypes =
-        Inventory.getDefaultInventorySections(this.document, {
-          rowActions: inventoryRowActions,
-        });
+        Inventory.getDefaultInventorySections(this.document);
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
@@ -136,7 +134,6 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           inventoryTypes,
           {
             canCreate: true,
-            rowActions: inventoryRowActions,
           },
           undefined,
           undefined,
@@ -155,7 +152,6 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           inventoryTypes,
           {
             canCreate: true,
-            rowActions: inventoryRowActions,
           },
         );
       });

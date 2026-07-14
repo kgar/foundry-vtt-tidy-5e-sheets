@@ -55,7 +55,6 @@ export class NpcSheetSections {
         creationItemTypes: NpcSheetSections.abilitiesItemTypes,
       },
       show: true,
-      rowActions: [], // quadrone only
       sectionActions: [], // quadrone only
       columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       ...customSectionOptions,

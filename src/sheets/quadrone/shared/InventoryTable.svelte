@@ -8,7 +8,6 @@
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
@@ -39,7 +38,6 @@
   };
 
   let {
-    containingDocument,
     editable,
     inlineToggleService,
     itemContext,
@@ -49,24 +47,9 @@
     sectionsInlineWidth,
     sheetDocument,
     tabId,
-    columnsEffectiveTabId,
-    columns: columnsOverride,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-
-  const columns = $derived(
-    columnsOverride ??
-      new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: containingDocument.type,
-          tabId: columnsEffectiveTabId ?? tabId,
-          sectionKey: section.key,
-          rowActions: section.rowActions,
-          sheetDocument: containingDocument,
-        }),
-      ),
-  );
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -85,7 +68,6 @@
   {sectionsInlineWidth}
   entryToggleMap={containerToggleMap}
   {tabId}
-  {columns}
   columnsV2={section.columns}
   {root}
 >

@@ -118,7 +118,6 @@
     {context}
     section={{
       ...SheetSections.EMPTY,
-      rowActions: rowActions,
     }}
     {hiddenColumns}
   />

@@ -424,7 +424,6 @@ export class Tidy5eVehicleSheet
           inventoryTypes,
           {
             canCreate: true,
-            rowActions: [],
           },
           undefined,
           undefined,

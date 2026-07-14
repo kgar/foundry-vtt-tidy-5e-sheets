@@ -328,9 +328,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     );
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document, {
-        rowActions: inventoryRowActions,
-      });
+      Inventory.getDefaultInventorySections(this.document);
 
     type NpcPartitions = {
       inventoryItems: Item5e[];
@@ -349,13 +347,19 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           obj.inventoryItems.push(item);
         }
 
+        ctx.rowActions = Inventory.isItemInventoryType(item)
+          ? TableRowActionsRuntime.getInventoryRowActions(context)
+          : item.type === CONSTANTS.ITEM_TYPE_SPELL
+            ? TableRowActionsRuntime.getSpellRowActions(context)
+            : item.type === CONSTANTS.ITEM_TYPE_FEAT
+              ? TableRowActionsRuntime.getStatblockRowActions(context)
+              : // TODO: Determine if we should provide a simple default array of options
+                [];
+
         return obj;
       },
       { inventoryItems: [] as Item5e[] },
     );
-
-    const statblockRowActions =
-      TableRowActionsRuntime.getStatblockRowActions(context);
 
     const createNewStatblockSection = (
       label: string,
@@ -382,7 +386,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         items: [],
         key: id,
         show: true,
-        rowActions: statblockRowActions,
         sectionActions: [],
         dataset: dataset,
         canCreate: true,
@@ -419,6 +422,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     // TODO: We could loop less by doing all of this in the single pass over items.
     items.forEach((item: Item5e) => {
+      const ctx = context.itemContext[item.id] ?? {};
+
       if (
         !inventoryTypesSet.has(item.type) &&
         item.type !== CONSTANTS.ITEM_TYPE_FEAT
@@ -437,11 +442,13 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           ));
 
         section.items.push(item);
+
+        ItemColumnRuntime.applyRowActionColumnWidth(section, ctx.rowActions);
         return;
       }
 
-      const activationType =
-        item.system.activities?.contents[0]?.activation.type;
+      const activationType: string =
+        item.system.activities?.contents[0]?.activation.type ?? '';
 
       const isPassive =
         item.system.properties?.has('trait') ||
@@ -461,6 +468,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       }
 
       featureSections[section]?.items.push(item);
+
+      ItemColumnRuntime.applyRowActionColumnWidth(
+        featureSections[section],
+        ctx.rowActions,
+      );
     });
 
     // Remove any default sections that did not receive an item.
@@ -493,7 +505,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         inventoryTypes,
         {
           canCreate: true,
-          rowActions: inventoryRowActions,
         },
         undefined,
         undefined,
@@ -512,7 +523,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         inventoryTypes,
         {
           canCreate: true,
-          rowActions: inventoryRowActions,
         },
       );
     });
@@ -523,9 +533,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       this.actor.itemTypes.spell,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
-          hasActionsTab: false,
-        }),
       },
     );
 

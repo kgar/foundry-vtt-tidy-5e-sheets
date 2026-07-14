@@ -300,6 +300,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         context,
         'crew',
       );
+      
     context.crew.unassigned.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
 
@@ -338,7 +339,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           } satisfies DraftAnimalContext;
         }),
       ),
-      rowActions: TableRowActionsRuntime.getDraftAnimalRowActions(context),
     };
 
     context.statblock.push(drafted);
@@ -414,7 +414,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           ['type']: CONSTANTS.ITEM_TYPE_FEAT,
         },
         key: CONSTANTS.ITEM_TYPE_FEAT,
-        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
         columns: ItemColumnRuntime.getColumnSpecifications(
@@ -430,7 +429,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         label: 'TYPES.Item.spellPl',
         dataset: {},
         key: CONSTANTS.ITEM_TYPE_SPELL,
-        rowActions: statblockSpellRowActions,
         sectionActions: [],
         show: true,
         columns: ItemColumnRuntime.getColumnSpecifications(
@@ -449,7 +447,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_SIEGE_WEAPON,
         },
         key: CONSTANTS.ITEM_TYPE_WEAPON,
-        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
         columns: ItemColumnRuntime.getColumnSpecifications(
@@ -468,7 +465,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_VEHICLE_EQUIPMENT,
         },
         key: CONSTANTS.ITEM_TYPE_EQUIPMENT,
-        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
         columns: ItemColumnRuntime.getColumnSpecifications(
@@ -485,9 +481,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     );
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document, {
-        rowActions: inventoryRowActions,
-      });
+      Inventory.getDefaultInventorySections(this.document);
 
     const inventoryTypes = Inventory.getInventoryTypes();
 
@@ -513,7 +507,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           inventoryTypes,
           {
             canCreate: true,
-            rowActions: inventoryRowActions,
           },
           undefined,
           undefined,
@@ -531,7 +524,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           statblockTypes,
           {
             canCreate: false,
-            rowActions: statblockSpellRowActions,
           },
           CONSTANTS.ITEM_TYPE_SPELL,
           undefined,
@@ -546,7 +538,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           statblockTypes,
           {
             canCreate: false,
-            rowActions: statblockRowActions,
           },
           CONSTANTS.ITEM_TYPE_FEAT,
           undefined,
@@ -568,7 +559,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         inventoryTypes,
         {
           canCreate: true,
-          rowActions: inventoryRowActions,
         },
       );
     });

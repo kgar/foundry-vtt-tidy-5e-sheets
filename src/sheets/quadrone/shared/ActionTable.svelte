@@ -1,18 +1,13 @@
 <script lang="ts">
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type {
     TidyItemSectionBase,
     Actor5e,
     CharacterItemQuadroneContext,
-    CharacterSheetQuadroneContext,
     NpcItemQuadroneContext,
-    NpcSheetQuadroneContext,
     VehicleItemQuadroneContext,
   } from 'src/types/types';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
 
   interface Props {
@@ -38,25 +33,6 @@
     tabId,
   }: Props = $props();
 
-  let context =
-    $derived(
-      getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
-      >(),
-    );
-
-  const columns = $derived(
-    new ColumnsLoadout(
-      ItemColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: sheetDocument.type,
-        tabId: tabId,
-        sectionKey: section.key,
-        rowActions: section.rowActions,
-        sheetDocument: context.actor,
-      }),
-    ),
-  );
-
   let itemToggleMap = $derived(inlineToggleService.map);
 </script>
 
@@ -68,7 +44,6 @@
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  {columns}
   columnsV2={section.columns}
 >
   {#snippet subtitle(item, ctx)}

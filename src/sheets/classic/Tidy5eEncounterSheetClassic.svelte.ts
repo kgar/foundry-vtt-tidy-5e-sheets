@@ -576,7 +576,6 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: true,
-        rowActions: [], // quadrone only
         sectionActions: [], // quadrone only
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },

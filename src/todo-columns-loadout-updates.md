@@ -14,6 +14,7 @@
   - [x] Effects
   - [x] Activities
   - [x] Container Contents
+- [ ] Create proper section for EncounterMembersTab.svelte content
 - [ ] Ensure each sheet tab tables invocation is properly looking for columnsv2: NPC
   - [ ] Statblock
   - [ ] Inventory

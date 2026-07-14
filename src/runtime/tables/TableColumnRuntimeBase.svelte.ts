@@ -68,10 +68,9 @@ export abstract class TableColumnRuntimeBase {
             const configuredSpec: ConfiguredSectionColumnSpecification = {
               key,
               ...spec,
-              widthRems: spec.widthRems,
             };
             map[key] = configuredSpec;
-
+            
             allSpecs.push(configuredSpec);
           }
 
@@ -98,38 +97,6 @@ export abstract class TableColumnRuntimeBase {
       prioritized: [],
       maxRowActionsCount: 1,
     };
-  }
-
-  // TODO: Eliminate
-  getConfiguredColumnSpecifications(
-    args: GetConfiguredColumnSpecificationsArgs,
-  ): ConfiguredColumnSpecification[] {
-    for (let type of [args.sheetType, CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]) {
-      for (let tab of [args.tabId, CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]) {
-        for (let section of [
-          args.sectionKey,
-          CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT,
-        ]) {
-          const specs = this._registeredColumns[type]?.[tab]?.[section];
-          if (specs) {
-            return Object.entries(specs)
-              .filter(
-                ([_, spec]) =>
-                  spec.condition?.({
-                    sheetDocument: args.sheetDocument,
-                  }) ?? true,
-              )
-              .map(([key, spec]) => ({
-                key,
-                ...spec,
-                widthRems: spec.widthRems,
-              }));
-          }
-        }
-      }
-    }
-
-    return [];
   }
 
   // TODO: Eliminate

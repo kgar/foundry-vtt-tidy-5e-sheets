@@ -103,7 +103,6 @@ function buildActionSections(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
-      rowActions: [],
       sectionActions: [],
       columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
     };
@@ -123,7 +122,6 @@ function buildActionSections(
           creationItemTypes: [],
           section: customSectionName,
         },
-        rowActions: [],
         sectionActions: [],
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
@@ -139,7 +137,6 @@ function buildActionSections(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
-        rowActions: [],
         sectionActions: [],
         columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
@@ -194,7 +191,6 @@ function buildActionSectionsQuadrone(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
-      rowActions: [],
       sectionActions: [],
       columns: ItemColumnRuntime.getColumnSpecifications(
         actor,
@@ -220,7 +216,6 @@ function buildActionSectionsQuadrone(
           creationItemTypes: [],
           section: customSectionName,
         },
-        rowActions: [],
         sectionActions: [],
         columns: ItemColumnRuntime.getColumnSpecifications(
           actor,
@@ -249,7 +244,6 @@ function buildActionSectionsQuadrone(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
-        rowActions: [],
         sectionActions: [],
         columns: ItemColumnRuntime.getColumnSpecifications(
           actor,
