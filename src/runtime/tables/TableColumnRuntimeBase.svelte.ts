@@ -1,16 +1,11 @@
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
-import type { ColumnsLoadout } from '../item/ColumnsLoadout.svelte';
 import type {
   ColumnSpecDocumentTypesToTabs,
-  ConfiguredColumnSpecification,
   ConfiguredSectionColumnSpecification,
-  GetConfiguredColumnSpecificationsArgs,
   SectionColumnContext,
   SectionColumnSpecifications,
 } from '../types';
 import { CONSTANTS } from 'src/constants';
-import type { TidySectionBase } from 'src/types/types';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export abstract class TableColumnRuntimeBase {
   static readonly getEmptyColumnSpecs = () =>
@@ -18,7 +13,6 @@ export abstract class TableColumnRuntimeBase {
       map: {},
       prioritized: [],
       sorted: [],
-      maxRowActionsCount: 0,
     }) satisfies SectionColumnContext;
 
   _registeredColumns: ColumnSpecDocumentTypesToTabs = $state({});
@@ -30,16 +24,6 @@ export abstract class TableColumnRuntimeBase {
   }
 
   abstract getDefaultColumns(): ColumnSpecDocumentTypesToTabs;
-
-  applyRowActionColumnWidth(
-    section: TidySectionBase,
-    rowActions: TidyTableAction<any, any>[] = [],
-  ) {
-    section.columns.maxRowActionsCount = Math.max(
-      section.columns.maxRowActionsCount,
-      rowActions.length,
-    );
-  }
 
   getColumnSpecifications(
     sheetDocument: any,
@@ -70,7 +54,7 @@ export abstract class TableColumnRuntimeBase {
               ...spec,
             };
             map[key] = configuredSpec;
-            
+
             allSpecs.push(configuredSpec);
           }
 
@@ -85,7 +69,6 @@ export abstract class TableColumnRuntimeBase {
             sorted,
             prioritized,
             map,
-            maxRowActionsCount: 1,
           };
         }
       }
@@ -95,7 +78,6 @@ export abstract class TableColumnRuntimeBase {
       sorted: [],
       map: {},
       prioritized: [],
-      maxRowActionsCount: 1,
     };
   }
 

@@ -202,12 +202,6 @@ export class SheetSections {
         ),
       };
 
-      // TODO: Avoid this additional loop by setting this all at time of original section creation and partitioning.
-      for (const spell of section.items) {
-        const rowActions = context.itemContext[spell.id]?.rowActions;
-        ItemColumnRuntime.applyRowActionColumnWidth(section, rowActions);
-      }
-
       return section;
     });
 

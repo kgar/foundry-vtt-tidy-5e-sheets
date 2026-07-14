@@ -17,7 +17,6 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import type { SectionColumnSpecifications } from 'src/runtime/types';
   import DocumentActionsColumn from '../item/columns/DocumentActionsColumn.svelte';
@@ -47,19 +46,16 @@
 </script>
 
 {#each sections as section (section.key)}
-  {const rowActionsColumnWidthRems = $derived(
-    TableRowActionsRuntime.calculateRowActionWidthRems(
-      section.columns.maxRowActionsCount,
+  {const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      section.effects,
+      (entry) => entry.rowActions,
     ),
-  )}
-
-  {const rowActionsColumnWidthPx = $derived(
-    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
   )}
 
   {const hiddenColumns = $derived(
     EffectColumnRuntime.determineHiddenColumnsV2(
-      inlineWidth - rowActionsColumnWidthPx,
+      inlineWidth - rowActionInfo.widthPx,
       section.columns,
       10,
     ),
@@ -89,7 +85,7 @@
           />
           <TidyTableHeaderCell
             class="header-cell-actions"
-            columnWidth="{rowActionsColumnWidthRems}rem"
+            columnWidth="{rowActionInfo.widthRems}rem"
             data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
           >
             <EffectActionsColumnHeader
@@ -112,7 +108,7 @@
             section.columns,
             hiddenColumns,
             section,
-            rowActionsColumnWidthRems,
+            rowActionInfo.widthRems,
           )}
           {#each effectContext.effect.riders as rider}
             {@render EffectRow(
@@ -120,7 +116,7 @@
               section.columns,
               hiddenColumns,
               section,
-              rowActionsColumnWidthRems,
+              rowActionInfo.widthRems,
               true,
             )}
           {/each}

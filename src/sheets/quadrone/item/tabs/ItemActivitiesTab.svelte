@@ -56,8 +56,6 @@
       ),
     };
 
-    result.columns.maxRowActionsCount = rowActions.length;
-
     return result;
   });
 
@@ -67,19 +65,32 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  const rowActionsColumnWidthRems = $derived(
-    TableRowActionsRuntime.calculateRowActionWidthRems(
-      section.columns.maxRowActionsCount,
+  // TODO: This happens twice. Where should this data prep go?
+  const rowActionsMap = $derived(
+    context.activities.reduce<Record<string, TidyTableAction<any, any>[]>>(
+      (prev, entry) => {
+        prev[entry.id] = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: entry.activity, rowContext: entry }),
+        );
+
+        return prev;
+      },
+      {},
     ),
   );
 
-  const rowActionsColumnWidthPx = $derived(
-    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      context.activities,
+      (entry) => rowActionsMap[entry.id],
+    ),
   );
 
   let hiddenColumns = $derived(
     ActivityColumnRuntime.determineHiddenColumnsV2(
-      sectionsInlineWidth - rowActionsColumnWidthPx,
+      sectionsInlineWidth - rowActionInfo.widthPx,
       section.columns,
     ),
   );
@@ -103,12 +114,13 @@
 
         <TidyTableHeaderCell
           class="header-cell-actions"
-          columnWidth="{rowActionsColumnWidthRems}rem"
+          columnWidth="{rowActionInfo.widthRems}rem"
           data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
         >
           <ActivityActionsColumnHeader
+            editable={context.editable}
+            maxRowActionsCount={rowActionInfo.maxRowActionsCount}
             {section}
-            sheetContext={context}
             sheetDocument={context.document}
           />
         </TidyTableHeaderCell>
@@ -183,7 +195,7 @@
               {section}
             />
 
-            <TidyTableCell columnWidth="{rowActionsColumnWidthRems}rem">
+            <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
               <DocumentActionsColumn
                 rowDocument={ctx.activity}
                 rowContext={ctxWithRowActions}

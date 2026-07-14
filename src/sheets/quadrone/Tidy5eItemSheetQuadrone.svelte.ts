@@ -731,16 +731,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         }) satisfies ActiveEffectSection,
     );
 
-    // TODO: Avoid additional looping
-    for (const section of result) {
-      for (const effect of section.effects) {
-        EffectColumnRuntime.applyRowActionColumnWidth(
-          section,
-          effect.rowActions,
-        );
-      }
-    }
-
     return result;
   }
 

@@ -330,8 +330,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const draftRowActions =
       TableRowActionsRuntime.getDraftAnimalRowActions(context);
 
-    let maxRowActionsCount = 1;
-
     const drafted: DraftAnimalSection = {
       ...SheetSections.EMPTY,
       type: 'draft',
@@ -340,19 +338,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       members: await Promise.all(
         this.actor.system.draft.value.map(async (uuid: string) => {
           const actor = await fromUuid(uuid);
-          const rowActions = draftRowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: actor, rowContext: undefined }),
-          );
-          maxRowActionsCount = Math.max(maxRowActionsCount, rowActions.length);
 
           return {
             actor,
             subtitle: this._getSubtitle(actor),
             quantity: 1,
             name: actor.name,
-            rowActions: rowActions,
+            rowActions: draftRowActions.filter(
+              (action) =>
+                !action.condition ||
+                action.condition({ data: actor, rowContext: undefined }),
+            ),
           } satisfies DraftAnimalContext;
         }),
       ),
@@ -362,8 +358,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         'draft',
       ),
     };
-
-    drafted.columns.maxRowActionsCount = maxRowActionsCount;
 
     context.statblock.push(drafted);
   }

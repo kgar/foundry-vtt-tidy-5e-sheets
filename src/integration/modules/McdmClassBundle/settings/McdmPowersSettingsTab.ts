@@ -136,7 +136,6 @@ export function buildMcdmPowersSections(
       .toSorted((a, b) => b.priority - a.priority)
       .map((s) => s.key),
     sorted: allSpecs.toSorted((a, b) => a.order - b.order).map((s) => s.key),
-    maxRowActionsCount: 1,
   };
 
   const allSections: PowersSection[] = [];
@@ -157,13 +156,6 @@ export function buildMcdmPowersSections(
       columns,
     };
 
-    for (const power of powers ?? []) {
-      ItemColumnRuntime.applyRowActionColumnWidth(
-        section,
-        context.itemContext[power.id]?.rowActions,
-      );
-    }
-
     allSections.push(section);
   }
 
@@ -182,13 +174,6 @@ export function buildMcdmPowersSections(
       show: sectionConfig?.[sectionKey]?.show !== false,
       columns,
     };
-
-    for (const power of powers ?? []) {
-      ItemColumnRuntime.applyRowActionColumnWidth(
-        section,
-        context.itemContext[power.id]?.rowActions,
-      );
-    }
 
     allSections.push(section);
   }

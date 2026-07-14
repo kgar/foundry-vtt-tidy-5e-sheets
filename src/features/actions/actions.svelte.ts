@@ -226,11 +226,6 @@ function buildActionSectionsQuadrone(
       });
 
       customSection.items.push(item);
-
-      ItemColumnRuntime.applyRowActionColumnWidth(
-        customSection,
-        itemContext[item.id]?.rowActions,
-      );
     } else {
       const activationType = getActivationType(
         item.system.activities?.contents[0]?.activation?.type,
@@ -253,11 +248,6 @@ function buildActionSectionsQuadrone(
         ...options,
       });
       section.items.push(item);
-
-      ItemColumnRuntime.applyRowActionColumnWidth(
-        section,
-        itemContext[item.id]?.rowActions,
-      );
     }
   }
 

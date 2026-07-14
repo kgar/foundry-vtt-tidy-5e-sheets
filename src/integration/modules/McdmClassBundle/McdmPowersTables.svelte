@@ -19,7 +19,6 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
@@ -63,19 +62,16 @@
 <div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#each sections as section}
     {#if section.show}
-      {const rowActionsColumnWidthRems = $derived(
-        TableRowActionsRuntime.calculateRowActionWidthRems(
-          section.columns.maxRowActionsCount,
+      {const rowActionInfo = $derived(
+        TableRowActionsRuntime.getRowActionWidthInfo(
+          section.items,
+          (entry) => context.itemContext[entry.id]?.rowActions,
         ),
-      )}
-
-      {const rowActionsColumnWidthPx = $derived(
-        rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
       )}
 
       {let hiddenColumns = $derived(
         ItemColumnRuntime.determineHiddenColumnsV2(
-          sectionsInlineWidth - rowActionsColumnWidthPx,
+          sectionsInlineWidth - rowActionInfo.widthPx,
           section.columns,
         ),
       )}
@@ -104,12 +100,12 @@
 
             <TidyTableHeaderCell
               class="header-cell-actions"
-              columnWidth="{rowActionsColumnWidthRems}rem"
+              columnWidth="{rowActionInfo.widthRems}rem"
               data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
             >
               <SectionActionsColumnHeader
                 {section}
-                sheetContext={context}
+                maxRowActionsCount={rowActionInfo.maxRowActionsCount}
                 sheetDocument={context.document}
               />
             </TidyTableHeaderCell>
@@ -186,7 +182,7 @@
                 />
 
                 <TidyTableCell
-                  columnWidth="{rowActionsColumnWidthRems}rem"
+                  columnWidth="{rowActionInfo.widthRems}rem"
                   class="tidy-table-actions"
                   attributes={{
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,

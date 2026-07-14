@@ -453,7 +453,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
         section.items.push(item);
 
-        ItemColumnRuntime.applyRowActionColumnWidth(section, ctx.rowActions);
         return;
       }
 
@@ -478,11 +477,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       }
 
       featureSections[section]?.items.push(item);
-
-      ItemColumnRuntime.applyRowActionColumnWidth(
-        featureSections[section],
-        ctx.rowActions,
-      );
     });
 
     // Remove any default sections that did not receive an item.

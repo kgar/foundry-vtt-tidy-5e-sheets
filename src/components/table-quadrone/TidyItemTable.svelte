@@ -16,8 +16,10 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
+    ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
+    TidyItemSectionBase,
     TidySectionBase,
   } from 'src/types/types';
   import { type Snippet } from 'svelte';
@@ -34,9 +36,9 @@
   import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
   interface Props {
-    section: TidySectionBase;
+    section: TidyItemSectionBase;
     entries: TEntry[];
-    entryContext: Record<string, any>;
+    entryContext: Record<string, ActorItemQuadroneContext>;
     /** Actor or item (e.g. nested container inventory); theme is resolved per document. */
     sheetDocument: Actor5e | Item5e;
     sectionsInlineWidth: number;
@@ -93,20 +95,17 @@
 
   const localize = FoundryAdapter.localize;
 
-  const rowActionsColumnWidthRems = $derived(
-    TableRowActionsRuntime.calculateRowActionWidthRems(
-      section.columns.maxRowActionsCount,
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      section.items,
+      (entry) => entryContext[entry.id]?.rowActions,
     ),
-  );
-
-  const rowActionsColumnWidthPx = $derived(
-    rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
   );
 
   let hiddenColumns = $derived(
     columnsV2
       ? ItemColumnRuntime.determineHiddenColumnsV2(
-          sectionsInlineWidth - rowActionsColumnWidthPx,
+          sectionsInlineWidth - rowActionInfo.widthPx,
           columnsV2,
         )
       : new Set<string>(),
@@ -147,12 +146,12 @@
       />
       <TidyTableHeaderCell
         class="header-cell-actions"
-        columnWidth="{rowActionsColumnWidthRems}rem"
+        columnWidth="{rowActionInfo.widthRems}rem"
         data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
       >
         <SectionActionsColumnHeader
           {section}
-          sheetContext={context}
+          maxRowActionsCount={rowActionInfo.maxRowActionsCount}
           sheetDocument={context.document}
         />
       </TidyTableHeaderCell>
@@ -245,7 +244,7 @@
               {context}
             />
             <TidyTableCell
-              columnWidth="{rowActionsColumnWidthRems}rem"
+              columnWidth="{rowActionInfo.widthRems}rem"
               class="tidy-table-actions"
               attributes={{
                 ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,

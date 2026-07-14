@@ -88,7 +88,6 @@ export class Inventory {
       let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];
       partition?.items.push(item);
 
-      ItemColumnRuntime.applyRowActionColumnWidth(partition, rowActions);
       return;
     }
 
@@ -102,8 +101,6 @@ export class Inventory {
       ));
 
     customSection.items.push(item);
-
-    ItemColumnRuntime.applyRowActionColumnWidth(customSection, rowActions);
   }
 
   static createInventorySection(

@@ -199,16 +199,6 @@ export class ConditionsAndEffects {
       });
     }
 
-    // TODO: Avoid additional looping
-    for (const section of newCategories) {
-      for (const effect of section.effects) {
-        EffectColumnRuntime.applyRowActionColumnWidth(
-          section,
-          effect.rowActions,
-        );
-      }
-    }
-
     return {
       conditions,
       effects: newCategories,
@@ -272,16 +262,6 @@ export class ConditionsAndEffects {
           key,
         ),
       });
-    }
-
-    // TODO: Avoid additional looping
-    for (const section of newCategories) {
-      for (const effect of section.effects) {
-        EffectColumnRuntime.applyRowActionColumnWidth(
-          section,
-          effect.rowActions,
-        );
-      }
     }
 
     return newCategories;

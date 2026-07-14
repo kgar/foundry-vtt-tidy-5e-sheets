@@ -336,19 +336,16 @@
         {/if}
       {:else if section.type === 'draft'}
         {#if section.show}
-          {const rowActionsColumnWidthRems = $derived(
-            TableRowActionsRuntime.calculateRowActionWidthRems(
-              section.columns.maxRowActionsCount,
+          {const rowActionInfo = $derived(
+            TableRowActionsRuntime.getRowActionWidthInfo(
+              section.members,
+              (entry) => entry.rowActions,
             ),
-          )}
-
-          {const rowActionsColumnWidthPx = $derived(
-            rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
           )}
 
           {const hiddenColumns = $derived(
             ItemColumnRuntime.determineHiddenColumnsV2(
-              sectionsInlineWidth - rowActionsColumnWidthPx,
+              sectionsInlineWidth - rowActionInfo.widthPx,
               section.columns,
             ),
           )}
@@ -377,12 +374,12 @@
 
                 <TidyTableHeaderCell
                   class="header-cell-actions"
-                  columnWidth="{rowActionsColumnWidthRems}rem"
+                  columnWidth="{rowActionInfo.widthRems}rem"
                   data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
                 >
                   <SectionActionsColumnHeader
                     {section}
-                    sheetContext={context}
+                    maxRowActionsCount={rowActionInfo.maxRowActionsCount}
                     sheetDocument={context.document}
                   />
                 </TidyTableHeaderCell>
@@ -466,7 +463,7 @@
                         />
 
                         <TidyTableCell
-                          columnWidth="{rowActionsColumnWidthRems}rem"
+                          columnWidth="{rowActionInfo.widthRems}rem"
                           class="tidy-table-actions"
                           attributes={{
                             ['data-tidy-column-key']:

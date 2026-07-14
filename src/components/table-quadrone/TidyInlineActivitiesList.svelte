@@ -20,6 +20,7 @@
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import type { TidyTableAction } from './table-buttons/table.types';
 
   interface Props {
     item?: Item5e | null;
@@ -50,15 +51,31 @@
     ),
   });
 
-  const rowActionsColumnWidthRems = $derived(
-    TableRowActionsRuntime.calculateRowActionWidthRems(
-      section.columns.maxRowActionsCount,
+  const rowActionsMap = $derived(
+    activities.reduce<Record<string, TidyTableAction<any, any>[]>>(
+      (prev, entry) => {
+        prev[entry.id] = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: entry.activity, rowContext: entry }),
+        );
+
+        return prev;
+      },
+      {},
+    ),
+  );
+
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      activities,
+      (entry) => rowActionsMap[entry.id],
     ),
   );
 
   // TODO: Determine if we want to support custom columns and prioritized column hiding for activities.
+  // If yes, we should pass the inline size in from the outside.
   let hiddenColumns = new Set<string>();
-  
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -79,7 +96,7 @@
         {section}
         {context}
       />
-      <TidyTableHeaderCell columnWidth="{rowActionsColumnWidthRems}rem"
+      <TidyTableHeaderCell columnWidth="{rowActionInfo.widthRems}rem"
       ></TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}
@@ -88,11 +105,9 @@
       {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
       {const ctxWithRowActions = $derived({
         ...ctx,
-        rowActions: TableRowActionsRuntime.getActivityRowActions(
-          context.owner,
-          context.unlocked,
-        ),
+        rowActions: rowActionsMap[ctx.id],
       })}
+
       <TidyTableRow
         rowAttributes={{
           'data-item-id': ctx.activity.item.id,
@@ -138,7 +153,7 @@
           {context}
         />
 
-        <TidyTableCell columnWidth="{rowActionsColumnWidthRems}rem">
+        <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
           <DocumentActionsColumn
             rowDocument={ctx.activity}
             rowContext={ctxWithRowActions}

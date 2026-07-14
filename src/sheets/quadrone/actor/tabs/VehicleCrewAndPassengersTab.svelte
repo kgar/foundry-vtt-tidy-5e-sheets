@@ -15,7 +15,6 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
@@ -214,22 +213,16 @@
     noMembersView?: Snippet<[CrewSection | PassengerSection]>,
   )}
     {#if section.members.length || noMembersView}
-      <!-- TODO: Collapse all this common content down into a single derived call. -->
-      {const maxRowActionsCount = $derived(
-        Math.max(...section.members.map((member) => member.rowActions.length)),
-      )}
-
-      {const rowActionsColumnWidthRems = $derived(
-        TableRowActionsRuntime.calculateRowActionWidthRems(maxRowActionsCount),
-      )}
-
-      {const rowActionsColumnWidthPx = $derived(
-        rowActionsColumnWidthRems * foundryCoreSettings.value.fontSizePx,
+      {const rowActionInfo = $derived(
+        TableRowActionsRuntime.getRowActionWidthInfo(
+          section.members,
+          (entry) => entry.rowActions,
+        ),
       )}
 
       {const hiddenColumns = $derived(
         VehicleMemberColumnRuntime.determineHiddenColumnsV2(
-          sectionsInlineWidth - rowActionsColumnWidthPx,
+          sectionsInlineWidth - rowActionInfo.widthPx,
           section.columns,
         ),
       )}
@@ -255,13 +248,13 @@
 
             <TidyTableHeaderCell
               class="header-cell-actions"
-              columnWidth="{rowActionsColumnWidthRems}rem"
+              columnWidth="{rowActionInfo.widthRems}rem"
               data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
             >
               <SectionActionsColumnHeader
                 {section}
-                sheetContext={context}
                 sheetDocument={context.document}
+                maxRowActionsCount={rowActionInfo.maxRowActionsCount}
               />
             </TidyTableHeaderCell>
           </TidyTableHeaderRow>
@@ -314,7 +307,7 @@
               />
 
               <TidyTableCell
-                columnWidth="{rowActionsColumnWidthRems}rem"
+                columnWidth="{rowActionInfo.widthRems}rem"
                 class="tidy-table-actions"
                 attributes={{
                   ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,

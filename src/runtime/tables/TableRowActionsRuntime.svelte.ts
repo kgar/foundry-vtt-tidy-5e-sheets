@@ -29,6 +29,7 @@ import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButt
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import GenericActionButton from 'src/components/table-quadrone/table-buttons/GenericActionButton.svelte';
 import AttuneButton from 'src/components/table-quadrone/table-buttons/AttuneButton.svelte';
+import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -670,6 +671,29 @@ class TableRowActionsRuntime {
     let paddingX = 0.1875;
     let buttonWidth = 1.5;
     return buttonWidth * rowActionCount + paddingX;
+  }
+
+  getRowActionWidthInfo<TEntry>(
+    entries: TEntry[],
+    rowActionFn: (entry: TEntry) => TidyTableAction<any, any>[] | undefined,
+  ) {
+    let maxRowActionsCount = 1;
+
+    for (const entry of entries) {
+      maxRowActionsCount = Math.max(
+        maxRowActionsCount,
+        (rowActionFn(entry) ?? []).length,
+      );
+    }
+
+    const widthRems = this.calculateRowActionWidthRems(maxRowActionsCount);
+    const widthPx = widthRems * foundryCoreSettings.value.fontSizePx;
+
+    return {
+      maxRowActionsCount,
+      widthRems,
+      widthPx,
+    };
   }
 }
 

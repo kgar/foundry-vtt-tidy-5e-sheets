@@ -10,14 +10,13 @@
   import { CONSTANTS } from 'src/constants';
   import { iterateReversed } from 'src/utils/array';
 
-  let {
-    section,
-    sheetDocument,
-  }: ColumnHeaderProps<
-    Actor5e,
-    DocumentSheetQuadroneContext<any>,
-    TidySectionBase
-  > = $props();
+  type Props = {
+    maxRowActionsCount: number;
+    section: TidySectionBase;
+    sheetDocument: any;
+  };
+
+  let { maxRowActionsCount, section, sheetDocument }: Props = $props();
 
   const menuAction = SectionActions.getMenuActionCommand();
 
@@ -27,7 +26,7 @@
   );
 </script>
 
-{#if section.sectionActions.length <= section.columns.maxRowActionsCount}
+{#if section.sectionActions.length <= maxRowActionsCount}
   {#each reversedSectionActions as action}
     <SectionActionHeaderControl
       {action}

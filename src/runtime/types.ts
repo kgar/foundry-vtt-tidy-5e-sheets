@@ -277,14 +277,12 @@ export type SectionColumnSpecifications = {
   sorted: (keyof SectionColumnContext['map'])[];
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredColumnSpecification>;
-  maxRowActionsCount: number;
 };
 
 export type SectionColumnContext = {
   sorted: (keyof SectionColumnContext['map'])[];
   prioritized: (keyof SectionColumnContext['map'])[];
   map: Record<string, ConfiguredSectionColumnSpecification>;
-  maxRowActionsCount: number;
 };
 
 /** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */

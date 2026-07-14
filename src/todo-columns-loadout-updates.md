@@ -22,12 +22,15 @@
 - [x] Vehicle - add row actions for assigned crew
 - [x] Vehicle - add row actions for unassigned crew
 - [x] Vehicle - add row actions for passengers
-- [ ] Refactor: calculate the max row actions per table as a derived rune at the location where it is needed, as opposed to bookkeeping during data prep. i.e., `<!-- TODO: Collapse all this common content down into a single derived call. -->`
-  - [ ] Remove the max row actions prop from section base
-  - [ ] Find all max row action width calcs and replace with single derived function call
-- [ ] Make vehicle tabs load properly
-  - [ ] Statblock
-  - [ ] Crew & Passengers
+- [x] Refactor: calculate the max row actions per table as a derived rune at the location where it is needed, as opposed to bookkeeping during data prep. i.e., `<!-- TODO: Collapse all this common content down into a single derived call. -->`
+  - [x] Remove the max row actions prop from section base
+  - [x] Remove applyRowActionColumnWidth
+  - [x] Add function for deriving row actions info
+  - [x] Find all max row action width calcs and replace with single derived function call
+  - [x] Pass in maxRowActionsCount to all instances of SectionActionsColumnHeader
+- [x] Make vehicle tabs load properly
+  - [x] Statblock
+  - [x] Crew & Passengers
 - [ ] TidyTableCustomCells - eliminate columnsV2. It should just use the section columns
 - [ ] TidyItemTable - eliminate columnsV2. It should just use the section columns
 - [ ] TidyTableCustomHeaderCells - eliminate columnsV2. It should just use the section columns
@@ -85,6 +88,7 @@
 - [ ] // TODO: Eliminate
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
 - [ ] This happens a lot with row actions: `!action.condition || action.condition(...)` ; can we either create a helper or somehow have the condition function defaulted to a universal return true copy when not specified?
+- [ ] // TODO: This happens twice. Where should this data prep go?
 
 ## WIP changes
 
@@ -99,4 +103,7 @@
 - [ ] // TODO: Avoid additional looping
 - [ ] Refactoring consideration: We don't need to ship whole copies of row actions. We can store them in `CONFIG.TIDY5E.rowActions` or the like, with sort orders built in, and ship just the keys in the appropriate order. This is a bigger and more involved refactoring, but it could be very valuable to do, allowing the API (or the brave user) to swap out implementations directly on `CONFIG.TIDY5E` (a thing which doesn't exist yet.)
 - [ ] Refactoring consideration: `CONFIG.TIDY5E` can replace the concept of the various runtimes. Each can be represented in config, among other useful things like first-class reusable Tidy components. Another bigger refactor opportunity worth pursuing when all other matters have been settled.
-- [ ] Actor sheets - Currently, activity row actions and columns are created in the moment when a TidyInlineActivitiesList is rendered upon expanding an item summary. It would be good to make some decisions on how the activity tables should be treated and whether we want to provide API integration for their row actions and/or columns. It may still be beneficial to lazily load their row actions and columns, but it feels like it goes against the rest of this effort. Then again, they were just hardcoded before now. See 
+- [ ] Actor sheets - Currently, activity row actions and columns are created in the moment when a TidyInlineActivitiesList is rendered upon expanding an item summary. It would be good to make some decisions on how the activity tables should be treated and whether we want to provide API integration for their row actions and/or columns. It may still be beneficial to lazily load their row actions and columns, but it feels like it goes against the rest of this effort. Then again, they were just hardcoded before now.
+- [ ] // TODO: Determine if we want to support custom columns and prioritized column hiding for activities.
+- [ ] <!-- TODO: Upgrade to use full section actions feature -->
+- [ ] // TODO: Determine how to make managing row action styles less hardcoded and more configured.
