@@ -18,9 +18,8 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import ActivityActionsColumnHeader from '../columns/ActivityActionsColumnHeader.svelte';
-  import DocumentActionsColumn from '../columns/DocumentActionsColumn.svelte';
+  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -190,7 +189,7 @@
             />
 
             <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-              <DocumentActionsColumn
+              <TableRowActions
                 rowDocument={ctx.activity}
                 rowContext={ctxWithRowActions}
                 {section}

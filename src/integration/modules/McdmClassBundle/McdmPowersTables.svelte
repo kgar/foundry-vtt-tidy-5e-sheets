@@ -21,7 +21,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
   interface Props {
     sections: PowersSection[];
@@ -186,7 +186,7 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  <DocumentActionsColumn
+                  <TableRowActions
                     {section}
                     rowDocument={item}
                     rowContext={ctx}

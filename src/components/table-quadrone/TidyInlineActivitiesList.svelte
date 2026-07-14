@@ -11,7 +11,7 @@
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
@@ -148,7 +148,7 @@
         />
 
         <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          <DocumentActionsColumn
+          <TableRowActions
             rowDocument={ctx.activity}
             rowContext={ctxWithRowActions}
             {section}

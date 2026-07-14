@@ -26,9 +26,8 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
-  import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   const localize = FoundryAdapter.localize;
@@ -466,7 +465,7 @@
                               CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                           }}
                         >
-                          <DocumentActionsColumn
+                          <TableRowActions
                             {section}
                             rowDocument={member.actor}
                             rowContext={member}

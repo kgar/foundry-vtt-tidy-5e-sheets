@@ -42,8 +42,8 @@
 - [x] Create proper section for EncounterMembersTab.svelte content
 - [x] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
 - [x] Row actions needed for Encounter inventory
-- [ ] Question: Are there section actions for Encounter Members table?
-- [ ] DocumentActionsColumn -> RowActionsColumn
+- [x] Question: Are there section actions for Encounter Members table? Yes. Fix it.
+- [ ] DocumentActionsColumn -> TableRowActions, and move to quadrone table parts.
   - [ ] The only arg should be `data`, typed to a TData generic. Could be a document, could be context object of some sort. But it's only one thing.
 - [ ] // TODO: Inline actions column
 - [ ] Dismantle the `widthRems()` function. We will do special handling for row actions / table actions, utilizing a constant for the column key.

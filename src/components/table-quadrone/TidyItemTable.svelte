@@ -27,7 +27,7 @@
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
@@ -232,7 +232,7 @@
                 ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
               }}
             >
-              <DocumentActionsColumn
+              <TableRowActions
                 {section}
                 rowDocument={entry}
                 rowContext={ctx}

@@ -1,12 +1,7 @@
 import { CONSTANTS } from 'src/constants';
-import type {
-  ColumnSpecDocumentTypesToTabs,
-  ColumnSpecificationCalculatedWidthArgs,
-} from '../types';
+import type { ColumnSpecDocumentTypesToTabs } from '../types';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import EffectActionsColumnHeader from 'src/sheets/quadrone/item/columns/EffectActionsColumnHeader.svelte';
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import EffectSourceColumn from 'src/sheets/quadrone/item/columns/EffectSourceColumn.svelte';
 import EffectDurationColumn from 'src/sheets/quadrone/item/columns/EffectDurationColumn.svelte';
 

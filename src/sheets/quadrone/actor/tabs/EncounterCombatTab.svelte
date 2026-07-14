@@ -20,7 +20,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
@@ -221,7 +221,7 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  <DocumentActionsColumn
+                  <TableRowActions
                     {section}
                     rowDocument={member?.actor}
                     rowContext={member ?? placeholder}

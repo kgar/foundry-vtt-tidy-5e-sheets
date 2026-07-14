@@ -19,7 +19,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import type { SectionColumnSpecifications } from 'src/runtime/types';
-  import DocumentActionsColumn from '../item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
 
   interface Props {
@@ -180,7 +180,7 @@
           ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
         }}
       >
-        <DocumentActionsColumn {section} rowDocument={ctx} rowContext={ctx} />
+        <TableRowActions {section} rowDocument={ctx} rowContext={ctx} />
       </TidyTableCell>
     {/snippet}
   </TidyEffectTableRow>

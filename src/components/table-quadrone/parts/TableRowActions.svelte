@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ColumnCellProps } from 'src/runtime/types';
 
-  let { rowDocument, rowContext, section }: ColumnCellProps = $props();
+  let { rowDocument, rowContext }: ColumnCellProps = $props();
 
   const rowActions = $derived(rowContext.rowActions);
 </script>
