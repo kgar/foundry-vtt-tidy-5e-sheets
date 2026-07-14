@@ -6,7 +6,6 @@ import type {
   ActorSheetQuadroneContext,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
-  EncounterSheetQuadroneContext,
   NpcSheetQuadroneContext,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
@@ -38,6 +37,8 @@ type RowActionConfig = {
   hasActionsTab?: boolean;
   /** The caller is capable of equipping items. Default: true */
   canEquip?: boolean;
+  /** The caller is capable of attuning to items. Default: true */
+  canAttune?: boolean;
 };
 
 class TableRowActionsRuntime {
@@ -45,6 +46,10 @@ class TableRowActionsRuntime {
     context: ActorSheetQuadroneContext,
     config?: RowActionConfig,
   ) {
+    const canAttune = config?.canAttune ?? true;
+    const canEquip = config?.canEquip ?? true;
+    const hasActionsTab = config?.hasActionsTab ?? false;
+
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e
@@ -56,7 +61,8 @@ class TableRowActionsRuntime {
       if (context.owner) {
         result.push({
           component: AttuneButton,
-          condition: (args) => FoundryAdapter.isAttunementApplicable(args.data),
+          condition: (args) =>
+            canAttune && FoundryAdapter.isAttunementApplicable(args.data),
           props: (args) => ({ doc: args.data, itemContext: args.rowContext }),
         });
 
@@ -73,7 +79,7 @@ class TableRowActionsRuntime {
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
-          if (config?.canEquip ?? true) {
+          if (canEquip ?? true) {
             result.push({
               component: EquipButton,
               props: (args) => ({ doc: args.data }),
@@ -81,7 +87,7 @@ class TableRowActionsRuntime {
             } satisfies TableAction<typeof EquipButton>);
           }
 
-          if (config?.hasActionsTab) {
+          if (hasActionsTab) {
             result.push({
               component: CharacterSheetTabToggleButton,
               props: (args) => ({

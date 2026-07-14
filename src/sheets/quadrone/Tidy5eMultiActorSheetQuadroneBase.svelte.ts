@@ -108,8 +108,20 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       const inventory: ActorInventoryTypes =
         Inventory.getDefaultInventorySections(this.document);
 
+      const rowActions = TableRowActionsRuntime.getInventoryRowActions(
+        context,
+        { canEquip: false, hasActionsTab: false, canAttune: false },
+      );
+
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.rowActions = rowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: item, rowContext: undefined }),
+          );
+
           const isWithinContainer = this.actor.items.has(item.system.container);
 
           if (!isWithinContainer && Inventory.isItemInventoryType(item)) {

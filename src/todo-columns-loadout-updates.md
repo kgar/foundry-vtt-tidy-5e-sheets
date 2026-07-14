@@ -41,7 +41,8 @@
 - [x] Ensure SectionActionsColumnHeader / Section Base is aware of row actions count so it can mirror.
 - [x] Create proper section for EncounterMembersTab.svelte content
 - [x] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
-- [ ] Row actions needed for Encounter inventory
+- [x] Row actions needed for Encounter inventory
+- [ ] Question: Are there section actions for Encounter Members table?
 - [ ] DocumentActionsColumn -> RowActionsColumn
   - [ ] The only arg should be `data`, typed to a TData generic. Could be a document, could be context object of some sort. But it's only one thing.
 - [ ] // TODO: Inline actions column
