@@ -1674,6 +1674,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type DraftAnimalSection = {
@@ -1682,11 +1683,14 @@ export type DraftAnimalSection = {
 } & TidySectionBase;
 
 export type CrewMemberContext = {
+  uuid: string;
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
+  cr?: number;
   assignedTo?: Item5e;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type CrewSection = {
@@ -1704,6 +1708,7 @@ export type PassengerMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type PassengerSection = {

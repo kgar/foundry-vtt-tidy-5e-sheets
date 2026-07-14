@@ -56,7 +56,6 @@ export class SheetSections {
     dataset: {},
     key: '',
     show: true,
-    rowActions: [],
     sectionActions: [],
     columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
   });

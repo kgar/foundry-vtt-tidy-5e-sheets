@@ -23,6 +23,9 @@
 - [ ] Vehicle - add row actions for unassigned crew
 - [ ] Vehicle - add row actions for passengers
 - [ ] ...?
+- [ ] Refactor: calculate the max row actions per table as a derived rune at the location where it is needed, as opposed to bookkeeping during data prep. i.e., `<!-- TODO: Collapse all this common content down into a single derived call. -->`
+  - [ ] Remove the max row actions prop from section base
+  - [ ] Find all max row action width calcs and replace with single derived function call
 - [ ] Make vehicle tabs load properly
   - [ ] Statblock
   - [ ] Crew & Passengers
@@ -82,7 +85,7 @@
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
 - [ ] // TODO: Eliminate
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
-
+- [ ] This happens a lot with row actions: `!action.condition || action.condition(...)` ; can we either create a helper or somehow have the condition function defaulted to a universal return true copy when not specified?
 
 ## WIP changes
 

@@ -7,6 +7,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  CrewMemberContext,
   DraftAnimalContext,
   DraftAnimalSection,
   InventorySection,
@@ -35,6 +36,8 @@ import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 const localize = FoundryAdapter.localize;
 
@@ -206,13 +209,23 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
           members: [],
           key: CONSTANTS.SECTION_KEY_ASSIGNED,
+          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+            CONSTANTS.SECTION_KEY_ASSIGNED,
+          ),
         },
         unassigned: {
           ...SheetSections.EMPTY,
           type: 'crew',
           label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
           members: [],
-          key: 'unassigned',
+          key: CONSTANTS.SECTION_KEY_UNASSIGNED,
+          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+            CONSTANTS.SECTION_KEY_UNASSIGNED,
+          ),
         },
       },
       currencies,
@@ -231,7 +244,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         type: 'passengers',
         label: 'DND5E.VEHICLE.Crew.Passengers',
         members: [],
-        key: 'passengers',
+        key: CONSTANTS.SECTION_KEY_PASSENGERS,
+        columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+          CONSTANTS.SECTION_KEY_PASSENGERS,
+        ),
       },
       quality: this.actor.system.attributes.quality?.value ?? 0,
       size: {
@@ -292,23 +310,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       );
     });
 
-    context.crew.assigned.rowActions =
-      TableRowActionsRuntime.getAssignedCrewRowActions(context);
-
-    context.crew.unassigned.rowActions =
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        'crew',
-      );
-
     context.crew.unassigned.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
 
-    context.passengers.rowActions =
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        'passengers',
-      );
     context.passengers.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
@@ -323,6 +327,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
+    const draftRowActions =
+      TableRowActionsRuntime.getDraftAnimalRowActions(context);
+
+    let maxRowActionsCount = 1;
+
     const drafted: DraftAnimalSection = {
       ...SheetSections.EMPTY,
       type: 'draft',
@@ -331,15 +340,30 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       members: await Promise.all(
         this.actor.system.draft.value.map(async (uuid: string) => {
           const actor = await fromUuid(uuid);
+          const rowActions = draftRowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: actor, rowContext: undefined }),
+          );
+          maxRowActionsCount = Math.max(maxRowActionsCount, rowActions.length);
+
           return {
             actor,
             subtitle: this._getSubtitle(actor),
             quantity: 1,
             name: actor.name,
+            rowActions: rowActions,
           } satisfies DraftAnimalContext;
         }),
       ),
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_STATBLOCK,
+        'draft',
+      ),
     };
+
+    drafted.columns.maxRowActionsCount = maxRowActionsCount;
 
     context.statblock.push(drafted);
   }
@@ -371,16 +395,33 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
 
     context.crew.assigned.members = (
-      await this.resolveCrewMemberContext(assigned, assignments)
+      await this.resolveCrewMemberContext(
+        assigned,
+        TableRowActionsRuntime.getAssignedCrewRowActions(context),
+        assignments,
+      )
     ).value;
+
     context.crew.unassigned.members = (
-      await this.resolveCrewMemberContext(unassigned)
+      await this.resolveCrewMemberContext(
+        unassigned,
+        TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+          context,
+          CONSTANTS.SECTION_TYPE_CREW,
+        ),
+      )
     ).value;
   }
 
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
     const uuids: string[] = context.system.passengers.value;
     const groups = this.groupCrew(uuids);
+    const rowActions =
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        CONSTANTS.SECTION_TYPE_PASSENGERS,
+      );
+
     context.passengers.members = (
       await Promise.all(
         Object.keys(groups).map(async (uuid) => {
@@ -389,6 +430,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             actor,
             subtitle: this._getSubtitle(actor),
             quantity: groups[uuid],
+            rowActions: rowActions.filter(
+              (action) =>
+                !action.condition ||
+                action.condition({ data: actor, rowContext: undefined }),
+            ),
           } satisfies PassengerMemberContext;
         }),
       )
@@ -1048,24 +1094,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    */
   async resolveCrewMemberContext(
     group: Record<string, number>,
+    rowActions: TidyTableAction<any, any>[],
     // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
-    value: {
-      actor: Actor5e;
-      quantity: number;
-      uuid: string;
-      subtitle: string;
-    }[];
+    value: CrewMemberContext[];
   }> {
-    const value: {
-      actor: Actor5e;
-      quantity: number;
-      uuid: string;
-      subtitle: string;
-      cr?: number;
-      assignedTo?: Item5e;
-    }[] = [];
+    const value: CrewMemberContext[] = [];
 
     for (const [uuid, quantity] of Object.entries(group)) {
       if (!quantity) {
@@ -1091,6 +1126,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             cr,
             subtitle,
             assignedTo: item,
+            rowActions: rowActions.filter(
+              (action) =>
+                !action.condition ||
+                action.condition({ data: actor, rowContext: undefined }),
+            ),
           });
         }
       } else {
@@ -1100,6 +1140,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           cr,
           subtitle,
+          rowActions: rowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: actor, rowContext: undefined }),
+          ),
         });
       }
     }

@@ -99,11 +99,6 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             cr: { ...crColumn, priority: 10, order: 10 },
             hp: { ...hpColumn, priority: 20, order: 20 },
-            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-              ...defaultItemColumns.actions,
-              order: 1000,
-              priority: 1000,
-            },
           },
         },
         [CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS]: {
@@ -111,30 +106,15 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             cr: { ...crColumn, priority: 10, order: 10 },
             qty: { ...qtyColumn, priority: 20, order: 20 },
             assignTo: { ...assignToColumn, priority: 30, order: 30 },
-            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-              ...defaultItemColumns.actions,
-              order: 1000,
-              priority: 1000,
-            },
           },
           [CONSTANTS.SECTION_KEY_ASSIGNED]: {
             cr: { ...crColumn, priority: 10, order: 10 },
             hp: { ...hpColumn, priority: 20, order: 20 },
             assigned: { ...assignedColumn, priority: 30, order: 30 },
-            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-              ...defaultItemColumns.actions,
-              order: 1000,
-              priority: 1000,
-            },
           },
           [CONSTANTS.SECTION_KEY_PASSENGERS]: {
             cr: { ...crColumn, priority: 10, order: 10 },
             qty: { ...qtyColumn, priority: 20, order: 20 },
-            [CONSTANTS.COLUMN_KEY_ROW_ACTIONS]: {
-              ...defaultItemColumns.actions,
-              order: 1000,
-              priority: 1000,
-            },
           },
           // TODO: Default state? Necessary?
         },

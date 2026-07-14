@@ -28,6 +28,8 @@
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
   import { foundryCoreSettings } from 'src/settings/settings.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import DocumentActionsColumn from '../../item/columns/DocumentActionsColumn.svelte';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -372,6 +374,18 @@
                   {section}
                   {expanded}
                 />
+
+                <TidyTableHeaderCell
+                  class="header-cell-actions"
+                  columnWidth="{rowActionsColumnWidthRems}rem"
+                  data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+                >
+                  <SectionActionsColumnHeader
+                    {section}
+                    sheetContext={context}
+                    sheetDocument={context.document}
+                  />
+                </TidyTableHeaderCell>
               </TidyTableHeaderRow>
             {/snippet}
 
@@ -450,6 +464,21 @@
                           {hiddenColumns}
                           {section}
                         />
+
+                        <TidyTableCell
+                          columnWidth="{rowActionsColumnWidthRems}rem"
+                          class="tidy-table-actions"
+                          attributes={{
+                            ['data-tidy-column-key']:
+                              CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                          }}
+                        >
+                          <DocumentActionsColumn
+                            {section}
+                            rowDocument={member.actor}
+                            rowContext={member}
+                          />
+                        </TidyTableCell>
                       {/snippet}
                     </TidyTableRow>
                   {/if}
