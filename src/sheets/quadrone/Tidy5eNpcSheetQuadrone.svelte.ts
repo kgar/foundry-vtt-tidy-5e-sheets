@@ -347,14 +347,24 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           obj.inventoryItems.push(item);
         }
 
-        ctx.rowActions = Inventory.isItemInventoryType(item)
-          ? TableRowActionsRuntime.getInventoryRowActions(context)
+        const rowActions = Inventory.isItemInventoryType(item)
+          ? TableRowActionsRuntime.getInventoryRowActions(context, {
+              hasActionsTab: false,
+            })
           : item.type === CONSTANTS.ITEM_TYPE_SPELL
-            ? TableRowActionsRuntime.getSpellRowActions(context)
+            ? TableRowActionsRuntime.getSpellRowActions(context, {
+                hasActionsTab: false,
+              })
             : item.type === CONSTANTS.ITEM_TYPE_FEAT
               ? TableRowActionsRuntime.getStatblockRowActions(context)
               : // TODO: Determine if we should provide a simple default array of options
                 [];
+
+        ctx.rowActions = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: item, rowContext: ctx }),
+        );
 
         return obj;
       },

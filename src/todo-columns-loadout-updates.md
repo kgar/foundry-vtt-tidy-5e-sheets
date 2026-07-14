@@ -66,6 +66,7 @@
 
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
 - [ ] // TODO: Eliminate
+- [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
 
 
 ## WIP changes
