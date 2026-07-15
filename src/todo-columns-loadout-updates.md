@@ -70,8 +70,8 @@
 - [x] Test TableRowActions update
 - [x] Get group sheet working
 - [x] Get advancement tab working
-- [ ] Test and task Item sheet issues
-- [ ] Test and task Container sheet issues
+- [x] Test and task Item sheet issues
+- [x] Test and task Container sheet issues
 - [ ] Apply custom column setup to activities
 - [ ] test and fix
 - [ ] Resolve remaining check errors
