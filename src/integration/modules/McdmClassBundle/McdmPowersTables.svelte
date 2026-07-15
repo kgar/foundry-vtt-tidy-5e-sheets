@@ -19,7 +19,9 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ItemTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
@@ -186,11 +188,11 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  <TableRowActions
-                    {section}
-                    rowDocument={item}
-                    rowContext={ctx}
-                  />
+                  {const data = $derived<ItemTableActionData>({
+                    item,
+                    ctx,
+                  })}
+                  <TableRowActions rowActions={ctx.rowActions} {data} />
                 </TidyTableCell>
               {/snippet}
             </TidyItemTableRow>

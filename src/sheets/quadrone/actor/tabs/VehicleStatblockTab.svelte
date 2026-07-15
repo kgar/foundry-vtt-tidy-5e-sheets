@@ -26,7 +26,9 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActorTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
@@ -465,10 +467,13 @@
                               CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                           }}
                         >
+                          {const data = $derived<ActorTableActionData>({
+                            actor: member.actor,
+                            ctx: member,
+                          })}
                           <TableRowActions
-                            {section}
-                            rowDocument={member.actor}
-                            rowContext={member}
+                            rowActions={member.rowActions}
+                            {data}
                           />
                         </TidyTableCell>
                       {/snippet}

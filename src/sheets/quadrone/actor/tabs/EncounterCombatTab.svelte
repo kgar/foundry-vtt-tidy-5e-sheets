@@ -1,7 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type EncounterCombatantMemberTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -221,11 +223,11 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  <TableRowActions
-                    {section}
-                    rowDocument={member?.actor}
-                    rowContext={member ?? placeholder}
-                  />
+                  {const data =
+                    $derived<EncounterCombatantMemberTableActionData>(
+                      combatant,
+                    )}
+                  <TableRowActions rowActions={combatant.rowActions} {data} />
                 </TidyTableCell>
               </div>
             {/each}

@@ -5,10 +5,9 @@
 
   interface Props {
     doc: Item5e;
-    itemContext: CharacterItemContext | ContainerItemContext;
+    ctx: CharacterItemContext | ContainerItemContext;
   }
-
-  let { doc, itemContext }: Props = $props();
+  let { doc, ctx }: Props = $props();
 
   function toggleAttuned() {
     const actor = doc.actor;
@@ -36,10 +35,10 @@
 
 <!-- svelte-ignore a11y_missing_attribute -->
 <a
-  aria-label={itemContext.attunement?.title}
+  aria-label={ctx.attunement?.title}
   role="button"
   tabindex="0"
-  data-tooltip={itemContext.attunement?.title}
+  data-tooltip={ctx.attunement?.title}
   onclick={toggleAttuned}
   class="tidy-table-button"
   onkeydown={(ev) => {
@@ -51,7 +50,7 @@
   <i
     class={[
       'fas fa-sun',
-      itemContext.attunement?.cls,
+      ctx.attunement?.cls,
       {
         'color-text-default': doc.system.attuned,
         'color-text-lightest': !doc.system.attuned,

@@ -43,20 +43,19 @@
 - [x] <!-- TODO: Set up proper sections in sheet data prep for EncounterCombatTab usage -->
 - [x] Row actions needed for Encounter inventory
 - [x] Question: Are there section actions for Encounter Members table? Yes. Fix it.
-- [ ] DocumentActionsColumn -> TableRowActions, and move to quadrone table parts.
-  - [ ] The only arg should be `data`, typed to a TData generic. Could be a document, could be context object of some sort. But it's only one thing.
-- [ ] // TODO: Inline actions column
-- [ ] Dismantle the `widthRems()` function. We will do special handling for row actions / table actions, utilizing a constant for the column key.
-  - [ ] Section base should have `maxRowActionsCount` to compare against its section actions. For now, this should be a loop after the section has been prepared and items/activities/effects partitioned into it. Later, this will be moved to a section preparer.
+- [x] DocumentActionsColumn -> TableRowActions, and move to quadrone table parts.
+- [x] Refactor - TableRowActions - The only arg should be `data`, typed to a TData generic. Could be a document, could be context object of some sort. But it's only one thing.
+- [x] Dismantle the `widthRems()` function. We will do special handling for row actions / table actions, utilizing a constant for the column key.
+  - [x] ~~Section base should have `maxRowActionsCount` to compare against its section actions. For now, this should be a loop after the section has been prepared and items/activities/effects partitioned into it. Later, this will be moved to a section preparer.~~ This evolved to something else entirely.
     - [x] PC Inventory / Sheet tab origin version
     - [x] PC Spellbook / Sheet tab origin version
     - [x] PC Features / Sheet tab origin version
     - [x] PC Effects
-    - [ ] ... enumerate the rest
+    - [x] ... enumerate the rest
   - [x] Clean up: remove dynamicWidths from the spec types and usages
-  - [ ] Clean up: remove the widthRemsFn / widthRems() references from all column specs. The actions column will be width 0 by default and will be calculated later as a special feature
-    - [ ] // TODO: Inline actions column
-    - [ ] ...
+  - [x] Clean up: remove the widthRemsFn / widthRems() references from all column specs. The actions column will be width 0 by default and will be calculated later as a special feature
+    - [x] // TODO: Inline actions column
+    - [x] ...
   - [x] Have the SectionActionColumnHeader component make this comparison against 
 - [x] Refactoring consideration: Actions column could simply not be a column in the specs, much like the primary column.
 - [x] Propagate row actions column fixture to
@@ -65,24 +64,28 @@
   - [x] Activity table
 - [x] Handle special case: Additional Spells row actions. Might be using the "ChooseAButton"
 - [x] Eliminate ChooseAButton
+- [x] Remove rowActions from base section definition
+- [x] ~~Ensure each tab tables invocation is properly looking for columnsV2~~ This fully evolved to something else.
+- [x] Search `action.condition(` and make sure all data fields are being given their proper data per their underlying type
+- [x] Test TableRowActions update
+- [ ] Get group sheet working
+- [ ] Test and task Item sheet issues
+- [ ] Test and task Container sheet issues
 - [ ] Apply custom column setup to activities
-  - [ ] (across all tabs) Activities
 - [ ] test and fix
-- [ ] Remove rowActions from base section definition
 - [ ] Resolve remaining check errors
-- [ ] Ensure each tab tables invocation is properly looking for columnsV2
-  - [ ] ... (enumerate)
-- [ ] Task out the rest
 
 ## Cleanup
 
+- [ ] Apply strong `TData` typing to all the row action runtime callers' contexts.
+- [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
 - [ ] // TODO: Eliminate
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
 - [ ] This happens a lot with row actions: `!action.condition || action.condition(...)` ; can we either create a helper or somehow have the condition function defaulted to a universal return true copy when not specified?
 - [ ] // TODO: This happens twice. Where should this data prep go?
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
-- [ ] Upgrade TableRowActionsRuntime to 
+- [ ] `generics="TEntry extends { id: string, uuid: string, name: string, img: string}"` - find out why TidyItemTable is using this generic interface and try to eliminate it. We should always have items when using the TidyItemTable.
 
 ## WIP changes
 

@@ -41,7 +41,7 @@ export function buildMcdmPowersSections(
     const ctx = (context.itemContext[power.id] ??= {});
     ctx.rowActions = rowActions.filter(
       (action) =>
-        !action.condition || action.condition({ data: power, rowContext: ctx }),
+        !action.condition || action.condition({ data: { item: power, ctx } }),
     );
 
     if (TidyFlags.section.get(power)) {

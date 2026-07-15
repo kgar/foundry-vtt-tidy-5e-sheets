@@ -116,11 +116,8 @@
     for (let [key, section] of advancements) {
       length = Math.max(
         length,
-        tableHeaderActions.filter(
-          (a) =>
-            a.condition?.({ data: { key }, section, rowContext: undefined }) ??
-            0,
-        ).length,
+        tableHeaderActions.filter((a) => a.condition?.({ data: { key } }) ?? 0)
+          .length,
       );
     }
 
@@ -161,12 +158,10 @@
             {...columnSpecs.actions}
           >
             {#each tableHeaderActions as headerAction}
-              {#if headerAction.condition?.( { data: { key }, section: section, rowContext: undefined } ) ?? true}
+              {#if headerAction.condition?.({ data: { key } }) ?? true}
                 <headerAction.component
                   {...headerAction.props({
                     data: { key },
-                    section,
-                    rowContext: undefined,
                   })}
                 />
               {/if}
@@ -235,8 +230,6 @@
                     {const props = $derived(
                       action.props({
                         data: advancement,
-                        section,
-                        rowContext: undefined,
                       }),
                     )}
                     <action.component {...props} />

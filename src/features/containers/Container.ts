@@ -31,7 +31,6 @@ export class Container {
         container,
         TableRowActionsRuntime.getContainerContentsRowActions(
           context,
-          itemContext,
           container.parent,
         ),
       );
@@ -109,7 +108,6 @@ export class Container {
 
       ctx.rowActions = TableRowActionsRuntime.getContainerContentsRowActions(
         context,
-        itemContext,
         item.parent,
       );
     }

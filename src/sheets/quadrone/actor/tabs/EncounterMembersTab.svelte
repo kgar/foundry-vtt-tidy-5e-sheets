@@ -6,7 +6,9 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActorTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
@@ -164,11 +166,11 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  <TableRowActions
-                    {section}
-                    rowDocument={member.actor}
-                    rowContext={member}
-                  />
+                  {const data = $derived<ActorTableActionData>({
+                    actor: member.actor,
+                    ctx: member,
+                  })}
+                  <TableRowActions rowActions={member.rowActions} {data} />
                 </TidyTableCell>
               </div>
             {/each}

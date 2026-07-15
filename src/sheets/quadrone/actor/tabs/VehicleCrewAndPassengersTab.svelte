@@ -15,7 +15,9 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActorTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
 
@@ -311,11 +313,11 @@
                   ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                 }}
               >
-                <TableRowActions
-                  {section}
-                  rowDocument={member.actor}
-                  rowContext={member}
-                />
+                {const data = $derived<ActorTableActionData>({
+                  actor: member.actor,
+                  ctx: member,
+                })}
+                <TableRowActions rowActions={member.rowActions} {data} />
               </TidyTableCell>
             </TidyTableRow>
           {:else}

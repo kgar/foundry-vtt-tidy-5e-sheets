@@ -159,7 +159,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     actorContext: ActorSheetQuadroneContext,
   ): Promise<{
     abilities: GroupAbility[];
-    members: GroupMembersQuadroneContext;
+    members: GroupMemberSection[];
+    memberContext: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
   }> {
@@ -206,8 +207,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       ],
     ]);
 
-    let membersContext: GroupMembersQuadroneContext = {
-      sections: [],
+    let memberContext: GroupMembersQuadroneContext = {
       character: [],
       all: new Map<string, GroupMemberQuadroneContext>(),
       skilled: [],
@@ -292,9 +292,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       };
 
       section.members.push(groupMemberContext);
-      membersContext.all.set(actor.uuid, groupMemberContext);
+      memberContext.all.set(actor.uuid, groupMemberContext);
       if (actor.system.isCharacter) {
-        membersContext.character.push(actor);
+        memberContext.character.push(actor);
       }
 
       const prepareCreatureInformation =
@@ -339,7 +339,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       );
     });
 
-    membersContext.skilled.push(
+    memberContext.skilled.push(
       ...skilled.values().reduce((prev, curr) => {
         return prev.concat(
           curr.toSorted((a, b) =>
@@ -354,11 +354,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       a.name.localeCompare(b.name, game.i18n.lang),
     );
 
-    membersContext.sections = [...sections.values()];
-
     return {
       abilities: groupAbilities,
-      members: membersContext,
+      memberContext,
+      members: [...sections.values()],
       skills: groupSkills,
       traits: {
         languages: [...languages.values()].sort((a, b) =>

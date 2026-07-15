@@ -408,8 +408,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const ctx = context.itemContext[item.id];
       const rowActions = inventoryRowActions.filter(
         (action) =>
-          !action.condition ||
-          action.condition({ data: item, rowContext: ctx }),
+          !action.condition || action.condition({ data: { item, ctx } }),
       );
 
       Inventory.applyInventoryItemToSection(
@@ -835,9 +834,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
             // TODO: Find a cleaner way to handle all tabled documents' row actions.
             // Contained items get row actions like any other item
             ctx.rowActions = inventoryRowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: item, rowContext: ctx }),
+              (action) => !action.condition || action.condition({ data: { item, ctx } }),
             );
           }
 
@@ -863,9 +860,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const ctx = (context.itemContext[item.id] ??= {});
 
       ctx.rowActions = inventoryRowActions.filter(
-        (action) =>
-          !action.condition ||
-          action.condition({ data: item, rowContext: ctx }),
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
       );
 
       Inventory.applyInventoryItemToSection(
@@ -906,9 +901,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of spells) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = spellRowActions.filter(
-        (action) =>
-          !action.condition ||
-          action.condition({ data: item, rowContext: ctx }),
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
       );
     }
 
@@ -946,9 +939,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of feats) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = featureRowActions.filter(
-        (action) =>
-          !action.condition ||
-          action.condition({ data: item, rowContext: ctx }),
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
       );
     }
 

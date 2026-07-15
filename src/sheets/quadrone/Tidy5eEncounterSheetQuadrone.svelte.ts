@@ -269,9 +269,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           visible: combatantSettings.visible,
           type: 'member',
           rowActions: memberRowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: actor, rowContext: undefined }),
+            (action) => !action.condition || action.condition({ data: { actor, ctx: memberContext } }),
           ),
         };
 
@@ -297,11 +295,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           name: placeholder.name,
           visible: combatantSettings.visible,
-          rowActions: combatRowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: undefined, rowContext: undefined }),
-          ),
+          rowActions: combatRowActions,
         });
       },
     );

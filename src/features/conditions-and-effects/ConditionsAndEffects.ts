@@ -177,8 +177,7 @@ export class ConditionsAndEffects {
               riders: [],
               rowActions: allEffectRowActions.filter(
                 (action) =>
-                  !action.condition ||
-                  action.condition({ data: effect, rowContext: undefined }),
+                  !action.condition || action.condition({ data: { effect } }),
               ),
             });
             return arr;
@@ -242,8 +241,7 @@ export class ConditionsAndEffects {
               riders: [],
               rowActions: allEffectRowActions.filter(
                 (action) =>
-                  !action.condition ||
-                  action.condition({ data: effect, rowContext: undefined }),
+                  !action.condition || action.condition({ data: { effect } }),
               ),
             });
             return arr;

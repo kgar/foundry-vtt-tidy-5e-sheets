@@ -21,7 +21,7 @@
 
   let showModAndPassiveValues = $derived(
     emphasizedMember &&
-      !!context.members.skilled.find(
+      !!context.memberContext.skilled.find(
         (m) => m.actor.uuid === emphasizedMember?.actor.uuid,
       ),
   );
@@ -79,7 +79,7 @@
             tooltip?.tryShow(ev, {
               key: skill.key,
               label: skill.name,
-              members: context.members.skilled,
+              members: context.memberContext.skilled,
             })}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL}
         >

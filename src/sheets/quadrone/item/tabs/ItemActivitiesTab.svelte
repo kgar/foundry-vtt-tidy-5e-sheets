@@ -12,8 +12,10 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActivityTableAction,
+    type ActivityTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -30,12 +32,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    Activity5e
-  >;
-
-  let rowActions: TableAction<any>[] = $derived(
+  let rowActions: ActivityTableAction<any>[] = $derived(
     TableRowActionsRuntime.getActivityRowActions(
       context.owner,
       context.unlocked,
@@ -66,12 +63,14 @@
 
   // TODO: This happens twice. Where should this data prep go?
   const rowActionsMap = $derived(
-    context.activities.reduce<Record<string, TidyTableAction<any, any>[]>>(
+    context.activities.reduce<Record<string, ActivityTableAction<any>[]>>(
       (prev, entry) => {
         prev[entry.id] = rowActions.filter(
           (action) =>
             !action.condition ||
-            action.condition({ data: entry.activity, rowContext: entry }),
+            action.condition({
+              data: { activity: entry.activity, ctx: entry },
+            }),
         );
 
         return prev;
@@ -127,7 +126,7 @@
           rowActions: rowActions.filter(
             (action) =>
               !action.condition ||
-              action.condition({ data: ctx.activity, rowContext: ctx }),
+              action.condition({ data: { activity: ctx.activity, ctx } }),
           ),
         })}
         <TidyActivityTableRow {ctx}>
@@ -189,11 +188,11 @@
             />
 
             <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-              <TableRowActions
-                rowDocument={ctx.activity}
-                rowContext={ctxWithRowActions}
-                {section}
-              />
+              {const data = $derived<ActivityTableActionData>({
+                activity: ctx.activity,
+                ctx,
+              })}
+              <TableRowActions {rowActions} {data} />
             </TidyTableCell>
           {/snippet}
         </TidyActivityTableRow>

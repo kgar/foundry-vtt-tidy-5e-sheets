@@ -1,14 +1,15 @@
-<script lang="ts">
-  import type { ColumnCellProps } from 'src/runtime/types';
+<script lang="ts" generics="TData extends {}">
+  import type { TidyTableAction } from '../table-buttons/table.types';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowActions?: TidyTableAction<any, TData>[];
+    data: TData;
+  };
 
-  const rowActions = $derived(rowContext.rowActions);
+  let { rowActions = [], data }: Props = $props();
 </script>
 
 {#each rowActions as action}
-  {#if action.condition?.({ data: rowDocument, rowContext: rowContext }) ?? true}
-    {const props = $derived(action.props({ data: rowDocument, rowContext: rowContext }))}
-    <action.component {...props} />
-  {/if}
+  {const props = $derived(action.props({ data }))}
+  <action.component {...props} />
 {/each}

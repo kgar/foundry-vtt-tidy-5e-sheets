@@ -13,7 +13,10 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActivityTableAction,
+    type ActivityTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -21,6 +24,7 @@
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import type { TidyTableAction } from './table-buttons/table.types';
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
 
   interface Props {
     item?: Item5e | null;
@@ -52,12 +56,14 @@
   });
 
   const rowActionsMap = $derived(
-    activities.reduce<Record<string, TidyTableAction<any, any>[]>>(
+    activities.reduce<Record<string, ActivityTableAction<any>[]>>(
       (prev, entry) => {
         prev[entry.id] = rowActions.filter(
           (action) =>
             !action.condition ||
-            action.condition({ data: entry.activity, rowContext: entry }),
+            action.condition({
+              data: { activity: entry.activity, ctx: entry },
+            }),
         );
 
         return prev;
@@ -148,11 +154,11 @@
         />
 
         <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          <TableRowActions
-            rowDocument={ctx.activity}
-            rowContext={ctxWithRowActions}
-            {section}
-          />
+          {const data = $derived<ActivityTableActionData>({
+            activity: ctx.activity,
+            ctx: ctx.activity,
+          })}
+          <TableRowActions {data} {rowActions} />
         </TidyTableCell>
       </TidyTableRow>
     {/each}
