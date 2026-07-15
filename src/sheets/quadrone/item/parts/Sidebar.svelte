@@ -398,7 +398,7 @@
     <!-- Activations -->
     {#if sidebarActivations.length}
       <div>
-        <h4>{localize('DND5E.Action')}</h4>
+        <h4>{localize('DND5E.ACTIVITY.SECTIONS.Activation')}</h4>
         <ul class="pills stacked">
           {#each sidebarActivations as activation}
             {const activationText =

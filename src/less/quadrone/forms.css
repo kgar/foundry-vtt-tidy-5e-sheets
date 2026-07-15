@@ -1,17 +1,25 @@
 .tidy5e-sheet.application:where(.quadrone) {
   input.full-width {
     flex: 0 0 100%;
-    margin-top: 0.25rem;
+    margin-block-start: 0.25rem;
+  }
+
+  :where(.form-group, .form-fields) :where(label, .hint) {
+    font-family: var(--t5e-font-family-forms);
   }
 
   /* Fieldset */
   fieldset {
+    --label-font-family: var(--t5e-font-family-forms);
+    --label-font-size-default: var(--font-size-14);
+    --label-font-size-small: var(--font-size-default);
     border: none;
     display: flex;
     flex-direction: column;
-    gap: var(--t5e-size-3x);
+    gap: 0.375rem;
     margin: 0;
-    padding: 0 0 var(--t5e-size-2x);
+    padding-block: 0 var(--t5e-size-2x);
+    padding-inline: 0;
 
     > label.checkbox,
     > label.radio {
@@ -25,7 +33,8 @@
       font-family: var(--font-family-title, 'Modesto Condensed');
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
-      padding: var(--t5e-size-3x) 0 var(--t5e-size-2x);
+      padding-block: var(--t5e-size-3x) var(--t5e-size-2x);
+      padding-inline: 0;
       width: 100%;
 
       &:not(:has(tidy-gold-header-underline)) {
@@ -36,7 +45,7 @@
         font-weight: 600;
 
         input[type='checkbox'] {
-          margin-bottom: 0.0625rem;
+          margin-block-end: 0.0625rem;
         }
       }
 
@@ -48,44 +57,46 @@
     }
 
     > .empty {
-      padding: var(--t5e-size-1x) 0 var(--t5e-size-2x);
+      padding-block: var(--t5e-size-1x) var(--t5e-size-2x);
+      padding-inline: 0;
       font-style: italic;
       text-align: left;
       color: var(--t5e-color-text-lightest);
     }
 
     &.card {
-      margin-top: var(--t5e-size-8x);
+      margin-block-start: var(--t5e-size-8x);
     }
   }
 
-  &.label-top {
-    --label-height: var(--font-size-small);
-    --label-font-size: var(--font-size-small);
+  :is(.form-group, .form-fields) .label-top {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.125rem;
+    gap: var(--t5e-size-halfx);
 
     > * {
       flex: unset;
     }
 
     > label {
-      font-size: var(--label-font-size);
+      font-size: var(--label-font-size-small);
       font-weight: 600;
-      line-height: var(--label-height);
-      height: var(--label-height);
+      line-height: var(--label-font-size-small);
+      height: var(--label-font-size-small);
       color: var(--t5e-color-text-lightest);
-      margin: var(--t5e-size-halfx) 0;
+      margin-block: 0 var(--t5e-size-halfx);
+      margin-inline: 0;
+      min-height: unset;
 
       > p.hint {
         cursor: help;
-        font-size: var(--label-font-size);
+        font-size: var(--label-font-size-small);
         font-weight: 600;
         display: inline-block;
-        margin: 0.1875rem 0 0 0;
-        line-height: var(--label-height);
-        height: var(--label-height);
+        margin-block: 0.1875rem 0;
+        margin-inline: 0;
+        line-height: var(--label-font-size-small);
+        height: var(--label-font-size-small);
 
         &:empty {
           min-height: unset;
@@ -102,120 +113,26 @@
       min-width: max-content;
       align-items: center;
     }
-
-    /*
-          &.multi-select {
-      position: relative;
-
-      multi-select .tags.input-element-tags {
-        min-height: 0.625rem;
-        padding-left: 40%;
-      }
-
-      > label {
-        position: absolute;
-        inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
-      }
-    } 
-      */
-  }
-
-  .form-group.label-top,
-  .form-field.label-top {
-    --label-height: var(--font-size-small);
-    --label-font-size: var(--font-size-small);
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.125rem;
-
-    > * {
-      flex: unset;
-    }
-
-    > label {
-      font-size: var(--label-font-size);
-      font-weight: 600;
-      line-height: var(--label-height);
-      height: var(--label-height);
-      color: var(--t5e-color-text-lightest);
-      margin: 0 0 var(--t5e-size-halfx) 0;
-
-      > p.hint {
-        cursor: help;
-        font-size: var(--label-font-size);
-        font-weight: 600;
-        display: inline-block;
-        margin: 0.1875rem 0 0 0;
-        line-height: var(--label-height);
-        height: var(--label-height);
-
-        &:empty {
-          min-height: unset;
-        }
-
-        /*
-
-          &:hover {
-            text-shadow: 0 0 0.375rem var(--color-shadow-primary);
-          }
-
-          &::before {
-            content: "\f059";
-            font-family: var(--font-awesome);
-            font-weight: normal;
-            color: var(--color-text-dark-5);
-          }
-
-        */
-      }
-    }
-
-    + .form-group {
-      align-self: end;
-    }
-
-    &.checkbox-top {
-      flex: 0;
-      min-width: max-content;
-      align-items: center;
-    }
-
-    /*
-        &.multi-select {
-    position: relative;
-
-    multi-select .tags.input-element-tags {
-      min-height: 0.625rem;
-      padding-left: 40%;
-    }
-
-    > label {
-      position: absolute;
-      inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
-    }
-  } 
-    */
   }
 
   /* Form Groups */
   .form-group {
     --form-field-height: var(--t5e-field-size-default);
+    align-items: center;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    gap: var(--t5e-size-1x);
     margin: 0;
-    gap: 0.25rem;
 
     > label {
-      color: var(--t5e-color-text-lighter);
-      font-size: var(--font-size-default);
+      color: var(--t5e-color-text-default);
+      font-size: var(--label-font-size-default);
       font-weight: 500;
       line-height: var(--t5e-line-height-default);
-    }
-
-    &:has(.label-top) > label {
-      margin-top: calc(var(--font-size-small) + 0.25rem);
+      align-content: center;
+      align-self: flex-start;
+      min-height: var(--t5e-field-size-default);
     }
 
     &:has(input[type='radio']),
@@ -223,7 +140,7 @@
       align-items: flex-start;
 
       > label {
-        margin-top: var(--t5e-size-1x);
+        margin-block-start: var(--t5e-size-1x);
       }
     }
 
@@ -255,17 +172,9 @@
       transition: color var(--t5e-transition-default);
     }
 
-    &:not(.label-top) {
-      > label {
-        align-content: center;
-        align-self: flex-start;
-        min-height: var(--t5e-field-size-default);
-      }
-    }
-
     /* Icon-Only Labels */
     > label.icon {
-      flex: 0 0 1rem;
+      flex: 0 0 var(--t5e-size-4x);
 
       > i {
         margin: 0;
@@ -321,7 +230,7 @@
         width: 1em;
         height: 1em;
         background: transparent no-repeat center / contain;
-        margin-left: 0.1875rem;
+        margin-inline-start: 0.1875rem;
         position: absolute;
       }
 
@@ -350,14 +259,18 @@
 
     /* Split Groups */
     &.split-group {
-      gap: 0 0.25rem;
+      gap: 0 var(--t5e-size-1x);
+
+      > label {
+        margin-block-start: calc(var(--font-size-small) + var(--t5e-size-1x));
+      }
 
       > .form-fields {
         .form-group {
           flex-wrap: nowrap;
 
           &:not(.label-top):not(.checkbox) {
-            gap: 0.25rem;
+            gap: var(--t5e-size-1x);
           }
 
           > * {
@@ -369,10 +282,11 @@
 
     /* Full-Width Groups */
     &.full-width {
-      padding: 0.375rem 0;
+      padding-block: 0.375rem;
+      padding-inline: 0;
 
       & + .full-width {
-        margin-top: 0.125rem;
+        margin-block-start: 0.125rem;
       }
     }
 
@@ -388,7 +302,7 @@
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--t5e-size-1x);
 
     > * {
       flex: 1;
@@ -406,26 +320,18 @@
     }
 
     input[type='checkbox'] {
-      --checkbox-size: 1rem;
-    }
-
-    &:has(input[type="checkbox"]:only-child) {
-      justify-content: flex-end;
+      --checkbox-size: var(--t5e-size-4x);
     }
 
     &.flexcol {
       flex-direction: column;
     }
 
-    &:has(.label-top) {
-      align-items: end;
-    }
-
     &.vertical {
       align-items: stretch;
       flex-direction: column;
       justify-content: flex-start;
-      padding-top: 0.25rem;
+      padding-block-start: var(--t5e-size-1x);
     }
 
     > *:only-child {
@@ -435,12 +341,11 @@
 
   /** Hint Text */
   .hint {
-    margin: 0;
-    margin-inline-start: 0.25rem;
+    margin-inline: var(--t5e-size-1x) 0;
+    margin-block: 0;
+    margin-block: var(--t5e-size-halfx) var(--t5e-size-1x);
+    margin-inline: 0;
     color: var(--t5e-color-text-lighter);
-  }
-
-  .form-group .hint {
     flex: 0 0 100%;
   }
 
@@ -450,7 +355,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--t5e-size-2x);
 
     > button,
     a.button {
@@ -464,13 +369,10 @@
     flex: unset;
   }
 
-  :is(.form-group, fieldset) .hint {
-    font-size: var(--font-size-12);
-    margin: 0.125rem 0 0.25rem 0;
-  }
-
   .checkbox-grid {
     --min-column-width: 7.8125rem;
+    gap: 0;
+    margin-block-end: var(--t5e-size-1x);
 
     > .form-fields {
       display: grid;
@@ -481,7 +383,7 @@
 
       .checkbox {
         line-height: var(--t5e-line-height-small);
-        gap: 0.25rem;
+        gap: var(--t5e-size-1x);
         min-height: var(--t5e-field-size-small);
       }
 
@@ -496,6 +398,6 @@
   }
 
   fieldset .form-group .form-fields .starting-equipment-list {
-    margin-bottom: var(--t5e-size-3x);
+    margin-block-end: var(--t5e-size-3x);
   }
 }

@@ -30,19 +30,36 @@ type ContextMenuOptionsV13 = {
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
  * @extends {ContextMenu}
  */
-export default class FloatingContextMenu extends foundry.applications.ux
-  .ContextMenu {
+export default class FloatingContextMenu
+  extends foundry.applications.ux.ContextMenu
+{
   #layout: string;
 
   constructor(
     container: any,
     selector: string,
     menuItems: ContextMenuEntry[],
-    options: ContextMenuOptionsV13
+    options: ContextMenuOptionsV13,
   ) {
     super(container, selector, menuItems, options);
 
+    options.layout ??=
+      // TODO: remove _inferLayout when we are 14-only.
+      game.release.generation <= 14
+        ? this._inferLayout(container)
+        : CONSTANTS.SHEET_LAYOUT_QUADRONE;
+
     this.#layout = options.layout;
+  }
+
+  _inferLayout(container: any): ContextMenuOptionsV13['layout'] {
+    const el = container.get?.(0) ?? container;
+
+    return el
+      .closest(`.${CONSTANTS.MODULE_ID}`)
+      ?.classList?.contains(CONSTANTS.SHEET_LAYOUT_CLASSIC)
+      ? CONSTANTS.SHEET_LAYOUT_CLASSIC
+      : CONSTANTS.SHEET_LAYOUT_QUADRONE;
   }
 
   _setPosition(html: any, target: any, options: any) {

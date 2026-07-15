@@ -14,8 +14,6 @@
     itemNameEl?: HTMLElement;
   }
 
-  let scrollMarkerEl: HTMLElement | undefined = $state();
-
   const headerOffset = $derived.by(() => {
     return untrack(() => {
       const headerHeight = coalesce(
@@ -26,6 +24,8 @@
       return `-${headerHeight}px`;
     });
   });
+
+  let windowHeader = $derived(context.sheet.window.header);
 
   let { itemNameEl }: Props = $props();
 </script>
@@ -38,18 +38,21 @@
 -->
 
 <div
-  bind:this={scrollMarkerEl}
-  {@attach visibilityObserver({
-    root: context.sheet.windowContent,
-    trackWhenOffScreen: true,
-    toAffect: 'self',
-  })}
-  {@attach itemNameEl
+  {@attach windowHeader
     ? visibilityObserver({
         root: context.sheet.windowContent,
         trackWhenOffScreen: true,
+        offScreenClass: 'scroll-marker-off-screen',
+        toAffect: [windowHeader],
+      })
+    : null}
+  {@attach itemNameEl && windowHeader
+    ? visibilityObserver({
+        root: context.sheet.windowContent,
+        trackWhenOnScreen: true,
+        onScreenClass: 'item-name-visible',
         toObserve: [itemNameEl],
-        toAffect: 'self',
+        toAffect: [windowHeader],
         rootMargin: headerOffset,
       })
     : null}

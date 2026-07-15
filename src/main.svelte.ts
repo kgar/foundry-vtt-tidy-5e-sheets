@@ -1,6 +1,7 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './less/tidy5e.less';
+import './less/tidy5e.css';
 import { SettingsProvider, initSettings } from './settings/settings.svelte';
 import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
 import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
@@ -32,15 +33,14 @@ import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterS
 import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
+import { loadConditionalStyles } from './utils/css-loading';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
   initSettings();
 
-  const hideClassic = SettingsProvider.settings.hideClassic.get();
-
-  if (!hideClassic) {
+  if (!SettingsProvider.settings.hideClassic.get()) {
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
@@ -220,6 +220,11 @@ Hooks.once('ready', async () => {
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
+
+  if (!SettingsProvider.settings.hideClassic.get()) {
+    import('./less/classic/classic.less');
+    loadConditionalStyles('classic');
+  }
 
   initRuntimeOnReady();
 

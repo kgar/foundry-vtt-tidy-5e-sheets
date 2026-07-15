@@ -84,6 +84,7 @@
 <div
   class={[
     'actor-image',
+    {'death-saves-open': context.showDeathSaves},
     currentPortraitShape,
     { dead: actorIsDead, transparent: context.portrait.isVideo },
   ]}

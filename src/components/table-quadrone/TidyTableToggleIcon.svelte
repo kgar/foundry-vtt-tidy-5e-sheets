@@ -8,7 +8,7 @@
   let { expanded = true }: Props = $props();
 </script>
 
-<div class="button expand-button" class:expanded>
+<div class={['button', 'expand-button', expanded ? 'expanded' : 'collapsed']}>
   <i
     class="fa-solid fa-chevron-right"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}

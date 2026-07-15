@@ -132,11 +132,14 @@
       {#each entriesWithContext as { entry, ctx }, i (entry.uuid)}
         {const expanded = $derived(!!entryToggleMap.get(tabId)?.has(entry.id))}
         {const classes = $derived(rowClassFunction ? rowClassFunction(entry) : {})}
+        {const hasContainerExpander = $derived(
+          'containerContents' in ctx && !!ctx.containerContents,
+        )}
 
         <TidyItemTableRow
           item={entry}
           hidden={!searchResults.show(entry.uuid)}
-          rowClass={[{ expanded }, classes]}
+          rowClass={[{ expanded }, { 'expandable': hasContainerExpander }, classes]}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: entry.uuid,
@@ -185,10 +188,9 @@
                     </TidyTableSubtitle>
                   {/if}
                 </span>
-                <span class="row-detail-expand-indicator">
+                <span class={['row-detail-expand-indicator', expanded ? 'expanded' : 'collapsed']}>
                   <i
                     class="fa-solid fa-angle-right expand-indicator"
-                    class:expanded
                   >
                   </i>
                 </span>

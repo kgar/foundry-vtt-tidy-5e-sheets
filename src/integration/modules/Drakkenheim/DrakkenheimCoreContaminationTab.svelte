@@ -53,8 +53,15 @@
     });
   }
 
-  async function rollContaminationSave(dc: number): Promise<void> {
-    const roll = new Roll('1d20');
+  async function rollContaminationSave(
+    event: MouseEvent,
+    dc: number,
+  ): Promise<void> {
+    const rollMode = FoundryAdapter.getRollModeState(event);
+
+    const rollModifier = rollMode.disadvantage ? 'dis' : rollMode.advantage ? 'adv' : '';
+
+    const roll = new Roll(`1d20${rollModifier}`);
     await roll.evaluate();
     const success = roll.total >= dc;
     const resultKey = success
@@ -92,20 +99,32 @@
 
 <div class="tab-content">
   <div class="contamination-actions flexrow">
-    <button type="button" 
-      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC)}
-      class="button button-icon-only button-secondary">
+    <button
+      type="button"
+      onclick={(event) =>
+        rollContaminationSave(
+          event,
+          DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_SAVE_DC,
+        )}
+      class="button button-secondary"
+    >
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
     </button>
-    <button type="button" 
-      onclick={() => rollContaminationSave(DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC)}
-      class="button button-icon-only button-secondary">
+    <button
+      type="button"
+      onclick={(event) =>
+        rollContaminationSave(
+          event,
+          DRAKKENHEIM_CORE_CONSTANTS.DEEP_HAZE_CONTAMINATION_SAVE_DC,
+        )}
+      class="button button-secondary"
+    >
       <i class="fa-solid fa-dice-d20"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
     </button>
     <button type="button" onclick={rollMutation}
-      class="button button-icon-only button-secondary">
+      class="button button-secondary">
       <i class="fa-solid fa-bacteria"></i>
       {localize('TIDY5E.Drakkenheim.Contamination.rollMutation')}
     </button>
@@ -136,7 +155,11 @@
       class:active={0 === contaminationLevel}
       class="symptom level-0"
       onclick={() => clearContamination()}
-      onkeydown={(ev) => clearContamination()}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          clearContamination();
+        }
+      }}
     >
     <span class="level-icon">
       <i class="fa-solid fa-heart"></i>
@@ -145,8 +168,16 @@
       {localize('TIDY5E.Drakkenheim.Contamination.none')}
     </span>
     {#if contaminationLevel > 0}
-      <div onclick={clearContamination}
-      class="button button-icon-only button-secondary clear-contamination">
+      <div 
+        onclick={() => clearContamination()}
+        tabindex={0}
+        role="button"
+        onkeydown={(ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            clearContamination();
+          }
+        }}
+        class="button button-secondary clear-contamination">
         <i class="fa-solid fa-syringe"></i>
         {localize('TIDY5E.Drakkenheim.Contamination.clear')}
       </div>
