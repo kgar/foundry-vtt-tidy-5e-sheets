@@ -69,7 +69,7 @@
 - [x] Search `action.condition(` and make sure all data fields are being given their proper data per their underlying type
 - [x] Test TableRowActions update
 - [x] Get group sheet working
-- [ ] Get advancement tab working
+- [x] Get advancement tab working
 - [ ] Test and task Item sheet issues
 - [ ] Test and task Container sheet issues
 - [ ] Apply custom column setup to activities

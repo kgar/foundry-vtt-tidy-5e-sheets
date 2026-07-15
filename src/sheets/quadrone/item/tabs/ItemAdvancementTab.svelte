@@ -64,7 +64,7 @@
 
   type TableHeaderAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    { key: string }
+    { key: string; section: AdvancementSectionContext }
   >;
 
   let tableHeaderActions: TableHeaderAction<any>[] = $derived.by(() => {
@@ -75,7 +75,7 @@
       condition: (args) =>
         context.unlocked &&
         args.data.key !== CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED &&
-        !!args.section.configured,
+        !!args.data.section.configured,
       props: (args) => ({
         title: 'DND5E.AdvancementModifyChoices',
         onControlClick: (ev, args) =>
@@ -89,7 +89,8 @@
       component: TableHeaderButton,
       condition: (args) =>
         !context.unlocked &&
-        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
+        args.data.section.configured ===
+          CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredComplete',
         iconClass: 'fa-solid fa-badge-check emphasis',
@@ -100,7 +101,8 @@
       component: TableHeaderButton,
       condition: (args) =>
         !context.unlocked &&
-        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
+        args.data.section.configured ===
+          CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredIncomplete',
         iconClass: 'fas fa-exclamation-triangle warning',
@@ -116,8 +118,9 @@
     for (let [key, section] of advancements) {
       length = Math.max(
         length,
-        tableHeaderActions.filter((a) => a.condition?.({ data: { key } }) ?? 0)
-          .length,
+        tableHeaderActions.filter(
+          (a) => a.condition?.({ data: { key, section } }) ?? 0,
+        ).length,
       );
     }
 
@@ -158,10 +161,10 @@
             {...columnSpecs.actions}
           >
             {#each tableHeaderActions as headerAction}
-              {#if headerAction.condition?.({ data: { key } }) ?? true}
+              {#if headerAction.condition?.({ data: { key, section } }) ?? true}
                 <headerAction.component
                   {...headerAction.props({
-                    data: { key },
+                    data: { key, section },
                   })}
                 />
               {/if}
