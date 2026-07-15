@@ -2,13 +2,10 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-  ColumnSpecificationCalculatedWidthArgs,
 } from '../types';
-import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import GroupMemberInspirationColumn from 'src/sheets/quadrone/item/columns/GroupMemberInspirationColumn.svelte';
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import GroupMemberHpColumn from 'src/sheets/quadrone/item/columns/GroupMemberHpColumn.svelte';
 import GroupMemberHdColumn from 'src/sheets/quadrone/item/columns/GroupMemberHdColumn.svelte';
 import GroupMemberAcColumn from 'src/sheets/quadrone/item/columns/GroupMemberAcColumn.svelte';
@@ -111,24 +108,6 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 3.75,
     };
 
-    const actionsColumn: ColumnSpecificationBase = {
-      headerContent: {
-        type: 'component',
-        component: SectionActionsColumnHeader,
-      },
-      cellContent: {
-        type: 'component',
-        component: DocumentActionsColumn,
-      },
-      cellClasses: 'tidy-table-actions',
-      headerClasses: 'header-cell-actions',
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
-    };
-
     return {
       [CONSTANTS.SHEET_TYPE_GROUP]: {
         [CONSTANTS.TAB_MEMBERS]: {
@@ -138,21 +117,18 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             hd: { ...hdColumn, order: 300, priority: 100 },
             ac: { ...acColumn, order: 400, priority: 200 },
             characterXp: { ...xpColumn, order: 500, priority: 300 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
           [CONSTANTS.SHEET_TYPE_NPC]: {
             hp: { ...hpColumn, order: 100, priority: 400 },
             hd: { ...hdColumn, order: 200, priority: 100 },
             ac: { ...acColumn, order: 300, priority: 200 },
             npcXp: { ...xpColumn, order: 400, priority: 300 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
           [CONSTANTS.SHEET_TYPE_VEHICLE]: {
             hp: { ...hpColumn, order: 100, priority: 400 },
             ac: { ...acColumn, order: 200, priority: 300 },
             dt: { ...damageThresholdColumn, order: 300, priority: 200 },
             crew: { ...crewColumn, order: 400, priority: 100 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             inspiration: { ...inspirationColumn, order: 100, priority: 400 },
@@ -160,7 +136,6 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             hd: { ...hdColumn, order: 300, priority: 100 },
             ac: { ...acColumn, order: 400, priority: 200 },
             characterXp: { ...xpColumn, order: 500, priority: 300 },
-            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
       },

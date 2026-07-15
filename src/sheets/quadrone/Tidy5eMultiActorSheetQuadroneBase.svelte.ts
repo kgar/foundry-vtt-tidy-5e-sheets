@@ -106,12 +106,21 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       );
 
       const inventory: ActorInventoryTypes =
-        Inventory.getDefaultInventorySections({
-          rowActions: inventoryRowActions,
-        });
+        Inventory.getDefaultInventorySections(this.document);
+
+      const rowActions = TableRowActionsRuntime.getInventoryRowActions(
+        context,
+        { canEquip: false, hasActionsTab: false, canAttune: false },
+      );
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.rowActions = rowActions.filter(
+            (action) =>
+              !action.condition || action.condition({ data: { item, ctx } }),
+          );
+
           const isWithinContainer = this.actor.items.has(item.system.container);
 
           if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
@@ -128,20 +137,34 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       // Section the items by type
       for (let item of inventoryItems) {
         const ctx = (context.itemContext[item.id] ??= {});
-        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
+        Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory,
+          item,
+          inventoryTypes,
+          {
+            canCreate: true,
+          },
+          undefined,
+          undefined,
+          ctx.rowActions ?? [],
+        );
       }
 
       SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
         context.actor,
         CONSTANTS.TAB_ACTOR_INVENTORY,
       ).forEach((s) => {
-        inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
+        inventory[s] ??= Inventory.createInventorySection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          s,
+          inventoryTypes,
+          {
+            canCreate: true,
+          },
+        );
       });
 
       context.inventory = Object.values(inventory);

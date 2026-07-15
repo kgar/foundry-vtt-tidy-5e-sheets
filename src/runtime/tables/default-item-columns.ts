@@ -1,9 +1,4 @@
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
-import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-import type {
-  ColumnSpecificationCalculatedWidthArgs,
-  DefaultTableColumns,
-} from '../types';
+import type { DefaultTableColumns } from '../types';
 import InlineCapacityBarColumn from 'src/sheets/quadrone/item/columns/InlineCapacityBarColumn.svelte';
 import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
@@ -23,23 +18,6 @@ import ItemFeatureSourceColumn from 'src/sheets/quadrone/item/columns/ItemFeatur
 
 export function getDefaultItemColumns() {
   return {
-    actions: {
-      headerClasses: 'header-cell-actions',
-      headerContent: {
-        type: 'component',
-        component: SectionActionsColumnHeader,
-      },
-      cellClasses: 'tidy-table-actions',
-      cellContent: {
-        type: 'component',
-        component: DocumentActionsColumn,
-      },
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
-    },
     capacityTracker: {
       cellContent: {
         type: 'component',

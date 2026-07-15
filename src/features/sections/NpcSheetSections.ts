@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type { NpcAbilitySection } from 'src/types/types';
 
@@ -54,8 +55,8 @@ export class NpcSheetSections {
         creationItemTypes: NpcSheetSections.abilitiesItemTypes,
       },
       show: true,
-      rowActions: [], // for the UI Overhaul
-      sectionActions: [], // for the UI Overhaul
+      sectionActions: [], // quadrone only
+      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       ...customSectionOptions,
     };
   }

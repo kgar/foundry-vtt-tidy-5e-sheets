@@ -10,29 +10,29 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime, {
+    type ActivityTableAction,
+    type ActivityTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import ActivityActionsColumnHeader from '../columns/ActivityActionsColumnHeader.svelte';
+  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   const localize = FoundryAdapter.localize;
 
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    Activity5e,
-    any
-  >;
-
-  let tableActions: TableAction<any>[] = $derived(
+  let rowActions: ActivityTableAction<any>[] = $derived(
     TableRowActionsRuntime.getActivityRowActions(
       context.owner,
       context.unlocked,
@@ -41,10 +41,18 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let section = $derived({
-    ...SheetSections.EMPTY,
-    canCreate: context.editable,
-    rowActions: tableActions,
+  let section = $derived.by(() => {
+    const result = {
+      ...SheetSections.EMPTY,
+      canCreate: context.editable,
+      columns: ActivityColumnRuntime.getColumnSpecifications(
+        context.document,
+        tabId,
+        'activities',
+      ),
+    };
+
+    return result;
   });
 
   let sectionsInlineWidth: number = $state(0);
@@ -53,21 +61,36 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  let columns = $derived(
-    new ColumnsLoadout(
-      ActivityColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: context.item.type,
-        tabId: tabId,
-        sectionKey: 'activities',
-        rowActions: tableActions,
-        section: section,
-        sheetDocument: context.item,
-      }),
+  // TODO: This happens twice. Where should this data prep go?
+  const rowActionsMap = $derived(
+    context.activities.reduce<Record<string, ActivityTableAction<any>[]>>(
+      (prev, entry) => {
+        prev[entry.id] = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({
+              data: { activity: entry.activity, ctx: entry },
+            }),
+        );
+
+        return prev;
+      },
+      {},
+    ),
+  );
+
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      context.activities,
+      (entry) => rowActionsMap[entry.id],
     ),
   );
 
   let hiddenColumns = $derived(
-    ActivityColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
+    ActivityColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
   );
 </script>
 
@@ -80,16 +103,32 @@
           <span class="table-header-count">{context.activities.length}</span>
         </TidyTableHeaderCell>
 
-        <TidyTableCustomHeaderCells
-          {columns}
-          {context}
-          {hiddenColumns}
-          {section}
-        />
+        <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
+        <TidyTableHeaderCell
+          class="header-cell-actions"
+          columnWidth="{rowActionInfo.widthRems}rem"
+          data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+        >
+          <ActivityActionsColumnHeader
+            editable={context.editable}
+            maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+            {section}
+            sheetDocument={context.document}
+          />
+        </TidyTableHeaderCell>
       </TidyTableHeaderRow>
     {/snippet}
     {#snippet body()}
       {#each context.activities as ctx (ctx.id)}
+        {const ctxWithRowActions = $derived({
+          ...ctx,
+          rowActions: rowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: { activity: ctx.activity, ctx } }),
+          ),
+        })}
         <TidyActivityTableRow {ctx}>
           {#snippet children()}
             <!-- svelte-ignore a11y_missing_attribute -->
@@ -141,13 +180,20 @@
             </TidyTableCell>
 
             <TidyTableCustomCells
-              {columns}
               {context}
-              {ctx}
+              ctx={ctxWithRowActions}
               entry={ctx.activity}
               {hiddenColumns}
               {section}
             />
+
+            <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
+              {const data = $derived<ActivityTableActionData>({
+                activity: ctx.activity,
+                ctx,
+              })}
+              <TableRowActions {rowActions} {data} />
+            </TidyTableCell>
           {/snippet}
         </TidyActivityTableRow>
       {/each}

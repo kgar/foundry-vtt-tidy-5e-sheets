@@ -7,8 +7,6 @@
     NpcItemQuadroneContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
@@ -35,11 +33,9 @@
     sheetDocument: Actor5e | Item5e;
     tabId: string;
     columnsEffectiveTabId?: string;
-    columns?: ColumnsLoadout;
   };
 
   let {
-    containingDocument,
     editable,
     inlineToggleService,
     itemContext,
@@ -49,25 +45,9 @@
     sectionsInlineWidth,
     sheetDocument,
     tabId,
-    columnsEffectiveTabId,
-    columns: columnsOverride,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-
-  const columns = $derived(
-    columnsOverride ??
-      new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: containingDocument.type,
-          tabId: columnsEffectiveTabId ?? tabId,
-          sectionKey: section.key,
-          rowActions: section.rowActions,
-          section: section,
-          sheetDocument: containingDocument,
-        }),
-      ),
-  );
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -81,12 +61,10 @@
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
   entryToggleMap={containerToggleMap}
   {tabId}
-  {columns}
   {root}
 >
   {#snippet subtitle(_item, ctx)}
@@ -124,23 +102,28 @@
   {/snippet}
 
   {#snippet afterFirstCell(entry, ctx)}
-    {const mastered = $derived(actor?.system.traits?.weaponProf?.mastery?.value?.has(
-      entry.system.type?.baseItem ?? '',
-    ))}
+    {const mastered = $derived(
+      actor?.system.traits?.weaponProf?.mastery?.value?.has(
+        entry.system.type?.baseItem ?? '',
+      ),
+    )}
 
     {#if mastered}
-      {const mastery = $derived(CONFIG.DND5E.weaponMasteries[entry.system.mastery])}
-      {const reference =
-        $derived(SettingsProvider.settings.referenceTooltipMastery.get()
+      {const mastery = $derived(
+        CONFIG.DND5E.weaponMasteries[entry.system.mastery],
+      )}
+      {const reference = $derived(
+        SettingsProvider.settings.referenceTooltipMastery.get()
           ? mastery?.reference
-          : undefined)}
+          : undefined,
+      )}
       {const tooltip = $derived(
         !isNil(mastery?.label, '')
           ? FoundryAdapter.localize('TIDY5E.Weapon.Mastery.LabelWithMastery', {
-            mastery: mastery.label,
-          })
-          : game.i18n.format('DND5E.WEAPON.Mastery.Label')
-        )}
+              mastery: mastery.label,
+            })
+          : game.i18n.format('DND5E.WEAPON.Mastery.Label'),
+      )}
 
       <i
         class="fa-solid fa-circle-star color-icon-theme-highlight highlighted mastery item-state-indicator"
@@ -153,7 +136,7 @@
       {const iconClass = $derived(
         entry.system.attuned
           ? 'fa-solid fa-sun color-icon-theme-highlight highlighted'
-          : 'fa-regular fa-sun color-text-lightest'
+          : 'fa-regular fa-sun color-text-lightest',
       )}
 
       {const title = $derived(localize(ctx.attunement.title))}

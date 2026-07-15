@@ -16,11 +16,13 @@ import type {
   ActorSheetContextV1,
   ActorSheetClassicContextV2,
   TidySectionBase,
+  ActiveEffect5e,
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { SectionOptionGroup } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
@@ -37,7 +39,7 @@ export type SheetSectionConfiguration = {
   key: string;
   label: string;
   show: boolean;
-}
+};
 
 export type TabOptions = {
   tabId: string;
@@ -225,7 +227,7 @@ export type ContainerContentsRowActionsContext = {
 };
 
 export type ColumnSpecificationCalculatedWidthArgs = {
-  rowActions: TidyTableAction<any, any, any>[];
+  rowActions: TidyTableAction<any, any>[];
 };
 
 // Columns
@@ -252,16 +254,12 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  widthRems:
-    | number
-    | ((args: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
+  widthRems: number; // default: 5 (rem)
   priority: number;
   order: number;
   headerClasses?: ClassValue;
   cellClasses?: ClassValue;
-  condition?: <TSection extends TidySectionBase>(
-    data: ColumnSpecificationConditionArgs<any, TSection>,
-  ) => boolean;
+  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
 };
 
 export type GetConfiguredColumnSpecificationsArgs = {
@@ -269,8 +267,22 @@ export type GetConfiguredColumnSpecificationsArgs = {
   tabId: string;
   sectionKey: string;
   sheetDocument: any;
-  section?: TidySectionBase;
 } & ColumnSpecificationCalculatedWidthArgs;
+
+export type ConfiguredSectionColumnSpecification =
+  ConfiguredColumnSpecification;
+
+export type SectionColumnSpecifications = {
+  sorted: (keyof SectionColumnContext['map'])[];
+  prioritized: (keyof SectionColumnContext['map'])[];
+  map: Record<string, ConfiguredColumnSpecification>;
+};
+
+export type SectionColumnContext = {
+  sorted: (keyof SectionColumnContext['map'])[];
+  prioritized: (keyof SectionColumnContext['map'])[];
+  map: Record<string, ConfiguredSectionColumnSpecification>;
+};
 
 /** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
 export type ConfiguredColumnSpecification = ColumnSpecification & {
@@ -298,12 +310,8 @@ export type ColumnCellProps<
   section: TSection;
 };
 
-export type ColumnSpecificationConditionArgs<
-  TDocument = any,
-  TSection = TidySectionBase,
-> = {
+export type ColumnSpecificationConditionArgs<TDocument = any> = {
   sheetDocument: TDocument;
-  section: TSection;
 };
 
 export type ColumnSpecSectionKeysToColumns = Record<

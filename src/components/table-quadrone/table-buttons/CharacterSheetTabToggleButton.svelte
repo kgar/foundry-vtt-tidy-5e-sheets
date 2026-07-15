@@ -6,16 +6,14 @@
 
   interface Props {
     doc: any;
-    itemContext: Record<string, CharacterItemContext | ContainerItemContext>;
+    ctx: CharacterItemContext | ContainerItemContext;
   }
 
-  let { doc, itemContext }: Props = $props();
+  let { doc, ctx }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let included = $derived(
-    itemContext[doc.id]?.includeInCharacterSheetTab === true,
-  );
+  let included = $derived(ctx.includeInCharacterSheetTab === true);
 
   let tooltip = $derived(
     localize(

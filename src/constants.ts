@@ -13,6 +13,7 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP: 'xp',
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
+  COLUMN_KEY_ROW_ACTIONS: 'actions',
   COLUMN_SPEC_SECTION_KEY_DEFAULT:
     'default section key fallback for column specs',
   COLUMN_SPEC_TAB_KEY_DEFAULT: 'default tab key fallback for column specs',
@@ -70,6 +71,8 @@ export const CONSTANTS = {
   FILTER_EQUIPPED: 'equipped',
   FLAG_TYPE_TIDY_JOURNAL: 'Tidy5eJournal',
   HABITAT_TYPE_ANY: 'any',
+  EFFECT_TYPE_BASE: 'base',
+  EFFECT_TYPE_ENCHANTMENT: 'enchantment',
   ITEM_CAPACITY_TYPE_ITEMS: 'items',
   ITEM_CAPACITY_TYPE_WEIGHT: 'weight',
   ITEM_SORT_GROUP_KEY_ALPHABETICAL: 'a',

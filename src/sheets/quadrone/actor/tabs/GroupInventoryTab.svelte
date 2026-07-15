@@ -60,18 +60,18 @@
 
   let hoveredMember = $state<string | null>(null);
 
-  let members = $derived(context.members.sections.flatMap((s) => s.members));
+  let members = $derived(context.members.flatMap((s) => s.members));
 </script>
 
 <aside class="sidebar expanded">
   {#each members as member}
-    {const actorIsDead = $derived( 
+    {const actorIsDead = $derived(
       member.actor.system.attributes?.hp?.value === 0 &&
-      member.actor.system.attributes?.hp?.max > 0 &&
-      (member.actor.system.attributes.death === undefined ||
-        (member.actor.system.attributes.death.failure >= 3 &&
-          member.actor.system.attributes.death.success < 3))
-      )}
+        member.actor.system.attributes?.hp?.max > 0 &&
+        (member.actor.system.attributes.death === undefined ||
+          (member.actor.system.attributes.death.failure >= 3 &&
+            member.actor.system.attributes.death.success < 3)),
+    )}
 
     <!-- svelte-ignore a11y_missing_attribute -->
     <a

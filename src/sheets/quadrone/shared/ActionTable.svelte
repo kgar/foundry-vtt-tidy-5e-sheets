@@ -1,25 +1,22 @@
 <script lang="ts">
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type {
     TidyItemSectionBase,
     Actor5e,
     CharacterItemQuadroneContext,
-    CharacterSheetQuadroneContext,
     NpcItemQuadroneContext,
-    NpcSheetQuadroneContext,
     VehicleItemQuadroneContext,
   } from 'src/types/types';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
     itemContext: Record<
       string,
-      CharacterItemQuadroneContext | NpcItemQuadroneContext | VehicleItemQuadroneContext
+      | CharacterItemQuadroneContext
+      | NpcItemQuadroneContext
+      | VehicleItemQuadroneContext
     >;
     inlineToggleService: InlineToggleService;
     sheetDocument: Actor5e | Item5e;
@@ -36,38 +33,16 @@
     tabId,
   }: Props = $props();
 
-  let context =
-    $derived(
-      getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
-      >(),
-    );
-
-  const columns = $derived(
-    new ColumnsLoadout(
-      ItemColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: sheetDocument.type,
-        tabId: tabId,
-        sectionKey: section.key,
-        rowActions: section.rowActions,
-        section: section,
-        sheetDocument: context.actor,
-      }),
-    ),
-  );
-
   let itemToggleMap = $derived(inlineToggleService.map);
 </script>
 
 <TidyItemTable
   {section}
   entries={section.items}
-  {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
-  {columns}
 >
   {#snippet subtitle(item, ctx)}
     {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}

@@ -432,7 +432,7 @@
         }
       }
 
-      .tidy-table-cell {
+      .tidy-table-cell:not(.tidy-table-actions) {
         max-width: none;
         justify-content: center;
         align-items: center;

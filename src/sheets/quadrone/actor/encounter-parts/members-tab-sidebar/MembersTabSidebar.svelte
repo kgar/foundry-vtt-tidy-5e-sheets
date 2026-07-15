@@ -35,7 +35,7 @@
     identifiers: Map<string, GroupTraitBase<any>>,
   ) {
     return [...identifiers].map(([uuid, value]) => ({
-      context: context.members.all.get(uuid) as EncounterMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
+      context: context.memberContext.all.get(uuid) as EncounterMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
       units: value.units,
       value: value.value?.toString(),
     }));
@@ -247,7 +247,7 @@
                   traitTooltip?.tryShow(ev, {
                     label: special.label,
                     members: [...special.identifiers].map((s) => ({
-                      context: context.members.all.get(
+                      context: context.memberContext.all.get(
                         s,
                       ) as EncounterMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
                     })),

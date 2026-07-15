@@ -66,6 +66,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -295,7 +296,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       // skills/tools, and spell slots and churns out sections and any side-effecting context changes
       // (like pinning skills/tools/slots(?) when in Origin mode).
 
-      await this.prepareSheetTabSections(context);
+      this.prepareSheetTabSections(context);
     }
 
     context.customContent =
@@ -337,12 +338,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const actionSections = getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
         context,
-        {
-          rowActions: TableRowActionsRuntime.getActionsRowActions(
-            this.actor.isOwner,
-            context.unlocked,
-          ),
-        },
       );
 
       actionSections.forEach((section) => {
@@ -380,9 +375,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     );
     const inventoryTypes = Inventory.getInventoryTypes();
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
-        rowActions: inventoryRowActions,
-      });
+      Inventory.getDefaultInventorySections(this.document);
 
     // Get eligible items (note: in Origin Sections, we do not dump out their containers into the top-level table; nesting is supported).
     const partitions = (this.actor.items as any[])
@@ -412,16 +405,25 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
     // Inventory
     for (let item of partitions.items) {
+      const ctx = context.itemContext[item.id];
+      const rowActions = inventoryRowActions.filter(
+        (action) =>
+          !action.condition || action.condition({ data: { item, ctx } }),
+      );
+
       Inventory.applyInventoryItemToSection(
+        this.actor,
+        // TODO: This is a test to see if we can have inventory columns in the sheet tab for free.
+        CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory,
         item,
         inventoryTypes,
         {
           canCreate: true,
-          rowActions: inventoryRowActions,
         },
         '',
         'actionSection',
+        rowActions,
       );
     }
 
@@ -432,9 +434,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       partitions.spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
-          hasActionsTab: true,
-        }),
       },
       'actionSection',
     );
@@ -443,13 +442,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         partitions.feats,
         {
           canCreate: true,
-          rowActions:
-            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         },
         'actionSection',
       );
@@ -486,6 +484,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     ];
 
     function createGenericSheetTabSection(
+      sheet: Tidy5eCharacterSheetQuadrone,
       key: string,
       items: Item5e[],
     ): CustomItemSectionQuadrone {
@@ -501,22 +500,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         },
         isExternal: false,
         show: true,
-        rowActions: [
-          {
-            component: CharacterSheetTabToggleButton,
-            props: (args) => ({
-              doc: args.data,
-              itemContext: context.itemContext,
-            }),
-          },
-          {
-            component: MenuButton,
-            props: () => ({
-              targetSelector: '[data-context-menu]',
-            }),
-          },
-        ],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          sheet.document,
+          CONSTANTS.TAB_ACTOR_ACTIONS,
+          key,
+        ),
       };
     }
 
@@ -534,10 +523,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
-        sectionsMap[section.key] = createGenericSheetTabSection(section.key, [
-          ...incomingItems,
-          ...mappedItems,
-        ]);
+        sectionsMap[section.key] = createGenericSheetTabSection(
+          this,
+          section.key,
+          [...incomingItems, ...mappedItems],
+        );
 
         continue;
       }
@@ -778,9 +768,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
-        rowActions: inventoryRowActions,
-      });
+      Inventory.getDefaultInventorySections(this.document);
 
     const inclusionMode = this.getSheetTabInclusionMode();
     const sheetTabOrganization = this.getSheetTabSectionOrganization();
@@ -842,6 +830,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           // Classify items into types
           if (!isWithinContainer) {
             CharacterSheetSections.partitionItem(item, obj, inventory);
+          } else {
+            // TODO: Find a cleaner way to handle all tabled documents' row actions.
+            // Contained items get row actions like any other item
+            ctx.rowActions = inventoryRowActions.filter(
+              (action) => !action.condition || action.condition({ data: { item, ctx } }),
+            );
           }
 
           return obj;
@@ -861,34 +855,62 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
-    for (let item of items) {
+
+    for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+
+      ctx.rowActions = inventoryRowActions.filter(
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+      );
+
+      Inventory.applyInventoryItemToSection(
+        this.actor,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+        },
+        undefined,
+        undefined,
+        ctx.rowActions,
+      );
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
       CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      inventory[s] ??= Inventory.createInventorySection(
+        context.actor,
+        CONSTANTS.TAB_ACTOR_INVENTORY,
+        s,
+        inventoryTypes,
+        {
+          canCreate: true,
+        },
+      );
     });
 
     // Section spells
+    // TODO: Avoid having to loop over items again.
+    const spellRowActions = TableRowActionsRuntime.getSpellRowActions(context, {
+      hasActionsTab: true,
+    });
+    for (const item of spells) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.rowActions = spellRowActions.filter(
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+      );
+    }
+
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
       CONSTANTS.TAB_ACTOR_SPELLBOOK,
       spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
-          hasActionsTab: true,
-        }),
       },
     );
 
@@ -911,16 +933,25 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     }
 
     // Section Features
+    // TODO: Avoid having to loop over items again.
+    const featureRowActions =
+      TableRowActionsRuntime.getCharacterFeatureRowActions(context);
+    for (const item of feats) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.rowActions = featureRowActions.filter(
+        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+      );
+    }
+
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         feats,
         {
           canCreate: true,
-          rowActions:
-            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         },
       );
 

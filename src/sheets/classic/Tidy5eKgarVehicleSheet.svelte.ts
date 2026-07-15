@@ -40,7 +40,7 @@ import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eVehicleSheet
   extends getTidy5eActorSheetClassicV2Base<VehicleSheetContext>(
-    CONSTANTS.SHEET_TYPE_VEHICLE
+    CONSTANTS.SHEET_TYPE_VEHICLE,
   )
   implements
     SheetTabCacheable,
@@ -70,7 +70,7 @@ export class Tidy5eVehicleSheet
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
@@ -89,14 +89,17 @@ export class Tidy5eVehicleSheet
     },
     actions: {
       browseActors: async function (this: Tidy5eVehicleSheet) {
-        new dnd5e.applications.CompendiumBrowser({
-          filters: {
-            locked: {
-              documentClass: 'Actor',
-              types: new Set(['character', 'npc']),
+        new dnd5e.applications.CompendiumBrowser(
+          {
+            filters: {
+              locked: {
+                documentClass: 'Actor',
+                types: new Set(['character', 'npc']),
+              },
             },
           },
-        }, this._detachOptions()).render({ force: true });
+          this._detachOptions(),
+        ).render({ force: true });
       },
     },
   };
@@ -142,7 +145,7 @@ export class Tidy5eVehicleSheet
         [
           CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TABLE_TOGGLE,
           this.itemTableTogglesCache.onItemTableToggle.bind(
-            this.itemTableTogglesCache
+            this.itemTableTogglesCache,
           ),
         ],
         [
@@ -161,7 +164,7 @@ export class Tidy5eVehicleSheet
     const defaultDocumentContext = await super._prepareContext(options);
 
     const vehiclePreferences = UserSheetPreferencesService.getByType(
-      this.actor.type
+      this.actor.type,
     );
 
     const actionListSortMode =
@@ -179,7 +182,7 @@ export class Tidy5eVehicleSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
-                'm'
+                'm',
               );
             },
             visible: actionListSortMode === 'a',
@@ -193,7 +196,7 @@ export class Tidy5eVehicleSheet
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
-                'a'
+                'a',
               );
             },
             visible: actionListSortMode === 'm',
@@ -205,7 +208,7 @@ export class Tidy5eVehicleSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_ACTIONS,
-                true
+                true,
               ),
           },
           {
@@ -215,13 +218,13 @@ export class Tidy5eVehicleSheet
             execute: () =>
               this.sectionExpansionTracker.setAll(
                 CONSTANTS.TAB_ACTOR_ACTIONS,
-                false
+                false,
               ),
           },
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -230,12 +233,12 @@ export class Tidy5eVehicleSheet
                   sections: sections,
                   tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                   tabTitle: VehicleSheetClassicRuntime.getTabTitle(
-                    CONSTANTS.TAB_ACTOR_ACTIONS
+                    CONSTANTS.TAB_ACTOR_ACTIONS,
                   ),
                 },
                 {
                   document: context.actor,
-                }
+                },
               ).render(true);
             },
           },
@@ -248,17 +251,17 @@ export class Tidy5eVehicleSheet
       draft: await this._prepareMemberSection(
         'draft',
         'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
-        'DND5E.VEHICLE.Action.Drop.Animal'
+        'DND5E.VEHICLE.Action.Drop.Animal',
       ),
       passengers: await this._prepareMemberSection(
         'passengers',
         'DND5E.VEHICLE.Crew.Passengers',
-        'DND5E.VEHICLE.Action.Drop.Passengers'
+        'DND5E.VEHICLE.Action.Drop.Passengers',
       ),
       crew: await this._prepareMemberSection(
         'crew',
         'DND5E.VEHICLE.Crew.Label',
-        'DND5E.VEHICLE.Action.Drop.Crew'
+        'DND5E.VEHICLE.Action.Drop.Crew',
       ),
       features: {
         ...SheetSections.EMPTY,
@@ -312,12 +315,11 @@ export class Tidy5eVehicleSheet
         context,
         app: this,
         element: this.element,
-      }
+      },
     );
 
-    context.customContent = await VehicleSheetClassicRuntime.getContent(
-      context
-    );
+    context.customContent =
+      await VehicleSheetClassicRuntime.getContent(context);
 
     for (const item of context.items) {
       const ctx = context.itemContext[item.id];
@@ -337,7 +339,7 @@ export class Tidy5eVehicleSheet
       tabs = tabs
         .filter((t) => selectedTabs?.includes(t.id))
         .sort(
-          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id),
         );
     } else {
       const defaultTabs = settings.value.defaultVehicleSheetTabs;
@@ -358,7 +360,7 @@ export class Tidy5eVehicleSheet
   async _prepareMemberSection(
     area: string,
     label: string,
-    dropLabel: string
+    dropLabel: string,
   ): Promise<VehicleMemberSection> {
     const section: VehicleMemberSection = {
       ...SheetSections.EMPTY,
@@ -392,7 +394,7 @@ export class Tidy5eVehicleSheet
   }
 
   _prepareVehicleItems(context: VehicleSheetContext) {
-    const inventory = Inventory.getDefaultInventorySections();
+    const inventory = Inventory.getDefaultInventorySections(this.document);
     const inventoryTypes = Inventory.getInventoryTypes();
 
     context.items.forEach((item) => {
@@ -414,10 +416,19 @@ export class Tidy5eVehicleSheet
       }
       // Inventory
       else if (Inventory.isItemInventoryType(item)) {
-        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-          canCreate: true,
-          rowActions: [],
-        });
+        Inventory.applyInventoryItemToSection(
+          this.document,
+          CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory,
+          item,
+          inventoryTypes,
+          {
+            canCreate: true,
+          },
+          undefined,
+          undefined,
+          [], // quadrone
+        );
       }
       // Features (and stray items)
       else {
@@ -442,13 +453,13 @@ export class Tidy5eVehicleSheet
     // Activities
     ctx.activities = Activities.getVisibleActivities(
       item,
-      item.system.activities
+      item.system.activities,
     )?.map(Activities.getActivityItemContext);
 
     if (item.isMountable) {
       this._prepareCrewedItem(item, ctx);
     }
-    
+
     return ctx;
   }
 
@@ -463,7 +474,7 @@ export class Tidy5eVehicleSheet
     const isCrewed = item.system.crewed;
     context.toggleClass = isCrewed ? 'active' : '';
     context.toggleTitle = game.i18n.localize(
-      `DND5E.${isCrewed ? 'Crewed' : 'Uncrewed'}`
+      `DND5E.${isCrewed ? 'Crewed' : 'Uncrewed'}`,
     );
 
     // Handle crew actions
@@ -495,7 +506,7 @@ export class Tidy5eVehicleSheet
       if (item) {
         this.expandedItemData.set(
           id,
-          await item.getChatData({ secrets: this.actor.isOwner })
+          await item.getChatData({ secrets: this.actor.isOwner }),
         );
       }
     }
@@ -503,7 +514,7 @@ export class Tidy5eVehicleSheet
 
   async _onDropSingleItem(
     itemData: any,
-    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
   ) {
     const cargoTypes = Inventory.getInventoryTypes();
     const isCargo =
@@ -521,7 +532,7 @@ export class Tidy5eVehicleSheet
 
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
         itemData,
-        options
+        options,
       );
 
       return scroll.toObject();
@@ -532,7 +543,7 @@ export class Tidy5eVehicleSheet
 
   async _onDropActor(
     event: DragEvent,
-    actorData: { type: string; uuid: string } & Record<string, any>
+    actorData: { type: string; uuid: string } & Record<string, any>,
   ) {
     const actor = await fromUuid(actorData.uuid);
 
@@ -585,11 +596,11 @@ export class Tidy5eVehicleSheet
     if (src)
       Object.assign(
         updates,
-        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+        this.actor.system.getCrewUpdates(src, actor.uuid, '-1'),
       );
     Object.assign(
       updates,
-      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1'),
     );
     if (!foundry.utils.isEmpty(updates)) this.actor.update(updates);
   }
@@ -603,7 +614,7 @@ export class Tidy5eVehicleSheet
     actor: Actor5e,
     item: Item5e,
     dest: string,
-    { src }: { src?: string } = {}
+    { src }: { src?: string } = {},
   ) {
     const itemUpdates = { _id: item.id };
     const actorUpdates = { items: [itemUpdates] };
@@ -620,14 +631,14 @@ export class Tidy5eVehicleSheet
       if (!src) {
         Object.assign(
           actorUpdates,
-          this.actor.system.getCrewUpdates('crew', actor.uuid, '+1')
+          this.actor.system.getCrewUpdates('crew', actor.uuid, '+1'),
         );
       }
 
       foundry.utils.setProperty(
         itemUpdates,
         'system.crew.value',
-        crew.concat(actor.uuid)
+        crew.concat(actor.uuid),
       );
 
       this.actor.update(actorUpdates);
@@ -660,7 +671,7 @@ export class Tidy5eVehicleSheet
     const locationSet = mapGetOrInsert(
       this.expandedItems,
       itemId,
-      new Set<string>()
+      new Set<string>(),
     );
 
     if (isVisible) {

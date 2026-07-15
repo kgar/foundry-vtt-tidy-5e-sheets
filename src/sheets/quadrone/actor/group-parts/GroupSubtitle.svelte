@@ -21,7 +21,7 @@
 
   let memberCount = $derived(context.system.members.length);
   let charactersOnly = $derived(
-    context.members.character.length === context.system.members.length,
+    context.memberContext.character.length === context.system.members.length,
   );
 
   let xpPool = $derived(context.system.details.xp.value);
@@ -45,7 +45,7 @@
 
 <!-- Group subtitle, member info -->
 <div class="actor-subtitle separated-list" data-tidy-sheet-part="subtitle-row">
-  {#if !charactersOnly && context.members.character.length > 0}
+  {#if !charactersOnly && context.memberContext.character.length > 0}
     <span
       class="members"
       role="button"
@@ -53,12 +53,12 @@
       onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
     >
       <span class="color-text-gold font-label-medium"
-        >{context.members.character.length > 1
+        >{context.memberContext.character.length > 1
           ? localize('TYPES.Actor.characterPl')
           : localize('TYPES.Actor.character')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.members.character.length}</span
+        >{context.memberContext.character.length}</span
       >
     </span>
     <div class="divider-dot"></div>

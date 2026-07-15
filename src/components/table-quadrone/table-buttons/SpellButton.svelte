@@ -43,25 +43,23 @@
   });
 </script>
 
-{#if !doc.system.linkedActivity}
-  {#if FoundryAdapter.canPrepareSpell(doc)}
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      role="button"
-      tabindex="0"
-      aria-label={tooltip}
-      data-tooltip={tooltip}
-      class="tidy-table-button"
-      onclick={togglePreparation}
-      onkeydown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          togglePreparation();
-        }
-      }}
-    >
-      <i class={iconClasses}></i>
-    </a>
-  {:else}
-    <i data-tooltip={tooltip} class={iconClasses}></i>
-  {/if}
+{#if FoundryAdapter.canPrepareSpell(doc)}
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <a
+    role="button"
+    tabindex="0"
+    aria-label={tooltip}
+    data-tooltip={tooltip}
+    class="tidy-table-button"
+    onclick={togglePreparation}
+    onkeydown={(event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        togglePreparation();
+      }
+    }}
+  >
+    <i class={iconClasses}></i>
+  </a>
+{:else}
+  <i data-tooltip={tooltip} class={iconClasses}></i>
 {/if}

@@ -10,18 +10,15 @@
   import { CONSTANTS } from 'src/constants';
   import { iterateReversed } from 'src/utils/array';
 
-  let {
-    section,
-    sheetDocument,
-  }: ColumnHeaderProps<
-    Actor5e,
-    DocumentSheetQuadroneContext<any>,
-    TidySectionBase
-  > = $props();
+  type Props = {
+    maxRowActionsCount: number;
+    section: TidySectionBase;
+    sheetDocument: any;
+  };
+
+  let { maxRowActionsCount, section, sheetDocument }: Props = $props();
 
   const menuAction = SectionActions.getMenuActionCommand();
-
-  const sectionActionLimit = $derived(section.rowActions.length);
 
   // Reverse section actions so that the most important action is on the far right.
   const reversedSectionActions = $derived(
@@ -29,7 +26,7 @@
   );
 </script>
 
-{#if section.sectionActions.length <= sectionActionLimit}
+{#if section.sectionActions.length <= maxRowActionsCount}
   {#each reversedSectionActions as action}
     <SectionActionHeaderControl
       {action}

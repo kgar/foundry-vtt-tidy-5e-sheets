@@ -22,7 +22,7 @@
 
   let showMemberSkills = $derived(
     emphasizedMember &&
-      !!context.members.npc.find(
+      !!context.memberContext.npc.find(
         (m) => m.actor.uuid === emphasizedMember?.actor.uuid,
       ),
   );
@@ -80,7 +80,7 @@
           tooltip?.tryShow(ev, {
             key: skill.key,
             label: skill.name,
-            members: context.members.npc,
+            members: context.memberContext.npc,
           })}
       >
         <span class="skill-ability font-label-medium color-text-gold-emphasis">

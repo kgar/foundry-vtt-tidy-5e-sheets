@@ -2335,7 +2335,7 @@ export function getTidy5eActorSheetQuadroneBase<
         case 'skills':
           return FoundryAdapter.renderSkillsConfig(this.actor);
         case 'special-traits':
-          this.openSheetSettings(TidySheetSettingsTabIds.specialTraits);
+          return this.openSheetSettings(TidySheetSettingsTabIds.specialTraits);
         case 'tool':
           const tool = target.closest<HTMLElement>('[data-key]')?.dataset.key;
 

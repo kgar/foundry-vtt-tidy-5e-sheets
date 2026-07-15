@@ -1,12 +1,7 @@
 import { CONSTANTS } from 'src/constants';
-import type {
-  ColumnSpecDocumentTypesToTabs,
-  ColumnSpecificationCalculatedWidthArgs,
-} from '../types';
+import type { ColumnSpecDocumentTypesToTabs } from '../types';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import EffectActionsColumnHeader from 'src/sheets/quadrone/item/columns/EffectActionsColumnHeader.svelte';
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import EffectSourceColumn from 'src/sheets/quadrone/item/columns/EffectSourceColumn.svelte';
 import EffectDurationColumn from 'src/sheets/quadrone/item/columns/EffectDurationColumn.svelte';
 
@@ -22,7 +17,7 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
               headerContent: {
                 type: 'html',
                 html: FoundryAdapter.localize(
-                  'DND5E.SOURCE.FIELDS.source.label'
+                  'DND5E.SOURCE.FIELDS.source.label',
                 ),
               },
               cellContent: {
@@ -45,26 +40,6 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
               widthRems: 6,
               order: 200,
               priority: 200,
-            },
-            actions: {
-              headerClasses: 'header-cell-actions',
-              headerContent: {
-                type: 'component',
-                // @ts-ignore
-                component: EffectActionsColumnHeader, // TODO: work on the column runtime types so that more specific types can be used in scenarios where the section type, for example, is known, like effects
-              },
-              cellClasses: 'tidy-table-actions',
-              cellContent: {
-                type: 'component',
-                component: DocumentActionsColumn,
-              },
-              widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-                let paddingX = 0.1875;
-                let buttonWidth = 1.5;
-                return buttonWidth * section.rowActions.length + paddingX;
-              },
-              order: 1000,
-              priority: 1000,
             },
           },
         },

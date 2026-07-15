@@ -41,6 +41,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
+import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -159,7 +160,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     actorContext: ActorSheetQuadroneContext,
   ): Promise<{
     abilities: GroupAbility[];
-    members: GroupMembersQuadroneContext;
+    members: GroupMemberSection[];
+    memberContext: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
   }> {
@@ -179,8 +181,12 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           key: CONSTANTS.SHEET_TYPE_CHARACTER,
           show: true,
           dataset: {},
-          rowActions,
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_CHARACTER,
+          ),
         },
       ],
       [
@@ -191,8 +197,12 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           key: CONSTANTS.SHEET_TYPE_NPC,
           show: true,
           dataset: {},
-          rowActions,
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_NPC,
+          ),
         },
       ],
       [
@@ -203,14 +213,17 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           key: CONSTANTS.SHEET_TYPE_VEHICLE,
           show: true,
           dataset: {},
-          rowActions,
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_VEHICLE,
+          ),
         },
       ],
     ]);
 
-    let membersContext: GroupMembersQuadroneContext = {
-      sections: [],
+    let memberContext: GroupMembersQuadroneContext = {
       character: [],
       all: new Map<string, GroupMemberQuadroneContext>(),
       skilled: [],
@@ -257,8 +270,12 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             section: key,
             creationItemTypes: [],
           },
-          rowActions,
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            key,
+          ),
         }),
       );
 
@@ -273,7 +290,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         !settings.value.useGroupSheetMemberSecurity ||
         actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER);
 
-      const groupMemberContext = {
+      const groupMemberContext: GroupMemberQuadroneContext = {
         accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
         backgroundColor: !isNil(accentColor, '')
@@ -293,12 +310,17 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         ),
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
+        rowActions: rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: { actor, ctx: undefined } }),
+        ),
       };
 
       section.members.push(groupMemberContext);
-      membersContext.all.set(actor.uuid, groupMemberContext);
+      memberContext.all.set(actor.uuid, groupMemberContext);
       if (actor.system.isCharacter) {
-        membersContext.character.push(actor);
+        memberContext.character.push(actor);
       }
 
       const prepareCreatureInformation =
@@ -343,7 +365,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       );
     });
 
-    membersContext.skilled.push(
+    memberContext.skilled.push(
       ...skilled.values().reduce((prev, curr) => {
         return prev.concat(
           curr.toSorted((a, b) =>
@@ -358,11 +380,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       a.name.localeCompare(b.name, game.i18n.lang),
     );
 
-    membersContext.sections = [...sections.values()];
-
     return {
       abilities: groupAbilities,
-      members: membersContext,
+      memberContext,
+      members: [...sections.values()],
       skills: groupSkills,
       traits: {
         languages: [...languages.values()].sort((a, b) =>

@@ -23,15 +23,17 @@
 
   let localize = FoundryAdapter.localize;
 
-  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());  
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let advancements = $derived(Object.entries(context.advancement));
 
   type TableAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    AdvancementItemContext,
-    {}
+    AdvancementItemContext
   >;
 
   let tableRowActions: TableAction<any>[] = $derived.by(() => {
@@ -50,7 +52,9 @@
         props: (args) => ({
           doc: context.item.system.advancement?.get(args.data.id),
           deleteFn: () =>
-            context.item.system.advancement?.get(args.data.id)?.deleteDialog({ sheet: context.item }),
+            context.item.system.advancement
+              ?.get(args.data.id)
+              ?.deleteDialog({ sheet: context.item }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }
@@ -60,8 +64,7 @@
 
   type TableHeaderAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    { key: string },
-    AdvancementSectionContext
+    { key: string; section: AdvancementSectionContext }
   >;
 
   let tableHeaderActions: TableHeaderAction<any>[] = $derived.by(() => {
@@ -72,7 +75,7 @@
       condition: (args) =>
         context.unlocked &&
         args.data.key !== CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED &&
-        !!args.section.configured,
+        !!args.data.section.configured,
       props: (args) => ({
         title: 'DND5E.AdvancementModifyChoices',
         onControlClick: (ev, args) =>
@@ -86,7 +89,8 @@
       component: TableHeaderButton,
       condition: (args) =>
         !context.unlocked &&
-        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
+        args.data.section.configured ===
+          CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredComplete',
         iconClass: 'fa-solid fa-badge-check emphasis',
@@ -97,7 +101,8 @@
       component: TableHeaderButton,
       condition: (args) =>
         !context.unlocked &&
-        args.section.configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
+        args.data.section.configured ===
+          CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       props: () => ({
         title: 'DND5E.AdvancementConfiguredIncomplete',
         iconClass: 'fas fa-exclamation-triangle warning',
@@ -114,9 +119,7 @@
       length = Math.max(
         length,
         tableHeaderActions.filter(
-          (a) =>
-            a.condition?.({ data: { key }, section, rowContext: undefined }) ??
-            0,
+          (a) => a.condition?.({ data: { key, section } }) ?? 0,
         ).length,
       );
     }
@@ -158,12 +161,10 @@
             {...columnSpecs.actions}
           >
             {#each tableHeaderActions as headerAction}
-              {#if headerAction.condition?.( { data: { key }, section: section, rowContext: undefined }, ) ?? true}
+              {#if headerAction.condition?.({ data: { key, section } }) ?? true}
                 <headerAction.component
                   {...headerAction.props({
-                    data: { key },
-                    section,
-                    rowContext: undefined,
+                    data: { key, section },
                   })}
                 />
               {/if}
@@ -232,9 +233,7 @@
                     {const props = $derived(
                       action.props({
                         data: advancement,
-                        section,
-                        rowContext: undefined,
-                      })
+                      }),
                     )}
                     <action.component {...props} />
                   {/each}

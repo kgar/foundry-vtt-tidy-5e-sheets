@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import TidyTableCell from '../TidyTableCell.svelte';
   import type {
     DocumentSheetQuadroneContext,
@@ -7,7 +6,6 @@
   } from 'src/types/types';
 
   type Props = {
-    columns: ColumnsLoadout;
     ctx?: any;
     entry?: any;
     hiddenColumns?: Set<string>;
@@ -16,7 +14,6 @@
   };
 
   let {
-    columns,
     context,
     ctx,
     entry,
@@ -25,7 +22,8 @@
   }: Props = $props();
 </script>
 
-{#each columns.ordered as column}
+{#each section.columns.sorted as key}
+  {const column = $derived(section.columns.map[key])}
   {const hidden = $derived(hiddenColumns.has(column.key))}
 
   <TidyTableCell

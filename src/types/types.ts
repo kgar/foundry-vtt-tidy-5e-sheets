@@ -15,6 +15,7 @@ import type {
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
   RegisteredPortraitMenuCommand,
+  SectionColumnContext,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -45,6 +46,7 @@ import type {
   CurrencyItemConfig,
   TravelPaceConfig,
 } from 'src/foundry/config.types';
+import type { ActorTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -193,9 +195,8 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
-  // columns: ColumnsLoadout[];
-  rowActions: TidyTableAction<any, any, any>[];
   sectionActions: SectionCommand[];
+  columns: SectionColumnContext;
 };
 
 export type SectionCommand = {
@@ -359,7 +360,7 @@ export type ActivityItemContext = {
 
 export type ActivityItemSpellContext = {
   uuid?: string;
-}
+};
 
 // TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {
@@ -400,8 +401,7 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
+  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -413,8 +413,7 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  | SheetPinItemContext
-  | SheetPinActivityContext
+  SheetPinItemContext | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -878,11 +877,7 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'rounded';
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1013,6 +1008,7 @@ export type ActiveEffectContext = {
   uuid: string;
   effect: ActiveEffect5e;
   riders: ActiveEffectContext[];
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
@@ -1021,8 +1017,7 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  | HTMLElement
-  | { get(index: number): HTMLElement };
+  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1108,7 +1103,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  // TODO: Merge more universal item context here before PR
+  rowActions?: TidyTableAction<any, any>[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1435,6 +1430,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
+  rowActions: ActorTableAction<any>[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1448,7 +1444,6 @@ export type GroupMemberSection = {
 } & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
-  sections: GroupMemberSection[];
   character: GroupMemberQuadroneContext[];
   all: Map<string, GroupMemberQuadroneContext>;
   skilled: GroupMemberQuadroneContext[];
@@ -1572,7 +1567,8 @@ export type GroupSheetQuadroneContext = {
       summary: string;
     };
   };
-  members: GroupMembersQuadroneContext;
+  memberContext: GroupMembersQuadroneContext;
+  members: GroupMemberSection[];
   skills: GroupSkill[];
   travel: {
     currentPace: TravelPaceConfigEntry;
@@ -1609,6 +1605,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1617,7 +1614,18 @@ export type EncounterPlaceholderQuadroneContext = {
   name: string;
   visible: boolean;
   type: 'placeholder';
+  rowActions: TidyTableAction<any, any>[];
 } & EncounterPlaceholder;
+
+export type EncounterMemberSection = TidySectionBase & {
+  members: EncounterMemberQuadroneContext[];
+};
+
+export type EncounterCombatSection = TidySectionBase & {
+  combatants: (
+    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+  )[];
+};
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
@@ -1655,10 +1663,6 @@ export type EncounterDifficultyContext = {
 };
 
 export type EncounterSheetQuadroneContext = {
-  combatants: (
-    | EncounterMemberQuadroneContext
-    | EncounterPlaceholderQuadroneContext
-  )[];
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: EncounterDifficultyContext;
   enriched: {
@@ -1667,7 +1671,9 @@ export type EncounterSheetQuadroneContext = {
       summary: string;
     };
   };
-  members: EncounterMembersQuadroneContext;
+  memberContext: EncounterMembersQuadroneContext;
+  members: EncounterMemberSection[];
+  combat: EncounterCombatSection[];
   skills: GroupSkill[];
   totalCurrency: number;
   totalXp: number;
@@ -1681,6 +1687,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type DraftAnimalSection = {
@@ -1689,11 +1696,14 @@ export type DraftAnimalSection = {
 } & TidySectionBase;
 
 export type CrewMemberContext = {
+  uuid: string;
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
+  cr?: number;
   assignedTo?: Item5e;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type CrewSection = {
@@ -1711,6 +1721,7 @@ export type PassengerMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
+  rowActions: TidyTableAction<any, any>[];
 };
 
 export type PassengerSection = {

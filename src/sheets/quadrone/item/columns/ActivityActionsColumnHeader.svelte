@@ -9,15 +9,15 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
 
-  let {
-    sheetContext,
-    sheetDocument,
-    section,
-  }: ColumnHeaderProps<
-    Actor5e,
-    DocumentSheetQuadroneContext<any>,
-    TidySectionBase
-  > = $props();
+  type Props = {
+    editable: boolean;
+    maxRowActionsCount: number;
+    section: TidySectionBase;
+    sheetDocument: any;
+  };
+
+  let { editable, maxRowActionsCount, section, sheetDocument }: Props =
+    $props();
 
   let localize = FoundryAdapter.localize;
 
@@ -33,7 +33,8 @@
   }
 </script>
 
-{#if sheetContext.editable && 'canCreate' in section && !!section.canCreate}
+<!-- TODO: Upgrade to use full section actions feature -->
+{#if editable && 'canCreate' in section && !!section.canCreate}
   <a
     class="tidy-table-button"
     aria-label={localize('DND5E.ACTIVITY.Action.Create')}

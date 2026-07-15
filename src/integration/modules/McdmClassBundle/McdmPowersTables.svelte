@@ -12,16 +12,18 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { getContext } from 'svelte';
-  import McdmPowerSpecialtyColumn from './McdmPowerSpecialtyColumn.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import type { PowersSection } from './McdmClassBundle';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import TableRowActionsRuntime, {
+    type ItemTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
   interface Props {
     sections: PowersSection[];
@@ -57,68 +59,25 @@
   });
 
   const localize = FoundryAdapter.localize;
-
-  const defaultColumns = getDefaultItemColumns();
-  let columns = $derived(
-    new ColumnsLoadout([
-      {
-        key: 'concentration',
-        headerContent: {
-          type: 'html',
-          html: '',
-        },
-        cellContent: {
-          type: 'callback',
-          callback: (rowDocument, rowContext) => {
-            if (!rowDocument.requiresConcentration) return '';
-            return `
-              <span class="concentration-icon">
-                <dnd5e-icon src="systems/dnd5e/icons/svg/statuses/concentrating.svg">
-              </span>
-            `;
-          },
-        },
-        widthRems: 2,
-        order: 100,
-        priority: 900,
-      },
-      { ...defaultColumns.uses, key: 'uses', order: 200, priority: 200 },
-      {
-        key: 'specialty',
-        headerContent: {
-          type: 'html',
-          html: localize('MCDMCB.TALENT.POWERS.SPECIALTIES.Header'),
-        },
-        cellContent: {
-          type: 'component',
-          component: McdmPowerSpecialtyColumn,
-        },
-        widthRems: 3.5,
-        order: 300,
-        priority: 100,
-      },
-      { ...defaultColumns.time, key: 'time', order: 400, priority: 500 },
-      { ...defaultColumns.formula, key: 'formula', order: 500, priority: 300 },
-      { ...defaultColumns.target, key: 'target', order: 600, priority: 400 },
-      { ...defaultColumns.range, key: 'range', order: 700, priority: 600 },
-      { ...defaultColumns.roll, key: 'roll', order: 800, priority: 700 },
-      {
-        ...defaultColumns.actions,
-        widthRems: defaultColumns.actions.widthRems(sections[0]),
-        key: 'actions',
-        order: 1000,
-        priority: 1000,
-      },
-    ]),
-  );
-  let hiddenColumns = $derived(
-    ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
-  );
 </script>
 
 <div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#each sections as section}
     {#if section.show}
+      {const rowActionInfo = $derived(
+        TableRowActionsRuntime.getRowActionWidthInfo(
+          section.items,
+          (entry) => context.itemContext[entry.id]?.rowActions,
+        ),
+      )}
+
+      {let hiddenColumns = $derived(
+        ItemColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth - rowActionInfo.widthPx,
+          section.columns,
+        ),
+      )}
+
       <TidyTable
         key={section.key}
         data-custom-section={false}
@@ -132,23 +91,39 @@
               </h3>
               <span class="table-header-count">{section.items.length}</span>
             </TidyTableHeaderCell>
+
             <TidyTableCustomHeaderCells
-              {columns}
               {section}
               {expanded}
               {hiddenColumns}
               {context}
             />
+
+            <TidyTableHeaderCell
+              class="header-cell-actions"
+              columnWidth="{rowActionInfo.widthRems}rem"
+              data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+            >
+              <SectionActionsColumnHeader
+                {section}
+                maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                sheetDocument={context.document}
+              />
+            </TidyTableHeaderCell>
           </TidyTableHeaderRow>
         {/snippet}
 
         {#snippet body()}
-          {const itemEntries = $derived(section.items.map((item) => ({
-            item,
-            ctx: context.itemContext[item.id],
-          })))}
+          {const itemEntries = $derived(
+            section.items.map((item) => ({
+              item,
+              ctx: context.itemContext[item.id],
+            })),
+          )}
           {#each itemEntries as { item, ctx }, i (item.id)}
-            {const expanded = $derived(!!itemToggleMap.get(tabId)?.has(item.id))}
+            {const expanded = $derived(
+              !!itemToggleMap.get(tabId)?.has(item.id),
+            )}
 
             <TidyItemTableRow
               {item}
@@ -197,14 +172,28 @@
                     </span>
                   </a>
                 </TidyTableCell>
+
                 <TidyTableCustomCells
-                  {columns}
                   {section}
                   {ctx}
                   entry={item}
                   {hiddenColumns}
                   {context}
                 />
+
+                <TidyTableCell
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  class="tidy-table-actions"
+                  attributes={{
+                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                  }}
+                >
+                  {const data = $derived<ItemTableActionData>({
+                    item,
+                    ctx,
+                  })}
+                  <TableRowActions rowActions={ctx.rowActions} {data} />
+                </TidyTableCell>
               {/snippet}
             </TidyItemTableRow>
           {/each}

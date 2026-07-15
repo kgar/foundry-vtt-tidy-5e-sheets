@@ -5,7 +5,6 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -13,7 +12,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
@@ -28,6 +26,11 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { DraftAnimalSection, InventorySection } from 'src/types/types';
+  import TableRowActionsRuntime, {
+    type ActorTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -56,8 +59,7 @@
 
   let sections = $derived(
     buildVehicleStatblockSections(context, tabId) as (
-      | InventorySection
-      | DraftAnimalSection
+      InventorySection | DraftAnimalSection
     )[],
   );
 
@@ -285,28 +287,13 @@
             section.items.length === 0,
         )}
         {#if section.show && !emptyAndShouldHide}
-          {const columns = $derived(
-            new ColumnsLoadout(
-              ItemColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                section: section,
-                sheetDocument: context.document,
-              }),
-            ),
-          )}
-
           <TidyItemTable
             {section}
             entries={section.items}
-            sheetDocument={context.document}
             entryContext={context.itemContext}
             {sectionsInlineWidth}
             entryToggleMap={itemToggleMap}
             {tabId}
-            {columns}
           >
             {#snippet bodyNoEntries()}
               {#if !hideEmptyStates}
@@ -348,22 +335,17 @@
         {/if}
       {:else if section.type === 'draft'}
         {#if section.show}
-          {const columns = $derived(
-            new ColumnsLoadout(
-              VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                section: section,
-                sheetDocument: context.document,
-              }),
+          {const rowActionInfo = $derived(
+            TableRowActionsRuntime.getRowActionWidthInfo(
+              section.members,
+              (entry) => entry.rowActions,
             ),
           )}
+
           {const hiddenColumns = $derived(
             ItemColumnRuntime.determineHiddenColumns(
-              sectionsInlineWidth,
-              columns,
+              sectionsInlineWidth - rowActionInfo.widthPx,
+              section.columns,
             ),
           )}
           <TidyTable
@@ -382,12 +364,23 @@
                 </TidyTableHeaderCell>
 
                 <TidyTableCustomHeaderCells
-                  {columns}
                   {context}
                   {hiddenColumns}
                   {section}
                   {expanded}
                 />
+
+                <TidyTableHeaderCell
+                  class="header-cell-actions"
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+                >
+                  <SectionActionsColumnHeader
+                    {section}
+                    maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                    sheetDocument={context.document}
+                  />
+                </TidyTableHeaderCell>
               </TidyTableHeaderRow>
             {/snippet}
 
@@ -459,13 +452,30 @@
                         </TidyTableCell>
 
                         <TidyTableCustomCells
-                          {columns}
                           {context}
                           ctx={member}
                           entry={member.actor}
                           {hiddenColumns}
                           {section}
                         />
+
+                        <TidyTableCell
+                          columnWidth="{rowActionInfo.widthRems}rem"
+                          class="tidy-table-actions"
+                          attributes={{
+                            ['data-tidy-column-key']:
+                              CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                          }}
+                        >
+                          {const data = $derived<ActorTableActionData>({
+                            actor: member.actor,
+                            ctx: member,
+                          })}
+                          <TableRowActions
+                            rowActions={member.rowActions}
+                            {data}
+                          />
+                        </TidyTableCell>
                       {/snippet}
                     </TidyTableRow>
                   {/if}

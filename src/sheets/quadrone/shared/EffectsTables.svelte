@@ -10,15 +10,19 @@
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import TableRowActionsRuntime, {
+    type EffectTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import type { SectionColumnSpecifications } from 'src/runtime/types';
+  import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -33,38 +37,38 @@
       >(),
     );
 
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
-
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let sections = $derived(context.effects);
 
   const localize = FoundryAdapter.localize;
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 </script>
 
 {#each sections as section (section.key)}
-  {const columns = $derived(new ColumnsLoadout(
-    EffectColumnRuntime.getConfiguredColumnSpecifications({
-      sheetType: context.document.type,
-      tabId: tabId,
-      sectionKey: section.key,
-      rowActions: section.rowActions,
-      section: section,
-      sheetDocument: context.document,
-    }),
-  ))}
+  {const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      section.effects,
+      (entry) => entry.rowActions,
+    ),
+  )}
 
-  {const hiddenColumns = $derived(EffectColumnRuntime.determineHiddenColumns(
-    inlineWidth,
-    columns,
-    10,
-  ))}
+  {const hiddenColumns = $derived(
+    EffectColumnRuntime.determineHiddenColumns(
+      inlineWidth - rowActionInfo.widthPx,
+      section.columns,
+      10,
+    ),
+  )}
+
   {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
         <TidyTableHeaderRow
-          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type === 'suppressed' || section.disabled
+          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
+            'suppressed' || section.disabled
             ? 'diminished'
             : ''}"
         >
@@ -75,29 +79,43 @@
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
 
-          <TidyTableCustomHeaderCells
-            {columns}
-            {context}
-            {hiddenColumns}
-            {section}
-          />
+          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            columnWidth="{rowActionInfo.widthRems}rem"
+            data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+          >
+            <EffectActionsColumnHeader
+              {section}
+              sheetContext={context}
+              sheetDocument={context.document}
+            />
+          </TidyTableHeaderCell>
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {const effectEntries = $derived(section.effects.map(
-          (effect: ActiveEffectContext) => ({
+        {const effectEntries = $derived(
+          section.effects.map((effect: ActiveEffectContext) => ({
             effect,
-          }),
-        ))}
+          })),
+        )}
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,
-            columns,
+            section.columns,
             hiddenColumns,
             section,
+            rowActionInfo.widthRems,
           )}
           {#each effectContext.effect.riders as rider}
-            {@render EffectRow(rider, columns, hiddenColumns, section, true)}
+            {@render EffectRow(
+              rider,
+              section.columns,
+              hiddenColumns,
+              section,
+              rowActionInfo.widthRems,
+              true,
+            )}
           {/each}
         {/each}
       {/snippet}
@@ -107,16 +125,18 @@
 
 {#snippet EffectRow(
   ctx: ActiveEffectContext,
-  columns: ColumnsLoadout,
+  columns: SectionColumnSpecifications,
   hiddenColumns: Set<string>,
   section: ActiveEffectSection,
+  rowActionsColumnWidthRems: number,
   isRider?: boolean,
 )}
   <TidyEffectTableRow effectContext={ctx}>
     {#snippet children({ toggleSummary, expanded })}
       {#if isRider}
         <span class="inline-activity-arrow">
-          <i class="fa-solid fa-turn-up fa-fw fa-rotate-90 color-text-disabled"></i>
+          <i class="fa-solid fa-turn-up fa-fw fa-rotate-90 color-text-disabled"
+          ></i>
         </span>
       {/if}
       <span class="tidy-table-row-use-button disabled">
@@ -128,13 +148,15 @@
       </span>
       <TidyTableCell primary={true}>
         <!--svelte-ignore a11y_missing_attribute-->
-        <a 
-          class="item-name" 
+        <a
+          class="item-name"
           onclick={(ev) => toggleSummary()}
-          onkeydown={(ev) => ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
+          onkeydown={(ev) =>
+            ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
           role="button"
           tabindex="0"
-          data-keyboard-focus>
+          data-keyboard-focus
+        >
           <span class="cell-text">
             <span class="cell-name">{ctx.effect.name}</span>
           </span>
@@ -146,13 +168,26 @@
       </TidyTableCell>
 
       <TidyTableCustomCells
-        {columns}
         {context}
         {ctx}
         entry={ctx}
         {hiddenColumns}
         {section}
       />
+
+      <TidyTableCell
+        columnWidth="{rowActionsColumnWidthRems}rem"
+        class="tidy-table-actions"
+        attributes={{
+          ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+        }}
+      >
+        {const data = $derived<EffectTableActionData>({
+          effect: ctx.effect,
+          ctx,
+        })}
+        <TableRowActions rowActions={ctx.rowActions} {data} />
+      </TidyTableCell>
     {/snippet}
   </TidyEffectTableRow>
 {/snippet}

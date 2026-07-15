@@ -8,6 +8,7 @@ import type {
   ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
+  CharacterItemQuadroneContext,
   CharacterSheetQuadroneContext,
   CustomItemSectionQuadrone,
   TidyItemSectionBase,
@@ -18,6 +19,8 @@ import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from '../containers/Container';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -100,8 +103,8 @@ function buildActionSections(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
-      rowActions: [],
       sectionActions: [],
+      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
     };
   });
 
@@ -119,8 +122,8 @@ function buildActionSections(
           creationItemTypes: [],
           section: customSectionName,
         },
-        rowActions: [],
         sectionActions: [],
+        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       customSection.actions.push(actionItem);
     } else {
@@ -134,8 +137,8 @@ function buildActionSections(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
-        rowActions: [],
         sectionActions: [],
+        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       section.actions.push(actionItem);
     }
@@ -155,7 +158,13 @@ export function getCharacterSheetTabActionSectionsQuadrone(
         context.itemContext[item.id]?.includeInCharacterSheetTab,
     );
 
-    return buildActionSectionsQuadrone(eligibleItems, options);
+    return buildActionSectionsQuadrone(
+      actor,
+      context.itemContext,
+      CONSTANTS.TAB_ACTOR_ACTIONS,
+      eligibleItems,
+      options,
+    );
   } catch (e) {
     error('An error occurred while getting actions', false, e);
     return [];
@@ -163,6 +172,9 @@ export function getCharacterSheetTabActionSectionsQuadrone(
 }
 
 function buildActionSectionsQuadrone(
+  actor: Actor5e,
+  itemContext: Record<string, CharacterItemQuadroneContext>,
+  tabId: string,
   items: Item5e[],
   options?: Partial<CustomItemSectionQuadrone>,
 ): CustomItemSectionQuadrone[] {
@@ -179,8 +191,12 @@ function buildActionSectionsQuadrone(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
-      rowActions: [],
       sectionActions: [],
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        actor,
+        tabId,
+        activationType,
+      ),
       ...options,
     };
   });
@@ -200,10 +216,15 @@ function buildActionSectionsQuadrone(
           creationItemTypes: [],
           section: customSectionName,
         },
-        rowActions: [],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          customSectionName,
+        ),
         ...options,
       });
+
       customSection.items.push(item);
     } else {
       const activationType = getActivationType(
@@ -218,8 +239,12 @@ function buildActionSectionsQuadrone(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
-        rowActions: [],
         sectionActions: [],
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          activationType,
+        ),
         ...options,
       });
       section.items.push(item);
@@ -502,14 +527,13 @@ export function actorUsesActionFeature(actor: Actor5e) {
     return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
   }
 
-  const defaultTabIds =
-    actor.system.isCharacter
-      ? settings.value.defaultCharacterSheetTabs
-      : actor.system.isNPC
-        ? settings.value.defaultNpcSheetTabs
-        : actor.system.isVehicle
-          ? settings.value.defaultVehicleSheetTabs
-          : [];
+  const defaultTabIds = actor.system.isCharacter
+    ? settings.value.defaultCharacterSheetTabs
+    : actor.system.isNPC
+      ? settings.value.defaultNpcSheetTabs
+      : actor.system.isVehicle
+        ? settings.value.defaultVehicleSheetTabs
+        : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
 }

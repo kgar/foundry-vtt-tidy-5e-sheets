@@ -20,6 +20,7 @@ import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemShee
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export type PropertyContext = {
   active: string[];
@@ -71,13 +72,11 @@ export type ItemSheetContext = {
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   data: any;
   damageTypes:
-    | { label: string; value: string; selected: boolean }[]
-    | undefined;
+    { label: string; value: string; selected: boolean }[] | undefined;
   defaultAbility: string;
   denominationOptions: any;
   dimensions:
-    | { size: string; width: string | false; height: string | false }
-    | undefined;
+    { size: string; width: string | false; height: string | false } | undefined;
   document: any;
   durationUnits: GroupableSelectOption[];
   editable: boolean;
@@ -172,13 +171,11 @@ export type ItemSheetQuadroneContext = {
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   data: any;
   damageTypes:
-    | { label: string; value: string; selected: boolean }[]
-    | undefined;
+    { label: string; value: string; selected: boolean }[] | undefined;
   defaultAbility: string;
   denominationOptions: any;
   dimensions:
-    | { size: string; width: string | false; height: string | false }
-    | undefined;
+    { size: string; width: string | false; height: string | false } | undefined;
   document: any;
   durationUnits: GroupableSelectOption[];
   editable: boolean;
@@ -308,6 +305,7 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
+  rowActions?: TidyTableAction<any, any>[];
 };
 
 export type ContainerSheetClassicContext = {

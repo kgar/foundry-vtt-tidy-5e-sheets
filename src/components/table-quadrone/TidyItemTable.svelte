@@ -10,34 +10,34 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    Actor5e,
+    ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
-    TidySectionBase,
+    TidyItemSectionBase,
   } from 'src/types/types';
-  import { getContext, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
   import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-  import type { Item5e } from 'src/types/item.types';
+  import TableRowActionsRuntime, {
+    type ItemTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
   interface Props {
-    section: TidySectionBase;
+    section: TidyItemSectionBase;
     entries: TEntry[];
-    entryContext: Record<string, any>;
-    /** Actor or item (e.g. nested container inventory); theme is resolved per document. */
-    sheetDocument: Actor5e | Item5e;
+    entryContext: Record<string, ActorItemQuadroneContext>;
     sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
-    columns: ColumnsLoadout;
     headerRowClasses?: ClassValue;
     headerRowAttributes?: Omit<HTMLAttributes<HTMLElement>, 'class'>;
     rowClassFunction?: (entry: TEntry) => ClassValue;
@@ -55,12 +55,10 @@
   let {
     entries,
     section,
-    sheetDocument,
     entryContext,
     sectionsInlineWidth,
     entryToggleMap,
     tabId,
-    columns,
     rowClassFunction,
     subtitle,
     afterInlineActivities,
@@ -86,12 +84,26 @@
 
   const localize = FoundryAdapter.localize;
 
-  let hiddenColumns = $derived(
-    ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      section.items,
+      (entry) => entryContext[entry.id]?.rowActions,
+    ),
   );
+
+  let hiddenColumns = $derived(
+    ItemColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
+  );
+
   // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
-  
-  const isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+
+  const isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 </script>
 
 <TidyTable
@@ -112,26 +124,40 @@
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells
-        {columns}
         {hiddenColumns}
         {section}
         {context}
         {expanded}
         {root}
       />
+      <TidyTableHeaderCell
+        class="header-cell-actions"
+        columnWidth="{rowActionInfo.widthRems}rem"
+        data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+      >
+        <SectionActionsColumnHeader
+          {section}
+          maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+          sheetDocument={context.document}
+        />
+      </TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}
 
   {#snippet body()}
-    {const entriesWithContext = $derived(entries.map((entry) => ({
-      entry,
-      ctx: entryContext[entry.id],
-    })))}
+    {const entriesWithContext = $derived(
+      entries.map((entry) => ({
+        entry,
+        ctx: entryContext[entry.id],
+      })),
+    )}
 
     {#if entriesWithContext.length}
       {#each entriesWithContext as { entry, ctx }, i (entry.uuid)}
         {const expanded = $derived(!!entryToggleMap.get(tabId)?.has(entry.id))}
-        {const classes = $derived(rowClassFunction ? rowClassFunction(entry) : {})}
+        {const classes = $derived(
+          rowClassFunction ? rowClassFunction(entry) : {},
+        )}
         {const hasContainerExpander = $derived(
           'containerContents' in ctx && !!ctx.containerContents,
         )}
@@ -174,8 +200,7 @@
                 tabindex="0"
                 onclick={(ev) => toggleSummary()}
                 onkeydown={(ev) =>
-                  ev.key === 'Enter' ||
-                  (ev.key === ' ' && toggleSummary())}
+                  ev.key === 'Enter' || (ev.key === ' ' && toggleSummary())}
               >
                 <span class="cell-text">
                   <span class="cell-name">{entry.name}</span>
@@ -198,13 +223,22 @@
             </TidyTableCell>
             {@render afterFirstCell?.(entry, ctx)}
             <TidyTableCustomCells
-              {columns}
               {hiddenColumns}
               {ctx}
               {entry}
               {section}
               {context}
             />
+            <TidyTableCell
+              columnWidth="{rowActionInfo.widthRems}rem"
+              class="tidy-table-actions"
+              attributes={{
+                ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+              }}
+            >
+              {const data = $derived<ItemTableActionData>({ item: entry, ctx })}
+              <TableRowActions rowActions={ctx.rowActions} {data} />
+            </TidyTableCell>
           {/snippet}
         </TidyItemTableRow>
 

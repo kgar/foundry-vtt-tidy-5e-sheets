@@ -15,7 +15,8 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
-import { Inventory } from './Inventory';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(
@@ -25,7 +26,7 @@ export class CharacterSheetSections {
     backgrounds: any[],
     classes: any[],
     feats: any[],
-    options: Partial<CharacterFeatureSection>
+    options: Partial<CharacterFeatureSection>,
   ): Record<string, CharacterFeatureSection> {
     const customFeats = feats.filter((f) => TidyFlags.section.get(f));
     feats = feats.filter((f) => !TidyFlags.section.get(f));
@@ -41,8 +42,12 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
         show: true,
-        rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
+        ),
         ...options,
       },
       background: {
@@ -55,8 +60,12 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
         show: true,
-        rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
+        ),
         ...options,
       },
       classes: {
@@ -70,8 +79,12 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
         show: true,
-        rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
+        ),
         ...options,
       },
       active: {
@@ -89,8 +102,12 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
         show: true,
-        rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
+        ),
         ...options,
       },
       passive: {
@@ -105,37 +122,50 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,
-        rowActions: [], // for the UI Overhaul
         sectionActions: [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          actor,
+          tabId,
+          CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
+        ),
         ...options,
       },
     };
 
     customFeats.forEach((f) =>
       CharacterSheetSections.applyCharacterFeatureToSection(
+        actor,
+        tabId,
         features,
         f,
-        options
-      )
+        options,
+      ),
     );
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       actor,
-      tabId
+      tabId,
     ).forEach((s) => {
-      features[s] ??= CharacterSheetSections.createFeatureSection(s, {
-        canCreate: true,
-        ...options,
-      });
+      features[s] ??= CharacterSheetSections.createFeatureSection(
+        actor,
+        tabId,
+        s,
+        {
+          canCreate: true,
+          ...options,
+        },
+      );
     });
 
     return features;
   }
 
   static applyCharacterFeatureToSection(
+    sheetDocument: Actor5e,
+    tabId: string,
     features: Record<string, CharacterFeatureSection>,
     feat: Item5e,
-    customSectionOptions: Partial<CharacterFeatureSection>
+    customSectionOptions: Partial<CharacterFeatureSection>,
   ) {
     const customSectionName = TidyFlags.section.get(feat);
 
@@ -146,16 +176,20 @@ export class CharacterSheetSections {
     const customSection: CharacterFeatureSection = (features[
       customSectionName
     ] ??= CharacterSheetSections.createFeatureSection(
+      sheetDocument,
+      tabId,
       customSectionName,
-      customSectionOptions
+      customSectionOptions,
     ));
 
     customSection.items.push(feat);
   }
 
   static createFeatureSection(
+    sheetDocument: Actor5e,
+    tabId: string,
     customSectionName: string,
-    customSectionOptions: Partial<CharacterFeatureSection>
+    customSectionOptions: Partial<CharacterFeatureSection>,
   ): CharacterFeatureSection {
     return {
       type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -177,14 +211,19 @@ export class CharacterSheetSections {
         creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
       },
       show: true,
-      rowActions: [], // for the UI Overhaul
       sectionActions: [], // for the UI Overhaul
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        sheetDocument,
+        tabId,
+        customSectionName,
+      ),
       ...customSectionOptions,
     };
   }
 
   static buildQuadroneFeatureSections(
     actor: Actor5e,
+    itemContext: Record<string, { rowActions?: TidyTableAction<any, any>[] }>,
     unlocked: boolean,
     tabId: string,
     feats: Item5e[],
@@ -200,9 +239,11 @@ export class CharacterSheetSections {
     function buildOriginSection(
       key: string,
       item: Item5e,
-      options: Partial<CharacterFeatureSection>
+      options: Partial<CharacterFeatureSection>,
     ) {
       return CharacterSheetSections.createQuadroneFeatureSection({
+        actor,
+        tabId,
         key,
         title: FoundryAdapter.localize('DND5E.FeaturesClass', {
           class: item.name,
@@ -220,6 +261,8 @@ export class CharacterSheetSections {
     let otherFeaturesKey = 'tidy-feature-section-others';
 
     const otherFeaturesSection = this.createQuadroneFeatureSection({
+      actor,
+      tabId,
       key: otherFeaturesKey,
       title: FoundryAdapter.localize('DND5E.FeaturesOther'),
       options,
@@ -233,6 +276,8 @@ export class CharacterSheetSections {
         // Partition/Create Custom Section and add item
         let section = (featuresMap[customSection] ??=
           this.createQuadroneFeatureSection({
+            actor,
+            tabId,
             key: customSection,
             title: FoundryAdapter.localize(customSection),
             options,
@@ -240,6 +285,7 @@ export class CharacterSheetSections {
           }));
 
         section.items.push(feat);
+
         continue;
       }
 
@@ -260,7 +306,7 @@ export class CharacterSheetSections {
           section = featuresMap[key] = buildOriginSection(
             key,
             originItem,
-            options
+            options,
           );
         }
 
@@ -288,9 +334,11 @@ export class CharacterSheetSections {
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       actor,
-      tabId
+      tabId,
     ).forEach((s) => {
       featuresMap[s] ??= CharacterSheetSections.createQuadroneFeatureSection({
+        actor,
+        tabId,
         key: s,
         options,
         title: FoundryAdapter.localize(s),
@@ -335,13 +383,15 @@ export class CharacterSheetSections {
 
     const features = Object.values(featuresMap).toSorted(
       (a, b) =>
-        (sectionSort[a.key] ?? Infinity) - (sectionSort[b.key] ?? Infinity)
+        (sectionSort[a.key] ?? Infinity) - (sectionSort[b.key] ?? Infinity),
     );
 
     return features;
   }
 
   static createQuadroneFeatureSection(args: {
+    actor: Actor5e;
+    tabId: string;
     key: string;
     title: string;
     options: Partial<TidyItemSectionBase>;
@@ -357,7 +407,6 @@ export class CharacterSheetSections {
     return {
       type: CONSTANTS.SECTION_TYPE_FEATURE,
       key: args.key,
-      rowActions: [],
       sectionActions: [],
       items: [],
       label: args.title,
@@ -365,6 +414,11 @@ export class CharacterSheetSections {
       dataset: {},
       custom,
       canCreate: true,
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        args.actor,
+        args.tabId,
+        args.key,
+      ),
       ...args.options,
     };
   }
@@ -372,7 +426,7 @@ export class CharacterSheetSections {
   static partitionItem(
     item: Item5e,
     partitions: CharacterItemPartitions,
-    inventory: ActorInventoryTypes
+    inventory: ActorInventoryTypes,
   ) {
     // Suppress riders for disabled enchantments
     if (item.dependentOrigin?.active === false) {
@@ -397,7 +451,11 @@ export class CharacterSheetSections {
   }
 
   // TODO: Figure out how to handle effects with section names that collide with items
-  static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
+  static mergeDuplicateFavoriteSections(
+    actor: Actor5e,
+    tabId: string,
+    sections: FavoriteSection[],
+  ) {
     let sectionsMap: Record<
       string,
       Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
@@ -423,10 +481,12 @@ export class CharacterSheetSections {
         const mappedItems = mappedSection.items;
 
         sectionsMap[section.key] =
-          CharacterSheetSections.createGenericFavoriteSection(section.key, [
-            ...incomingItems,
-            ...mappedItems,
-          ]);
+          CharacterSheetSections.createGenericFavoriteSection(
+            actor,
+            tabId,
+            section.key,
+            [...incomingItems, ...mappedItems],
+          );
 
         continue;
       }
@@ -438,8 +498,10 @@ export class CharacterSheetSections {
   }
 
   static createGenericFavoriteSection(
+    actor: Actor5e,
+    tabId: string,
     key: string,
-    items: Item5e[]
+    items: Item5e[],
   ): CharacterFeatureSection {
     return {
       type: 'feature',
@@ -454,8 +516,8 @@ export class CharacterSheetSections {
       },
       isExternal: false,
       show: true,
-      rowActions: [], // for the UI Overhaul
       sectionActions: [], // for the UI Overhaul
+      columns: ItemColumnRuntime.getColumnSpecifications(actor, tabId, key),
     };
   }
 }

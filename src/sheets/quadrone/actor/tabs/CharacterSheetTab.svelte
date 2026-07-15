@@ -16,8 +16,6 @@
   import FeatureTable from '../../shared/FeatureTable.svelte';
   import InventoryTable from '../../shared/InventoryTable.svelte';
   import ActionTable from '../../shared/ActionTable.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/api';
   import { tick } from 'svelte';
@@ -125,22 +123,11 @@
             ))}
 
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId: tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  section: section,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <SpellTable
                 {section}
                 sheetDocument={context.document}
                 {sectionsInlineWidth}
                 {itemToggleMap}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
@@ -149,16 +136,6 @@
               searchResults.uuids,
             ))}
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId: tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  section: section,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <InventoryTable
                 containingDocument={context.document}
                 editable={context.editable}
@@ -170,7 +147,6 @@
                 {sectionsInlineWidth}
                 sheetDocument={context.document}
                 {tabId}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
@@ -179,22 +155,11 @@
               searchResults.uuids,
             ))}
             {#if section.show && hasViewableItems}
-              {const columns = $derived(new ColumnsLoadout(
-                ItemColumnRuntime.getConfiguredColumnSpecifications({
-                  sheetType: context.document.type,
-                  tabId,
-                  sectionKey: section.key,
-                  rowActions: section.rowActions,
-                  section: section,
-                  sheetDocument: context.document,
-                }),
-              ))}
               <FeatureTable
                 {section}
                 {itemToggleMap}
                 {sectionsInlineWidth}
                 sheetDocument={context.document}
-                {columns}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}

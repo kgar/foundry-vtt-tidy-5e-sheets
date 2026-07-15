@@ -3,7 +3,6 @@
   import TidyTable from './TidyTable.svelte';
   import TidyTableRow from './TidyTableRow.svelte';
   import TidyTableCell from './TidyTableCell.svelte';
-  import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Activities } from 'src/features/activities/activities';
@@ -11,17 +10,21 @@
     ActivityItemContext,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
-  import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeColumn.svelte';
-  import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
-  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
+  import TableRowActionsRuntime, {
+    type ActivityTableAction,
+    type ActivityTableActionData,
+  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import type { TidyTableAction } from './table-buttons/table.types';
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
 
   interface Props {
     item?: Item5e | null;
@@ -31,23 +34,10 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
-
-  const columns = $derived({
-    uses: {
-      columnWidth: '5rem',
-    },
-    time: {
-      columnWidth: '5rem',
-    },
-    formula: {
-      columnWidth: '5rem',
-    },
-  });
-
-  function rollActivity(activity: Activity5e, event: MouseEvent) {
-    activity.use({ event }, { options: { sheet: context.sheet } });
-  }
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   let rowActions = $derived(
     TableRowActionsRuntime.getActivityRowActions(
@@ -56,14 +46,42 @@
     ),
   );
 
-  let actionsColumn = getDefaultItemColumns().actions;
-
   let section = $derived({
     ...SheetSections.EMPTY,
-    rowActions,
+    columns: ActivityColumnRuntime.getColumnSpecifications(
+      item,
+      CONSTANTS.TAB_ITEM_ACTIVITIES,
+      'activity',
+    ),
   });
 
-  let actionsColumnWidthRems = $derived(actionsColumn.widthRems(section));
+  const rowActionsMap = $derived(
+    activities.reduce<Record<string, ActivityTableAction<any>[]>>(
+      (prev, entry) => {
+        prev[entry.id] = rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({
+              data: { activity: entry.activity, ctx: entry },
+            }),
+        );
+
+        return prev;
+      },
+      {},
+    ),
+  );
+
+  const rowActionInfo = $derived(
+    TableRowActionsRuntime.getRowActionWidthInfo(
+      activities,
+      (entry) => rowActionsMap[entry.id],
+    ),
+  );
+
+  // TODO: Determine if we want to support custom columns and prioritized column hiding for activities.
+  // If yes, we should pass the inline size in from the outside.
+  let hiddenColumns = new Set<string>();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -78,22 +96,19 @@
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>
-      <TidyTableHeaderCell {...columns.uses}
-        >{localize('DND5E.Uses')}</TidyTableHeaderCell
-      >
-      <TidyTableHeaderCell {...columns.time}
-        >{localize('DND5E.SpellHeader.Time')}</TidyTableHeaderCell
-      >
-      <TidyTableHeaderCell {...columns.formula}
-        >{localize('DND5E.SpellHeader.Formula')}</TidyTableHeaderCell
-      >
-      <TidyTableHeaderCell columnWidth="{actionsColumnWidthRems}rem"
+      <TidyTableCustomHeaderCells {hiddenColumns} {section} {context} />
+      <TidyTableHeaderCell columnWidth="{rowActionInfo.widthRems}rem"
       ></TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}
   {#snippet body()}
     {#each activities as ctx (ctx.activity.id)}
       {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
+      {const ctxWithRowActions = $derived({
+        ...ctx,
+        rowActions: rowActionsMap[ctx.id],
+      })}
+
       <TidyTableRow
         rowAttributes={{
           'data-item-id': ctx.activity.item.id,
@@ -129,35 +144,21 @@
             </span>
           </span>
         </TidyTableCell>
-        <TidyTableCell {...columns.uses} class="inline-uses">
-          {#if configurable}
-            <ActivityUsesColumn
-              rowDocument={ctx.activity}
-              rowContext={ctx}
-              {section}
-            />
-          {/if}
-        </TidyTableCell>
-        <TidyTableCell {...columns.time}>
-          <ActivityTimeColumn
-            rowDocument={ctx.activity}
-            rowContext={ctx}
-            {section}
-          />
-        </TidyTableCell>
-        <TidyTableCell {...columns.formula}>
-          <ActivityDamageFormulasColumn
-            rowDocument={ctx.activity}
-            rowContext={ctx}
-            {section}
-          />
-        </TidyTableCell>
-        <TidyTableCell columnWidth="{actionsColumnWidthRems}rem">
-          <DocumentActionsColumn
-            rowDocument={ctx.activity}
-            rowContext={ctx}
-            {section}
-          />
+
+        <TidyTableCustomCells
+          {hiddenColumns}
+          ctx={ctxWithRowActions}
+          entry={ctx.activity}
+          {section}
+          {context}
+        />
+
+        <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
+          {const data = $derived<ActivityTableActionData>({
+            activity: ctx.activity,
+            ctx: ctx.activity,
+          })}
+          <TableRowActions {data} {rowActions} />
         </TidyTableCell>
       </TidyTableRow>
     {/each}

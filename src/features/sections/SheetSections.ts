@@ -4,6 +4,7 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSectionClassic,
   Actor5e,
+  ActorItemQuadroneContext,
   ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
@@ -30,15 +31,15 @@ import { UserSheetPreferencesService } from '../user-preferences/SheetPreference
 import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import {
-  getSortedActions,
-} from '../actions/actions.svelte';
+import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
 import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
 import { Inventory } from './Inventory';
+import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -55,8 +56,8 @@ export class SheetSections {
     dataset: {},
     key: '',
     show: true,
-    rowActions: [],
     sectionActions: [],
+    columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
   });
 
   static itemSupportsCustomSections(itemType: string) {
@@ -64,9 +65,11 @@ export class SheetSections {
   }
 
   static applySpellToSection(
+    actor: Actor5e,
+    tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
-    options: Partial<SpellbookSection>
+    options: Partial<SpellbookSection>,
   ) {
     const customSectionName = TidyFlags.section.get(spell);
 
@@ -76,14 +79,21 @@ export class SheetSections {
     }
 
     const section: SpellbookSection = (spellbook[customSectionName] ??=
-      SheetSections.createSpellbookSection(customSectionName, options));
+      SheetSections.createSpellbookSection(
+        actor,
+        tabId,
+        customSectionName,
+        options,
+      ));
 
     section.items.push(spell);
   }
 
   static createSpellbookSection(
+    actor: Actor5e,
+    tabId: string,
     customSectionName: string,
-    options: Partial<SpellbookSection>
+    options: Partial<SpellbookSection>,
   ): SpellbookSection {
     return {
       type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
@@ -101,23 +111,27 @@ export class SheetSections {
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
       },
       show: true,
-      rowActions: [], // for the UI Overhaul
       sectionActions: [], // for the UI Overhaul
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
       method: '',
+      columns: ItemColumnRuntime.getColumnSpecifications(
+        actor,
+        tabId,
+        customSectionName,
+      ),
       ...options,
     };
   }
 
   static sortKeyedSections<
-    T extends { key: string; custom?: CustomSectionOptions }
+    T extends { key: string; custom?: CustomSectionOptions },
   >(sections: T[], sectionConfigs: Record<string, SectionConfig> | undefined) {
     const sortMap = new Map(
-      Object.values(sectionConfigs ?? {}).map((e) => [e.key, e.order])
+      Object.values(sectionConfigs ?? {}).map((e) => [e.key, e.order]),
     );
     const defaultSortMap = new Map(
-      SheetSections.getDefaultSortOrder(sections).map((e, i) => [e, i])
+      SheetSections.getDefaultSortOrder(sections).map((e, i) => [e, i]),
     );
 
     const maxLength = sections.length;
@@ -125,12 +139,12 @@ export class SheetSections {
     return sections.toSorted(
       (a, b) =>
         (sortMap.get(a.key) ?? defaultSortMap.get(a.key) ?? maxLength) -
-        (sortMap.get(b.key) ?? defaultSortMap.get(b.key) ?? maxLength)
+        (sortMap.get(b.key) ?? defaultSortMap.get(b.key) ?? maxLength),
     );
   }
 
   static getDefaultSortOrder<
-    T extends { key: string; custom?: CustomSectionOptions }
+    T extends { key: string; custom?: CustomSectionOptions },
   >(sections: T[]): string[] {
     const { defaultSections, customSections } = sections.reduce<{
       defaultSections: string[];
@@ -143,11 +157,11 @@ export class SheetSections {
 
         return prev;
       },
-      { defaultSections: [], customSections: [] }
+      { defaultSections: [], customSections: [] },
     );
 
     var sortedCustomSections = customSections.toSorted((a, b) =>
-      a.localeCompare(b, game.i18n.lang)
+      a.localeCompare(b, game.i18n.lang),
     );
 
     return [...defaultSections, ...sortedCustomSections];
@@ -156,9 +170,7 @@ export class SheetSections {
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
     context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
@@ -172,21 +184,26 @@ export class SheetSections {
     // TODO: Absorb _prepareSpellbookLegacy
     const spellbook: SpellbookSection[] = this._prepareSpellbookLegacy(
       context,
-      spells
-    ).map(
-      (s: SpellbookSectionLegacy) =>
-        ({
-          ...s,
-          type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
-          uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
-          slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
-          key: s.slot,
-          method: s.id,
-          show: true,
-          rowActions: options.rowActions ?? [], // for the UI Overhaul
-          sectionActions: options.sectionActions ?? [], // for the UI Overhaul
-        }) satisfies SpellbookSection
-    );
+      spells,
+    ).map((s: SpellbookSectionLegacy) => {
+      const section: SpellbookSection = {
+        ...s,
+        type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
+        uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
+        slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
+        key: s.slot,
+        method: s.id,
+        show: true,
+        sectionActions: options.sectionActions ?? [], // for the UI Overhaul
+        columns: ItemColumnRuntime.getColumnSpecifications(
+          context.document,
+          tabId,
+          s.slot,
+        ),
+      };
+
+      return section;
+    });
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
@@ -195,21 +212,32 @@ export class SheetSections {
         prev[key] = curr;
         return prev;
       },
-      {}
+      {},
     );
 
     customSectionSpells.forEach((spell) => {
-      SheetSections.applySpellToSection(spellbookMap, spell, options);
+      SheetSections.applySpellToSection(
+        context.document,
+        tabId,
+        spellbookMap,
+        spell,
+        options,
+      );
     });
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
-      tabId
+      tabId,
     ).forEach((s) => {
-      spellbookMap[s] ??= SheetSections.createSpellbookSection(s, {
-        canCreate: true,
-        ...options,
-      });
+      spellbookMap[s] ??= SheetSections.createSpellbookSection(
+        context.document,
+        tabId,
+        s,
+        {
+          canCreate: true,
+          ...options,
+        },
+      );
     });
 
     return Object.values(spellbookMap);
@@ -224,7 +252,7 @@ export class SheetSections {
    */
   static _prepareSpellbookLegacy(
     context: ActorSheetContextV1 | ActorSheetQuadroneContext,
-    items: Item5e[]
+    items: Item5e[],
   ) {
     const owner = context.actor.isOwner;
     const spellbook: Record<string, SpellbookSectionLegacy> = {};
@@ -237,7 +265,7 @@ export class SheetSections {
       key: string,
       level?: number,
       config?: SpellcastingConfigEntry,
-      customLabel?: string
+      customLabel?: string,
     ) => {
       level = config?.slots ? level : 1;
 
@@ -251,11 +279,11 @@ export class SheetSections {
         game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
       const method = config?.key ?? key;
       const order = level === 0 ? 0 : (config?.order ?? 1000);
-      const usesSlots = config?.slots && (level !== 0);
+      const usesSlots = config?.slots && level !== 0;
 
       const spells = foundry.utils.getProperty(
         context.actor.system.spells,
-        key
+        key,
       );
 
       let slotsData = {};
@@ -296,7 +324,7 @@ export class SheetSections {
       if (spellcasting.cantrips)
         registerSection('spell0', 0, CONFIG.DND5E.spellcasting.spell);
       levels.forEach((l) =>
-        registerSection(spellcasting.getSpellSlotKey!(l), l, spellcasting)
+        registerSection(spellcasting.getSpellSlotKey!(l), l, spellcasting),
       );
     }
 
@@ -372,7 +400,7 @@ export class SheetSections {
       | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
-    actor: Actor5e
+    actor: Actor5e,
   ) {
     const maxLevelDelta = CONFIG.DND5E.maxLevel - actor.system.details.level;
     return classes.reduce((arr, cls) => {
@@ -387,7 +415,7 @@ export class SheetSections {
       const identifier =
         cls.system.identifier || cls.name.slugify({ strict: true });
       const subclass = subclasses.findSplice(
-        (s: Item5e) => s.system.classIdentifier === identifier
+        (s: Item5e) => s.system.classIdentifier === identifier,
       );
       if (subclass) {
         arr.push(subclass);
@@ -411,7 +439,7 @@ export class SheetSections {
       | NpcSheetContext
       | CharacterSheetQuadroneContext
       | NpcSheetQuadroneContext,
-    items: Item5e[]
+    items: Item5e[],
   ): Item5e[] {
     const itemContext = context.itemContext;
     const { parents, parentIdToChildren } = items.reduce<{
@@ -430,7 +458,7 @@ export class SheetSections {
         }
         return prev;
       },
-      { parents: [], parentIdToChildren: new Map<string, Item5e[]>() }
+      { parents: [], parentIdToChildren: new Map<string, Item5e[]>() },
     );
 
     if (parents.length === items.length) {
@@ -452,7 +480,7 @@ export class SheetSections {
 
   static accountForExternalSections(
     props: string[],
-    data: Record<string, any>
+    data: Record<string, any>,
   ) {
     props.forEach((prop) => {
       const sectionCollection = data[prop];
@@ -480,7 +508,7 @@ export class SheetSections {
     sections: (InventorySection | DraftAnimalSection)[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
+    sectionConfig?: Record<string, SectionConfig>,
   ) {
     sections = SheetSections.sortKeyedSections(sections, sectionConfig);
 
@@ -513,7 +541,7 @@ export class SheetSections {
     sections: InventorySection[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
+    sectionConfig?: Record<string, SectionConfig>,
   ) {
     try {
       sections = SheetSections.sortKeyedSections(sections, sectionConfig);
@@ -539,18 +567,18 @@ export class SheetSections {
     document: any,
     tabId: string,
     sections: SpellbookSection[],
-    spellClassFilter: string = ''
+    spellClassFilter: string = '',
   ) {
     try {
       const sectionConfigs = TidyFlags.sectionConfig.get(document);
 
       sections = SheetSections.sortKeyedSections(
         sections,
-        sectionConfigs?.[tabId]
+        sectionConfigs?.[tabId],
       );
 
       const characterPreferences = UserSheetPreferencesService.getByType(
-        document.type
+        document.type,
       );
 
       const sortMode = characterPreferences.tabs?.[tabId]?.sort ?? 'm';
@@ -560,7 +588,7 @@ export class SheetSections {
         section.items = SpellUtils.tryFilterBySourceItemClass(
           document,
           section.items,
-          spellClassFilter
+          spellClassFilter,
         );
 
         // Sort Spellbook
@@ -585,14 +613,14 @@ export class SheetSections {
     actor: Actor5e,
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
+    sectionConfig?: Record<string, SectionConfig>,
   ) {
     let configuredFavorites: FavoriteSection[] = [];
 
     try {
       configuredFavorites = SheetSections.sortKeyedSections(
         favoriteSections,
-        sectionConfig
+        sectionConfig,
       );
 
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
@@ -602,7 +630,7 @@ export class SheetSections {
           map.set(f.id, f);
           return map;
         },
-        new Map<string, CharacterFavorite>()
+        new Map<string, CharacterFavorite>(),
       );
 
       return (configuredFavorites as FavoriteSection[]).map(
@@ -617,11 +645,11 @@ export class SheetSections {
                 Number.MAX_SAFE_INTEGER;
 
               effectContexts = effectContexts.toSorted(
-                (a, b) => getSort(a.effect) - getSort(b.effect)
+                (a, b) => getSort(a.effect) - getSort(b.effect),
               );
             } else {
               effectContexts = effectContexts.toSorted((a, b) =>
-                a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
+                a.effect.name.localeCompare(b.effect.name, game.i18n.lang),
               );
             }
 
@@ -636,11 +664,11 @@ export class SheetSections {
                 Number.MAX_SAFE_INTEGER;
 
               activities = activities.toSorted(
-                (a, b) => getSort(a) - getSort(b)
+                (a, b) => getSort(a) - getSort(b),
               );
             } else {
               activities = activities.toSorted((a, b) =>
-                a.name.localeCompare(b.name, game.i18n.lang)
+                a.name.localeCompare(b.name, game.i18n.lang),
               );
             }
 
@@ -671,7 +699,7 @@ export class SheetSections {
           section.show = sectionConfig?.[section.key]?.show !== false;
 
           return section;
-        }
+        },
       );
     } catch (e) {
       error('An error occurred while configuring favorites', false, e);
@@ -685,7 +713,7 @@ export class SheetSections {
     context: NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
+    sectionConfig?: Record<string, SectionConfig>,
   ) {
     try {
       sections = SheetSections.sortKeyedSections(sections, sectionConfig);
@@ -710,9 +738,7 @@ export class SheetSections {
 
   static configureFeatures<
     TSection extends
-      | CharacterFeatureSection
-      | FeatureSection
-      | NpcAbilitySection
+      CharacterFeatureSection | FeatureSection | NpcAbilitySection,
   >(
     features: TSection[],
     context:
@@ -722,7 +748,7 @@ export class SheetSections {
       | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
+    sectionConfig?: Record<string, SectionConfig>,
   ): TSection[] {
     try {
       features = SheetSections.sortKeyedSections(features, sectionConfig);
@@ -752,7 +778,7 @@ export class SheetSections {
     sections: ActionSectionClassic[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined
+    sectionConfigs: Record<string, SectionConfig> | undefined,
   ) {
     try {
       sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
@@ -777,7 +803,7 @@ export class SheetSections {
     sections: T[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined
+    sectionConfigs: Record<string, SectionConfig> | undefined,
   ) {
     try {
       sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
@@ -804,7 +830,6 @@ export class SheetSections {
           return aSort - bSort;
         });
 
-
         section.show = sectionConfigs?.[section.key]?.show !== false;
 
         return section;
@@ -830,11 +855,11 @@ export class SheetSections {
         prev.add(TidyFlags.actionSection.get(curr));
         return prev;
       },
-      new Set<string>()
+      new Set<string>(),
     );
 
     settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
-      sectionSet.add(defaultSectionConfig.section)
+      sectionSet.add(defaultSectionConfig.section),
     );
 
     return Array.from<string>(sectionSet)
@@ -844,11 +869,11 @@ export class SheetSections {
 
   static getKnownCustomGroupMemberSections(group: Actor5e) {
     const sectionSet = new Set<string>(
-      Object.values(TidyFlags.sections.get(group)).filter((s) => !isNil(s))
+      Object.values(TidyFlags.sections.get(group)).filter((s) => !isNil(s)),
     );
 
     settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
-      sectionSet.add(defaultSectionConfig.section)
+      sectionSet.add(defaultSectionConfig.section),
     );
 
     return Array.from<string>(sectionSet)
@@ -858,7 +883,7 @@ export class SheetSections {
 
   static getFilteredGlobalSectionsToShowWhenEmpty(
     document: any,
-    tabId: string
+    tabId: string,
   ) {
     const sheetType = document.type;
     return settings.value.globalCustomSections
@@ -888,14 +913,13 @@ export class SheetSections {
   static getSectionLabel(item: Item5e) {
     let value = Inventory.isItemInventoryType(item)
       ? 'DND5E.Inventory'
-      : item.parent?.system.isNPC &&
-        item.type === CONSTANTS.ITEM_TYPE_FEAT
-      ? 'TIDY5E.StatblockTabName'
-      : item.type === CONSTANTS.ITEM_TYPE_FEAT
-      ? 'DND5E.Features'
-      : item.type === CONSTANTS.ITEM_TYPE_SPELL
-      ? 'DND5E.Spellbook'
-      : 'TIDY5E.Section.Label';
+      : item.parent?.system.isNPC && item.type === CONSTANTS.ITEM_TYPE_FEAT
+        ? 'TIDY5E.StatblockTabName'
+        : item.type === CONSTANTS.ITEM_TYPE_FEAT
+          ? 'DND5E.Features'
+          : item.type === CONSTANTS.ITEM_TYPE_SPELL
+            ? 'DND5E.Spellbook'
+            : 'TIDY5E.Section.Label';
 
     return FoundryAdapter.localize(value);
   }
@@ -911,7 +935,7 @@ export class SheetSections {
     sections: GroupMemberSection[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined
+    sectionConfigs: Record<string, SectionConfig> | undefined,
   ) {
     try {
       sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
