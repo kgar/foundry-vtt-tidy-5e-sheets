@@ -1,14 +1,4 @@
 .tidy5e-sheet:is(.quadrone) {
-  --t5e-table-row-border-image: linear-gradient(to right,
-      rgba(143, 123, 78, 0) 0%,
-      rgba(143, 123, 78, 0.25) 20%,
-      rgba(143, 123, 78, 0.25) 80%,
-      rgba(143, 123, 78, 0) 100%) 0 0 1 0;
-  --t5e-table-header-row-height: var(--t5e-size-6x);
-  --t5e-table-header-background-left: var(--t5e-theme-color-darkest);
-  --t5e-table-header-background-right: var(--t5e-theme-color-default);
-  --t5e-table-header-border-color: rgba(0, 0, 0, 0.16);
-
   &.theme-basic {
     --t5e-table-header-background-left: transparent;
     --t5e-table-header-background-right: transparent;
