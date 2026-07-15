@@ -59,8 +59,8 @@
   })}
 ></div>
 
-<div class={['sheet-footer spellbook-footer flexrow', classValue]}>
-  <div class={['sheet-footer-left spellcasting-cards flexcol', { 'collapse-spellcasting-cards': collapsed }]}>
+<div class={['sheet-footer spellbook-footer flexrow', classValue, { 'multiclass': multiclass }]}>
+  <div class={['sheet-footer-left spellcasting-cards flexcol', { 'collapse-spellcasting-cards': collapsed }, { 'compact': mode === 'compact' }]}>
     {#each context.spellcasting as info}
       {#if info.type === 'class'}
         <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} onNameClick={toggleCollapsed} />

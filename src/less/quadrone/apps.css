@@ -16,10 +16,7 @@
   &::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     opacity: 0.5;
     pointer-events: none;
     z-index: -1;
@@ -41,10 +38,15 @@
       display: grid;
     }
 
+    .window-header {
+      gap: var(--t5e-size-halfx);
+      padding-block-end: var(--t5e-size-halfx);
+    }
+
     .window-title {
       color: var(--t5e-color-text-default);
       font: var(--t5e-font-label-medium);
-      margin-bottom: 0.0625rem;
+      margin-block-end: 0.0625rem;
     }
 
     .header-control {
@@ -62,7 +64,7 @@
     --color-light-text-heading: var(--t5e-color-text-lighter);
 
     .window-title {
-      margin-bottom: 0.125rem;
+      margin-block-end: 0.125rem;
     }
   }
 
@@ -95,24 +97,14 @@
     }
 
     button.header-control {
-      --button-size: var(--t5e-field-size-default);
       border-radius: 100%;
       color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
       &:hover {
         color: var(--t5e-theme-color-foreground);
+        border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
-
-        &:active,
-        &:focus-within {
-          background: rgba(0, 0, 0, 0.32);
-        }
-      }
-
-      &:active {
-        background: rgba(0, 0, 0, 0.12);
-        border: none;
       }
 
       /* TODO: Figure out how to make the header UUID control use a copy cursor. */
@@ -148,6 +140,31 @@
       border: 0.0625rem solid var(--t5e-component-field-border);
       box-shadow: var(--t5e-drop-shadow-card);
     }
+
+    .header-control > button {
+      gap: 0.5rem;
+      justify-content: flex-start;
+      min-height: var(--t5e-field-size-default);
+      --button-text-color: var(--t5e-color-text-default);
+      --button-hover-text-color: var(--t5e-color-text-default);
+
+      .control-label {
+        color: var(--t5e-color-text-default);
+        font: var(--t5e-font-default-medium);
+      }
+
+      i {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      &:hover {
+        background: var(--t5e-component-field-background-hover);
+
+        i {
+          color: var(--t5e-color-icon-default);
+        }
+      }
+    }
   }
 
   .flexshrink {
@@ -182,7 +199,8 @@
       color: var(--t5e-color-text-default);
       text-shadow: none;
       border: none;
-      margin: 0;
+      margin-block: 0;
+      margin-inline: 0;
     }
 
     h1,
@@ -307,7 +325,8 @@
       background: none;
       border: none;
       box-shadow: none;
-      padding: var(--t5e-size-2x) 0;
+      padding-block: var(--t5e-size-2x);
+      padding-inline: 0;
       outline: none;
     }
 
@@ -315,7 +334,8 @@
       background: var(--t5e-component-card-lighter);
       box-sizing: border-box;
       gap: var(--t5e-size-halfx);
-      padding: 0.125rem;
+      padding-block: 0.125rem;
+      padding-inline: 0.125rem;
 
       .pm-dropdown {
         justify-content: space-between;
@@ -328,7 +348,7 @@
       li {
         .pm-dropdown {
           i {
-            margin-left: 0.25rem;
+            margin-inline-start: 0.25rem;
           }
 
           > span {
@@ -342,23 +362,31 @@
           width: unset;
           min-height: var(--t5e-field-size-small);
           height: var(--t5e-field-size-small);
-          margin: 0;
+          margin-block: 0;
+          margin-inline: 0;
           background: none;
           border: 0.0625rem solid transparent;
           box-sizing: border-box;
           box-shadow: none;
-          padding: 0 0.3125rem;
+          padding-block: 0;
+          padding-inline: 0.3125rem;
 
           &.active i {
             color: var(--t5e-color-icon-button);
           }
 
           &:active,
-          &:focus {
+          &:focus-within {
             background-color: var(--t5e-component-field-background-active);
 
             i {
               color: var(--t5e-color-icon-button);
+            }
+
+            &:hover {
+              i {
+                color: var(--t5e-theme-color-foreground);
+              }
             }
           }
 
@@ -371,6 +399,10 @@
         &.active {
           button {
             background-color: var(--t5e-component-field-background-active);
+
+            &:hover i {
+              color: var(--t5e-theme-color-foreground);
+            }
           }
         }
       }
@@ -410,7 +442,8 @@
     color: var(--t5e-color-text);
     border: none;
     font-size: var(--font-size-12);
-    margin: -0.0625rem 0;
+    margin-block: -0.0625rem;
+    margin-inline: 0;
   }
 
   .inline-roll,
@@ -421,11 +454,12 @@
     /* TODO: Cleanup this section. */
     --icon-fill: var(--t5e-color-text-gold-emphasis);
     border: none;
-    font-weight: 500;
     color: var(--t5e-color-default);
     background: var(--t5e-enricher-background);
-    padding-left: var(--t5e-size-halfx);
-    padding: 0.0625rem 0.125rem 0.125rem;
+    padding-block: var(--t5e-size-1) var(--t5e-size-halfx);
+    padding-inline: 0.1875rem;
+    text-decoration: underline;
+    text-underline-offset: var(--t5e-size-halfx);
 
     a {
       background: none;
@@ -434,8 +468,7 @@
 
     i {
       color: var(--icon-fill);
-      transition: all var(--t5e-transition-default);
-      margin-right: var(--t5e-size-1x);
+      margin-inline-end: var(--t5e-size-1x);
     }
 
     &:hover {
@@ -444,15 +477,20 @@
     }
   }
 
+  .broken {
+    i {
+      color: var(--t5e-color-orange);
+    }
+  }
+
   .roll-link-group {
     border: none;
     background: var(--t5e-enricher-background);
-    padding-top: 0.0625rem;
-    padding-right: 0.125rem;
-    padding-left: 0.125rem;
+    padding-block-start: var(--t5e-size-1) var(--t5e-size-halfx);
+    padding-inline: 0.1875rem;
 
     &:has(.enricher-action) {
-      padding-right: 0;
+      padding-inline-end: 0;
     }
 
     &:hover {
@@ -472,27 +510,27 @@
 
   .enricher-action {
     margin-inline: var(--t5e-size-1);
-    padding-left: var(--t5e-size-1x);
-    padding-right: var(--t5e-size-1x);
+    padding-inline: var(--t5e-size-1x);
 
     i {
-      margin: 0;
+      margin-block: 0;
+      margin-inline: 0;
     }
   }
 
   .roll-link {
-    padding-left: 0.125rem;
+    padding-inline-start: var(--t5e-size-halfx);
   }
 
   /* Item Summary */
   /* TODO: Remove this if not used. Moved to .editor-rendered-content in editors.less */
   .item-summary {
     flex: 0 0 100%;
-    padding-top: var(--item-summary-padding-top, 0);
-    padding-right: var(--item-summary-padding-right, 0.5rem);
-    padding-bottom: var(--item-summary-padding-bottom, 0.25rem);
-    padding-left: var(--item-summary-padding-left, 0.5rem);
-    border-width: 0 0 0.0625rem 0;
+    padding-block-start: var(--item-summary-padding-top, 0);
+    padding-inline-end: var(--item-summary-padding-right, var(--t5e-size-2x));
+    padding-block-end: var(--item-summary-padding-bottom, var(--t5e-size-1x));
+    padding-inline-start: var(--item-summary-padding-left, var(--t5e-size-1x));
+    border-width: 0 0 var(--t5e-size-1) 0;
     border-style: solid;
     border-image: linear-gradient(to right,
         rgba(143, 123, 78, 0) 0%,
@@ -501,7 +539,7 @@
         rgba(143, 123, 78, 0) 100%) 0 0 1 0;
 
     p:not(:first-child) {
-      margin-top: 0.5em;
+      margin-block-start: 0.5em;
     }
 
     /* TODO: Remove the line separator and this style when App V1 is eliminated */
@@ -510,8 +548,8 @@
     }
 
     .inline-wrapped-elements {
-      margin-top: var(--t5e-size-3x);
-      margin-bottom: var(--t5e-size-1x);
+      margin-block-start: var(--t5e-size-3x);
+      margin-block-end: var(--t5e-size-1x);
     }
 
     .left-aligned-elements {
@@ -519,7 +557,7 @@
       flex-grow: 1;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: var(--t5e-size-1x);
     }
 
     .right-aligned-elements {
@@ -527,7 +565,7 @@
       flex-grow: 0;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: var(--t5e-size-1x);
     }
   }
 
@@ -583,7 +621,7 @@
 
   #context-menu.tidy5e-sheet {
     background: var(--t5e-component-card-darker);
-    border: 0.0625rem solid var(--t5e-component-field-border);
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
     box-shadow: var(--t5e-drop-shadow-card);
   }
 
@@ -606,12 +644,11 @@
 
     &.minimized .window-header {
       background: var(--t5e-component-card-darker);
-      padding-bottom: 0.1875rem;
     }
 
     .window-header {
       button.header-control:hover {
-        background: rgba(0, 0, 0, 1);
+        background: rgba(0, 0, 0, 0.5);
       }
     }
 
@@ -630,7 +667,7 @@
     }
 
     .editor.prosemirror menu {
-      border: 0.0625rem solid var(--t5e-color-palette-gold-89);
+      border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
 
       li button {
         &.active {
@@ -739,14 +776,14 @@
   }
 
   .window-resize-handle {
-    right: 0;
-    bottom: 0;
+    inset-inline-end: 0;
+    inset-block-end: 0;
   }
 
   .button-bar {
     flex: 0;
     display: flex;
-    gap: 0.25rem;
+    gap: var(--t5e-size-1x);
 
     button {
       flex: 1;

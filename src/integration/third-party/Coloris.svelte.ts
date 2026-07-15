@@ -2,6 +2,7 @@ import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { ThirdPartyIntegrationBase } from '../integration-classes';
 import Coloris from '@melloware/coloris';
 import { debug } from 'src/utils/logging';
+import { loadConditionalStyles } from 'src/utils/css-loading';
 
 export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
   name: string = 'Coloris';
@@ -9,6 +10,8 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
 
   init(_api: Tidy5eSheetsApi): void {
     import('./coloris.less');
+    loadConditionalStyles('coloris');
+    
     Coloris.init();
     Coloris.coloris({
       el: '.coloris',

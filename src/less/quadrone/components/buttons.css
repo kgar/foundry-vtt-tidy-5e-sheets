@@ -2,7 +2,6 @@
 
   /* Quadrone-style buttons */
   :is(button, .button) {
-    /* :where( :not(.header-control):not(.controls-dropdown .control))*/
     --button-padding-block-start: 0.5rem;
     --button-padding-block-end: 0.5rem;
     --button-padding-inline-start: 0.75rem;
@@ -58,13 +57,12 @@
 
     &.active,
     &:active:not(:disabled) {
-      --icon-fill: var(--button-icon);
+      --icon-fill: var(--t5e-theme-color-foreground-diminished);
       color: var(--button-text);
       border: 0.0625rem solid var(--button-border);
       background: var(--button-background);
 
       :where(i) {
-        --icon-fill: var(--t5e-color-icon-light);
         color: var(--icon-fill);
       }
 
@@ -330,10 +328,11 @@
         background: none;
       }
     }
-  }
 
-  :is(button, .button).header-control {
-    font-weight: 900;
+    &.header-control {
+      font-weight: 900;
+      min-width: var(--t5e-field-size-default);
+    }
   }
 
   /* Button Dropdown */
@@ -508,10 +507,10 @@
 
       &.button-toggle,
       &.button-primary {
-        --button-border: var(--t5e-component-field-border);
+        --button-border: var(--button-background);
 
         &:hover:not(:disabled) {
-          --button-border-hover: var(--t5e-component-field-border-hover);
+          --button-border-hover: var(--button-background-hover);
         }
       }
 

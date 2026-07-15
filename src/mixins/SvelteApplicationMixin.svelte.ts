@@ -20,6 +20,7 @@ import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getTidyPerformanceSettings } from 'src/settings/settings.svelte';
+import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -43,7 +44,7 @@ const HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR =
  */
 export function getSvelteApplicationMixin<
   TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
-  TContext extends any = {}
+  TContext extends any = {},
 >(BaseApplication: any) {
   class SvelteApplication extends BaseApplication {
     constructor(args?: TConstructorArgs) {
@@ -103,7 +104,7 @@ export function getSvelteApplicationMixin<
     /** Creates the component which represents the window content area. */
     _createComponent(
       node: HTMLElement,
-      context: TContext
+      context: TContext,
     ): Record<string, any> {
       const errorMessage =
         'Unable to render Svelte application. To implement a Svelte application, override _createComponent and provide context data matching the specified sheet context type.';
@@ -112,7 +113,7 @@ export function getSvelteApplicationMixin<
 
     _createAdditionalComponents(
       content: HTMLElement,
-      context: TContext
+      context: TContext,
     ): Record<string, any>[] {
       return [];
     }
@@ -123,12 +124,12 @@ export function getSvelteApplicationMixin<
 
     #debouncedRerenderForSettings = FoundryAdapter.debounce(
       this.render.bind(this),
-      150
+      150,
     );
 
     #throttleSoftRendering = FoundryAdapter.throttle(
       this.#renderSoftly.bind(this),
-      50
+      50,
     );
 
     /** Run the standard render cycle while reusing the existing prepared context data. */
@@ -249,7 +250,7 @@ export function getSvelteApplicationMixin<
      * It is intentionally anemic to provide intellisense until the author can add sufficient additional typings for Application V2.
      */
     async _prepareContext(
-      options: ApplicationRenderOptions
+      options: ApplicationRenderOptions,
     ): Promise<TContext> {
       return await super._prepareContext(options);
     }
@@ -264,7 +265,7 @@ export function getSvelteApplicationMixin<
      */
     async _renderHTML(
       context: TContext,
-      options: ApplicationRenderOptions
+      options: ApplicationRenderOptions,
     ): Promise<RenderResult<TContext>> {
       this._context.data = context;
 
@@ -272,7 +273,7 @@ export function getSvelteApplicationMixin<
         const content = this.windowContent;
         this.#components.push(this._createComponent(content, context));
         this.#components.push(
-          ...this._createAdditionalComponents(content, context)
+          ...this._createAdditionalComponents(content, context),
         );
       }
 
@@ -285,7 +286,7 @@ export function getSvelteApplicationMixin<
     _replaceHTML(
       _result: RenderResult<TContext>,
       _content: HTMLElement,
-      _options: ApplicationRenderOptions
+      _options: ApplicationRenderOptions,
     ) {
       // Stop it here so the underlying App V2 code doesn't insert `result` "beforeend"
     }
@@ -313,14 +314,14 @@ export function getSvelteApplicationMixin<
 
     async render(
       options: boolean | ApplicationRenderOptions = {},
-      _options: ApplicationRenderOptions = {}
+      _options: ApplicationRenderOptions = {},
     ) {
       if (
         _options.renderContext === CONSTANTS.RENDER_CONTEXT_UPDATE_USER &&
         !_options.renderData?.flags?.[CONSTANTS.MODULE_ID]
       ) {
         debug(
-          'Ignoring non-Tidy-related user update and preventing re-render.'
+          'Ignoring non-Tidy-related user update and preventing re-render.',
         );
         return;
       }
@@ -335,7 +336,18 @@ export function getSvelteApplicationMixin<
     themeSettingsSubscription?: Unsubscribable;
 
     _attachFrameListeners() {
-      super._attachFrameListeners();
+      const originalContextImpl = CONFIG.ux.ContextMenu;
+
+      // Tidy swaps in its Floating Context Menu for the menu header wire-up.
+      // This is one of precious few ways to apply the appropriate
+      // Tidy sheet classes to the context menu.
+      CONFIG.ux.ContextMenu = FloatingContextMenu;
+
+      try {
+        super._attachFrameListeners();
+      } finally {
+        CONFIG.ux.ContextMenu = originalContextImpl;
+      }
 
       this.element.addEventListener(
         'plugins',
@@ -344,7 +356,7 @@ export function getSvelteApplicationMixin<
 
       this.themeSettingsSubscription =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-          this.themeConfigOptions()
+          this.themeConfigOptions(),
         );
 
       try {
@@ -367,11 +379,11 @@ export function getSvelteApplicationMixin<
               ev: FocusEvent & {
                 currentTarget: HTMLElement;
                 relatedTarget?: HTMLElement;
-              }
+              },
             ) => {
               if (
                 ev.relatedTarget?.closest(
-                  `${HEADER_CONTROLS_DROPDOWN_SELECTOR}, ${HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR}`
+                  `${HEADER_CONTROLS_DROPDOWN_SELECTOR}, ${HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR}`,
                 )
               ) {
                 return;
@@ -379,7 +391,7 @@ export function getSvelteApplicationMixin<
 
               if (
                 !ev.currentTarget.matches(
-                  HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR
+                  HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR,
                 )
               ) {
                 return;
@@ -387,13 +399,13 @@ export function getSvelteApplicationMixin<
 
               this.toggleControls(false);
             },
-            {}
+            {},
           );
       } catch (e) {
         error(
           'An error occurred while attaching frame listeners for the application.',
           false,
-          { error: e, sheet: this }
+          { error: e, sheet: this },
         );
       }
     }
@@ -405,10 +417,10 @@ export function getSvelteApplicationMixin<
       super.toggleControls(expanded, { animate: false });
 
       const controlsDropdown = this.element.querySelector(
-        HEADER_CONTROLS_DROPDOWN_SELECTOR
+        HEADER_CONTROLS_DROPDOWN_SELECTOR,
       );
       const menuIsExpanded = controlsDropdown?.matches(
-        HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR
+        HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR,
       );
       if (menuIsExpanded) {
         debug('App V2 - On Menu Opened');
@@ -448,7 +460,9 @@ export function getSvelteApplicationMixin<
      */
     _onConfigurePlugins(event: any) {
       event.plugins.highlightDocumentMatches =
-        ProseMirror.ProseMirrorHighlightMatchesPlugin.build(ProseMirror.defaultSchema);
+        ProseMirror.ProseMirrorHighlightMatchesPlugin.build(
+          ProseMirror.defaultSchema,
+        );
     }
 
     /* -------------------------------------------- */
@@ -494,7 +508,7 @@ export function getSvelteApplicationMixin<
      * @returns options for a detached window.
      */
     _detachOptions(): Record<string, any> {
-      if ( game.release.generation < 14 ) return {};
+      if (game.release.generation < 14) return {};
       const { windowId } = (this.parent ?? this).window ?? {};
       return windowId ? { window: { detached: true, windowId } } : {};
     }

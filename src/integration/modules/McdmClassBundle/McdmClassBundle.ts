@@ -16,6 +16,7 @@ import type { ItemFilter } from 'src/runtime/item/item.types';
 import type { Item5e } from 'src/types/item.types';
 import type { TidySectionBase } from 'src/types/types';
 import { buildMcdmPowersSettingsTab } from './settings/McdmPowersSettingsTab';
+import { loadConditionalStyles } from 'src/utils/css-loading';
 
 declare global {
   interface CONFIG extends OriginalConfig {
@@ -58,6 +59,8 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
   init(api: Tidy5eSheetsApi): void {
     // Powers tab
     import('./McdmPowersTab.less');
+    loadConditionalStyles('McdmPowersTab');
+
     const powersTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('TYPES.Item.mcdm-class-bundle.powerPl'),
       tabId: this.powersTabId,

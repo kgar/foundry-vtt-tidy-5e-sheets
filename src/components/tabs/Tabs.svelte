@@ -145,6 +145,7 @@
             ['no-border-on-last-tab']: !tabEnd && i === tabs.length - 1,
           },
           tabCssClass,
+          tab.iconClass ? 'icon-start' : undefined,
         ]}
         data-tab-id={tab.id}
         role="tab"

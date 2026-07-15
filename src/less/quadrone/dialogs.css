@@ -7,14 +7,15 @@
       --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
 
       .window-header {
-        border: 0.0625rem solid var(--t5e-settings-border-color);
+        border: var(--t5e-size-1) solid var(--t5e-settings-border-color);
       }
     }
   }
 
   .window-content {
     gap: 0;
-    padding: 0;
+    padding-block: 0;
+    padding-inline: 0;
 
     h2 {
       &:not(:first-child) {
@@ -45,8 +46,9 @@
     .button-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.25rem;
-      padding: 0 1rem 1rem;
+      gap: var(--t5e-size-1x);
+      padding-block: 0 1rem;
+      padding-inline: 1rem;
       white-space: nowrap;
 
       > * {
@@ -57,7 +59,7 @@
   }
 
   .tidy-sheet-settings {
-    border-top: 0.0625rem solid var(--t5e-table-row-divider);
+    border-block-start: var(--t5e-size-1) solid var(--t5e-table-row-divider);
     flex: 1;
     display: grid;
     grid-template-areas:
@@ -68,7 +70,8 @@
     min-height: 0;
 
     .settings-pane .dialog-content-container {
-      padding: var(--t5e-size-2x) var(--t5e-size-4x) 2rem;
+      padding-block: var(--t5e-size-2x) var(--t5e-size-8x);
+      padding-inline: var(--t5e-size-4x);
     }
   }
 
@@ -78,8 +81,9 @@
     flex-direction: column;
     gap: 1rem;
     overflow-y: auto;
-    padding: var(--t5e-size-2x) var(--t5e-size-2x) var(--t5e-size-6x) var(--t5e-size-2x);
-    border-right: 0.0625rem solid var(--t5e-settings-border-color);
+    padding-block: var(--t5e-size-2x) var(--t5e-size-6x);
+    padding-inline: var(--t5e-size-2x);
+    border-inline-end: 0.0625rem solid var(--t5e-settings-border-color);
     background-color: var(--t5e-header-background);
   }
 
@@ -97,10 +101,10 @@
 
     .drop-line {
       position: absolute;
-      left: 0;
-      right: 0;
+      inset-inline: 0;
       height: 0.1875rem;
-      margin: 0;
+      margin-block: 0;
+      margin-inline: 0;
       border-radius: 0.125rem;
       background-color: var(--t5e-theme-color-highlight);
       pointer-events: none;
@@ -110,7 +114,8 @@
 
   h3.nav-group-header {
     font-size: var(--font-size-20);
-    padding: 0.25rem 0 0.375rem var(--t5e-size-2x);
+    padding-block: 0.25rem 0.375rem;
+    padding-inline: var(--t5e-size-2x) 0;
   }
 
   .nav-tab {
@@ -124,8 +129,9 @@
     cursor: pointer;
     font: inherit;
     min-height: var(--t5e-field-size-default);
-    padding: var(--t5e-size-2x);
-    text-align: left;
+    padding-block: var(--t5e-size-2x);
+    padding-inline: var(--t5e-size-2x);
+    text-align: start;
     width: 100%;
 
     &:active,
@@ -179,8 +185,8 @@
     }
   }
 
-  .nav-tab:not(:has(.nav-tab-icon)) {
-    padding-left: 0.4375rem;
+  .nav-tab.icon-start {
+    padding-inline-start: 0.4375rem;
   }
 
   .nav-tab-icon {
@@ -197,7 +203,8 @@
   }
 
   .nav-empty {
-    padding: 0.25rem 0.5rem;
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
     font-style: italic;
   }
 
@@ -220,8 +227,7 @@
   }
 
   .window-content .dialog-content-container {
-    padding-left: var(--t5e-size-4x);
-    padding-right: var(--t5e-size-4x);
+    padding-inline: var(--t5e-size-4x);
   }
 
   .window-header {
@@ -237,8 +243,7 @@
   /* Section Selector Dialog */
   &.tidy-section-selector-application {
     .window-content .button-bar {
-      padding-left: 0;
-      padding-right: 0;
+      padding-inline: 0;
     }
 
     .existing-sections {
@@ -247,33 +252,32 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: var(--t5e-size-halfx);
     }
 
     .new-section {
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: var(--t5e-size-halfx);
     }
   }
 
   /* Sheet Default Preferences */
   &.tidy5e-sheet-preferences {
     .settings-header {
-      margin-bottom: var(--t5e-size-1x);
+      margin-block-end: var(--t5e-size-1x);
     }
 
     .settings-description {
-      margin-bottom: var(--t5e-size-3x);
+      margin-block-end: var(--t5e-size-3x);
     }
 
     .title-underlined {
-      margin-bottom: var(--t5e-size-2x);
+      margin-block-end: var(--t5e-size-2x);
     }
 
     .tidy-table-header-row .tidy-table-header-cell {
-      padding-top: var(--t5e-size-1x);
-      padding-bottom: var(--t5e-size-1x);
+      padding-block: var(--t5e-size-1x);
     }
 
     .scroll-container {
@@ -304,7 +308,8 @@
     }
 
     .choose-specific-btn {
-      padding: 0;
+      padding-block: 0;
+      padding-inline: 0;
       align-self: flex-start;
     }
 
@@ -360,18 +365,20 @@
 
     .hidden-input {
       position: absolute;
-      top: 0;
-      left: 0;
+      inset-block-start: 0;
+      inset-inline-start: 0;
       width: 0;
       height: 0;
       flex: 0;
-      padding: 0;
+      padding-block: 0;
+      padding-inline: 0;
       border: 0;
     }
 
     .button-bar {
       gap: var(--t5e-size-2x);
-      padding: 0 var(--t5e-size-4x) var(--t5e-size-3x);
+      padding-block: 0 var(--t5e-size-3x);
+      padding-inline: var(--t5e-size-4x);
     }
   }
 
@@ -404,8 +411,7 @@
 
   .world-settings-overview {
     .filigree-card {
-      margin-bottom: var(--t5e-size-4x);
-      margin-top: var(--t5e-size-2x);
+      margin-block: var(--t5e-size-2x) var(--t5e-size-4x);
     }
 
     .tidy-info-banner {
@@ -413,7 +419,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-top: var(--t5e-size-4x);
+      margin-block-start: var(--t5e-size-4x);
       text-align: center;
     }
 
@@ -421,9 +427,8 @@
       font-size: var(--font-size-16);
       color: var(--t5e-color-text-lighter);
       line-height: 1.25rem;
-      margin-left: var(--t5e-size-8x);
-      margin-right: var(--t5e-size-8x);
-      margin-bottom: var(--t5e-size-6x);
+      margin-inline: var(--t5e-size-8x);
+      margin-block-end: var(--t5e-size-6x);
 
       span {
         font-weight: var(--font-weight-label);
@@ -432,11 +437,12 @@
     }
 
     .settings-description {
-      margin-top: 0;
+      margin-block-start: 0;
     }
 
     .settings-description-list {
-      margin: 0;
+      margin-block: 0;
+      margin-inline: 0;
     }
 
     .logo {
@@ -446,7 +452,7 @@
   }
 
   .sheet-preferences-table {
-    margin-top: var(--t5e-size-4x);
+    margin-block-start: var(--t5e-size-4x);
 
     &.scrollable-table .expandable {
       overflow-y: auto;
@@ -454,13 +460,14 @@
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
       align-items: center;
-      padding: 0.3125rem 0.5rem;
+      padding-block: 0.3125rem;
+      padding-inline: 0.5rem;
     }
   }
 
   &.tidy5e-sheet-preferences {
     .sheet-preferences-table {
-      margin-bottom: var(--t5e-size-8x);
+      margin-block-end: var(--t5e-size-8x);
     }
   }
 
@@ -478,13 +485,14 @@
     .controls-row {
       display: flex;
       justify-content: flex-end;
-      margin-top: var(--t5e-size-2x);
+      margin-block-start: var(--t5e-size-2x);
       gap: var(--t5e-size-2x);
     }
 
     .sheet-preferences-table {
       :is(.tidy-table-cell, .tidy-table-header-cell) {
-        padding: 0.3125rem 0.5rem;
+        padding-block: 0.3125rem;
+        padding-inline: 0.5rem;
       }
 
       .header-cell-icon {
@@ -502,6 +510,7 @@
       }
 
       .sheet-preferences-label {
+        color: var(--t5e-theme-color-foreground-darker);
         font-size: var(--font-size-18);
       }
 
@@ -514,6 +523,18 @@
         align-items: center;
         justify-content: center;
       }
+    }
+
+    .spell-source-item-assignments {
+      h3 {
+        padding-inline-start: 0.75rem;
+      }
+    }
+
+    .spell-name-button {
+      height: auto;
+      padding-block: 0.25rem;
+      justify-content: flex-start;
     }
 
     button.button:where(:not(.header-control)) {

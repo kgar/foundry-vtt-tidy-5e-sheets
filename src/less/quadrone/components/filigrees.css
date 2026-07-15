@@ -1,10 +1,10 @@
 .tidy5e-sheet.application:where(.quadrone) {
   &:not(.theme-basic) .gold-header-underline {
+    --line-color: var(--t5e-color-gold);
     display: flex;
     align-items: center;
     flex-basis: 100%;
-    --line-color: var(--t5e-color-gold);
-    margin-top: -0.125rem;
+    height: var(--t5e-size-1x);
 
     svg {
       flex: 0 0 auto;
@@ -20,18 +20,21 @@
 
   &.theme-basic {
     &.theme-light {
+
       .gold-header-underline,
       header:has(.gold-header-underline) {
         border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.16);
       }
     }
+
     .gold-header-underline {
       border-bottom: 0.0625rem solid var(--t5e-component-card-default);
-    
+
       svg {
         display: none;
       }
     }
+
     header:has(.gold-header-underline) {
       border-bottom: 0.0625rem solid var(--t5e-component-card-default);
     }
@@ -39,14 +42,14 @@
 
   .filigree-card {
     background: var(--t5e-component-card-default);
-    border-radius: 1.25rem;
+    border-radius: var(--t5e-size-5x);
     position: relative;
     isolation: isolate;
     min-height: 3.5rem;
-    filter: var(--filigree-drop-shadow, drop-shadow(0 0 0.75rem var(--dnd5e-shadow-15)));
+    filter: var(--filigree-drop-shadow, drop-shadow(0 0 var(--t5e-size-3x) var(--dnd5e-shadow-15)));
 
     .backdrop {
-      --chamfer: 0.75rem;
+      --chamfer: var(--t5e-size-3x);
       position: absolute;
       inset: 0;
       z-index: -2;
@@ -72,11 +75,11 @@
     }
 
     .filigree.top {
-      top: 0;
+      inset-block-start: 0;
     }
 
     .filigree.bottom {
-      bottom: 0;
+      inset-block-end: 0;
       transform: scale(1, -1);
     }
 
@@ -86,11 +89,11 @@
     }
 
     .filigree.left {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     .filigree.right {
-      right: 0;
+      inset-inline-end: 0;
       transform: scale(-1, 1);
     }
 
@@ -99,14 +102,13 @@
     }
 
     .filigree.block {
-      inline-size: calc(100% - 3rem);
-      inset-inline: 1.5rem;
+      inline-size: calc(100% - var(--t5e-size-12x));
+      inset-inline: var(--t5e-size-6x);
     }
 
     .filigree.inline {
       block-size: calc(100% - 3.5rem);
       inset-block: 1.75rem;
     }
-
   }
 }
