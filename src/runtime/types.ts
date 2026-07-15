@@ -136,7 +136,8 @@ export type RegisteredCustomActorTrait = {
   title: string;
   alwaysShow: boolean | undefined;
   openConfiguration:
-    ((params: RegisteredTraitOpenConfigurationParams) => void) | undefined;
+    | ((params: RegisteredTraitOpenConfigurationParams) => void)
+    | undefined;
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;
@@ -258,9 +259,7 @@ export type ColumnSpecification = {
   order: number;
   headerClasses?: ClassValue;
   cellClasses?: ClassValue;
-  condition?: <TSection extends TidySectionBase>(
-    data: ColumnSpecificationConditionArgs<any /*, TSection*/>,
-  ) => boolean;
+  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
 };
 
 export type GetConfiguredColumnSpecificationsArgs = {
