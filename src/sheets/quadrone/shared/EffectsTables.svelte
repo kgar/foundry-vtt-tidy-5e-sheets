@@ -56,7 +56,7 @@
   )}
 
   {const hiddenColumns = $derived(
-    EffectColumnRuntime.determineHiddenColumnsV2(
+    EffectColumnRuntime.determineHiddenColumns(
       inlineWidth - rowActionInfo.widthPx,
       section.columns,
       10,

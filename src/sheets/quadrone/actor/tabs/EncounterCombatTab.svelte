@@ -148,7 +148,7 @@
         )}
 
         {const hiddenColumns = $derived(
-          EncounterMemberColumnRuntime.determineHiddenColumnsV2(
+          EncounterMemberColumnRuntime.determineHiddenColumns(
             sectionsInlineWidth - rowActionInfo.widthPx,
             section.columns,
           ),

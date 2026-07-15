@@ -87,7 +87,7 @@
   );
 
   let hiddenColumns = $derived(
-    ActivityColumnRuntime.determineHiddenColumnsV2(
+    ActivityColumnRuntime.determineHiddenColumns(
       sectionsInlineWidth - rowActionInfo.widthPx,
       section.columns,
     ),

@@ -81,7 +81,7 @@ export abstract class TableColumnRuntimeBase {
     };
   }
 
-  determineHiddenColumnsV2(
+  determineHiddenColumns(
     inlineSizePx: number,
     schematics: SectionColumnContext,
     minWidthRemsOverride?: number,

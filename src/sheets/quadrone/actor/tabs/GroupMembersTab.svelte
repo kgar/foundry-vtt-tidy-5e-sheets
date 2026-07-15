@@ -116,7 +116,7 @@
         )}
 
         {const hiddenColumns = $derived(
-          GroupMemberColumnRuntime.determineHiddenColumnsV2(
+          GroupMemberColumnRuntime.determineHiddenColumns(
             sectionsInlineWidth - rowActionInfo.widthPx,
             section.columns,
           ),

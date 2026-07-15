@@ -223,7 +223,7 @@
       )}
 
       {const hiddenColumns = $derived(
-        VehicleMemberColumnRuntime.determineHiddenColumnsV2(
+        VehicleMemberColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth - rowActionInfo.widthPx,
           section.columns,
         ),

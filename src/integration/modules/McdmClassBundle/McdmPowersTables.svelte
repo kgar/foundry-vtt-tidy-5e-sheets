@@ -72,7 +72,7 @@
       )}
 
       {let hiddenColumns = $derived(
-        ItemColumnRuntime.determineHiddenColumnsV2(
+        ItemColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth - rowActionInfo.widthPx,
           section.columns,
         ),
