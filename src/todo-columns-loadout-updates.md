@@ -10,6 +10,7 @@
 - [ ] // TODO: This happens twice. Where should this data prep go?
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
 - [ ] `generics="TEntry extends { id: string, uuid: string, name: string, img: string}"` - find out why TidyItemTable is using this generic interface and try to eliminate it. We should always have items when using the TidyItemTable.
+- [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
 
 ## Stretch
 
@@ -19,3 +20,4 @@
 - [ ] Actor sheets - Currently, activity row actions and columns are created in the moment when a TidyInlineActivitiesList is rendered upon expanding an item summary. It would be good to make some decisions on how the activity tables should be treated and whether we want to provide API integration for their row actions and/or columns. It may still be beneficial to lazily load their row actions and columns, but it feels like it goes against the rest of this effort. Then again, they were just hardcoded before now.
 - [ ] <!-- TODO: Upgrade to use full section actions feature -->
 - [ ] // TODO: Determine how to make managing row action styles less hardcoded and more configured.
+- [ ] Try a CSS Grid / Sub-grid approach Tidy tables. This would eliminate the need to calculate row actions width and open lots of doors, if it were performant.
