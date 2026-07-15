@@ -41,6 +41,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
+import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -181,6 +182,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_CHARACTER,
+          ),
         },
       ],
       [
@@ -192,6 +198,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_NPC,
+          ),
         },
       ],
       [
@@ -203,6 +214,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            CONSTANTS.SHEET_TYPE_VEHICLE,
+          ),
         },
       ],
     ]);
@@ -255,6 +271,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             creationItemTypes: [],
           },
           sectionActions: [],
+          columns: GroupMemberColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_MEMBERS,
+            key,
+          ),
         }),
       );
 
@@ -269,7 +290,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         !settings.value.useGroupSheetMemberSecurity ||
         actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER);
 
-      const groupMemberContext = {
+      const groupMemberContext: GroupMemberQuadroneContext = {
         accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
         backgroundColor: !isNil(accentColor, '')
@@ -289,6 +310,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         ),
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
+        rowActions: rowActions.filter(
+          (action) =>
+            !action.condition ||
+            action.condition({ data: { actor, ctx: undefined } }),
+        ),
       };
 
       section.members.push(groupMemberContext);

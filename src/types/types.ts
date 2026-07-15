@@ -46,6 +46,7 @@ import type {
   CurrencyItemConfig,
   TravelPaceConfig,
 } from 'src/foundry/config.types';
+import type { ActorTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1429,6 +1430,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
+  rowActions: ActorTableAction<any>[];
 };
 
 export type MultiActorMemberPortraitContext = {
