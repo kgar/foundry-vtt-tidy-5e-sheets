@@ -586,11 +586,11 @@
                       class="value"
                       data-tooltip="TIDY5E.HitDice.Current.Label"
                     >
-                      {context.system.attributes.hd.value}
+                      {context.system.attributes?.hd?.value ?? '0'}
                     </div>
                     <div class="separator">/</div>
                     <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
-                      {context.system.attributes.hd.max}
+                      {context.system.attributes?.hd?.max ?? '0'}
                     </div>
                     <div class="hd-label" data-tooltip="DND5E.HitDice">
                       {localize('TIDY5E.HitDice.Abbreviation')}

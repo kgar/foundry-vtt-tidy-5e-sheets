@@ -56,7 +56,7 @@
   var showUnassignedOnly = $state(false);
 </script>
 
-<section class="dialog-content-container flexcol">
+<section class="spell-source-item-assignments dialog-content-container flexcol">
   <h2>{localize('TIDY5E.Utilities.AssignSpellsToClasses')}</h2>
   <p class="settings-description">
     {localize('TIDY5E.SheetSettings.AssignSpellsToClasses.hint')}
@@ -77,7 +77,6 @@
               <h3
                 class="truncate"
                 data-tooltip="DND5E.spell"
-                style="padding-inline-start: 0.75rem"
               >
                 {localize('TYPES.Item.spell')}
               </h3>
@@ -115,8 +114,7 @@
                   tabindex="0"
                   role="button"
                   data-keyboard-focus
-                  class="button button-borderless"
-                  style="justify-content: flex-start;"
+                  class="button button-borderless spell-name-button"
                   onclick={async () =>
                     FoundryAdapter.renderSheetFromUuid(assignment.uuid)}
                   onkeydown={(ev) => {

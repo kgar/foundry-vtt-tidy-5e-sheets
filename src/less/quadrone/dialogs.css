@@ -525,6 +525,18 @@
       }
     }
 
+    .spell-source-item-assignments {
+      h3 {
+        padding-inline-start: 0.75rem;
+      }
+    }
+
+    .spell-name-button {
+      height: auto;
+      padding-block: 0.25rem;
+      justify-content: flex-start;
+    }
+
     button.button:where(:not(.header-control)) {
       --font-size-default: var(--font-size-14);
     }
