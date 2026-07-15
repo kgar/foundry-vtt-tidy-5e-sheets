@@ -68,7 +68,8 @@
 - [x] ~~Ensure each tab tables invocation is properly looking for columnsV2~~ This fully evolved to something else.
 - [x] Search `action.condition(` and make sure all data fields are being given their proper data per their underlying type
 - [x] Test TableRowActions update
-- [ ] Get group sheet working
+- [x] Get group sheet working
+- [ ] Get advancement tab working
 - [ ] Test and task Item sheet issues
 - [ ] Test and task Container sheet issues
 - [ ] Apply custom column setup to activities
