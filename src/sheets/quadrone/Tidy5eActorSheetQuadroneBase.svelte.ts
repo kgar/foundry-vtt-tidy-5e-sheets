@@ -395,7 +395,9 @@ export function getTidy5eActorSheetQuadroneBase<
         ctx.activities = Activities.getVisibleActivities(
           item,
           item.system.activities,
-        )?.map(Activities.getActivityItemContext);
+        )?.map((activity) =>
+          Activities.getActivityItemContext(activity, context.unlocked),
+        );
       }
 
       ctx.linkedUses = Activities.getLinkedUses(item);

@@ -50,6 +50,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -326,7 +327,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             .filter((a: any) => {
               return Activities.isConfigurable(a);
             })
-            ?.map(Activities.getActivityItemContext)
+            ?.map((activity: Activity5e) =>
+              Activities.getActivityItemContext(activity, documentSheetContext.unlocked),
+            )
             .sort((a: any, b: any) => a.sort - b.sort),
           columns: ActivityColumnRuntime.getColumnSpecifications(
             this.document,

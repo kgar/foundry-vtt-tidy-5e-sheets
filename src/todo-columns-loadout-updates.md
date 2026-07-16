@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] Item sheet - set up activities sections array with custom column setup. This will be another breaking change to the ItemSheetQuadroneContext model. Good thing I didn't advertize it as public API 😉
 - [ ] Apply strong `TData` typing to all the row action runtime callers' contexts.
 - [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
@@ -11,6 +10,7 @@
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
 - [ ] `generics="TEntry extends { id: string, uuid: string, name: string, img: string}"` - find out why TidyItemTable is using this generic interface and try to eliminate it. We should always have items when using the TidyItemTable.
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
+- [ ] <!-- TODO: Convert to an ordered section array for regular processing. -->
 
 ## Stretch
 

@@ -137,7 +137,7 @@
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
     {#each context.combat as section (section.key)}
-      {#if section.combatants.length}
+      {#if section.show && section.combatants.length}
         {const visibleItemCount = $derived(section.combatants.length)}
 
         {const rowActionInfo = $derived(

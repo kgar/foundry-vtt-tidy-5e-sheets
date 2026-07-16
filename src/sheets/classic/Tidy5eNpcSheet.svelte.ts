@@ -932,7 +932,12 @@ export class Tidy5eNpcSheet
         ctx.activities = Activities.getVisibleActivities(
           item,
           item.system.activities,
-        )?.map(Activities.getActivityItemContext);
+        )?.map((activity) =>
+          Activities.getActivityItemContext(
+            activity,
+            this.isEditable && this.isEditMode,
+          ),
+        );
 
         ctx.linkedUses = Activities.getLinkedUses(item);
 

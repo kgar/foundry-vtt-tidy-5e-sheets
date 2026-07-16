@@ -95,7 +95,7 @@
     {/if}
 
     {#each context.members as section (section.key)}
-      {#if section.members.length}
+      {#if section.show && section.members.length}
         {const visibleItemCount = $derived(section.members.length)}
 
         {const rowActionInfo = $derived(

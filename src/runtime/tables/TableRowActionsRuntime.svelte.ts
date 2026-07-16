@@ -366,24 +366,22 @@ class TableRowActionsRuntime {
     return result;
   }
 
-  getActivityRowActions(owner: boolean, unlocked: boolean) {
+  getActivityRowActions(unlocked: boolean) {
     let rowActions: ActivityTableAction<any>[] = $derived.by(() => {
       let result: ActivityTableAction<any>[] = [];
 
-      if (owner) {
-        if (unlocked) {
-          result.push({
-            component: EditButton,
-            props: (args) => ({ doc: args.data.activity }),
-          } satisfies ActivityTableAction<typeof EditButton>);
+      if (unlocked) {
+        result.push({
+          component: EditButton,
+          props: (args) => ({ doc: args.data.activity }),
+        } satisfies ActivityTableAction<typeof EditButton>);
 
-          result.push({
-            component: DeleteButton,
-            props: (args) => ({
-              doc: args.data.activity,
-            }),
-          } satisfies ActivityTableAction<typeof DeleteButton>);
-        }
+        result.push({
+          component: DeleteButton,
+          props: (args) => ({
+            doc: args.data.activity,
+          }),
+        } satisfies ActivityTableAction<typeof DeleteButton>);
       }
 
       result.push({

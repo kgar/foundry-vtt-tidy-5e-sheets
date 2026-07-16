@@ -12,6 +12,7 @@
   import { settings } from 'src/settings/settings.svelte';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
   import PropertyTag from '../properties/PropertyTag.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -27,9 +28,12 @@
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
   );
+
   let concealDetails = $derived(FoundryAdapter.concealDetails(item));
 
   let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
+
+  const context = $derived(getSheetContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -38,7 +42,9 @@
       ? Activities.getVisibleActivities(
           item,
           item.system.activities,
-        ).map<ActivityItemContext>(Activities.getActivityItemContext)
+        ).map<ActivityItemContext>((activity) =>
+          Activities.getActivityItemContext(activity, context.unlocked),
+        )
       : [];
   });
 </script>

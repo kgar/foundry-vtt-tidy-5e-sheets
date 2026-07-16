@@ -1486,7 +1486,12 @@ export class Tidy5eCharacterSheet
     context.activities = Activities.getVisibleActivities(
       item,
       item.system.activities,
-    )?.map(Activities.getActivityItemContext);
+    )?.map((activity) =>
+      Activities.getActivityItemContext(
+        activity,
+        this.isEditable && this.isEditMode,
+      ),
+    );
 
     context.linkedUses = Activities.getLinkedUses(item);
   }

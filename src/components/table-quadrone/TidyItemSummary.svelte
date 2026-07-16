@@ -40,7 +40,9 @@
       ? Activities.getVisibleActivities(
           item,
           item.system.activities,
-        ).map<ActivityItemContext>(Activities.getActivityItemContext)
+        ).map<ActivityItemContext>((activity) =>
+          Activities.getActivityItemContext(activity, context.unlocked),
+        )
       : [];
   });
 

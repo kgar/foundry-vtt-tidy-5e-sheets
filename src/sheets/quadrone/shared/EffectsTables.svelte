@@ -48,24 +48,24 @@
 </script>
 
 {#each sections as section (section.key)}
-  {const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
-      section.effects,
-      (entry) => entry.rowActions,
-    ),
-  )}
-
-  {const hiddenColumns = $derived(
-    EffectColumnRuntime.determineHiddenColumns(
-      inlineWidth - rowActionInfo.widthPx,
-      section.columns,
-      10,
-    ),
-  )}
-
   {#if section.show}
+    {const rowActionInfo = $derived(
+      TableRowActionsRuntime.getRowActionWidthInfo(
+        section.effects,
+        (entry) => entry.rowActions,
+      ),
+    )}
+
+    {const hiddenColumns = $derived(
+      EffectColumnRuntime.determineHiddenColumns(
+        inlineWidth - rowActionInfo.widthPx,
+        section.columns,
+        10,
+      ),
+    )}
+
     <TidyTable key={section.key}>
-      {#snippet header()}
+      {#snippet header(expanded)}
         <TidyTableHeaderRow
           class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
             'suppressed' || section.disabled
@@ -160,9 +160,13 @@
           <span class="cell-text">
             <span class="cell-name">{ctx.effect.name}</span>
           </span>
-          <span class="row-detail-expand-indicator">
-            <i class="fa-solid fa-angle-right expand-indicator" class:expanded>
-            </i>
+          <span
+            class={[
+              'row-detail-expand-indicator',
+              expanded ? 'expanded' : 'collapsed',
+            ]}
+          >
+            <i class="fa-solid fa-angle-right expand-indicator"> </i>
           </span>
         </a>
       </TidyTableCell>

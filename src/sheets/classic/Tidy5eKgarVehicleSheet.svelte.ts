@@ -454,7 +454,12 @@ export class Tidy5eVehicleSheet
     ctx.activities = Activities.getVisibleActivities(
       item,
       item.system.activities,
-    )?.map(Activities.getActivityItemContext);
+    )?.map((activity) =>
+      Activities.getActivityItemContext(
+        activity,
+        this.isEditable && this.isEditMode,
+      ),
+    );
 
     if (item.isMountable) {
       this._prepareCrewedItem(item, ctx);

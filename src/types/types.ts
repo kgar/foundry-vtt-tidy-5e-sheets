@@ -46,7 +46,10 @@ import type {
   CurrencyItemConfig,
   TravelPaceConfig,
 } from 'src/foundry/config.types';
-import type { ActorTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type {
+  ActivityTableAction,
+  ActorTableAction,
+} from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -356,6 +359,7 @@ export type ActivityItemContext = {
   toHit: number | null;
   spell?: ActivityItemSpellContext;
   type: string;
+  rowActions: ActivityTableAction<any>[];
 };
 
 export type ActivityItemSpellContext = {

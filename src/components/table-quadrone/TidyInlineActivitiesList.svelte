@@ -40,10 +40,7 @@
   );
 
   let rowActions = $derived(
-    TableRowActionsRuntime.getActivityRowActions(
-      context.owner,
-      context.unlocked,
-    ),
+    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
   );
 
   let section = $derived({

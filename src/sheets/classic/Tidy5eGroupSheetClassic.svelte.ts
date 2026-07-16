@@ -863,7 +863,12 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
       activities: Activities.getVisibleActivities(
         item,
         item.system.activities,
-      )?.map(Activities.getActivityItemContext),
+      )?.map((activity) =>
+        Activities.getActivityItemContext(
+          activity,
+          this.isEditable && this.isEditMode,
+        ),
+      ),
       canToggle: false,
       containerContents: undefined,
       hasUses: item.hasLimitedUses,

@@ -8,6 +8,10 @@ import type {
   LinkedUses,
   NpcItemContext,
 } from 'src/types/types';
+import TableRowActionsRuntime, {
+  type ActivityTableAction,
+  type ActivityTableActionData,
+} from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {
@@ -17,7 +21,7 @@ export class Activities {
   static getVisibleActivities(
     item: Item5e,
     activities: Activity5e[],
-    forItemSheet: boolean = false
+    forItemSheet: boolean = false,
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
@@ -25,7 +29,7 @@ export class Activities {
         activities?.filter(
           (a: Activity5e) =>
             !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id) &&
-            a.canUse
+            a.canUse,
         ) ?? [],
     };
 
@@ -45,7 +49,10 @@ export class Activities {
     day: 'DND5E.TimeDayAbbr',
   };
 
-  static getActivityItemContext(activity: Activity5e): ActivityItemContext {
+  static getActivityItemContext(
+    activity: Activity5e,
+    unlocked: boolean,
+  ): ActivityItemContext {
     // To Hit
     const toHit = parseInt(activity.labels.modifier);
 
@@ -66,7 +73,7 @@ export class Activities {
       isOnCooldown,
       activation: activationAbbr
         ? `${activity.activation.value ?? ''}${game.i18n.localize(
-            activationAbbr
+            activationAbbr,
           )}`
         : activity.labels.activation,
       spell: activity.spell
@@ -86,6 +93,7 @@ export class Activities {
         : null,
       toHit: isNaN(toHit) ? null : toHit,
       type: activity.type,
+      rowActions: TableRowActionsRuntime.getActivityRowActions(unlocked),
     };
   }
 
@@ -94,7 +102,7 @@ export class Activities {
 
     if (linkedActivity) {
       return linkedActivity.consumption?.targets.find(
-        (t: any) => t.type === 'activityUses'
+        (t: any) => t.type === 'activityUses',
       )
         ? {
             ...linkedActivity.uses,
@@ -104,16 +112,16 @@ export class Activities {
             doc: linkedActivity,
           }
         : linkedActivity.consumption?.targets.find(
-            (t: any) => t.type === 'itemUses'
-          )
-        ? {
-            ...linkedActivity.item.system.uses,
-            valueProp: 'system.uses.value',
-            spentProp: 'system.uses.spent',
-            maxProp: 'system.uses.max',
-            doc: linkedActivity.item,
-          }
-        : undefined;
+              (t: any) => t.type === 'itemUses',
+            )
+          ? {
+              ...linkedActivity.item.system.uses,
+              valueProp: 'system.uses.value',
+              spentProp: 'system.uses.spent',
+              maxProp: 'system.uses.max',
+              doc: linkedActivity.item,
+            }
+          : undefined;
     }
   }
 }

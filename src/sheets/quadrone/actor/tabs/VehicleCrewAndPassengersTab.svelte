@@ -182,32 +182,39 @@
   </div>
 
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
-    {@render CrewPassengerTable(
-      context.crew.unassigned,
-      false,
-      UnassignedNoCrewView,
-    )}
+    <!-- TODO: Convert to an ordered section array for regular processing. -->
+    {#if context.crew.unassigned.show}
+      {@render CrewPassengerTable(
+        context.crew.unassigned,
+        false,
+        UnassignedNoCrewView,
+      )}
 
-    {#snippet UnassignedNoCrewView(section: CrewSection | PassengerSection)}
-      <div class="inventory-empty empty-state-container">
-        <button
-          type="button"
-          class="button button-tertiary"
-          data-action="browseActors"
-        >
-          <i class="fas fa-plus"></i>
-          {localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
-        </button>
-      </div>
-    {/snippet}
+      {#snippet UnassignedNoCrewView(section: CrewSection | PassengerSection)}
+        <div class="inventory-empty empty-state-container">
+          <button
+            type="button"
+            class="button button-tertiary"
+            data-action="browseActors"
+          >
+            <i class="fas fa-plus"></i>
+            {localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
+          </button>
+        </div>
+      {/snippet}
+    {/if}
 
-    {@render CrewPassengerTable(context.crew.assigned, true)}
+    {#if context.crew.assigned.show}
+      {@render CrewPassengerTable(context.crew.assigned, true)}
+    {/if}
 
-    {@render CrewPassengerTable(
-      context.passengers,
-      false,
-      UnassignedNoPassengerView,
-    )}
+    {#if context.passengers.show}
+      {@render CrewPassengerTable(
+        context.passengers,
+        false,
+        UnassignedNoPassengerView,
+      )}
+    {/if}
 
     {#snippet UnassignedNoPassengerView(
       section: CrewSection | PassengerSection,
