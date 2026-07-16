@@ -21,6 +21,7 @@ import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCon
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type PropertyContext = {
   active: string[];
@@ -150,8 +151,10 @@ export type ItemNameContext = {
   field: unknown;
 };
 
+export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
+
 export type ItemSheetQuadroneContext = {
-  activities: ActivityItemContext[];
+  activities: ActivitySection[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementsContext;
   affectsPlaceholder: string;

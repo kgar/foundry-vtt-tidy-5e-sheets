@@ -48,6 +48,8 @@ import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
+import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -317,12 +319,28 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
     const context: ItemSheetQuadroneContext = {
-      activities: (this.document.system.activities ?? [])
-        .filter((a: any) => {
-          return Activities.isConfigurable(a);
-        })
-        ?.map(Activities.getActivityItemContext)
-        .sort((a: any, b: any) => a.sort - b.sort),
+      activities: [
+        {
+          key: CONSTANTS.TAB_ITEM_ACTIVITIES,
+          activities: (this.document.system.activities ?? [])
+            .filter((a: any) => {
+              return Activities.isConfigurable(a);
+            })
+            ?.map(Activities.getActivityItemContext)
+            .sort((a: any, b: any) => a.sort - b.sort),
+          columns: ActivityColumnRuntime.getColumnSpecifications(
+            this.document,
+            CONSTANTS.TAB_ITEM_ACTIVITIES,
+            CONSTANTS.TAB_ITEM_ACTIVITIES,
+          ),
+          show: true,
+          dataset: {},
+          label: 'DND5E.ACTIVITY.Title.other',
+          sectionActions: SectionActions.getItemActivityHeaderActions(
+            this.isEditable,
+          ),
+        },
+      ],
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),
