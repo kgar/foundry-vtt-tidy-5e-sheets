@@ -1,7 +1,4 @@
-<script
-  lang="ts"
-  generics="TEntry extends { id: string, uuid: string, name: string, img: string}"
->
+<script lang="ts">
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
@@ -30,25 +27,26 @@
   } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
   interface Props {
     section: TidyItemSectionBase;
-    entries: TEntry[];
+    entries: Item5e[];
     entryContext: Record<string, ActorItemQuadroneContext>;
     sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
     headerRowClasses?: ClassValue;
     headerRowAttributes?: Omit<HTMLAttributes<HTMLElement>, 'class'>;
-    rowClassFunction?: (entry: TEntry) => ClassValue;
+    rowClassFunction?: (entry: Item5e) => ClassValue;
     bodyNoEntries?: Snippet;
     endOfPrimaryHeaderCell?: Snippet;
-    subtitle?: Snippet<[entry: TEntry, ctx: any]>;
-    afterFirstCell?: Snippet<[entry: TEntry, ctx: any]>;
-    afterInlineActivities?: Snippet<[entry: TEntry, ctx: any]>;
-    beforeImage?: Snippet<[entry: TEntry, ctx: any]>;
-    afterImage?: Snippet<[entry: TEntry, ctx: any]>;
-    afterEntryRow?: Snippet<[entry: TEntry, ctx: any]>;
+    subtitle?: Snippet<[entry: Item5e, ctx: any]>;
+    afterFirstCell?: Snippet<[entry: Item5e, ctx: any]>;
+    afterInlineActivities?: Snippet<[entry: Item5e, ctx: any]>;
+    beforeImage?: Snippet<[entry: Item5e, ctx: any]>;
+    afterImage?: Snippet<[entry: Item5e, ctx: any]>;
+    afterEntryRow?: Snippet<[entry: Item5e, ctx: any]>;
     root?: boolean;
   }
 
@@ -165,7 +163,11 @@
         <TidyItemTableRow
           item={entry}
           hidden={!searchResults.show(entry.uuid)}
-          rowClass={[{ expanded }, { 'expandable': hasContainerExpander }, classes]}
+          rowClass={[
+            { expanded },
+            { expandable: hasContainerExpander },
+            classes,
+          ]}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: entry.uuid,
@@ -213,11 +215,13 @@
                     </TidyTableSubtitle>
                   {/if}
                 </span>
-                <span class={['row-detail-expand-indicator', expanded ? 'expanded' : 'collapsed']}>
-                  <i
-                    class="fa-solid fa-angle-right expand-indicator"
-                  >
-                  </i>
+                <span
+                  class={[
+                    'row-detail-expand-indicator',
+                    expanded ? 'expanded' : 'collapsed',
+                  ]}
+                >
+                  <i class="fa-solid fa-angle-right expand-indicator"> </i>
                 </span>
               </a>
             </TidyTableCell>
