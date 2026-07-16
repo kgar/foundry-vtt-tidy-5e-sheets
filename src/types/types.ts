@@ -1736,6 +1736,8 @@ export type VehicleSheetQuadroneContext = {
     denomination: string;
   };
   crew: CrewSections;
+  crewBrokenLinks: string[];
+  draftBrokenLinks: string[];
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
@@ -1756,6 +1758,7 @@ export type VehicleSheetQuadroneContext = {
     }
   >;
   passengers: PassengerSection;
+  passengerBrokenLinks: string[];
   quality: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];

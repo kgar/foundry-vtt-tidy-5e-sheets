@@ -65,10 +65,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         target: HTMLElement,
       ) {
         const area =
-          target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
+          target.closest('[data-area]')?.getAttribute('data-area') ??
+          CONSTANTS.SECTION_TYPE_CREW;
 
         return this.browseAddActor(area);
       },
+      removeBrokenLinks: Tidy5eVehicleSheetQuadrone.#onRemoveBrokenLinks,
       removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
       removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
       removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
@@ -84,7 +86,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       return;
     }
 
-    await this._assignCrew(actor, item);
+    await this._assignCrew(newCrewmateUuid, item);
   }
 
   browseActors(): Promise<Actor5e | undefined> {
@@ -135,7 +137,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions,
+    options?: ApplicationRenderOptions,
   ): Promise<VehicleSheetQuadroneContext> {
     if (options?.tidy?.soft && this._context?.data) {
       return this._context.data;
@@ -205,7 +207,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       crew: {
         assigned: {
           ...SheetSections.EMPTY,
-          type: 'crew',
+          type: CONSTANTS.SECTION_TYPE_CREW,
           label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
           members: [],
           key: CONSTANTS.SECTION_KEY_ASSIGNED,
@@ -217,7 +219,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         },
         unassigned: {
           ...SheetSections.EMPTY,
-          type: 'crew',
+          type: CONSTANTS.SECTION_TYPE_CREW,
           label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
           members: [],
           key: CONSTANTS.SECTION_KEY_UNASSIGNED,
@@ -228,6 +230,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           ),
         },
       },
+      crewBrokenLinks: [],
+      draftBrokenLinks: [],
       currencies,
       effects: enhancedEffectSections,
       encumbrance: await this.actor.system.getEncumbrance(),
@@ -241,7 +245,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       mountableItems: {},
       passengers: {
         ...SheetSections.EMPTY,
-        type: 'passengers',
+        type: CONSTANTS.SECTION_TYPE_PASSENGERS,
         label: 'DND5E.VEHICLE.Crew.Passengers',
         members: [],
         key: CONSTANTS.SECTION_KEY_PASSENGERS,
@@ -251,6 +255,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           CONSTANTS.SECTION_KEY_PASSENGERS,
         ),
       },
+      passengerBrokenLinks: [],
       quality: this.actor.system.attributes.quality?.value ?? 0,
       size: {
         key: this.actor.system.traits.size,
@@ -335,11 +340,25 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       type: 'draft',
       key: 'draft',
       label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
-      members: await Promise.all(
-        this.actor.system.draft.value.map(async (uuid: string) => {
-          const actor = await fromUuid(uuid);
+      members: [],
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_STATBLOCK,
+        'draft',
+      ),
+    };
 
-          return {
+    const members = await Promise.all(
+      (this.actor.system.draft.value as string[]).map(async (uuid: string) => {
+        const actor = await fromUuid(uuid);
+
+        if (!actor) {
+          return { uuid };
+        }
+
+        return {
+          uuid,
+          value: {
             actor,
             subtitle: this._getSubtitle(actor),
             quantity: 1,
@@ -349,15 +368,18 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
                 !action.condition ||
                 action.condition({ data: { actor, ctx: undefined } }),
             ),
-          } satisfies DraftAnimalContext;
-        }),
-      ),
-      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_STATBLOCK,
-        'draft',
-      ),
-    };
+          } satisfies DraftAnimalContext,
+        };
+      }),
+    );
+
+    for (const member of members) {
+      if (member.value) {
+        drafted.members.push(member.value);
+      } else {
+        context.draftBrokenLinks.push(member.uuid);
+      }
+    }
 
     context.statblock.push(drafted);
   }
@@ -388,23 +410,37 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       }
     }
 
-    context.crew.assigned.members = (
+    const { value: assignedCrewContextValue, broken: brokenAssignedCrewUuids } =
       await this.resolveCrewMemberContext(
         assigned,
         TableRowActionsRuntime.getAssignedCrewRowActions(context),
         assignments,
-      )
-    ).value;
+      );
+    context.crew.assigned.members = assignedCrewContextValue;
 
-    context.crew.unassigned.members = (
-      await this.resolveCrewMemberContext(
-        unassigned,
-        TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-          context,
-          CONSTANTS.SECTION_TYPE_CREW,
-        ),
-      )
-    ).value;
+    const {
+      value: unassignedCrewContextValue,
+      broken: brokenUnassignedCrewUuids,
+    } = await this.resolveCrewMemberContext(
+      unassigned,
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        CONSTANTS.SECTION_TYPE_CREW,
+      ),
+    );
+    context.crew.unassigned.members = unassignedCrewContextValue;
+
+    // Add the actual number of broken passengers, even if duplicate actor UUIDs.
+    if (brokenAssignedCrewUuids.length || brokenUnassignedCrewUuids.length) {
+      for (const uuid of [
+        ...brokenAssignedCrewUuids,
+        ...brokenUnassignedCrewUuids,
+      ]) {
+        for (let i = 0; i < (crew[uuid] ?? 0); i++) {
+          context.crewBrokenLinks.push(uuid);
+        }
+      }
+    }
   }
 
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
@@ -416,23 +452,42 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         CONSTANTS.SECTION_TYPE_PASSENGERS,
       );
 
-    context.passengers.members = (
-      await Promise.all(
-        Object.keys(groups).map(async (uuid) => {
-          const actor = await fromUuid(uuid);
-          return {
-            actor,
-            subtitle: this._getSubtitle(actor),
-            quantity: groups[uuid],
-            rowActions: rowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: { actor, ctx: undefined } }),
-            ),
-          } satisfies PassengerMemberContext;
-        }),
-      )
-    ).filter((ctx) => !!ctx.actor);
+    const passengerResult = await Promise.all(
+      Object.keys(groups).map(async (uuid) => {
+        const actor = await fromUuid(uuid);
+
+        if (!actor) {
+          return { uuid };
+        }
+
+        const value = {
+          actor,
+          subtitle: this._getSubtitle(actor),
+          quantity: groups[uuid],
+          rowActions: rowActions.filter(
+            (action) =>
+              !action.condition ||
+              action.condition({ data: { actor, ctx: undefined } }),
+          ),
+        } satisfies PassengerMemberContext;
+
+        return {
+          uuid,
+          value,
+        };
+      }),
+    );
+
+    for (const passenger of passengerResult) {
+      if (passenger.value) {
+        context.passengers.members.push(passenger.value);
+      } else {
+        // Add the actual number of broken passengers, even if duplicate actor UUIDs.
+        for (let i = 0; i < (groups[passenger.uuid] ?? 0); i++) {
+          context.passengerBrokenLinks.push(passenger.uuid);
+        }
+      }
+    }
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
@@ -705,7 +760,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     );
 
     // Handle crew actions
-    if (item.type === 'feat' && item.system.activation?.type === 'crew') {
+    if (
+      item.type === 'feat' &&
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_CREW
+    ) {
       if (item.system.cover === 1) {
         ctx.cover = FoundryAdapter.localize('DND5E.CoverTotal');
       } else if (item.system.cover === 0.5) {
@@ -813,6 +871,48 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     return entries;
   }
 
+  async removeBrokenLinks(area?: CrewArea5e) {
+    const context = await this._prepareContext({ tidy: { soft: true } });
+
+    let toUpdate: Record<string, any> = {};
+
+    const itemUpdates: Promise<void>[] = [];
+
+    if (area === CONSTANTS.SECTION_TYPE_CREW || !area) {
+      let crew = this.document.system.crew.value as string[];
+      crew = crew.filter((uuid) => !context.crewBrokenLinks.includes(uuid));
+      toUpdate['system.crew.value'] = crew;
+
+      // Clear all item assignments
+      const vehicleItems = context.items.filter((i) => i.system.isMountable);
+      for (const item of vehicleItems) {
+        const repairedItemCrew = item.system.crew.value.filter(
+          (uuid: string) => !context.crewBrokenLinks.includes(uuid),
+        );
+
+        itemUpdates.push(
+          item.update({ 'system.crew.value': repairedItemCrew }),
+        );
+      }
+    }
+
+    if (area === CONSTANTS.SECTION_TYPE_PASSENGERS || !area) {
+      let passengers = this.document.system.passengers.value as string[];
+      passengers = passengers.filter(
+        (uuid) => !context.passengerBrokenLinks.includes(uuid),
+      );
+      toUpdate['system.passengers.value'] = passengers;
+    }
+
+    if (area === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS || !area) {
+      let draft = this.document.system.draft.value as string[];
+      draft = draft.filter((uuid) => !context.draftBrokenLinks.includes(uuid));
+      toUpdate['system.draft.value'] = draft;
+    }
+
+    await Promise.all([this.document.update(toUpdate), ...itemUpdates]);
+  }
+
   async removeDraftAnimal(uuid: string) {
     const draft = [...this.actor.system.draft.value];
     const removed = draft.findSplice((u) => u === uuid);
@@ -833,7 +933,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       return;
     }
 
-    await this.applyDeltaToCrew('crew', uuid, `-${numberToRemove}`);
+    await this.applyDeltaToCrew(
+      CONSTANTS.SECTION_TYPE_CREW,
+      uuid,
+      `-${numberToRemove}`,
+    );
   }
 
   async removePassengers(uuid: string) {
@@ -879,7 +983,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    * @protected
    */
   async _assignCrew(
-    actor: Actor5e,
+    memberUuid: string,
     item: Item5e,
     { src }: { src?: CrewArea5e } = {},
   ): Promise<void> {
@@ -888,7 +992,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     let crew = foundry.utils.getProperty(item, 'system.crew.value');
 
     // Prevent assigning a non-crew-member.
-    if (src && src !== 'crew') {
+    if (src && src !== CONSTANTS.SECTION_TYPE_CREW) {
       return;
     }
 
@@ -896,25 +1000,29 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     if (!src) {
       Object.assign(
         actorUpdates,
-        this.actor.system.getCrewUpdates('crew', actor.uuid, '+1'),
+        this.actor.system.getCrewUpdates(
+          CONSTANTS.SECTION_TYPE_CREW,
+          memberUuid,
+          '+1',
+        ),
       );
     }
 
     foundry.utils.setProperty(
       itemUpdates,
       'system.crew.value',
-      crew.concat(actor.uuid),
+      crew.concat(memberUuid),
     );
 
     await this.actor.update(actorUpdates);
   }
 
-  async _unassignCrew(actor: { uuid: string }, item: Item5e) {
+  async _unassignCrew(memberUuid: string, item: Item5e) {
     let crew = foundry.utils.getProperty(item, 'system.crew.value');
 
     crew = [...crew];
 
-    if (!crew.findSplice((u: string) => u === actor.uuid)) {
+    if (!crew.findSplice((u: string) => u === memberUuid)) {
       return;
     }
 
@@ -934,6 +1042,15 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
+
+  static async #onRemoveBrokenLinks(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const area = target.closest<HTMLElement>('[data-area]')?.dataset.area;
+    return this.removeBrokenLinks(area);
+  }
 
   static async #onRemoveDraftAnimal(
     this: Tidy5eVehicleSheetQuadrone,
@@ -1018,7 +1135,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       sectionKey,
     } = foundry.applications.ux.TextEditor.getDragEventData(event);
 
-    const { area: dest = 'crew' } =
+    const { area: dest = CONSTANTS.SECTION_TYPE_CREW } =
       event.target?.closest<HTMLElement>('[data-area]')?.dataset ?? {};
 
     const { tidySectionKey: destKey } =
@@ -1033,12 +1150,16 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const context = await this._prepareContext({ tidy: { soft: true } });
 
     // From Assigned Crew, dropping away from Assigned
-    if (src === 'crew' && sectionKey === 'assigned' && destKey !== 'assigned') {
+    if (
+      src === CONSTANTS.SECTION_TYPE_CREW &&
+      sectionKey === 'assigned' &&
+      destKey !== 'assigned'
+    ) {
       const currentAssignedItem = context.crew.assigned.members.find(
         (m) => m.actor.uuid === document.uuid,
       )?.assignedTo;
 
-      await this._unassignCrew(document, currentAssignedItem);
+      await this._unassignCrew(document.uuid, currentAssignedItem);
     }
 
     if (src === dest) {
@@ -1046,10 +1167,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
 
     const quantity =
-      src === 'passenger'
+      src === CONSTANTS.SECTION_TYPE_PASSENGERS
         ? context.passengers.members.find((m) => m.actor.uuid === document.uuid)
             ?.quantity
-        : src === 'crew' && sectionKey === 'unassigned'
+        : src === CONSTANTS.SECTION_TYPE_CREW && sectionKey === 'unassigned'
           ? context.crew.unassigned.members.find(
               (m) => m.actor.uuid === document.uuid,
             )?.quantity
@@ -1090,8 +1211,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
     value: CrewMemberContext[];
+    broken: string[];
   }> {
     const value: CrewMemberContext[] = [];
+    const broken: string[] = [];
 
     for (const [uuid, quantity] of Object.entries(group)) {
       if (!quantity) {
@@ -1101,6 +1224,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       const actor = await fromUuid(uuid);
 
       if (!actor) {
+        broken.push(uuid);
         continue;
       }
 
@@ -1147,6 +1271,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
         );
       }),
+      broken,
     };
   }
 

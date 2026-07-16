@@ -984,6 +984,7 @@
   "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. HP",
   "TIDY5E.Vehicle.Unassigned.EmptyState": "Drag and drop crew here, or click to add. Crew can then be assigned to vehicle equipment or features.",
   "TIDY5E.Vehicle.Passenger.EmptyState": "Drag and drop passengers here, or click to add.",
+  "TIDY5E.Vehicle.RemoveBrokenLinks": "Remove {value} broken link(s)",
   "TIDY5E.TotalCrewCount": "Total Crew",
   "TIDY5E.ActionsPerTurn": "Actions Per Turn",
   "TIDY5E.SheetMenu": {
