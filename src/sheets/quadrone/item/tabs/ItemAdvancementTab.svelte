@@ -47,10 +47,10 @@
     )}
 
     <!-- 
-    Unlike with most other tables, this table cannot hide 
-    the header buttons when there are too few row actions. 
-    All header controls must be visible, always. 
-  -->
+      Unlike with most other tables, this table cannot hide 
+      the header buttons when there are too few row actions. 
+      All header controls must be visible, always. 
+    -->
     {let arrayWithMostActions = $derived(
       longestRowActionArray.length > section.sectionActions.length
         ? longestRowActionArray
