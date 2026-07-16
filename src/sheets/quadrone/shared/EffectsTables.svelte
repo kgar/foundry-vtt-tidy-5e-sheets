@@ -80,6 +80,7 @@
           </TidyTableHeaderCell>
 
           <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
           <TidyTableHeaderCell
             class="header-cell-actions"
             columnWidth="{rowActionInfo.widthRems}rem"

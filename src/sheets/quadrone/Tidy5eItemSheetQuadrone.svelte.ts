@@ -9,7 +9,7 @@ import type {
 } from 'src/types/application.types';
 import type {
   AdvancementItemContext,
-  AdvancementsContext,
+  AdvancementSection,
   Item5e,
   ItemDescription,
   ItemFacilityOrdersContext,
@@ -30,7 +30,6 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
-  DocumentSheetV2Context,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -47,11 +46,14 @@ import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableRowActionsRuntime, {
+  type AdvancementTableAction,
+} from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { AdvancementColumnRuntime } from 'src/runtime/tables/AdvancementColumnRuntime.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -428,6 +430,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       advancement: await this._getItemAdvancement(
         this.document,
         documentSheetContext.unlocked,
+        documentSheetContext.editable,
       ),
 
       effects: await this._getEffectsSections(documentSheetContext),
@@ -767,12 +770,21 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   async _getItemAdvancement(
     item: Item5e,
     unlocked: boolean,
-  ): Promise<AdvancementsContext> {
+    editable: boolean,
+  ): Promise<AdvancementSection[]> {
     if (!item.system.advancement) {
-      return {};
+      return [];
     }
 
-    const advancement: AdvancementsContext = {};
+    type AdvancementSectionContext = {
+      items: AdvancementItemContext[];
+      configured: 'partial' | 'full' | false;
+    };
+
+    const advancement: {
+      [level: string]: AdvancementSectionContext;
+    } = {};
+
     const configMode = !item.parent;
     const legacyDisplay = this.options.legacyDisplay;
     const maxLevel = !configMode
@@ -782,19 +794,31 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         -1)
       : -1;
 
+    let tableRowActions: AdvancementTableAction[] = $derived(
+      TableRowActionsRuntime.getItemAdvancementRowActions(unlocked, item),
+    );
+
     // Improperly configured advancements
     if (item.advancement.needingConfiguration.length) {
       advancement[CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED] = {
-        items: item.advancement.needingConfiguration.map((a: any) => ({
-          id: a.id,
-          order: a.constructor.order,
-          title: a.title,
-          icon: a.icon,
-          classRestriction: a.classRestriction,
-          configured: false,
-          tags: this._getItemAdvancementTags(a, unlocked),
-          classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
-        })),
+        items: item.advancement.needingConfiguration.map(
+          (a: any) =>
+            ({
+              id: a.id,
+              order: a.constructor.order,
+              title: a.title,
+              icon: a.icon,
+              classRestriction: a.classRestriction,
+              configured: false,
+              tags: this._getItemAdvancementTags(a, unlocked),
+              classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
+              summary: '',
+              rowActions: tableRowActions.filter(
+                (action) => !action.condition || action.condition({ data: a }),
+              ),
+              value: '',
+            }) satisfies AdvancementItemContext,
+        ),
         configured: CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL,
       };
     }
@@ -808,26 +832,33 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       }
 
       const items: AdvancementItemContext[] = await Promise.all(
-        advancements.map(async (advancement: any) => ({
-          id: advancement.id,
-          order: advancement.sortingValueForLevel(level),
-          title: advancement.titleForLevel(level, {
-            configMode,
-            legacyDisplay,
-          }),
-          icon: advancement.icon,
-          classRestriction: advancement.classRestriction,
-          summary: await advancement.summaryForLevel(level, {
-            configMode,
-            legacyDisplay,
-          }),
-          configured: advancement.configuredForLevel(level),
-          tags: this._getItemAdvancementTags(advancement, unlocked),
-          value: advancement.valueForLevel?.(level),
-          classes: [advancement.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(
-            ' ',
-          ),
-        })),
+        advancements.map(
+          async (advancement: any) =>
+            ({
+              id: advancement.id,
+              order: advancement.sortingValueForLevel(level),
+              title: advancement.titleForLevel(level, {
+                configMode,
+                legacyDisplay,
+              }),
+              icon: advancement.icon,
+              classRestriction: advancement.classRestriction,
+              summary: await advancement.summaryForLevel(level, {
+                configMode,
+                legacyDisplay,
+              }),
+              configured: advancement.configuredForLevel(level),
+              tags: this._getItemAdvancementTags(advancement, unlocked),
+              value: advancement.valueForLevel?.(level),
+              classes: [
+                advancement.icon?.endsWith('.svg') ? 'svg' : '',
+              ].filterJoin(' '),
+              rowActions: tableRowActions.filter(
+                (action) =>
+                  !action.condition || action.condition({ data: advancement }),
+              ),
+            }) satisfies AdvancementItemContext,
+        ),
       );
 
       if (!items.length) {
@@ -847,7 +878,36 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               : CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL,
       };
     }
-    return advancement;
+
+    return Object.entries(advancement).map<AdvancementSection>(
+      ([level, context]: [string, AdvancementSectionContext]) => ({
+        key: level,
+        show: true,
+        columns: AdvancementColumnRuntime.getColumnSpecifications(
+          this.document,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
+          level,
+        ),
+        configured: context.configured,
+        items: context.items,
+        label:
+          level === CONSTANTS.ADVANCEMENT_LEVEL_ZERO
+            ? 'DND5E.AdvancementLevelAnyHeader'
+            : level === CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED
+              ? 'DND5E.AdvancementLevelNoneHeader'
+              : FoundryAdapter.localize('DND5E.AdvancementLevelHeader', {
+                  level: level,
+                }),
+        sectionActions: SectionActions.getItemAdvancementHeaderActions(
+          item,
+          unlocked,
+          level,
+          context.configured,
+          editable,
+        ),
+        dataset: {},
+      }),
+    );
   }
 
   /* -------------------------------------------- */

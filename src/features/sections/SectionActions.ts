@@ -14,23 +14,8 @@ import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { EventHelper } from 'src/utils/events';
-import type {
-  AdvancementSectionContext,
-  Item5e,
-  ItemSheetQuadroneContext,
-} from 'src/types/item.types';
-import TableHeaderButton from 'src/components/table-quadrone/table-buttons/TableHeaderButton.svelte';
-import type { Component } from 'svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { AdvancementSection, Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
-
-// TODO: Consolidate table header types to types.ts
-export type AdvancementTableHeaderAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<
-  TComponent,
-  { key: string; section: AdvancementSectionContext }
->;
 
 class SectionActions {
   getActionHeaderActions(
@@ -411,14 +396,14 @@ class SectionActions {
     sheetDocument: Item5e,
     unlocked: boolean,
     sectionKey: string,
-    configured: AdvancementSectionContext['configured'],
+    configured: AdvancementSection['configured'],
     editable: boolean,
-  ): AdvancementTableHeaderAction[] {
+  ): SectionCommand[] {
     if (!editable) {
       return [];
     }
 
-    let result: AdvancementTableHeaderAction[] = [];
+    let result: SectionCommand[] = [];
 
     if (
       unlocked &&
@@ -426,28 +411,22 @@ class SectionActions {
       !!configured
     ) {
       result.push({
-        component: TableHeaderButton,
-        props: (args) => ({
-          title: 'DND5E.AdvancementModifyChoices',
-          onControlClick: (ev, args) =>
-            FoundryAdapter.modifyAdvancementChoices(
-              args.data.key,
-              sheetDocument,
-            ),
-          iconClass: 'fa-solid fa-cog',
-          controlContext: args,
-        }),
-      } satisfies AdvancementTableHeaderAction<typeof TableHeaderButton>);
+        execute(params) {
+          FoundryAdapter.modifyAdvancementChoices(
+            params.section.key,
+            sheetDocument,
+          );
+        },
+        label: 'DND5E.AdvancementModifyChoices',
+        iconClass: 'fa-solid fa-cog',
+      });
     }
 
     if (!unlocked && configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL) {
       result.push({
-        component: TableHeaderButton,
-        props: () => ({
-          title: 'DND5E.AdvancementConfiguredComplete',
-          iconClass: 'fa-solid fa-badge-check emphasis',
-        }),
-      } satisfies AdvancementTableHeaderAction<typeof TableHeaderButton>);
+        iconClass: 'fa-solid fa-badge-check emphasis',
+        label: 'DND5E.AdvancementConfiguredComplete',
+      });
     }
 
     if (
@@ -455,24 +434,18 @@ class SectionActions {
       configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
     ) {
       result.push({
-        component: TableHeaderButton,
-        props: () => ({
-          title: 'DND5E.AdvancementConfiguredIncomplete',
-          iconClass: 'fa-solid fa-exclamation-triangle warning',
-        }),
-      } satisfies AdvancementTableHeaderAction<typeof TableHeaderButton>);
+        label: 'DND5E.AdvancementConfiguredIncomplete',
+        iconClass: 'fa-solid fa-exclamation-triangle warning',
+      });
     }
 
     result.push({
-      component: TableHeaderButton,
-      props: () => ({
-        title: 'DND5E.ADVANCEMENT.Action.Create',
-        iconClass: 'fa-solid fa-plus',
-        onControlClick: () => {
-          FoundryAdapter.createAdvancementSelectionDialog(sheetDocument);
-        },
-      }),
-    } satisfies AdvancementTableHeaderAction<typeof TableHeaderButton>);
+      label: 'DND5E.ADVANCEMENT.Action.Create',
+      iconClass: 'fa-solid fa-plus',
+      execute() {
+        FoundryAdapter.createAdvancementSelectionDialog(sheetDocument);
+      },
+    });
 
     return result;
   }

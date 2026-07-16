@@ -1,9 +1,6 @@
 
 ## To Do
 
-- [ ] <!-- TODO: Advancements, derive from TidySectionBase -->
-- [ ] <!-- TODO: Advancements, use column specs and custom column components -->
-- [ ] <!-- TODO: Advancements, use header action and row action render components -->
 - [ ] `generics="TEntry extends { id: string, uuid: string, name: string, img: string}"` - find out why TidyItemTable is using this generic interface and try to eliminate it. We should always have items when using the TidyItemTable.
 - [ ] <!-- TODO: Convert to an ordered section array for regular processing. -->
 - [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.

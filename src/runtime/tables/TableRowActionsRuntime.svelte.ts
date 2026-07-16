@@ -1,5 +1,6 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type {
+  Advancement5e,
   AdvancementItemContext,
   ContainerItemContext,
   Item5e,
@@ -94,9 +95,11 @@ export type EncounterCombatantMemberTableAction<
   TComponent extends Component<any> = Component<any>,
 > = TidyTableAction<TComponent, EncounterCombatantMemberTableActionData>;
 
+export type AdvancementTableActionData = { id: string };
+
 export type AdvancementTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, AdvancementItemContext>;
+> = TidyTableAction<TComponent, AdvancementTableActionData>;
 
 class TableRowActionsRuntime {
   getInventoryRowActions(
@@ -659,25 +662,25 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getItemAdvancementRowActions(context: ItemSheetQuadroneContext) {
+  getItemAdvancementRowActions(unlocked: boolean, item: Item5e) {
     let result: AdvancementTableAction[] = [];
 
-    if (context.unlocked) {
+    if (unlocked) {
       result.push({
         component: EditButton,
         props: (args) => ({
-          doc: context.item.system.advancement?.get(args.data.id),
+          doc: item.system.advancement?.get(args.data.id),
         }),
       } satisfies AdvancementTableAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: context.item.system.advancement?.get(args.data.id),
+          doc: item.system.advancement?.get(args.data.id),
           deleteFn: () =>
-            context.item.system.advancement
+            item.system.advancement
               ?.get(args.data.id)
-              ?.deleteDialog({ sheet: context.item }),
+              ?.deleteDialog({ sheet: item }),
         }),
       } satisfies AdvancementTableAction<typeof DeleteButton>);
     }
@@ -701,7 +704,7 @@ class TableRowActionsRuntime {
 
   getRowActionWidthInfo<TEntry>(
     entries: TEntry[],
-    rowActionFn: (entry: TEntry) => TidyTableAction<any, any>[] | undefined,
+    rowActionFn: (entry: TEntry) => any[] | undefined,
   ) {
     let maxRowActionsCount = 1;
 

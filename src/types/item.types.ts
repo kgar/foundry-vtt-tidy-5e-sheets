@@ -22,6 +22,7 @@ import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetC
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type { AdvancementTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export type PropertyContext = {
   active: string[];
@@ -156,7 +157,7 @@ export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
 export type ItemSheetQuadroneContext = {
   activities: ActivitySection[];
   activationTypes: GroupableSelectOption[];
-  advancement: AdvancementsContext;
+  advancement: AdvancementSection[];
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;
@@ -410,11 +411,7 @@ export type ContainerContents = {
   itemContext: Record<string, ContainerItemContext>;
 };
 
-export type AdvancementsContext = {
-  [level: string]: AdvancementSectionContext;
-};
-
-export type AdvancementSectionContext = {
+export type AdvancementSection = TidySectionBase & {
   items: AdvancementItemContext[];
   configured: 'partial' | 'full' | false;
 };
@@ -451,12 +448,14 @@ export type AdvancementItemContext = {
    * A subclass of ScaleValueType.
    * For our purposes, this is a means to call `.toString()`.
    */
-  value: { toString(): string };
+  value?: { toString(): string };
   /**
    * Any CSS classes that should be added to a given row.
    * In svelte, we would do this in the component.
    */
   classes: string;
+  /** Available row actions for the current advancement. */
+  rowActions: AdvancementTableAction[];
 };
 
 export type MovementInfo = {
