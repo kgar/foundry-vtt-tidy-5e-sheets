@@ -38,127 +38,129 @@
   }
 </script>
 
-<div {@attach observeResize(onResize)} class="tidy-table-container"></div>
-{#each context.advancement as section (section.key)}
-  {let longestRowActionArray = $derived(
-    section.items.reduce<AdvancementTableAction[]>((prev, curr) => {
-      return prev.length > curr.rowActions.length ? prev : curr.rowActions;
-    }, []),
-  )}
+<div {@attach observeResize(onResize)} class="tidy-table-container">
+  {#each context.advancement as section (section.key)}
+    {let longestRowActionArray = $derived(
+      section.items.reduce<AdvancementTableAction[]>((prev, curr) => {
+        return prev.length > curr.rowActions.length ? prev : curr.rowActions;
+      }, []),
+    )}
 
-  <!-- 
+    <!-- 
     Unlike with most other tables, this table cannot hide 
     the header buttons when there are too few row actions. 
     All header controls must be visible, always. 
   -->
-  {let arrayWithMostActions = $derived(
-    longestRowActionArray.length > section.sectionActions.length
-      ? longestRowActionArray
-      : section.sectionActions,
-  )}
+    {let arrayWithMostActions = $derived(
+      longestRowActionArray.length > section.sectionActions.length
+        ? longestRowActionArray
+        : section.sectionActions,
+    )}
 
-  {const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
-      section.items,
-      (_entry) => arrayWithMostActions,
-    ),
-  )}
+    {const rowActionInfo = $derived(
+      TableRowActionsRuntime.getRowActionWidthInfo(
+        section.items,
+        (_entry) => arrayWithMostActions,
+      ),
+    )}
 
-  {const hiddenColumns = $derived(
-    AdvancementColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth - rowActionInfo.widthPx,
-      section.columns,
-    ),
-  )}
+    {const hiddenColumns = $derived(
+      AdvancementColumnRuntime.determineHiddenColumns(
+        sectionsInlineWidth - rowActionInfo.widthPx,
+        section.columns,
+      ),
+    )}
 
-  <TidyTable key={section.key}>
-    {#snippet header()}
-      <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-        <TidyTableHeaderCell primary={true} class="header-label-cell">
-          <h3>
-            {localize(section.label)}
-          </h3>
-        </TidyTableHeaderCell>
+    <TidyTable key={section.key}>
+      {#snippet header()}
+        <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+          <TidyTableHeaderCell primary={true} class="header-label-cell">
+            <h3>
+              {localize(section.label)}
+            </h3>
+          </TidyTableHeaderCell>
 
-        <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
-        <TidyTableHeaderCell
-          class="header-cell-actions"
-          columnWidth="{rowActionInfo.widthRems}rem"
-          data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-        >
-          <SectionActionsColumnHeader
-            {section}
-            sheetDocument={context.document}
-            maxRowActionsCount={arrayWithMostActions.length}
-          />
-        </TidyTableHeaderCell>
-      </TidyTableHeaderRow>
-    {/snippet}
-    {#snippet body()}
-      {#each section.items as advancement (advancement.id)}
-        <TidyAdvancementTableRow
-          {advancement}
-          item={context.item}
-          rowClass="advancement-item"
-        >
-          {#snippet children()}
-            <span class="tidy-table-row-use-button disabled">
-              <img
-                class="item-image"
-                src={advancement.icon}
-                alt={advancement.title ?? ''}
-              />
-            </span>
-            <TidyTableCell primary={true}>
-              <div class="item-name">
-                <div class="cell-text">
-                  <div class="cell-name">
-                    {@html advancement.title}
-                    {#each advancement.tags as tag}
-                      <i class={tag.iconClass} title={localize(tag.label)}></i>
-                    {/each}
-                  </div>
-                  <div class="advancement-cell-context">
-                    {@html advancement.summary}
+          <TidyTableHeaderCell
+            class="header-cell-actions"
+            columnWidth="{rowActionInfo.widthRems}rem"
+            data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+          >
+            <SectionActionsColumnHeader
+              {section}
+              sheetDocument={context.document}
+              maxRowActionsCount={arrayWithMostActions.length}
+            />
+          </TidyTableHeaderCell>
+        </TidyTableHeaderRow>
+      {/snippet}
+      {#snippet body()}
+        {#each section.items as advancement (advancement.id)}
+          <TidyAdvancementTableRow
+            {advancement}
+            item={context.item}
+            rowClass="advancement-item"
+          >
+            {#snippet children()}
+              <span class="tidy-table-row-use-button disabled">
+                <img
+                  class="item-image"
+                  src={advancement.icon}
+                  alt={advancement.title ?? ''}
+                />
+              </span>
+              <TidyTableCell primary={true}>
+                <div class="item-name">
+                  <div class="cell-text">
+                    <div class="cell-name">
+                      {@html advancement.title}
+                      {#each advancement.tags as tag}
+                        <i class={tag.iconClass} title={localize(tag.label)}
+                        ></i>
+                      {/each}
+                    </div>
+                    <div class="advancement-cell-context">
+                      {@html advancement.summary}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </TidyTableCell>
+              </TidyTableCell>
 
-            <TidyTableCustomCells
-              {context}
-              ctx={advancement}
-              entry={advancement}
-              {hiddenColumns}
-              {section}
-            />
+              <TidyTableCustomCells
+                {context}
+                ctx={advancement}
+                entry={advancement}
+                {hiddenColumns}
+                {section}
+              />
 
-            <TidyTableCell
-              columnWidth="{rowActionInfo.widthRems}rem"
-              class="tidy-table-actions"
-              attributes={{
-                ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-              }}
-            >
-              {const data = $derived<AdvancementTableActionData>(advancement)}
-              <TableRowActions rowActions={advancement.rowActions} {data} />
-            </TidyTableCell>
-          {/snippet}
-        </TidyAdvancementTableRow>
-      {/each}
-    {/snippet}
-  </TidyTable>
-{:else}
-  <button
-    type="button"
-    class="button button-primary"
-    title={localize('DND5E.ADVANCEMENT.Action.Create')}
-    aria-label={localize('DND5E.ADVANCEMENT.Action.Create')}
-    onclick={() =>
-      FoundryAdapter.createAdvancementSelectionDialog(context.item)}
-  >
-    <i class="fas fa-plus"></i>
-    {localize('DND5E.ADVANCEMENT.Action.Create')}
-  </button>
-{/each}
+              <TidyTableCell
+                columnWidth="{rowActionInfo.widthRems}rem"
+                class="tidy-table-actions"
+                attributes={{
+                  ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                }}
+              >
+                {const data = $derived<AdvancementTableActionData>(advancement)}
+                <TableRowActions rowActions={advancement.rowActions} {data} />
+              </TidyTableCell>
+            {/snippet}
+          </TidyAdvancementTableRow>
+        {/each}
+      {/snippet}
+    </TidyTable>
+  {:else}
+    <button
+      type="button"
+      class="button button-primary"
+      title={localize('DND5E.ADVANCEMENT.Action.Create')}
+      aria-label={localize('DND5E.ADVANCEMENT.Action.Create')}
+      onclick={() =>
+        FoundryAdapter.createAdvancementSelectionDialog(context.item)}
+    >
+      <i class="fas fa-plus"></i>
+      {localize('DND5E.ADVANCEMENT.Action.Create')}
+    </button>
+  {/each}
+</div>

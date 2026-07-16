@@ -391,7 +391,6 @@ class SectionActions {
     return [];
   }
 
-  // TODO: this should only return SectionCommand[]
   getItemAdvancementHeaderActions(
     sheetDocument: Item5e,
     unlocked: boolean,
