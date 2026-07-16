@@ -51,7 +51,7 @@
             context.system.crew.value.length > context.system.crew.max,
         },
       ]}
-      data-area="crew"
+      data-area={CONSTANTS.SECTION_TYPE_CREW}
     >
       <div class="pin-details">
         <div class="pin-name-container">
@@ -84,6 +84,14 @@
             placeholder="—"
           />
         </span>
+        {#if context.crewBrokenLinks.length && context.editable}
+          <a data-action="removeBrokenLinks">
+            <i class="fa-solid fa-link-broken"></i>
+            {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+              value: context.crewBrokenLinks.length,
+            })}
+          </a>
+        {/if}
       </div>
       {#if context.system.crew.max > 0}
         <!-- svelte-ignore a11y_missing_attribute -->
@@ -111,7 +119,7 @@
             context.system.passengers.max,
         },
       ]}
-      data-area="passengers"
+      data-area={CONSTANTS.SECTION_TYPE_PASSENGERS}
     >
       <div class="pin-details">
         <div class="pin-name-container">
@@ -144,6 +152,14 @@
             placeholder="—"
           />
         </span>
+        {#if context.passengerBrokenLinks.length && context.editable}
+          <a data-action="removeBrokenLinks">
+            <i class="fa-solid fa-link-broken"></i>
+            {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+              value: context.passengerBrokenLinks.length,
+            })}
+          </a>
+        {/if}
       </div>
       {#if context.system.passengers.max > 0}
         <!-- svelte-ignore a11y_missing_attribute -->

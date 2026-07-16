@@ -483,6 +483,20 @@
               {/if}
             {/snippet}
           </TidyTable>
+
+          {#if context.draftBrokenLinks.length && context.editable}
+            <button
+              type="button"
+              class="button"
+              data-action="removeBrokenLinks"
+              data-area={CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS}
+            >
+              <i class="fa-solid fa-link-broken"></i>
+              {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+                value: context.draftBrokenLinks.length,
+              })}
+            </button>
+          {/if}
         {/if}
       {/if}
     {/each}

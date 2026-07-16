@@ -574,7 +574,7 @@ class TableRowActionsRuntime {
         props: (args) => ({
           callback: () => {
             return context.sheet._unassignCrew(
-              args.data.actor,
+              args.data.actor.uuid,
               args.data.ctx.assignedTo,
             );
           },
