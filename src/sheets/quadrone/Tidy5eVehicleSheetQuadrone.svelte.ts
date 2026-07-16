@@ -910,6 +910,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       toUpdate['system.draft.value'] = draft;
     }
 
+    // game.release.generation <= 14 // convert to batched update
     await Promise.all([this.document.update(toUpdate), ...itemUpdates]);
   }
 
