@@ -146,9 +146,6 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          ctx.rowActions ?? [],
         );
       }
 

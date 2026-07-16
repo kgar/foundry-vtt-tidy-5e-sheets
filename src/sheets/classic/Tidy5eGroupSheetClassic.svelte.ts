@@ -440,9 +440,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone only
         );
       }
     }

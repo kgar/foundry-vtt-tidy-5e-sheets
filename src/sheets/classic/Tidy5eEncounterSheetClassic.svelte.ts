@@ -433,9 +433,6 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone only
         );
       }
     }

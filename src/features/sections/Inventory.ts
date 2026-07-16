@@ -80,7 +80,6 @@ export class Inventory {
     customSectionOptions: Partial<InventorySection>,
     fallbackInventoryKey: string = '',
     customSectionFlag: 'section' | 'actionSection' = 'section',
-    rowActions: TidyTableAction<any, any>[],
   ) {
     const customSectionName = TidyFlags[customSectionFlag].get(item);
 
@@ -159,7 +158,6 @@ export class Inventory {
 
   static async getContainerContentsInventory(
     container: Item5e,
-    rowActions: TidyTableAction<any, any>[],
     options: Partial<InventorySection> = {
       canCreate: false,
     },
@@ -178,9 +176,6 @@ export class Inventory {
         item,
         inventoryTypes,
         options,
-        undefined,
-        undefined,
-        rowActions,
       );
     }
 

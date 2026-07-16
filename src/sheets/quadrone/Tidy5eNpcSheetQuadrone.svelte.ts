@@ -509,9 +509,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         {
           canCreate: true,
         },
-        undefined,
-        undefined,
-        ctx.rowActions ?? [],
       );
     }
 

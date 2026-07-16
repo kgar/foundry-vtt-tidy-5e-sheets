@@ -610,9 +610,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          ctx.rowActions ?? [],
         );
       } else if (
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
@@ -633,8 +630,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             canCreate: false,
           },
           CONSTANTS.ITEM_TYPE_SPELL,
-          undefined,
-          ctx.rowActions ?? [],
         );
       } else {
         const rowActions = itemIsInventoryType
@@ -656,8 +651,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             canCreate: false,
           },
           CONSTANTS.ITEM_TYPE_FEAT,
-          undefined,
-          ctx.rowActions ?? [],
         );
       }
     }

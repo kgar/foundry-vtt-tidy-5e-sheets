@@ -1,5 +1,10 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type { ContainerItemContext, Item5e } from 'src/types/item.types';
+import type {
+  AdvancementItemContext,
+  ContainerItemContext,
+  Item5e,
+  ItemSheetQuadroneContext,
+} from 'src/types/item.types';
 import type {
   ActiveEffect5e,
   ActiveEffectContext,
@@ -51,39 +56,47 @@ export type ItemTableActionData = {
   ctx?: any;
 };
 
-export type ItemTableAction<TComponent extends Component<any>> =
-  TidyTableAction<TComponent, ItemTableActionData>;
+export type ItemTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ItemTableActionData>;
 
 export type EffectTableActionData = {
   effect: ActiveEffect5e;
   ctx?: ActiveEffectContext;
 };
 
-export type EffectTableAction<TComponent extends Component<any>> =
-  TidyTableAction<TComponent, EffectTableActionData>;
+export type EffectTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, EffectTableActionData>;
 
 export type ActivityTableActionData = {
   activity: Activity5e;
   ctx?: any;
 };
 
-export type ActivityTableAction<TComponent extends Component<any>> =
-  TidyTableAction<TComponent, ActivityTableActionData>;
+export type ActivityTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ActivityTableActionData>;
 
 export type ActorTableActionData = {
   actor: Actor5e;
   ctx?: any;
 };
 
-export type ActorTableAction<TComponent extends Component<any>> =
-  TidyTableAction<TComponent, ActorTableActionData>;
+export type ActorTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ActorTableActionData>;
 
 export type EncounterCombatantMemberTableActionData =
   EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
 
 export type EncounterCombatantMemberTableAction<
-  TComponent extends Component<any>,
+  TComponent extends Component<any> = Component<any>,
 > = TidyTableAction<TComponent, EncounterCombatantMemberTableActionData>;
+
+export type AdvancementTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, AdvancementItemContext>;
 
 class TableRowActionsRuntime {
   getInventoryRowActions(
@@ -644,6 +657,39 @@ class TableRowActionsRuntime {
     );
 
     return rowActions;
+  }
+
+  getItemAdvancementRowActions(context: ItemSheetQuadroneContext) {
+    let result: AdvancementTableAction[] = [];
+
+    if (context.unlocked) {
+      result.push({
+        component: EditButton,
+        props: (args) => ({
+          doc: context.item.system.advancement?.get(args.data.id),
+        }),
+      } satisfies AdvancementTableAction<typeof EditButton>);
+
+      result.push({
+        component: DeleteButton,
+        props: (args) => ({
+          doc: context.item.system.advancement?.get(args.data.id),
+          deleteFn: () =>
+            context.item.system.advancement
+              ?.get(args.data.id)
+              ?.deleteDialog({ sheet: context.item }),
+        }),
+      } satisfies AdvancementTableAction<typeof DeleteButton>);
+    }
+
+    result.push({
+      component: MenuButton,
+      props: () => ({
+        targetSelector: '.advancement-item',
+      }),
+    } satisfies ItemTableAction<typeof MenuButton>);
+
+    return result;
   }
 
   // TODO: Determine how to make managing row action styles less hardcoded and more configured.

@@ -1021,9 +1021,6 @@ export class Tidy5eNpcSheet
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone only
         );
       }
       // Handle custom section, if present

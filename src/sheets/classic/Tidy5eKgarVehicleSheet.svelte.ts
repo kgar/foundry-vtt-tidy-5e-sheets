@@ -425,9 +425,6 @@ export class Tidy5eVehicleSheet
           {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone
         );
       }
       // Features (and stray items)

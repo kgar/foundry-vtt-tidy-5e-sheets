@@ -423,7 +423,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         },
         '',
         'actionSection',
-        rowActions,
       );
     }
 
@@ -442,7 +441,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
-        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         partitions.feats,
@@ -834,7 +832,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
             // TODO: Find a cleaner way to handle all tabled documents' row actions.
             // Contained items get row actions like any other item
             ctx.rowActions = inventoryRowActions.filter(
-              (action) => !action.condition || action.condition({ data: { item, ctx } }),
+              (action) =>
+                !action.condition || action.condition({ data: { item, ctx } }),
             );
           }
 
@@ -860,7 +859,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const ctx = (context.itemContext[item.id] ??= {});
 
       ctx.rowActions = inventoryRowActions.filter(
-        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+        (action) =>
+          !action.condition || action.condition({ data: { item, ctx } }),
       );
 
       Inventory.applyInventoryItemToSection(
@@ -872,9 +872,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         {
           canCreate: true,
         },
-        undefined,
-        undefined,
-        ctx.rowActions,
       );
     }
 
@@ -901,7 +898,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of spells) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = spellRowActions.filter(
-        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+        (action) =>
+          !action.condition || action.condition({ data: { item, ctx } }),
       );
     }
 
@@ -939,14 +937,14 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of feats) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = featureRowActions.filter(
-        (action) => !action.condition || action.condition({ data: { item, ctx } }),
+        (action) =>
+          !action.condition || action.condition({ data: { item, ctx } }),
       );
     }
 
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
-        context.itemContext,
         context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         feats,

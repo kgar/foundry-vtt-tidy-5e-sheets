@@ -49,6 +49,9 @@ import type {
 import type {
   ActivityTableAction,
   ActorTableAction,
+  EffectTableAction,
+  EffectTableActionData,
+  EncounterCombatantMemberTableAction,
 } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
@@ -360,7 +363,7 @@ export type ActivityItemContext = {
   toHit: number | null;
   spell?: ActivityItemSpellContext;
   type: string;
-  rowActions: ActivityTableAction<any>[];
+  rowActions: ActivityTableAction[];
 };
 
 export type ActivityItemSpellContext = {
@@ -1015,7 +1018,7 @@ export type ActiveEffectContext = {
   uuid: string;
   effect: ActiveEffect5e;
   riders: ActiveEffectContext[];
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: EffectTableAction[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
@@ -1437,7 +1440,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
-  rowActions: ActorTableAction<any>[];
+  rowActions: ActorTableAction[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1612,7 +1615,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorTableAction[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1621,7 +1624,7 @@ export type EncounterPlaceholderQuadroneContext = {
   name: string;
   visible: boolean;
   type: 'placeholder';
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: EncounterCombatantMemberTableAction[];
 } & EncounterPlaceholder;
 
 export type EncounterMemberSection = TidySectionBase & {
@@ -1694,7 +1697,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorTableAction[];
 };
 
 export type DraftAnimalSection = {
@@ -1710,7 +1713,7 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorTableAction[];
 };
 
 export type CrewSection = {
@@ -1728,7 +1731,7 @@ export type PassengerMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorTableAction[];
 };
 
 export type PassengerSection = {

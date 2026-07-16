@@ -1101,9 +1101,6 @@ export class Tidy5eCharacterSheet
         {
           canCreate: true,
         },
-        undefined,
-        undefined,
-        [], // quadrone only
       );
     }
 
@@ -1135,9 +1132,6 @@ export class Tidy5eCharacterSheet
         {
           canCreate: false,
         },
-        undefined,
-        undefined,
-        [], // quadrone only
       );
     }
 
