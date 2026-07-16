@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] Figure out - all document contexts should have reference to the current sheet
 - [ ] Apply strong `TData` typing to all the row action runtime callers' contexts.
 - [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.

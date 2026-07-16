@@ -313,11 +313,11 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
         options: [],
       },
       rollData: rollData,
-      sheet: this,
       system: this.document.system,
       tabs: [],
       utilities: utilities,
       ...documentSheetContext,
+      sheet: this,
     };
 
     // Properties

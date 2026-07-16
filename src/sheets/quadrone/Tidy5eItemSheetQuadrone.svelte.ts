@@ -400,7 +400,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
-      sheet: this,
       subtitle: this._getItemSubtitle(),
       spellProgression: [],
       system: this.document.system,
@@ -515,6 +514,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ...this._getSourceItemContext(),
 
       ...documentSheetContext,
+
+      sheet: this,
     };
 
     // Physical items

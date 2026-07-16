@@ -50,6 +50,7 @@ import type {
   ActivityTableAction,
   ActorTableAction,
 } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -788,6 +789,7 @@ export type DocumentSheetV2Context = {
   /** The data schema of the document. */
   fields: any; // One day, maybe we can have types. Doesn't seem within reach right now.
   rootId: string;
+  sheet: TidyExtensibleDocumentSheetMixinInstance;
   source: Record<string, any>;
   /**
    * Tells whether the sheet is unlocked via the Sheet Mode feature.

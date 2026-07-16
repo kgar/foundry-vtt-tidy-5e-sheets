@@ -341,7 +341,6 @@ export function getTidy5eActorSheetQuadroneBase<
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
-        sheet: this,
         system: this.actor.system,
         tabs: [],
         themeSettings,
@@ -351,7 +350,10 @@ export function getTidy5eActorSheetQuadroneBase<
           foundry.utils
             .deepClone(this.actor._preparationWarnings)
             .filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
+
         ...documentSheetContext,
+
+        sheet: this,
       };
 
       // Concentration
