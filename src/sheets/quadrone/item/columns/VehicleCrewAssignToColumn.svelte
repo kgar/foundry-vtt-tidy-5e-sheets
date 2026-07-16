@@ -20,8 +20,13 @@
     const src =
       event.currentTarget.closest('[data-area]')?.getAttribute('data-area') ??
       'crew';
+
     const item = await fromUuid(uuid);
-    await context.sheet._assignCrew(rowDocument, item, { src });
+
+    if (item) {
+      await context.sheet._assignCrew(rowDocument.uuid, item, { src });
+    }
+
     uuid = '';
   }
 </script>

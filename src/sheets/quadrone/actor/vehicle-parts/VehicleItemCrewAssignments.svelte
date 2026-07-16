@@ -22,7 +22,10 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(
+    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+      .useBasicTheme ?? false,
+  );
 
   function onEmptySlotClicked(
     ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
@@ -60,6 +63,8 @@
                 <a
                   data-action="showContextMenu"
                   data-target-selector="[data-context-menu]"
+                  data-tooltip=""
+                  aria-label={localize('TIDY5E.BrokenLink')}
                 >
                   <i class="fa-solid fa-link-slash broken-link-icon"></i>
                 </a>
@@ -76,14 +81,18 @@
                         'data-action': 'showContextMenu',
                         'data-target-selector': '[data-context-menu]',
                       }
-                    : {}
-                )}
+                    : {},
+              )}
               <li
                 class="slot member-slot"
                 data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
-                <a {...memberAttributes}>
+                <a
+                  {...memberAttributes}
+                  data-tooltip=""
+                  aria-label={slot.actor.name}
+                >
                   <img src={slot.actor.img} alt={slot.actor.name} />
                 </a>
               </li>

@@ -5,7 +5,7 @@ import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehic
 
 export function configureVehicleMemberContextMenu(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone
+  app: Tidy5eVehicleSheetQuadrone,
 ) {
   ui.context.menuItems = getVehicleMemberContextOptionsQuadrone(element, app);
 
@@ -15,7 +15,7 @@ export function configureVehicleMemberContextMenu(
     getMemberUuid(element),
     getVehicleItemId(element),
     getCrewArea(element),
-    ui.context.menuItems
+    ui.context.menuItems,
   );
 }
 
@@ -27,7 +27,7 @@ export function configureVehicleMemberContextMenu(
  */
 function getVehicleMemberContextOptionsQuadrone(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone
+  app: Tidy5eVehicleSheetQuadrone,
 ) {
   const vehicleItemId = getVehicleItemId(element);
 
@@ -46,20 +46,18 @@ function getVehicleMemberContextOptionsQuadrone(
 
 function getCrewArea(element: HTMLElement) {
   return element.closest('[data-area]')?.getAttribute('data-area') as
-    | CrewArea5e
-    | undefined;
+    CrewArea5e | undefined;
 }
 
 function getVehicleItemId(element: HTMLElement) {
   return element.closest('[data-item-id]')?.getAttribute('data-item-id') as
-    | string
-    | undefined;
+    string | undefined;
 }
 
 function getVehicleItemMemberOptions(
   element: HTMLElement,
   app: Tidy5eVehicleSheetQuadrone,
-  vehicleItemId: string
+  vehicleItemId: string,
 ): ContextMenuEntry[] {
   const brokenLink = !!element.closest('.broken');
   const empty = !!element.closest('.empty');
@@ -90,10 +88,8 @@ function getVehicleItemMemberOptions(
       condition: () => !!memberUuid,
       icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
-        const actor = await fromUuid(memberUuid);
-
-        if (item) {
-          await app._unassignCrew(actor, item);
+        if (item && memberUuid) {
+          await app._unassignCrew(memberUuid, item);
         }
       },
     },
@@ -110,7 +106,7 @@ function getVehicleItemMemberOptions(
 
 function getDraftMemberOptions(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone
+  app: Tidy5eVehicleSheetQuadrone,
 ): ContextMenuEntry[] {
   const canChange = canChangeDocument(app);
 
@@ -120,7 +116,7 @@ function getDraftMemberOptions(
     {
       name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
         name: FoundryAdapter.localize(
-          'TIDY5E.Vehicle.Member.DraftAnimal.Label'
+          'TIDY5E.Vehicle.Member.DraftAnimal.Label',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
@@ -136,59 +132,60 @@ function getDraftMemberOptions(
 
 function getCrewMemberOptions(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone
+  app: Tidy5eVehicleSheetQuadrone,
 ): ContextMenuEntry[] {
   const memberUuid = getMemberUuid(element);
 
   const assigned = !!element.closest(
-    '[data-area="crew"][data-tidy-section-key="assigned"]'
+    '[data-area="crew"][data-tidy-section-key="assigned"]',
   );
 
   const unassigned = !!element.closest(
-    '[data-area="crew"][data-tidy-section-key="unassigned"]'
+    '[data-area="crew"][data-tidy-section-key="unassigned"]',
   );
 
   const assignableItems = app.getAssignableItems();
 
   const currentlyAssignedItemId = assigned
     ? element
-      .closest('[data-assigned-item-id]')
-      ?.getAttribute('data-assigned-item-id')
+        .closest('[data-assigned-item-id]')
+        ?.getAttribute('data-assigned-item-id')
     : undefined;
 
   const area = element.closest('[data-area]')?.getAttribute('data-area') as
-    | CrewArea5e
-    | undefined;
+    CrewArea5e | undefined;
 
   const canChange = canChangeDocument(app);
 
   const assignableItemOptions: ContextMenuEntry[] = Object.values(
-    assignableItems
+    assignableItems,
   )
     .map((mountableItem) => {
       return {
         name: `${FoundryAdapter.localize(
           'TIDY5E.ContextMenuActionAssignToEntity',
-          { entityName: mountableItem.name }
+          { entityName: mountableItem.name },
         )} ${mountableItem.crew?.value ?? '0'}/${
           mountableItem.crew?.max ?? '—'
         }`,
         icon: '<i class="fa-solid fa-user-plus fa-fw"></i>',
         condition: () => area === 'crew' && canChange,
         callback: async () => {
-          const actor = await fromUuid(memberUuid);
+          if (!memberUuid) {
+            return;
+          }
 
           const currentlyAssignedItem = app.document.items.get(
-            currentlyAssignedItemId
+            currentlyAssignedItemId,
           );
 
           if (currentlyAssignedItem) {
-            await app._unassignCrew(actor, currentlyAssignedItem);
+            await app._unassignCrew(memberUuid, currentlyAssignedItem);
           }
 
           const newItemToAssign = app.document.items.get(mountableItem.id);
 
-          await app._assignCrew(actor, newItemToAssign, { src: area });
+          await app._assignCrew(memberUuid, newItemToAssign, { src: area });
         },
       };
     })
@@ -200,14 +197,16 @@ function getCrewMemberOptions(
       icon: '<i class="fa-solid fa-user-minus fa-fw"></i>',
       condition: () => !!currentlyAssignedItemId && canChange,
       callback: async () => {
-        const actor = await fromUuid(memberUuid);
+        if (!memberUuid) {
+          return;
+        }
 
         const currentlyAssignedItem = app.document.items.get(
-          currentlyAssignedItemId
+          currentlyAssignedItemId,
         );
 
         if (currentlyAssignedItemId) {
-          await app._unassignCrew(actor, currentlyAssignedItem);
+          await app._unassignCrew(memberUuid, currentlyAssignedItem);
         }
       },
     },
@@ -215,7 +214,7 @@ function getCrewMemberOptions(
     {
       name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
         name: FoundryAdapter.localize(
-          'TIDY5E.Vehicle.Section.Crew.Unassigned.Label'
+          'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
@@ -242,8 +241,7 @@ function getCrewMemberOptions(
 }
 function getMemberUuid(element: HTMLElement) {
   return element.closest('[data-uuid]')?.getAttribute('data-uuid') as
-    | string
-    | undefined;
+    string | undefined;
 }
 
 function canChangeDocument(app: Tidy5eVehicleSheetQuadrone) {
