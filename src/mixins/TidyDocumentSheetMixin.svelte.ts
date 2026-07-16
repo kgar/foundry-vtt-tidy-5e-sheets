@@ -268,6 +268,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         ...context,
         defaultCurrency: FoundryAdapter.getDefaultCurrencyConfig(),
         unlocked: sheetModeConfig.unlocked,
+        config: CONFIG.DND5E,
       } as DocumentSheetV2Context;
     }
 

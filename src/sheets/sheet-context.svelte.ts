@@ -1,6 +1,5 @@
 import { CONSTANTS } from 'src/constants';
 import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
-import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type {
   EncounterSheetClassicContext,
   GroupSheetClassicContext,
@@ -12,6 +11,7 @@ import type {
   ItemSheetQuadroneContext,
 } from 'src/types/item.types';
 import type {
+  AnyActorSheetQuadroneContext,
   CharacterSheetContext,
   CharacterSheetQuadroneContext,
   DocumentSheetV2Context,
@@ -32,6 +32,12 @@ export function tryGetSheetContext<TContext = any>(): TContext | undefined {
 
 export function getSheetContext<TContext = DocumentSheetV2Context>(): TContext {
   return getContext<CoarseReactivityProvider<TContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
+  ).data;
+}
+
+export function getActorSheetQuadroneContext(): AnyActorSheetQuadroneContext {
+  return getContext<CoarseReactivityProvider<AnyActorSheetQuadroneContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   ).data;
 }

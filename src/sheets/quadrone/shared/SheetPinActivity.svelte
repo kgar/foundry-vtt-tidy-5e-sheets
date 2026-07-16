@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getActorSheetQuadroneContext, getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -50,7 +50,7 @@
     return false;
   }
 
-  let context = $derived(getSheetContext());
+  let context = $derived(getActorSheetQuadroneContext());
 
   const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
 

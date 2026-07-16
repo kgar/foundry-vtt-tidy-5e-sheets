@@ -297,7 +297,6 @@ export class Tidy5eContainerSheetQuadrone
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-      config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,

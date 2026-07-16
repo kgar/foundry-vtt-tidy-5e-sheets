@@ -203,7 +203,6 @@ export function getTidy5eActorSheetClassicV2Base<
             relativeTo: this.actor,
           }
         ),
-        config: CONFIG.DND5E,
         customActorTraits: [],
         customContent: [],
         disableExperience:

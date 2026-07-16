@@ -775,6 +775,7 @@ export type SpecialTraits = {
 
 // TODO: Try to eliminate this because it's already being
 export type DocumentSheetV2Context = {
+  config: typeof CONFIG.DND5E;
   /** The game world's default currency when a single currency is needed. */
   defaultCurrency: CurrencyItemConfig & { key: string };
   /** The document which the sheet represents. */
@@ -1799,3 +1800,12 @@ export type SvelteInputEvent = (
     currentTarget: EventTarget & HTMLInputElement;
   },
 ) => any;
+
+/* Aggregates */
+
+export type AnyActorSheetQuadroneContext =
+  | CharacterSheetQuadroneContext
+  | NpcSheetQuadroneContext
+  | VehicleSheetQuadroneContext
+  | GroupSheetQuadroneContext
+  | EncounterSheetQuadroneContext;

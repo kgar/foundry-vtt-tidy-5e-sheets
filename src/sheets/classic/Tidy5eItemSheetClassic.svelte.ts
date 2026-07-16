@@ -235,7 +235,6 @@ export class Tidy5eItemSheetClassic extends getTidyExtensibleDocumentSheetMixin(
       advancementEditable:
         (this.advancementConfigurationMode || !this.document.isEmbedded) &&
         editable,
-      config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label })
       ),

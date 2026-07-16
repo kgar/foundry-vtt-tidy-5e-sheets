@@ -312,7 +312,6 @@ export function getTidy5eActorSheetQuadroneBase<
       let context: ActorSheetQuadroneContext = {
         actor: this.actor,
         appId: this.appId,
-        config: CONFIG.DND5E,
         customActorTraits: [],
         customContent: [],
         enableXp:

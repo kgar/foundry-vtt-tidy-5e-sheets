@@ -30,6 +30,7 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
+  DocumentSheetV2Context,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -328,7 +329,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               return Activities.isConfigurable(a);
             })
             ?.map((activity: Activity5e) =>
-              Activities.getActivityItemContext(activity, documentSheetContext.unlocked),
+              Activities.getActivityItemContext(
+                activity,
+                documentSheetContext.unlocked,
+              ),
             )
             .sort((a: any, b: any) => a.sort - b.sort),
           columns: ActivityColumnRuntime.getColumnSpecifications(
@@ -347,7 +351,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),
-      config: CONFIG.DND5E,
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label }),
       ),

@@ -467,7 +467,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       canObserveAll: Object.values(memberContext).every((m) => m.canObserve),
-      config: CONFIG.DND5E,
       containerPanelItems:
         await Inventory.getContainerPanelItems(uncontainedItems),
       customContent: [],
