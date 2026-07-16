@@ -208,6 +208,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         CONSTANTS.SECTION_TYPE_CREW,
       ),
     };
+    
     const unassignedCrewSection = {
       ...SheetSections.EMPTY,
       type: CONSTANTS.SECTION_TYPE_CREW,
@@ -225,6 +226,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         CONSTANTS.SECTION_TYPE_CREW,
       ),
     };
+
     const passengerSection = {
       ...SheetSections.EMPTY,
       type: CONSTANTS.SECTION_TYPE_PASSENGERS,
