@@ -214,13 +214,11 @@ class SectionActions {
     return controls;
   }
 
-  getVehicleMemberHeaderActions(
-    section: CrewSection | PassengerSection | DraftAnimalSection,
-  ): SectionCommand[] {
+  getVehicleMemberHeaderActions(type: string): SectionCommand[] {
     const entityNameKey =
-      section.type === 'crew'
+      type === 'crew'
         ? 'DND5E.VEHICLE.Crew.Label'
-        : section.type === 'draft'
+        : type === 'draft'
           ? 'TIDY5E.Vehicle.Member.DraftAnimal.Label'
           : 'TIDY5E.Vehicle.Member.Passenger.Label';
 

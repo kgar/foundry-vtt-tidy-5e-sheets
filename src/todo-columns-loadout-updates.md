@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] <!-- TODO: Convert to an ordered section array for regular processing. -->
 - [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.
 - [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.

@@ -1717,8 +1717,10 @@ export type CrewMemberContext = {
 };
 
 export type CrewSection = {
-  type: 'crew';
+  type: typeof CONSTANTS.SECTION_TYPE_CREW;
   members: CrewMemberContext[];
+  showEmptyState: boolean;
+  showCount: boolean;
 } & TidySectionBase;
 
 export type CrewSections = {
@@ -1735,8 +1737,10 @@ export type PassengerMemberContext = {
 };
 
 export type PassengerSection = {
-  type: 'passengers';
+  type: typeof CONSTANTS.SECTION_TYPE_PASSENGERS;
   members: PassengerMemberContext[];
+  showEmptyState: boolean;
+  showCount: boolean;
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
@@ -1745,6 +1749,7 @@ export type VehicleSheetQuadroneContext = {
     value: number;
     denomination: string;
   };
+  crewAndPassengers: (CrewSection | PassengerSection)[];
   crew: CrewSections;
   crewBrokenLinks: string[];
   draftBrokenLinks: string[];

@@ -191,6 +191,58 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       relativeTo: this.actor,
     };
 
+    const assignedCrewSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_CREW,
+      label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_ASSIGNED,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_ASSIGNED,
+      ),
+      showCount: true,
+      showEmptyState: false,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_CREW,
+      ),
+    };
+    const unassignedCrewSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_CREW,
+      label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_UNASSIGNED,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_UNASSIGNED,
+      ),
+      showCount: false,
+      showEmptyState: true,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_CREW,
+      ),
+    };
+    const passengerSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_PASSENGERS,
+      label: 'DND5E.VEHICLE.Crew.Passengers',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_PASSENGERS,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_PASSENGERS,
+      ),
+      showCount: true,
+      showEmptyState: true,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_PASSENGERS,
+      ),
+    };
+    
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],
@@ -204,31 +256,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           this.actor.system.attributes.price?.denomination ??
           actorContext.defaultCurrency.key,
       },
+      crewAndPassengers: [
+        unassignedCrewSection,
+        assignedCrewSection,
+        passengerSection,
+      ],
       crew: {
-        assigned: {
-          ...SheetSections.EMPTY,
-          type: CONSTANTS.SECTION_TYPE_CREW,
-          label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
-          members: [],
-          key: CONSTANTS.SECTION_KEY_ASSIGNED,
-          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-            CONSTANTS.SECTION_KEY_ASSIGNED,
-          ),
-        },
-        unassigned: {
-          ...SheetSections.EMPTY,
-          type: CONSTANTS.SECTION_TYPE_CREW,
-          label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
-          members: [],
-          key: CONSTANTS.SECTION_KEY_UNASSIGNED,
-          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-            CONSTANTS.SECTION_KEY_UNASSIGNED,
-          ),
-        },
+        assigned: assignedCrewSection,
+        unassigned: unassignedCrewSection,
       },
       crewBrokenLinks: [],
       draftBrokenLinks: [],
@@ -243,18 +278,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       },
       features: [],
       mountableItems: {},
-      passengers: {
-        ...SheetSections.EMPTY,
-        type: CONSTANTS.SECTION_TYPE_PASSENGERS,
-        label: 'DND5E.VEHICLE.Crew.Passengers',
-        members: [],
-        key: CONSTANTS.SECTION_KEY_PASSENGERS,
-        columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-          CONSTANTS.SECTION_KEY_PASSENGERS,
-        ),
-      },
+      passengers: passengerSection,
       passengerBrokenLinks: [],
       quality: this.actor.system.attributes.quality?.value ?? 0,
       size: {
@@ -301,8 +325,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
               )
             : [];
       } else {
-        section.sectionActions =
-          SectionActions.getVehicleMemberHeaderActions(section);
+        section.sectionActions = SectionActions.getVehicleMemberHeaderActions(
+          CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
+        );
       }
     });
 
@@ -314,12 +339,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         section,
       );
     });
-
-    context.crew.unassigned.sectionActions =
-      SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
-
-    context.passengers.sectionActions =
-      SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
     // Custom content
     context.customContent =
