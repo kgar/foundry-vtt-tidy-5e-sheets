@@ -2,12 +2,14 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type {
   ActiveEffectSection,
   ActivityItemContext,
+  AdvancementTableAction,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
   GroupableSelectOption,
   InventorySection,
+  ItemTableAction,
   Tab,
   TidySectionBase,
   Utilities,
@@ -20,9 +22,7 @@ import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemShee
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import type { AdvancementTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export type PropertyContext = {
   active: string[];
@@ -309,7 +309,7 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
-  rowActions?: TidyTableAction<any, any>[];
+  rowActions?: ItemTableAction[];
 };
 
 export type ContainerSheetClassicContext = {

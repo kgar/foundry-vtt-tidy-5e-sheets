@@ -12,16 +12,17 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetQuadroneContext } from 'src/types/types';
+  import type {
+    ActorSheetQuadroneContext,
+    ItemTableActionData,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import type { PowersSection } from './McdmClassBundle';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime, {
-    type ItemTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 

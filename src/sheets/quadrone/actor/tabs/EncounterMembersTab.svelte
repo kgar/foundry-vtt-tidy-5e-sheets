@@ -5,10 +5,7 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
@@ -24,6 +21,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
+  import type { ActorTableActionData } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 

@@ -30,6 +30,7 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
+  AdvancementTableAction,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -46,9 +47,7 @@ import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
-import TableRowActionsRuntime, {
-  type AdvancementTableAction,
-} from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';

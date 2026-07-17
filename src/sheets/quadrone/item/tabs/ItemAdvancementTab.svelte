@@ -9,10 +9,6 @@
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import type {
-    AdvancementTableAction,
-    AdvancementTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
@@ -20,6 +16,10 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
+  import type {
+    AdvancementTableAction,
+    AdvancementTableActionData,
+  } from 'src/types/types';
 
   let localize = FoundryAdapter.localize;
 

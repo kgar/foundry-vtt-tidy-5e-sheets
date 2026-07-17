@@ -6,8 +6,6 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import type { CrewSection, PassengerSection } from 'src/types/types';
-  import type { Snippet } from 'svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
@@ -15,11 +13,10 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import type { ActorTableActionData } from 'src/types/types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(

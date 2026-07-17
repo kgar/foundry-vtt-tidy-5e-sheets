@@ -1,10 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-    type EncounterCombatantMemberTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -19,6 +16,10 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
+  import {
+    type EncounterCombatantMemberTableActionData,
+    type ActorTableActionData,
+  } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(

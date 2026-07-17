@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData extends {}">
-  import type { TidyTableAction } from '../table-buttons/table.types';
+  import type { TidyTableAction } from 'src/types/types';
 
   type Props = {
     rowActions?: TidyTableAction<any, TData>[];

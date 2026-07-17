@@ -1,25 +1,18 @@
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { Item5e } from 'src/types/item.types';
 import type {
-  Advancement5e,
-  AdvancementItemContext,
-  ContainerItemContext,
-  Item5e,
-  ItemSheetQuadroneContext,
-} from 'src/types/item.types';
-import type {
-  ActiveEffect5e,
-  ActiveEffectContext,
+  ActivityTableAction,
   Actor5e,
   ActorSheetQuadroneContext,
+  ActorTableAction,
+  AdvancementTableAction,
   CharacterSheetQuadroneContext,
-  CrewMemberContext,
   DocumentSheetQuadroneContext,
-  EncounterMemberQuadroneContext,
-  EncounterPlaceholderQuadroneContext,
+  EffectTableAction,
+  EncounterCombatantMemberTableAction,
+  ItemTableAction,
   NpcSheetQuadroneContext,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
-import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
@@ -39,7 +32,6 @@ import type { CrewArea5e } from 'src/foundry/foundry.types';
 import GenericActionButton from 'src/components/table-quadrone/table-buttons/GenericActionButton.svelte';
 import AttuneButton from 'src/components/table-quadrone/table-buttons/AttuneButton.svelte';
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -51,55 +43,6 @@ type RowActionConfig = {
   /** The caller is capable of attuning to items. Default: true */
   canAttune?: boolean;
 };
-
-export type ItemTableActionData = {
-  item: Item5e;
-  ctx?: any;
-};
-
-export type ItemTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ItemTableActionData>;
-
-export type EffectTableActionData = {
-  effect: ActiveEffect5e;
-  ctx?: ActiveEffectContext;
-};
-
-export type EffectTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, EffectTableActionData>;
-
-export type ActivityTableActionData = {
-  activity: Activity5e;
-  ctx?: any;
-};
-
-export type ActivityTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ActivityTableActionData>;
-
-export type ActorTableActionData = {
-  actor: Actor5e;
-  ctx?: any;
-};
-
-export type ActorTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ActorTableActionData>;
-
-export type EncounterCombatantMemberTableActionData =
-  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
-
-export type EncounterCombatantMemberTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, EncounterCombatantMemberTableActionData>;
-
-export type AdvancementTableActionData = { id: string };
-
-export type AdvancementTableAction<
-  TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, AdvancementTableActionData>;
 
 class TableRowActionsRuntime {
   getInventoryRowActions(

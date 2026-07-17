@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { getContext, type Component } from 'svelte';
@@ -12,16 +11,17 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActionsRuntime, {
-    type ActivityTableAction,
-    type ActivityTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
+  import type {
+    ActivityTableAction,
+    ActivityTableActionData,
+  } from 'src/types/types';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 

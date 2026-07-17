@@ -13,6 +13,7 @@
   import type {
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
+    ItemTableActionData,
     NpcSheetQuadroneContext,
     TidyItemSectionBase,
   } from 'src/types/types';
@@ -22,9 +23,7 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-  import TableRowActionsRuntime, {
-    type ItemTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import type { Item5e } from 'src/types/item.types';

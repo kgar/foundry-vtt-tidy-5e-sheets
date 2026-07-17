@@ -1,4 +1,4 @@
-import type { Component } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 import type {
   ContainerContents,
   CurrencyContext,
@@ -32,7 +32,6 @@ import type { DataField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   PortraitShape,
@@ -46,13 +45,6 @@ import type {
   CurrencyItemConfig,
   TravelPaceConfig,
 } from 'src/foundry/config.types';
-import type {
-  ActivityTableAction,
-  ActorTableAction,
-  EffectTableAction,
-  EffectTableActionData,
-  EncounterCombatantMemberTableAction,
-} from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export type Actor5e = any;
@@ -1819,3 +1811,68 @@ export type AnyActorSheetQuadroneContext =
   | VehicleSheetQuadroneContext
   | GroupSheetQuadroneContext
   | EncounterSheetQuadroneContext;
+
+/* Section / Row Actions */
+export type TidyTableActionArgs<TData extends object> = {
+  data: TData;
+};
+
+export type TidyTableAction<
+  TComponent extends Component<any>,
+  TData extends object,
+> = {
+  component: TComponent;
+  props: (args: TidyTableActionArgs<TData>) => ComponentProps<TComponent>;
+  condition?: (args: TidyTableActionArgs<TData>) => boolean;
+};
+
+
+
+export type ItemTableActionData = {
+  item: Item5e;
+  ctx?: any;
+};
+
+export type ItemTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ItemTableActionData>;
+
+export type EffectTableActionData = {
+  effect: ActiveEffect5e;
+  ctx?: ActiveEffectContext;
+};
+
+export type EffectTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, EffectTableActionData>;
+
+export type ActivityTableActionData = {
+  activity: Activity5e;
+  ctx?: any;
+};
+
+export type ActivityTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ActivityTableActionData>;
+
+export type ActorTableActionData = {
+  actor: Actor5e;
+  ctx?: any;
+};
+
+export type ActorTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, ActorTableActionData>;
+
+export type EncounterCombatantMemberTableActionData =
+  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+
+export type EncounterCombatantMemberTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, EncounterCombatantMemberTableActionData>;
+
+export type AdvancementTableActionData = { id: string };
+
+export type AdvancementTableAction<
+  TComponent extends Component<any> = Component<any>,
+> = TidyTableAction<TComponent, AdvancementTableActionData>;
