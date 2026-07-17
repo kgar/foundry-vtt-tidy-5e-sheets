@@ -424,16 +424,16 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
 
     for (let item of uncontainedItems) {
       if (inventoryTypes.has(item.type)) {
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypesArray,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypesArray,
+          customSectionOptions: {
             canCreate: true,
           },
-        );
+        });
       }
     }
 

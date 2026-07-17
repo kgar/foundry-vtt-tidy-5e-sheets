@@ -1105,7 +1105,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  rowActions?: TidyTableAction<any, any>[];
+  rowActions?: ItemTableAction[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1825,8 +1825,6 @@ export type TidyTableAction<
   props: (args: TidyTableActionArgs<TData>) => ComponentProps<TComponent>;
   condition?: (args: TidyTableActionArgs<TData>) => boolean;
 };
-
-
 
 export type ItemTableActionData = {
   item: Item5e;

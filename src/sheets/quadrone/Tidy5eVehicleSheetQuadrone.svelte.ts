@@ -622,16 +622,16 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         );
 
         // Cargo
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypes,
+          customSectionOptions: {
             canCreate: true,
           },
-        );
+        });
       } else if (
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.linkedActivity
@@ -641,17 +641,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             !action.condition || action.condition({ data: { item, ctx } }),
         );
 
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          statblock,
-          item,
-          statblockTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          inventory: statblock,
+          item: item,
+          defaultInventoryTypes: statblockTypes,
+          customSectionOptions: {
             canCreate: false,
           },
-          CONSTANTS.ITEM_TYPE_SPELL,
-        );
+          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_SPELL,
+        });
       } else {
         const rowActions = itemIsInventoryType
           ? inventoryRowActions
@@ -662,17 +662,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             !action.condition || action.condition({ data: { item, ctx } }),
         );
 
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          statblock,
-          item,
-          statblockTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          inventory: statblock,
+          item: item,
+          defaultInventoryTypes: statblockTypes,
+          customSectionOptions: {
             canCreate: false,
           },
-          CONSTANTS.ITEM_TYPE_FEAT,
-        );
+          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_FEAT,
+        });
       }
     }
 

@@ -1,13 +1,12 @@
 
 ## To Do
 
-- [ ] Refactor - consider making TableRowActions a base component (TData = never) that is derived by ItemTableRowActions, ActorTableRowActions, etc., if that's even possible, with the intent to require the caller to call upon the appropriate row actions component, given their row action typing.
-- [ ] Evaluate params for Inventory.applyInventoryItemToSection and tidy it up.
 - [ ] rowAction.condition is called when assigning to an itemContext entry, but in order to run the `condition()` function call, it asks for an itemContext entry. Figure out how to eliminate the need for the itemContext entry and instead just use the document data.
 - [ ] This happens a lot with row actions: `!action.condition || action.condition(...)` ; can we either create a helper or somehow have the condition function defaulted to a universal return true copy when not specified?
 - [ ] // TODO: This happens twice. Where should this data prep go?
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
+- [ ] // TODO: Figured out how to eliminate this niche parameter
 
 ## Stretch
 

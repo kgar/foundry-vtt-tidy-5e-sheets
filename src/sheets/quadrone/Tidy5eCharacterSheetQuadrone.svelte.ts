@@ -411,19 +411,17 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           !action.condition || action.condition({ data: { item, ctx } }),
       );
 
-      Inventory.applyInventoryItemToSection(
-        this.actor,
-        // TODO: This is a test to see if we can have inventory columns in the sheet tab for free.
-        CONSTANTS.TAB_ACTOR_INVENTORY,
-        inventory,
-        item,
-        inventoryTypes,
-        {
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: this.actor,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory: inventory,
+        item: item,
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: {
           canCreate: true,
         },
-        '',
-        'actionSection',
-      );
+        customSectionFlag: 'actionSection',
+      });
     }
 
     // Spellbook
@@ -863,16 +861,16 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           !action.condition || action.condition({ data: { item, ctx } }),
       );
 
-      Inventory.applyInventoryItemToSection(
-        this.actor,
-        CONSTANTS.TAB_ACTOR_INVENTORY,
-        inventory,
-        item,
-        inventoryTypes,
-        {
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: this.actor,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory: inventory,
+        item: item,
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: {
           canCreate: true,
         },
-      );
+      });
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(

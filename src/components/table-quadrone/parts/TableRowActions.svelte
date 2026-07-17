@@ -1,8 +1,11 @@
-<script lang="ts" generics="TData extends {}">
+<script
+  lang="ts"
+  generics="TData extends {}, TAction extends TidyTableAction<any, TData>"
+>
   import type { TidyTableAction } from 'src/types/types';
 
   type Props = {
-    rowActions?: TidyTableAction<any, TData>[];
+    rowActions?: TAction[];
     data: TData;
   };
 
