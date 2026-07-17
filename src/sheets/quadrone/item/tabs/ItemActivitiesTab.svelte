@@ -20,7 +20,7 @@
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
     ActivityTableAction,
-    ActivityTableActionData,
+    ActivityTableActionPropsData,
   } from 'src/types/types';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
@@ -167,7 +167,7 @@
                 />
 
                 <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-                  {const data = $derived<ActivityTableActionData>({
+                  {const data = $derived<ActivityTableActionPropsData>({
                     activity: ctx.activity,
                     ctx,
                   })}

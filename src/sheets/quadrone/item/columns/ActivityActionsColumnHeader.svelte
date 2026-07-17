@@ -1,12 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnHeaderProps } from 'src/runtime/types';
-  import type {
-    Actor5e,
-    DocumentSheetQuadroneContext,
-    TidySectionBase,
-  } from 'src/types/types';
+  import type { TidySectionBase } from 'src/types/types';
   import { getContext } from 'svelte';
 
   type Props = {

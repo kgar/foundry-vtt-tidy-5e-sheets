@@ -26,7 +26,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type {
-    ActorTableActionData,
+    ActorTableActionPropsData,
     DraftAnimalSection,
     InventorySection,
   } from 'src/types/types';
@@ -469,7 +469,7 @@
                               CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                           }}
                         >
-                          {const data = $derived<ActorTableActionData>({
+                          {const data = $derived<ActorTableActionPropsData>({
                             actor: member.actor,
                             ctx: member,
                           })}

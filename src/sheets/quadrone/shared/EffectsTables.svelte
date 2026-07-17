@@ -9,7 +9,7 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
-    EffectTableActionData,
+    EffectTableActionPropsData,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -186,7 +186,7 @@
           ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
         }}
       >
-        {const data = $derived<EffectTableActionData>({
+        {const data = $derived<EffectTableActionPropsData>({
           effect: ctx.effect,
           ctx,
         })}

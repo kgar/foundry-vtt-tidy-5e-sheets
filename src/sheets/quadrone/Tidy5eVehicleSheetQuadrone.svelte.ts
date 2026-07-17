@@ -7,12 +7,12 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  ActorTableAction,
   CrewMemberContext,
   DraftAnimalContext,
   DraftAnimalSection,
   InventorySection,
   PassengerMemberContext,
-  TidyTableAction,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
@@ -385,9 +385,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             quantity: 1,
             name: actor.name,
             rowActions: draftRowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: { actor, ctx: undefined } }),
+              (action) => !action.condition || action.condition({ actor }),
             ),
           } satisfies DraftAnimalContext,
         };
@@ -486,9 +484,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
           rowActions: rowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: { actor, ctx: undefined } }),
+            (action) => !action.condition || action.condition({ actor }),
           ),
         } satisfies PassengerMemberContext;
 
@@ -617,8 +613,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       // partition to section
       if (itemIsInventoryType && !item.system.isMountable) {
         ctx.rowActions = inventoryRowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => !action.condition || action.condition({ item }),
         );
 
         // Cargo
@@ -637,8 +632,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         item.system.linkedActivity
       ) {
         ctx.rowActions = statblockRowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => !action.condition || action.condition({ item }),
         );
 
         Inventory.applyInventoryItemToSection({
@@ -658,8 +652,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           : statblockRowActions;
 
         ctx.rowActions = rowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => !action.condition || action.condition({ item }),
         );
 
         Inventory.applyInventoryItemToSection({
@@ -1221,7 +1214,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    */
   async resolveCrewMemberContext(
     group: Record<string, number>,
-    rowActions: TidyTableAction<any, any>[],
+    rowActions: ActorTableAction[],
     // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
@@ -1257,9 +1250,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle,
             assignedTo: item,
             rowActions: rowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: { actor, ctx: undefined } }),
+              (action) => !action.condition || action.condition({ actor }),
             ),
           });
         }
@@ -1271,9 +1262,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           cr,
           subtitle,
           rowActions: rowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: { actor, ctx: undefined } }),
+            (action) => !action.condition || action.condition({ actor }),
           ),
         });
       }

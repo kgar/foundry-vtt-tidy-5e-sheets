@@ -21,7 +21,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
-  import type { ActorTableActionData } from 'src/types/types';
+  import type { ActorTableActionPropsData } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -163,7 +163,7 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {const data = $derived<ActorTableActionData>({
+                  {const data = $derived<ActorTableActionPropsData>({
                     actor: member.actor,
                     ctx: member,
                   })}

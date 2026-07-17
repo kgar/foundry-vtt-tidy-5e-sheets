@@ -1,18 +1,18 @@
 <script
   lang="ts"
-  generics="TData extends {}, TAction extends TidyTableAction<any, TData>"
+  generics="TPropsData extends {}, TAction extends TableRowAction<any, TPropsData, any>"
 >
-  import type { TidyTableAction } from 'src/types/types';
+  import type { TableRowAction } from 'src/types/types';
 
   type Props = {
     rowActions?: TAction[];
-    data: TData;
+    data: TPropsData;
   };
 
   let { rowActions = [], data }: Props = $props();
 </script>
 
 {#each rowActions as action}
-  {const props = $derived(action.props({ data }))}
+  {const props = $derived(action.props(data))}
   <action.component {...props} />
 {/each}

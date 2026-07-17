@@ -1813,64 +1813,109 @@ export type AnyActorSheetQuadroneContext =
   | EncounterSheetQuadroneContext;
 
 /* Section / Row Actions */
-export type TidyTableActionArgs<TData extends object> = {
-  data: TData;
-};
 
-export type TidyTableAction<
+export type TableRowActionProps<TData extends object> = TData;
+
+export type TableRowAction<
   TComponent extends Component<any>,
-  TData extends object,
+  TPropsData extends object,
+  TConditionData extends object,
 > = {
   component: TComponent;
-  props: (args: TidyTableActionArgs<TData>) => ComponentProps<TComponent>;
-  condition?: (args: TidyTableActionArgs<TData>) => boolean;
+  props: (args: TableRowActionProps<TPropsData>) => ComponentProps<TComponent>;
+  condition?: (args: TableRowActionProps<TConditionData>) => boolean;
 };
 
-export type ItemTableActionData = {
+export type ItemTableActionPropsData = {
   item: Item5e;
   ctx?: any;
 };
 
+export type ItemTableActionConditionData = {
+  item: Item5e;
+};
+
 export type ItemTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ItemTableActionData>;
+> = TableRowAction<
+  TComponent,
+  ItemTableActionPropsData,
+  ItemTableActionConditionData
+>;
 
-export type EffectTableActionData = {
+export type EffectTableActionPropsData = {
   effect: ActiveEffect5e;
   ctx?: ActiveEffectContext;
 };
 
+export type EffectTableActionConditionData = {
+  effect: ActiveEffect5e;
+};
+
 export type EffectTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, EffectTableActionData>;
+> = TableRowAction<
+  TComponent,
+  EffectTableActionPropsData,
+  EffectTableActionConditionData
+>;
 
-export type ActivityTableActionData = {
+export type ActivityTableActionPropsData = {
   activity: Activity5e;
   ctx?: any;
 };
 
+export type ActivityTableActionConditionData = {
+  activity: Activity5e;
+};
+
 export type ActivityTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ActivityTableActionData>;
+> = TableRowAction<
+  TComponent,
+  ActivityTableActionPropsData,
+  ActivityTableActionConditionData
+>;
 
-export type ActorTableActionData = {
+export type ActorTableActionPropsData = {
   actor: Actor5e;
   ctx?: any;
 };
 
+export type ActorTableActionConditionData = {
+  actor: Actor5e;
+};
+
 export type ActorTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, ActorTableActionData>;
+> = TableRowAction<
+  TComponent,
+  ActorTableActionPropsData,
+  ActorTableActionConditionData
+>;
 
-export type EncounterCombatantMemberTableActionData =
+export type EncounterCombatantMemberTableActionPropsData =
+  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+
+export type EncounterCombatantMemberTableActionConditionData =
   EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
 
 export type EncounterCombatantMemberTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, EncounterCombatantMemberTableActionData>;
+> = TableRowAction<
+  TComponent,
+  EncounterCombatantMemberTableActionPropsData,
+  EncounterCombatantMemberTableActionConditionData
+>;
 
-export type AdvancementTableActionData = { id: string };
+export type AdvancementTableActionPropsData = { id: string };
+
+export type AdvancementTableActionConditionData = { id: string };
 
 export type AdvancementTableAction<
   TComponent extends Component<any> = Component<any>,
-> = TidyTableAction<TComponent, AdvancementTableActionData>;
+> = TableRowAction<
+  TComponent,
+  AdvancementTableActionPropsData,
+  AdvancementTableActionConditionData
+>;

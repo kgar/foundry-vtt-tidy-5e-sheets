@@ -13,7 +13,7 @@
   import type {
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
-    ItemTableActionData,
+    ItemTableActionPropsData,
     NpcSheetQuadroneContext,
     TidyItemSectionBase,
   } from 'src/types/types';
@@ -239,7 +239,10 @@
                 ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
               }}
             >
-              {const data = $derived<ItemTableActionData>({ item: entry, ctx })}
+              {const data = $derived<ItemTableActionPropsData>({
+                item: entry,
+                ctx,
+              })}
               <TableRowActions rowActions={ctx.rowActions} {data} />
             </TidyTableCell>
           {/snippet}

@@ -60,31 +60,31 @@ class TableRowActionsRuntime {
         result.push({
           component: AttuneButton,
           condition: (args) =>
-            canAttune && FoundryAdapter.isAttunementApplicable(args.data.item),
+            canAttune && FoundryAdapter.isAttunementApplicable(args.item),
           props: (args) => ({
-            doc: args.data.item,
-            ctx: args.data.ctx,
+            doc: args.item,
+            ctx: args.ctx,
           }),
         } satisfies ItemTableAction<typeof AttuneButton>);
 
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (args) => ({ doc: args.data.item }),
+            props: (args) => ({ doc: args.item }),
           } satisfies ItemTableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
-              doc: args.data.item,
+              doc: args.item,
             }),
           } satisfies ItemTableAction<typeof DeleteButton>);
         } else {
           if (canEquip ?? true) {
             result.push({
               component: EquipButton,
-              props: (args) => ({ doc: args.data.item }),
-              condition: (args) => 'equipped' in args.data.item.system,
+              props: (args) => ({ doc: args.item }),
+              condition: (args) => 'equipped' in args.item.system,
             } satisfies ItemTableAction<typeof EquipButton>);
           }
 
@@ -92,8 +92,8 @@ class TableRowActionsRuntime {
             result.push({
               component: CharacterSheetTabToggleButton,
               props: (args) => ({
-                doc: args.data.item,
-                ctx: args.data.ctx,
+                doc: args.item,
+                ctx: args.ctx,
               }),
             } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
           }
@@ -121,21 +121,21 @@ class TableRowActionsRuntime {
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (args) => ({ doc: args.data.item }),
+            props: (args) => ({ doc: args.item }),
           } satisfies ItemTableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
-              doc: args.data.item,
+              doc: args.item,
             }),
           } satisfies ItemTableAction<typeof DeleteButton>);
         } else {
           result.push({
             component: CharacterSheetTabToggleButton,
             props: (args) => ({
-              doc: args.data.item,
-              ctx: args.data.ctx,
+              doc: args.item,
+              ctx: args.ctx,
             }),
           } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
         }
@@ -164,30 +164,30 @@ class TableRowActionsRuntime {
       if (context.owner) {
         result.push({
           component: SpellButton,
-          condition: (args) => !args.data.item.system.linkedActivity,
-          props: (args) => ({ doc: args.data.item }),
+          condition: (args) => !args.item.system.linkedActivity,
+          props: (args) => ({ doc: args.item }),
         } satisfies ItemTableAction<typeof SpellButton>);
 
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (args) => ({ doc: args.data.item }),
+            props: (args) => ({ doc: args.item }),
           } satisfies ItemTableAction<typeof EditButton>);
 
           result.push(
             {
               component: DeleteButton,
               props: (args) => ({
-                doc: args.data.item,
+                doc: args.item,
               }),
-              condition: (args) => !args.data.item.system.linkedActivity,
+              condition: (args) => !args.item.system.linkedActivity,
             } satisfies ItemTableAction<typeof DeleteButton>,
             {
               component: OpenActivityButton,
               props: (args) => ({
-                doc: args.data.item,
+                doc: args.item,
               }),
-              condition: (args) => !!args.data.item.system.linkedActivity,
+              condition: (args) => !!args.item.system.linkedActivity,
             } satisfies ItemTableAction<typeof OpenActivityButton>,
           );
         } else {
@@ -195,8 +195,8 @@ class TableRowActionsRuntime {
             result.push({
               component: CharacterSheetTabToggleButton,
               props: (args) => ({
-                doc: args.data.item,
-                ctx: args.data.ctx,
+                doc: args.item,
+                ctx: args.ctx,
               }),
             } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
           }
@@ -226,19 +226,19 @@ class TableRowActionsRuntime {
       if (context.unlocked) {
         result.push({
           component: EditButton,
-          props: (args) => ({ doc: args.data.item }),
+          props: (args) => ({ doc: args.item }),
         } satisfies ItemTableAction<typeof EditButton>);
 
         result.push({
           component: DeleteButton,
           props: (args) => ({
-            doc: args.data.item,
+            doc: args.item,
           }),
         } satisfies ItemTableAction<typeof DeleteButton>);
       } else if (context.hasActor && itemParent?.system.isCharacter) {
         result.push({
           component: CharacterSheetTabToggleButton,
-          props: (args) => ({ doc: args.data.item, ctx: args.data.ctx }),
+          props: (args) => ({ doc: args.item, ctx: args.ctx }),
         } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
       }
 
@@ -263,13 +263,13 @@ class TableRowActionsRuntime {
         if (unlocked) {
           result.push({
             component: EditButton,
-            props: (args) => ({ doc: args.data.item }),
+            props: (args) => ({ doc: args.item }),
           } satisfies ItemTableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
-              doc: args.data.item,
+              doc: args.item,
             }),
           } satisfies ItemTableAction<typeof DeleteButton>);
         }
@@ -294,23 +294,23 @@ class TableRowActionsRuntime {
     result.push({
       component: EffectToggleButton,
       props: (args) => ({
-        effect: args.data.effect,
+        effect: args.effect,
       }),
       condition: (args) =>
         context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
-        args.data.effect.type !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT,
+        args.effect.type !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT,
     } satisfies EffectTableAction<typeof EffectToggleButton>);
 
     if (context.unlocked) {
       result.push({
         component: EditButton,
-        props: (args) => ({ doc: args.data.effect }),
+        props: (args) => ({ doc: args.effect }),
       } satisfies EffectTableAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: args.data.effect,
+          doc: args.effect,
         }),
       } satisfies EffectTableAction<typeof DeleteButton>);
     }
@@ -332,13 +332,13 @@ class TableRowActionsRuntime {
       if (unlocked) {
         result.push({
           component: EditButton,
-          props: (args) => ({ doc: args.data.activity }),
+          props: (args) => ({ doc: args.activity }),
         } satisfies ActivityTableAction<typeof EditButton>);
 
         result.push({
           component: DeleteButton,
           props: (args) => ({
-            doc: args.data.activity,
+            doc: args.activity,
           }),
         } satisfies ActivityTableAction<typeof DeleteButton>);
       }
@@ -364,13 +364,13 @@ class TableRowActionsRuntime {
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (args) => ({ doc: args.data.item }),
+            props: (args) => ({ doc: args.item }),
           } satisfies ItemTableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
-              doc: args.data.item,
+              doc: args.item,
             }),
           } satisfies ItemTableAction<typeof DeleteButton>);
         }
@@ -399,7 +399,7 @@ class TableRowActionsRuntime {
             component: GenericActionButton,
             props: (args) => ({
               'data-action': 'removeMember',
-              'data-uuid': args.data.actor.uuid,
+              'data-uuid': args.actor.uuid,
               iconClasses: 'fa-solid fa-trash fa-fw',
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
@@ -430,7 +430,7 @@ class TableRowActionsRuntime {
             component: GenericActionButton,
             props: (args) => ({
               'data-action': 'removeMember',
-              'data-uuid': args.data.actor.uuid,
+              'data-uuid': args.actor.uuid,
               iconClasses: 'fa-solid fa-trash fa-fw',
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
@@ -459,7 +459,7 @@ class TableRowActionsRuntime {
         component: GenericActionButton,
         props: (args) => ({
           'data-action': 'removeDraftAnimal',
-          'data-uuid': args.data.actor.uuid,
+          'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
           tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
             name: FoundryAdapter.localize(
@@ -503,7 +503,7 @@ class TableRowActionsRuntime {
               : area === 'passengers'
                 ? 'removePassengers'
                 : '',
-          'data-uuid': args.data.actor.uuid,
+          'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
           tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
             name: FoundryAdapter.localize(memberTypeKey),
@@ -531,8 +531,8 @@ class TableRowActionsRuntime {
         props: (args) => ({
           callback: () => {
             return context.sheet._unassignCrew(
-              args.data.actor.uuid,
-              args.data.ctx.assignedTo,
+              args.actor.uuid,
+              args.ctx.assignedTo,
             );
           },
           iconClasses: 'fa-solid fa-user-minus',
@@ -566,7 +566,7 @@ class TableRowActionsRuntime {
           result.push({
             component: EncounterCombatVisibilityToggle,
             props: (args) => ({
-              rowContext: args.data,
+              rowContext: args,
             }),
           } satisfies EncounterCombatantMemberTableAction<
             typeof EncounterCombatVisibilityToggle
@@ -574,7 +574,7 @@ class TableRowActionsRuntime {
           result.push({
             component: EncounterCombatInclusionToggle,
             props: (args) => ({
-              rowContext: args.data,
+              rowContext: args,
             }),
           } satisfies EncounterCombatantMemberTableAction<
             typeof EncounterCombatInclusionToggle
@@ -583,7 +583,7 @@ class TableRowActionsRuntime {
             result.push({
               component: DeleteEncounterEntityButton,
               props: (args) => ({
-                rowContext: args.data,
+                rowContext: args,
               }),
             } satisfies EncounterCombatantMemberTableAction<
               typeof DeleteEncounterEntityButton
@@ -612,17 +612,17 @@ class TableRowActionsRuntime {
       result.push({
         component: EditButton,
         props: (args) => ({
-          doc: item.system.advancement?.get(args.data.id),
+          doc: item.system.advancement?.get(args.id),
         }),
       } satisfies AdvancementTableAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: item.system.advancement?.get(args.data.id),
+          doc: item.system.advancement?.get(args.id),
           deleteFn: () =>
             item.system.advancement
-              ?.get(args.data.id)
+              ?.get(args.id)
               ?.deleteDialog({ sheet: item }),
         }),
       } satisfies AdvancementTableAction<typeof DeleteButton>);

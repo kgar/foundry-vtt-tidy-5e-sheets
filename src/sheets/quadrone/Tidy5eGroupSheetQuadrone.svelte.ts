@@ -311,9 +311,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
         rowActions: rowActions.filter(
-          (action) =>
-            !action.condition ||
-            action.condition({ data: { actor, ctx: undefined } }),
+          (action) => !action.condition || action.condition({ actor }),
         ),
       };
 

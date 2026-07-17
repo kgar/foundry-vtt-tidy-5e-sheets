@@ -176,8 +176,7 @@ export class ConditionsAndEffects {
               effect: effect,
               riders: [],
               rowActions: allEffectRowActions.filter(
-                (action) =>
-                  !action.condition || action.condition({ data: { effect } }),
+                (action) => !action.condition || action.condition({ effect }),
               ),
             });
             return arr;
@@ -240,8 +239,7 @@ export class ConditionsAndEffects {
               effect: effect,
               riders: [],
               rowActions: allEffectRowActions.filter(
-                (action) =>
-                  !action.condition || action.condition({ data: { effect } }),
+                (action) => !action.condition || action.condition({ effect }),
               ),
             });
             return arr;

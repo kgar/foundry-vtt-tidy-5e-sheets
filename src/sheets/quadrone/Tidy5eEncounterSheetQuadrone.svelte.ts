@@ -269,7 +269,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           visible: combatantSettings.visible,
           type: 'member',
           rowActions: memberRowActions.filter(
-            (action) => !action.condition || action.condition({ data: { actor, ctx: memberContext } }),
+            (action) => !action.condition || action.condition({ actor }),
           ),
         };
 

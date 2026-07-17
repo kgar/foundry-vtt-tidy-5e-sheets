@@ -18,7 +18,7 @@
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
     AdvancementTableAction,
-    AdvancementTableActionData,
+    AdvancementTableActionPropsData,
   } from 'src/types/types';
 
   let localize = FoundryAdapter.localize;
@@ -142,7 +142,8 @@
                   ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                 }}
               >
-                {const data = $derived<AdvancementTableActionData>(advancement)}
+                {const data =
+                  $derived<AdvancementTableActionPropsData>(advancement)}
                 <TableRowActions rowActions={advancement.rowActions} {data} />
               </TidyTableCell>
             {/snippet}

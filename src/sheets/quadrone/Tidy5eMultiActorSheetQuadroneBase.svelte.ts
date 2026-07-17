@@ -117,8 +117,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         (inventoryItems: Item5e[], item: Item5e) => {
           const ctx = (context.itemContext[item.id] ??= {});
           ctx.rowActions = rowActions.filter(
-            (action) =>
-              !action.condition || action.condition({ data: { item, ctx } }),
+            (action) => !action.condition || action.condition({ item }),
           );
 
           const isWithinContainer = this.actor.items.has(item.system.container);

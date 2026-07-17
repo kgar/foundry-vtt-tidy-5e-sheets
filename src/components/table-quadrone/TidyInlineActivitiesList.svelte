@@ -9,7 +9,7 @@
   import type {
     ActivityItemContext,
     ActivityTableAction,
-    ActivityTableActionData,
+    ActivityTableActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -54,10 +54,7 @@
       (prev, entry) => {
         prev[entry.id] = rowActions.filter(
           (action) =>
-            !action.condition ||
-            action.condition({
-              data: { activity: entry.activity, ctx: entry },
-            }),
+            !action.condition || action.condition({ activity: entry.activity }),
         );
 
         return prev;
@@ -148,7 +145,7 @@
         />
 
         <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          {const data = $derived<ActivityTableActionData>({
+          {const data = $derived<ActivityTableActionPropsData>({
             activity: ctx.activity,
             ctx: ctx.activity,
           })}

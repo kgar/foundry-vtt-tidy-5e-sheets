@@ -813,7 +813,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
               summary: '',
               rowActions: tableRowActions.filter(
-                (action) => !action.condition || action.condition({ data: a }),
+                (action) => !action.condition || action.condition(a),
               ),
               value: '',
             }) satisfies AdvancementItemContext,
@@ -853,8 +853,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
                 advancement.icon?.endsWith('.svg') ? 'svg' : '',
               ].filterJoin(' '),
               rowActions: tableRowActions.filter(
-                (action) =>
-                  !action.condition || action.condition({ data: advancement }),
+                (action) => !action.condition || action.condition(advancement),
               ),
             }) satisfies AdvancementItemContext,
         ),

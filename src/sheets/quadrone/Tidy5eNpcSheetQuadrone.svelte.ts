@@ -361,8 +361,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
                 [];
 
         ctx.rowActions = rowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => !action.condition || action.condition({ item }),
         );
 
         return obj;

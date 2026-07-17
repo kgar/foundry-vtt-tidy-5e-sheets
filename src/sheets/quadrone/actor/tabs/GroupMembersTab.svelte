@@ -9,7 +9,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type {
     Actor5e,
-    ActorTableActionData,
+    ActorTableActionPropsData,
     GroupMemberSection,
   } from 'src/types/types';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
@@ -170,7 +170,7 @@
                         CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                     }}
                   >
-                    {const data = $derived<ActorTableActionData>({
+                    {const data = $derived<ActorTableActionPropsData>({
                       actor: member.actor,
                       ctx: member,
                     })}
