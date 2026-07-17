@@ -255,39 +255,6 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getActionsRowActions(owner: boolean, unlocked: boolean) {
-    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
-      let result: ItemRowAction<any>[] = [];
-
-      if (owner) {
-        if (unlocked) {
-          result.push({
-            component: EditButton,
-            props: (args) => ({ doc: args.item }),
-          } satisfies ItemRowAction<typeof EditButton>);
-
-          result.push({
-            component: DeleteButton,
-            props: (args) => ({
-              doc: args.item,
-            }),
-          } satisfies ItemRowAction<typeof DeleteButton>);
-        }
-      }
-
-      result.push({
-        component: MenuButton,
-        props: () => ({
-          targetSelector: '[data-context-menu]',
-        }),
-      } satisfies ItemRowAction<typeof MenuButton>);
-
-      return result;
-    });
-
-    return rowActions;
-  }
-
   getEffectsRowActions(context: DocumentSheetQuadroneContext<any>) {
     let result: EffectRowAction<any>[] = [];
 
