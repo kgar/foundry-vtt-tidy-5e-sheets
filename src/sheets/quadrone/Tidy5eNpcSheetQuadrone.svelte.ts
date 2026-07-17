@@ -39,6 +39,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC,
@@ -360,8 +361,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
               : // TODO: Determine if we should provide a simple default array of options
                 [];
 
-        ctx.rowActions = rowActions.filter(
-          (action) => !action.condition || action.condition({ item }),
+        ctx.rowActions = rowActions.filter((action) =>
+          checkCondition(action, { item }),
         );
 
         return obj;

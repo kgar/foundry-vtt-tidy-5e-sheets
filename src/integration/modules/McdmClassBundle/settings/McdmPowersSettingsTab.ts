@@ -21,6 +21,7 @@ import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
 import type { PowersSection } from '../McdmClassBundle';
 import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
 import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export function buildMcdmPowersSections(
   context: ActorSheetQuadroneContext,
@@ -39,7 +40,7 @@ export function buildMcdmPowersSections(
   for (const power of allPowers) {
     const ctx = (context.itemContext[power.id] ??= {});
     ctx.rowActions = rowActions.filter(
-      (action) => !action.condition || action.condition({ item: power }),
+      (action) => checkCondition(action, { item: power }),
     );
 
     if (TidyFlags.section.get(power)) {

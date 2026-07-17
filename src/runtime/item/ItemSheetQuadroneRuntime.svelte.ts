@@ -58,6 +58,7 @@ import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevel
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
+import { checkCondition } from 'src/utils/iteration';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -152,7 +153,7 @@ class ItemSheetQuadroneRuntimeImpl {
 
     let tabs = await TabManager.prepareTabsForRender(context, tabsToPrepare);
 
-    return tabs.filter((t) => !t.condition || t.condition(context.document));
+    return tabs.filter((t) => checkCondition(t, context.document));
   }
 
   private _getVisibleTabs(

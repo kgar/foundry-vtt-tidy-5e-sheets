@@ -22,6 +22,7 @@
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import { checkCondition } from 'src/utils/iteration';
 
   interface Props {
     item?: Item5e | null;
@@ -52,9 +53,8 @@
   const rowActionsMap = $derived(
     activities.reduce<Record<string, ActivityRowAction<any>[]>>(
       (prev, entry) => {
-        prev[entry.id] = rowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ activity: entry.activity }),
+        prev[entry.id] = rowActions.filter((action) =>
+          checkCondition(action, { activity: entry.activity }),
         );
 
         return prev;

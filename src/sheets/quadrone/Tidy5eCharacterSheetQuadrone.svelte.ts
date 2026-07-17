@@ -67,6 +67,7 @@ import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.s
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -823,8 +824,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           } else {
             // TODO: Find a cleaner way to handle all tabled documents' row actions.
             // Contained items get row actions like any other item
-            ctx.rowActions = inventoryRowActions.filter(
-              (action) => !action.condition || action.condition({ item }),
+            ctx.rowActions = inventoryRowActions.filter((action) =>
+              checkCondition(action, { item }),
             );
           }
 
@@ -849,8 +850,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
 
-      ctx.rowActions = inventoryRowActions.filter(
-        (action) => !action.condition || action.condition({ item }),
+      ctx.rowActions = inventoryRowActions.filter((action) =>
+        checkCondition(action, { item }),
       );
 
       Inventory.applyInventoryItemToSection({
@@ -887,8 +888,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     });
     for (const item of spells) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.rowActions = spellRowActions.filter(
-        (action) => !action.condition || action.condition({ item }),
+      ctx.rowActions = spellRowActions.filter((action) =>
+        checkCondition(action, { item }),
       );
     }
 
@@ -925,8 +926,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       TableRowActionsRuntime.getCharacterFeatureRowActions(context);
     for (const item of feats) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.rowActions = featureRowActions.filter(
-        (action) => !action.condition || action.condition({ item }),
+      ctx.rowActions = featureRowActions.filter((action) =>
+        checkCondition(action, { item }),
       );
     }
 

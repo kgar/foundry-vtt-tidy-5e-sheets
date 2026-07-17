@@ -53,6 +53,7 @@ import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.
 import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/tables/AdvancementColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -812,8 +813,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               tags: this._getItemAdvancementTags(a, unlocked),
               classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
               summary: '',
-              rowActions: tableRowActions.filter(
-                (action) => !action.condition || action.condition(a),
+              rowActions: tableRowActions.filter((action) =>
+                checkCondition(action, a),
               ),
               value: '',
             }) satisfies AdvancementItemContext,
@@ -852,8 +853,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               classes: [
                 advancement.icon?.endsWith('.svg') ? 'svg' : '',
               ].filterJoin(' '),
-              rowActions: tableRowActions.filter(
-                (action) => !action.condition || action.condition(advancement),
+              rowActions: tableRowActions.filter((action) =>
+                checkCondition(action, advancement),
               ),
             }) satisfies AdvancementItemContext,
         ),

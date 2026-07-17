@@ -44,6 +44,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -268,8 +269,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
-          rowActions: memberRowActions.filter(
-            (action) => !action.condition || action.condition({ actor }),
+          rowActions: memberRowActions.filter((action) =>
+            checkCondition(action, { actor }),
           ),
         };
 

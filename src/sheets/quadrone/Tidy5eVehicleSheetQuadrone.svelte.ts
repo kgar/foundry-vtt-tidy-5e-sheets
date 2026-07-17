@@ -38,6 +38,7 @@ import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+import { checkCondition } from 'src/utils/iteration';
 
 const localize = FoundryAdapter.localize;
 
@@ -385,7 +386,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             quantity: 1,
             name: actor.name,
             rowActions: draftRowActions.filter(
-              (action) => !action.condition || action.condition({ actor }),
+              (action) => checkCondition(action, { actor }),
             ),
           } satisfies DraftAnimalContext,
         };
@@ -484,7 +485,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
           rowActions: rowActions.filter(
-            (action) => !action.condition || action.condition({ actor }),
+            (action) => checkCondition(action, { actor }),
           ),
         } satisfies PassengerMemberContext;
 
@@ -613,7 +614,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       // partition to section
       if (itemIsInventoryType && !item.system.isMountable) {
         ctx.rowActions = inventoryRowActions.filter(
-          (action) => !action.condition || action.condition({ item }),
+          (action) => checkCondition(action, { item }),
         );
 
         // Cargo
@@ -632,7 +633,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         item.system.linkedActivity
       ) {
         ctx.rowActions = statblockRowActions.filter(
-          (action) => !action.condition || action.condition({ item }),
+          (action) => checkCondition(action, { item }),
         );
 
         Inventory.applyInventoryItemToSection({
@@ -652,7 +653,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           : statblockRowActions;
 
         ctx.rowActions = rowActions.filter(
-          (action) => !action.condition || action.condition({ item }),
+          (action) => checkCondition(action, { item }),
         );
 
         Inventory.applyInventoryItemToSection({
@@ -1250,7 +1251,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle,
             assignedTo: item,
             rowActions: rowActions.filter(
-              (action) => !action.condition || action.condition({ actor }),
+              (action) => checkCondition(action, { actor }),
             ),
           });
         }
@@ -1262,7 +1263,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           cr,
           subtitle,
           rowActions: rowActions.filter(
-            (action) => !action.condition || action.condition({ actor }),
+            (action) => checkCondition(action, { actor }),
           ),
         });
       }

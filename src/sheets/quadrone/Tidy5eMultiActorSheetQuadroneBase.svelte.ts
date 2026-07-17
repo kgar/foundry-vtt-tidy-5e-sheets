@@ -33,6 +33,7 @@ import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>,
@@ -116,8 +117,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
           const ctx = (context.itemContext[item.id] ??= {});
-          ctx.rowActions = rowActions.filter(
-            (action) => !action.condition || action.condition({ item }),
+          ctx.rowActions = rowActions.filter((action) =>
+            checkCondition(action, { item }),
           );
 
           const isWithinContainer = this.actor.items.has(item.system.container);
