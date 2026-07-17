@@ -9,9 +9,8 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type {
     Actor5e,
-    GroupMemberQuadroneContext,
+    ActorRowActionPropsData,
     GroupMemberSection,
-    TidySectionBase,
   } from 'src/types/types';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
@@ -27,10 +26,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
@@ -174,7 +170,7 @@
                         CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                     }}
                   >
-                    {const data = $derived<ActorTableActionData>({
+                    {const data = $derived<ActorRowActionPropsData>({
                       actor: member.actor,
                       ctx: member,
                     })}

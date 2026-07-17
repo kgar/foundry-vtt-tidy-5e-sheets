@@ -1,4 +1,4 @@
-import type { Component } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 import type {
   ContainerContents,
   CurrencyContext,
@@ -32,7 +32,6 @@ import type { DataField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   PortraitShape,
@@ -46,7 +45,7 @@ import type {
   CurrencyItemConfig,
   TravelPaceConfig,
 } from 'src/foundry/config.types';
-import type { ActorTableAction } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -356,6 +355,7 @@ export type ActivityItemContext = {
   toHit: number | null;
   spell?: ActivityItemSpellContext;
   type: string;
+  rowActions: ActivityRowAction[];
 };
 
 export type ActivityItemSpellContext = {
@@ -771,6 +771,7 @@ export type SpecialTraits = {
 
 // TODO: Try to eliminate this because it's already being
 export type DocumentSheetV2Context = {
+  config: typeof CONFIG.DND5E;
   /** The game world's default currency when a single currency is needed. */
   defaultCurrency: CurrencyItemConfig & { key: string };
   /** The document which the sheet represents. */
@@ -783,6 +784,7 @@ export type DocumentSheetV2Context = {
   /** The data schema of the document. */
   fields: any; // One day, maybe we can have types. Doesn't seem within reach right now.
   rootId: string;
+  sheet: TidyExtensibleDocumentSheetMixinInstance;
   source: Record<string, any>;
   /**
    * Tells whether the sheet is unlocked via the Sheet Mode feature.
@@ -1008,7 +1010,7 @@ export type ActiveEffectContext = {
   uuid: string;
   effect: ActiveEffect5e;
   riders: ActiveEffectContext[];
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: EffectRowAction[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
@@ -1103,7 +1105,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  rowActions?: TidyTableAction<any, any>[];
+  rowActions?: ItemRowAction[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1430,7 +1432,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
-  rowActions: ActorTableAction<any>[];
+  rowActions: ActorRowAction[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1605,7 +1607,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorRowAction[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1614,7 +1616,7 @@ export type EncounterPlaceholderQuadroneContext = {
   name: string;
   visible: boolean;
   type: 'placeholder';
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: EncounterCombatantMemberRowAction[];
 } & EncounterPlaceholder;
 
 export type EncounterMemberSection = TidySectionBase & {
@@ -1687,7 +1689,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorRowAction[];
 };
 
 export type DraftAnimalSection = {
@@ -1703,12 +1705,14 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorRowAction[];
 };
 
 export type CrewSection = {
-  type: 'crew';
+  type: typeof CONSTANTS.SECTION_TYPE_CREW;
   members: CrewMemberContext[];
+  showEmptyState: boolean;
+  showCount: boolean;
 } & TidySectionBase;
 
 export type CrewSections = {
@@ -1721,12 +1725,14 @@ export type PassengerMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: TidyTableAction<any, any>[];
+  rowActions: ActorRowAction[];
 };
 
 export type PassengerSection = {
-  type: 'passengers';
+  type: typeof CONSTANTS.SECTION_TYPE_PASSENGERS;
   members: PassengerMemberContext[];
+  showEmptyState: boolean;
+  showCount: boolean;
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
@@ -1735,6 +1741,7 @@ export type VehicleSheetQuadroneContext = {
     value: number;
     denomination: string;
   };
+  crewAndPassengers: (CrewSection | PassengerSection)[];
   crew: CrewSections;
   crewBrokenLinks: string[];
   draftBrokenLinks: string[];
@@ -1795,3 +1802,120 @@ export type SvelteInputEvent = (
     currentTarget: EventTarget & HTMLInputElement;
   },
 ) => any;
+
+/* Aggregates */
+
+export type AnyActorSheetQuadroneContext =
+  | CharacterSheetQuadroneContext
+  | NpcSheetQuadroneContext
+  | VehicleSheetQuadroneContext
+  | GroupSheetQuadroneContext
+  | EncounterSheetQuadroneContext;
+
+/* Section / Row Actions */
+
+export type TableRowActionProps<TData extends object> = TData;
+
+export type TableRowAction<
+  TComponent extends Component<any>,
+  TPropsData extends object,
+  TConditionData extends object,
+> = {
+  component: TComponent;
+  props: (args: TableRowActionProps<TPropsData>) => ComponentProps<TComponent>;
+  condition?: (args: TableRowActionProps<TConditionData>) => boolean;
+};
+
+export type ItemRowActionPropsData = {
+  item: Item5e;
+  ctx?: any;
+};
+
+export type ItemRowActionConditionData = {
+  item: Item5e;
+};
+
+export type ItemRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  ItemRowActionPropsData,
+  ItemRowActionConditionData
+>;
+
+export type EffectRowActionPropsData = {
+  effect: ActiveEffect5e;
+  ctx?: ActiveEffectContext;
+};
+
+export type EffectRowActionConditionData = {
+  effect: ActiveEffect5e;
+};
+
+export type EffectRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  EffectRowActionPropsData,
+  EffectRowActionConditionData
+>;
+
+export type ActivityRowActionPropsData = {
+  activity: Activity5e;
+  ctx?: any;
+};
+
+export type ActivityRowActionConditionData = {
+  activity: Activity5e;
+};
+
+export type ActivityRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  ActivityRowActionPropsData,
+  ActivityRowActionConditionData
+>;
+
+export type ActorRowActionPropsData = {
+  actor: Actor5e;
+  ctx?: any; // This should not be `any`; do we need to subdivide and conquer?
+};
+
+export type ActorRowActionConditionData = {
+  actor: Actor5e;
+};
+
+export type ActorRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  ActorRowActionPropsData,
+  ActorRowActionConditionData
+>;
+
+export type EncounterCombatantMemberRowActionPropsData =
+  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+
+export type EncounterCombatantMemberRowActionConditionData =
+  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+
+export type EncounterCombatantMemberRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  EncounterCombatantMemberRowActionPropsData,
+  EncounterCombatantMemberRowActionConditionData
+>;
+
+export type AdvancementRowActionPropsData = { id: string };
+
+export type AdvancementRowActionConditionData = { id: string };
+
+export type AdvancementRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  AdvancementRowActionPropsData,
+  AdvancementRowActionConditionData
+>;

@@ -32,8 +32,9 @@
       return;
     }
 
-    const dragData =
-      context.item.system.advancement.get(advancement.id)?.toDragData();
+    const dragData = context.item.system.advancement
+      .get(advancement.id)
+      ?.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 </script>

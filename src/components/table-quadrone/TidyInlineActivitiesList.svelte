@@ -8,23 +8,21 @@
   import { Activities } from 'src/features/activities/activities';
   import type {
     ActivityItemContext,
+    ActivityRowAction,
+    ActivityRowActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime, {
-    type ActivityTableAction,
-    type ActivityTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
-  import type { TidyTableAction } from './table-buttons/table.types';
-  import type { Activity5e } from 'src/foundry/dnd5e.types';
+  import { checkCondition } from 'src/utils/iteration';
 
   interface Props {
     item?: Item5e | null;
@@ -40,10 +38,7 @@
   );
 
   let rowActions = $derived(
-    TableRowActionsRuntime.getActivityRowActions(
-      context.owner,
-      context.unlocked,
-    ),
+    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
   );
 
   let section = $derived({
@@ -56,14 +51,10 @@
   });
 
   const rowActionsMap = $derived(
-    activities.reduce<Record<string, ActivityTableAction<any>[]>>(
+    activities.reduce<Record<string, ActivityRowAction<any>[]>>(
       (prev, entry) => {
-        prev[entry.id] = rowActions.filter(
-          (action) =>
-            !action.condition ||
-            action.condition({
-              data: { activity: entry.activity, ctx: entry },
-            }),
+        prev[entry.id] = rowActions.filter((action) =>
+          checkCondition(action, { activity: entry.activity }),
         );
 
         return prev;
@@ -154,7 +145,7 @@
         />
 
         <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          {const data = $derived<ActivityTableActionData>({
+          {const data = $derived<ActivityRowActionPropsData>({
             activity: ctx.activity,
             ctx: ctx.activity,
           })}

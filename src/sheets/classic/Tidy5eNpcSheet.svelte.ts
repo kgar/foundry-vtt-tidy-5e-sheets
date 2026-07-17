@@ -932,7 +932,12 @@ export class Tidy5eNpcSheet
         ctx.activities = Activities.getVisibleActivities(
           item,
           item.system.activities,
-        )?.map(Activities.getActivityItemContext);
+        )?.map((activity) =>
+          Activities.getActivityItemContext(
+            activity,
+            this.isEditable && this.isEditMode,
+          ),
+        );
 
         ctx.linkedUses = Activities.getLinkedUses(item);
 
@@ -1007,19 +1012,16 @@ export class Tidy5eNpcSheet
     // Organize Features
     for (let item of other) {
       if (inventoryTypes.has(item.type)) {
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypesArray,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypesArray,
+          customSectionOptions: {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone only
-        );
+        });
       }
       // Handle custom section, if present
       if (TidyFlags.section.get(item)) {

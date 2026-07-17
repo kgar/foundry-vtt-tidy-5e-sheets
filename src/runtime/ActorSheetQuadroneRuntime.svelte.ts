@@ -18,6 +18,7 @@ import {
 } from 'src/settings/settings-data-models';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import { CONSTANTS } from 'src/constants';
+import { checkCondition } from 'src/utils/iteration';
 
 type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 
@@ -89,9 +90,7 @@ export class ActorSheetQuadroneRuntime<
       tabsToPrepare,
     );
 
-    return renderableTabs.filter(
-      (t) => !t.condition || t.condition(context.document),
-    );
+    return renderableTabs.filter((t) => checkCondition(t, context.document));
   }
 
   _getVisibleTabIds(context: TSheetContext) {

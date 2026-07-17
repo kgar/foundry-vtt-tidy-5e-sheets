@@ -39,6 +39,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC,
@@ -360,9 +361,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
               : // TODO: Determine if we should provide a simple default array of options
                 [];
 
-        ctx.rowActions = rowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+        ctx.rowActions = rowActions.filter((action) =>
+          checkCondition(action, { item }),
         );
 
         return obj;
@@ -500,19 +500,16 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     // Section the items by type
     for (let item of inventoryItems) {
       const ctx = (context.itemContext[item.id] ??= {});
-      Inventory.applyInventoryItemToSection(
-        this.document,
-        CONSTANTS.TAB_ACTOR_INVENTORY,
-        inventory,
-        item,
-        inventoryTypes,
-        {
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory: inventory,
+        item: item,
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: {
           canCreate: true,
         },
-        undefined,
-        undefined,
-        ctx.rowActions ?? [],
-      );
+      });
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(

@@ -7,6 +7,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  ActorRowAction,
   CrewMemberContext,
   DraftAnimalContext,
   DraftAnimalSection,
@@ -37,7 +38,7 @@ import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import { checkCondition } from 'src/utils/iteration';
 
 const localize = FoundryAdapter.localize;
 
@@ -191,6 +192,60 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       relativeTo: this.actor,
     };
 
+    const assignedCrewSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_CREW,
+      label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_ASSIGNED,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_ASSIGNED,
+      ),
+      showCount: true,
+      showEmptyState: false,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_CREW,
+      ),
+    };
+
+    const unassignedCrewSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_CREW,
+      label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_UNASSIGNED,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_UNASSIGNED,
+      ),
+      showCount: false,
+      showEmptyState: true,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_CREW,
+      ),
+    };
+
+    const passengerSection = {
+      ...SheetSections.EMPTY,
+      type: CONSTANTS.SECTION_TYPE_PASSENGERS,
+      label: 'DND5E.VEHICLE.Crew.Passengers',
+      members: [],
+      key: CONSTANTS.SECTION_KEY_PASSENGERS,
+      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
+        this.document,
+        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        CONSTANTS.SECTION_KEY_PASSENGERS,
+      ),
+      showCount: true,
+      showEmptyState: true,
+      sectionActions: SectionActions.getVehicleMemberHeaderActions(
+        CONSTANTS.SECTION_TYPE_PASSENGERS,
+      ),
+    };
+
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],
@@ -204,31 +259,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           this.actor.system.attributes.price?.denomination ??
           actorContext.defaultCurrency.key,
       },
+      crewAndPassengers: [
+        unassignedCrewSection,
+        assignedCrewSection,
+        passengerSection,
+      ],
       crew: {
-        assigned: {
-          ...SheetSections.EMPTY,
-          type: CONSTANTS.SECTION_TYPE_CREW,
-          label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
-          members: [],
-          key: CONSTANTS.SECTION_KEY_ASSIGNED,
-          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-            CONSTANTS.SECTION_KEY_ASSIGNED,
-          ),
-        },
-        unassigned: {
-          ...SheetSections.EMPTY,
-          type: CONSTANTS.SECTION_TYPE_CREW,
-          label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
-          members: [],
-          key: CONSTANTS.SECTION_KEY_UNASSIGNED,
-          columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-            CONSTANTS.SECTION_KEY_UNASSIGNED,
-          ),
-        },
+        assigned: assignedCrewSection,
+        unassigned: unassignedCrewSection,
       },
       crewBrokenLinks: [],
       draftBrokenLinks: [],
@@ -243,18 +281,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       },
       features: [],
       mountableItems: {},
-      passengers: {
-        ...SheetSections.EMPTY,
-        type: CONSTANTS.SECTION_TYPE_PASSENGERS,
-        label: 'DND5E.VEHICLE.Crew.Passengers',
-        members: [],
-        key: CONSTANTS.SECTION_KEY_PASSENGERS,
-        columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-          CONSTANTS.SECTION_KEY_PASSENGERS,
-        ),
-      },
+      passengers: passengerSection,
       passengerBrokenLinks: [],
       quality: this.actor.system.attributes.quality?.value ?? 0,
       size: {
@@ -301,8 +328,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
               )
             : [];
       } else {
-        section.sectionActions =
-          SectionActions.getVehicleMemberHeaderActions(section);
+        section.sectionActions = SectionActions.getVehicleMemberHeaderActions(
+          CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
+        );
       }
     });
 
@@ -314,12 +342,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         section,
       );
     });
-
-    context.crew.unassigned.sectionActions =
-      SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
-
-    context.passengers.sectionActions =
-      SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
     // Custom content
     context.customContent =
@@ -364,9 +386,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             quantity: 1,
             name: actor.name,
             rowActions: draftRowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: { actor, ctx: undefined } }),
+              (action) => checkCondition(action, { actor }),
             ),
           } satisfies DraftAnimalContext,
         };
@@ -465,9 +485,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
           rowActions: rowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: { actor, ctx: undefined } }),
+            (action) => checkCondition(action, { actor }),
           ),
         } satisfies PassengerMemberContext;
 
@@ -596,69 +614,59 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       // partition to section
       if (itemIsInventoryType && !item.system.isMountable) {
         ctx.rowActions = inventoryRowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => checkCondition(action, { item }),
         );
 
         // Cargo
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypes,
+          customSectionOptions: {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          ctx.rowActions ?? [],
-        );
+        });
       } else if (
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.linkedActivity
       ) {
         ctx.rowActions = statblockRowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => checkCondition(action, { item }),
         );
 
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          statblock,
-          item,
-          statblockTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          inventory: statblock,
+          item: item,
+          defaultInventoryTypes: statblockTypes,
+          customSectionOptions: {
             canCreate: false,
           },
-          CONSTANTS.ITEM_TYPE_SPELL,
-          undefined,
-          ctx.rowActions ?? [],
-        );
+          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_SPELL,
+        });
       } else {
         const rowActions = itemIsInventoryType
           ? inventoryRowActions
           : statblockRowActions;
 
         ctx.rowActions = rowActions.filter(
-          (action) =>
-            !action.condition || action.condition({ data: { item, ctx } }),
+          (action) => checkCondition(action, { item }),
         );
 
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          statblock,
-          item,
-          statblockTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          inventory: statblock,
+          item: item,
+          defaultInventoryTypes: statblockTypes,
+          customSectionOptions: {
             canCreate: false,
           },
-          CONSTANTS.ITEM_TYPE_FEAT,
-          undefined,
-          ctx.rowActions ?? [],
-        );
+          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_FEAT,
+        });
       }
     }
 
@@ -1207,7 +1215,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    */
   async resolveCrewMemberContext(
     group: Record<string, number>,
-    rowActions: TidyTableAction<any, any>[],
+    rowActions: ActorRowAction[],
     // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
@@ -1243,9 +1251,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle,
             assignedTo: item,
             rowActions: rowActions.filter(
-              (action) =>
-                !action.condition ||
-                action.condition({ data: { actor, ctx: undefined } }),
+              (action) => checkCondition(action, { actor }),
             ),
           });
         }
@@ -1257,9 +1263,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           cr,
           subtitle,
           rowActions: rowActions.filter(
-            (action) =>
-              !action.condition ||
-              action.condition({ data: { actor, ctx: undefined } }),
+            (action) => checkCondition(action, { actor }),
           ),
         });
       }

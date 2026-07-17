@@ -14,14 +14,15 @@ import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { EventHelper } from 'src/utils/events';
-import type { Item5e } from 'src/types/item.types';
+import type { AdvancementSection, Item5e } from 'src/types/item.types';
+import { CONSTANTS } from 'src/constants';
 
 class SectionActions {
   getActionHeaderActions(
     actor: Actor5e,
     owner: boolean,
     unlocked: boolean,
-    section: TidyItemSectionBase
+    section: TidyItemSectionBase,
   ): SectionCommand[] {
     if (!owner) {
       return [];
@@ -31,7 +32,7 @@ class SectionActions {
       actor,
       unlocked,
       section,
-      TidyFlags.actionSection.prop
+      TidyFlags.actionSection.prop,
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
@@ -55,13 +56,13 @@ class SectionActions {
     actor: Actor5e,
     owner: boolean,
     unlocked: boolean,
-    section: TidyItemSectionBase
+    section: TidyItemSectionBase,
   ): SectionCommand[] {
     const renameControl = this.getActorItemSectionRenameCommand(
       actor,
       unlocked,
       section,
-      TidyFlags.section.prop
+      TidyFlags.section.prop,
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
@@ -103,13 +104,13 @@ class SectionActions {
     actor: Actor5e,
     owner: boolean,
     unlocked: boolean,
-    section: TidyItemSectionBase
+    section: TidyItemSectionBase,
   ): SectionCommand[] {
     const renameControl = this.getActorItemSectionRenameCommand(
       actor,
       unlocked,
       section,
-      TidyFlags.section.prop
+      TidyFlags.section.prop,
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
@@ -137,13 +138,13 @@ class SectionActions {
     container: Item5e,
     owner: boolean,
     unlocked: boolean,
-    section: TidyItemSectionBase
+    section: TidyItemSectionBase,
   ): SectionCommand[] {
     const renameControl = this.getContainerItemSectionRenameCommand(
       container,
       unlocked,
       section,
-      TidyFlags.section.prop
+      TidyFlags.section.prop,
     );
 
     const controls: SectionCommand[] = [];
@@ -162,7 +163,7 @@ class SectionActions {
   getGroupMemberHeaderActions(
     group: Actor5e,
     unlocked: boolean,
-    section: GroupMemberSection
+    section: GroupMemberSection,
   ): SectionCommand[] {
     const controls: SectionCommand[] = [];
 
@@ -183,13 +184,13 @@ class SectionActions {
               const updates = params.section.members.reduce(
                 (
                   prev: Record<string, string | null>,
-                  curr: GroupMemberQuadroneContext
+                  curr: GroupMemberQuadroneContext,
                 ) => {
                   prev[`${TidyFlags.sections.prop}.${curr.actor.id}`] =
                     newSectionName;
                   return prev;
                 },
-                {}
+                {},
               );
 
               params.document.update(updates);
@@ -200,7 +201,7 @@ class SectionActions {
                 {
                   sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
                   documentName: FoundryAdapter.localize(section.label),
-                }
+                },
               ),
             },
           });
@@ -213,19 +214,20 @@ class SectionActions {
     return controls;
   }
 
-  getVehicleMemberHeaderActions(
-    section: CrewSection | PassengerSection | DraftAnimalSection
-  ): SectionCommand[] {
+  getVehicleMemberHeaderActions(type: string): SectionCommand[] {
     const entityNameKey =
-      section.type === 'crew'
+      type === 'crew'
         ? 'DND5E.VEHICLE.Crew.Label'
-        : section.type === 'draft'
+        : type === 'draft'
           ? 'TIDY5E.Vehicle.Member.DraftAnimal.Label'
           : 'TIDY5E.Vehicle.Member.Passenger.Label';
 
-    const addSpecificLabel = FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-      name: FoundryAdapter.localize(entityNameKey),
-    });
+    const addSpecificLabel = FoundryAdapter.localize(
+      'TIDY5E.CompendiumBrowser',
+      {
+        name: FoundryAdapter.localize(entityNameKey),
+      },
+    );
 
     return [
       {
@@ -255,7 +257,7 @@ class SectionActions {
         });
       },
       label: 'DND5E.ItemCreate',
-      iconClass: 'fas fa-plus',
+      iconClass: 'fa-solid fa-plus',
     };
   }
 
@@ -263,44 +265,44 @@ class SectionActions {
     actor: Actor5e,
     unlocked: boolean,
     section: TidyItemSectionBase,
-    flagProp: string
+    flagProp: string,
   ): SectionCommand | undefined {
     return unlocked && actor.isOwner && !!section.items.length
       ? {
-        execute: () => {
-          const app = new SectionSelectorApplication({
-            flag: flagProp,
-            callingDocument: actor,
-            document: section.items[0],
-            async onSave(newSectionName) {
-              const updates = section.items.map((i) => ({
-                _id: i.id,
-                [flagProp]: newSectionName,
-              }));
+          execute: () => {
+            const app = new SectionSelectorApplication({
+              flag: flagProp,
+              callingDocument: actor,
+              document: section.items[0],
+              async onSave(newSectionName) {
+                const updates = section.items.map((i) => ({
+                  _id: i.id,
+                  [flagProp]: newSectionName,
+                }));
 
-              return Item.implementation.updateDocuments(updates, {
-                parent: actor,
-              });
-            },
-            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-            window: {
-              title: FoundryAdapter.localize(
-                'TIDY5E.Section.SectionSelectorTitle',
-                {
-                  sectionType: FoundryAdapter.localize(
-                    'TIDY5E.Section.Label'
-                  ),
-                  documentName: FoundryAdapter.localize(section.label),
-                }
-              ),
-            },
-          });
+                return Item.implementation.updateDocuments(updates, {
+                  parent: actor,
+                });
+              },
+              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+              window: {
+                title: FoundryAdapter.localize(
+                  'TIDY5E.Section.SectionSelectorTitle',
+                  {
+                    sectionType: FoundryAdapter.localize(
+                      'TIDY5E.Section.Label',
+                    ),
+                    documentName: FoundryAdapter.localize(section.label),
+                  },
+                ),
+              },
+            });
 
-          actor.sheet._renderChild(app);
-        },
-        iconClass: 'fa-solid fa-diagram-cells',
-        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-      }
+            actor.sheet._renderChild(app);
+          },
+          iconClass: 'fa-solid fa-diagram-cells',
+          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+        }
       : undefined;
   }
 
@@ -308,42 +310,42 @@ class SectionActions {
     container: Item5e,
     unlocked: boolean,
     section: TidyItemSectionBase,
-    flagProp: string
+    flagProp: string,
   ): SectionCommand | undefined {
     return unlocked && container.isOwner && !!section.items.length
       ? {
-        execute: () => {
-          const app = new SectionSelectorApplication({
-            flag: flagProp,
-            callingDocument: container,
-            document: section.items[0],
-            async onSave(newSectionName) {
-              const updates = section.items.map((i) => ({
-                _id: i.id,
-                [flagProp]: newSectionName,
-              }));
+          execute: () => {
+            const app = new SectionSelectorApplication({
+              flag: flagProp,
+              callingDocument: container,
+              document: section.items[0],
+              async onSave(newSectionName) {
+                const updates = section.items.map((i) => ({
+                  _id: i.id,
+                  [flagProp]: newSectionName,
+                }));
 
-              return Item.implementation.updateDocuments(updates);
-            },
-            window: {
-              title: FoundryAdapter.localize(
-                'TIDY5E.Section.SectionSelectorTitle',
-                {
-                  sectionType: FoundryAdapter.localize(
-                    'TIDY5E.Section.Label'
-                  ),
-                  documentName: FoundryAdapter.localize(section.label),
-                }
-              ),
-            },
-            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-          });
+                return Item.implementation.updateDocuments(updates);
+              },
+              window: {
+                title: FoundryAdapter.localize(
+                  'TIDY5E.Section.SectionSelectorTitle',
+                  {
+                    sectionType: FoundryAdapter.localize(
+                      'TIDY5E.Section.Label',
+                    ),
+                    documentName: FoundryAdapter.localize(section.label),
+                  },
+                ),
+              },
+              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            });
 
-          container.sheet._renderChild(app);
-        },
-        iconClass: 'fa-solid fa-diagram-cells',
-        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-      }
+            container.sheet._renderChild(app);
+          },
+          iconClass: 'fa-solid fa-diagram-cells',
+          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+        }
       : undefined;
   }
 
@@ -353,12 +355,96 @@ class SectionActions {
         params.document.sheet._sectionForMenu = params.section;
         EventHelper.triggerContextMenu(
           params.event as Event & { currentTarget: HTMLElement },
-          '[data-context-menu]'
+          '[data-context-menu]',
         );
       },
       iconClass: 'fa-solid fa-ellipsis-vertical',
       label: 'TIDY5E.Options.Title',
     };
+  }
+
+  getItemActivityHeaderActions(editable: boolean): SectionCommand[] {
+    if (editable) {
+      return [
+        {
+          execute({ section, document, event }) {
+            const target = event.currentTarget as HTMLElement;
+            const tabId = target
+              .closest('[data-tab-contents-for]')
+              ?.getAttribute('data-tab-contents-for');
+
+            document.sheet._addDocument({
+              tabId,
+              customSection: section.custom?.section,
+              creationItemTypes: section.custom?.creationItemTypes,
+              data: { type: section.key, ...section.dataset },
+            });
+          },
+          label: 'DND5E.ACTIVITY.Action.Create',
+          iconClass: 'fa-solid fa-plus',
+        },
+      ];
+    }
+
+    return [];
+  }
+
+  getItemAdvancementHeaderActions(
+    sheetDocument: Item5e,
+    unlocked: boolean,
+    sectionKey: string,
+    configured: AdvancementSection['configured'],
+    editable: boolean,
+  ): SectionCommand[] {
+    if (!editable) {
+      return [];
+    }
+
+    let result: SectionCommand[] = [];
+
+    if (
+      unlocked &&
+      sectionKey !== CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED &&
+      !!configured
+    ) {
+      result.push({
+        execute(params) {
+          FoundryAdapter.modifyAdvancementChoices(
+            params.section.key,
+            sheetDocument,
+          );
+        },
+        label: 'DND5E.AdvancementModifyChoices',
+        iconClass: 'fa-solid fa-cog',
+      });
+    }
+
+    if (!unlocked && configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL) {
+      result.push({
+        iconClass: 'fa-solid fa-badge-check emphasis',
+        label: 'DND5E.AdvancementConfiguredComplete',
+      });
+    }
+
+    if (
+      !unlocked &&
+      configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
+    ) {
+      result.push({
+        label: 'DND5E.AdvancementConfiguredIncomplete',
+        iconClass: 'fa-solid fa-exclamation-triangle warning',
+      });
+    }
+
+    result.push({
+      label: 'DND5E.ADVANCEMENT.Action.Create',
+      iconClass: 'fa-solid fa-plus',
+      execute() {
+        FoundryAdapter.createAdvancementSelectionDialog(sheetDocument);
+      },
+    });
+
+    return result;
   }
 }
 

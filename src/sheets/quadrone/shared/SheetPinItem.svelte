@@ -4,10 +4,9 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getActorSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
-  import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
   import SpellPip from 'src/components/pips/SpellPip.svelte';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
@@ -18,6 +17,8 @@
   }
 
   const { ctx }: Props = $props();
+
+  const context = $derived(getActorSheetQuadroneContext());
 
   let isEditing = $state(false);
 
@@ -69,12 +70,11 @@
     return false;
   }
 
-  const context = $derived(getSheetContext());
-
   const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   const spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
   const spellSlotTrackerMode = $derived(
-    context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    'spellSlotTrackerMode' in context &&
+      context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
       ? 'spell-slots-pips'
       : 'spell-slots',
   );
@@ -266,8 +266,9 @@
       </div>
 
       {#if pinType === 'container'}
-        {const capacity =
-          $derived(context.itemContext[ctx.document.id].containerCapacity)}
+        {const capacity = $derived(
+          context.itemContext[ctx.document.id].containerCapacity,
+        )}
         {#if capacity}
           <ContainerCapacityTooltip
             bind:this={containerCapacityTooltip}

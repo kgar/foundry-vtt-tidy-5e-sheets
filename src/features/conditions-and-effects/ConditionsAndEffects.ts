@@ -13,6 +13,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
+import { checkCondition } from 'src/utils/iteration';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
@@ -175,9 +176,8 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
-              rowActions: allEffectRowActions.filter(
-                (action) =>
-                  !action.condition || action.condition({ data: { effect } }),
+              rowActions: allEffectRowActions.filter((action) =>
+                checkCondition(action, { effect }),
               ),
             });
             return arr;
@@ -239,9 +239,8 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
-              rowActions: allEffectRowActions.filter(
-                (action) =>
-                  !action.condition || action.condition({ data: { effect } }),
+              rowActions: allEffectRowActions.filter((action) =>
+                checkCondition(action, { effect }),
               ),
             });
             return arr;

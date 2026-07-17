@@ -16,7 +16,6 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(
@@ -223,7 +222,6 @@ export class CharacterSheetSections {
 
   static buildQuadroneFeatureSections(
     actor: Actor5e,
-    itemContext: Record<string, { rowActions?: TidyTableAction<any, any>[] }>,
     unlocked: boolean,
     tabId: string,
     feats: Item5e[],

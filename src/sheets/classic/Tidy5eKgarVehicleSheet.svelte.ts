@@ -416,19 +416,16 @@ export class Tidy5eVehicleSheet
       }
       // Inventory
       else if (Inventory.isItemInventoryType(item)) {
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypes,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypes,
+          customSectionOptions: {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone
-        );
+        });
       }
       // Features (and stray items)
       else {
@@ -454,7 +451,12 @@ export class Tidy5eVehicleSheet
     ctx.activities = Activities.getVisibleActivities(
       item,
       item.system.activities,
-    )?.map(Activities.getActivityItemContext);
+    )?.map((activity) =>
+      Activities.getActivityItemContext(
+        activity,
+        this.isEditable && this.isEditMode,
+      ),
+    );
 
     if (item.isMountable) {
       this._prepareCrewedItem(item, ctx);

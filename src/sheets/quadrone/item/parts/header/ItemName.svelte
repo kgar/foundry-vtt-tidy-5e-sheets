@@ -1,8 +1,11 @@
 <script lang="ts">
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getItemSheetContextQuadrone,
+    getSheetContext,
+  } from 'src/sheets/sheet-context.svelte';
 
-  let context = $derived(getSheetContext());
+  let context = $derived(getItemSheetContextQuadrone());
 
   let unidentified = $derived(context.system.identified === false);
   let value = $derived(

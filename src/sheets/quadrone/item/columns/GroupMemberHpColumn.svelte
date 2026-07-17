@@ -5,7 +5,10 @@
     GroupMemberQuadroneContext,
   } from 'src/types/types';
   import { Tidy5eNpcSheetQuadrone } from '../../Tidy5eNpcSheetQuadrone.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getGroupSheetQuadroneContext,
+    getSheetContext,
+  } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
@@ -26,7 +29,7 @@
     rowDocument.system.attributes?.hp?.effectiveMax ?? 0,
   );
 
-  let context = $derived(getSheetContext());
+  let context = $derived(getGroupSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -46,8 +49,7 @@
 >
   <div
     class="meter meter-small progress hit-points"
-    style=
-    {tempHpValue > 0
+    style={tempHpValue > 0
       ? `--bar-percentage: ${hpPct.toFixed(0)}%;` +
         ` --bar-adjusted: ${tempHpValue.toFixed(0)}%;` +
         ` --bar-adjusted-background: var(--t5e-color-hp-temp);` +
@@ -57,7 +59,9 @@
   <div class="flexrow">
     <span class="font-data-medium color-text-default value">{hpValue}</span>
     <span class="font-body-medium color-text-lightest separator">/</span>
-    <span class="font-label-medium color-text-default max">{effectiveMaxHp}</span>
+    <span class="font-label-medium color-text-default max"
+      >{effectiveMaxHp}</span
+    >
   </div>
 </div>
 {#if 'canEdit' in rowContext && rowContext.canEdit}

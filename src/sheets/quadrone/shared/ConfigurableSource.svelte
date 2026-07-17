@@ -1,6 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type {
+    ContainerSheetQuadroneContext,
+    ItemSheetQuadroneContext,
+  } from 'src/types/item.types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
 
   interface Props {
     unlocked: boolean;
@@ -18,7 +23,14 @@
     buttonClass = '',
   }: Props = $props();
 
-  let context = $derived(getSheetContext());
+  let context =
+    $derived(
+      getSheetContext<
+        | ActorSheetQuadroneContext
+        | ItemSheetQuadroneContext
+        | ContainerSheetQuadroneContext
+      >(),
+    );
 
   let conceal = $derived(
     context.system.identified === false &&

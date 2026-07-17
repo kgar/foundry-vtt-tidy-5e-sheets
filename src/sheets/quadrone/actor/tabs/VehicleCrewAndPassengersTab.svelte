@@ -6,8 +6,6 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import type { CrewSection, PassengerSection } from 'src/types/types';
-  import type { Snippet } from 'svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
@@ -15,11 +13,10 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import type { ActorRowActionPropsData } from 'src/types/types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -34,11 +31,6 @@
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  const noCrew = $derived(
-    !context.crew.assigned.members.length &&
-      !context.crew.unassigned.members.length,
-  );
 </script>
 
 <div class="tab-content">
@@ -182,13 +174,128 @@
   </div>
 
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
-    {@render CrewPassengerTable(
-      context.crew.unassigned,
-      false,
-      UnassignedNoCrewView,
-    )}
+    {#each context.crewAndPassengers as section (section.key)}
+      {#if section.members.length || section.showEmptyState}
+        {const rowActionInfo = $derived(
+          TableRowActionsRuntime.getRowActionWidthInfo(
+            section.members,
+            (entry) => entry.rowActions,
+          ),
+        )}
 
-    {#snippet UnassignedNoCrewView(section: CrewSection | PassengerSection)}
+        {const hiddenColumns = $derived(
+          VehicleMemberColumnRuntime.determineHiddenColumns(
+            sectionsInlineWidth - rowActionInfo.widthPx,
+            section.columns,
+          ),
+        )}
+        <TidyTable key={section.key} data-area={section.type}>
+          {#snippet header(expanded)}
+            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+              <TidyTableHeaderCell primary={true} class="header-label-cell">
+                <h3>
+                  {localize(section.label)}
+                </h3>
+                {#if section.showCount}
+                  <span class="table-header-count"
+                    >{section.members.length}</span
+                  >
+                {/if}
+              </TidyTableHeaderCell>
+
+              <TidyTableCustomHeaderCells
+                {context}
+                {hiddenColumns}
+                {section}
+                {expanded}
+              />
+
+              <TidyTableHeaderCell
+                class="header-cell-actions"
+                columnWidth="{rowActionInfo.widthRems}rem"
+                data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+              >
+                <SectionActionsColumnHeader
+                  {section}
+                  sheetDocument={context.document}
+                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                />
+              </TidyTableHeaderCell>
+            </TidyTableHeaderRow>
+          {/snippet}
+          {#snippet body()}
+            {#each section.members as member}
+              {const assignedItemId = $derived(
+                'assignedTo' in member ? member.assignedTo?.id : undefined,
+              )}
+              <TidyTableRow
+                rowContainerAttributes={{
+                  ['data-assigned-item-id']: assignedItemId,
+                  ['data-context-menu']:
+                    CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                  ['data-uuid']: member.actor.uuid,
+                  ['data-quantity']: member.quantity,
+                }}
+                rowAttributes={{
+                  ['data-tidy-draggable']: true,
+                }}
+              >
+                <img
+                  class="item-image"
+                  alt={member.actor.name}
+                  src={member.actor.img}
+                />
+
+                <TidyTableCell primary={true} class="item-label text-cell">
+                  <a
+                    class="item-name"
+                    role="button"
+                    data-keyboard-focus
+                    tabindex="0"
+                    data-action="showDocument"
+                    data-uuid={member.actor.uuid}
+                  >
+                    <span class="cell-text">
+                      <span class="cell-name">{member.actor.name}</span>
+                      <span class="cell-context">{member.subtitle}</span>
+                    </span>
+                  </a>
+                </TidyTableCell>
+                <TidyTableCustomCells
+                  {context}
+                  ctx={member}
+                  entry={member.actor}
+                  {hiddenColumns}
+                  {section}
+                />
+
+                <TidyTableCell
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  class="tidy-table-actions"
+                  attributes={{
+                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                  }}
+                >
+                  {const data = $derived<ActorRowActionPropsData>({
+                    actor: member.actor,
+                    ctx: member,
+                  })}
+                  <TableRowActions rowActions={member.rowActions} {data} />
+                </TidyTableCell>
+              </TidyTableRow>
+            {:else}
+              {#if section.type === 'crew'}
+                {@render UnassignedNoCrewView()}
+              {:else if section.type === 'passengers'}
+                {@render UnassignedNoPassengerView()}
+              {/if}
+            {/each}
+          {/snippet}
+        </TidyTable>
+      {/if}
+    {/each}
+
+    {#snippet UnassignedNoCrewView()}
       <div class="inventory-empty empty-state-container">
         <button
           type="button"
@@ -201,17 +308,7 @@
       </div>
     {/snippet}
 
-    {@render CrewPassengerTable(context.crew.assigned, true)}
-
-    {@render CrewPassengerTable(
-      context.passengers,
-      false,
-      UnassignedNoPassengerView,
-    )}
-
-    {#snippet UnassignedNoPassengerView(
-      section: CrewSection | PassengerSection,
-    )}
+    {#snippet UnassignedNoPassengerView()}
       <div class="inventory-empty empty-state-container">
         <button
           type="button"
@@ -224,126 +321,4 @@
       </div>
     {/snippet}
   </div>
-
-  {#snippet CrewPassengerTable(
-    section: CrewSection | PassengerSection,
-    showCount: boolean,
-    noMembersView?: Snippet<[CrewSection | PassengerSection]>,
-  )}
-    {#if section.members.length || noMembersView}
-      {const rowActionInfo = $derived(
-        TableRowActionsRuntime.getRowActionWidthInfo(
-          section.members,
-          (entry) => entry.rowActions,
-        ),
-      )}
-
-      {const hiddenColumns = $derived(
-        VehicleMemberColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth - rowActionInfo.widthPx,
-          section.columns,
-        ),
-      )}
-      <TidyTable key={section.key} data-area={section.type}>
-        {#snippet header(expanded)}
-          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-            <TidyTableHeaderCell primary={true} class="header-label-cell">
-              <h3>
-                {localize(section.label)}
-              </h3>
-              {#if showCount}
-                <span class="table-header-count">{section.members.length}</span>
-              {/if}
-            </TidyTableHeaderCell>
-
-            <TidyTableCustomHeaderCells
-              {context}
-              {hiddenColumns}
-              {section}
-              {expanded}
-            />
-
-            <TidyTableHeaderCell
-              class="header-cell-actions"
-              columnWidth="{rowActionInfo.widthRems}rem"
-              data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-            >
-              <SectionActionsColumnHeader
-                {section}
-                sheetDocument={context.document}
-                maxRowActionsCount={rowActionInfo.maxRowActionsCount}
-              />
-            </TidyTableHeaderCell>
-          </TidyTableHeaderRow>
-        {/snippet}
-        {#snippet body()}
-          {#each section.members as member}
-            {const assignedItemId = $derived(
-              'assignedTo' in member ? member.assignedTo?.id : undefined,
-            )}
-            <TidyTableRow
-              rowContainerAttributes={{
-                ['data-assigned-item-id']: assignedItemId,
-                ['data-context-menu']:
-                  CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-                ['data-uuid']: member.actor.uuid,
-                ['data-quantity']: member.quantity,
-              }}
-              rowAttributes={{
-                ['data-tidy-draggable']: true,
-              }}
-            >
-              <img
-                class="item-image"
-                alt={member.actor.name}
-                src={member.actor.img}
-              />
-
-              <TidyTableCell primary={true} class="item-label text-cell">
-                <a
-                  class="item-name"
-                  role="button"
-                  data-keyboard-focus
-                  tabindex="0"
-                  data-action="showDocument"
-                  data-uuid={member.actor.uuid}
-                >
-                  <span class="cell-text">
-                    <span class="cell-name">{member.actor.name}</span>
-                    <span class="cell-context">{member.subtitle}</span>
-                  </span>
-                </a>
-              </TidyTableCell>
-              <TidyTableCustomCells
-                {context}
-                ctx={member}
-                entry={member.actor}
-                {hiddenColumns}
-                {section}
-              />
-
-              <TidyTableCell
-                columnWidth="{rowActionInfo.widthRems}rem"
-                class="tidy-table-actions"
-                attributes={{
-                  ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                }}
-              >
-                {const data = $derived<ActorTableActionData>({
-                  actor: member.actor,
-                  ctx: member,
-                })}
-                <TableRowActions rowActions={member.rowActions} {data} />
-              </TidyTableCell>
-            </TidyTableRow>
-          {:else}
-            {@render noMembersView?.(section)}
-          {/each}
-          {#if noCrew}
-            <!-- Unassigned Empty State -->
-          {/if}
-        {/snippet}
-      </TidyTable>
-    {/if}
-  {/snippet}
 </div>

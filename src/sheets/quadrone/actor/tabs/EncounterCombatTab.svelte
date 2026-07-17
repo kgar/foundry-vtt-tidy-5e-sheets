@@ -1,18 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime, {
-    type EncounterCombatantMemberTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SheetSections } from 'src/features/sections/SheetSections';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
-  import type {
-    EncounterMemberQuadroneContext,
-    EncounterPlaceholderQuadroneContext,
-  } from 'src/types/types';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
@@ -20,10 +13,13 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
+  import {
+    type EncounterCombatantMemberRowActionPropsData,
+    type ActorRowActionPropsData,
+  } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -137,7 +133,7 @@
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
     {#each context.combat as section (section.key)}
-      {#if section.combatants.length}
+      {#if section.show && section.combatants.length}
         {const visibleItemCount = $derived(section.combatants.length)}
 
         {const rowActionInfo = $derived(
@@ -223,11 +219,17 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {const data =
-                    $derived<EncounterCombatantMemberTableActionData>(
-                      combatant,
-                    )}
-                  <TableRowActions rowActions={combatant.rowActions} {data} />
+                  {#if combatant.type === 'placeholder'}
+                    {const data =
+                      $derived<EncounterCombatantMemberRowActionPropsData>(
+                        combatant,
+                      )}
+                    <TableRowActions rowActions={combatant.rowActions} {data} />
+                  {:else}
+                    {const data =
+                      $derived<ActorRowActionPropsData>(combatant)}
+                    <TableRowActions rowActions={combatant.rowActions} {data} />
+                  {/if}
                 </TidyTableCell>
               </div>
             {/each}

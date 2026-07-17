@@ -7,6 +7,7 @@ import { EncounterMemberColumnRuntime } from './tables/EncounterMemberColumnRunt
 import { ItemColumnRuntime } from './tables/ItemColumnRuntime.svelte';
 import { TabDocumentItemTypesRuntime } from './item/TabDocumentItemTypesRuntime';
 import { VehicleMemberColumnRuntime } from './tables/VehicleCrewMemberColumnRuntime';
+import { AdvancementColumnRuntime } from './tables/AdvancementColumnRuntime.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -21,6 +22,7 @@ export function initRuntime() {
  */
 export function initRuntimeOnReady() {
   ActivityColumnRuntime.initOnReady();
+  AdvancementColumnRuntime.initOnReady();
   EffectColumnRuntime.initOnReady();
   EncounterMemberColumnRuntime.initOnReady();
   GroupMemberColumnRuntime.initOnReady();

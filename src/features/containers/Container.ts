@@ -27,13 +27,7 @@ export class Container {
     );
 
     const containerContentsInventory =
-      await Inventory.getContainerContentsInventory(
-        container,
-        TableRowActionsRuntime.getContainerContentsRowActions(
-          context,
-          container.parent,
-        ),
-      );
+      await Inventory.getContainerContentsInventory(container);
 
     // Build currencies array from container's currency data
     const currencies: CurrencyContext[] = [];
@@ -95,7 +89,9 @@ export class Container {
       ctx.activities = Activities.getVisibleActivities(
         item,
         item.system.activities,
-      )?.map(Activities.getActivityItemContext);
+      )?.map((activity) =>
+        Activities.getActivityItemContext(activity, context.unlocked),
+      );
 
       ctx.includeInCharacterSheetTab =
         inclusionMode !== undefined &&

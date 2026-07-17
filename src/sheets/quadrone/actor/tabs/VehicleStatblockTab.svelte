@@ -25,10 +25,12 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
-  import type { DraftAnimalSection, InventorySection } from 'src/types/types';
-  import TableRowActionsRuntime, {
-    type ActorTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import type {
+    ActorRowActionPropsData,
+    DraftAnimalSection,
+    InventorySection,
+  } from 'src/types/types';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
@@ -467,7 +469,7 @@
                               CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                           }}
                         >
-                          {const data = $derived<ActorTableActionData>({
+                          {const data = $derived<ActorRowActionPropsData>({
                             actor: member.actor,
                             ctx: member,
                           })}

@@ -297,7 +297,6 @@ export class Tidy5eContainerSheetQuadrone
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-      config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
@@ -337,11 +336,12 @@ export class Tidy5eContainerSheetQuadrone
         options: [],
       },
       rollData: rollData,
-      sheet: this,
       system: this.document.system,
       tabs: [],
       userPreferences: UserPreferencesService.get(),
       ...documentSheetContext,
+
+      sheet: this,
     };
 
     // TODO: Could header action prep be organized better?

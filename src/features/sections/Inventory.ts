@@ -1,4 +1,3 @@
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
@@ -10,7 +9,6 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Inventory {
   static getInventoryDataModelEntries(): [string, any][] {
@@ -70,18 +68,35 @@ export class Inventory {
     return inventory;
   }
 
-  // TODO: switch to object param
-  static applyInventoryItemToSection(
-    sheetDocument: Actor5e | Item5e,
-    tabId: string,
-    inventory: Record<string, InventorySection>,
-    item: Item5e,
-    defaultInventoryTypes: string[],
-    customSectionOptions: Partial<InventorySection>,
-    fallbackInventoryKey: string = '',
-    customSectionFlag: 'section' | 'actionSection' = 'section',
-    rowActions: TidyTableAction<any, any>[],
-  ) {
+  static applyInventoryItemToSection(params: {
+    /** The sheet document where the items are to be presented. */
+    sheetDocument: Actor5e | Item5e;
+    /** The tab ID where the items will be shown. */
+    tabId: string;
+    /** The current inventory state to be updated by this function. */
+    inventory: Record<string, InventorySection>;
+    /** The item to be applied to the inventory sections. */
+    item: Item5e;
+    /** The default inventory types to show when triggering item creation from a custom section. */
+    defaultInventoryTypes: string[];
+    /** When creating a custom section during this operation, merge in these options over the defaults.  */
+    customSectionOptions?: Partial<InventorySection>;
+    /** A secondary inventory key to use if the primary inventory key is not found. */
+    fallbackInventoryKey?: string; // TODO: Figured out how to eliminate this niche parameter
+    /** The custom section flag to use when looking for a custom section name. */
+    customSectionFlag?: 'section' | 'actionSection';
+  }) {
+    const {
+      sheetDocument,
+      tabId,
+      inventory,
+      item,
+      defaultInventoryTypes,
+      customSectionOptions,
+      fallbackInventoryKey = '',
+      customSectionFlag = 'section',
+    } = params;
+
     const customSectionName = TidyFlags[customSectionFlag].get(item);
 
     if (!customSectionName) {
@@ -108,7 +123,7 @@ export class Inventory {
     tabId: string,
     customSectionName: string,
     defaultInventoryTypes: string[],
-    customSectionOptions: Partial<InventorySection>,
+    customSectionOptions: Partial<InventorySection> = {},
   ): InventorySection {
     return {
       type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -159,7 +174,6 @@ export class Inventory {
 
   static async getContainerContentsInventory(
     container: Item5e,
-    rowActions: TidyTableAction<any, any>[],
     options: Partial<InventorySection> = {
       canCreate: false,
     },
@@ -171,17 +185,14 @@ export class Inventory {
     const inventoryTypes = Inventory.getInventoryTypes();
 
     for (let item of containerItems) {
-      Inventory.applyInventoryItemToSection(
-        container,
-        CONSTANTS.TAB_CONTAINER_CONTENTS,
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: container,
+        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
         inventory,
         item,
-        inventoryTypes,
-        options,
-        undefined,
-        undefined,
-        rowActions,
-      );
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: options,
+      });
     }
 
     return Object.values(inventory);

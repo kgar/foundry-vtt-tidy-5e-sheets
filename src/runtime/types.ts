@@ -16,13 +16,11 @@ import type {
   ActorSheetContextV1,
   ActorSheetClassicContextV2,
   TidySectionBase,
-  ActiveEffect5e,
+  TableRowAction,
 } from 'src/types/types';
 import type { Component } from 'svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { SectionOptionGroup } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
@@ -136,8 +134,7 @@ export type RegisteredCustomActorTrait = {
   title: string;
   alwaysShow: boolean | undefined;
   openConfiguration:
-    | ((params: RegisteredTraitOpenConfigurationParams) => void)
-    | undefined;
+    ((params: RegisteredTraitOpenConfigurationParams) => void) | undefined;
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;
@@ -226,10 +223,6 @@ export type ContainerContentsRowActionsContext = {
   hasActor: boolean;
 };
 
-export type ColumnSpecificationCalculatedWidthArgs = {
-  rowActions: TidyTableAction<any, any>[];
-};
-
 // Columns
 export type ColumnSpecification = {
   headerContent?:
@@ -261,13 +254,6 @@ export type ColumnSpecification = {
   cellClasses?: ClassValue;
   condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
 };
-
-export type GetConfiguredColumnSpecificationsArgs = {
-  sheetType: string;
-  tabId: string;
-  sectionKey: string;
-  sheetDocument: any;
-} & ColumnSpecificationCalculatedWidthArgs;
 
 export type ConfiguredSectionColumnSpecification =
   ConfiguredColumnSpecification;

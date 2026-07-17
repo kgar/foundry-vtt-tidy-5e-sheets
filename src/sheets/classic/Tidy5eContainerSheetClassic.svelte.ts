@@ -39,7 +39,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
   getSvelteApplicationMixin<
     ApplicationConfiguration | undefined,
     ContainerSheetClassicContext
-  >(foundry.applications.sheets.ItemSheetV2)
+  >(foundry.applications.sheets.ItemSheetV2),
 ) {
   currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
@@ -59,7 +59,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
-      CONSTANTS.LOCATION_SECTION
+      CONSTANTS.LOCATION_SECTION,
     );
   }
 
@@ -91,12 +91,14 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        
-        this._renderChild(new foundry.applications.apps.ImagePopout({
-          src: this.item.img,
-          uuid: this.item.uuid,
-          window: { title },
-        }));
+
+        this._renderChild(
+          new foundry.applications.apps.ImagePopout({
+            src: this.item.img,
+            uuid: this.item.uuid,
+            window: { title },
+          }),
+        );
       },
     },
     dragDrop: [
@@ -146,7 +148,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
   }
 
   async _prepareContext(
-    options: ApplicationRenderOptions
+    options: ApplicationRenderOptions,
   ): Promise<ContainerSheetClassicContext> {
     this.itemFilterService.refreshFilters();
 
@@ -163,15 +165,15 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
     const enriched = {
       description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.value,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.unidentified?.description,
-        enrichmentOptions
+        enrichmentOptions,
       ),
       chat: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.chat,
-        enrichmentOptions
+        enrichmentOptions,
       ),
     };
 
@@ -205,7 +207,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
     });
 
     const containerPreferences = UserSheetPreferencesService.getByType(
-      this.item.type
+      this.item.type,
     );
 
     const contentsSortMode =
@@ -225,7 +227,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
                 this.item.type,
                 CONSTANTS.TAB_CONTAINER_CONTENTS,
                 'sort',
-                'm'
+                'm',
               );
               this.render();
             },
@@ -240,7 +242,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
                 this.item.type,
                 CONSTANTS.TAB_CONTAINER_CONTENTS,
                 'sort',
-                'a'
+                'a',
               );
               this.render();
             },
@@ -249,7 +251,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
           {
             id: 'configure-sections',
             title: FoundryAdapter.localize(
-              'TIDY5E.Utilities.ConfigureSections'
+              'TIDY5E.Utilities.ConfigureSections',
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context, sections }) => {
@@ -259,12 +261,12 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
                   sections: sections,
                   tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                   tabTitle: ItemSheetRuntime.getTabTitle(
-                    CONSTANTS.TAB_CONTAINER_CONTENTS
+                    CONSTANTS.TAB_CONTAINER_CONTENTS,
                   ),
                 },
                 {
                   document: context.item,
-                }
+                },
               ).render(true);
             },
           },
@@ -278,7 +280,6 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       capacity: await this.item.system.computeCapacity(),
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-      config: CONFIG.DND5E,
       containerContents: await Container.getContainerContents(this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
@@ -312,24 +313,24 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
         options: [],
       },
       rollData: rollData,
-      sheet: this,
       system: this.document.system,
       tabs: [],
       utilities: utilities,
       ...documentSheetContext,
+      sheet: this,
     };
 
     // Properties
     context.properties = {
       active: [],
       object: Object.fromEntries(
-        (this.document.system.properties ?? []).map((p: string) => [p, true])
+        (this.document.system.properties ?? []).map((p: string) => [p, true]),
       ),
       options: (this.document.system.validProperties ?? [])
         .reduce(
           (
             arr: ContainerSheetClassicContext['properties']['options'],
-            k: any
+            k: any,
           ) => {
             // @ts-ignore
             const { label } = CONFIG.DND5E.itemProperties[k];
@@ -340,13 +341,13 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
             });
             return arr;
           },
-          []
+          [],
         )
         .sort(
           (
             a: ContainerSheetClassicContext['properties']['options'][0],
-            b: ContainerSheetClassicContext['properties']['options'][0]
-          ) => a.label.localeCompare(b.label, game.i18n.lang)
+            b: ContainerSheetClassicContext['properties']['options'][0],
+          ) => a.label.localeCompare(b.label, game.i18n.lang),
         ),
     };
 
@@ -357,7 +358,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
 
     const customTabs: Tab[] = await TabManager.prepareTabsForRender(
       context,
-      eligibleCustomTabs
+      eligibleCustomTabs,
     );
 
     context.tabs =
@@ -374,7 +375,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
    */
   _getItemOverrides(): string[] {
     const overrides = Object.keys(
-      foundry.utils.flattenObject(this.item.overrides ?? {})
+      foundry.utils.flattenObject(this.item.overrides ?? {}),
     );
     this.item.system.getItemOverrides?.(overrides);
     if ('properties' in this.item.system) {
@@ -382,7 +383,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
         this.item,
         'system.properties',
         'system.properties',
-        overrides
+        overrides,
       );
     }
     if (
@@ -393,8 +394,8 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       Array.fromRange(this.item.system.damage.parts.length).forEach((index) =>
         overrides.push(
           `system.damage.parts.${index}.0`,
-          `system.damage.parts.${index}.1`
-        )
+          `system.damage.parts.${index}.1`,
+        ),
       );
     }
     return overrides;
@@ -406,7 +407,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
 
   /** @inheritDoc */
   async _onDrop(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
   ): Promise<unknown> {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     if (!['Item', 'Folder'].includes(data.type)) {
@@ -428,7 +429,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
 
   async _onDropFolder(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    data: any,
   ): Promise<Item5e[]> {
     const folder = await Folder.implementation.fromDropData(data);
     if (!this.item.isOwner || folder.type !== 'Item') return [];
@@ -447,7 +448,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
         }
         if (item.type === 'container') containers.add(item.id);
         return item;
-      })
+      }),
     );
     items = items.filter((i) => i && !containers.has(i.system.container));
 
@@ -477,7 +478,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    data: any,
   ): Promise<Item5e[] | boolean | void> {
     const behavior = this._dropBehavior(event, data);
     const item = await Item.implementation.fromDropData(data);
@@ -552,9 +553,8 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
         itemData.flags = itemData.flags;
       }
 
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
-      );
+      const scroll =
+        await dnd5e.documents.Item5e.createScrollFromSpell(itemData);
 
       return scroll?.toObject?.() ?? false;
     }
@@ -563,7 +563,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       const result = await FoundryAdapter.onDropStackConsumablesForActor(
         this.item.actor,
         itemData,
-        { container }
+        { container },
       );
       if (result) return false;
     }
@@ -578,7 +578,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
    */
   async _onSortItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    item: Item5e
+    item: Item5e,
   ) {
     const dropTarget = event.target.closest<HTMLElement>('[data-item-id]');
     if (!dropTarget) return;

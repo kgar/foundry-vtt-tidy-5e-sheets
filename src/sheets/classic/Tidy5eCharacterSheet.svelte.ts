@@ -1092,19 +1092,16 @@ export class Tidy5eCharacterSheet
     for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(
-        this.document,
-        CONSTANTS.TAB_ACTOR_INVENTORY,
-        inventory,
-        item,
-        inventoryTypes,
-        {
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+        inventory: inventory,
+        item: item,
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: {
           canCreate: true,
         },
-        undefined,
-        undefined,
-        [], // quadrone only
-      );
+      });
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
@@ -1126,19 +1123,16 @@ export class Tidy5eCharacterSheet
     for (const item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(
-        this.document,
-        CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-        favoriteInventory,
-        item,
-        inventoryTypes,
-        {
+      Inventory.applyInventoryItemToSection({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+        inventory: favoriteInventory,
+        item: item,
+        defaultInventoryTypes: inventoryTypes,
+        customSectionOptions: {
           canCreate: false,
         },
-        undefined,
-        undefined,
-        [], // quadrone only
-      );
+      });
     }
 
     // Section spells
@@ -1486,7 +1480,12 @@ export class Tidy5eCharacterSheet
     context.activities = Activities.getVisibleActivities(
       item,
       item.system.activities,
-    )?.map(Activities.getActivityItemContext);
+    )?.map((activity) =>
+      Activities.getActivityItemContext(
+        activity,
+        this.isEditable && this.isEditMode,
+      ),
+    );
 
     context.linkedUses = Activities.getLinkedUses(item);
   }

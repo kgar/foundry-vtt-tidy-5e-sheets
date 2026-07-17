@@ -312,7 +312,6 @@ export function getTidy5eActorSheetQuadroneBase<
       let context: ActorSheetQuadroneContext = {
         actor: this.actor,
         appId: this.appId,
-        config: CONFIG.DND5E,
         customActorTraits: [],
         customContent: [],
         enableXp:
@@ -342,7 +341,6 @@ export function getTidy5eActorSheetQuadroneBase<
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
-        sheet: this,
         system: this.actor.system,
         tabs: [],
         themeSettings,
@@ -352,7 +350,10 @@ export function getTidy5eActorSheetQuadroneBase<
           foundry.utils
             .deepClone(this.actor._preparationWarnings)
             .filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
+
         ...documentSheetContext,
+
+        sheet: this,
       };
 
       // Concentration
@@ -395,7 +396,9 @@ export function getTidy5eActorSheetQuadroneBase<
         ctx.activities = Activities.getVisibleActivities(
           item,
           item.system.activities,
-        )?.map(Activities.getActivityItemContext);
+        )?.map((activity) =>
+          Activities.getActivityItemContext(activity, context.unlocked),
+        );
       }
 
       ctx.linkedUses = Activities.getLinkedUses(item);

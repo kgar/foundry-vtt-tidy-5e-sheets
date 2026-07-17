@@ -42,6 +42,7 @@ import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
+import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -310,10 +311,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         ),
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
-        rowActions: rowActions.filter(
-          (action) =>
-            !action.condition ||
-            action.condition({ data: { actor, ctx: undefined } }),
+        rowActions: rowActions.filter((action) =>
+          checkCondition(action, { actor }),
         ),
       };
 

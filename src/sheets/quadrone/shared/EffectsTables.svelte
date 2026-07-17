@@ -9,6 +9,7 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
+    EffectRowActionPropsData,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -17,9 +18,7 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TableRowActionsRuntime, {
-    type EffectTableActionData,
-  } from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import type { SectionColumnSpecifications } from 'src/runtime/types';
   import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
@@ -48,24 +47,24 @@
 </script>
 
 {#each sections as section (section.key)}
-  {const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
-      section.effects,
-      (entry) => entry.rowActions,
-    ),
-  )}
-
-  {const hiddenColumns = $derived(
-    EffectColumnRuntime.determineHiddenColumns(
-      inlineWidth - rowActionInfo.widthPx,
-      section.columns,
-      10,
-    ),
-  )}
-
   {#if section.show}
+    {const rowActionInfo = $derived(
+      TableRowActionsRuntime.getRowActionWidthInfo(
+        section.effects,
+        (entry) => entry.rowActions,
+      ),
+    )}
+
+    {const hiddenColumns = $derived(
+      EffectColumnRuntime.determineHiddenColumns(
+        inlineWidth - rowActionInfo.widthPx,
+        section.columns,
+        10,
+      ),
+    )}
+
     <TidyTable key={section.key}>
-      {#snippet header()}
+      {#snippet header(expanded)}
         <TidyTableHeaderRow
           class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
             'suppressed' || section.disabled
@@ -80,6 +79,7 @@
           </TidyTableHeaderCell>
 
           <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
           <TidyTableHeaderCell
             class="header-cell-actions"
             columnWidth="{rowActionInfo.widthRems}rem"
@@ -160,9 +160,13 @@
           <span class="cell-text">
             <span class="cell-name">{ctx.effect.name}</span>
           </span>
-          <span class="row-detail-expand-indicator">
-            <i class="fa-solid fa-angle-right expand-indicator" class:expanded>
-            </i>
+          <span
+            class={[
+              'row-detail-expand-indicator',
+              expanded ? 'expanded' : 'collapsed',
+            ]}
+          >
+            <i class="fa-solid fa-angle-right expand-indicator"> </i>
           </span>
         </a>
       </TidyTableCell>
@@ -182,7 +186,7 @@
           ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
         }}
       >
-        {const data = $derived<EffectTableActionData>({
+        {const data = $derived<EffectRowActionPropsData>({
           effect: ctx.effect,
           ctx,
         })}

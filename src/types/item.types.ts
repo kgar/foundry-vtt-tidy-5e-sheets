@@ -2,12 +2,14 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type {
   ActiveEffectSection,
   ActivityItemContext,
+  AdvancementRowAction,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
   GroupableSelectOption,
   InventorySection,
+  ItemRowAction,
   Tab,
   TidySectionBase,
   Utilities,
@@ -20,7 +22,7 @@ import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemShee
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type PropertyContext = {
   active: string[];
@@ -150,10 +152,12 @@ export type ItemNameContext = {
   field: unknown;
 };
 
+export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
+
 export type ItemSheetQuadroneContext = {
-  activities: ActivityItemContext[];
+  activities: ActivitySection[];
   activationTypes: GroupableSelectOption[];
-  advancement: AdvancementsContext;
+  advancement: AdvancementSection[];
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;
@@ -305,7 +309,7 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
-  rowActions?: TidyTableAction<any, any>[];
+  rowActions?: ItemRowAction[];
 };
 
 export type ContainerSheetClassicContext = {
@@ -407,11 +411,7 @@ export type ContainerContents = {
   itemContext: Record<string, ContainerItemContext>;
 };
 
-export type AdvancementsContext = {
-  [level: string]: AdvancementSectionContext;
-};
-
-export type AdvancementSectionContext = {
+export type AdvancementSection = TidySectionBase & {
   items: AdvancementItemContext[];
   configured: 'partial' | 'full' | false;
 };
@@ -448,12 +448,14 @@ export type AdvancementItemContext = {
    * A subclass of ScaleValueType.
    * For our purposes, this is a means to call `.toString()`.
    */
-  value: { toString(): string };
+  value?: { toString(): string };
   /**
    * Any CSS classes that should be added to a given row.
    * In svelte, we would do this in the component.
    */
   classes: string;
+  /** Available row actions for the current advancement. */
+  rowActions: AdvancementRowAction[];
 };
 
 export type MovementInfo = {

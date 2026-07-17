@@ -431,19 +431,16 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
 
     for (let item of uncontainedItems) {
       if (inventoryTypes.has(item.type)) {
-        Inventory.applyInventoryItemToSection(
-          this.document,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          inventory,
-          item,
-          inventoryTypesArray,
-          {
+        Inventory.applyInventoryItemToSection({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          inventory: inventory,
+          item: item,
+          defaultInventoryTypes: inventoryTypesArray,
+          customSectionOptions: {
             canCreate: true,
           },
-          undefined,
-          undefined,
-          [], // quadrone only
-        );
+        });
       }
     }
 
@@ -467,7 +464,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       canObserveAll: Object.values(memberContext).every((m) => m.canObserve),
-      config: CONFIG.DND5E,
       containerPanelItems:
         await Inventory.getContainerPanelItems(uncontainedItems),
       customContent: [],
@@ -863,7 +859,12 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
       activities: Activities.getVisibleActivities(
         item,
         item.system.activities,
-      )?.map(Activities.getActivityItemContext),
+      )?.map((activity) =>
+        Activities.getActivityItemContext(
+          activity,
+          this.isEditable && this.isEditMode,
+        ),
+      ),
       canToggle: false,
       containerContents: undefined,
       hasUses: item.hasLimitedUses,
