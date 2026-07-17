@@ -7,7 +7,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ActorTableAction,
+  ActorRowAction,
   CrewMemberContext,
   DraftAnimalContext,
   DraftAnimalSection,
@@ -1214,7 +1214,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    */
   async resolveCrewMemberContext(
     group: Record<string, number>,
-    rowActions: ActorTableAction[],
+    rowActions: ActorRowAction[],
     // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{

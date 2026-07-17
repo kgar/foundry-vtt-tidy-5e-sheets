@@ -1,15 +1,15 @@
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActivityTableAction,
+  ActivityRowAction,
   Actor5e,
   ActorSheetQuadroneContext,
-  ActorTableAction,
-  AdvancementTableAction,
+  ActorRowAction,
+  AdvancementRowAction,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
-  EffectTableAction,
-  EncounterCombatantMemberTableAction,
-  ItemTableAction,
+  EffectRowAction,
+  EncounterCombatantMemberRowAction,
+  ItemRowAction,
   NpcSheetQuadroneContext,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
@@ -48,13 +48,13 @@ class TableRowActionsRuntime {
   getInventoryRowActions(
     context: ActorSheetQuadroneContext,
     config?: RowActionConfig,
-  ): ItemTableAction<any>[] {
+  ): ItemRowAction<any>[] {
     const canAttune = config?.canAttune ?? true;
     const canEquip = config?.canEquip ?? true;
     const hasActionsTab = config?.hasActionsTab ?? false;
 
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (context.owner) {
         result.push({
@@ -65,27 +65,27 @@ class TableRowActionsRuntime {
             doc: args.item,
             ctx: args.ctx,
           }),
-        } satisfies ItemTableAction<typeof AttuneButton>);
+        } satisfies ItemRowAction<typeof AttuneButton>);
 
         if (context.unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.item }),
-          } satisfies ItemTableAction<typeof EditButton>);
+          } satisfies ItemRowAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
               doc: args.item,
             }),
-          } satisfies ItemTableAction<typeof DeleteButton>);
+          } satisfies ItemRowAction<typeof DeleteButton>);
         } else {
           if (canEquip ?? true) {
             result.push({
               component: EquipButton,
               props: (args) => ({ doc: args.item }),
               condition: (args) => 'equipped' in args.item.system,
-            } satisfies ItemTableAction<typeof EquipButton>);
+            } satisfies ItemRowAction<typeof EquipButton>);
           }
 
           if (hasActionsTab) {
@@ -95,7 +95,7 @@ class TableRowActionsRuntime {
                 doc: args.item,
                 ctx: args.ctx,
               }),
-            } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
+            } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -105,7 +105,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -114,22 +114,22 @@ class TableRowActionsRuntime {
   }
 
   getCharacterFeatureRowActions(context: CharacterSheetQuadroneContext) {
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (context.owner) {
         if (context.unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.item }),
-          } satisfies ItemTableAction<typeof EditButton>);
+          } satisfies ItemRowAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
               doc: args.item,
             }),
-          } satisfies ItemTableAction<typeof DeleteButton>);
+          } satisfies ItemRowAction<typeof DeleteButton>);
         } else {
           result.push({
             component: CharacterSheetTabToggleButton,
@@ -137,7 +137,7 @@ class TableRowActionsRuntime {
               doc: args.item,
               ctx: args.ctx,
             }),
-          } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
+          } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>);
         }
       }
 
@@ -146,7 +146,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -158,21 +158,21 @@ class TableRowActionsRuntime {
     context: ActorSheetQuadroneContext,
     config?: RowActionConfig,
   ) {
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (context.owner) {
         result.push({
           component: SpellButton,
           condition: (args) => !args.item.system.linkedActivity,
           props: (args) => ({ doc: args.item }),
-        } satisfies ItemTableAction<typeof SpellButton>);
+        } satisfies ItemRowAction<typeof SpellButton>);
 
         if (context.unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.item }),
-          } satisfies ItemTableAction<typeof EditButton>);
+          } satisfies ItemRowAction<typeof EditButton>);
 
           result.push(
             {
@@ -181,14 +181,14 @@ class TableRowActionsRuntime {
                 doc: args.item,
               }),
               condition: (args) => !args.item.system.linkedActivity,
-            } satisfies ItemTableAction<typeof DeleteButton>,
+            } satisfies ItemRowAction<typeof DeleteButton>,
             {
               component: OpenActivityButton,
               props: (args) => ({
                 doc: args.item,
               }),
               condition: (args) => !!args.item.system.linkedActivity,
-            } satisfies ItemTableAction<typeof OpenActivityButton>,
+            } satisfies ItemRowAction<typeof OpenActivityButton>,
           );
         } else {
           if (config?.hasActionsTab) {
@@ -198,7 +198,7 @@ class TableRowActionsRuntime {
                 doc: args.item,
                 ctx: args.ctx,
               }),
-            } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
+            } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -208,7 +208,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -220,26 +220,26 @@ class TableRowActionsRuntime {
     context: ContainerContentsRowActionsContext,
     itemParent?: Actor5e | undefined,
   ) {
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (context.unlocked) {
         result.push({
           component: EditButton,
           props: (args) => ({ doc: args.item }),
-        } satisfies ItemTableAction<typeof EditButton>);
+        } satisfies ItemRowAction<typeof EditButton>);
 
         result.push({
           component: DeleteButton,
           props: (args) => ({
             doc: args.item,
           }),
-        } satisfies ItemTableAction<typeof DeleteButton>);
+        } satisfies ItemRowAction<typeof DeleteButton>);
       } else if (context.hasActor && itemParent?.system.isCharacter) {
         result.push({
           component: CharacterSheetTabToggleButton,
           props: (args) => ({ doc: args.item, ctx: args.ctx }),
-        } satisfies ItemTableAction<typeof CharacterSheetTabToggleButton>);
+        } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>);
       }
 
       result.push({
@@ -247,7 +247,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -256,22 +256,22 @@ class TableRowActionsRuntime {
   }
 
   getActionsRowActions(owner: boolean, unlocked: boolean) {
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (owner) {
         if (unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.item }),
-          } satisfies ItemTableAction<typeof EditButton>);
+          } satisfies ItemRowAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
               doc: args.item,
             }),
-          } satisfies ItemTableAction<typeof DeleteButton>);
+          } satisfies ItemRowAction<typeof DeleteButton>);
         }
       }
 
@@ -280,7 +280,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -289,7 +289,7 @@ class TableRowActionsRuntime {
   }
 
   getEffectsRowActions(context: DocumentSheetQuadroneContext<any>) {
-    let result: EffectTableAction<any>[] = [];
+    let result: EffectRowAction<any>[] = [];
 
     result.push({
       component: EffectToggleButton,
@@ -299,20 +299,20 @@ class TableRowActionsRuntime {
       condition: (args) =>
         context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
         args.effect.type !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT,
-    } satisfies EffectTableAction<typeof EffectToggleButton>);
+    } satisfies EffectRowAction<typeof EffectToggleButton>);
 
     if (context.unlocked) {
       result.push({
         component: EditButton,
         props: (args) => ({ doc: args.effect }),
-      } satisfies EffectTableAction<typeof EditButton>);
+      } satisfies EffectRowAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
         props: (args) => ({
           doc: args.effect,
         }),
-      } satisfies EffectTableAction<typeof DeleteButton>);
+      } satisfies EffectRowAction<typeof DeleteButton>);
     }
 
     result.push({
@@ -320,27 +320,27 @@ class TableRowActionsRuntime {
       props: () => ({
         targetSelector: '[data-context-menu]',
       }),
-    } satisfies EffectTableAction<typeof MenuButton>);
+    } satisfies EffectRowAction<typeof MenuButton>);
 
     return result;
   }
 
   getActivityRowActions(unlocked: boolean) {
-    let rowActions: ActivityTableAction<any>[] = $derived.by(() => {
-      let result: ActivityTableAction<any>[] = [];
+    let rowActions: ActivityRowAction<any>[] = $derived.by(() => {
+      let result: ActivityRowAction<any>[] = [];
 
       if (unlocked) {
         result.push({
           component: EditButton,
           props: (args) => ({ doc: args.activity }),
-        } satisfies ActivityTableAction<typeof EditButton>);
+        } satisfies ActivityRowAction<typeof EditButton>);
 
         result.push({
           component: DeleteButton,
           props: (args) => ({
             doc: args.activity,
           }),
-        } satisfies ActivityTableAction<typeof DeleteButton>);
+        } satisfies ActivityRowAction<typeof DeleteButton>);
       }
 
       result.push({
@@ -348,7 +348,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ActivityTableAction<typeof MenuButton>);
+      } satisfies ActivityRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -357,22 +357,22 @@ class TableRowActionsRuntime {
   }
 
   getStatblockRowActions(context: NpcSheetQuadroneContext) {
-    let rowActions: ItemTableAction<any>[] = $derived.by(() => {
-      let result: ItemTableAction<any>[] = [];
+    let rowActions: ItemRowAction<any>[] = $derived.by(() => {
+      let result: ItemRowAction<any>[] = [];
 
       if (context.owner) {
         if (context.unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.item }),
-          } satisfies ItemTableAction<typeof EditButton>);
+          } satisfies ItemRowAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
             props: (args) => ({
               doc: args.item,
             }),
-          } satisfies ItemTableAction<typeof DeleteButton>);
+          } satisfies ItemRowAction<typeof DeleteButton>);
         }
       }
 
@@ -381,7 +381,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemTableAction<typeof MenuButton>);
+      } satisfies ItemRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -390,8 +390,8 @@ class TableRowActionsRuntime {
   }
 
   getGroupMemberRowActions(actor: Actor5e, unlocked: boolean) {
-    let rowActions: ActorTableAction<any>[] = $derived.by(() => {
-      let result: ActorTableAction<any>[] = [];
+    let rowActions: ActorRowAction<any>[] = $derived.by(() => {
+      let result: ActorRowAction<any>[] = [];
 
       if (actor.isOwner) {
         if (unlocked) {
@@ -403,7 +403,7 @@ class TableRowActionsRuntime {
               iconClasses: 'fa-solid fa-trash fa-fw',
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
-          } satisfies ActorTableAction<typeof GenericActionButton>);
+          } satisfies ActorRowAction<typeof GenericActionButton>);
         }
       }
 
@@ -412,7 +412,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ActorTableAction<typeof MenuButton>);
+      } satisfies ActorRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -421,8 +421,8 @@ class TableRowActionsRuntime {
   }
 
   getEncounterMemberRowActions(context: ActorSheetQuadroneContext) {
-    let rowActions: ActorTableAction<any>[] = $derived.by(() => {
-      let result: ActorTableAction<any>[] = [];
+    let rowActions: ActorRowAction<any>[] = $derived.by(() => {
+      let result: ActorRowAction<any>[] = [];
 
       if (context.owner) {
         if (context.unlocked) {
@@ -434,7 +434,7 @@ class TableRowActionsRuntime {
               iconClasses: 'fa-solid fa-trash fa-fw',
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
-          } satisfies ActorTableAction<typeof GenericActionButton>);
+          } satisfies ActorRowAction<typeof GenericActionButton>);
         }
       }
 
@@ -443,7 +443,7 @@ class TableRowActionsRuntime {
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ActorTableAction<typeof MenuButton>);
+      } satisfies ActorRowAction<typeof MenuButton>);
 
       return result;
     });
@@ -452,7 +452,7 @@ class TableRowActionsRuntime {
   }
 
   getDraftAnimalRowActions(context: VehicleSheetQuadroneContext) {
-    let result: ActorTableAction<any>[] = [];
+    let result: ActorRowAction<any>[] = [];
 
     if (context.owner && context.unlocked) {
       result.push({
@@ -467,7 +467,7 @@ class TableRowActionsRuntime {
             ),
           }),
         }),
-      } satisfies ActorTableAction<typeof GenericActionButton>);
+      } satisfies ActorRowAction<typeof GenericActionButton>);
     }
 
     result.push({
@@ -475,7 +475,7 @@ class TableRowActionsRuntime {
       props: () => ({
         targetSelector: '[data-context-menu]',
       }),
-    } satisfies ActorTableAction<typeof MenuButton>);
+    } satisfies ActorRowAction<typeof MenuButton>);
 
     return result;
   }
@@ -484,7 +484,7 @@ class TableRowActionsRuntime {
     context: VehicleSheetQuadroneContext,
     area: CrewArea5e,
   ) {
-    let result: ActorTableAction<any>[] = [];
+    let result: ActorRowAction<any>[] = [];
 
     if (context.owner && context.unlocked) {
       const memberTypeKey =
@@ -509,7 +509,7 @@ class TableRowActionsRuntime {
             name: FoundryAdapter.localize(memberTypeKey),
           }),
         }),
-      } satisfies ActorTableAction<typeof GenericActionButton>);
+      } satisfies ActorRowAction<typeof GenericActionButton>);
     }
 
     result.push({
@@ -517,13 +517,13 @@ class TableRowActionsRuntime {
       props: () => ({
         targetSelector: '[data-context-menu]',
       }),
-    } satisfies ActorTableAction<typeof MenuButton>);
+    } satisfies ActorRowAction<typeof MenuButton>);
 
     return result;
   }
 
   getAssignedCrewRowActions(context: VehicleSheetQuadroneContext) {
-    let result: ActorTableAction<any>[] = [];
+    let result: ActorRowAction<any>[] = [];
 
     if (context.owner && context.unlocked) {
       result.push({
@@ -538,7 +538,7 @@ class TableRowActionsRuntime {
           iconClasses: 'fa-solid fa-user-minus',
           tooltip: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
         }),
-      } satisfies ActorTableAction<typeof GenericActionButton>);
+      } satisfies ActorRowAction<typeof GenericActionButton>);
     }
 
     result.push({
@@ -546,21 +546,21 @@ class TableRowActionsRuntime {
       props: () => ({
         targetSelector: '[data-context-menu]',
       }),
-    } satisfies ActorTableAction<typeof MenuButton>);
+    } satisfies ActorRowAction<typeof MenuButton>);
 
     return result;
   }
 
   getEncounterCombatRowActions(context: ActorSheetQuadroneContext) {
-    let rowActions: EncounterCombatantMemberTableAction<any>[] = $derived.by(
+    let rowActions: EncounterCombatantMemberRowAction<any>[] = $derived.by(
       () => {
-        let result: EncounterCombatantMemberTableAction<any>[] = [];
+        let result: EncounterCombatantMemberRowAction<any>[] = [];
 
         if (context.owner) {
           result.push({
             component: EncounterAddAsCombatPlaceholder,
             props: () => ({}),
-          } satisfies EncounterCombatantMemberTableAction<
+          } satisfies EncounterCombatantMemberRowAction<
             typeof EncounterAddAsCombatPlaceholder
           >);
           result.push({
@@ -568,7 +568,7 @@ class TableRowActionsRuntime {
             props: (args) => ({
               rowContext: args,
             }),
-          } satisfies EncounterCombatantMemberTableAction<
+          } satisfies EncounterCombatantMemberRowAction<
             typeof EncounterCombatVisibilityToggle
           >);
           result.push({
@@ -576,7 +576,7 @@ class TableRowActionsRuntime {
             props: (args) => ({
               rowContext: args,
             }),
-          } satisfies EncounterCombatantMemberTableAction<
+          } satisfies EncounterCombatantMemberRowAction<
             typeof EncounterCombatInclusionToggle
           >);
           if (context.unlocked) {
@@ -585,7 +585,7 @@ class TableRowActionsRuntime {
               props: (args) => ({
                 rowContext: args,
               }),
-            } satisfies EncounterCombatantMemberTableAction<
+            } satisfies EncounterCombatantMemberRowAction<
               typeof DeleteEncounterEntityButton
             >);
           }
@@ -596,7 +596,7 @@ class TableRowActionsRuntime {
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies EncounterCombatantMemberTableAction<typeof MenuButton>);
+        } satisfies EncounterCombatantMemberRowAction<typeof MenuButton>);
 
         return result;
       },
@@ -606,7 +606,7 @@ class TableRowActionsRuntime {
   }
 
   getItemAdvancementRowActions(unlocked: boolean, item: Item5e) {
-    let result: AdvancementTableAction[] = [];
+    let result: AdvancementRowAction[] = [];
 
     if (unlocked) {
       result.push({
@@ -614,7 +614,7 @@ class TableRowActionsRuntime {
         props: (args) => ({
           doc: item.system.advancement?.get(args.id),
         }),
-      } satisfies AdvancementTableAction<typeof EditButton>);
+      } satisfies AdvancementRowAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
@@ -625,7 +625,7 @@ class TableRowActionsRuntime {
               ?.get(args.id)
               ?.deleteDialog({ sheet: item }),
         }),
-      } satisfies AdvancementTableAction<typeof DeleteButton>);
+      } satisfies AdvancementRowAction<typeof DeleteButton>);
     }
 
     result.push({
@@ -633,7 +633,7 @@ class TableRowActionsRuntime {
       props: () => ({
         targetSelector: '.advancement-item',
       }),
-    } satisfies ItemTableAction<typeof MenuButton>);
+    } satisfies ItemRowAction<typeof MenuButton>);
 
     return result;
   }

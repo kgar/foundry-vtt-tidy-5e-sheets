@@ -30,7 +30,7 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
-  AdvancementTableAction,
+  AdvancementRowAction,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -793,7 +793,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         -1)
       : -1;
 
-    let tableRowActions: AdvancementTableAction[] = $derived(
+    let tableRowActions: AdvancementRowAction[] = $derived(
       TableRowActionsRuntime.getItemAdvancementRowActions(unlocked, item),
     );
 

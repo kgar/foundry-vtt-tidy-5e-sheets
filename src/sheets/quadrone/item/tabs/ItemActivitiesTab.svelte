@@ -19,8 +19,8 @@
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
-    ActivityTableAction,
-    ActivityTableActionPropsData,
+    ActivityRowAction,
+    ActivityRowActionPropsData,
   } from 'src/types/types';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
@@ -32,7 +32,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let rowActions: ActivityTableAction<any>[] = $derived(
+  let rowActions: ActivityRowAction<any>[] = $derived(
     TableRowActionsRuntime.getActivityRowActions(context.unlocked),
   );
 
@@ -167,7 +167,7 @@
                 />
 
                 <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-                  {const data = $derived<ActivityTableActionPropsData>({
+                  {const data = $derived<ActivityRowActionPropsData>({
                     activity: ctx.activity,
                     ctx,
                   })}

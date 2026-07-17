@@ -17,8 +17,8 @@
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import {
-    type EncounterCombatantMemberTableActionPropsData,
-    type ActorTableActionPropsData,
+    type EncounterCombatantMemberRowActionPropsData,
+    type ActorRowActionPropsData,
   } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
@@ -221,13 +221,13 @@
                 >
                   {#if combatant.type === 'placeholder'}
                     {const data =
-                      $derived<EncounterCombatantMemberTableActionPropsData>(
+                      $derived<EncounterCombatantMemberRowActionPropsData>(
                         combatant,
                       )}
                     <TableRowActions rowActions={combatant.rowActions} {data} />
                   {:else}
                     {const data =
-                      $derived<ActorTableActionPropsData>(combatant)}
+                      $derived<ActorRowActionPropsData>(combatant)}
                     <TableRowActions rowActions={combatant.rowActions} {data} />
                   {/if}
                 </TidyTableCell>

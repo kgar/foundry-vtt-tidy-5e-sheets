@@ -8,8 +8,8 @@
   import { Activities } from 'src/features/activities/activities';
   import type {
     ActivityItemContext,
-    ActivityTableAction,
-    ActivityTableActionPropsData,
+    ActivityRowAction,
+    ActivityRowActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -50,7 +50,7 @@
   });
 
   const rowActionsMap = $derived(
-    activities.reduce<Record<string, ActivityTableAction<any>[]>>(
+    activities.reduce<Record<string, ActivityRowAction<any>[]>>(
       (prev, entry) => {
         prev[entry.id] = rowActions.filter(
           (action) =>
@@ -145,7 +145,7 @@
         />
 
         <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          {const data = $derived<ActivityTableActionPropsData>({
+          {const data = $derived<ActivityRowActionPropsData>({
             activity: ctx.activity,
             ctx: ctx.activity,
           })}

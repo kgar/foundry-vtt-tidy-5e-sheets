@@ -16,7 +16,7 @@
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
-  import type { ActorTableActionPropsData } from 'src/types/types';
+  import type { ActorRowActionPropsData } from 'src/types/types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -276,7 +276,7 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {const data = $derived<ActorTableActionPropsData>({
+                  {const data = $derived<ActorRowActionPropsData>({
                     actor: member.actor,
                     ctx: member,
                   })}

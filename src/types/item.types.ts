@@ -2,14 +2,14 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type {
   ActiveEffectSection,
   ActivityItemContext,
-  AdvancementTableAction,
+  AdvancementRowAction,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
   GroupableSelectOption,
   InventorySection,
-  ItemTableAction,
+  ItemRowAction,
   Tab,
   TidySectionBase,
   Utilities,
@@ -309,7 +309,7 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
-  rowActions?: ItemTableAction[];
+  rowActions?: ItemRowAction[];
 };
 
 export type ContainerSheetClassicContext = {
@@ -455,7 +455,7 @@ export type AdvancementItemContext = {
    */
   classes: string;
   /** Available row actions for the current advancement. */
-  rowActions: AdvancementTableAction[];
+  rowActions: AdvancementRowAction[];
 };
 
 export type MovementInfo = {

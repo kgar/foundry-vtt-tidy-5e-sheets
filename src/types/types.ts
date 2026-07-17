@@ -355,7 +355,7 @@ export type ActivityItemContext = {
   toHit: number | null;
   spell?: ActivityItemSpellContext;
   type: string;
-  rowActions: ActivityTableAction[];
+  rowActions: ActivityRowAction[];
 };
 
 export type ActivityItemSpellContext = {
@@ -1010,7 +1010,7 @@ export type ActiveEffectContext = {
   uuid: string;
   effect: ActiveEffect5e;
   riders: ActiveEffectContext[];
-  rowActions: EffectTableAction[];
+  rowActions: EffectRowAction[];
 };
 
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
@@ -1105,7 +1105,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  rowActions?: ItemTableAction[];
+  rowActions?: ItemRowAction[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1432,7 +1432,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
-  rowActions: ActorTableAction[];
+  rowActions: ActorRowAction[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1607,7 +1607,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
-  rowActions: ActorTableAction[];
+  rowActions: ActorRowAction[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1616,7 +1616,7 @@ export type EncounterPlaceholderQuadroneContext = {
   name: string;
   visible: boolean;
   type: 'placeholder';
-  rowActions: EncounterCombatantMemberTableAction[];
+  rowActions: EncounterCombatantMemberRowAction[];
 } & EncounterPlaceholder;
 
 export type EncounterMemberSection = TidySectionBase & {
@@ -1689,7 +1689,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: ActorTableAction[];
+  rowActions: ActorRowAction[];
 };
 
 export type DraftAnimalSection = {
@@ -1705,7 +1705,7 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: ActorTableAction[];
+  rowActions: ActorRowAction[];
 };
 
 export type CrewSection = {
@@ -1725,7 +1725,7 @@ export type PassengerMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: ActorTableAction[];
+  rowActions: ActorRowAction[];
 };
 
 export type PassengerSection = {
@@ -1826,96 +1826,96 @@ export type TableRowAction<
   condition?: (args: TableRowActionProps<TConditionData>) => boolean;
 };
 
-export type ItemTableActionPropsData = {
+export type ItemRowActionPropsData = {
   item: Item5e;
   ctx?: any;
 };
 
-export type ItemTableActionConditionData = {
+export type ItemRowActionConditionData = {
   item: Item5e;
 };
 
-export type ItemTableAction<
+export type ItemRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  ItemTableActionPropsData,
-  ItemTableActionConditionData
+  ItemRowActionPropsData,
+  ItemRowActionConditionData
 >;
 
-export type EffectTableActionPropsData = {
+export type EffectRowActionPropsData = {
   effect: ActiveEffect5e;
   ctx?: ActiveEffectContext;
 };
 
-export type EffectTableActionConditionData = {
+export type EffectRowActionConditionData = {
   effect: ActiveEffect5e;
 };
 
-export type EffectTableAction<
+export type EffectRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  EffectTableActionPropsData,
-  EffectTableActionConditionData
+  EffectRowActionPropsData,
+  EffectRowActionConditionData
 >;
 
-export type ActivityTableActionPropsData = {
+export type ActivityRowActionPropsData = {
   activity: Activity5e;
   ctx?: any;
 };
 
-export type ActivityTableActionConditionData = {
+export type ActivityRowActionConditionData = {
   activity: Activity5e;
 };
 
-export type ActivityTableAction<
+export type ActivityRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  ActivityTableActionPropsData,
-  ActivityTableActionConditionData
+  ActivityRowActionPropsData,
+  ActivityRowActionConditionData
 >;
 
-export type ActorTableActionPropsData = {
+export type ActorRowActionPropsData = {
   actor: Actor5e;
-  ctx?: any;
+  ctx?: any; // This should not be `any`; do we need to subdivide and conquer?
 };
 
-export type ActorTableActionConditionData = {
+export type ActorRowActionConditionData = {
   actor: Actor5e;
 };
 
-export type ActorTableAction<
+export type ActorRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  ActorTableActionPropsData,
-  ActorTableActionConditionData
+  ActorRowActionPropsData,
+  ActorRowActionConditionData
 >;
 
-export type EncounterCombatantMemberTableActionPropsData =
+export type EncounterCombatantMemberRowActionPropsData =
   EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
 
-export type EncounterCombatantMemberTableActionConditionData =
+export type EncounterCombatantMemberRowActionConditionData =
   EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
 
-export type EncounterCombatantMemberTableAction<
+export type EncounterCombatantMemberRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  EncounterCombatantMemberTableActionPropsData,
-  EncounterCombatantMemberTableActionConditionData
+  EncounterCombatantMemberRowActionPropsData,
+  EncounterCombatantMemberRowActionConditionData
 >;
 
-export type AdvancementTableActionPropsData = { id: string };
+export type AdvancementRowActionPropsData = { id: string };
 
-export type AdvancementTableActionConditionData = { id: string };
+export type AdvancementRowActionConditionData = { id: string };
 
-export type AdvancementTableAction<
+export type AdvancementRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  AdvancementTableActionPropsData,
-  AdvancementTableActionConditionData
+  AdvancementRowActionPropsData,
+  AdvancementRowActionConditionData
 >;

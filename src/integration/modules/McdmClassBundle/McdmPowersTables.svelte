@@ -14,7 +14,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActorSheetQuadroneContext,
-    ItemTableActionPropsData,
+    ItemRowActionPropsData,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
@@ -189,7 +189,7 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {const data = $derived<ItemTableActionPropsData>({
+                  {const data = $derived<ItemRowActionPropsData>({
                     item,
                     ctx,
                   })}
