@@ -12,6 +12,7 @@ import type {
   DraftAnimalSection,
   InventorySection,
   PassengerMemberContext,
+  TidyTableAction,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
@@ -37,7 +38,6 @@ import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 const localize = FoundryAdapter.localize;
 
@@ -208,7 +208,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         CONSTANTS.SECTION_TYPE_CREW,
       ),
     };
-    
+
     const unassignedCrewSection = {
       ...SheetSections.EMPTY,
       type: CONSTANTS.SECTION_TYPE_CREW,
@@ -244,7 +244,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         CONSTANTS.SECTION_TYPE_PASSENGERS,
       ),
     };
-    
+
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],

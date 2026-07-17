@@ -1,4 +1,3 @@
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
@@ -10,7 +9,6 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Inventory {
   static getInventoryDataModelEntries(): [string, any][] {
