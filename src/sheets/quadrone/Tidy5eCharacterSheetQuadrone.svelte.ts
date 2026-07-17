@@ -405,11 +405,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
     // Inventory
     for (let item of partitions.items) {
-      const ctx = context.itemContext[item.id];
-      const rowActions = inventoryRowActions.filter(
-        (action) => !action.condition || action.condition({ item }),
-      );
-
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.actor,
         tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
