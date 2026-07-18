@@ -1,13 +1,15 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { VehicleItemQuadroneContext } from 'src/types/types';
+  import type {
+    VehicleItemQuadroneContext,
+    ColumnCellProps,
+  } from 'src/types/types';
 
   let {
     rowDocument: item,

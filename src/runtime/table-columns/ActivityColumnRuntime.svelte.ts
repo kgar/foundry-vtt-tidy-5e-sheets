@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { ColumnSpecDocumentTypesToTabs } from '../types';
+import type { ColumnSpecDocumentTypesToTabs } from 'src/types/types';
 import { getDefaultActivityColumns } from './default-activity-columns';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 

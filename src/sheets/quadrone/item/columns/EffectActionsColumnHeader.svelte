@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnHeaderProps } from 'src/runtime/types';
-  import type { ActiveEffectSection } from 'src/types/types';
+  import type { ActiveEffectSection, ColumnHeaderProps } from 'src/types/types';
 
   let {
     sheetDocument,
@@ -22,7 +21,8 @@
     aria-label={localize('DND5E.EffectCreate')}
     data-tooltip
     onclick={() => onAddClicked(section)}
-    onkeydown={(ev) => ev.key === 'Enter' || (ev.key === ' ' && onAddClicked(section))}
+    onkeydown={(ev) =>
+      ev.key === 'Enter' || (ev.key === ' ' && onAddClicked(section))}
     role="button"
     tabindex="0"
     data-keyboard-focus

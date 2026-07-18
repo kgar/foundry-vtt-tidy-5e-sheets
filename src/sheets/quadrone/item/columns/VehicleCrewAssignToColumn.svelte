@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/runtime/types';
+  import type { ColumnCellProps } from 'src/types/types';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { CrewMemberContext } from 'src/types/types';
 

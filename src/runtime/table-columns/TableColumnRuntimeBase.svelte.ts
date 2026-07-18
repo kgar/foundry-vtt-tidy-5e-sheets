@@ -4,7 +4,7 @@ import type {
   ConfiguredSectionColumnSpecification,
   SectionColumnContext,
   SectionColumnSpecifications,
-} from '../types';
+} from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 
 export abstract class TableColumnRuntimeBase {

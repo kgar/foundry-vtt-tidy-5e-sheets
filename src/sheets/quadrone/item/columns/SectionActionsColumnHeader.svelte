@@ -1,11 +1,6 @@
 <script lang="ts">
   import SectionActionHeaderControl from 'src/components/item-list/controls/SectionActionHeaderControl.svelte';
-  import type { ColumnHeaderProps } from 'src/runtime/types';
-  import type {
-    Actor5e,
-    DocumentSheetQuadroneContext,
-    TidySectionBase,
-  } from 'src/types/types';
+  import type { TidySectionBase } from 'src/types/types';
   import SectionActions from 'src/features/sections/SectionActions';
   import { CONSTANTS } from 'src/constants';
   import { iterateReversed } from 'src/utils/array';

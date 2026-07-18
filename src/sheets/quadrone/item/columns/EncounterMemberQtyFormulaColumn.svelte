@@ -1,6 +1,6 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import type { ColumnCellProps } from 'src/runtime/types';
+  import type { ColumnCellProps } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
     EncounterMemberQuadroneContext,

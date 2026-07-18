@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/runtime/types';
+  import type { ColumnCellProps } from 'src/types/types';
   import ItemPriceSummary from '../parts/header/ItemPriceSummary.svelte';
 
   let { rowDocument: item }: ColumnCellProps = $props();

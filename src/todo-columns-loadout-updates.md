@@ -2,6 +2,13 @@
 ## To Do
 
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
+  - [x] Move and separate the columns runtime and row actions runtime into their own folders
+  - [ ] Design a runtime for row actions that covers each variety of row action available, covered by a base class that can perform condition filtering, etc.
+    - [ ] As part of this effort, revamp the condition types for each of the known row action types. Include the canonical `app` and `document` fields, as well as any custom options related to the given row action.
+    - [ ] Evaluate and eliminate any custom options (e.g., 'canEquip') if possible, based on patterns of their usage and the doc/app in question.
+      - Something to consider: sheet mode is sometimes locked down in context but not in the app itself. For this reason, all condition callbacks should have an options/flags object that specifies a few important things, like `unlocked`, `editable`, etc.
+      - Tentative params: `document, app, data`
+  - [ ] Set up an API surface area 
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
 - [ ] // TODO: Figured out how to eliminate this niche parameter
 - [ ] // This should not be `any`; do we need to subdivide and conquer?

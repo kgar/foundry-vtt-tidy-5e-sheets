@@ -3,14 +3,12 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type {
-  ConfiguredSectionColumnSpecification,
-  SectionColumnContext,
-  TabOptions,
-} from 'src/runtime/types';
+import type { TabOptions } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type {
   ActorSheetQuadroneContext,
+  ConfiguredSectionColumnSpecification,
+  SectionColumnContext,
   SectionCommand,
 } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
@@ -39,8 +37,8 @@ export function buildMcdmPowersSections(
   const rowActions = TableRowActionsRuntime.getInventoryRowActions(context);
   for (const power of allPowers) {
     const ctx = (context.itemContext[power.id] ??= {});
-    ctx.rowActions = rowActions.filter(
-      (action) => checkCondition(action, { item: power }),
+    ctx.rowActions = rowActions.filter((action) =>
+      checkCondition(action, { item: power }),
     );
 
     if (TidyFlags.section.get(power)) {

@@ -1,4 +1,4 @@
-import type { BankedInspirationConfiguration } from "../types";
+import type { BankedInspirationConfiguration } from "src/types/types";
 
 class ActorInspirationRuntimeImpl {
   private _bankedInspirationConfig: BankedInspirationConfiguration | undefined =
