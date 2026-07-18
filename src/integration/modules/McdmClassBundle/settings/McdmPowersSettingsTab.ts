@@ -20,6 +20,7 @@ import type { PowersSection } from '../McdmClassBundle';
 import { getDefaultItemColumns } from 'src/runtime/table-columns/default-item-columns';
 import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
 import { checkCondition } from 'src/utils/iteration';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 
 export function buildMcdmPowersSections(
   context: ActorSheetQuadroneContext,
@@ -34,12 +35,14 @@ export function buildMcdmPowersSections(
   const normalPowers: Item5e[] = [];
   const customSectionPowers: Item5e[] = [];
 
-  const rowActions = TableRowActionsRuntime.getInventoryRowActions(context);
   for (const power of allPowers) {
     const ctx = (context.itemContext[power.id] ??= {});
-    ctx.rowActions = rowActions.filter((action) =>
-      checkCondition(action, { item: power }),
-    );
+    ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+      app: context.sheet,
+      data: context,
+      rowDocument: power,
+      sheetDocument: context.document,
+    });
 
     if (TidyFlags.section.get(power)) {
       allPowers.push(power);

@@ -842,10 +842,12 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
+        this,
         panelItem.container,
         {
           hasActor: false,
           unlocked: context.unlocked,
+          owner: context.owner,
         },
       );
     }

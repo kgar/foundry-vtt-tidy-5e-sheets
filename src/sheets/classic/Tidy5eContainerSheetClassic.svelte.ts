@@ -276,13 +276,15 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
 
     documentSheetContext.source = systemSource;
 
+    const owner = this.item.isOwner;
     const context: ContainerSheetClassicContext = {
       capacity: await this.item.system.computeCapacity(),
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-      containerContents: await Container.getContainerContents(this.item, {
+      containerContents: await Container.getContainerContents(this, this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
+        owner,
       }),
       customContent: [],
       enriched: enriched,
@@ -294,9 +296,10 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       isIdentified: this.document.system.identified !== false,
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
-      itemContext: await Container.getContainerItemContext(this.item, {
+      itemContext: await Container.getContainerItemContext(this, this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
+        owner,
       }),
       itemDescriptions: itemDescriptions,
       itemOverrides: new Set<string>(this._getItemOverrides()),
@@ -306,7 +309,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
-      owner: this.item.isOwner,
+      owner: owner,
       properties: {
         active: [],
         object: {},

@@ -1104,7 +1104,7 @@ export type ActorItemQuadroneContext = {
   linkedUses?: LinkedUses;
   subtitle?: string;
   totalWeight?: number;
-  rowActions?: ItemRowAction[];
+  rowActions?: ItemRowActionV2[];
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1950,6 +1950,24 @@ export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
     ItemRowActionPropsData,
     ItemRowActionConditionData
   >;
+
+export type ItemRowActionConditionDataV2 = {
+  sheetDocument: Actor5e | Item5e;
+  rowDocument: Actor5e | Item5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
+
+export type ItemRowActionV2<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  ItemRowActionPropsData,
+  ItemRowActionConditionDataV2
+>;
 
 export type EffectRowActionPropsData = {
   effect: ActiveEffect5e;

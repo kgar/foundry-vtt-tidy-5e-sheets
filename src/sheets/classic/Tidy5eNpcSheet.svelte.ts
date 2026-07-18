@@ -765,10 +765,12 @@ export class Tidy5eNpcSheet
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
+        this,
         panelItem.container,
         {
           hasActor: true,
           unlocked: context.unlocked,
+          owner: context.owner,
         },
       );
     }

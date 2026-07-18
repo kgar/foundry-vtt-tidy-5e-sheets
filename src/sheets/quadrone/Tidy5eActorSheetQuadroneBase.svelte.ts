@@ -386,10 +386,15 @@ export function getTidy5eActorSheetQuadroneBase<
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         ctx.containerCapacity = await item.system.computeCapacity();
 
-        ctx.containerContents = await Container.getContainerContents(item, {
-          hasActor: true,
-          unlocked: context.unlocked,
-        });
+        ctx.containerContents = await Container.getContainerContents(
+          this,
+          item,
+          {
+            hasActor: true,
+            unlocked: context.unlocked,
+            owner: context.owner,
+          },
+        );
       }
 
       if (item.system.activities) {

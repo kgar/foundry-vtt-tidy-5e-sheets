@@ -293,13 +293,16 @@ export class Tidy5eContainerSheetQuadrone
 
     const capacityContext = await Container.computeCapacity(this.item);
 
+    const owner = this.item.isOwner;
+
     const context: ContainerSheetQuadroneContext = {
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
-      containerContents: await Container.getContainerContents(this.item, {
+      containerContents: await Container.getContainerContents(this, this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
+        owner,
       }),
       customContent: [],
       currencies,
@@ -313,9 +316,10 @@ export class Tidy5eContainerSheetQuadrone
       isIdentified: this.document.system.identified !== false,
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
-      itemContext: await Container.getContainerItemContext(this.item, {
+      itemContext: await Container.getContainerItemContext(this, this.item, {
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
+        owner,
       }),
       itemDescriptions: itemDescriptions,
       items: Array.from(await this.item.system.contents),
@@ -329,7 +333,7 @@ export class Tidy5eContainerSheetQuadrone
         editable: this.item._source.name,
         field: this.item.schema.getField('name'),
       },
-      owner: this.item.isOwner,
+      owner: owner,
       properties: {
         active: [],
         object: {},

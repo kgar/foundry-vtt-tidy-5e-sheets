@@ -34,6 +34,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { checkCondition } from 'src/utils/iteration';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>,
@@ -101,25 +102,18 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         return item.dependentOrigin?.active !== false;
       });
 
-      const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-        context,
-        { hasActionsTab: false, canEquip: false },
-      );
-
       const inventory: ActorInventoryTypes =
         Inventory.getDefaultInventorySections(this.document);
-
-      const rowActions = TableRowActionsRuntime.getInventoryRowActions(
-        context,
-        { canEquip: false, hasActionsTab: false, canAttune: false },
-      );
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
           const ctx = (context.itemContext[item.id] ??= {});
-          ctx.rowActions = rowActions.filter((action) =>
-            checkCondition(action, { item }),
-          );
+          ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: item,
+            sheetDocument: context.document,
+          });
 
           const isWithinContainer = this.actor.items.has(item.system.container);
 

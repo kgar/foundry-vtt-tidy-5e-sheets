@@ -324,10 +324,15 @@ export class Tidy5eVehicleSheet
     for (const item of context.items) {
       const ctx = context.itemContext[item.id];
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        ctx.containerContents = await Container.getContainerContents(item, {
-          hasActor: true,
-          unlocked: context.unlocked,
-        });
+        ctx.containerContents = await Container.getContainerContents(
+          this,
+          item,
+          {
+            hasActor: true,
+            unlocked: context.unlocked,
+            owner: context.owner,
+          },
+        );
       }
     }
 

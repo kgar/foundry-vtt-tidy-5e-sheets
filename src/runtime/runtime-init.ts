@@ -8,6 +8,10 @@ import { ItemColumnRuntime } from './table-columns/ItemColumnRuntime.svelte';
 import { TabDocumentItemTypesRuntime } from './item/TabDocumentItemTypesRuntime';
 import { VehicleMemberColumnRuntime } from './table-columns/VehicleCrewMemberColumnRuntime';
 import { AdvancementColumnRuntime } from './table-columns/AdvancementColumnRuntime.svelte';
+import { InventoryRowActionRuntime } from './table-row-actions/InventoryRowActionRuntime.svelte';
+import { FeatureRowActionRuntime } from './table-row-actions/FeatureRowActionRuntime.svelte';
+import { SpellRowActionRuntime } from './table-row-actions/SpellRowActionRuntime.svelte';
+import { ContainerContentsRowActionRuntime } from './table-row-actions/ContainerContentsRowActionRuntime.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -29,4 +33,8 @@ export function initRuntimeOnReady() {
   ItemColumnRuntime.initOnReady();
   TabDocumentItemTypesRuntime.initOnReady();
   VehicleMemberColumnRuntime.initOnReady();
+  ContainerContentsRowActionRuntime.initOnReady();
+  FeatureRowActionRuntime.initOnReady();
+  InventoryRowActionRuntime.initOnReady();
+  SpellRowActionRuntime.initOnReady();
 }

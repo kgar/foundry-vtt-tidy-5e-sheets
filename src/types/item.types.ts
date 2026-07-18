@@ -10,6 +10,7 @@ import type {
   GroupableSelectOption,
   InventorySection,
   ItemRowAction,
+  ItemRowActionV2,
   Tab,
   TidySectionBase,
   Utilities,
@@ -309,7 +310,7 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
-  rowActions?: ItemRowAction[];
+  rowActions?: ItemRowActionV2[];
 };
 
 export type ContainerSheetClassicContext = {
