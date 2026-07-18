@@ -557,7 +557,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
     if (stats.vehicleCount) {
       members.push(
         `${stats.vehicleCount} ${game.i18n.localize(
-          `DND5E.Group.Vehicle.${rule.select(stats.vehicleCount)}`,
+          `DND5E.Group.Vehicle.Count.${rule.select(stats.vehicleCount)}`,
         )}`,
       );
     }
@@ -693,7 +693,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         const senses = member.system.attributes.senses ?? {};
         const tags: Record<string, string> = {};
         for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-          const v = senses.ranges[k] ?? 0;
+          const v = senses.ranges?.[k] ?? 0;
           if (v === 0) continue;
           tags[k] = `${game.i18n.localize(label)} ${v} ${
             CONFIG.DND5E.movementUnits[senses.units]?.abbreviation ??
