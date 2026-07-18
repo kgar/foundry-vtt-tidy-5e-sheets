@@ -7,7 +7,9 @@
     - [ ] As part of this effort, revamp the condition types for each of the known row action types. Include the canonical `app` and `document` fields, as well as any custom options related to the given row action.
     - [ ] Evaluate and eliminate any custom options (e.g., 'canEquip') if possible, based on patterns of their usage and the doc/app in question.
       - Something to consider: sheet mode is sometimes locked down in context but not in the app itself. For this reason, all condition callbacks should have an options/flags object that specifies a few important things, like `unlocked`, `editable`, etc.
-      - Tentative params: `document, app, data`
+      - Type notes 
+        - Tentative params: `document, app, data`
+        - Ideally, we should take either the Generic Row Action args or a function that returns said args. That way, the feature remains contained.
   - [ ] Set up an API surface area 
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
 - [ ] // TODO: Figured out how to eliminate this niche parameter
