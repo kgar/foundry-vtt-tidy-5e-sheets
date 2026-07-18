@@ -9,9 +9,9 @@ import type {
   DocumentSheetQuadroneContext,
   EffectCategory,
 } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
+import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import { checkCondition } from 'src/utils/iteration';
 

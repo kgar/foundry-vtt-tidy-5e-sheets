@@ -2,7 +2,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import type { ActivityItemContext, LinkedUses } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {

@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,

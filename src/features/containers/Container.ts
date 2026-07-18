@@ -11,7 +11,7 @@ import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { ContainerCapacityContext } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import type { ContainerContentsRowActionsContext } from 'src/runtime/types';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';

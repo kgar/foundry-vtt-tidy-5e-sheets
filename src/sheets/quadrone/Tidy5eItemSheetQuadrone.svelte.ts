@@ -47,12 +47,12 @@ import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
-import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
+import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import { AdvancementColumnRuntime } from 'src/runtime/tables/AdvancementColumnRuntime.svelte';
+import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
