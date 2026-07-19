@@ -55,6 +55,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
+import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -432,7 +433,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       advancement: await this._getItemAdvancement(
         this.document,
         documentSheetContext.unlocked,
-        documentSheetContext.editable,
       ),
 
       effects: await this._getEffectsSections(documentSheetContext),
@@ -777,7 +777,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   async _getItemAdvancement(
     item: Item5e,
     unlocked: boolean,
-    editable: boolean,
   ): Promise<AdvancementSection[]> {
     if (!item.system.advancement) {
       return [];
@@ -801,10 +800,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         -1)
       : -1;
 
-    let tableRowActions: AdvancementRowAction[] = $derived(
-      TableRowActionsRuntime.getItemAdvancementRowActions(unlocked, item),
-    );
-
     // Improperly configured advancements
     if (item.advancement.needingConfiguration.length) {
       advancement[CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED] = {
@@ -820,9 +815,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               tags: this._getItemAdvancementTags(a, unlocked),
               classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
               summary: '',
-              rowActions: tableRowActions.filter((action) =>
-                checkCondition(action, a),
-              ),
+              rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
+                app: this,
+                data: { unlocked, owner: this.document.isOwner },
+                sheetDocument: this.document,
+                rowDocument: a,
+              }),
               value: '',
             }) satisfies AdvancementItemContext,
         ),
@@ -860,9 +858,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               classes: [
                 advancement.icon?.endsWith('.svg') ? 'svg' : '',
               ].filterJoin(' '),
-              rowActions: tableRowActions.filter((action) =>
-                checkCondition(action, advancement),
-              ),
+              rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
+                app: this,
+                data: { unlocked, owner: this.document.isOwner },
+                sheetDocument: this.document,
+                rowDocument: advancement,
+              }),
             }) satisfies AdvancementItemContext,
         ),
       );
@@ -909,7 +910,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           unlocked,
           level,
           context.configured,
-          editable,
+          this.isEditable,
         ),
         dataset: {},
       }),

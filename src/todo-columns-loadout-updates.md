@@ -2,7 +2,6 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] getItemAdvancementRowActions
   - [ ] calculateRowActionWidthRems
     - perhaps a static on the base abstract class?
   - [ ] getRowActionWidthInfo
@@ -37,6 +36,7 @@
 - [ ] // TODO: Do we really need this field? Surely we can figure this out with `item.actor`
 - [ ] Clean up: ItemRowActionV2 -> ItemRowAction, and remove the original and its Condition type.
 - [ ] Consider passing the sheet and document down to props callback for all row action types.
+- [ ] Reevaluate the props for all row actions before finalizing the API
 
 ## Stretch
 

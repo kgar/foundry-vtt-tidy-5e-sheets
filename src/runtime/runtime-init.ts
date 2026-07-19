@@ -21,6 +21,7 @@ import { UnassignedCrewMemberRowActionRuntime } from './table-row-actions/Unassi
 import { PassengerMemberRowActionRuntime } from './table-row-actions/PassengerRowActionRuntime.svelte';
 import { AssignedCrewMemberRowActionRuntime } from './table-row-actions/AssignedCrewRowActionRuntime.svelte';
 import { EncounterCombatMemberRowActionRuntime } from './table-row-actions/EncounterCombatRowActionRuntime.svelte';
+import { ItemAdvancementMemberRowActionRuntime } from './table-row-actions/ItemAdvancementRowActions.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -55,6 +56,7 @@ export function initRuntimeOnReady() {
   FeatureRowActionRuntime.initOnReady();
   GroupMemberRowActionRuntime.initOnReady();
   InventoryRowActionRuntime.initOnReady();
+  ItemAdvancementMemberRowActionRuntime.initOnReady();
   PassengerMemberRowActionRuntime.initOnReady();
   SpellRowActionRuntime.initOnReady();
   UnassignedCrewMemberRowActionRuntime.initOnReady();

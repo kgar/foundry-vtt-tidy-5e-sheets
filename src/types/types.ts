@@ -2066,9 +2066,17 @@ export type EncounterCombatantMemberRowAction<
   EncounterCombatantMemberRowActionConditionData
 >;
 
-export type AdvancementRowActionPropsData = { id: string };
+export type AdvancementRowActionPropsData = { item: Item5e; id: string };
 
-export type AdvancementRowActionConditionData = { id: string };
+export type AdvancementRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument?: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
 
 export type AdvancementRowAction<
   TComponent extends Component<any> = Component<any>,

@@ -142,8 +142,10 @@
                   ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                 }}
               >
-                {const data =
-                  $derived<AdvancementRowActionPropsData>(advancement)}
+                {const data = $derived<AdvancementRowActionPropsData>({
+                  id: advancement.id,
+                  item: context.document,
+                })}
                 <TableRowActions rowActions={advancement.rowActions} {data} />
               </TidyTableCell>
             {/snippet}
