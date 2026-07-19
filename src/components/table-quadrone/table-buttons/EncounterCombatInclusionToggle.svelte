@@ -2,13 +2,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    EncounterMemberQuadroneContext,
+    EncounterMemberCombatantQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
 
   interface Props {
     rowContext:
-      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
       | EncounterPlaceholderQuadroneContext;
   }
 
@@ -19,9 +19,7 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let identifier = $derived(
-    rowContext.type === 'member'
-      ? rowContext.actor.uuid
-      : rowContext.id,
+    rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
   );
 
   let include = $derived(rowContext.includeInCombat);

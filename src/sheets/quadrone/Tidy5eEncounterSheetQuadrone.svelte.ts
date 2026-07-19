@@ -14,6 +14,7 @@ import type {
   DifficultyTarget,
   EncounterMemberSection,
   EncounterCombatSection,
+  EncounterMemberCombatantQuadroneContext,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
@@ -219,7 +220,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     const npcMap = new Map<string, EncounterMemberQuadroneContext>();
     const combatants: (
-      EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext
     )[] = [];
     const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
     const languages = new Map<string, MeasurableGroupTrait<number>>();
@@ -277,7 +279,18 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
         npcMap.set(actor.uuid, memberContext);
 
-        combatants.push(memberContext);
+        const memberCombatantContext: EncounterMemberCombatantQuadroneContext =
+          {
+            ...memberContext,
+            rowActions: EncounterCombatMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
+          };
+
+        combatants.push(memberCombatantContext);
 
         return memberContext;
       }),

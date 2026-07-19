@@ -2,7 +2,6 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] getEncounterCombatRowActions
   - [ ] getItemAdvancementRowActions
   - [ ] calculateRowActionWidthRems
     - perhaps a static on the base abstract class?

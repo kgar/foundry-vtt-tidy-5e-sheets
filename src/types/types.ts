@@ -1609,6 +1609,13 @@ export type EncounterMemberQuadroneContext = {
   rowActions: ActorRowAction[];
 };
 
+export type EncounterMemberCombatantQuadroneContext = Omit<
+  EncounterMemberQuadroneContext,
+  'rowActions'
+> & {
+  rowActions: EncounterCombatantMemberRowAction[];
+};
+
 export type EncounterPlaceholderQuadroneContext = {
   initiative: number | undefined;
   includeInCombat: boolean;
@@ -1624,7 +1631,8 @@ export type EncounterMemberSection = TidySectionBase & {
 
 export type EncounterCombatSection = TidySectionBase & {
   combatants: (
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+    | EncounterMemberCombatantQuadroneContext
+    | EncounterPlaceholderQuadroneContext
   )[];
 };
 
@@ -2038,7 +2046,7 @@ export type ActorRowAction<TComponent extends Component<any> = Component<any>> =
   >;
 
 export type EncounterCombatantMemberRowActionPropsData =
-  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+  EncounterMemberCombatantQuadroneContext | EncounterPlaceholderQuadroneContext;
 
 export type EncounterCombatantMemberRowActionConditionData = {
   sheetDocument: Actor5e;

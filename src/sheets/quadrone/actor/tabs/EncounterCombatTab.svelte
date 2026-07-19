@@ -216,16 +216,11 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {#if combatant.type === 'placeholder'}
-                    {const data =
-                      $derived<EncounterCombatantMemberRowActionPropsData>(
-                        combatant,
-                      )}
-                    <TableRowActions rowActions={combatant.rowActions} {data} />
-                  {:else}
-                    {const data = $derived<ActorRowActionPropsData>(combatant)}
-                    <TableRowActions rowActions={combatant.rowActions} {data} />
-                  {/if}
+                  {const data =
+                    $derived<EncounterCombatantMemberRowActionPropsData>(
+                      combatant,
+                    )}
+                  <TableRowActions rowActions={combatant.rowActions} {data} />
                 </TidyTableCell>
               </div>
             {/each}
