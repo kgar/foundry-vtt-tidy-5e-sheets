@@ -714,11 +714,11 @@
     }
 
     .roll-prompt i {
-      top: 50%;
-      left: 50%;
+      inset-block-start: calc(50% - 1.5px);
+      inset-inline-start: 50%;
       transform: translate(-50%, -50%);
-      right: unset;
-      bottom: unset;
+      inset-inline-end: unset;
+      inset-block-end: unset;
     }
 
     dnd5e-icon {

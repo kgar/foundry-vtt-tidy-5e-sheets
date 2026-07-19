@@ -91,7 +91,7 @@
     ;
     margin-inline-end: var(--t5e-size-5x);
     display: inline-flex;
-    gap: var(--t5e-size-2x);
+    gap: var(--t5e-size-1x);
     align-items: center;
     width: var(--sidebar-width);
     height: var(--header-height);
