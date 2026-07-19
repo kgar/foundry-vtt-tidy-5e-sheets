@@ -45,6 +45,9 @@ import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/Invento
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
 import { DraftAnimalMemberRowActionRuntime } from 'src/runtime/table-row-actions/DraftAnimalRowActions.svelte';
+import { PassengerMemberRowActionRuntime } from 'src/runtime/table-row-actions/PassengerRowActionRuntime.svelte';
+import { UnassignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/UnassignedCrewRowActionRuntime.svelte';
+import { AssignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/AssignedCrewRowActionRuntime.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -81,6 +84,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
       removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
       removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
+      unassignCrew: Tidy5eVehicleSheetQuadrone.#onUnassignCrew,
     },
   };
 
@@ -462,11 +466,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
     const uuids: string[] = context.system.passengers.value;
     const groups = this.groupCrew(uuids);
-    const rowActions =
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        CONSTANTS.SECTION_TYPE_PASSENGERS,
-      );
 
     const passengerResult = await Promise.all(
       Object.keys(groups).map(async (uuid) => {
@@ -480,12 +479,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
-          rowActions:
-            // Temporarily broken until new runtime is set up with condition filtering baked in
-            TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-              context,
-              CONSTANTS.SECTION_TYPE_CREW,
-            ),
+          rowActions: PassengerMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
         } satisfies PassengerMemberContext;
 
         return {
@@ -1024,7 +1023,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     await this.actor.update(actorUpdates);
   }
 
-  async _unassignCrew(memberUuid: string, item: Item5e) {
+  async _unassignCrew(memberUuid: string, itemUuid: string) {
+    let item = await fromUuid(itemUuid);
+
+    if (!item) {
+      return;
+    }
+
     let crew = foundry.utils.getProperty(item, 'system.crew.value');
 
     crew = [...crew];
@@ -1089,6 +1094,21 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
     if (uuid) {
       return this.removeUnassignedCrew(uuid);
+    }
+  }
+
+  static async #onUnassignCrew(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const memberUuid =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
+    const itemUuid =
+      target.closest<HTMLElement>('[data-item-uuid]')?.dataset.itemUuid;
+
+    if (memberUuid && itemUuid) {
+      return this._unassignCrew(memberUuid, itemUuid);
     }
   }
 
@@ -1166,7 +1186,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         (m) => m.actor.uuid === document.uuid,
       )?.assignedTo;
 
-      await this._unassignCrew(document.uuid, currentAssignedItem);
+      await this._unassignCrew(document.uuid, currentAssignedItem.uuid);
     }
 
     if (src === dest) {
@@ -1247,9 +1267,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             cr,
             subtitle,
             assignedTo: item,
-            rowActions:
-              // Temporarily broken until new runtime is set up with condition filtering baked in
-              TableRowActionsRuntime.getAssignedCrewRowActions(context),
+            rowActions: AssignedCrewMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
           });
         }
       } else {
@@ -1259,8 +1282,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           cr,
           subtitle,
-          // Temporarily broken until new runtime is set up with condition filtering baked in
-          rowActions: TableRowActionsRuntime.getAssignedCrewRowActions(context),
+          rowActions: UnassignedCrewMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
         });
       }
     }

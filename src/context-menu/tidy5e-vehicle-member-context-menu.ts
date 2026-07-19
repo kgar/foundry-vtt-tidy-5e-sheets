@@ -89,7 +89,7 @@ function getVehicleItemMemberOptions(
       icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
         if (item && memberUuid) {
-          await app._unassignCrew(memberUuid, item);
+          await app._unassignCrew(memberUuid, item.uuid);
         }
       },
     },
@@ -180,7 +180,7 @@ function getCrewMemberOptions(
           );
 
           if (currentlyAssignedItem) {
-            await app._unassignCrew(memberUuid, currentlyAssignedItem);
+            await app._unassignCrew(memberUuid, currentlyAssignedItem.uuid);
           }
 
           const newItemToAssign = app.document.items.get(mountableItem.id);
@@ -206,7 +206,7 @@ function getCrewMemberOptions(
         );
 
         if (currentlyAssignedItemId) {
-          await app._unassignCrew(memberUuid, currentlyAssignedItem);
+          await app._unassignCrew(memberUuid, currentlyAssignedItem.uuid);
         }
       },
     },

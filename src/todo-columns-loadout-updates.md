@@ -2,8 +2,7 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] getUnassignedCrewPassengerRowActions
-  - [ ] getAssignedCrewRowActions
+  - [ ] _unassignCrewV2 -> _unassignCrew, eliminate original
   - [ ] getEncounterCombatRowActions
   - [ ] getItemAdvancementRowActions
   - [ ] calculateRowActionWidthRems
@@ -39,6 +38,7 @@
 - [ ] Can Container Row Actions and Inventory Row Actions be the same list?
 - [ ] // TODO: Do we really need this field? Surely we can figure this out with `item.actor`
 - [ ] Clean up: ItemRowActionV2 -> ItemRowAction, and remove the original and its Condition type.
+- [ ] Consider passing the sheet and document down to props callback for all row action types.
 
 ## Stretch
 
