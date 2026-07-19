@@ -5,7 +5,7 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
@@ -93,7 +93,7 @@
         {const visibleItemCount = $derived(section.members.length)}
 
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
           ),

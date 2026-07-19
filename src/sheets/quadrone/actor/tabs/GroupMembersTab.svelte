@@ -26,7 +26,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
@@ -105,7 +105,7 @@
         {const visibleItemCount = $derived(section.members.length)}
 
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
           ),

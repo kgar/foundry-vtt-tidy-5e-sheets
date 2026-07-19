@@ -14,12 +14,10 @@ import type {
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import SectionActions from 'src/features/sections/SectionActions';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
 import type { PowersSection } from '../McdmClassBundle';
 import { getDefaultItemColumns } from 'src/runtime/table-columns/default-item-columns';
 import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
-import { checkCondition } from 'src/utils/iteration';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 
 export function buildMcdmPowersSections(

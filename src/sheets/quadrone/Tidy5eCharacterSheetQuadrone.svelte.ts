@@ -44,7 +44,6 @@ import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSect
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ItemContext } from 'src/features/item/ItemContext';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -53,21 +52,15 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import {
-  TidySheetSettingsTabIds,
-  TidySheetSettingsQuadroneApplication,
-} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import {
   getCharacterSheetTabActionSectionsQuadrone,
   isItemInActionList,
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
 import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';

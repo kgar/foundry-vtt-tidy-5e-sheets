@@ -9,7 +9,7 @@
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
@@ -58,7 +58,7 @@
     )}
 
     {const rowActionInfo = $derived(
-      TableRowActionsRuntime.getRowActionWidthInfo(
+      RowActionRuntimeBase.getRowActionWidthInfo(
         section.items,
         (_entry) => arrayWithMostActions,
       ),

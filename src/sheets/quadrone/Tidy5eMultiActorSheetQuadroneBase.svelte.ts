@@ -20,7 +20,6 @@ import type {
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { TidyFlags } from 'src/api';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -33,7 +32,6 @@ import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { checkCondition } from 'src/utils/iteration';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 
 export function getTidy5eMultiActorSheetQuadroneBase<

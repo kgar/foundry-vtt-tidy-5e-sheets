@@ -19,7 +19,7 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
 
@@ -49,7 +49,7 @@
 {#each sections as section (section.key)}
   {#if section.show}
     {const rowActionInfo = $derived(
-      TableRowActionsRuntime.getRowActionWidthInfo(
+      RowActionRuntimeBase.getRowActionWidthInfo(
         section.effects,
         (entry) => entry.rowActions,
       ),

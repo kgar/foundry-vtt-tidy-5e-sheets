@@ -13,7 +13,7 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import type { ActorRowActionPropsData } from 'src/types/types';
@@ -177,7 +177,7 @@
     {#each context.crewAndPassengers as section (section.key)}
       {#if section.members.length || section.showEmptyState}
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
           ),

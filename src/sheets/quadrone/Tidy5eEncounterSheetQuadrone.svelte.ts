@@ -43,9 +43,7 @@ import {
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
 import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
 import { EncounterCombatMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatRowActionRuntime.svelte';
 

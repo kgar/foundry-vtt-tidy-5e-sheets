@@ -7,7 +7,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ActorRowAction,
   CrewMemberContext,
   DraftAnimalContext,
   DraftAnimalSection,
@@ -17,8 +16,6 @@ import type {
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
   VehicleSheetQuadroneContext,
-  ItemRowAction,
-  ItemRowActionV2,
 } from 'src/types/types';
 import VehicleSheet from './actor/VehicleSheet.svelte';
 import { mount } from 'svelte';
@@ -33,14 +30,12 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
 import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import { VehicleMemberColumnRuntime } from 'src/runtime/table-columns/VehicleCrewMemberColumnRuntime';
-import { checkCondition } from 'src/utils/iteration';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';

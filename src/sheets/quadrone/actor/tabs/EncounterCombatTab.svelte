@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { CONSTANTS } from 'src/constants';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -18,7 +18,6 @@
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import {
     type EncounterCombatantMemberRowActionPropsData,
-    type ActorRowActionPropsData,
   } from 'src/types/types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
@@ -134,7 +133,7 @@
         {const visibleItemCount = $derived(section.combatants.length)}
 
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.combatants,
             (entry) => entry.rowActions,
           ),

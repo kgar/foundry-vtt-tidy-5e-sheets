@@ -23,7 +23,7 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import type { Item5e } from 'src/types/item.types';
@@ -82,7 +82,7 @@
   const localize = FoundryAdapter.localize;
 
   const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
+    RowActionRuntimeBase.getRowActionWidthInfo(
       section.items,
       (entry) => entryContext[entry.id]?.rowActions,
     ),

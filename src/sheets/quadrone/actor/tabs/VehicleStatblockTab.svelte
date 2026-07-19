@@ -30,7 +30,7 @@
     DraftAnimalSection,
     InventorySection,
   } from 'src/types/types';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
@@ -338,7 +338,7 @@
       {:else if section.type === 'draft'}
         {#if section.show}
           {const rowActionInfo = $derived(
-            TableRowActionsRuntime.getRowActionWidthInfo(
+            RowActionRuntimeBase.getRowActionWidthInfo(
               section.members,
               (entry) => entry.rowActions,
             ),

@@ -30,7 +30,6 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
-  AdvancementRowAction,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -47,13 +46,11 @@ import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 

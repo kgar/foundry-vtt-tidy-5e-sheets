@@ -22,7 +22,7 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
@@ -66,7 +66,7 @@
   {#each sections as section}
     {#if section.show}
       {const rowActionInfo = $derived(
-        TableRowActionsRuntime.getRowActionWidthInfo(
+        RowActionRuntimeBase.getRowActionWidthInfo(
           section.items,
           (entry) => context.itemContext[entry.id]?.rowActions,
         ),

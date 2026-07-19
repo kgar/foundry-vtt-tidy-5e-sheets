@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import { getContext, type Component } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -10,8 +9,7 @@
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -40,7 +38,7 @@
   {#each context.activities as section (section.key)}
     {#if section.show}
       {const rowActionInfo = $derived(
-        TableRowActionsRuntime.getRowActionWidthInfo(
+        RowActionRuntimeBase.getRowActionWidthInfo(
           section.activities,
           (entry) => entry.rowActions,
         ),
