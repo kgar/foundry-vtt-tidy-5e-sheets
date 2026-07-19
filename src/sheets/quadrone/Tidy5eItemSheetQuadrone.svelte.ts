@@ -54,6 +54,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
+import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -332,6 +333,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             })
             ?.map((activity: Activity5e) =>
               Activities.getActivityItemContext(
+                this,
                 activity,
                 documentSheetContext.unlocked,
               ),
@@ -714,7 +716,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               hasTooltip: true,
               effect: effect,
               riders: [],
-              rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+              rowActions: EffectRowActionRuntime.getRowActions({
+                app: context.document.sheet,
+                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                rowDocument: effect,
+                sheetDocument: context.document,
+              }),
             });
             if (riderIds.has(id)) riders.push(ctx);
             else arr.push(ctx);

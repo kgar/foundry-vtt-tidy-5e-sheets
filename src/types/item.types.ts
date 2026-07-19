@@ -155,8 +155,12 @@ export type ItemNameContext = {
 
 export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
 
+export type ActivitySectionQuadrone = {
+  activities: ActivityItemContext[];
+} & TidySectionBase;
+
 export type ItemSheetQuadroneContext = {
-  activities: ActivitySection[];
+  activities: ActivitySectionQuadrone[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementSection[];
   affectsPlaceholder: string;

@@ -18,10 +18,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
-  import type {
-    ActivityRowAction,
-    ActivityRowActionPropsData,
-  } from 'src/types/types';
+  import type { ActivityRowActionPropsData } from 'src/types/types';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -31,26 +28,6 @@
   );
 
   const localize = FoundryAdapter.localize;
-
-  let rowActions: ActivityRowAction<any>[] = $derived(
-    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
-  );
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let section = $derived.by(() => {
-    const result = {
-      ...SheetSections.EMPTY,
-      canCreate: context.editable,
-      columns: ActivityColumnRuntime.getColumnSpecifications(
-        context.document,
-        tabId,
-        'activities',
-      ),
-    };
-
-    return result;
-  });
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -171,7 +148,7 @@
                     activity: ctx.activity,
                     ctx,
                   })}
-                  <TableRowActions {rowActions} {data} />
+                  <TableRowActions rowActions={ctx.rowActions} {data} />
                 </TidyTableCell>
               {/snippet}
             </TidyActivityTableRow>

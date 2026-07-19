@@ -8,7 +8,6 @@
   import { Activities } from 'src/features/activities/activities';
   import type {
     ActivityItemContext,
-    ActivityRowAction,
     ActivityRowActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
@@ -22,7 +21,6 @@
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
-  import { checkCondition } from 'src/utils/iteration';
 
   interface Props {
     item?: Item5e | null;
@@ -37,10 +35,6 @@
       .useBasicTheme ?? false,
   );
 
-  let rowActions = $derived(
-    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
-  );
-
   let section = $derived({
     ...SheetSections.EMPTY,
     columns: ActivityColumnRuntime.getColumnSpecifications(
@@ -50,23 +44,10 @@
     ),
   });
 
-  const rowActionsMap = $derived(
-    activities.reduce<Record<string, ActivityRowAction<any>[]>>(
-      (prev, entry) => {
-        prev[entry.id] = rowActions.filter((action) =>
-          checkCondition(action, { activity: entry.activity }),
-        );
-
-        return prev;
-      },
-      {},
-    ),
-  );
-
   const rowActionInfo = $derived(
     TableRowActionsRuntime.getRowActionWidthInfo(
       activities,
-      (entry) => rowActionsMap[entry.id],
+      (entry) => entry.rowActions,
     ),
   );
 
@@ -95,10 +76,6 @@
   {#snippet body()}
     {#each activities as ctx (ctx.activity.id)}
       {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
-      {const ctxWithRowActions = $derived({
-        ...ctx,
-        rowActions: rowActionsMap[ctx.id],
-      })}
 
       <TidyTableRow
         rowAttributes={{
@@ -138,7 +115,7 @@
 
         <TidyTableCustomCells
           {hiddenColumns}
-          ctx={ctxWithRowActions}
+          {ctx}
           entry={ctx.activity}
           {section}
           {context}
@@ -149,7 +126,7 @@
             activity: ctx.activity,
             ctx: ctx.activity,
           })}
-          <TableRowActions {data} {rowActions} />
+          <TableRowActions {data} rowActions={ctx.rowActions} />
         </TidyTableCell>
       </TidyTableRow>
     {/each}

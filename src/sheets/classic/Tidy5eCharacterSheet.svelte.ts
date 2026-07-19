@@ -1484,8 +1484,9 @@ export class Tidy5eCharacterSheet
       item.system.activities,
     )?.map((activity) =>
       Activities.getActivityItemContext(
+        this,
         activity,
-        this.isEditable && this.isEditMode,
+        this.isEditMode && this.isEditable,
       ),
     );
 

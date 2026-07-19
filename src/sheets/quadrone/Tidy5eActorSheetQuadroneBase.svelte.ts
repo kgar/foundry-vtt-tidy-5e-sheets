@@ -402,7 +402,7 @@ export function getTidy5eActorSheetQuadroneBase<
           item,
           item.system.activities,
         )?.map((activity) =>
-          Activities.getActivityItemContext(activity, context.unlocked),
+          Activities.getActivityItemContext(this, activity, context.unlocked),
         );
       }
 

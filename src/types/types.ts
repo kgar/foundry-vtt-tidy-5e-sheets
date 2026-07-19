@@ -1953,7 +1953,7 @@ export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
 
 export type ItemRowActionConditionDataV2 = {
   sheetDocument: Actor5e | Item5e;
-  rowDocument: Actor5e | Item5e;
+  rowDocument: Item5e;
   app: any;
   data: {
     owner: boolean;
@@ -1975,7 +1975,13 @@ export type EffectRowActionPropsData = {
 };
 
 export type EffectRowActionConditionData = {
-  effect: ActiveEffect5e;
+  sheetDocument: Actor5e | Item5e;
+  rowDocument: ActiveEffect5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
 };
 
 export type EffectRowAction<
@@ -1992,7 +1998,13 @@ export type ActivityRowActionPropsData = {
 };
 
 export type ActivityRowActionConditionData = {
-  activity: Activity5e;
+  sheetDocument: Actor5e | Item5e;
+  rowDocument: ActiveEffect5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
 };
 
 export type ActivityRowAction<

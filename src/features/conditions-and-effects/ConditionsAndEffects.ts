@@ -9,11 +9,11 @@ import type {
   DocumentSheetQuadroneContext,
   EffectCategory,
 } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import { checkCondition } from 'src/utils/iteration';
+import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
@@ -127,8 +127,6 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
-    const allEffectRowActions =
-      TableRowActionsRuntime.getEffectsRowActions(context);
     const sectionActions: SectionCommand[] = [];
     const newCategories: ActiveEffectSection[] = [];
 
@@ -176,9 +174,12 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
-              rowActions: allEffectRowActions.filter((action) =>
-                checkCondition(action, { effect }),
-              ),
+              rowActions: EffectRowActionRuntime.getRowActions({
+                app: context.document.sheet,
+                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                rowDocument: effect,
+                sheetDocument: context.document,
+              }),
             });
             return arr;
           },
@@ -210,8 +211,6 @@ export class ConditionsAndEffects {
   ): Promise<ActiveEffectSection[]> {
     const newCategories: ActiveEffectSection[] = [];
     const sectionActions: SectionCommand[] = [];
-    const allEffectRowActions =
-      TableRowActionsRuntime.getEffectsRowActions(context);
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -239,9 +238,12 @@ export class ConditionsAndEffects {
               uuid: effect.uuid,
               effect: effect,
               riders: [],
-              rowActions: allEffectRowActions.filter((action) =>
-                checkCondition(action, { effect }),
-              ),
+              rowActions: EffectRowActionRuntime.getRowActions({
+                app: context.document.sheet,
+                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                rowDocument: effect,
+                sheetDocument: context.document,
+              }),
             });
             return arr;
           },

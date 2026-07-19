@@ -2,8 +2,7 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] getEffectsRowActions
-  - [ ] getActivityRowActions
+  
   - [ ] getGroupMemberRowActions
   - [ ] getEncounterMemberRowActions
   - [ ] getDraftAnimalRowActions
@@ -15,6 +14,7 @@
     - perhaps a static on the base abstract class?
   - [ ] getRowActionWidthInfo
     - perhaps a static on the base abstract class?
+- [ ] Do any of the row actions need to be supressed when the sheet is not editable?
 - [ ] Refactoring consideration: Row Actions don't need both presence/absence as well as an optional condition callback. We also don't need to pull row actions until we have an item to be evaluated. Consider eliminating presence/absence and just evaluating conditions each time an item needs row actions. `TableRowActionsRuntime.getEncounterMemberRowActions(context: ActorSheetQuadroneContext)` and others like it do not need the full context object in order to return row actions, just some intel like editable and unlocked, plus the document entry.
   - [x] Move and separate the columns runtime and row actions runtime into their own folders
   - [ ] Design a runtime for row actions that covers each variety of row action available, covered by a base class that can perform condition filtering, etc.

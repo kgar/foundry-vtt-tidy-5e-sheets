@@ -41,7 +41,11 @@
           item,
           item.system.activities,
         ).map<ActivityItemContext>((activity) =>
-          Activities.getActivityItemContext(activity, context.unlocked),
+          Activities.getActivityItemContext(
+            context.sheet,
+            activity,
+            context.unlocked,
+          ),
         )
       : [];
   });

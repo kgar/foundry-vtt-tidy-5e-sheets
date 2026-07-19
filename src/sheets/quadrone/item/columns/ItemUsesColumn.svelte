@@ -68,10 +68,12 @@
 {:else if item.system.linkedActivity}
   {const ctx = $derived(
     Activities.getActivityItemContext(
+      context.sheet,
       item.system.linkedActivity,
       context.unlocked,
     ),
   )}
+
   <ActivityUsesColumn
     rowContext={ctx}
     rowDocument={ctx.activity}
