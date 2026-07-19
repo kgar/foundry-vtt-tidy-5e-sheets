@@ -38,8 +38,8 @@ import type { Component } from 'svelte';
 import { checkCondition } from 'src/utils/iteration';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class EncounterMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowAction> {
-  settingKey: string = 'encounterMember';
+class DraftAnimalMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowAction> {
+  settingKey: string = 'draftAnimal';
 
   override _getDefaultRowActions() {
     return [
@@ -47,10 +47,14 @@ class EncounterMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowA
         component: GenericActionButton,
         condition: (args) => args.data.unlocked,
         props: (args) => ({
-          'data-action': 'removeMember',
+          'data-action': 'removeDraftAnimal',
           'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
-          tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+            name: FoundryAdapter.localize(
+              'TIDY5E.Vehicle.Member.DraftAnimal.Label',
+            ),
+          }),
         }),
       } satisfies ActorRowAction<typeof GenericActionButton>,
       {
@@ -63,5 +67,5 @@ class EncounterMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowA
   }
 }
 
-export const EncounterMemberRowActionRuntime =
-  new EncounterMemberRowActionRuntimeImpl();
+export const DraftAnimalMemberRowActionRuntime =
+  new DraftAnimalMemberRowActionRuntimeImpl();

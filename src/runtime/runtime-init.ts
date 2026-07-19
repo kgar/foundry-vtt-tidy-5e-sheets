@@ -16,6 +16,7 @@ import { EffectRowActionRuntime } from './table-row-actions/EffectRowActionRunti
 import { ActivityRowActionRuntime } from './table-row-actions/ActivityRowActionRuntime.svelte';
 import { GroupMemberRowActionRuntime } from './table-row-actions/GroupMemberRowActionRuntime.svelte';
 import { EncounterMemberRowActionRuntime } from './table-row-actions/EncounterMemberRowActions.svelte';
+import { DraftAnimalMemberRowActionRuntime } from './table-row-actions/DraftAnimalRowActions.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -38,10 +39,11 @@ export function initRuntimeOnReady() {
   ItemColumnRuntime.initOnReady();
   TabDocumentItemTypesRuntime.initOnReady();
   VehicleMemberColumnRuntime.initOnReady();
-  
+
   // Row Actions
   ActivityRowActionRuntime.initOnReady();
   ContainerContentsRowActionRuntime.initOnReady();
+  DraftAnimalMemberRowActionRuntime.initOnReady();
   EffectRowActionRuntime.initOnReady();
   EncounterMemberRowActionRuntime.initOnReady();
   FeatureRowActionRuntime.initOnReady();

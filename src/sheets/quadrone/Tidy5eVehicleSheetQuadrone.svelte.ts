@@ -44,6 +44,7 @@ import { checkCondition } from 'src/utils/iteration';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
+import { DraftAnimalMemberRowActionRuntime } from 'src/runtime/table-row-actions/DraftAnimalRowActions.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -359,9 +360,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
-    const draftRowActions =
-      TableRowActionsRuntime.getDraftAnimalRowActions(context);
-
     const drafted: DraftAnimalSection = {
       ...SheetSections.EMPTY,
       type: 'draft',
@@ -390,9 +388,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle: this._getSubtitle(actor),
             quantity: 1,
             name: actor.name,
-            rowActions:
-              // Temporarily broken until new runtime is set up with condition filtering baked in
-              TableRowActionsRuntime.getDraftAnimalRowActions(context),
+            rowActions: DraftAnimalMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
           } satisfies DraftAnimalContext,
         };
       }),

@@ -20,35 +20,6 @@ import GenericActionButton from 'src/components/table-quadrone/table-buttons/Gen
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
 class TableRowActionsRuntime {
-  getDraftAnimalRowActions(context: VehicleSheetQuadroneContext) {
-    let result: ActorRowAction<any>[] = [];
-
-    if (context.owner && context.unlocked) {
-      result.push({
-        component: GenericActionButton,
-        props: (args) => ({
-          'data-action': 'removeDraftAnimal',
-          'data-uuid': args.actor.uuid,
-          iconClasses: 'fa-solid fa-trash fa-fw',
-          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
-            name: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Member.DraftAnimal.Label',
-            ),
-          }),
-        }),
-      } satisfies ActorRowAction<typeof GenericActionButton>);
-    }
-
-    result.push({
-      component: MenuButton,
-      props: () => ({
-        targetSelector: '[data-context-menu]',
-      }),
-    } satisfies ActorRowAction<typeof MenuButton>);
-
-    return result;
-  }
-
   getUnassignedCrewPassengerRowActions(
     context: VehicleSheetQuadroneContext,
     area: CrewArea5e,
