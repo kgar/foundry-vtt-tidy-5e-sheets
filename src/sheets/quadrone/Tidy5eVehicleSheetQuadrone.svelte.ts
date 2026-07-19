@@ -390,9 +390,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle: this._getSubtitle(actor),
             quantity: 1,
             name: actor.name,
-            rowActions: draftRowActions.filter((action) =>
-              checkCondition(action, { actor }),
-            ),
+            rowActions:
+              // Temporarily broken until new runtime is set up with condition filtering baked in
+              TableRowActionsRuntime.getDraftAnimalRowActions(context),
           } satisfies DraftAnimalContext,
         };
       }),
@@ -436,23 +436,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
 
     const { value: assignedCrewContextValue, broken: brokenAssignedCrewUuids } =
-      await this.resolveCrewMemberContext(
-        assigned,
-        TableRowActionsRuntime.getAssignedCrewRowActions(context),
-        assignments,
-      );
+      await this.resolveCrewMemberContext(context, assigned, assignments);
     context.crew.assigned.members = assignedCrewContextValue;
 
     const {
       value: unassignedCrewContextValue,
       broken: brokenUnassignedCrewUuids,
-    } = await this.resolveCrewMemberContext(
-      unassigned,
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        CONSTANTS.SECTION_TYPE_CREW,
-      ),
-    );
+    } = await this.resolveCrewMemberContext(context, unassigned);
     context.crew.unassigned.members = unassignedCrewContextValue;
 
     // Add the actual number of broken passengers, even if duplicate actor UUIDs.
@@ -489,9 +479,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
-          rowActions: rowActions.filter((action) =>
-            checkCondition(action, { actor }),
-          ),
+          rowActions:
+            // Temporarily broken until new runtime is set up with condition filtering baked in
+            TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+              context,
+              CONSTANTS.SECTION_TYPE_CREW,
+            ),
         } satisfies PassengerMemberContext;
 
         return {
@@ -1218,9 +1211,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    * Resolve crew UUIDs.
    */
   async resolveCrewMemberContext(
+    context: VehicleSheetQuadroneContext,
     group: Record<string, number>,
-    rowActions: ActorRowAction[],
-    // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
     value: CrewMemberContext[];
@@ -1254,9 +1246,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             cr,
             subtitle,
             assignedTo: item,
-            rowActions: rowActions.filter((action) =>
-              checkCondition(action, { actor }),
-            ),
+            rowActions:
+              // Temporarily broken until new runtime is set up with condition filtering baked in
+              TableRowActionsRuntime.getAssignedCrewRowActions(context),
           });
         }
       } else {
@@ -1266,9 +1258,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           cr,
           subtitle,
-          rowActions: rowActions.filter((action) =>
-            checkCondition(action, { actor }),
-          ),
+          // Temporarily broken until new runtime is set up with condition filtering baked in
+          rowActions: TableRowActionsRuntime.getAssignedCrewRowActions(context),
         });
       }
     }

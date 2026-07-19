@@ -225,8 +225,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const specials = new Map<string, GroupTrait>();
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
 
-    const memberRowActions =
-      TableRowActionsRuntime.getEncounterMemberRowActions(context);
     const combatRowActions =
       TableRowActionsRuntime.getEncounterCombatRowActions(context);
 
@@ -269,9 +267,9 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
-          rowActions: memberRowActions.filter((action) =>
-            checkCondition(action, { actor }),
-          ),
+          rowActions:
+            // Temporarily broken until new runtime is set up with condition filtering baked in
+            TableRowActionsRuntime.getEncounterMemberRowActions(context),
         };
 
         npcMap.set(actor.uuid, memberContext);
