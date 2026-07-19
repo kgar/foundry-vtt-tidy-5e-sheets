@@ -43,6 +43,7 @@ import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowAction
 import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
+import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -167,11 +168,6 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     traits: GroupTraits;
   }> {
     const customSections = TidyFlags.sections.get(this.actor);
-
-    const rowActions = TableRowActionsRuntime.getGroupMemberRowActions(
-      actorContext.document,
-      actorContext.unlocked,
-    );
 
     const sections = new Map<string, GroupMemberSection>([
       [
@@ -311,9 +307,12 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         ),
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
-        rowActions: rowActions.filter((action) =>
-          checkCondition(action, { actor }),
-        ),
+        rowActions: GroupMemberRowActionRuntime.getRowActions({
+          app: this,
+          data: { unlocked: actorContext.unlocked, owner: actorContext.owner },
+          rowDocument: actor,
+          sheetDocument: actorContext.document,
+        }),
       };
 
       section.members.push(groupMemberContext);

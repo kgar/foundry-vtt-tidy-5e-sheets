@@ -14,6 +14,7 @@ import { SpellRowActionRuntime } from './table-row-actions/SpellRowActionRuntime
 import { ContainerContentsRowActionRuntime } from './table-row-actions/ContainerContentsRowActionRuntime.svelte';
 import { EffectRowActionRuntime } from './table-row-actions/EffectRowActionRuntime.svelte';
 import { ActivityRowActionRuntime } from './table-row-actions/ActivityRowActionRuntime.svelte';
+import { GroupMemberRowActionRuntime } from './table-row-actions/GroupMemberRowActionRuntime.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -42,6 +43,7 @@ export function initRuntimeOnReady() {
   ContainerContentsRowActionRuntime.initOnReady();
   EffectRowActionRuntime.initOnReady();
   FeatureRowActionRuntime.initOnReady();
+  GroupMemberRowActionRuntime.initOnReady();
   InventoryRowActionRuntime.initOnReady();
   SpellRowActionRuntime.initOnReady();
 }

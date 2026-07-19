@@ -1,6 +1,5 @@
 import type { Item5e } from 'src/types/item.types';
 import type {
-  Actor5e,
   ActorSheetQuadroneContext,
   ActorRowAction,
   AdvancementRowAction,
@@ -21,37 +20,6 @@ import GenericActionButton from 'src/components/table-quadrone/table-buttons/Gen
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
 class TableRowActionsRuntime {
-  getGroupMemberRowActions(actor: Actor5e, unlocked: boolean) {
-    let rowActions: ActorRowAction<any>[] = $derived.by(() => {
-      let result: ActorRowAction<any>[] = [];
-
-      if (actor.isOwner) {
-        if (unlocked) {
-          result.push({
-            component: GenericActionButton,
-            props: (args) => ({
-              'data-action': 'removeMember',
-              'data-uuid': args.actor.uuid,
-              iconClasses: 'fa-solid fa-trash fa-fw',
-              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
-            }),
-          } satisfies ActorRowAction<typeof GenericActionButton>);
-        }
-      }
-
-      result.push({
-        component: MenuButton,
-        props: () => ({
-          targetSelector: '[data-context-menu]',
-        }),
-      } satisfies ActorRowAction<typeof MenuButton>);
-
-      return result;
-    });
-
-    return rowActions;
-  }
-
   getEncounterMemberRowActions(context: ActorSheetQuadroneContext) {
     let rowActions: ActorRowAction<any>[] = $derived.by(() => {
       let result: ActorRowAction<any>[] = [];
