@@ -15,6 +15,7 @@ import { ContainerContentsRowActionRuntime } from './table-row-actions/Container
 import { EffectRowActionRuntime } from './table-row-actions/EffectRowActionRuntime.svelte';
 import { ActivityRowActionRuntime } from './table-row-actions/ActivityRowActionRuntime.svelte';
 import { GroupMemberRowActionRuntime } from './table-row-actions/GroupMemberRowActionRuntime.svelte';
+import { EncounterMemberRowActionRuntime } from './table-row-actions/EncounterMemberRowActions.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -42,6 +43,7 @@ export function initRuntimeOnReady() {
   ActivityRowActionRuntime.initOnReady();
   ContainerContentsRowActionRuntime.initOnReady();
   EffectRowActionRuntime.initOnReady();
+  EncounterMemberRowActionRuntime.initOnReady();
   FeatureRowActionRuntime.initOnReady();
   GroupMemberRowActionRuntime.initOnReady();
   InventoryRowActionRuntime.initOnReady();

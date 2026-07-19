@@ -35,10 +35,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  let rowActions: any[] = $derived(
-    TableRowActionsRuntime.getEncounterMemberRowActions(context),
-  );
-
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {

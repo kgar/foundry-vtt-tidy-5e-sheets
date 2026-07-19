@@ -45,6 +45,7 @@ import type { Item5e } from 'src/types/item.types';
 import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowActionsRuntime.svelte';
 import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
+import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -268,8 +269,12 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           visible: combatantSettings.visible,
           type: 'member',
           rowActions:
-            // Temporarily broken until new runtime is set up with condition filtering baked in
-            TableRowActionsRuntime.getEncounterMemberRowActions(context),
+            EncounterMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
         };
 
         npcMap.set(actor.uuid, memberContext);

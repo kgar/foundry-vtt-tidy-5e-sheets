@@ -2,7 +2,6 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] getEncounterMemberRowActions
   - [ ] getDraftAnimalRowActions
   - [ ] getUnassignedCrewPassengerRowActions
   - [ ] getAssignedCrewRowActions
