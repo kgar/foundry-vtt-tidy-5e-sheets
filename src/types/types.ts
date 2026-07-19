@@ -2040,8 +2040,15 @@ export type ActorRowAction<TComponent extends Component<any> = Component<any>> =
 export type EncounterCombatantMemberRowActionPropsData =
   EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
 
-export type EncounterCombatantMemberRowActionConditionData =
-  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
+export type EncounterCombatantMemberRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument?: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
 
 export type EncounterCombatantMemberRowAction<
   TComponent extends Component<any> = Component<any>,

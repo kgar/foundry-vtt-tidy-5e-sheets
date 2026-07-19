@@ -46,6 +46,7 @@ import TableRowActionsRuntime from 'src/runtime/table-row-actions/TableRowAction
 import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
 import { checkCondition } from 'src/utils/iteration';
 import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
+import { EncounterCombatMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatRowActionRuntime.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -226,9 +227,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const specials = new Map<string, GroupTrait>();
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
 
-    const combatRowActions =
-      TableRowActionsRuntime.getEncounterCombatRowActions(context);
-
     const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
         const combatantSettings = CombatantSettings.getEntry(
@@ -268,13 +266,13 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
-          rowActions:
-            EncounterMemberRowActionRuntime.getRowActions({
-              app: context.sheet,
-              data: context,
-              rowDocument: actor,
-              sheetDocument: context.document,
-            }),
+          // TODO: separate the combatant member context from the encounter member context. They are for different uses.
+          rowActions: EncounterMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
         };
 
         npcMap.set(actor.uuid, memberContext);
@@ -299,7 +297,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           name: placeholder.name,
           visible: combatantSettings.visible,
-          rowActions: combatRowActions,
+          rowActions: EncounterCombatMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            sheetDocument: context.document,
+          }),
         });
       },
     );

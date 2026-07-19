@@ -2,7 +2,6 @@
 ## To Do
 
 - [ ] Finish dismantling TableRowActionRuntime
-  - [ ] _unassignCrewV2 -> _unassignCrew, eliminate original
   - [ ] getEncounterCombatRowActions
   - [ ] getItemAdvancementRowActions
   - [ ] calculateRowActionWidthRems

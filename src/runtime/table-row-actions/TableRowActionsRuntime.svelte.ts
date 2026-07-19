@@ -20,60 +20,6 @@ import GenericActionButton from 'src/components/table-quadrone/table-buttons/Gen
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 
 class TableRowActionsRuntime {
-  getEncounterCombatRowActions(context: ActorSheetQuadroneContext) {
-    let rowActions: EncounterCombatantMemberRowAction<any>[] = $derived.by(
-      () => {
-        let result: EncounterCombatantMemberRowAction<any>[] = [];
-
-        if (context.owner) {
-          result.push({
-            component: EncounterAddAsCombatPlaceholder,
-            props: () => ({}),
-          } satisfies EncounterCombatantMemberRowAction<
-            typeof EncounterAddAsCombatPlaceholder
-          >);
-          result.push({
-            component: EncounterCombatVisibilityToggle,
-            props: (args) => ({
-              rowContext: args,
-            }),
-          } satisfies EncounterCombatantMemberRowAction<
-            typeof EncounterCombatVisibilityToggle
-          >);
-          result.push({
-            component: EncounterCombatInclusionToggle,
-            props: (args) => ({
-              rowContext: args,
-            }),
-          } satisfies EncounterCombatantMemberRowAction<
-            typeof EncounterCombatInclusionToggle
-          >);
-          if (context.unlocked) {
-            result.push({
-              component: DeleteEncounterEntityButton,
-              props: (args) => ({
-                rowContext: args,
-              }),
-            } satisfies EncounterCombatantMemberRowAction<
-              typeof DeleteEncounterEntityButton
-            >);
-          }
-        }
-
-        result.push({
-          component: MenuButton,
-          props: () => ({
-            targetSelector: '[data-context-menu]',
-          }),
-        } satisfies EncounterCombatantMemberRowAction<typeof MenuButton>);
-
-        return result;
-      },
-    );
-
-    return rowActions;
-  }
-
   getItemAdvancementRowActions(unlocked: boolean, item: Item5e) {
     let result: AdvancementRowAction[] = [];
 

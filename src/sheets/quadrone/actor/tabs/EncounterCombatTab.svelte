@@ -28,9 +28,6 @@
   );
 
   const localize = FoundryAdapter.localize;
-  let rowActions: any[] = $derived(
-    TableRowActionsRuntime.getEncounterCombatRowActions(context),
-  );
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -226,8 +223,7 @@
                       )}
                     <TableRowActions rowActions={combatant.rowActions} {data} />
                   {:else}
-                    {const data =
-                      $derived<ActorRowActionPropsData>(combatant)}
+                    {const data = $derived<ActorRowActionPropsData>(combatant)}
                     <TableRowActions rowActions={combatant.rowActions} {data} />
                   {/if}
                 </TidyTableCell>
