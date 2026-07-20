@@ -5,7 +5,7 @@ import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButt
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
 class ActivityRowActionRuntimeImpl extends RowActionRuntimeBase<ActivityRowAction> {
-  settingKey: string = 'effect';
+  settingKey: string = 'activity';
 
   override _getDefaultRowActions() {
     return [

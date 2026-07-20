@@ -40,7 +40,7 @@ import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/Invento
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
 import { DraftAnimalMemberRowActionRuntime } from 'src/runtime/table-row-actions/DraftAnimalRowActions.svelte';
-import { PassengerMemberRowActionRuntime } from 'src/runtime/table-row-actions/PassengerRowActionRuntime.svelte';
+import { PassengerRowActionRuntime } from 'src/runtime/table-row-actions/PassengerRowActionRuntime.svelte';
 import { UnassignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/UnassignedCrewRowActionRuntime.svelte';
 import { AssignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/AssignedCrewRowActionRuntime.svelte';
 
@@ -474,7 +474,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           actor,
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
-          rowActions: PassengerMemberRowActionRuntime.getRowActions({
+          rowActions: PassengerRowActionRuntime.getRowActions({
             app: context.sheet,
             data: context,
             rowDocument: actor,

@@ -6,8 +6,8 @@ import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table
 import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class EncounterCombatMemberRowActionRuntimeImpl extends RowActionRuntimeBase<EncounterCombatantMemberRowAction> {
-  settingKey: string = 'encounterCombatMember';
+class EncounterCombatantMemberRowActionRuntimeImpl extends RowActionRuntimeBase<EncounterCombatantMemberRowAction> {
+  settingKey: string = 'encounterCombatant';
 
   override _getDefaultRowActions() {
     return [
@@ -56,5 +56,5 @@ class EncounterCombatMemberRowActionRuntimeImpl extends RowActionRuntimeBase<Enc
   }
 }
 
-export const EncounterCombatMemberRowActionRuntime =
-  new EncounterCombatMemberRowActionRuntimeImpl();
+export const EncounterCombatantMemberRowActionRuntime =
+  new EncounterCombatantMemberRowActionRuntimeImpl();

@@ -45,7 +45,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
 import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
 import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
-import { EncounterCombatMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatRowActionRuntime.svelte';
+import { EncounterCombatantMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatantRowActionRuntime.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -280,7 +280,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         const memberCombatantContext: EncounterMemberCombatantQuadroneContext =
           {
             ...memberContext,
-            rowActions: EncounterCombatMemberRowActionRuntime.getRowActions({
+            rowActions: EncounterCombatantMemberRowActionRuntime.getRowActions({
               app: context.sheet,
               data: context,
               rowDocument: actor,
@@ -308,7 +308,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           name: placeholder.name,
           visible: combatantSettings.visible,
-          rowActions: EncounterCombatMemberRowActionRuntime.getRowActions({
+          rowActions: EncounterCombatantMemberRowActionRuntime.getRowActions({
             app: context.sheet,
             data: context,
             sheetDocument: context.document,

@@ -8,7 +8,7 @@ import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButt
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
 class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
-  settingKey: string = 'inventory';
+  settingKey: string = 'spell';
 
   override _getDefaultRowActions() {
     return [

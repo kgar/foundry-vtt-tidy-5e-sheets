@@ -4,7 +4,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import GenericActionButton from 'src/components/table-quadrone/table-buttons/GenericActionButton.svelte';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class PassengerMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowAction> {
+class PassengerRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowAction> {
   settingKey: string = 'passenger';
 
   override _getDefaultRowActions() {
@@ -31,5 +31,5 @@ class PassengerMemberRowActionRuntimeImpl extends RowActionRuntimeBase<ActorRowA
   }
 }
 
-export const PassengerMemberRowActionRuntime =
-  new PassengerMemberRowActionRuntimeImpl();
+export const PassengerRowActionRuntime =
+  new PassengerRowActionRuntimeImpl();

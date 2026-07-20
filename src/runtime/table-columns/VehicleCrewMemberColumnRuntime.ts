@@ -81,18 +81,6 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 10,
     };
 
-    const draftAnimalTestColumn: ColumnSpecificationBase = {
-      cellContent: {
-        type: 'component',
-        component: DraftAnimalTestColumn,
-      },
-      headerContent: {
-        type: 'html',
-        html: 'Sample Column',
-      },
-      widthRems: 8,
-    };
-
     return {
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
@@ -116,7 +104,6 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             cr: { ...crColumn, priority: 10, order: 10 },
             qty: { ...qtyColumn, priority: 20, order: 20 },
           },
-          // TODO: Default state? Necessary?
         },
       },
     };

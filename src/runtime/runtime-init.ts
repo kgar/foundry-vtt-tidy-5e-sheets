@@ -18,9 +18,9 @@ import { GroupMemberRowActionRuntime } from './table-row-actions/GroupMemberRowA
 import { EncounterMemberRowActionRuntime } from './table-row-actions/EncounterMemberRowActions.svelte';
 import { DraftAnimalMemberRowActionRuntime } from './table-row-actions/DraftAnimalRowActions.svelte';
 import { UnassignedCrewMemberRowActionRuntime } from './table-row-actions/UnassignedCrewRowActionRuntime.svelte';
-import { PassengerMemberRowActionRuntime } from './table-row-actions/PassengerRowActionRuntime.svelte';
+import { PassengerRowActionRuntime } from './table-row-actions/PassengerRowActionRuntime.svelte';
 import { AssignedCrewMemberRowActionRuntime } from './table-row-actions/AssignedCrewRowActionRuntime.svelte';
-import { EncounterCombatMemberRowActionRuntime } from './table-row-actions/EncounterCombatRowActionRuntime.svelte';
+import { EncounterCombatantMemberRowActionRuntime } from './table-row-actions/EncounterCombatantRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from './table-row-actions/ItemAdvancementRowActions.svelte';
 
 /**
@@ -51,13 +51,13 @@ export function initRuntimeOnReady() {
   ContainerContentsRowActionRuntime.initOnReady();
   DraftAnimalMemberRowActionRuntime.initOnReady();
   EffectRowActionRuntime.initOnReady();
-  EncounterCombatMemberRowActionRuntime.initOnReady();
+  EncounterCombatantMemberRowActionRuntime.initOnReady();
   EncounterMemberRowActionRuntime.initOnReady();
   FeatureRowActionRuntime.initOnReady();
   GroupMemberRowActionRuntime.initOnReady();
   InventoryRowActionRuntime.initOnReady();
   ItemAdvancementMemberRowActionRuntime.initOnReady();
-  PassengerMemberRowActionRuntime.initOnReady();
+  PassengerRowActionRuntime.initOnReady();
   SpellRowActionRuntime.initOnReady();
   UnassignedCrewMemberRowActionRuntime.initOnReady();
 }
