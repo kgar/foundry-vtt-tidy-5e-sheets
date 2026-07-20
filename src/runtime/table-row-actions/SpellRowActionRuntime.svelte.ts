@@ -1,68 +1,16 @@
-import type { ItemRowAction } from 'src/types/types';
-import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
-import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
-import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import OpenActivityButton from 'src/components/table-quadrone/table-buttons/OpenActivityButton.svelte';
-import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowAction> {
-  settingKey: string = 'spell';
+class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<'spell'> {
+  domain = 'spell' as const;
 
-  override _getDefaultRowActions() {
+  override _getDefaultRowActionKeys() {
     return [
-      {
-        component: SpellButton,
-        condition: (args) =>
-          args.data.owner &&
-          !args.rowDocument.system.linkedActivity &&
-          // TODO: remove doc type logic after partitioning
-          (args.sheetDocument.system.isCharacter ||
-            args.sheetDocument.system.isNPC),
-        props: (args) => ({ doc: args.item }),
-      } satisfies ItemRowAction<typeof SpellButton>,
-
-      {
-        component: EditButton,
-        condition: (args) => args.data.unlocked,
-        props: (args) => ({ doc: args.item }),
-      } satisfies ItemRowAction<typeof EditButton>,
-
-      {
-        component: DeleteButton,
-        props: (args) => ({
-          doc: args.item,
-        }),
-        condition: (args) =>
-          args.data.unlocked && !args.rowDocument.system.linkedActivity,
-      } satisfies ItemRowAction<typeof DeleteButton>,
-      {
-        component: OpenActivityButton,
-        props: (args) => ({
-          doc: args.item,
-        }),
-        condition: (args) =>
-          args.data.unlocked && !!args.rowDocument.system.linkedActivity,
-      } satisfies ItemRowAction<typeof OpenActivityButton>,
-      {
-        component: CharacterSheetTabToggleButton,
-        condition: (args) =>
-          // TODO: remove doc type logic after partitioning
-          args.sheetDocument.system.isCharacter &&
-          args.rowDocument.isOwner &&
-          !args.data.unlocked,
-        props: (args) => ({
-          doc: args.item,
-          ctx: args.ctx,
-        }),
-      } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
-      {
-        component: MenuButton,
-        props: () => ({
-          targetSelector: '[data-context-menu]',
-        }),
-      } satisfies ItemRowAction<typeof MenuButton>,
+      'spell',
+      'edit',
+      'delete',
+      'openActivity',
+      'toggleSheetTab',
+      'menu',
     ];
   }
 }

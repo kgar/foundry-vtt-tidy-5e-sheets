@@ -400,7 +400,8 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  AttributeItemPinContext | AttributeActivityPinContext;
+  | AttributeItemPinContext
+  | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -412,7 +413,8 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  SheetPinItemContext | SheetPinActivityContext
+  | SheetPinItemContext
+  | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -878,7 +880,11 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1018,7 +1024,8 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  HTMLElement | { get(index: number): HTMLElement };
+  | HTMLElement
+  | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1958,13 +1965,12 @@ export type ItemRowActionConditionData = {
   };
 };
 
-export type ItemRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  ItemRowActionPropsData,
-  ItemRowActionConditionData
->;
+export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
+  TableRowAction<
+    TComponent,
+    ItemRowActionPropsData,
+    ItemRowActionConditionData
+  >;
 
 export type EffectRowActionPropsData = {
   effect: ActiveEffect5e;
@@ -2035,7 +2041,8 @@ export type ActorRowAction<TComponent extends Component<any> = Component<any>> =
   >;
 
 export type EncounterCombatantMemberRowActionPropsData =
-  EncounterMemberCombatantQuadroneContext | EncounterPlaceholderQuadroneContext;
+  | EncounterMemberCombatantQuadroneContext
+  | EncounterPlaceholderQuadroneContext;
 
 export type EncounterCombatantMemberRowActionConditionData = {
   sheetDocument: Actor5e;

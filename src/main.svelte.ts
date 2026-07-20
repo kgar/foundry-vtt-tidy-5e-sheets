@@ -34,11 +34,449 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import { loadConditionalStyles } from './utils/css-loading';
+import EditButton from './components/table-quadrone/table-buttons/EditButton.svelte';
+import type {
+  ActivityRowAction,
+  ActorRowAction,
+  AdvancementRowAction,
+  EffectRowAction,
+  EncounterCombatantMemberRowAction,
+  ItemRowAction,
+} from './types/types';
+import DeleteButton from './components/table-quadrone/table-buttons/DeleteButton.svelte';
+import MenuButton from './components/table-quadrone/table-buttons/MenuButton.svelte';
+import GenericActionButton from './components/table-quadrone/table-buttons/GenericActionButton.svelte';
+import CharacterSheetTabToggleButton from './components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
+import EffectToggleButton from './components/table-quadrone/table-buttons/EffectToggleButton.svelte';
+import EncounterAddAsCombatPlaceholder from './components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
+import EncounterCombatVisibilityToggle from './components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
+import EncounterCombatInclusionToggle from './components/table-quadrone/table-buttons/EncounterCombatInclusionToggle.svelte';
+import DeleteEncounterEntityButton from './components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
+import AttuneButton from './components/table-quadrone/table-buttons/AttuneButton.svelte';
+import EquipButton from './components/table-quadrone/table-buttons/EquipButton.svelte';
+import SpellButton from './components/table-quadrone/table-buttons/SpellButton.svelte';
+import OpenActivityButton from './components/table-quadrone/table-buttons/OpenActivityButton.svelte';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
   initSettings();
+
+  CONFIG.TIDY5E = {
+    rowActions: {
+      activity: {
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.activity }),
+        } satisfies ActivityRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.activity,
+          }),
+        } satisfies ActivityRowAction<typeof DeleteButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActivityRowAction<typeof MenuButton>,
+      },
+      assignedCrew: {
+        unassign: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'unassignCrew',
+            'data-member-uuid': args.actor.uuid,
+            'data-item-uuid': args.ctx?.assignedTo?.uuid,
+            iconClasses: 'fa-solid fa-user-minus',
+            tooltip: FoundryAdapter.localize(
+              'TIDY5E.ContextMenuActionUnassign',
+            ),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+      containerContents: {
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.item }),
+        } satisfies ItemRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+          }),
+        } satisfies ItemRowAction<typeof DeleteButton>,
+        toggleSheetTab: {
+          component: CharacterSheetTabToggleButton,
+          condition: (args) =>
+            // TODO: remove doc type logic after partitioning
+            args.sheetDocument.system.isCharacter &&
+            args.rowDocument.isOwner &&
+            !args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+            ctx: args.ctx,
+          }),
+        } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ItemRowAction<typeof MenuButton>,
+      },
+      draftAnimal: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removeDraftAnimal',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+              name: FoundryAdapter.localize(
+                'TIDY5E.Vehicle.Member.DraftAnimal.Label',
+              ),
+            }),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+      effect: {
+        toggle: {
+          component: EffectToggleButton,
+          props: (args) => ({
+            effect: args.effect,
+          }),
+          condition: (args) =>
+            args.sheetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
+            args.rowDocument.type !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT,
+        } satisfies EffectRowAction<typeof EffectToggleButton>,
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.effect }),
+        } satisfies EffectRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.effect,
+          }),
+        } satisfies EffectRowAction<typeof DeleteButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies EffectRowAction<typeof MenuButton>,
+      },
+      encounterCombatant: {
+        addAsPlaceholder: {
+          component: EncounterAddAsCombatPlaceholder,
+          condition: (args) => args.data.owner,
+          props: () => ({}),
+        } satisfies EncounterCombatantMemberRowAction<
+          typeof EncounterAddAsCombatPlaceholder
+        >,
+        toggleVisibility: {
+          component: EncounterCombatVisibilityToggle,
+          condition: (args) => args.data.owner,
+          props: (args) => ({
+            rowContext: args,
+          }),
+        } satisfies EncounterCombatantMemberRowAction<
+          typeof EncounterCombatVisibilityToggle
+        >,
+        toggleInclusion: {
+          component: EncounterCombatInclusionToggle,
+          condition: (args) => args.data.owner,
+          props: (args) => ({
+            rowContext: args,
+          }),
+        } satisfies EncounterCombatantMemberRowAction<
+          typeof EncounterCombatInclusionToggle
+        >,
+        delete: {
+          component: DeleteEncounterEntityButton,
+
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            rowContext: args,
+          }),
+        } satisfies EncounterCombatantMemberRowAction<
+          typeof DeleteEncounterEntityButton
+        >,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies EncounterCombatantMemberRowAction<typeof MenuButton>,
+      },
+      encounterMember: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removeMember',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+      feature: {
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.item }),
+        } satisfies ItemRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+          }),
+        } satisfies ItemRowAction<typeof DeleteButton>,
+        toggleSheetTab: {
+          component: CharacterSheetTabToggleButton,
+          condition: (args) =>
+            // TODO: remove doc type logic after partitioning
+            args.sheetDocument.system.isCharacter &&
+            args.rowDocument.isOwner &&
+            !args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+            ctx: args.ctx,
+          }),
+        } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ItemRowAction<typeof MenuButton>,
+      },
+      groupMember: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removeMember',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+      inventory: {
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.item }),
+        } satisfies ItemRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+          }),
+        } satisfies ItemRowAction<typeof DeleteButton>,
+        attune: {
+          component: AttuneButton,
+          condition: (args) =>
+            args.rowDocument.isOwner &&
+            !args.data.unlocked &&
+            // TODO: remove doc type logic after partitioning
+            (args.sheetDocument.system.isCharacter ||
+              args.sheetDocument.system.isNPC) &&
+            FoundryAdapter.isAttunementApplicable(args.rowDocument),
+          props: (args) => ({
+            doc: args.item,
+            ctx: args.ctx,
+          }),
+        } satisfies ItemRowAction<typeof AttuneButton>,
+        equip: {
+          component: EquipButton,
+          props: (args) => ({ doc: args.item }),
+          condition: (args) =>
+            args.rowDocument.isOwner &&
+            !args.data.unlocked &&
+            // TODO: remove doc type logic after partitioning
+            (args.sheetDocument.system.isCharacter ||
+              args.sheetDocument.system.isNPC) &&
+            'equipped' in args.rowDocument.system,
+        } satisfies ItemRowAction<typeof EquipButton>,
+        toggleSheetTab: {
+          component: CharacterSheetTabToggleButton,
+          condition: (args) =>
+            // TODO: remove doc type logic after partitioning
+            args.sheetDocument.system.isCharacter &&
+            args.rowDocument.isOwner &&
+            !args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+            ctx: args.ctx,
+          }),
+        } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ItemRowAction<typeof MenuButton>,
+      },
+      itemAdvancement: {
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.item.system.advancement?.get(args.id),
+          }),
+        } satisfies AdvancementRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            doc: args.item.system.advancement?.get(args.id),
+            deleteFn: () =>
+              args.item.system.advancement
+                ?.get(args.id)
+                ?.deleteDialog({ sheet: args.item }),
+          }),
+        } satisfies AdvancementRowAction<typeof DeleteButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '.advancement-item',
+          }),
+        } satisfies AdvancementRowAction<typeof MenuButton>,
+      },
+      passenger: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removePassengers',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+              name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
+            }),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+      spell: {
+        spell: {
+          component: SpellButton,
+          condition: (args) =>
+            args.data.owner &&
+            !args.rowDocument.system.linkedActivity &&
+            // TODO: remove doc type logic after partitioning
+            (args.sheetDocument.system.isCharacter ||
+              args.sheetDocument.system.isNPC),
+          props: (args) => ({ doc: args.item }),
+        } satisfies ItemRowAction<typeof SpellButton>,
+        edit: {
+          component: EditButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({ doc: args.item }),
+        } satisfies ItemRowAction<typeof EditButton>,
+        delete: {
+          component: DeleteButton,
+          props: (args) => ({
+            doc: args.item,
+          }),
+          condition: (args) =>
+            args.data.unlocked && !args.rowDocument.system.linkedActivity,
+        } satisfies ItemRowAction<typeof DeleteButton>,
+        openActivity: {
+          component: OpenActivityButton,
+          props: (args) => ({
+            doc: args.item,
+          }),
+          condition: (args) =>
+            args.data.unlocked && !!args.rowDocument.system.linkedActivity,
+        } satisfies ItemRowAction<typeof OpenActivityButton>,
+        toggleSheetTab: {
+          component: CharacterSheetTabToggleButton,
+          condition: (args) =>
+            // TODO: remove doc type logic after partitioning
+            args.sheetDocument.system.isCharacter &&
+            args.rowDocument.isOwner &&
+            !args.data.unlocked,
+          props: (args) => ({
+            doc: args.item,
+            ctx: args.ctx,
+          }),
+        } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ItemRowAction<typeof MenuButton>,
+      },
+      unassignedCrew: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removeUnassignedCrew',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+              name: FoundryAdapter.localize(
+                'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+              ),
+            }),
+          }),
+        } satisfies ActorRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies ActorRowAction<typeof MenuButton>,
+      },
+    },
+  };
 
   if (!SettingsProvider.settings.hideClassic.get()) {
     documentSheetConfig.registerSheet(

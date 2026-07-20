@@ -1,33 +1,50 @@
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
+import type { RowActionOf, RowActionRegistryDomain } from 'src/types/registry';
 import type { TableRowAction } from 'src/types/types';
 import { checkCondition } from 'src/utils/iteration';
+import { debug } from 'src/utils/logging';
 
 type ConditionArgs<T extends TableRowAction<any, any, any>> =
   T['condition'] extends ((args: infer A) => boolean) | undefined ? A : never;
 
 export abstract class RowActionRuntimeBase<
-  TRowAction extends TableRowAction<any, any, any>,
+  TDomain extends RowActionRegistryDomain,
+  TRowAction extends TableRowAction<any, any, any> = RowActionOf<TDomain>,
 > {
-  // TODO: Partition to Document Name, Document Type
-  protected _rowActions: TRowAction[] = [];
+  abstract readonly domain: TDomain;
 
-  abstract readonly settingKey: string;
+  // TODO: Partition to Document Name, Document Type; but where? In the registry?
+  protected _rowActions: string[] = [];
 
   initOnReady() {
-    this._rowActions = this._getDefaultRowActions();
+    this._rowActions = this._getDefaultRowActionKeys();
   }
 
   /**
    * Provides the default row actions for the implementation.
+   * TODO: potentially move the default row actions to the registry as the default partition
    */
-  abstract _getDefaultRowActions(): TRowAction[];
+  abstract _getDefaultRowActionKeys(): string[];
 
   /**
    * Gets the row actions for a single row.
    */
   getRowActions(args: ConditionArgs<TRowAction>): TRowAction[] {
-    /**  */
-    return this._rowActions.filter((a) => checkCondition(a, args));
+    const result = [];
+
+    for (const key of this._rowActions) {
+      const action = CONFIG.TIDY5E.rowActions[this.domain][key] as
+        | TRowAction
+        | undefined;
+
+      if (action && checkCondition(action, args)) {
+        result.push(action);
+      } else if (!action) {
+        debug('Action not found', { key, domain: this.domain, action, args });
+      }
+    }
+
+    return result;
   }
 
   // TODO: Determine how to make managing row action styles less hardcoded and more configured.

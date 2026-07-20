@@ -1,15 +1,9 @@
 
 ## To Do
 
-- [ ] Implement a central registry for each Row Action type, e.g. `Record<string, ItemRowAction>`, `Record<string, EffectRowAction>`, where the key string is a stable row action key for the given row action type.
-    - Reason: 
-      - Instant access for partitioning
-      - Row actions will need stable keys, at least unique within their own specific row action type, even when called from the API, so that there are options like being able to enhance or even completely override existing row action conditions. E.g., the West Marches DM wants to hide all row actions for users, sometimes, only allowing the GM to edit.
-  - `CONFIG.TIDY5E.rowActions.inventory`, `CONFIG.TIDY5E.rowActions.actor`, `CONFIG.TIDY5E.rowActions.encounterCombatantMember`, etc.
-  - In the future, when storing world settings for custom rowActions, the same rowAction key (actor, inventory, etc.) will be included in the saved data.
-- [ ] Initialize row actions in a central config file that inits on ready before the rest of the runtime. This is where all the default configs go, and all runtime usages / beyond will always reference `CONFIG.TIDY5E`. Ensure type safety of registry keys for known default entries.
 - [ ] Create Row Action API
       - API method: `overrideCondition(key, wrapped: (originalFn, args: { app, document, data}) => boolean)`
+      - Note: I am intentionally deferring partitioning to some other time.
 - [ ] // TODO: Figured out how to eliminate this niche parameter
 - [ ] // This should not be `any`; do we need to subdivide and conquer?
 - [ ] Can Container Row Actions and Inventory Row Actions be the same list?
@@ -23,7 +17,20 @@
     - Reasons:
       - Shorter lists to process per render, resulting in relative performance improvements
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
+- [ ] Write a script that takes an allowlist of svelte directories and generates `_module.ts` files for them. It includes named exports such as `export {default as AttuneButton} from "./AttuneButton.svelte";`
+- [ ] Review main.svelte.ts `CONFIG.TIDY5E` init - should that content be passed in by a src/runtime/row-action/init.ts function? Or should it all be laid out in the open like that?
+- [ ] One last look: with the API and registry implemented, is there anything about the design that should change?
 
+## Questions
+
+- What part should own partitioning?
+  - Should I put partitions of row actions into CONFIG.TIDY5E?
+    - Idea: `CONFIG.TIDY5E.rowActions.inventory.registry`, `CONFIG.TIDY5E.rowActions.inventory.setup`
+      - `registry` - where the inventory row actions go
+      - `setup` - partitions of inventory row actions by  
+- How should partitioning be implemented in relation to the API and the runtime?
+- ~~Is the runtime still relevant if the API can simply manipulate the registry directly?~~
+  - The runtime should read from and write to the registry. No other Tidy code. This will keep things maintainable.
 
 ## Stretch
 
