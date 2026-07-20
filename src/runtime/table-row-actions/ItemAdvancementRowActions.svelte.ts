@@ -1,4 +1,4 @@
-import type { AdvancementRowAction, ItemRowAction } from 'src/types/types';
+import type { AdvancementRowAction } from 'src/types/types';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
@@ -32,7 +32,7 @@ class ItemAdvancementMemberRowActionRuntimeImpl extends RowActionRuntimeBase<Adv
         props: () => ({
           targetSelector: '.advancement-item',
         }),
-      } satisfies ItemRowAction<typeof MenuButton>,
+      } satisfies AdvancementRowAction<typeof MenuButton>,
     ];
   }
 }

@@ -1,4 +1,4 @@
-import type { ItemRowActionV2 } from 'src/types/types';
+import type { ItemRowAction } from 'src/types/types';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
@@ -7,7 +7,7 @@ import OpenActivityButton from 'src/components/table-quadrone/table-buttons/Open
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
+class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowAction> {
   settingKey: string = 'spell';
 
   override _getDefaultRowActions() {
@@ -21,13 +21,13 @@ class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
           (args.sheetDocument.system.isCharacter ||
             args.sheetDocument.system.isNPC),
         props: (args) => ({ doc: args.item }),
-      } satisfies ItemRowActionV2<typeof SpellButton>,
+      } satisfies ItemRowAction<typeof SpellButton>,
 
       {
         component: EditButton,
         condition: (args) => args.data.unlocked,
         props: (args) => ({ doc: args.item }),
-      } satisfies ItemRowActionV2<typeof EditButton>,
+      } satisfies ItemRowAction<typeof EditButton>,
 
       {
         component: DeleteButton,
@@ -36,7 +36,7 @@ class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
         }),
         condition: (args) =>
           args.data.unlocked && !args.rowDocument.system.linkedActivity,
-      } satisfies ItemRowActionV2<typeof DeleteButton>,
+      } satisfies ItemRowAction<typeof DeleteButton>,
       {
         component: OpenActivityButton,
         props: (args) => ({
@@ -44,7 +44,7 @@ class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
         }),
         condition: (args) =>
           args.data.unlocked && !!args.rowDocument.system.linkedActivity,
-      } satisfies ItemRowActionV2<typeof OpenActivityButton>,
+      } satisfies ItemRowAction<typeof OpenActivityButton>,
       {
         component: CharacterSheetTabToggleButton,
         condition: (args) =>
@@ -56,13 +56,13 @@ class SpellRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
           doc: args.item,
           ctx: args.ctx,
         }),
-      } satisfies ItemRowActionV2<typeof CharacterSheetTabToggleButton>,
+      } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
       {
         component: MenuButton,
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemRowActionV2<typeof MenuButton>,
+      } satisfies ItemRowAction<typeof MenuButton>,
     ];
   }
 }

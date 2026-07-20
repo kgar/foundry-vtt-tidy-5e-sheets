@@ -1,4 +1,4 @@
-import type { Actor5e, ItemRowActionV2 } from 'src/types/types';
+import type { Actor5e, ItemRowAction } from 'src/types/types';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
@@ -8,7 +8,7 @@ import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButt
 import AttuneButton from 'src/components/table-quadrone/table-buttons/AttuneButton.svelte';
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2> {
+class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowAction> {
   settingKey: string = 'inventory';
 
   override _getDefaultRowActions() {
@@ -17,14 +17,14 @@ class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2
         component: EditButton,
         condition: (args) => args.data.unlocked,
         props: (args) => ({ doc: args.item }),
-      } satisfies ItemRowActionV2<typeof EditButton>,
+      } satisfies ItemRowAction<typeof EditButton>,
       {
         component: DeleteButton,
         condition: (args) => args.data.unlocked,
         props: (args) => ({
           doc: args.item,
         }),
-      } satisfies ItemRowActionV2<typeof DeleteButton>,
+      } satisfies ItemRowAction<typeof DeleteButton>,
       {
         component: AttuneButton,
         condition: (args) =>
@@ -38,7 +38,7 @@ class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2
           doc: args.item,
           ctx: args.ctx,
         }),
-      } satisfies ItemRowActionV2<typeof AttuneButton>,
+      } satisfies ItemRowAction<typeof AttuneButton>,
       {
         component: EquipButton,
         props: (args) => ({ doc: args.item }),
@@ -49,7 +49,7 @@ class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2
           (args.sheetDocument.system.isCharacter ||
             args.sheetDocument.system.isNPC) &&
           'equipped' in args.rowDocument.system,
-      } satisfies ItemRowActionV2<typeof EquipButton>,
+      } satisfies ItemRowAction<typeof EquipButton>,
       {
         component: CharacterSheetTabToggleButton,
         condition: (args) =>
@@ -61,13 +61,13 @@ class InventoryRowActionRuntimeImpl extends RowActionRuntimeBase<ItemRowActionV2
           doc: args.item,
           ctx: args.ctx,
         }),
-      } satisfies ItemRowActionV2<typeof CharacterSheetTabToggleButton>,
+      } satisfies ItemRowAction<typeof CharacterSheetTabToggleButton>,
       {
         component: MenuButton,
         props: () => ({
           targetSelector: '[data-context-menu]',
         }),
-      } satisfies ItemRowActionV2<typeof MenuButton>,
+      } satisfies ItemRowAction<typeof MenuButton>,
     ];
   }
 }
