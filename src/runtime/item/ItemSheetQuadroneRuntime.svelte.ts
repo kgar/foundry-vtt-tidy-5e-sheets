@@ -50,15 +50,15 @@ import {
   getSelectedTabIds,
   getTabVisibilityLevels,
 } from 'src/settings/settings-data-models';
-import type {
-  ItemTabRegistrationOptions,
-  TabEnabledCallbackFunctionOverrideOptions,
-} from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
 import { checkCondition } from 'src/utils/iteration';
+import type {
+  ItemTabRegistrationOptions,
+  TabEnabledCallbackFunctionOverrideOptions,
+} from 'src/api/api.types';
 
 export type ItemSheetInfo = {
   component: Component;

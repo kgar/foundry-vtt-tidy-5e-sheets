@@ -4,5 +4,5 @@
   "defaultCategory": "Tidy 5e Sheets API",
   "readme": "./src/api/README.md",
   "name": "Tidy 5e Sheets API",
-  "entryPoints": ["./src/api/index.ts"]
+  "entryPoints": ["./typedoc/api/index.ts"]
 }

@@ -1,4 +1,4 @@
-import type { CustomHeaderControlsEntry } from 'src/api';
+import type { CustomHeaderControlsEntry } from 'src/api/api.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationHeaderControlsEntry } from 'src/types/application.types';
 

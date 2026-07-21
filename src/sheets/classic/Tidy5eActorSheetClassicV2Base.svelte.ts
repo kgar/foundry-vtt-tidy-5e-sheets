@@ -36,7 +36,7 @@ import { mount } from 'svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 // TODO: Simplify mixins to mostly a class hierarchy
 export function getTidy5eActorSheetClassicV2Base<

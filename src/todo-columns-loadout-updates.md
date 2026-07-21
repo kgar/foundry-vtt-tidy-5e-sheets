@@ -1,10 +1,10 @@
 
 ## To Do
 
-- [ ] Consider - move the src\api\index.ts file out of src and into typedoc/api/index.ts and update typedoc entry points accordingly
 - [ ] Consider - types/index.ts to export all into a pure barrel file, and import from `@/types` wherever types are needed
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
+- [ ] Implement - a Hooks.CallAll when Tidy is done setting up CONFIG.TIDY5E.
 
 ## After Next Release
 

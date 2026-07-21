@@ -9,7 +9,7 @@
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
-  import { TidyHooks } from 'src/api';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
   import type {

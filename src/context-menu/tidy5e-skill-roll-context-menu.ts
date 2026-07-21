@@ -1,6 +1,6 @@
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export function configureSkillRollContextMenu(
   element: HTMLElement,

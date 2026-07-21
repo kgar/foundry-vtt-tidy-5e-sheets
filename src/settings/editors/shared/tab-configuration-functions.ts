@@ -12,8 +12,8 @@ import type {
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { CustomTabTitle } from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 
 /**
  * {@link TabConfigContextEntry} stores the tab order and who can see them.
@@ -103,7 +103,7 @@ export function buildTabConfigContextEntry(
   const defaultTabs = buildTabConfigEntries(registry, {}, documentName);
 
   const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
-  
+
   // Effective ordered tabs. Prefer the new per-tab config that with order and
   // player visibility, otherwise get from the old model (visible in order with a
   // second array for hidden).

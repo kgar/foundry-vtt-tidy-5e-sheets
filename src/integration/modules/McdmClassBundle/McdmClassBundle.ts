@@ -1,4 +1,3 @@
-import type { Tidy5eSheetsApi } from 'src/api';
 import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
 import McdmPowersTab from './McdmPowersTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -17,30 +16,37 @@ import type { Item5e } from 'src/types/item.types';
 import type { TidySectionBase } from 'src/types/types';
 import { buildMcdmPowersSettingsTab } from './settings/McdmPowersSettingsTab';
 import { loadConditionalStyles } from 'src/utils/css-loading';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 
 declare global {
   interface CONFIG extends OriginalConfig {
     MCDM: {
       powerOrders: Record<number, string>;
-      specialties: Record<string, {
-        label: string;
-        icon: string;
-        fullKey: string;
-      }>;
-      strainTypes: Record<string, {
-        effects: {
+      specialties: Record<
+        string,
+        {
           label: string;
-          tooltip: string;
-        }[];
-        header: string;
-        label: string;
-      }>;
-    }
+          icon: string;
+          fullKey: string;
+        }
+      >;
+      strainTypes: Record<
+        string,
+        {
+          effects: {
+            label: string;
+            tooltip: string;
+          }[];
+          header: string;
+          label: string;
+        }
+      >;
+    };
   }
 }
 
 export type PowersSection = {
-  type: 'powers',
+  type: 'powers';
   order?: number | string;
   items: Item5e[];
   uses?: number;
@@ -62,18 +68,19 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
     loadConditionalStyles('McdmPowersTab');
 
     const powersTab = new api.models.SvelteTab({
-      title: () => FoundryAdapter.localize('TYPES.Item.mcdm-class-bundle.powerPl'),
+      title: () =>
+        FoundryAdapter.localize('TYPES.Item.mcdm-class-bundle.powerPl'),
       tabId: this.powersTabId,
       component: McdmPowersTab,
       iconClass: 'fa-solid fa-brain',
       tabOptionsBuilder: buildMcdmPowersSettingsTab,
     });
-    
+
     api.registerCharacterTab(powersTab, {
       layout: ['quadrone'],
     });
     api.registerNpcTab(powersTab, {
-      layout: ['quadrone']
+      layout: ['quadrone'],
     });
 
     // Power item sheet
@@ -85,8 +92,8 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       {
         types: [MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE],
         label: 'TIDY5E.Tidy5eItemSheetQuadrone',
-      }
-    )
+      },
+    );
     ItemSheetQuadroneRuntime.registerItemSheet(
       MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE,
       {
@@ -102,7 +109,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
         CONSTANTS.TAB_DESCRIPTION,
         CONSTANTS.TAB_ITEM_ACTIVITIES,
         CONSTANTS.TAB_EFFECTS,
-      ]
+      ],
     );
     ItemSheetQuadroneRuntime.registerTab({
       id: CONSTANTS.TAB_ITEM_DETAILS,
@@ -116,45 +123,54 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
     });
     TabDocumentItemTypesRuntime.registerTypes({
       tabId: this.powersTabId,
-      documentItemTypes: [MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE]
+      documentItemTypes: [MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE],
     });
 
-    const powerSpecialtyFilters = Object.entries(CONFIG.MCDM.specialties).map<ItemFilter>(
-      ([key, specialtyData]) =>
-        ({
-          name: key,
-          predicate: (item) => item.system.specialty === key,
-          text: specialtyData.label
-        })
-    );
+    const powerSpecialtyFilters = Object.entries(
+      CONFIG.MCDM.specialties,
+    ).map<ItemFilter>(([key, specialtyData]) => ({
+      name: key,
+      predicate: (item) => item.system.specialty === key,
+      text: specialtyData.label,
+    }));
     const filterTabs = {
       'DND5E.ItemActivationCost': [
         {
           ...defaultItemFilters.activationCostAction,
-          pinnedFilterClass: 'hide-under-400'
+          pinnedFilterClass: 'hide-under-400',
         },
         {
           ...defaultItemFilters.activationCostBonus,
-          pinnedFilterClass: 'hide-under-400'
+          pinnedFilterClass: 'hide-under-400',
         },
         {
           ...defaultItemFilters.activationCostReaction,
-          pinnedFilterClass: 'hide-under-400'
+          pinnedFilterClass: 'hide-under-400',
         },
         {
-          ...defaultItemFilters.concentration
-        }
+          ...defaultItemFilters.concentration,
+        },
       ],
-      'MCDMCB.TALENT.POWERS.SPECIALTIES.Header': powerSpecialtyFilters
+      'MCDMCB.TALENT.POWERS.SPECIALTIES.Header': powerSpecialtyFilters,
     };
 
     // TODO: expose this via API
-    ItemFilterRuntime._documentTabFiltersQuadrone[CONSTANTS.SHEET_TYPE_CHARACTER][this.powersTabId] = filterTabs;
-    ItemFilterRuntime._documentTabFiltersQuadrone[CONSTANTS.SHEET_TYPE_NPC][this.powersTabId] = filterTabs;
+    ItemFilterRuntime._documentTabFiltersQuadrone[
+      CONSTANTS.SHEET_TYPE_CHARACTER
+    ][this.powersTabId] = filterTabs;
+    ItemFilterRuntime._documentTabFiltersQuadrone[CONSTANTS.SHEET_TYPE_NPC][
+      this.powersTabId
+    ] = filterTabs;
 
-    const filterPins = new Set(filterTabs['DND5E.ItemActivationCost'].map(i => i.name));
+    const filterPins = new Set(
+      filterTabs['DND5E.ItemActivationCost'].map((i) => i.name),
+    );
     // TODO: expose this via API
-    ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_CHARACTER][this.powersTabId] = filterPins;
-    ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_NPC][this.powersTabId] = filterPins;
+    ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_CHARACTER][
+      this.powersTabId
+    ] = filterPins;
+    ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_NPC][
+      this.powersTabId
+    ] = filterPins;
   }
 }
