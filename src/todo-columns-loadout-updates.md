@@ -14,6 +14,7 @@
 ## Stretch
 
 - [ ] Refactoring consideration: `CONFIG.TIDY5E` can replace the concept of the various runtimes. Each can be represented in config, among other useful things like first-class reusable Tidy components. Another bigger refactor opportunity worth pursuing when all other matters have been settled.
+  - This should go into a github issue for tracking
 - [ ] Migrate in the Item section preparers and reduce looping to a single pass over the items.
 - [ ] // TODO: Determine how to make managing row action styles less hardcoded and more configured.
 - [ ] Try a CSS Grid / Sub-grid approach Tidy tables. This would eliminate the need to calculate row actions width and open lots of doors, if it were performant.
