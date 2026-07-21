@@ -29,9 +29,9 @@
 </script>
 
 {#if !isNil(text, '')}
-  <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent}>
-    {inferredActivation?.value ?? ''}&nbsp;
-    {localize(text)}
+  <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
+    {!isNil(inferredActivation?.value) ? inferredActivation?.value + '&nbsp;' : ''}
+    {localize(text).trim()}
   </span>
 {:else}
   <span class="color-text-disabled">—</span>
