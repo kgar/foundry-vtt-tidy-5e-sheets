@@ -150,7 +150,7 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  const betaQuadroneItemTypes = [
+  const quadroneItemTypes = [
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_CONSUMABLE,
@@ -170,7 +170,7 @@ Hooks.once('init', () => {
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eItemSheetQuadrone,
     {
-      types: betaQuadroneItemTypes,
+      types: quadroneItemTypes,
       label: 'TIDY5E.Tidy5eItemSheetQuadrone',
     },
   );
@@ -224,6 +224,9 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
     },
   );
+
+  // Tidy has done everything it needs in the init phase. Notify callers.
+  TidyHooks.tidy5eSheetsInit();
 });
 
 Hooks.once('ready', async () => {

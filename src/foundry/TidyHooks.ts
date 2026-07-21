@@ -39,7 +39,7 @@ export class TidyHooks {
    */
   static dnd5eGetActiveEffectContextOptions(
     effect: ActiveEffect5e,
-    menuItems: ContextMenuEntry[]
+    menuItems: ContextMenuEntry[],
   ): boolean {
     return Hooks.call('dnd5e.getActiveEffectContextOptions', effect, menuItems);
   }
@@ -70,7 +70,7 @@ export class TidyHooks {
    */
   static dnd5eGetItemAdvancementContext(
     html: any,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
   }
@@ -90,7 +90,7 @@ export class TidyHooks {
    */
   static dnd5eGetItemContextOptions(
     item: Item5e,
-    menuItems: ContextMenuEntry[]
+    menuItems: ContextMenuEntry[],
   ): boolean {
     return Hooks.call('dnd5e.getItemContextOptions', item, menuItems);
   }
@@ -111,7 +111,7 @@ export class TidyHooks {
     occupantUuid: string | null,
     prop: string | null,
     index: number | null,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getFacilityOccupantContextOptions',
@@ -120,7 +120,7 @@ export class TidyHooks {
       occupantUuid,
       prop,
       index,
-      contextOptions
+      contextOptions,
     );
   }
 
@@ -149,7 +149,7 @@ export class TidyHooks {
    */
   static tidy5eSheetsActorItemUseContextMenu(
     item: Item5e,
-    options: { event: Event }
+    options: { event: Event },
   ) {
     Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
   }
@@ -182,7 +182,7 @@ export class TidyHooks {
   static tidy5eSheetsAddFacilityClicked(
     event: Event,
     actor: Actor5e,
-    type: string
+    type: string,
   ): boolean {
     return Hooks.call('tidy5e-sheet.addFacilityClicked', event, actor, type);
   }
@@ -199,14 +199,14 @@ export class TidyHooks {
     event: Event,
     item: Item5e,
     occupantType: string,
-    prop: string
+    prop: string,
   ) {
     return Hooks.call(
       'tidy5e-sheet.facilityEmptyOccupantSlotClicked',
       event,
       item,
       occupantType,
-      prop
+      prop,
     );
   }
 
@@ -228,13 +228,13 @@ export class TidyHooks {
   static tidy5eSheetsGetEncounterMemberContextOptions(
     encounter: Encounter5e,
     member: Actor5e,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getEncounterMemberContextOptions',
       encounter,
       member,
-      contextOptions
+      contextOptions,
     );
   }
 
@@ -256,13 +256,13 @@ export class TidyHooks {
   static tidy5eSheetsGetGroupMemberContextOptions(
     group: Group5e,
     member: Actor5e,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getGroupMemberContextOptions',
       group,
       member,
-      contextOptions
+      contextOptions,
     );
   }
 
@@ -284,16 +284,16 @@ export class TidyHooks {
   static tidy5eSheetsGetGroupSkillRollContextOptions(
     group: Group5e,
     skill: string,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getGroupMemberContextOptions',
       group,
       skill,
-      contextOptions
+      contextOptions,
     );
   }
-  
+
   /**
    * The actor skill roll context menu has established its options and is about to show.
    * @param actor             The affected actor.
@@ -312,13 +312,13 @@ export class TidyHooks {
   static tidy5eSheetsGetSkillRollContextOptions(
     actor: Actor5e,
     skill: string,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getGroupMemberContextOptions',
       actor,
       skill,
-      contextOptions
+      contextOptions,
     );
   }
 
@@ -347,7 +347,7 @@ export class TidyHooks {
     memberUuid: string | undefined,
     vehicleItemId: string | undefined,
     area: CrewArea5e | undefined,
-    contextOptions: ContextMenuEntry[]
+    contextOptions: ContextMenuEntry[],
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.getVehicleMemberContextOptions',
@@ -356,7 +356,7 @@ export class TidyHooks {
       memberUuid,
       vehicleItemId,
       area,
-      contextOptions
+      contextOptions,
     );
   }
 
@@ -375,9 +375,23 @@ export class TidyHooks {
    */
   static tidy5eSheetsGetActivitiesForPlay(
     parent: any,
-    data: { activities: Activity5e[] }
+    data: { activities: Activity5e[] },
   ) {
     Hooks.callAll('tidy5e-sheet.getActivitiesForPlay', parent, data);
+  }
+
+  /**
+   * Tidy 5e Sheets has initialized its settings, config registry, runtime, keybinds, sheets, and
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.ready', (api) => {
+   *   // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsInit(): void {
+    Hooks.callAll('tidy5e-sheet.init');
   }
 
   /**
@@ -433,7 +447,7 @@ export class TidyHooks {
       | NpcSheetContext
       | ContainerSheetClassicContext
       | ContainerSheetQuadroneContext
-      | ItemSheetQuadroneContext
+      | ItemSheetQuadroneContext,
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }
@@ -457,13 +471,13 @@ export class TidyHooks {
   static tidy5eSheetsPreCreateActiveEffect(
     owner: any,
     createData: object,
-    userId: string
+    userId: string,
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.preCreateActiveEffect',
       owner,
       createData,
-      userId
+      userId,
     );
   }
 
@@ -486,7 +500,7 @@ export class TidyHooks {
   static tidy5eSheetsPreCreateItem(
     owner: any,
     createData: object,
-    userId: string
+    userId: string,
   ): boolean {
     return Hooks.call('tidy5e-sheet.preCreateItem', owner, createData, userId);
   }
@@ -509,12 +523,12 @@ export class TidyHooks {
       | ActorSheetContextV1
       | ActorSheetClassicContextV2
       | ActorSheetQuadroneContext,
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ): boolean {
     return Hooks.call(
       'tidy5e-sheet.preOpenActorPortraitFilePicker',
       context,
-      event
+      event,
     );
   }
 
@@ -527,7 +541,7 @@ export class TidyHooks {
   static tidy5eSheetsPrepareSheetContext(
     document: any,
     app: TidyExtensibleDocumentSheetMixinInstance,
-    context: any
+    context: any,
   ): void {
     Hooks.callAll('tidy5e-sheet.prepareSheetContext', document, app, context);
   }
@@ -540,7 +554,7 @@ export class TidyHooks {
    */
   static tidy5eSheetsPrePromptGroupAbilityRoll(
     app: any,
-    options: { ability: string, event: Event }
+    options: { ability: string; event: Event },
   ) {
     return Hooks.call('tidy5e-sheet.prePromptGroupAbilityRoll', app, options);
   }
@@ -553,9 +567,13 @@ export class TidyHooks {
    */
   static tidy5eSheetsPrePromptGroupSavingThrowRoll(
     app: any,
-    options: { ability: string, event: Event }
+    options: { ability: string; event: Event },
   ) {
-    return Hooks.call('tidy5e-sheet.prePromptGroupSavingThrowRoll', app, options);
+    return Hooks.call(
+      'tidy5e-sheet.prePromptGroupSavingThrowRoll',
+      app,
+      options,
+    );
   }
 
   /**
@@ -566,7 +584,7 @@ export class TidyHooks {
    */
   static tidy5eSheetsPrePromptGroupSkillRoll(
     app: any,
-    options: Partial<GroupSkillRollProcessConfiguration>
+    options: Partial<GroupSkillRollProcessConfiguration>,
   ) {
     return Hooks.call('tidy5e-sheet.prePromptGroupSkillRoll', app, options);
   }
@@ -588,7 +606,7 @@ export class TidyHooks {
   static tidy5eSheetsPreSelectTab(
     app: any,
     element: HTMLElement,
-    data: { currentTab: any; newTab: string }
+    data: { currentTab: any; newTab: string },
   ): boolean {
     return Hooks.call('tidy5e-sheet.preSelectTab', app, element, data);
   }
@@ -626,7 +644,7 @@ export class TidyHooks {
     app: any,
     element: HTMLElement,
     data: CharacterSheetContext | NpcSheetContext | VehicleSheetContext,
-    forced: boolean
+    forced: boolean,
   ) {
     Hooks.callAll('tidy5e-sheet.renderActorSheet', app, element, data, forced);
   }
@@ -647,7 +665,7 @@ export class TidyHooks {
   static tidy5eSheetsSelectTab(
     app: any,
     element: HTMLElement,
-    newTabId: string
+    newTabId: string,
   ) {
     Hooks.callAll('tidy5e-sheet.selectTab', app, element, newTabId);
   }
@@ -677,13 +695,13 @@ export class TidyHooks {
   static tidy5eSheetsSheetModeConfiguring(
     app: any,
     element: HTMLElement,
-    config: { unlocked: boolean }
+    config: { unlocked: boolean },
   ) {
     return Hooks.callAll(
       'tidy5e-sheet.sheetModeConfiguring',
       app,
       element,
-      config
+      config,
     );
   }
 
@@ -695,18 +713,25 @@ export class TidyHooks {
    * Alternatively, themes are being previewed, and relevant subscribers need to refresh their settings.
    * @param doc when dealing with a specific sheet's theme changes, this is the affected document
    */
-  static tidy5eSheetsThemeSettingsChanged(doc?: any, liveThemeOverride?: ThemeSettingsV3) {
-    Hooks.callAll(this.tidy5eSheetsThemeSettingsChangedHook, doc, liveThemeOverride);
+  static tidy5eSheetsThemeSettingsChanged(
+    doc?: any,
+    liveThemeOverride?: ThemeSettingsV3,
+  ) {
+    Hooks.callAll(
+      this.tidy5eSheetsThemeSettingsChangedHook,
+      doc,
+      liveThemeOverride,
+    );
   }
 
   static tidy5eSheetsThemeSettingsChangedSubscribe(
-    callback: (doc?: any, liveThemeOverride?: ThemeSettingsV3) => void
+    callback: (doc?: any, liveThemeOverride?: ThemeSettingsV3) => void,
   ): number {
     return Hooks.on(
       this.tidy5eSheetsThemeSettingsChangedHook,
       (...params: any[]) => {
         callback(...params);
-      }
+      },
     );
   }
 
