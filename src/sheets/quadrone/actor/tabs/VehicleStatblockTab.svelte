@@ -25,11 +25,14 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
-  import type { DraftAnimalSection, InventorySection } from 'src/types/types';
-  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import type {
+    InventorySection,
+    VehicleDraftAnimalSection,
+  } from 'src/types/types';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
-  import type { DraftAnimalRowActionPropsData } from 'src/types/row-actions.types';
+  import type { VehicleDraftAnimalRowActionPropsData } from 'src/types/row-actions.types';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -58,7 +61,7 @@
 
   let sections = $derived(
     buildVehicleStatblockSections(context, tabId) as (
-      InventorySection | DraftAnimalSection
+      InventorySection | VehicleDraftAnimalSection
     )[],
   );
 
@@ -466,12 +469,11 @@
                               CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                           }}
                         >
-                          {const data = $derived<DraftAnimalRowActionPropsData>(
-                            {
+                          {const data =
+                            $derived<VehicleDraftAnimalRowActionPropsData>({
                               actor: member.actor,
                               ctx: member,
-                            },
-                          )}
+                            })}
                           <TableRowActions
                             rowActions={member.rowActions}
                             {data}

@@ -2,7 +2,6 @@
 ## To Do
 
 - [ ] Reevaluate the props for all row actions before finalizing the API
-  - [ ] Refactor/rename vehicle passenger and crew types to include the word Vehicle for consistency and clarity
   - [ ] Ditto Advancement -> ItemAdvancement
   - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.

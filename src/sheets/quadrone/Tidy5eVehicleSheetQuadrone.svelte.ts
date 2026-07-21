@@ -7,11 +7,11 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  CrewMemberContext,
-  DraftAnimalContext,
-  DraftAnimalSection,
+  VehicleCrewMemberContext,
+  VehicleDraftAnimalContext,
+  VehicleDraftAnimalSection,
   InventorySection,
-  PassengerMemberContext,
+  VehiclePassengerMemberContext,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
@@ -359,7 +359,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
-    const drafted: DraftAnimalSection = {
+    const drafted: VehicleDraftAnimalSection = {
       ...SheetSections.EMPTY,
       type: 'draft',
       key: 'draft',
@@ -393,7 +393,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
               rowDocument: actor,
               sheetDocument: context.document,
             }),
-          } satisfies DraftAnimalContext,
+          } satisfies VehicleDraftAnimalContext,
         };
       }),
     );
@@ -481,7 +481,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             rowDocument: actor,
             sheetDocument: context.document,
           }),
-        } satisfies PassengerMemberContext;
+        } satisfies VehiclePassengerMemberContext;
 
         return {
           uuid,
@@ -1230,10 +1230,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     group: Record<string, number>,
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
-    value: CrewMemberContext[];
+    value: VehicleCrewMemberContext[];
     broken: string[];
   }> {
-    const value: CrewMemberContext[] = [];
+    const value: VehicleCrewMemberContext[] = [];
     const broken: string[] = [];
 
     for (const [uuid, quantity] of Object.entries(group)) {

@@ -17,8 +17,8 @@
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import type {
-    PassengerRowActionPropsData,
-    CrewRowActionPropsData,
+    VehicleCrewRowActionPropsData,
+    VehiclePassengerRowActionPropsData,
   } from 'src/types/row-actions.types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -286,13 +286,13 @@
                   }}
                 >
                   {#if member.type === 'crew'}
-                    {const data = $derived<CrewRowActionPropsData>({
+                    {const data = $derived<VehicleCrewRowActionPropsData>({
                       actor: member.actor,
                       ctx: member,
                     })}
                     <TableRowActions rowActions={member.rowActions} {data} />
                   {:else if member.type === 'passengers'}
-                    {const data = $derived<PassengerRowActionPropsData>({
+                    {const data = $derived<VehiclePassengerRowActionPropsData>({
                       actor: member.actor,
                       ctx: member,
                     })}

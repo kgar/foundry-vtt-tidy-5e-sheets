@@ -1,11 +1,8 @@
 import { ActorItemRuntime } from '../../runtime/ActorItemRuntime';
 import type {
   Actor5e,
-  CrewSection,
-  DraftAnimalSection,
   GroupMemberQuadroneContext,
   GroupMemberSection,
-  PassengerSection,
   SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';

@@ -38,14 +38,14 @@ import EditButton from './components/table-quadrone/table-buttons/EditButton.sve
 import type {
   ActivityRowAction,
   AdvancementRowAction,
-  CrewRowAction,
-  DraftAnimalRowAction,
+  VehicleCrewRowAction,
+  VehicleDraftAnimalRowAction,
   EffectRowAction,
   EncounterCombatantMemberRowAction,
   EncounterMemberRowAction,
   GroupMemberRowAction,
   ItemRowAction,
-  PassengerRowAction,
+  VehiclePassengerRowAction,
 } from './types/row-actions.types';
 import DeleteButton from './components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from './components/table-quadrone/table-buttons/MenuButton.svelte';
@@ -75,9 +75,7 @@ Hooks.once('init', () => {
     partitions: {
       rowActions: {
         activity: ['edit', 'delete', 'menu'],
-        assignedCrew: ['unassign', 'menu'],
         containerContents: ['edit', 'delete', 'toggleSheetTab', 'menu'],
-        draftAnimal: ['remove', 'menu'],
         effect: ['toggle', 'edit', 'delete', 'menu'],
         encounterCombatant: [
           'addAsPlaceholder',
@@ -98,7 +96,6 @@ Hooks.once('init', () => {
           'menu',
         ],
         itemAdvancement: ['edit', 'delete', 'menu'],
-        passenger: ['remove', 'menu'],
         spell: [
           'spell',
           'edit',
@@ -107,7 +104,10 @@ Hooks.once('init', () => {
           'toggleSheetTab',
           'menu',
         ],
-        unassignedCrew: ['remove', 'menu'],
+        vehicleAssignedCrew: ['unassign', 'menu'],
+        vehicleDraftAnimal: ['remove', 'menu'],
+        vehiclePassenger: ['remove', 'menu'],
+        vehicleUnassignedCrew: ['remove', 'menu'],
       },
     },
     rowActions: {
@@ -130,27 +130,6 @@ Hooks.once('init', () => {
             targetSelector: '[data-context-menu]',
           }),
         } satisfies ActivityRowAction<typeof MenuButton>,
-      },
-      assignedCrew: {
-        unassign: {
-          component: GenericActionButton,
-          condition: (args) => args.data.unlocked,
-          props: (args) => ({
-            'data-action': 'unassignCrew',
-            'data-member-uuid': args.actor.uuid,
-            'data-item-uuid': args.ctx?.assignedTo?.uuid,
-            iconClasses: 'fa-solid fa-user-minus',
-            tooltip: FoundryAdapter.localize(
-              'TIDY5E.ContextMenuActionUnassign',
-            ),
-          }),
-        } satisfies CrewRowAction<typeof GenericActionButton>,
-        menu: {
-          component: MenuButton,
-          props: () => ({
-            targetSelector: '[data-context-menu]',
-          }),
-        } satisfies CrewRowAction<typeof MenuButton>,
       },
       containerContents: {
         edit: {
@@ -183,28 +162,6 @@ Hooks.once('init', () => {
             targetSelector: '[data-context-menu]',
           }),
         } satisfies ItemRowAction<typeof MenuButton>,
-      },
-      draftAnimal: {
-        remove: {
-          component: GenericActionButton,
-          condition: (args) => args.data.unlocked,
-          props: (args) => ({
-            'data-action': 'removeDraftAnimal',
-            'data-uuid': args.actor.uuid,
-            iconClasses: 'fa-solid fa-trash fa-fw',
-            tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
-              name: FoundryAdapter.localize(
-                'TIDY5E.Vehicle.Member.DraftAnimal.Label',
-              ),
-            }),
-          }),
-        } satisfies DraftAnimalRowAction<typeof GenericActionButton>,
-        menu: {
-          component: MenuButton,
-          props: () => ({
-            targetSelector: '[data-context-menu]',
-          }),
-        } satisfies DraftAnimalRowAction<typeof MenuButton>,
       },
       effect: {
         toggle: {
@@ -429,7 +386,50 @@ Hooks.once('init', () => {
           }),
         } satisfies AdvancementRowAction<typeof MenuButton>,
       },
-      passenger: {
+      vehicleAssignedCrew: {
+        unassign: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'unassignCrew',
+            'data-member-uuid': args.actor.uuid,
+            'data-item-uuid': args.ctx?.assignedTo?.uuid,
+            iconClasses: 'fa-solid fa-user-minus',
+            tooltip: FoundryAdapter.localize(
+              'TIDY5E.ContextMenuActionUnassign',
+            ),
+          }),
+        } satisfies VehicleCrewRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies VehicleCrewRowAction<typeof MenuButton>,
+      },
+      vehicleDraftAnimal: {
+        remove: {
+          component: GenericActionButton,
+          condition: (args) => args.data.unlocked,
+          props: (args) => ({
+            'data-action': 'removeDraftAnimal',
+            'data-uuid': args.actor.uuid,
+            iconClasses: 'fa-solid fa-trash fa-fw',
+            tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+              name: FoundryAdapter.localize(
+                'TIDY5E.Vehicle.Member.DraftAnimal.Label',
+              ),
+            }),
+          }),
+        } satisfies VehicleDraftAnimalRowAction<typeof GenericActionButton>,
+        menu: {
+          component: MenuButton,
+          props: () => ({
+            targetSelector: '[data-context-menu]',
+          }),
+        } satisfies VehicleDraftAnimalRowAction<typeof MenuButton>,
+      },
+      vehiclePassenger: {
         remove: {
           component: GenericActionButton,
           condition: (args) => args.data.unlocked,
@@ -441,13 +441,13 @@ Hooks.once('init', () => {
               name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
             }),
           }),
-        } satisfies PassengerRowAction<typeof GenericActionButton>,
+        } satisfies VehiclePassengerRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies PassengerRowAction<typeof MenuButton>,
+        } satisfies VehiclePassengerRowAction<typeof MenuButton>,
       },
       spell: {
         spell: {
@@ -500,7 +500,7 @@ Hooks.once('init', () => {
           }),
         } satisfies ItemRowAction<typeof MenuButton>,
       },
-      unassignedCrew: {
+      vehicleUnassignedCrew: {
         remove: {
           component: GenericActionButton,
           condition: (args) => args.data.unlocked,
@@ -514,13 +514,13 @@ Hooks.once('init', () => {
               ),
             }),
           }),
-        } satisfies CrewRowAction<typeof GenericActionButton>,
+        } satisfies VehicleCrewRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies CrewRowAction<typeof MenuButton>,
+        } satisfies VehicleCrewRowAction<typeof MenuButton>,
       },
     },
   };

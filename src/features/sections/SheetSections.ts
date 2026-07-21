@@ -11,7 +11,7 @@ import type {
   CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
-  DraftAnimalSection,
+  VehicleDraftAnimalSection,
   FavoriteSection,
   FeatureSection,
   GroupMemberSection,
@@ -505,7 +505,7 @@ export class SheetSections {
   }
 
   static configureVehicleStatblockSections(
-    sections: (InventorySection | DraftAnimalSection)[],
+    sections: (InventorySection | VehicleDraftAnimalSection)[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>,

@@ -1,7 +1,7 @@
 import { RowActionRuntimeBase } from './RowActionRuntimeBase';
 
-class AssignedCrewMemberRowActionRuntimeImpl extends RowActionRuntimeBase<'assignedCrew'> {
-  domain = 'assignedCrew' as const;
+class AssignedCrewMemberRowActionRuntimeImpl extends RowActionRuntimeBase<'vehicleAssignedCrew'> {
+  domain = 'vehicleAssignedCrew' as const;
 }
 
 export const AssignedCrewMemberRowActionRuntime =

@@ -1,19 +1,20 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
   import type {
-    CrewMemberContext,
-    PassengerMemberContext,
-    DraftAnimalContext,
+    ColumnCellProps,
+    VehicleCrewMemberContext,
+    VehicleDraftAnimalContext,
   } from 'src/types/types';
+  import type { VehiclePassengerMemberContext } from 'src/types/types';
 
   let {
     rowDocument,
     rowContext,
   }: ColumnCellProps<
     any,
-    CrewMemberContext | PassengerMemberContext | DraftAnimalContext
+    | VehicleCrewMemberContext
+    | VehiclePassengerMemberContext
+    | VehicleDraftAnimalContext
   > = $props();
 </script>
 

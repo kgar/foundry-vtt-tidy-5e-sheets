@@ -10,7 +10,6 @@ import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/Vehicl
 import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/VehicleCrewMemberAssignedColumn.svelte';
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 import { getDefaultItemColumns } from './default-item-columns';
-import DraftAnimalTestColumn from 'src/sheets/quadrone/item/columns/DraftAnimalTestColumn.svelte';
 import VehicleMemberHpColumn from 'src/sheets/quadrone/item/columns/VehicleMemberHpColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;

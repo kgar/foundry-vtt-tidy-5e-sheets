@@ -3,15 +3,15 @@ import type {
   ActivityRowAction,
   ActorRowAction,
   AdvancementRowAction,
-  CrewRowAction,
-  DraftAnimalRowAction,
+  VehicleCrewRowAction,
+  VehicleDraftAnimalRowAction,
   EffectRowAction,
   EncounterCombatantMemberRowAction,
   EncounterMemberRowAction,
   GroupMemberRowAction,
   ItemRowAction,
-  PassengerRowAction,
-} from './types';
+  VehiclePassengerRowAction,
+} from './row-actions.types';
 
 declare global {
   interface CONFIG {
@@ -65,12 +65,8 @@ export type TidyPartitionRegistry = {
   rowActions: {
     /** Partitions for activity row actions. */
     activity: string[];
-    /** Partitions for assigned crew row actions. */
-    assignedCrew: string[];
     /** Partitions for container contents row actions. */
     containerContents: string[];
-    /** Partitions for draft animal row actions. */
-    draftAnimal: string[];
     /** Partitions for effect row actions. */
     effect: string[];
     /** Partitions for encounter combatant row actions. */
@@ -85,12 +81,16 @@ export type TidyPartitionRegistry = {
     inventory: string[];
     /** Partitions for item advancement row actions. */
     itemAdvancement: string[];
-    /** Partitions for passenger row actions. */
-    passenger: string[];
     /** Partitions for spell row actions. */
     spell: string[];
-    /** Partitions for unassigned crew row actions. */
-    unassignedCrew: string[];
+    /** Partitions for a vehicle's assigned crew row actions. */
+    vehicleAssignedCrew: string[];
+    /** Partitions for a vehicle's draft animal row actions. */
+    vehicleDraftAnimal: string[];
+    /** Partitions for a vehicle's passenger row actions. */
+    vehiclePassenger: string[];
+    /** Partitions for a vehicle's unassigned crew row actions. */
+    vehicleUnassignedCrew: string[];
   };
 };
 
@@ -104,12 +104,8 @@ export type TidyPartitionRegistry = {
 export type TidyRowActionRegistry = {
   /** Row actions for activities. */
   activity: Record<string, ActivityRowAction>;
-  /** Row actions for assigned crews. */
-  assignedCrew: Record<string, CrewRowAction>;
   /** Row actions for container contents. */
   containerContents: Record<string, ItemRowAction>;
-  /** Row actions for draft animals. */
-  draftAnimal: Record<string, DraftAnimalRowAction>;
   /** Row actions for effects. */
   effect: Record<string, EffectRowAction>;
   /** Row actions for encounter combatants. */
@@ -124,12 +120,16 @@ export type TidyRowActionRegistry = {
   inventory: Record<string, ItemRowAction>;
   /** Row actions for item advancements. */
   itemAdvancement: Record<string, AdvancementRowAction>;
-  /** Row actions for passengers. */
-  passenger: Record<string, PassengerRowAction>;
   /** Row actions for spells. */
   spell: Record<string, ItemRowAction>;
-  /** Row actions for unassigned crews. */
-  unassignedCrew: Record<string, CrewRowAction>;
+  /** Row actions for a vehicle's assigned crews. */
+  vehicleAssignedCrew: Record<string, VehicleCrewRowAction>;
+  /** Row actions for a vehicle's draft animals. */
+  vehicleDraftAnimal: Record<string, VehicleDraftAnimalRowAction>;
+  /** Row actions for a vehicle's passengers. */
+  vehiclePassenger: Record<string, VehiclePassengerRowAction>;
+  /** Row actions for a vehicle's unassigned crews. */
+  vehicleUnassignedCrew: Record<string, VehicleCrewRowAction>;
 };
 
 export type RowActionRegistryDomain = keyof CONFIG['TIDY5E']['rowActions'];

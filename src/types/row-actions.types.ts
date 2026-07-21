@@ -8,9 +8,9 @@ import type {
   ActiveEffect5e,
   ActiveEffectContext,
   ActivityItemContext,
-  DraftAnimalContext,
-  PassengerMemberContext,
-  CrewMemberContext,
+  VehicleDraftAnimalContext,
+  VehiclePassengerMemberContext,
+  VehicleCrewMemberContext,
   GroupMemberQuadroneContext,
   EncounterMemberQuadroneContext,
   EncounterMemberCombatantQuadroneContext,
@@ -218,19 +218,19 @@ export type ActivityRowAction<
   ActivityRowActionConditionData
 >;
 
-/* DRAFT ANIMAL */
+/* VEHICLE DRAFT ANIMAL */
 
 /**
  * Props passed to vehicle draft animal row-action components.
  *
  * @category Row Actions
  */
-export type DraftAnimalRowActionPropsData = {
+export type VehicleDraftAnimalRowActionPropsData = {
   /** The actor represented by this row. */
   actor: Actor5e;
 
   /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
-  ctx?: DraftAnimalContext;
+  ctx?: VehicleDraftAnimalContext;
 };
 
 /**
@@ -240,7 +240,7 @@ export type DraftAnimalRowActionPropsData = {
  *
  * @category Row Actions
  */
-export type DraftAnimalRowActionConditionData = {
+export type VehicleDraftAnimalRowActionConditionData = {
   /** The sheet-level document. */
   sheetDocument: Actor5e;
 
@@ -259,27 +259,27 @@ export type DraftAnimalRowActionConditionData = {
  *
  * @category Row Actions
  */
-export type DraftAnimalRowAction<
+export type VehicleDraftAnimalRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  DraftAnimalRowActionPropsData,
-  DraftAnimalRowActionConditionData
+  VehicleDraftAnimalRowActionPropsData,
+  VehicleDraftAnimalRowActionConditionData
 >;
 
-/* PASSENGER */
+/* VEHICLE PASSENGER */
 
 /**
  * Props passed to vehicle passenger row-action components.
  *
  * @category Row Actions
  */
-export type PassengerRowActionPropsData = {
+export type VehiclePassengerRowActionPropsData = {
   /** The actor represented by this row. */
   actor: Actor5e;
 
   /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
-  ctx?: PassengerMemberContext;
+  ctx?: VehiclePassengerMemberContext;
 };
 
 /**
@@ -289,7 +289,7 @@ export type PassengerRowActionPropsData = {
  *
  * @category Row Actions
  */
-export type PassengerRowActionConditionData = {
+export type VehiclePassengerRowActionConditionData = {
   /** The sheet-level document. */
   sheetDocument: Actor5e;
 
@@ -308,27 +308,27 @@ export type PassengerRowActionConditionData = {
  *
  * @category Row Actions
  */
-export type PassengerRowAction<
+export type VehiclePassengerRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  PassengerRowActionPropsData,
-  PassengerRowActionConditionData
+  VehiclePassengerRowActionPropsData,
+  VehiclePassengerRowActionConditionData
 >;
 
-/* CREW */
+/* VEHICLE CREW */
 
 /**
  * Props passed to vehicle crew row-action components.
  *
  * @category Row Actions
  */
-export type CrewRowActionPropsData = {
+export type VehicleCrewRowActionPropsData = {
   /** The actor represented by this row. */
   actor: Actor5e;
 
   /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
-  ctx?: CrewMemberContext;
+  ctx?: VehicleCrewMemberContext;
 };
 
 /**
@@ -338,7 +338,7 @@ export type CrewRowActionPropsData = {
  *
  * @category Row Actions
  */
-export type CrewRowActionConditionData = {
+export type VehicleCrewRowActionConditionData = {
   /** The sheet-level document. */
   sheetDocument: Actor5e;
 
@@ -357,12 +357,13 @@ export type CrewRowActionConditionData = {
  *
  * @category Row Actions
  */
-export type CrewRowAction<TComponent extends Component<any> = Component<any>> =
-  TableRowAction<
-    TComponent,
-    CrewRowActionPropsData,
-    CrewRowActionConditionData
-  >;
+export type VehicleCrewRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  VehicleCrewRowActionPropsData,
+  VehicleCrewRowActionConditionData
+>;
 
 /* GROUP MEMBER */
 

@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { ColumnCellProps } from 'src/types/types';
-  import type { CrewMemberContext } from 'src/types/types';
+  import type { VehicleCrewMemberContext } from 'src/types/types';
 
-  let { rowDocument, rowContext }: ColumnCellProps<any, CrewMemberContext> =
-    $props();
+  let {
+    rowDocument,
+    rowContext,
+  }: ColumnCellProps<any, VehicleCrewMemberContext> = $props();
 </script>
 
 {#if rowContext.assignedTo}

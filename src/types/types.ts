@@ -47,14 +47,14 @@ import type {
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type {
   ActivityRowAction,
-  CrewRowAction,
-  DraftAnimalRowAction,
+  VehicleCrewRowAction,
+  VehicleDraftAnimalRowAction,
   EffectRowAction,
   EncounterCombatantMemberRowAction,
   EncounterMemberRowAction,
   GroupMemberRowAction,
   ItemRowAction,
-  PassengerRowAction,
+  VehiclePassengerRowAction,
 } from './row-actions.types';
 
 export type Actor5e = any;
@@ -1701,21 +1701,21 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
-export type DraftAnimalContext = {
+export type VehicleDraftAnimalContext = {
   actor: Actor5e;
   subtitle: string;
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: DraftAnimalRowAction[];
+  rowActions: VehicleDraftAnimalRowAction[];
 };
 
-export type DraftAnimalSection = {
+export type VehicleDraftAnimalSection = {
   type: 'draft';
-  members: DraftAnimalContext[];
+  members: VehicleDraftAnimalContext[];
 } & TidySectionBase;
 
-export type CrewMemberContext = {
+export type VehicleCrewMemberContext = {
   type: 'crew';
   uuid: string;
   actor: Actor5e;
@@ -1724,33 +1724,33 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: CrewRowAction[];
+  rowActions: VehicleCrewRowAction[];
 };
 
-export type CrewSection = {
+export type VehicleCrewSection = {
   type: typeof CONSTANTS.SECTION_TYPE_CREW;
-  members: CrewMemberContext[];
+  members: VehicleCrewMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
 } & TidySectionBase;
 
 export type CrewSections = {
-  assigned: CrewSection;
-  unassigned: CrewSection;
+  assigned: VehicleCrewSection;
+  unassigned: VehicleCrewSection;
 };
 
-export type PassengerMemberContext = {
+export type VehiclePassengerMemberContext = {
   type: 'passengers';
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: PassengerRowAction[];
+  rowActions: VehiclePassengerRowAction[];
 };
 
-export type PassengerSection = {
+export type VehiclePassengerSection = {
   type: typeof CONSTANTS.SECTION_TYPE_PASSENGERS;
-  members: PassengerMemberContext[];
+  members: VehiclePassengerMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
 } & TidySectionBase;
@@ -1761,7 +1761,7 @@ export type VehicleSheetQuadroneContext = {
     value: number;
     denomination: string;
   };
-  crewAndPassengers: (CrewSection | PassengerSection)[];
+  crewAndPassengers: (VehicleCrewSection | VehiclePassengerSection)[];
   crew: CrewSections;
   crewBrokenLinks: string[];
   draftBrokenLinks: string[];
@@ -1784,13 +1784,13 @@ export type VehicleSheetQuadroneContext = {
       crew: { value: number; max: number | undefined };
     }
   >;
-  passengers: PassengerSection;
+  passengers: VehiclePassengerSection;
   passengerBrokenLinks: string[];
   quality: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellComponentLabels: Record<string, string>;
-  statblock: (InventorySection | DraftAnimalSection)[];
+  statblock: (InventorySection | VehicleDraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
     currentSpeed: TravelSpeedConfigEntry;
