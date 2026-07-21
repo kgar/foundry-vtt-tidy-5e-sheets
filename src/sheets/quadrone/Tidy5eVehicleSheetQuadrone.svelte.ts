@@ -631,7 +631,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           customSectionOptions: {
             canCreate: false,
           },
-          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_SPELL,
         });
       } else {
         ctx.rowActions = itemIsInventoryType
@@ -657,7 +656,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           customSectionOptions: {
             canCreate: false,
           },
-          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_FEAT,
         });
       }
     }

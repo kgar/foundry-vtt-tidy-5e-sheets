@@ -81,8 +81,6 @@ export class Inventory {
     defaultInventoryTypes: string[];
     /** When creating a custom section during this operation, merge in these options over the defaults.  */
     customSectionOptions?: Partial<InventorySection>;
-    /** A secondary inventory key to use if the primary inventory key is not found. */
-    fallbackInventoryKey?: string; // TODO: Figure out how to eliminate this niche parameter
     /** The custom section flag to use when looking for a custom section name. */
     customSectionFlag?: 'section' | 'actionSection';
   }) {
@@ -93,14 +91,13 @@ export class Inventory {
       item,
       defaultInventoryTypes,
       customSectionOptions,
-      fallbackInventoryKey = '',
       customSectionFlag = 'section',
     } = params;
 
     const customSectionName = TidyFlags[customSectionFlag].get(item);
 
     if (!customSectionName) {
-      let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];
+      let partition = inventory[item.type];
       partition?.items.push(item);
 
       return;
