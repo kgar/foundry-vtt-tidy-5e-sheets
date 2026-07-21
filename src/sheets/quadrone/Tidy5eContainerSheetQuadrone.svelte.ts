@@ -300,7 +300,6 @@ export class Tidy5eContainerSheetQuadrone
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       containerContents: await Container.getContainerContents(this, this.item, {
-        hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
         owner,
       }),
@@ -317,7 +316,6 @@ export class Tidy5eContainerSheetQuadrone
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
       itemContext: await Container.getContainerItemContext(this, this.item, {
-        hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
         owner,
       }),

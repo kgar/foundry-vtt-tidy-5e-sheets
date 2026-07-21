@@ -841,7 +841,6 @@ export class Tidy5eCharacterSheet
         this,
         panelItem.container,
         {
-          hasActor: true,
           unlocked: context.unlocked,
           owner: context.owner,
         },

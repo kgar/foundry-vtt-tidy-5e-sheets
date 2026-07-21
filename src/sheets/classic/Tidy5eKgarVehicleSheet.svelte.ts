@@ -328,7 +328,6 @@ export class Tidy5eVehicleSheet
           this,
           item,
           {
-            hasActor: true,
             unlocked: context.unlocked,
             owner: context.owner,
           },

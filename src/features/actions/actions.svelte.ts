@@ -413,7 +413,6 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
         item.actor.sheet,
         item,
         {
-          hasActor: false,
           unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
           owner: item.isOwner,
         },

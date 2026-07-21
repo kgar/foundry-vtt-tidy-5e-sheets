@@ -218,6 +218,4 @@ export type RegisteredTraitOpenConfigurationParams = {
 export type ContainerContentsRowActionsContext = {
   unlocked: boolean;
   owner: boolean;
-  // TODO: Do we really need this field? Surely we can figure this out with `item.actor`
-  hasActor: boolean;
 };

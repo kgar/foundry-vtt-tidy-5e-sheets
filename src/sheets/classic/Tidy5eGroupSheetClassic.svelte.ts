@@ -845,7 +845,6 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         this,
         panelItem.container,
         {
-          hasActor: false,
           unlocked: context.unlocked,
           owner: context.owner,
         },

@@ -768,7 +768,6 @@ export class Tidy5eNpcSheet
         this,
         panelItem.container,
         {
-          hasActor: true,
           unlocked: context.unlocked,
           owner: context.owner,
         },

@@ -390,7 +390,6 @@ export function getTidy5eActorSheetQuadroneBase<
           this,
           item,
           {
-            hasActor: true,
             unlocked: context.unlocked,
             owner: context.owner,
           },

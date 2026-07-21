@@ -282,7 +282,6 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       containerContents: await Container.getContainerContents(this, this.item, {
-        hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
         owner,
       }),
@@ -297,7 +296,6 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
       itemContext: await Container.getContainerItemContext(this, this.item, {
-        hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
         owner,
       }),
