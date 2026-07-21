@@ -509,14 +509,14 @@ export type EncounterCombatantMemberRowAction<
   EncounterCombatantMemberRowActionConditionData
 >;
 
-/* ADVANCEMENT */
+/* ITEM ADVANCEMENT */
 
 /**
- * Props passed to advancement row-action components.
+ * Props passed to item advancement row-action components.
  *
  * @category Row Actions
  */
-export type AdvancementRowActionPropsData = {
+export type ItemAdvancementRowActionPropsData = {
   /** The item to which this advancement belongs. */
   item: Item5e;
 
@@ -531,7 +531,7 @@ export type AdvancementRowActionPropsData = {
  *
  * @category Row Actions
  */
-export type AdvancementRowActionConditionData = {
+export type ItemAdvancementRowActionConditionData = {
   /** The sheet-level document. */
   sheetDocument: Actor5e;
 
@@ -550,10 +550,10 @@ export type AdvancementRowActionConditionData = {
  *
  * @category Row Actions
  */
-export type AdvancementRowAction<
+export type ItemAdvancementRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
   TComponent,
-  AdvancementRowActionPropsData,
-  AdvancementRowActionConditionData
+  ItemAdvancementRowActionPropsData,
+  ItemAdvancementRowActionConditionData
 >;

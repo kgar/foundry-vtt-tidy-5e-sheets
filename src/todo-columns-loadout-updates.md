@@ -1,9 +1,6 @@
 
 ## To Do
 
-- [ ] Reevaluate the props for all row actions before finalizing the API
-  - [ ] Ditto Advancement -> ItemAdvancement
-  - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
 - [ ] Write a script that takes an allowlist of svelte directories and generates `_module.ts` files for them. It includes named exports such as `export {default as AttuneButton} from "./AttuneButton.svelte";`
 - [ ] Review main.svelte.ts `CONFIG.TIDY5E` init - should that content be passed in by a src/runtime/row-action/init.ts function? Or should it all be laid out in the open like that?
