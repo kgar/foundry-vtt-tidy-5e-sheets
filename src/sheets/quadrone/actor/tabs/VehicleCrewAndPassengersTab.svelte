@@ -16,7 +16,10 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
-  import type { ActorRowActionPropsData } from 'src/types/types';
+  import type {
+    PassengerRowActionPropsData,
+    CrewRowActionPropsData,
+  } from 'src/types/types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -177,10 +180,16 @@
     {#each context.crewAndPassengers as section (section.key)}
       {#if section.members.length || section.showEmptyState}
         {const rowActionInfo = $derived(
-          RowActionRuntimeBase.getRowActionWidthInfo(
-            section.members,
-            (entry) => entry.rowActions,
-          ),
+          // TODO: Someday, eliminate this duplicated nonsense required by TypeScript
+          section.type === 'crew'
+            ? RowActionRuntimeBase.getRowActionWidthInfo(
+                section.members,
+                (entry) => entry.rowActions,
+              )
+            : RowActionRuntimeBase.getRowActionWidthInfo(
+                section.members,
+                (entry) => entry.rowActions,
+              ),
         )}
 
         {const hiddenColumns = $derived(
@@ -276,11 +285,19 @@
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
                 >
-                  {const data = $derived<ActorRowActionPropsData>({
-                    actor: member.actor,
-                    ctx: member,
-                  })}
-                  <TableRowActions rowActions={member.rowActions} {data} />
+                  {#if member.type === 'crew'}
+                    {const data = $derived<CrewRowActionPropsData>({
+                      actor: member.actor,
+                      ctx: member,
+                    })}
+                    <TableRowActions rowActions={member.rowActions} {data} />
+                  {:else if member.type === 'passengers'}
+                    {const data = $derived<PassengerRowActionPropsData>({
+                      actor: member.actor,
+                      ctx: member,
+                    })}
+                    <TableRowActions rowActions={member.rowActions} {data} />
+                  {/if}
                 </TidyTableCell>
               </TidyTableRow>
             {:else}

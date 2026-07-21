@@ -3,9 +3,14 @@ import type {
   ActivityRowAction,
   ActorRowAction,
   AdvancementRowAction,
+  CrewRowAction,
+  DraftAnimalRowAction,
   EffectRowAction,
   EncounterCombatantMemberRowAction,
+  EncounterMemberRowAction,
+  GroupMemberRowAction,
   ItemRowAction,
+  PassengerRowAction,
 } from './types';
 
 declare global {
@@ -43,19 +48,19 @@ type TidyPartitionRegistry = {
 
 type TidyRowActionRegistry = {
   activity: Record<string, ActivityRowAction>;
-  assignedCrew: Record<string, ActorRowAction>;
+  assignedCrew: Record<string, CrewRowAction>;
   containerContents: Record<string, ItemRowAction>;
-  draftAnimal: Record<string, ActorRowAction>;
+  draftAnimal: Record<string, DraftAnimalRowAction>;
   effect: Record<string, EffectRowAction>;
   encounterCombatant: Record<string, EncounterCombatantMemberRowAction>;
-  encounterMember: Record<string, ActorRowAction>;
+  encounterMember: Record<string, EncounterMemberRowAction>;
   feature: Record<string, ItemRowAction>;
-  groupMember: Record<string, ActorRowAction>;
+  groupMember: Record<string, GroupMemberRowAction>;
   inventory: Record<string, ItemRowAction>;
   itemAdvancement: Record<string, AdvancementRowAction>;
-  passenger: Record<string, ActorRowAction>;
+  passenger: Record<string, PassengerRowAction>;
   spell: Record<string, ItemRowAction>;
-  unassignedCrew: Record<string, ActorRowAction>;
+  unassignedCrew: Record<string, CrewRowAction>;
 };
 
 export type RowActionRegistryDomain = keyof CONFIG['TIDY5E']['rowActions'];

@@ -471,6 +471,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         }
 
         const value = {
+          type: 'passengers',
           actor,
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
@@ -1254,6 +1255,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       if (actorToItemAssignments?.[uuid]) {
         for (const item of actorToItemAssignments[uuid]) {
           value.push({
+            type: 'crew',
             uuid,
             quantity,
             actor,
@@ -1270,6 +1272,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         }
       } else {
         value.push({
+          type: 'crew',
           uuid,
           quantity,
           actor,

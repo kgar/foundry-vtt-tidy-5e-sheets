@@ -37,11 +37,15 @@ import { loadConditionalStyles } from './utils/css-loading';
 import EditButton from './components/table-quadrone/table-buttons/EditButton.svelte';
 import type {
   ActivityRowAction,
-  ActorRowAction,
   AdvancementRowAction,
+  CrewRowAction,
+  DraftAnimalRowAction,
   EffectRowAction,
   EncounterCombatantMemberRowAction,
+  EncounterMemberRowAction,
+  GroupMemberRowAction,
   ItemRowAction,
+  PassengerRowAction,
 } from './types/types';
 import DeleteButton from './components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from './components/table-quadrone/table-buttons/MenuButton.svelte';
@@ -140,13 +144,13 @@ Hooks.once('init', () => {
               'TIDY5E.ContextMenuActionUnassign',
             ),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies CrewRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies CrewRowAction<typeof MenuButton>,
       },
       containerContents: {
         edit: {
@@ -194,13 +198,13 @@ Hooks.once('init', () => {
               ),
             }),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies DraftAnimalRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies DraftAnimalRowAction<typeof MenuButton>,
       },
       effect: {
         toggle: {
@@ -284,13 +288,13 @@ Hooks.once('init', () => {
             iconClasses: 'fa-solid fa-trash fa-fw',
             tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies EncounterMemberRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies EncounterMemberRowAction<typeof MenuButton>,
       },
       feature: {
         edit: {
@@ -334,13 +338,13 @@ Hooks.once('init', () => {
             iconClasses: 'fa-solid fa-trash fa-fw',
             tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies GroupMemberRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies GroupMemberRowAction<typeof MenuButton>,
       },
       inventory: {
         edit: {
@@ -437,13 +441,13 @@ Hooks.once('init', () => {
               name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
             }),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies PassengerRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies PassengerRowAction<typeof MenuButton>,
       },
       spell: {
         spell: {
@@ -510,13 +514,13 @@ Hooks.once('init', () => {
               ),
             }),
           }),
-        } satisfies ActorRowAction<typeof GenericActionButton>,
+        } satisfies CrewRowAction<typeof GenericActionButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '[data-context-menu]',
           }),
-        } satisfies ActorRowAction<typeof MenuButton>,
+        } satisfies CrewRowAction<typeof MenuButton>,
       },
     },
   };

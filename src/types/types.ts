@@ -400,8 +400,7 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
+  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -413,8 +412,7 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  | SheetPinItemContext
-  | SheetPinActivityContext
+  SheetPinItemContext | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -880,11 +878,7 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'rounded';
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1024,8 +1018,7 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  | HTMLElement
-  | { get(index: number): HTMLElement };
+  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1438,7 +1431,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
-  rowActions: ActorRowAction[];
+  rowActions: GroupMemberRowAction[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1613,7 +1606,7 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
-  rowActions: ActorRowAction[];
+  rowActions: EncounterMemberRowAction[];
 };
 
 export type EncounterMemberCombatantQuadroneContext = Omit<
@@ -1703,7 +1696,7 @@ export type DraftAnimalContext = {
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: ActorRowAction[];
+  rowActions: DraftAnimalRowAction[];
 };
 
 export type DraftAnimalSection = {
@@ -1712,6 +1705,7 @@ export type DraftAnimalSection = {
 } & TidySectionBase;
 
 export type CrewMemberContext = {
+  type: 'crew';
   uuid: string;
   actor: Actor5e;
   subtitle: string;
@@ -1719,7 +1713,7 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: ActorRowAction[];
+  rowActions: CrewRowAction[];
 };
 
 export type CrewSection = {
@@ -1735,11 +1729,12 @@ export type CrewSections = {
 };
 
 export type PassengerMemberContext = {
+  type: 'passengers';
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: ActorRowAction[];
+  rowActions: PassengerRowAction[];
 };
 
 export type PassengerSection = {
@@ -2018,12 +2013,12 @@ export type ActivityRowAction<
   ActivityRowActionConditionData
 >;
 
-export type ActorRowActionPropsData = {
+export type DraftAnimalRowActionPropsData = {
   actor: Actor5e;
-  ctx?: any; // This should not be `any`; do we need to subdivide and conquer?
+  ctx?: DraftAnimalContext;
 };
 
-export type ActorRowActionConditionData = {
+export type DraftAnimalRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
@@ -2033,16 +2028,107 @@ export type ActorRowActionConditionData = {
   };
 };
 
-export type ActorRowAction<TComponent extends Component<any> = Component<any>> =
+export type DraftAnimalRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  DraftAnimalRowActionPropsData,
+  DraftAnimalRowActionConditionData
+>;
+
+export type PassengerRowActionPropsData = {
+  actor: Actor5e;
+  ctx?: PassengerMemberContext;
+};
+
+export type PassengerRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
+
+export type PassengerRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  PassengerRowActionPropsData,
+  PassengerRowActionConditionData
+>;
+
+export type CrewRowActionPropsData = {
+  actor: Actor5e;
+  ctx?: CrewMemberContext;
+};
+
+export type CrewRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
+
+export type CrewRowAction<TComponent extends Component<any> = Component<any>> =
   TableRowAction<
     TComponent,
-    ActorRowActionPropsData,
-    ActorRowActionConditionData
+    CrewRowActionPropsData,
+    CrewRowActionConditionData
   >;
 
+export type GroupMemberRowActionPropsData = {
+  actor: Actor5e;
+  ctx?: GroupMemberQuadroneContext;
+};
+
+export type GroupMemberRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
+
+export type GroupMemberRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  GroupMemberRowActionPropsData,
+  GroupMemberRowActionConditionData
+>;
+
+export type EncounterMemberRowActionPropsData = {
+  actor: Actor5e;
+  ctx?: EncounterMemberQuadroneContext;
+};
+
+export type EncounterMemberRowActionConditionData = {
+  sheetDocument: Actor5e;
+  rowDocument: Actor5e;
+  app: any;
+  data: {
+    owner: boolean;
+    unlocked: boolean;
+  };
+};
+
+export type EncounterMemberRowAction<
+  TComponent extends Component<any> = Component<any>,
+> = TableRowAction<
+  TComponent,
+  EncounterMemberRowActionPropsData,
+  EncounterMemberRowActionConditionData
+>;
+
 export type EncounterCombatantMemberRowActionPropsData =
-  | EncounterMemberCombatantQuadroneContext
-  | EncounterPlaceholderQuadroneContext;
+  EncounterMemberCombatantQuadroneContext | EncounterPlaceholderQuadroneContext;
 
 export type EncounterCombatantMemberRowActionConditionData = {
   sheetDocument: Actor5e;

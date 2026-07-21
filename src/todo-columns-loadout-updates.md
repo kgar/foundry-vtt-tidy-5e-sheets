@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] // This should not be `any`; do we need to subdivide and conquer?
 - [ ] // TODO: Do we really need this field? Surely we can figure this out with `item.actor`
 - [ ] Consider passing the sheet and document down to props callback for all row action types.
 - [ ] Reevaluate the props for all row actions before finalizing the API
