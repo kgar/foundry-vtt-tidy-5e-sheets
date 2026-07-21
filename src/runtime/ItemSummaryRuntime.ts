@@ -6,13 +6,11 @@ import type { Item5e } from 'src/types/item.types';
 export class ItemSummaryRuntime {
   private static _itemSummaryCommands: RegisteredItemSummaryCommand[] = [
     {
-      id: 'display-card',
       execute: (params) => params.item.displayCard(),
       label: 'DND5E.DisplayCard',
       iconClass: 'fa-solid fa-message-arrow-up-right',
     },
     {
-      id: 'view-details',
       execute: (params) =>
         params.item.parent.sheet.renderChild(params.item.sheet, {
           force: true,
