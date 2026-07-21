@@ -227,8 +227,8 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    <p class="hint">
-      {localize('DND5E.FACILITY.Craft.Hint')}
+    <p>
+      <span class="hint">{localize('DND5E.FACILITY.Craft.Hint')}</span>
     </p>
 
     <div class={{ harvesting: context.isHarvesting }}>
