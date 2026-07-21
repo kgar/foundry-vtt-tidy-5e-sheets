@@ -1931,38 +1931,78 @@ export type DefaultTableColumn = Omit<
 
 export type DefaultTableColumns = Record<string, DefaultTableColumn>;
 
-/* SECTION / ROW ACTIONS */
+/* ROW ACTIONS - CORE TYPES */
 
 export type TableRowActionProps<TData extends object> = TData;
 
-export type TableRowAction<
-  TComponent extends Component<any>,
-  TPropsData extends object,
-  TConditionData extends object,
-> = {
-  component: TComponent;
-  props: (args: TableRowActionProps<TPropsData>) => ComponentProps<TComponent>;
-  condition?: (args: TableRowActionProps<TConditionData>) => boolean;
-};
-
-export type ItemRowActionPropsData = {
-  item: Item5e;
-  ctx?: any;
-};
-
-export type ConditionContextData = {
+export type CommonConditionContextData = {
   owner: boolean;
   unlocked: boolean;
   editable: boolean;
 };
 
-export type ItemRowActionConditionData = {
-  sheetDocument: Actor5e | Item5e;
-  rowDocument: Item5e;
-  app: any;
-  data: ConditionContextData;
+/**
+ * The basis for the row actions that appear in Tidy's tables.
+ *
+ * @typeParam TComponent - The svelte component used to render the action.
+ * @typeParam TPropsData - The data passed to the `props` function.
+ * @typeParam TConditionData - The data passed to the `condition` function.
+ */
+export type TableRowAction<
+  TComponent extends Component<any>,
+  TPropsData extends object,
+  TConditionData extends object,
+> = {
+  /** The Svelte component to render. */
+  component: TComponent;
+  /**
+   * A function that maps row data → component props for this row action,
+   * for a given row in the table.
+   */
+  props: (args: TableRowActionProps<TPropsData>) => ComponentProps<TComponent>;
+  /**
+   * An optional condition callback that determines whether the row action
+   * should be included for a given row in the table
+   */
+  condition?: (args: TableRowActionProps<TConditionData>) => boolean;
 };
 
+/* ROW ACTIONS - ITEM */
+
+/**
+ * Props passed to item row-action components.
+ */
+export type ItemRowActionPropsData = {
+  /** The item represented by this row. */
+  item: Item5e;
+
+  // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
+  ctx?: any;
+};
+
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
+export type ItemRowActionConditionData = {
+  /** The sheet-level document. */
+  sheetDocument: Actor5e | Item5e;
+
+  /** The item represented by this row. */
+  rowDocument: Item5e;
+
+  /** The sheet application instance. */
+  app: any;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
+};
+
+/**
+ * Row action type for inventory items, equipment, loot, etc.
+ */
 export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
   TableRowAction<
     TComponent,
@@ -1970,18 +2010,41 @@ export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
     ItemRowActionConditionData
   >;
 
+/* ROW ACTIONS - EFFECT */
+
+/**
+ * Props passed to effect row-action components.
+ */
 export type EffectRowActionPropsData = {
+  /** The active effect represented by this row. */
   effect: ActiveEffect5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: ActiveEffectContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type EffectRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e | Item5e;
+
+  /** The active effect represented by this row. */
   rowDocument: ActiveEffect5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for active effects.
+ */
 export type EffectRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -1990,18 +2053,41 @@ export type EffectRowAction<
   EffectRowActionConditionData
 >;
 
+/* ROW ACTIONS - ACTIVITY */
+
+/**
+ * Props passed to activity row-action components.
+ */
 export type ActivityRowActionPropsData = {
+  /** The activity represented by this row. */
   activity: Activity5e;
-  ctx?: any;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
+  ctx?: ActivityItemContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type ActivityRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e | Item5e;
+
+  /** The activity represented by this row. */
   rowDocument: Activity5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for activities.
+ */
 export type ActivityRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2010,18 +2096,41 @@ export type ActivityRowAction<
   ActivityRowActionConditionData
 >;
 
+/* ROW ACTIONS - DRAFT ANIMAL */
+
+/**
+ * Props passed to vehicle draft animal row-action components.
+ */
 export type DraftAnimalRowActionPropsData = {
+  /** The actor represented by this row. */
   actor: Actor5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: DraftAnimalContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type DraftAnimalRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for vehicle draft animals.
+ */
 export type DraftAnimalRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2030,18 +2139,41 @@ export type DraftAnimalRowAction<
   DraftAnimalRowActionConditionData
 >;
 
+/* ROW ACTIONS - PASSENGER */
+
+/**
+ * Props passed to vehicle passenger row-action components.
+ */
 export type PassengerRowActionPropsData = {
+  /** The actor represented by this row. */
   actor: Actor5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: PassengerMemberContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type PassengerRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for vehicle passengers.
+ */
 export type PassengerRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2050,18 +2182,41 @@ export type PassengerRowAction<
   PassengerRowActionConditionData
 >;
 
+/* ROW ACTIONS - CREW */
+
+/**
+ * Props passed to vehicle crew row-action components.
+ */
 export type CrewRowActionPropsData = {
+  /** The actor represented by this row. */
   actor: Actor5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: CrewMemberContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type CrewRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for vehicle crew.
+ */
 export type CrewRowAction<TComponent extends Component<any> = Component<any>> =
   TableRowAction<
     TComponent,
@@ -2069,18 +2224,41 @@ export type CrewRowAction<TComponent extends Component<any> = Component<any>> =
     CrewRowActionConditionData
   >;
 
+/* ROW ACTIONS - GROUP MEMBER */
+
+/**
+ * Props passed to group member row-action components.
+ */
 export type GroupMemberRowActionPropsData = {
+  /** The actor represented by this row. */
   actor: Actor5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: GroupMemberQuadroneContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type GroupMemberRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for group members.
+ */
 export type GroupMemberRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2089,18 +2267,41 @@ export type GroupMemberRowAction<
   GroupMemberRowActionConditionData
 >;
 
+/* ROW ACTIONS - ENCOUNTER MEMBER */
+
+/**
+ * Props passed to encounter member row-action components.
+ */
 export type EncounterMemberRowActionPropsData = {
+  /** The actor represented by this row. */
   actor: Actor5e;
+
+  /** Optional contextual data. Primarily for internal Tidy use, so use at your own risk. */
   ctx?: EncounterMemberQuadroneContext;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type EncounterMemberRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for encounter members.
+ */
 export type EncounterMemberRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2109,16 +2310,38 @@ export type EncounterMemberRowAction<
   EncounterMemberRowActionConditionData
 >;
 
+/* ROW ACTIONS - ENCOUNTER COMBATANT */
+
+/**
+ * Props passed to encounter combatant member row-action components.
+ * Note that the data varies when dealing with an actor or a combat placeholder.
+ */
 export type EncounterCombatantMemberRowActionPropsData =
   EncounterMemberCombatantQuadroneContext | EncounterPlaceholderQuadroneContext;
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
 export type EncounterCombatantMemberRowActionConditionData = {
+  /** The sheet-level document. */
   sheetDocument: Actor5e;
+
+  /** The actor represented by this row. */
   rowDocument?: Actor5e;
+
+  /** The sheet application instance. */
   app: any;
-  data: ConditionContextData;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
 };
 
+/**
+ * Row action type for encounter combatants.
+ * Encounter combatants can be actors or placeholders.
+ */
 export type EncounterCombatantMemberRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
@@ -2127,15 +2350,41 @@ export type EncounterCombatantMemberRowAction<
   EncounterCombatantMemberRowActionConditionData
 >;
 
-export type AdvancementRowActionPropsData = { item: Item5e; id: string };
+/* ROW ACTIONS - ADVANCEMENT */
 
-export type AdvancementRowActionConditionData = {
-  sheetDocument: Actor5e;
-  rowDocument?: Actor5e;
-  app: any;
-  data: ConditionContextData;
+/**
+ * Props passed to advancement row-action components.
+ */
+export type AdvancementRowActionPropsData = {
+  /** The item to which this advancement belongs. */
+  item: Item5e;
+
+  /** The advancement's ID. */
+  id: string;
 };
 
+/**
+ * The available `args` data when evaluating the relevant row action's optional condition callback.
+ * Use this data (and any external data like settings, flags, etc.) to decide
+ * if your row action should be included for a given row in the table.
+ */
+export type AdvancementRowActionConditionData = {
+  /** The sheet-level document. */
+  sheetDocument: Actor5e;
+
+  /** The advancement represented by this row. */
+  rowDocument?: any;
+
+  /** The sheet application instance. */
+  app: any;
+
+  /** Common access-level data for convenience. */
+  data: CommonConditionContextData;
+};
+
+/**
+ * Row action type for item advancements.
+ */
 export type AdvancementRowAction<
   TComponent extends Component<any> = Component<any>,
 > = TableRowAction<
