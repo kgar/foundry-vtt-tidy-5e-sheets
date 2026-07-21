@@ -847,6 +847,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         {
           unlocked: context.unlocked,
           owner: context.owner,
+          editable: context.editable,
         },
       );
     }
@@ -865,6 +866,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
           this,
           activity,
           this.isEditMode && this.isEditable,
+          this.isEditable,
         ),
       ),
       canToggle: false,

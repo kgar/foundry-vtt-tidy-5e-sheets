@@ -330,6 +330,7 @@ export class Tidy5eVehicleSheet
           {
             unlocked: context.unlocked,
             owner: context.owner,
+            editable: context.editable,
           },
         );
       }
@@ -460,6 +461,7 @@ export class Tidy5eVehicleSheet
         this,
         activity,
         this.isEditMode && this.isEditable,
+        this.isEditable,
       ),
     );
 

@@ -307,7 +307,11 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
         rowActions: GroupMemberRowActionRuntime.getRowActions({
           app: this,
-          data: { unlocked: actorContext.unlocked, owner: actorContext.owner },
+          data: {
+            unlocked: actorContext.unlocked,
+            owner: actorContext.owner,
+            editable: actorContext.editable,
+          },
           rowDocument: actor,
           sheetDocument: actorContext.document,
         }),

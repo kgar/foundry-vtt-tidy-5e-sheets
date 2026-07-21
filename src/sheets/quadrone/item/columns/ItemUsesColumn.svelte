@@ -71,6 +71,7 @@
       context.sheet,
       item.system.linkedActivity,
       context.unlocked,
+      context.editable,
     ),
   )}
 

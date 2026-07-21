@@ -218,4 +218,5 @@ export type RegisteredTraitOpenConfigurationParams = {
 export type ContainerContentsRowActionsContext = {
   unlocked: boolean;
   owner: boolean;
+  editable: boolean;
 };

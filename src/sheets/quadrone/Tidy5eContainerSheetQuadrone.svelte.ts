@@ -302,6 +302,7 @@ export class Tidy5eContainerSheetQuadrone
       containerContents: await Container.getContainerContents(this, this.item, {
         unlocked: documentSheetContext.unlocked,
         owner,
+        editable: documentSheetContext.editable,
       }),
       customContent: [],
       currencies,
@@ -318,6 +319,7 @@ export class Tidy5eContainerSheetQuadrone
       itemContext: await Container.getContainerItemContext(this, this.item, {
         unlocked: documentSheetContext.unlocked,
         owner,
+        editable: documentSheetContext.editable,
       }),
       itemDescriptions: itemDescriptions,
       items: Array.from(await this.item.system.contents),

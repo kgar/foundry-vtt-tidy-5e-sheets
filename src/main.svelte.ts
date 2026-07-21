@@ -170,7 +170,7 @@ Hooks.once('init', () => {
           condition: (args) =>
             // TODO: remove doc type logic after partitioning
             args.sheetDocument.system.isCharacter &&
-            args.rowDocument.isOwner &&
+            args.data.editable &&
             !args.data.unlocked,
           props: (args) => ({
             doc: args.item,
@@ -238,14 +238,14 @@ Hooks.once('init', () => {
       encounterCombatant: {
         addAsPlaceholder: {
           component: EncounterAddAsCombatPlaceholder,
-          condition: (args) => args.data.owner,
+          condition: (args) => args.data.editable,
           props: () => ({}),
         } satisfies EncounterCombatantMemberRowAction<
           typeof EncounterAddAsCombatPlaceholder
         >,
         toggleVisibility: {
           component: EncounterCombatVisibilityToggle,
-          condition: (args) => args.data.owner,
+          condition: (args) => args.data.editable,
           props: (args) => ({
             rowContext: args,
           }),
@@ -254,7 +254,7 @@ Hooks.once('init', () => {
         >,
         toggleInclusion: {
           component: EncounterCombatInclusionToggle,
-          condition: (args) => args.data.owner,
+          condition: (args) => args.data.editable,
           props: (args) => ({
             rowContext: args,
           }),
@@ -314,7 +314,7 @@ Hooks.once('init', () => {
           condition: (args) =>
             // TODO: remove doc type logic after partitioning
             args.sheetDocument.system.isCharacter &&
-            args.rowDocument.isOwner &&
+            args.data.editable &&
             !args.data.unlocked,
           props: (args) => ({
             doc: args.item,
@@ -362,7 +362,7 @@ Hooks.once('init', () => {
         attune: {
           component: AttuneButton,
           condition: (args) =>
-            args.rowDocument.isOwner &&
+            args.rowDocument.editable &&
             !args.data.unlocked &&
             // TODO: remove doc type logic after partitioning
             (args.sheetDocument.system.isCharacter ||
@@ -377,7 +377,7 @@ Hooks.once('init', () => {
           component: EquipButton,
           props: (args) => ({ doc: args.item }),
           condition: (args) =>
-            args.rowDocument.isOwner &&
+            args.data.editable &&
             !args.data.unlocked &&
             // TODO: remove doc type logic after partitioning
             (args.sheetDocument.system.isCharacter ||
@@ -389,7 +389,7 @@ Hooks.once('init', () => {
           condition: (args) =>
             // TODO: remove doc type logic after partitioning
             args.sheetDocument.system.isCharacter &&
-            args.rowDocument.isOwner &&
+            args.data.editable &&
             !args.data.unlocked,
           props: (args) => ({
             doc: args.item,
@@ -453,7 +453,7 @@ Hooks.once('init', () => {
         spell: {
           component: SpellButton,
           condition: (args) =>
-            args.data.owner &&
+            args.data.editable &&
             !args.rowDocument.system.linkedActivity &&
             // TODO: remove doc type logic after partitioning
             (args.sheetDocument.system.isCharacter ||
@@ -486,7 +486,7 @@ Hooks.once('init', () => {
           condition: (args) =>
             // TODO: remove doc type logic after partitioning
             args.sheetDocument.system.isCharacter &&
-            args.rowDocument.isOwner &&
+            args.data.editable &&
             !args.data.unlocked,
           props: (args) => ({
             doc: args.item,

@@ -334,6 +334,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
                 this,
                 activity,
                 documentSheetContext.unlocked,
+                documentSheetContext.editable,
               ),
             )
             .sort((a: any, b: any) => a.sort - b.sort),
@@ -346,7 +347,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           dataset: {},
           label: 'DND5E.ACTIVITY.Title.other',
           sectionActions: SectionActions.getItemActivityHeaderActions(
-            this.isEditable,
+            documentSheetContext.editable,
           ),
         },
       ],
@@ -430,6 +431,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       advancement: await this._getItemAdvancement(
         this.document,
         documentSheetContext.unlocked,
+        documentSheetContext.editable,
       ),
 
       effects: await this._getEffectsSections(documentSheetContext),
@@ -715,7 +717,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               riders: [],
               rowActions: EffectRowActionRuntime.getRowActions({
                 app: context.document.sheet,
-                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                data: {
+                  owner: effect.isOwner,
+                  unlocked: context.unlocked,
+                  editable: context.editable,
+                },
                 rowDocument: effect,
                 sheetDocument: context.document,
               }),
@@ -750,7 +756,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ([key, value]) =>
         ({
           ...value,
-          canCreate: this.isEditable && !value.isEnchantment && !value.disabled,
+          canCreate:
+            context.editable && !value.isEnchantment && !value.disabled,
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
           sectionActions: [],
@@ -774,6 +781,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   async _getItemAdvancement(
     item: Item5e,
     unlocked: boolean,
+    editable: boolean,
   ): Promise<AdvancementSection[]> {
     if (!item.system.advancement) {
       return [];
@@ -814,7 +822,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               summary: '',
               rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
                 app: this,
-                data: { unlocked, owner: this.document.isOwner },
+                data: {
+                  unlocked,
+                  owner: this.document.isOwner,
+                  editable: editable,
+                },
                 sheetDocument: this.document,
                 rowDocument: a,
               }),
@@ -857,7 +869,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               ].filterJoin(' '),
               rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
                 app: this,
-                data: { unlocked, owner: this.document.isOwner },
+                data: {
+                  unlocked,
+                  owner: this.document.isOwner,
+                  editable: editable,
+                },
                 sheetDocument: this.document,
                 rowDocument: advancement,
               }),
@@ -907,7 +923,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           unlocked,
           level,
           context.configured,
-          this.isEditable,
+          editable,
         ),
         dataset: {},
       }),

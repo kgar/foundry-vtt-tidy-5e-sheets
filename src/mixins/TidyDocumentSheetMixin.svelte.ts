@@ -255,7 +255,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       const sheetModeConfig = {
         unlocked:
-          this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && this.isEditable,
+          this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && context.editable,
       };
 
       TidyHooks.tidy5eSheetsSheetModeConfiguring(

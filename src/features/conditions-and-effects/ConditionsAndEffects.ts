@@ -176,7 +176,11 @@ export class ConditionsAndEffects {
               riders: [],
               rowActions: EffectRowActionRuntime.getRowActions({
                 app: context.document.sheet,
-                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                data: {
+                  owner: effect.isOwner,
+                  unlocked: context.unlocked,
+                  editable: context.editable,
+                },
                 rowDocument: effect,
                 sheetDocument: context.document,
               }),
@@ -240,7 +244,11 @@ export class ConditionsAndEffects {
               riders: [],
               rowActions: EffectRowActionRuntime.getRowActions({
                 app: context.document.sheet,
-                data: { owner: effect.isOwner, unlocked: context.unlocked },
+                data: {
+                  owner: effect.isOwner,
+                  unlocked: context.unlocked,
+                  editable: context.editable,
+                },
                 rowDocument: effect,
                 sheetDocument: context.document,
               }),

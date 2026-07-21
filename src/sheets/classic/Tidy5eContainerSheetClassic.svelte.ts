@@ -284,6 +284,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       containerContents: await Container.getContainerContents(this, this.item, {
         unlocked: documentSheetContext.unlocked,
         owner,
+        editable: documentSheetContext.editable,
       }),
       customContent: [],
       enriched: enriched,
@@ -298,6 +299,7 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
       itemContext: await Container.getContainerItemContext(this, this.item, {
         unlocked: documentSheetContext.unlocked,
         owner,
+        editable: documentSheetContext.editable,
       }),
       itemDescriptions: itemDescriptions,
       itemOverrides: new Set<string>(this._getItemOverrides()),

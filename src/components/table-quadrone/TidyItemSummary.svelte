@@ -45,6 +45,7 @@
             context.sheet,
             activity,
             context.unlocked,
+            context.editable,
           ),
         )
       : [];

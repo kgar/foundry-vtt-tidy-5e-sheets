@@ -94,7 +94,12 @@ export class Container {
         item,
         item.system.activities,
       )?.map((activity) =>
-        Activities.getActivityItemContext(sheet, activity, context.unlocked),
+        Activities.getActivityItemContext(
+          sheet,
+          activity,
+          context.unlocked,
+          context.editable,
+        ),
       );
 
       ctx.includeInCharacterSheetTab =

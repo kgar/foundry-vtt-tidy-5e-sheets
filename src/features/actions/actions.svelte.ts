@@ -46,6 +46,7 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
+// Classic Only
 export async function getActorActionSections(
   actor: Actor5e,
 ): Promise<ActionSectionClassic[]> {
@@ -67,6 +68,7 @@ export async function getActorActionSections(
   }
 }
 
+// Classic Only
 export function getSortedActions(
   section: ActionSectionClassic,
   sortMode: string,
@@ -87,6 +89,7 @@ export function getSortedActions(
   });
 }
 
+// Classic Only
 function buildActionSections(
   actor: Actor5e,
   actionItems: ActionItem[],
@@ -365,6 +368,7 @@ function getActivityFirstDamage(item: Item5e) {
   };
 }
 
+// Classic Only
 async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.damages)
@@ -415,6 +419,7 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
         {
           unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
           owner: item.isOwner,
+          editable: item.actor.sheet.isEditable,
         },
       );
     }

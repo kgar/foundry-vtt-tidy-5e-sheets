@@ -1957,6 +1957,7 @@ export type ItemRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -1979,6 +1980,7 @@ export type EffectRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2002,6 +2004,7 @@ export type ActivityRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2025,6 +2028,7 @@ export type DraftAnimalRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2048,6 +2052,7 @@ export type PassengerRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2071,6 +2076,7 @@ export type CrewRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2093,6 +2099,7 @@ export type GroupMemberRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2116,6 +2123,7 @@ export type EncounterMemberRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2137,6 +2145,7 @@ export type EncounterCombatantMemberRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 
@@ -2157,6 +2166,7 @@ export type AdvancementRowActionConditionData = {
   data: {
     owner: boolean;
     unlocked: boolean;
+    editable: boolean;
   };
 };
 

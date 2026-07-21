@@ -843,6 +843,7 @@ export class Tidy5eCharacterSheet
         {
           unlocked: context.unlocked,
           owner: context.owner,
+          editable: context.editable,
         },
       );
     }
@@ -1486,6 +1487,7 @@ export class Tidy5eCharacterSheet
         this,
         activity,
         this.isEditMode && this.isEditable,
+        this.isEditable,
       ),
     );
 

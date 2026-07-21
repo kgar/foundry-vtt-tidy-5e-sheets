@@ -392,6 +392,7 @@ export function getTidy5eActorSheetQuadroneBase<
           {
             unlocked: context.unlocked,
             owner: context.owner,
+            editable: context.editable,
           },
         );
       }
@@ -401,7 +402,12 @@ export function getTidy5eActorSheetQuadroneBase<
           item,
           item.system.activities,
         )?.map((activity) =>
-          Activities.getActivityItemContext(this, activity, context.unlocked),
+          Activities.getActivityItemContext(
+            this,
+            activity,
+            context.unlocked,
+            context.editable,
+          ),
         );
       }
 

@@ -44,6 +44,7 @@ export class Activities {
     sheet: any,
     activity: Activity5e,
     unlocked: boolean,
+    editable: boolean,
   ): ActivityItemContext {
     // To Hit
     const toHit = parseInt(activity.labels.modifier);
@@ -90,6 +91,7 @@ export class Activities {
         data: {
           owner: sheet.document.isOwner,
           unlocked,
+          editable: editable,
         },
         rowDocument: activity,
         sheetDocument: sheet.document,
