@@ -37,7 +37,7 @@ import { loadConditionalStyles } from './utils/css-loading';
 import EditButton from './components/table-quadrone/table-buttons/EditButton.svelte';
 import type {
   ActivityRowAction,
-  AdvancementRowAction,
+  ItemAdvancementRowAction,
   VehicleCrewRowAction,
   VehicleDraftAnimalRowAction,
   EffectRowAction,
@@ -367,7 +367,7 @@ Hooks.once('init', () => {
           props: (args) => ({
             doc: args.item.system.advancement?.get(args.id),
           }),
-        } satisfies AdvancementRowAction<typeof EditButton>,
+        } satisfies ItemAdvancementRowAction<typeof EditButton>,
         delete: {
           component: DeleteButton,
           condition: (args) => args.data.unlocked,
@@ -378,13 +378,13 @@ Hooks.once('init', () => {
                 ?.get(args.id)
                 ?.deleteDialog({ sheet: args.item }),
           }),
-        } satisfies AdvancementRowAction<typeof DeleteButton>,
+        } satisfies ItemAdvancementRowAction<typeof DeleteButton>,
         menu: {
           component: MenuButton,
           props: () => ({
             targetSelector: '.advancement-item',
           }),
-        } satisfies AdvancementRowAction<typeof MenuButton>,
+        } satisfies ItemAdvancementRowAction<typeof MenuButton>,
       },
       vehicleAssignedCrew: {
         unassign: {

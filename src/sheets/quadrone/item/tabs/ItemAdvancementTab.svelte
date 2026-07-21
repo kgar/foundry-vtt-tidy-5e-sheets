@@ -17,8 +17,8 @@
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
-    AdvancementRowAction,
-    AdvancementRowActionPropsData,
+    ItemAdvancementRowAction,
+    ItemAdvancementRowActionPropsData,
   } from 'src/types/row-actions.types';
 
   let localize = FoundryAdapter.localize;
@@ -41,7 +41,7 @@
 <div {@attach observeResize(onResize)} class="tidy-table-container">
   {#each context.advancement as section (section.key)}
     {let longestRowActionArray = $derived(
-      section.items.reduce<AdvancementRowAction[]>((prev, curr) => {
+      section.items.reduce<ItemAdvancementRowAction[]>((prev, curr) => {
         return prev.length > curr.rowActions.length ? prev : curr.rowActions;
       }, []),
     )}
@@ -142,7 +142,7 @@
                   ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                 }}
               >
-                {const data = $derived<AdvancementRowActionPropsData>({
+                {const data = $derived<ItemAdvancementRowActionPropsData>({
                   id: advancement.id,
                   item: context.document,
                 })}

@@ -2,7 +2,7 @@ import type { Component } from 'svelte';
 import type {
   ActivityRowAction,
   ActorRowAction,
-  AdvancementRowAction,
+  ItemAdvancementRowAction,
   VehicleCrewRowAction,
   VehicleDraftAnimalRowAction,
   EffectRowAction,
@@ -119,7 +119,7 @@ export type TidyRowActionRegistry = {
   /** Row actions for inventory (consumable, equipment, weapon, etc.)s. */
   inventory: Record<string, ItemRowAction>;
   /** Row actions for item advancements. */
-  itemAdvancement: Record<string, AdvancementRowAction>;
+  itemAdvancement: Record<string, ItemAdvancementRowAction>;
   /** Row actions for spells. */
   spell: Record<string, ItemRowAction>;
   /** Row actions for a vehicle's assigned crews. */
