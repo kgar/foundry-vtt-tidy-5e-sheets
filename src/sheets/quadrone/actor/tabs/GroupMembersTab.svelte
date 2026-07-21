@@ -7,11 +7,7 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type {
-    Actor5e,
-    GroupMemberRowActionPropsData,
-    GroupMemberSection,
-  } from 'src/types/types';
+  import type { Actor5e, GroupMemberSection } from 'src/types/types';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -29,6 +25,7 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
+  import type { GroupMemberRowActionPropsData } from 'src/types/row-actions.types';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(

@@ -18,7 +18,7 @@
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import {
     type EncounterCombatantMemberRowActionPropsData,
-  } from 'src/types/types';
+  } from 'src/types/row-actions.types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(

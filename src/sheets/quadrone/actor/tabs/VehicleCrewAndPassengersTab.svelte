@@ -19,7 +19,7 @@
   import type {
     PassengerRowActionPropsData,
     CrewRowActionPropsData,
-  } from 'src/types/types';
+  } from 'src/types/row-actions.types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(

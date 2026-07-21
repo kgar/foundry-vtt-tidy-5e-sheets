@@ -13,7 +13,6 @@
   import type {
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
-    ItemRowActionPropsData,
     NpcSheetQuadroneContext,
     TidyItemSectionBase,
   } from 'src/types/types';
@@ -27,6 +26,7 @@
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import type { ItemRowActionPropsData } from 'src/types/row-actions.types';
 
   interface Props {
     section: TidyItemSectionBase;

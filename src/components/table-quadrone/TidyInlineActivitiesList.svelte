@@ -8,7 +8,6 @@
   import { Activities } from 'src/features/activities/activities';
   import type {
     ActivityItemContext,
-    ActivityRowActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -21,6 +20,7 @@
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import type { ActivityRowActionPropsData } from 'src/types/row-actions.types';
 
   interface Props {
     item?: Item5e | null;

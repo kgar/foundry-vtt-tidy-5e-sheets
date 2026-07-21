@@ -46,7 +46,7 @@ import type {
   GroupMemberRowAction,
   ItemRowAction,
   PassengerRowAction,
-} from './types/types';
+} from './types/row-actions.types';
 import DeleteButton from './components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from './components/table-quadrone/table-buttons/MenuButton.svelte';
 import GenericActionButton from './components/table-quadrone/table-buttons/GenericActionButton.svelte';

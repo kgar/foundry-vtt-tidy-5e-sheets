@@ -21,7 +21,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
-  import type { EncounterMemberRowActionPropsData } from 'src/types/types';
+  import type { EncounterMemberRowActionPropsData } from 'src/types/row-actions.types';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 

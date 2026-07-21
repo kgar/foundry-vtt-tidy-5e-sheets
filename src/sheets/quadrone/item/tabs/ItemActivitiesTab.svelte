@@ -16,7 +16,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
-  import type { ActivityRowActionPropsData } from 'src/types/types';
+  import type { ActivityRowActionPropsData } from 'src/types/row-actions.types';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 

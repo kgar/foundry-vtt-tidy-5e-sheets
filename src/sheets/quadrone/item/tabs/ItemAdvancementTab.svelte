@@ -19,7 +19,7 @@
   import type {
     AdvancementRowAction,
     AdvancementRowActionPropsData,
-  } from 'src/types/types';
+  } from 'src/types/row-actions.types';
 
   let localize = FoundryAdapter.localize;
 

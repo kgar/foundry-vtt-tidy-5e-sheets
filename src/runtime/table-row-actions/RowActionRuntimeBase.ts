@@ -1,6 +1,6 @@
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 import type { RowActionOf, RowActionRegistryDomain } from 'src/types/registry';
-import type { TableRowAction } from 'src/types/types';
+import type { TableRowAction } from 'src/types/row-actions.types';
 import { checkCondition } from 'src/utils/iteration';
 import { debug } from 'src/utils/logging';
 
@@ -23,8 +23,7 @@ export abstract class RowActionRuntimeBase<
 
     for (const key of rowActions) {
       const action = CONFIG.TIDY5E.rowActions[this.domain][key] as
-        | TRowAction
-        | undefined;
+        TRowAction | undefined;
 
       if (action && checkCondition(action, args)) {
         result.push(action);

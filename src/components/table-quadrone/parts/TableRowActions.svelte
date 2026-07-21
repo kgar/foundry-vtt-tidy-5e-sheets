@@ -2,7 +2,7 @@
   lang="ts"
   generics="TPropsData extends {}, TAction extends TableRowAction<any, TPropsData, any>"
 >
-  import type { TableRowAction } from 'src/types/types';
+  import type { TableRowAction } from 'src/types/row-actions.types';
 
   type Props = {
     rowActions?: TAction[];

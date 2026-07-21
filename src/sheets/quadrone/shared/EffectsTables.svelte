@@ -9,7 +9,6 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
-    EffectRowActionPropsData,
     SectionColumnSpecifications,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
@@ -22,6 +21,7 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
+  import type { EffectRowActionPropsData } from 'src/types/row-actions.types';
 
   interface Props {
     inlineWidth: number;
