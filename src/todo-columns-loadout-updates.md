@@ -1,14 +1,16 @@
 
 ## To Do
 
-- [ ] Write a script that takes an allowlist of svelte directories and generates `_module.ts` files for them. It includes named exports such as `export {default as AttuneButton} from "./AttuneButton.svelte";`
 - [ ] Review main.svelte.ts `CONFIG.TIDY5E` init - should that content be passed in by a src/runtime/row-action/init.ts function? Or should it all be laid out in the open like that?
-- [ ] One last look: with the API and registry implemented, is there anything about the design that should change?
-- [ ] Once in main, document row action customization and recipes as part of the wiki. Tag it with the tentative Tidy version.
 - [ ] Consider - move the src\api\index.ts file out of src and into typedoc/api/index.ts and update typedoc entry points accordingly
 - [ ] Consider - types/index.ts to export all into a pure barrel file, and import from `@/types` wherever types are needed
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
+
+## After Next Release
+
+- [ ] Document row action customization and recipes as part of the wiki. Tag it with the tentative Tidy version.
+
 
 ## Stretch
 
@@ -16,3 +18,4 @@
 - [ ] Migrate in the Item section preparers and reduce looping to a single pass over the items.
 - [ ] // TODO: Determine how to make managing row action styles less hardcoded and more configured.
 - [ ] Try a CSS Grid / Sub-grid approach Tidy tables. This would eliminate the need to calculate row actions width and open lots of doors, if it were performant.
+- [ ] Write a script that takes an allowlist of svelte directories and generates `_module.ts` files for them. It includes named exports such as `export {default as AttuneButton} from "./AttuneButton.svelte";`

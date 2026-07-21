@@ -1,5 +1,8 @@
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
-import type { RowActionOf, RowActionRegistryDomain } from 'src/types/registry';
+import type {
+  RowActionOf,
+  RowActionRegistryDomain,
+} from 'src/types/registry.types';
 import type { TableRowAction } from 'src/types/row-actions.types';
 import { checkCondition } from 'src/utils/iteration';
 import { debug } from 'src/utils/logging';

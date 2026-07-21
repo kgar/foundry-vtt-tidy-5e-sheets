@@ -27,4 +27,4 @@ export * from 'src/foundry/TidyHooks';
 export * from 'src/features/sections/sections.types';
 export type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types.ts';
 export * from 'src/types/row-actions.types';
-export type * from 'src/types/registry';
+export * from 'src/types/registry.types';
