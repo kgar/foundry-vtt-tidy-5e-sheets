@@ -82,7 +82,7 @@ export class Inventory {
     /** When creating a custom section during this operation, merge in these options over the defaults.  */
     customSectionOptions?: Partial<InventorySection>;
     /** A secondary inventory key to use if the primary inventory key is not found. */
-    fallbackInventoryKey?: string; // TODO: Figured out how to eliminate this niche parameter
+    fallbackInventoryKey?: string; // TODO: Figure out how to eliminate this niche parameter
     /** The custom section flag to use when looking for a custom section name. */
     customSectionFlag?: 'section' | 'actionSection';
   }) {
