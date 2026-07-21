@@ -23,9 +23,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
-  import type { GroupMemberRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -159,20 +157,15 @@
                     {hiddenColumns}
                     {section}
                   />
-                  <TidyTableCell
+
+                  <RowActionsColumn
                     columnWidth="{rowActionInfo.widthRems}rem"
-                    class="tidy-table-actions"
-                    attributes={{
-                      ['data-tidy-column-key']:
-                        CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                    }}
-                  >
-                    {const data = $derived<GroupMemberRowActionPropsData>({
+                    rowActions={member.rowActions}
+                    data={{
                       actor: member.actor,
                       ctx: member,
-                    })}
-                    <TableRowActions rowActions={member.rowActions} {data} />
-                  </TidyTableCell>
+                    }}
+                  />
                 {/if}
               </div>
             {/each}

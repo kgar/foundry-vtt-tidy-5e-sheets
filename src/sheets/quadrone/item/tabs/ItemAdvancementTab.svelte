@@ -14,12 +14,12 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
     ItemAdvancementRowAction,
     ItemAdvancementRowActionPropsData,
   } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../columns/RowActionsColumn.svelte';
 
   let localize = FoundryAdapter.localize;
 
@@ -135,19 +135,14 @@
                 {section}
               />
 
-              <TidyTableCell
+              <RowActionsColumn
                 columnWidth="{rowActionInfo.widthRems}rem"
-                class="tidy-table-actions"
-                attributes={{
-                  ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                }}
-              >
-                {const data = $derived<ItemAdvancementRowActionPropsData>({
+                rowActions={advancement.rowActions}
+                data={{
                   id: advancement.id,
                   item: context.document,
-                })}
-                <TableRowActions rowActions={advancement.rowActions} {data} />
-              </TidyTableCell>
+                }}
+              />
             {/snippet}
           </TidyAdvancementTableRow>
         {/each}

@@ -319,7 +319,7 @@ Hooks.once('init', () => {
         attune: {
           component: AttuneButton,
           condition: (args) =>
-            args.rowDocument.editable &&
+            args.data.editable &&
             !args.data.unlocked &&
             // TODO: remove doc type logic after partitioning
             (args.sheetDocument.system.isCharacter ||

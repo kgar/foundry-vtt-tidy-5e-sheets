@@ -19,9 +19,8 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
-  import type { EffectRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -179,19 +178,14 @@
         {section}
       />
 
-      <TidyTableCell
+      <RowActionsColumn
         columnWidth="{rowActionsColumnWidthRems}rem"
-        class="tidy-table-actions"
-        attributes={{
-          ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-        }}
-      >
-        {const data = $derived<EffectRowActionPropsData>({
+        rowActions={ctx.rowActions}
+        data={{
           effect: ctx.effect,
           ctx,
-        })}
-        <TableRowActions rowActions={ctx.rowActions} {data} />
-      </TidyTableCell>
+        }}
+      />
     {/snippet}
   </TidyEffectTableRow>
 {/snippet}

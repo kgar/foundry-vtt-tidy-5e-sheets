@@ -18,10 +18,8 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
-  import type { EncounterMemberRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -152,19 +150,14 @@
                   {hiddenColumns}
                 />
 
-                <TidyTableCell
+                <RowActionsColumn
                   columnWidth="{rowActionInfo.widthRems}rem"
-                  class="tidy-table-actions"
-                  attributes={{
-                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                  }}
-                >
-                  {const data = $derived<EncounterMemberRowActionPropsData>({
+                  rowActions={member.rowActions}
+                  data={{
                     actor: member.actor,
                     ctx: member,
-                  })}
-                  <TableRowActions rowActions={member.rowActions} {data} />
-                </TidyTableCell>
+                  }}
+                />
               </div>
             {/each}
           {/snippet}

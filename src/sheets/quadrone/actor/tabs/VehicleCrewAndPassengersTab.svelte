@@ -15,11 +15,7 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
-  import type {
-    VehicleCrewRowActionPropsData,
-    VehiclePassengerRowActionPropsData,
-  } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -284,21 +280,28 @@
                   attributes={{
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
-                >
-                  {#if member.type === 'crew'}
-                    {const data = $derived<VehicleCrewRowActionPropsData>({
+                ></TidyTableCell>
+
+                <!-- TODO: TypeScript cracks me up. There is a long, academic explanation about why this repetition is needed, but it would be nice to somehow eliminate the duplication one day. -->
+                {#if member.type === 'crew'}
+                  <RowActionsColumn
+                    columnWidth="{rowActionInfo.widthRems}rem"
+                    rowActions={member.rowActions}
+                    data={{
                       actor: member.actor,
                       ctx: member,
-                    })}
-                    <TableRowActions rowActions={member.rowActions} {data} />
-                  {:else if member.type === 'passengers'}
-                    {const data = $derived<VehiclePassengerRowActionPropsData>({
+                    }}
+                  />
+                {:else if member.type === 'passengers'}
+                  <RowActionsColumn
+                    columnWidth="{rowActionInfo.widthRems}rem"
+                    rowActions={member.rowActions}
+                    data={{
                       actor: member.actor,
                       ctx: member,
-                    })}
-                    <TableRowActions rowActions={member.rowActions} {data} />
-                  {/if}
-                </TidyTableCell>
+                    }}
+                  />
+                {/if}
               </TidyTableRow>
             {:else}
               {#if section.type === 'crew'}

@@ -13,12 +13,8 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
-  import {
-    type EncounterCombatantMemberRowActionPropsData,
-  } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -208,19 +204,11 @@
                   {hiddenColumns}
                 />
 
-                <TidyTableCell
+                <RowActionsColumn
                   columnWidth="{rowActionInfo.widthRems}rem"
-                  class="tidy-table-actions"
-                  attributes={{
-                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                  }}
-                >
-                  {const data =
-                    $derived<EncounterCombatantMemberRowActionPropsData>(
-                      combatant,
-                    )}
-                  <TableRowActions rowActions={combatant.rowActions} {data} />
-                </TidyTableCell>
+                  rowActions={combatant.rowActions}
+                  data={combatant}
+                />
               </div>
             {/each}
           {/snippet}

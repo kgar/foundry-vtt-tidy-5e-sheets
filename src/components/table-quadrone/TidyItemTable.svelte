@@ -24,9 +24,8 @@
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import type { ItemRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
@@ -232,19 +231,15 @@
               {section}
               {context}
             />
-            <TidyTableCell
+
+            <RowActionsColumn
               columnWidth="{rowActionInfo.widthRems}rem"
-              class="tidy-table-actions"
-              attributes={{
-                ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-              }}
-            >
-              {const data = $derived<ItemRowActionPropsData>({
+              rowActions={ctx.rowActions ?? []}
+              data={{
                 item: entry,
                 ctx,
-              })}
-              <TableRowActions rowActions={ctx.rowActions} {data} />
-            </TidyTableCell>
+              }}
+            />
           {/snippet}
         </TidyItemTableRow>
 

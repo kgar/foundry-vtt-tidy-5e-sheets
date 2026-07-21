@@ -11,7 +11,6 @@
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
@@ -20,7 +19,7 @@
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import type { ActivityRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -121,13 +120,14 @@
           {context}
         />
 
-        <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          {const data = $derived<ActivityRowActionPropsData>({
+        <RowActionsColumn
+          columnWidth="{rowActionInfo.widthRems}rem"
+          rowActions={ctx.rowActions}
+          data={{
             activity: ctx.activity,
             ctx: ctx.activity,
-          })}
-          <TableRowActions {data} rowActions={ctx.rowActions} />
-        </TidyTableCell>
+          }}
+        />
       </TidyTableRow>
     {/each}
   {/snippet}

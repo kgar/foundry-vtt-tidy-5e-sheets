@@ -49,9 +49,11 @@
 >
   <i
     class={[
-      'fas fa-sun',
+      'fa-sun',
       ctx.attunement?.cls,
       {
+        'fa-regular': !doc.system.attuned,
+        'fa-solid': doc.system.attuned,
         'color-text-default': doc.system.attuned,
         'color-text-lightest': !doc.system.attuned,
       },

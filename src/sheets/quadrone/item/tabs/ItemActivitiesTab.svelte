@@ -14,9 +14,8 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
-  import type { ActivityRowActionPropsData } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../columns/RowActionsColumn.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -141,13 +140,14 @@
                   {section}
                 />
 
-                <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-                  {const data = $derived<ActivityRowActionPropsData>({
+                <RowActionsColumn
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  rowActions={ctx.rowActions}
+                  data={{
                     activity: ctx.activity,
                     ctx,
-                  })}
-                  <TableRowActions rowActions={ctx.rowActions} {data} />
-                </TidyTableCell>
+                  }}
+                />
               {/snippet}
             </TidyActivityTableRow>
           {/each}

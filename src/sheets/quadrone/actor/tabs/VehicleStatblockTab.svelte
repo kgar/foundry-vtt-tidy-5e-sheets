@@ -30,9 +30,8 @@
     VehicleDraftAnimalSection,
   } from 'src/types/types';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
-  import type { VehicleDraftAnimalRowActionPropsData } from 'src/types/row-actions.types';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -461,24 +460,14 @@
                           {section}
                         />
 
-                        <TidyTableCell
+                        <RowActionsColumn
                           columnWidth="{rowActionInfo.widthRems}rem"
-                          class="tidy-table-actions"
-                          attributes={{
-                            ['data-tidy-column-key']:
-                              CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                          rowActions={member.rowActions}
+                          data={{
+                            actor: member.actor,
+                            ctx: member,
                           }}
-                        >
-                          {const data =
-                            $derived<VehicleDraftAnimalRowActionPropsData>({
-                              actor: member.actor,
-                              ctx: member,
-                            })}
-                          <TableRowActions
-                            rowActions={member.rowActions}
-                            {data}
-                          />
-                        </TidyTableCell>
+                        />
                       {/snippet}
                     </TidyTableRow>
                   {/if}
