@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] Consider passing the sheet and document down to props callback for all row action types.
 - [ ] Reevaluate the props for all row actions before finalizing the API
 - [ ] Do any of the row actions need to be supressed when the sheet is not editable?
 - [ ] Extract a TidyRowActionsCell? Determine if this is feasible, given other row action component updates.
