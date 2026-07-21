@@ -44,20 +44,4 @@ export function initRuntimeOnReady() {
   ItemColumnRuntime.initOnReady();
   TabDocumentItemTypesRuntime.initOnReady();
   VehicleMemberColumnRuntime.initOnReady();
-
-  // Row Actions
-  ActivityRowActionRuntime.initOnReady();
-  AssignedCrewMemberRowActionRuntime.initOnReady();
-  ContainerContentsRowActionRuntime.initOnReady();
-  DraftAnimalMemberRowActionRuntime.initOnReady();
-  EffectRowActionRuntime.initOnReady();
-  EncounterCombatantMemberRowActionRuntime.initOnReady();
-  EncounterMemberRowActionRuntime.initOnReady();
-  FeatureRowActionRuntime.initOnReady();
-  GroupMemberRowActionRuntime.initOnReady();
-  InventoryRowActionRuntime.initOnReady();
-  ItemAdvancementMemberRowActionRuntime.initOnReady();
-  PassengerRowActionRuntime.initOnReady();
-  SpellRowActionRuntime.initOnReady();
-  UnassignedCrewMemberRowActionRuntime.initOnReady();
 }

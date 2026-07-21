@@ -63,6 +63,49 @@ Hooks.once('init', () => {
   initSettings();
 
   CONFIG.TIDY5E = {
+    components: {
+      rowActions: {
+        generic: GenericActionButton,
+      },
+    },
+    partitions: {
+      rowActions: {
+        activity: ['edit', 'delete', 'menu'],
+        assignedCrew: ['unassign', 'menu'],
+        containerContents: ['edit', 'delete', 'toggleSheetTab', 'menu'],
+        draftAnimal: ['remove', 'menu'],
+        effect: ['toggle', 'edit', 'delete', 'menu'],
+        encounterCombatant: [
+          'addAsPlaceholder',
+          'toggleVisibility',
+          'toggleInclusion',
+          'delete',
+          'menu',
+        ],
+        encounterMember: ['remove', 'menu'],
+        feature: ['edit', 'delete', 'toggleSheetTab', 'menu'],
+        groupMember: ['remove', 'menu'],
+        inventory: [
+          'edit',
+          'delete',
+          'attune',
+          'equip',
+          'toggleSheetTab',
+          'menu',
+        ],
+        itemAdvancement: ['edit', 'delete', 'menu'],
+        passenger: ['remove', 'menu'],
+        spell: [
+          'spell',
+          'edit',
+          'delete',
+          'openActivity',
+          'toggleSheetTab',
+          'menu',
+        ],
+        unassignedCrew: ['remove', 'menu'],
+      },
+    },
     rowActions: {
       activity: {
         edit: {

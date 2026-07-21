@@ -1,3 +1,4 @@
+import type { Component } from 'svelte';
 import type {
   ActivityRowAction,
   ActorRowAction,
@@ -10,10 +11,35 @@ import type {
 declare global {
   interface CONFIG {
     TIDY5E: {
+      components: TidyComponentRegistry;
+      partitions: TidyPartitionRegistry;
       rowActions: TidyRowActionRegistry;
     };
   }
 }
+
+type TidyComponentRegistry = {
+  rowActions: Record<string, Component<any>>;
+};
+
+type TidyPartitionRegistry = {
+  rowActions: {
+    activity: string[];
+    assignedCrew: string[];
+    containerContents: string[];
+    draftAnimal: string[];
+    effect: string[];
+    encounterCombatant: string[];
+    encounterMember: string[];
+    feature: string[];
+    groupMember: string[];
+    inventory: string[];
+    itemAdvancement: string[];
+    passenger: string[];
+    spell: string[];
+    unassignedCrew: string[];
+  };
+};
 
 type TidyRowActionRegistry = {
   activity: Record<string, ActivityRowAction>;

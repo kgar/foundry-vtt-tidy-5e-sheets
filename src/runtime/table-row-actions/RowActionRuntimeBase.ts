@@ -13,26 +13,15 @@ export abstract class RowActionRuntimeBase<
 > {
   abstract readonly domain: TDomain;
 
-  // TODO: Partition to Document Name, Document Type; but where? In the registry?
-  protected _rowActions: string[] = [];
-
-  initOnReady() {
-    this._rowActions = this._getDefaultRowActionKeys();
-  }
-
-  /**
-   * Provides the default row actions for the implementation.
-   * TODO: potentially move the default row actions to the registry as the default partition
-   */
-  abstract _getDefaultRowActionKeys(): string[];
-
   /**
    * Gets the row actions for a single row.
    */
   getRowActions(args: ConditionArgs<TRowAction>): TRowAction[] {
     const result = [];
 
-    for (const key of this._rowActions) {
+    const rowActions = CONFIG.TIDY5E.partitions.rowActions[this.domain];
+
+    for (const key of rowActions) {
       const action = CONFIG.TIDY5E.rowActions[this.domain][key] as
         | TRowAction
         | undefined;
