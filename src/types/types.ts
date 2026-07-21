@@ -1950,15 +1950,17 @@ export type ItemRowActionPropsData = {
   ctx?: any;
 };
 
+export type ConditionContextData = {
+  owner: boolean;
+  unlocked: boolean;
+  editable: boolean;
+};
+
 export type ItemRowActionConditionData = {
   sheetDocument: Actor5e | Item5e;
   rowDocument: Item5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type ItemRowAction<TComponent extends Component<any> = Component<any>> =
@@ -1977,11 +1979,7 @@ export type EffectRowActionConditionData = {
   sheetDocument: Actor5e | Item5e;
   rowDocument: ActiveEffect5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type EffectRowAction<
@@ -2001,11 +1999,7 @@ export type ActivityRowActionConditionData = {
   sheetDocument: Actor5e | Item5e;
   rowDocument: Activity5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type ActivityRowAction<
@@ -2025,11 +2019,7 @@ export type DraftAnimalRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type DraftAnimalRowAction<
@@ -2049,11 +2039,7 @@ export type PassengerRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type PassengerRowAction<
@@ -2073,11 +2059,7 @@ export type CrewRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type CrewRowAction<TComponent extends Component<any> = Component<any>> =
@@ -2096,11 +2078,7 @@ export type GroupMemberRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type GroupMemberRowAction<
@@ -2120,11 +2098,7 @@ export type EncounterMemberRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type EncounterMemberRowAction<
@@ -2142,11 +2116,7 @@ export type EncounterCombatantMemberRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument?: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type EncounterCombatantMemberRowAction<
@@ -2163,11 +2133,7 @@ export type AdvancementRowActionConditionData = {
   sheetDocument: Actor5e;
   rowDocument?: Actor5e;
   app: any;
-  data: {
-    owner: boolean;
-    unlocked: boolean;
-    editable: boolean;
-  };
+  data: ConditionContextData;
 };
 
 export type AdvancementRowAction<
