@@ -241,7 +241,7 @@ Hooks.once('init', () => {
     },
   );
 
-  // Tidy has done everything it needs in the init phase. Notify callers.
+  // Tidy has done everything it needs in the init phase. Notify subscribers.
   TidyHooks.tidy5eSheetsInit();
 });
 
