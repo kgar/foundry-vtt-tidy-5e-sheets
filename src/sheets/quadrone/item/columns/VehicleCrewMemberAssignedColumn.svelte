@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
   import type { VehicleCrewMemberContext } from 'src/types/types';
 
   let {

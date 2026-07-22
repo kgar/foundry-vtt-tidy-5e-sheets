@@ -1,7 +1,7 @@
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-} from 'src/types/types';
+} from 'src/types/columns.types';
 import { CONSTANTS } from 'src/constants';
 import { getDefaultItemColumns } from './default-item-columns';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';

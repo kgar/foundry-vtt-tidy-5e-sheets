@@ -1,7 +1,6 @@
 
 ## To Do
 
-- [ ] Pull column types into their own types file
 - [ ] Resolve type deficiencies with the current column types and task out additional work as needed
 - [ ] Add columns to TidyFeaturesRegistry (includes width)
 - [ ] Add column partitions (includes ordering and priority)

@@ -2,7 +2,7 @@
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
 

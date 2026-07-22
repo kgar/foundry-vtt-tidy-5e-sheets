@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-} from 'src/types/types';
+} from 'src/types/columns.types';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import VehicleMemberCrColumn from 'src/sheets/quadrone/item/columns/VehicleMemberCrColumn.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActiveEffectSection, ColumnHeaderProps } from 'src/types/types';
+  import type { ActiveEffectSection } from 'src/types/types';
+  import type { ColumnHeaderProps } from 'src/types/columns.types';
 
   let {
     sheetDocument,

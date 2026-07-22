@@ -4,8 +4,8 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
     VehicleSheetQuadroneContext,
-    ColumnCellProps,
   } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
 

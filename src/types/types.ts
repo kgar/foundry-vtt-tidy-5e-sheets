@@ -56,6 +56,7 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
+import type { SectionColumnContext } from './columns.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -411,7 +412,8 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  AttributeItemPinContext | AttributeActivityPinContext;
+  | AttributeItemPinContext
+  | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -423,7 +425,8 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  SheetPinItemContext | SheetPinActivityContext
+  | SheetPinItemContext
+  | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -889,7 +892,11 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1029,7 +1036,8 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  HTMLElement | { get(index: number): HTMLElement };
+  | HTMLElement
+  | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1831,116 +1839,6 @@ export type AnyActorSheetQuadroneContext =
   | VehicleSheetQuadroneContext
   | GroupSheetQuadroneContext
   | EncounterSheetQuadroneContext;
-
-/* COLUMNS */
-
-export type ColumnSpecification = {
-  headerContent?:
-    | {
-        type: 'component';
-        component: Component<ColumnHeaderProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (sheetDocument: any, sheetContext: any) => string;
-      }
-    | {
-        type: 'html';
-        html: string;
-      };
-  cellContent:
-    | {
-        type: 'component';
-        component: Component<ColumnCellProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (rowDocument: any, rowContext: any) => string;
-      };
-  widthRems: number; // default: 5 (rem)
-  priority: number;
-  order: number;
-  headerClasses?: ClassValue;
-  cellClasses?: ClassValue;
-  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
-};
-
-export type ConfiguredSectionColumnSpecification =
-  ConfiguredColumnSpecification;
-
-export type SectionColumnSpecifications = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredColumnSpecification>;
-};
-
-export type SectionColumnContext = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredSectionColumnSpecification>;
-};
-
-/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
-export type ConfiguredColumnSpecification = ColumnSpecification & {
-  key: string;
-  widthRems: number;
-};
-
-export type ColumnHeaderProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  sheetDocument: TDocument;
-  sheetContext: TContext;
-  section: TSection;
-};
-
-export type ColumnCellProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  rowDocument: TDocument;
-  rowContext: TContext;
-  section: TSection;
-};
-
-export type ColumnSpecificationConditionArgs<TDocument = any> = {
-  sheetDocument: TDocument;
-};
-
-export type ColumnSpecSectionKeysToColumns = Record<
-  string | symbol,
-  Record<string, ColumnSpecification>
->;
-
-export type ColumnSpecTabIdsToSectionKeys = Record<
-  string,
-  ColumnSpecSectionKeysToColumns
->;
-
-export type ColumnSpecDocumentTypesToTabs = Record<
-  string,
-  ColumnSpecTabIdsToSectionKeys
->;
-
-export type DefaultColumnSpecTabsToColumns = Record<
-  string,
-  ColumnSpecification[]
->;
-
-export type DefaultColumnSpecDocumentTypesToTabs = Record<
-  string,
-  DefaultColumnSpecTabsToColumns
->;
-
-export type DefaultTableColumn = Omit<
-  ColumnSpecification,
-  'order' | 'priority'
->;
-
-export type DefaultTableColumns = Record<string, DefaultTableColumn>;
 
 /* BANKED INSPIRATION */
 

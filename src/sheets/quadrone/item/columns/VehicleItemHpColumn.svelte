@@ -1,10 +1,8 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type {
-    VehicleItemQuadroneContext,
-    ColumnCellProps,
-  } from 'src/types/types';
+  import type { VehicleItemQuadroneContext } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
 
   let {
     rowDocument: item,

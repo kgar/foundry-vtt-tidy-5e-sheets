@@ -9,8 +9,8 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
-    SectionColumnSpecifications,
   } from 'src/types/types';
+  import type { SectionColumnSpecifications } from 'src/types/columns.types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
