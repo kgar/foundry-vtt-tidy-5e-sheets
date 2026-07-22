@@ -162,6 +162,7 @@
   .tidy-tab {
     .tidy-table-row {
       min-height: 2.0625rem;
+      padding-inline-start: 0.1875rem;
     }
   }
 
