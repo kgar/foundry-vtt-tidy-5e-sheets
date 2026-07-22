@@ -1,4 +1,4 @@
-import type { DefaultTableColumns } from '../types';
+import type { DefaultTableColumns } from 'src/types/types';
 import InlineCapacityBarColumn from 'src/sheets/quadrone/item/columns/InlineCapacityBarColumn.svelte';
 import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';

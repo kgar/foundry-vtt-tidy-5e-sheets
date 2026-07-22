@@ -11,7 +11,7 @@ import type {
   CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
-  DraftAnimalSection,
+  VehicleDraftAnimalSection,
   FavoriteSection,
   FeatureSection,
   GroupMemberSection,
@@ -38,8 +38,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
 import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
 import { Inventory } from './Inventory';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -505,7 +505,7 @@ export class SheetSections {
   }
 
   static configureVehicleStatblockSections(
-    sections: (InventorySection | DraftAnimalSection)[],
+    sections: (InventorySection | VehicleDraftAnimalSection)[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>,

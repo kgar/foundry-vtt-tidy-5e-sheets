@@ -2,7 +2,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export function configureGroupSkillRollContextMenu(
   element: HTMLElement,

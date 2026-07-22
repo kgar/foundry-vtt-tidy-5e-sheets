@@ -1,5 +1,5 @@
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
-import type { BankedInspirationConfiguration } from 'src/runtime/types';
+import type { BankedInspirationConfiguration } from 'src/types/types';
 
 /**
  * API functionality related to Actor Inspiration.

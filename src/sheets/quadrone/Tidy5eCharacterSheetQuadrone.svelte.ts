@@ -44,7 +44,6 @@ import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSect
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ItemContext } from 'src/features/item/ItemContext';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -53,21 +52,18 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import {
-  TidySheetSettingsTabIds,
-  TidySheetSettingsQuadroneApplication,
-} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import {
   getCharacterSheetTabActionSectionsQuadrone,
   isItemInActionList,
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { arrayTransfer } from 'src/utils/array';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
+import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
+import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -370,10 +366,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   }
 
   createSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: true },
-    );
     const inventoryTypes = Inventory.getInventoryTypes();
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections(this.document);
@@ -752,11 +744,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       },
     );
 
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: true },
-    );
-
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections(this.document);
@@ -824,9 +811,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           } else {
             // TODO: Find a cleaner way to handle all tabled documents' row actions.
             // Contained items get row actions like any other item
-            ctx.rowActions = inventoryRowActions.filter((action) =>
-              checkCondition(action, { item }),
-            );
+            ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: item,
+              sheetDocument: context.document,
+            });
           }
 
           return obj;
@@ -850,9 +840,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
 
-      ctx.rowActions = inventoryRowActions.filter((action) =>
-        checkCondition(action, { item }),
-      );
+      ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+        app: context.sheet,
+        data: context,
+        rowDocument: item,
+        sheetDocument: context.document,
+      });
 
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.actor,
@@ -883,14 +876,14 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Section spells
     // TODO: Avoid having to loop over items again.
-    const spellRowActions = TableRowActionsRuntime.getSpellRowActions(context, {
-      hasActionsTab: true,
-    });
     for (const item of spells) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.rowActions = spellRowActions.filter((action) =>
-        checkCondition(action, { item }),
-      );
+      ctx.rowActions = SpellRowActionRuntime.getRowActions({
+        app: context.sheet,
+        data: context,
+        rowDocument: item,
+        sheetDocument: context.document,
+      });
     }
 
     const spellbook = SheetSections.prepareTidySpellbook(
@@ -922,13 +915,14 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Section Features
     // TODO: Avoid having to loop over items again.
-    const featureRowActions =
-      TableRowActionsRuntime.getCharacterFeatureRowActions(context);
     for (const item of feats) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.rowActions = featureRowActions.filter((action) =>
-        checkCondition(action, { item }),
-      );
+      ctx.rowActions = FeatureRowActionRuntime.getRowActions({
+        app: context.sheet,
+        data: context,
+        rowDocument: item,
+        sheetDocument: context.document,
+      });
     }
 
     const features: FeatureSection[] =

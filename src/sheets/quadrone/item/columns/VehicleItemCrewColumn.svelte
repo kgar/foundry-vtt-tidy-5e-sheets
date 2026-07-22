@@ -1,9 +1,13 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/runtime/types';
-  import type { VehicleItemQuadroneContext } from 'src/types/types';
+  import type {
+    VehicleItemQuadroneContext,
+    ColumnCellProps,
+  } from 'src/types/types';
 
-  let { rowDocument, rowContext }: ColumnCellProps<any, VehicleItemQuadroneContext> =
-    $props();
+  let {
+    rowDocument,
+    rowContext,
+  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
 
   const value = $derived(
     rowContext.crew?.filter((c) => c.actor && !c.brokenLink).length ?? 0,
@@ -18,5 +22,7 @@
     </span>/<span class="uses-max color-text-lighter">{max ?? '—'}</span>
   </span>
 {:else}
-  <span class="uses-max font-default-medium color-text-disabled">{max ?? '—'}</span>
+  <span class="uses-max font-default-medium color-text-disabled"
+    >{max ?? '—'}</span
+  >
 {/if}

@@ -2,7 +2,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import type { ActivityItemContext, LinkedUses } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { ActivityRowActionRuntime } from 'src/runtime/table-row-actions/ActivityRowActionRuntime.svelte';
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {
@@ -41,8 +41,10 @@ export class Activities {
   };
 
   static getActivityItemContext(
+    sheet: any,
     activity: Activity5e,
     unlocked: boolean,
+    editable: boolean,
   ): ActivityItemContext {
     // To Hit
     const toHit = parseInt(activity.labels.modifier);
@@ -84,7 +86,16 @@ export class Activities {
         : null,
       toHit: isNaN(toHit) ? null : toHit,
       type: activity.type,
-      rowActions: TableRowActionsRuntime.getActivityRowActions(unlocked),
+      rowActions: ActivityRowActionRuntime.getRowActions({
+        app: sheet,
+        data: {
+          owner: sheet.document.isOwner,
+          unlocked,
+          editable: editable,
+        },
+        rowDocument: activity,
+        sheetDocument: sheet.document,
+      }),
     };
   }
 

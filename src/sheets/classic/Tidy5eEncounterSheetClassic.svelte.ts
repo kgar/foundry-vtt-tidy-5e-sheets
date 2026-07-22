@@ -54,7 +54,7 @@ import {
 import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 import EncounterSheet from './encounter/EncounterSheet.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 type MemberStats = {
   memberCount: number;
@@ -768,10 +768,12 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
+        this,
         panelItem.container,
         {
-          hasActor: false,
           unlocked: context.unlocked,
+          owner: context.owner,
+          editable: context.editable,
         },
       );
     }
@@ -787,8 +789,10 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
         item.system.activities,
       )?.map((activity) =>
         Activities.getActivityItemContext(
+          this,
           activity,
-          this.isEditable && this.isEditMode,
+          this.isEditMode && this.isEditable,
+          this.isEditable,
         ),
       ),
       canToggle: false,

@@ -38,11 +38,10 @@ import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQua
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { TidyFlags } from 'src/api';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
-import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
+import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -167,11 +166,6 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     traits: GroupTraits;
   }> {
     const customSections = TidyFlags.sections.get(this.actor);
-
-    const rowActions = TableRowActionsRuntime.getGroupMemberRowActions(
-      actorContext.document,
-      actorContext.unlocked,
-    );
 
     const sections = new Map<string, GroupMemberSection>([
       [
@@ -311,9 +305,16 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         ),
         goldAbbreviation:
           FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
-        rowActions: rowActions.filter((action) =>
-          checkCondition(action, { actor }),
-        ),
+        rowActions: GroupMemberRowActionRuntime.getRowActions({
+          app: this,
+          data: {
+            unlocked: actorContext.unlocked,
+            owner: actorContext.owner,
+            editable: actorContext.editable,
+          },
+          rowDocument: actor,
+          sheetDocument: actorContext.document,
+        }),
       };
 
       section.members.push(groupMemberContext);

@@ -7,13 +7,12 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
-    ItemRowActionPropsData,
     NpcSheetQuadroneContext,
     TidyItemSectionBase,
   } from 'src/types/types';
@@ -23,10 +22,10 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
@@ -82,7 +81,7 @@
   const localize = FoundryAdapter.localize;
 
   const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
+    RowActionRuntimeBase.getRowActionWidthInfo(
       section.items,
       (entry) => entryContext[entry.id]?.rowActions,
     ),
@@ -232,19 +231,15 @@
               {section}
               {context}
             />
-            <TidyTableCell
+
+            <RowActionsColumn
               columnWidth="{rowActionInfo.widthRems}rem"
-              class="tidy-table-actions"
-              attributes={{
-                ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-              }}
-            >
-              {const data = $derived<ItemRowActionPropsData>({
+              rowActions={ctx.rowActions ?? []}
+              data={{
                 item: entry,
                 ctx,
-              })}
-              <TableRowActions rowActions={ctx.rowActions} {data} />
-            </TidyTableCell>
+              }}
+            />
           {/snippet}
         </TidyItemTableRow>
 

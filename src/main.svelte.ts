@@ -1,3 +1,4 @@
+// 💡 Order of imports is important
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './less/tidy5e.less';
@@ -34,11 +35,36 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import { loadConditionalStyles } from './utils/css-loading';
+import { getRowActionsRegistry as getRowActionRegistry } from './init/row-actions';
+import { getRegistryPartitions } from './init/partitions';
+import { getRegistryComponents } from './init/components';
 
 Hooks.once('init', () => {
-  const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
-
   initSettings();
+
+  // Establish Tidy config registry as early as possible.
+  CONFIG.TIDY5E = {
+    applications: {
+      actor: {
+        Tidy5eCharacterSheetQuadrone: Tidy5eCharacterSheetQuadrone,
+        Tidy5eEncounterSheetQuadrone: Tidy5eEncounterSheetQuadrone,
+        Tidy5eGroupSheetQuadrone: Tidy5eGroupSheetQuadrone,
+        Tidy5eNpcSheetQuadrone: Tidy5eNpcSheetQuadrone,
+        Tidy5eVehicleSheetQuadrone: Tidy5eVehicleSheetQuadrone,
+      },
+      item: {
+        Tidy5eItemSheetQuadrone: Tidy5eItemSheetQuadrone,
+        Tidy5eContainerSheetQuadrone: Tidy5eContainerSheetQuadrone,
+      },
+    },
+    components: getRegistryComponents(),
+    features: {
+      rowActions: getRowActionRegistry(),
+    },
+    partitions: getRegistryPartitions(),
+  };
+
+  const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
   if (!SettingsProvider.settings.hideClassic.get()) {
     documentSheetConfig.registerSheet(
@@ -140,7 +166,7 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  const betaQuadroneItemTypes = [
+  const quadroneItemTypes = [
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_CONSUMABLE,
@@ -160,7 +186,7 @@ Hooks.once('init', () => {
     CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eItemSheetQuadrone,
     {
-      types: betaQuadroneItemTypes,
+      types: quadroneItemTypes,
       label: 'TIDY5E.Tidy5eItemSheetQuadrone',
     },
   );
@@ -214,6 +240,9 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
     },
   );
+
+  // Tidy has done everything it needs in the init phase. Notify subscribers.
+  TidyHooks.tidy5eSheetsInit();
 });
 
 Hooks.once('ready', async () => {

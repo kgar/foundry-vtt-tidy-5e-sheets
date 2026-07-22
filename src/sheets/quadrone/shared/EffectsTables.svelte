@@ -9,19 +9,18 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
-    EffectRowActionPropsData,
+    SectionColumnSpecifications,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
+  import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import type { SectionColumnSpecifications } from 'src/runtime/types';
-  import TableRowActions from '../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
+  import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -49,7 +48,7 @@
 {#each sections as section (section.key)}
   {#if section.show}
     {const rowActionInfo = $derived(
-      TableRowActionsRuntime.getRowActionWidthInfo(
+      RowActionRuntimeBase.getRowActionWidthInfo(
         section.effects,
         (entry) => entry.rowActions,
       ),
@@ -179,19 +178,14 @@
         {section}
       />
 
-      <TidyTableCell
+      <RowActionsColumn
         columnWidth="{rowActionsColumnWidthRems}rem"
-        class="tidy-table-actions"
-        attributes={{
-          ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-        }}
-      >
-        {const data = $derived<EffectRowActionPropsData>({
+        rowActions={ctx.rowActions}
+        data={{
           effect: ctx.effect,
           ctx,
-        })}
-        <TableRowActions rowActions={ctx.rowActions} {data} />
-      </TidyTableCell>
+        }}
+      />
     {/snippet}
   </TidyEffectTableRow>
 {/snippet}

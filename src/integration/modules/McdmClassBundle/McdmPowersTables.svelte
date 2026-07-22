@@ -12,19 +12,16 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ActorSheetQuadroneContext,
-    ItemRowActionPropsData,
-  } from 'src/types/types';
   import { getContext } from 'svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import type { PowersSection } from './McdmClassBundle';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
+  import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
 
   interface Props {
     sections: PowersSection[];
@@ -66,7 +63,7 @@
   {#each sections as section}
     {#if section.show}
       {const rowActionInfo = $derived(
-        TableRowActionsRuntime.getRowActionWidthInfo(
+        RowActionRuntimeBase.getRowActionWidthInfo(
           section.items,
           (entry) => context.itemContext[entry.id]?.rowActions,
         ),
@@ -182,19 +179,14 @@
                   {context}
                 />
 
-                <TidyTableCell
+                <RowActionsColumn
                   columnWidth="{rowActionInfo.widthRems}rem"
-                  class="tidy-table-actions"
-                  attributes={{
-                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                  }}
-                >
-                  {const data = $derived<ItemRowActionPropsData>({
+                  rowActions={ctx.rowActions ?? []}
+                  data={{
                     item,
                     ctx,
-                  })}
-                  <TableRowActions rowActions={ctx.rowActions} {data} />
-                </TidyTableCell>
+                  }}
+                />
               {/snippet}
             </TidyItemTableRow>
           {/each}

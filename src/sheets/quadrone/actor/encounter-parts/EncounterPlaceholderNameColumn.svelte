@@ -4,7 +4,7 @@
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { Tidy5eEncounterSheetQuadrone } from '../../Tidy5eEncounterSheetQuadrone.svelte';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
     import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = {

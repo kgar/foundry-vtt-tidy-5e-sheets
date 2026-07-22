@@ -14,6 +14,7 @@ import type {
   DifficultyTarget,
   EncounterMemberSection,
   EncounterCombatSection,
+  EncounterMemberCombatantQuadroneContext,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
@@ -42,9 +43,9 @@ import {
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
+import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
+import { EncounterCombatantMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatantRowActionRuntime.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -217,18 +218,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     const npcMap = new Map<string, EncounterMemberQuadroneContext>();
     const combatants: (
-      EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext
     )[] = [];
     const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
     const languages = new Map<string, MeasurableGroupTrait<number>>();
     const senses = new Map<string, MeasurableGroupTrait<number>>();
     const specials = new Map<string, GroupTrait>();
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
-
-    const memberRowActions =
-      TableRowActionsRuntime.getEncounterMemberRowActions(context);
-    const combatRowActions =
-      TableRowActionsRuntime.getEncounterCombatRowActions(context);
 
     const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
@@ -269,14 +266,28 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
-          rowActions: memberRowActions.filter((action) =>
-            checkCondition(action, { actor }),
-          ),
+          rowActions: EncounterMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
         };
 
         npcMap.set(actor.uuid, memberContext);
 
-        combatants.push(memberContext);
+        const memberCombatantContext: EncounterMemberCombatantQuadroneContext =
+          {
+            ...memberContext,
+            rowActions: EncounterCombatantMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
+          };
+
+        combatants.push(memberCombatantContext);
 
         return memberContext;
       }),
@@ -296,7 +307,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           name: placeholder.name,
           visible: combatantSettings.visible,
-          rowActions: combatRowActions,
+          rowActions: EncounterCombatantMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            sheetDocument: context.document,
+          }),
         });
       },
     );

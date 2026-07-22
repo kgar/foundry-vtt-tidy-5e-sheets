@@ -2,14 +2,12 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type {
   ActiveEffectSection,
   ActivityItemContext,
-  AdvancementRowAction,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
   GroupableSelectOption,
   InventorySection,
-  ItemRowAction,
   Tab,
   TidySectionBase,
   Utilities,
@@ -23,6 +21,10 @@ import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCon
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type {
+  ItemAdvancementRowAction,
+  ItemRowAction,
+} from './row-actions.types';
 
 export type PropertyContext = {
   active: string[];
@@ -154,8 +156,12 @@ export type ItemNameContext = {
 
 export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
 
+export type ActivitySectionQuadrone = {
+  activities: ActivityItemContext[];
+} & TidySectionBase;
+
 export type ItemSheetQuadroneContext = {
-  activities: ActivitySection[];
+  activities: ActivitySectionQuadrone[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementSection[];
   affectsPlaceholder: string;
@@ -455,7 +461,7 @@ export type AdvancementItemContext = {
    */
   classes: string;
   /** Available row actions for the current advancement. */
-  rowActions: AdvancementRowAction[];
+  rowActions: ItemAdvancementRowAction[];
 };
 
 export type MovementInfo = {

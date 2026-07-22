@@ -11,17 +11,19 @@ import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { ContainerCapacityContext } from 'src/types/types';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import type { ContainerContentsRowActionsContext } from 'src/runtime/types';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { ContainerContentsRowActionRuntime } from 'src/runtime/table-row-actions/ContainerContentsRowActionRuntime.svelte';
 
 export class Container {
   static async getContainerContents(
+    sheet: any,
     container: Item5e,
     context: ContainerContentsRowActionsContext,
   ): Promise<ContainerContents> {
     const itemContext = await Container.getContainerItemContext(
+      sheet,
       container,
       context,
     );
@@ -51,6 +53,7 @@ export class Container {
   }
 
   static async getContainerItemContext(
+    sheet: any,
     container: Item5e,
     context: ContainerContentsRowActionsContext,
   ): Promise<Record<string, ContainerItemContext>> {
@@ -81,6 +84,7 @@ export class Container {
 
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         ctx.containerContents = await Container.getContainerContents(
+          sheet,
           item,
           context,
         );
@@ -90,7 +94,12 @@ export class Container {
         item,
         item.system.activities,
       )?.map((activity) =>
-        Activities.getActivityItemContext(activity, context.unlocked),
+        Activities.getActivityItemContext(
+          sheet,
+          activity,
+          context.unlocked,
+          context.editable,
+        ),
       );
 
       ctx.includeInCharacterSheetTab =
@@ -102,10 +111,12 @@ export class Container {
           sheetTabOrganization,
         );
 
-      ctx.rowActions = TableRowActionsRuntime.getContainerContentsRowActions(
-        context,
-        item.parent,
-      );
+      ctx.rowActions = ContainerContentsRowActionRuntime.getRowActions({
+        app: sheet,
+        data: context,
+        rowDocument: item,
+        sheetDocument: sheet.document,
+      });
     }
 
     return itemContext;

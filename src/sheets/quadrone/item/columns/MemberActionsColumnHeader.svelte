@@ -1,11 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnHeaderProps } from 'src/runtime/types';
   import type {
     Actor5e,
     EncounterSheetQuadroneContext,
     SpellbookSection,
     TidySectionBase,
+    ColumnHeaderProps,
   } from 'src/types/types';
 
   let {

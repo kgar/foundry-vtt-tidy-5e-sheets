@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ColumnCellProps } from 'src/runtime/types';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
     VehicleSheetQuadroneContext,
+    ColumnCellProps,
   } from 'src/types/types';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();

@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-} from '../types';
+} from 'src/types/types';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import VehicleMemberCrColumn from 'src/sheets/quadrone/item/columns/VehicleMemberCrColumn.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -10,7 +10,6 @@ import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/Vehicl
 import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/VehicleCrewMemberAssignedColumn.svelte';
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 import { getDefaultItemColumns } from './default-item-columns';
-import DraftAnimalTestColumn from 'src/sheets/quadrone/item/columns/DraftAnimalTestColumn.svelte';
 import VehicleMemberHpColumn from 'src/sheets/quadrone/item/columns/VehicleMemberHpColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
@@ -81,18 +80,6 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 10,
     };
 
-    const draftAnimalTestColumn: ColumnSpecificationBase = {
-      cellContent: {
-        type: 'component',
-        component: DraftAnimalTestColumn,
-      },
-      headerContent: {
-        type: 'html',
-        html: 'Sample Column',
-      },
-      widthRems: 8,
-    };
-
     return {
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
@@ -116,7 +103,6 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             cr: { ...crColumn, priority: 10, order: 10 },
             qty: { ...qtyColumn, priority: 20, order: 20 },
           },
-          // TODO: Default state? Necessary?
         },
       },
     };

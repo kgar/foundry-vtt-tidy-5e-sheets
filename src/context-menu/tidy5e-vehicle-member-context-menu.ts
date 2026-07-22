@@ -1,4 +1,4 @@
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry, CrewArea5e } from 'src/foundry/foundry.types';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
@@ -89,7 +89,7 @@ function getVehicleItemMemberOptions(
       icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
         if (item && memberUuid) {
-          await app._unassignCrew(memberUuid, item);
+          await app._unassignCrew(memberUuid, item.uuid);
         }
       },
     },
@@ -180,7 +180,7 @@ function getCrewMemberOptions(
           );
 
           if (currentlyAssignedItem) {
-            await app._unassignCrew(memberUuid, currentlyAssignedItem);
+            await app._unassignCrew(memberUuid, currentlyAssignedItem.uuid);
           }
 
           const newItemToAssign = app.document.items.get(mountableItem.id);
@@ -206,7 +206,7 @@ function getCrewMemberOptions(
         );
 
         if (currentlyAssignedItemId) {
-          await app._unassignCrew(memberUuid, currentlyAssignedItem);
+          await app._unassignCrew(memberUuid, currentlyAssignedItem.uuid);
         }
       },
     },

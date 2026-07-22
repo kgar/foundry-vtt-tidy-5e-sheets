@@ -28,7 +28,6 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
@@ -38,8 +37,10 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
+import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
+import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC,
@@ -323,11 +324,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 
     const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: false },
-    );
-
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections(this.document);
 
@@ -348,22 +344,29 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
           obj.inventoryItems.push(item);
         }
 
-        const rowActions = Inventory.isItemInventoryType(item)
-          ? TableRowActionsRuntime.getInventoryRowActions(context, {
-              hasActionsTab: false,
+        ctx.rowActions = Inventory.isItemInventoryType(item)
+          ? InventoryRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: item,
+              sheetDocument: context.document,
             })
           : item.type === CONSTANTS.ITEM_TYPE_SPELL
-            ? TableRowActionsRuntime.getSpellRowActions(context, {
-                hasActionsTab: false,
+            ? SpellRowActionRuntime.getRowActions({
+                app: context.sheet,
+                data: context,
+                rowDocument: item,
+                sheetDocument: context.document,
               })
             : item.type === CONSTANTS.ITEM_TYPE_FEAT
-              ? TableRowActionsRuntime.getStatblockRowActions(context)
+              ? FeatureRowActionRuntime.getRowActions({
+                  app: context.sheet,
+                  data: context,
+                  rowDocument: item,
+                  sheetDocument: context.document,
+                })
               : // TODO: Determine if we should provide a simple default array of options
                 [];
-
-        ctx.rowActions = rowActions.filter((action) =>
-          checkCondition(action, { item }),
-        );
 
         return obj;
       },

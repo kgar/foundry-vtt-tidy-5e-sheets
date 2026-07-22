@@ -1,6 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import type { EncounterMemberQuadroneContext } from 'src/types/types';
+  import type {
+    EncounterMemberCombatantQuadroneContext,
+    EncounterMemberQuadroneContext,
+  } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -8,7 +11,8 @@
   let localize = FoundryAdapter.localize;
 
   type Props = {
-    member: EncounterMemberQuadroneContext;
+    member:
+      EncounterMemberQuadroneContext | EncounterMemberCombatantQuadroneContext;
   };
 
   let { member }: Props = $props();
@@ -22,7 +26,11 @@
   );
 
   let emphasizedActorRef = getContext<
-    Ref<EncounterMemberQuadroneContext | undefined>
+    Ref<
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | undefined
+    >
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
 </script>
 
@@ -80,9 +88,10 @@
       {member.actor.name}
     </h4>
     {#if member.actor.system.details.cr}
-      {const size =
-        $derived(CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
-        member.actor.system.traits.size)}
+      {const size = $derived(
+        CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
+          member.actor.system.traits.size,
+      )}
 
       {const creatureType = $derived(member.actor.system.details.type.label)}
 

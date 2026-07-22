@@ -1,5 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { DefaultTableColumns } from '../types';
+import type { DefaultTableColumns } from 'src/types/types';
 import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
 import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeColumn.svelte';
 import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';

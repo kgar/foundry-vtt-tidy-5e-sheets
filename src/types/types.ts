@@ -15,7 +15,6 @@ import type {
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
   RegisteredPortraitMenuCommand,
-  SectionColumnContext,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -46,6 +45,17 @@ import type {
   TravelPaceConfig,
 } from 'src/foundry/config.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type {
+  ActivityRowAction,
+  VehicleCrewRowAction,
+  VehicleDraftAnimalRowAction,
+  EffectRowAction,
+  EncounterCombatantMemberRowAction,
+  EncounterMemberRowAction,
+  GroupMemberRowAction,
+  ItemRowAction,
+  VehiclePassengerRowAction,
+} from './row-actions.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1432,7 +1442,7 @@ export type GroupMemberQuadroneContext = {
   portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
-  rowActions: ActorRowAction[];
+  rowActions: GroupMemberRowAction[];
 };
 
 export type MultiActorMemberPortraitContext = {
@@ -1607,7 +1617,14 @@ export type EncounterMemberQuadroneContext = {
   };
   visible: boolean;
   type: 'member';
-  rowActions: ActorRowAction[];
+  rowActions: EncounterMemberRowAction[];
+};
+
+export type EncounterMemberCombatantQuadroneContext = Omit<
+  EncounterMemberQuadroneContext,
+  'rowActions'
+> & {
+  rowActions: EncounterCombatantMemberRowAction[];
 };
 
 export type EncounterPlaceholderQuadroneContext = {
@@ -1625,7 +1642,8 @@ export type EncounterMemberSection = TidySectionBase & {
 
 export type EncounterCombatSection = TidySectionBase & {
   combatants: (
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
+    | EncounterMemberCombatantQuadroneContext
+    | EncounterPlaceholderQuadroneContext
   )[];
 };
 
@@ -1683,21 +1701,22 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
-export type DraftAnimalContext = {
+export type VehicleDraftAnimalContext = {
   actor: Actor5e;
   subtitle: string;
   quantity: number;
   /** A stopgap to allow for performing sorting on the statblock tab. Awaiting filter / sort overhaul. */
   name: string;
-  rowActions: ActorRowAction[];
+  rowActions: VehicleDraftAnimalRowAction[];
 };
 
-export type DraftAnimalSection = {
+export type VehicleDraftAnimalSection = {
   type: 'draft';
-  members: DraftAnimalContext[];
+  members: VehicleDraftAnimalContext[];
 } & TidySectionBase;
 
-export type CrewMemberContext = {
+export type VehicleCrewMemberContext = {
+  type: 'crew';
   uuid: string;
   actor: Actor5e;
   subtitle: string;
@@ -1705,32 +1724,33 @@ export type CrewMemberContext = {
   quantity: number;
   cr?: number;
   assignedTo?: Item5e;
-  rowActions: ActorRowAction[];
+  rowActions: VehicleCrewRowAction[];
 };
 
-export type CrewSection = {
+export type VehicleCrewSection = {
   type: typeof CONSTANTS.SECTION_TYPE_CREW;
-  members: CrewMemberContext[];
+  members: VehicleCrewMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
 } & TidySectionBase;
 
 export type CrewSections = {
-  assigned: CrewSection;
-  unassigned: CrewSection;
+  assigned: VehicleCrewSection;
+  unassigned: VehicleCrewSection;
 };
 
-export type PassengerMemberContext = {
+export type VehiclePassengerMemberContext = {
+  type: 'passengers';
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
-  rowActions: ActorRowAction[];
+  rowActions: VehiclePassengerRowAction[];
 };
 
-export type PassengerSection = {
+export type VehiclePassengerSection = {
   type: typeof CONSTANTS.SECTION_TYPE_PASSENGERS;
-  members: PassengerMemberContext[];
+  members: VehiclePassengerMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
 } & TidySectionBase;
@@ -1741,7 +1761,7 @@ export type VehicleSheetQuadroneContext = {
     value: number;
     denomination: string;
   };
-  crewAndPassengers: (CrewSection | PassengerSection)[];
+  crewAndPassengers: (VehicleCrewSection | VehiclePassengerSection)[];
   crew: CrewSections;
   crewBrokenLinks: string[];
   draftBrokenLinks: string[];
@@ -1764,13 +1784,13 @@ export type VehicleSheetQuadroneContext = {
       crew: { value: number; max: number | undefined };
     }
   >;
-  passengers: PassengerSection;
+  passengers: VehiclePassengerSection;
   passengerBrokenLinks: string[];
   quality: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellComponentLabels: Record<string, string>;
-  statblock: (InventorySection | DraftAnimalSection)[];
+  statblock: (InventorySection | VehicleDraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
     currentSpeed: TravelSpeedConfigEntry;
@@ -1812,110 +1832,151 @@ export type AnyActorSheetQuadroneContext =
   | GroupSheetQuadroneContext
   | EncounterSheetQuadroneContext;
 
-/* Section / Row Actions */
+/* COLUMNS */
 
-export type TableRowActionProps<TData extends object> = TData;
+export type ColumnSpecification = {
+  headerContent?:
+    | {
+        type: 'component';
+        component: Component<ColumnHeaderProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (sheetDocument: any, sheetContext: any) => string;
+      }
+    | {
+        type: 'html';
+        html: string;
+      };
+  cellContent:
+    | {
+        type: 'component';
+        component: Component<ColumnCellProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (rowDocument: any, rowContext: any) => string;
+      };
+  widthRems: number; // default: 5 (rem)
+  priority: number;
+  order: number;
+  headerClasses?: ClassValue;
+  cellClasses?: ClassValue;
+  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
+};
 
-export type TableRowAction<
-  TComponent extends Component<any>,
-  TPropsData extends object,
-  TConditionData extends object,
+export type ConfiguredSectionColumnSpecification =
+  ConfiguredColumnSpecification;
+
+export type SectionColumnSpecifications = {
+  sorted: (keyof SectionColumnContext['map'])[];
+  prioritized: (keyof SectionColumnContext['map'])[];
+  map: Record<string, ConfiguredColumnSpecification>;
+};
+
+export type SectionColumnContext = {
+  sorted: (keyof SectionColumnContext['map'])[];
+  prioritized: (keyof SectionColumnContext['map'])[];
+  map: Record<string, ConfiguredSectionColumnSpecification>;
+};
+
+/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
+export type ConfiguredColumnSpecification = ColumnSpecification & {
+  key: string;
+  widthRems: number;
+};
+
+export type ColumnHeaderProps<
+  TDocument = any,
+  TContext = any,
+  TSection = TidySectionBase,
 > = {
-  component: TComponent;
-  props: (args: TableRowActionProps<TPropsData>) => ComponentProps<TComponent>;
-  condition?: (args: TableRowActionProps<TConditionData>) => boolean;
+  sheetDocument: TDocument;
+  sheetContext: TContext;
+  section: TSection;
 };
 
-export type ItemRowActionPropsData = {
-  item: Item5e;
-  ctx?: any;
+export type ColumnCellProps<
+  TDocument = any,
+  TContext = any,
+  TSection = TidySectionBase,
+> = {
+  rowDocument: TDocument;
+  rowContext: TContext;
+  section: TSection;
 };
 
-export type ItemRowActionConditionData = {
-  item: Item5e;
+export type ColumnSpecificationConditionArgs<TDocument = any> = {
+  sheetDocument: TDocument;
 };
 
-export type ItemRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  ItemRowActionPropsData,
-  ItemRowActionConditionData
+export type ColumnSpecSectionKeysToColumns = Record<
+  string | symbol,
+  Record<string, ColumnSpecification>
 >;
 
-export type EffectRowActionPropsData = {
-  effect: ActiveEffect5e;
-  ctx?: ActiveEffectContext;
-};
-
-export type EffectRowActionConditionData = {
-  effect: ActiveEffect5e;
-};
-
-export type EffectRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  EffectRowActionPropsData,
-  EffectRowActionConditionData
+export type ColumnSpecTabIdsToSectionKeys = Record<
+  string,
+  ColumnSpecSectionKeysToColumns
 >;
 
-export type ActivityRowActionPropsData = {
-  activity: Activity5e;
-  ctx?: any;
-};
-
-export type ActivityRowActionConditionData = {
-  activity: Activity5e;
-};
-
-export type ActivityRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  ActivityRowActionPropsData,
-  ActivityRowActionConditionData
+export type ColumnSpecDocumentTypesToTabs = Record<
+  string,
+  ColumnSpecTabIdsToSectionKeys
 >;
 
-export type ActorRowActionPropsData = {
-  actor: Actor5e;
-  ctx?: any; // This should not be `any`; do we need to subdivide and conquer?
+export type DefaultColumnSpecTabsToColumns = Record<
+  string,
+  ColumnSpecification[]
+>;
+
+export type DefaultColumnSpecDocumentTypesToTabs = Record<
+  string,
+  DefaultColumnSpecTabsToColumns
+>;
+
+export type DefaultTableColumn = Omit<
+  ColumnSpecification,
+  'order' | 'priority'
+>;
+
+export type DefaultTableColumns = Record<string, DefaultTableColumn>;
+
+/* BANKED INSPIRATION */
+
+/**
+ * The current and maximum possible number of inspiration points.
+ */
+export type BankedInspirationCount = {
+  value: number;
+  max: number;
 };
 
-export type ActorRowActionConditionData = {
-  actor: Actor5e;
+/**
+ * The necessary configuration to allow for externally-controlled
+ * banked inspiration on actors, utilizing any source of data.
+ * This configuration applies to all actors, so care is required
+ */
+export type BankedInspirationConfiguration = {
+  /**
+   * The actor sheet would like for you to adjust the inspiration value by the delta amount.
+   * Apply your changes, or ignore change requests per your own validation rules, as part of this callback.
+   * @param app the actor sheet instance
+   * @param actor the actor
+   * @param delta the proposed change in value. This delta is added to the current value. It will generally be 1 or -1.
+   * @returns
+   */
+  change: (app: any, actor: any, delta: number) => Promise<void>;
+  /**
+   * Required callback function which provides inspiration value/max information.
+   * This callback will be invoked on every render cycle when preparing actor context data.
+   *
+   * @param app the actor sheet instance
+   * @param actor the actor
+   * @returns the current inspiration value and max
+   */
+  getData: (
+    app: any,
+    actor: any,
+  ) => BankedInspirationCount | Promise<BankedInspirationCount>;
 };
-
-export type ActorRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  ActorRowActionPropsData,
-  ActorRowActionConditionData
->;
-
-export type EncounterCombatantMemberRowActionPropsData =
-  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
-
-export type EncounterCombatantMemberRowActionConditionData =
-  EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext;
-
-export type EncounterCombatantMemberRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  EncounterCombatantMemberRowActionPropsData,
-  EncounterCombatantMemberRowActionConditionData
->;
-
-export type AdvancementRowActionPropsData = { id: string };
-
-export type AdvancementRowActionConditionData = { id: string };
-
-export type AdvancementRowAction<
-  TComponent extends Component<any> = Component<any>,
-> = TableRowAction<
-  TComponent,
-  AdvancementRowActionPropsData,
-  AdvancementRowActionConditionData
->;

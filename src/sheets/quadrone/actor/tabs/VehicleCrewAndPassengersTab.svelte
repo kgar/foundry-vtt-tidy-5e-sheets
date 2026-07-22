@@ -6,17 +6,16 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+  import { VehicleMemberColumnRuntime } from 'src/runtime/table-columns/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
-  import type { ActorRowActionPropsData } from 'src/types/types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -177,10 +176,16 @@
     {#each context.crewAndPassengers as section (section.key)}
       {#if section.members.length || section.showEmptyState}
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
-            section.members,
-            (entry) => entry.rowActions,
-          ),
+          // TODO: Someday, eliminate this duplicated nonsense required by TypeScript
+          section.type === 'crew'
+            ? RowActionRuntimeBase.getRowActionWidthInfo(
+                section.members,
+                (entry) => entry.rowActions,
+              )
+            : RowActionRuntimeBase.getRowActionWidthInfo(
+                section.members,
+                (entry) => entry.rowActions,
+              ),
         )}
 
         {const hiddenColumns = $derived(
@@ -275,13 +280,28 @@
                   attributes={{
                     ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
                   }}
-                >
-                  {const data = $derived<ActorRowActionPropsData>({
-                    actor: member.actor,
-                    ctx: member,
-                  })}
-                  <TableRowActions rowActions={member.rowActions} {data} />
-                </TidyTableCell>
+                ></TidyTableCell>
+
+                <!-- TODO: TypeScript cracks me up. There is a long, academic explanation about why this repetition is needed, but it would be nice to somehow eliminate the duplication one day. -->
+                {#if member.type === 'crew'}
+                  <RowActionsColumn
+                    columnWidth="{rowActionInfo.widthRems}rem"
+                    rowActions={member.rowActions}
+                    data={{
+                      actor: member.actor,
+                      ctx: member,
+                    }}
+                  />
+                {:else if member.type === 'passengers'}
+                  <RowActionsColumn
+                    columnWidth="{rowActionInfo.widthRems}rem"
+                    rowActions={member.rowActions}
+                    data={{
+                      actor: member.actor,
+                      ctx: member,
+                    }}
+                  />
+                {/if}
               </TidyTableRow>
             {:else}
               {#if section.type === 'crew'}

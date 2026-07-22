@@ -7,11 +7,7 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type {
-    Actor5e,
-    ActorRowActionPropsData,
-    GroupMemberSection,
-  } from 'src/types/types';
+  import type { Actor5e, GroupMemberSection } from 'src/types/types';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -25,10 +21,9 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
+  import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -105,7 +100,7 @@
         {const visibleItemCount = $derived(section.members.length)}
 
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
           ),
@@ -162,20 +157,15 @@
                     {hiddenColumns}
                     {section}
                   />
-                  <TidyTableCell
+
+                  <RowActionsColumn
                     columnWidth="{rowActionInfo.widthRems}rem"
-                    class="tidy-table-actions"
-                    attributes={{
-                      ['data-tidy-column-key']:
-                        CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                    }}
-                  >
-                    {const data = $derived<ActorRowActionPropsData>({
+                    rowActions={member.rowActions}
+                    data={{
                       actor: member.actor,
                       ctx: member,
-                    })}
-                    <TableRowActions rowActions={member.rowActions} {data} />
-                  </TidyTableCell>
+                    }}
+                  />
                 {/if}
               </div>
             {/each}

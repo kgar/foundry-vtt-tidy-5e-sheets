@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/runtime/types';
+  import type { ColumnCellProps } from 'src/types/types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
   import { error } from 'src/utils/logging';

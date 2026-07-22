@@ -15,7 +15,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(

@@ -56,7 +56,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 type MemberStats = {
   currentHP: number;
@@ -557,7 +557,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
     if (stats.vehicleCount) {
       members.push(
         `${stats.vehicleCount} ${game.i18n.localize(
-          `DND5E.Group.Vehicle.${rule.select(stats.vehicleCount)}`,
+          `DND5E.Group.Vehicle.Count.${rule.select(stats.vehicleCount)}`,
         )}`,
       );
     }
@@ -693,7 +693,7 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         const senses = member.system.attributes.senses ?? {};
         const tags: Record<string, string> = {};
         for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-          const v = senses.ranges[k] ?? 0;
+          const v = senses.ranges?.[k] ?? 0;
           if (v === 0) continue;
           tags[k] = `${game.i18n.localize(label)} ${v} ${
             CONFIG.DND5E.movementUnits[senses.units]?.abbreviation ??
@@ -842,10 +842,12 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
+        this,
         panelItem.container,
         {
-          hasActor: false,
           unlocked: context.unlocked,
+          owner: context.owner,
+          editable: context.editable,
         },
       );
     }
@@ -861,8 +863,10 @@ export class Tidy5eGroupSheetClassic extends getTidy5eActorSheetBaseMixin(
         item.system.activities,
       )?.map((activity) =>
         Activities.getActivityItemContext(
+          this,
           activity,
-          this.isEditable && this.isEditMode,
+          this.isEditMode && this.isEditable,
+          this.isEditable,
         ),
       ),
       canToggle: false,

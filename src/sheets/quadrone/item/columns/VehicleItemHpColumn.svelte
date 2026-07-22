@@ -1,8 +1,10 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { VehicleItemQuadroneContext } from 'src/types/types';
+  import type {
+    VehicleItemQuadroneContext,
+    ColumnCellProps,
+  } from 'src/types/types';
 
   let {
     rowDocument: item,
@@ -24,23 +26,23 @@
   }
 </script>
 
-{#if context.unlocked || hpValue > 0 || item.system.hp?.max == 0 }
-<div class="meter-container inline-hp-container">
-  <div
-    class="meter meter-small progress hit-points"
-    style="--bar-percentage: {hpPct.toFixed(0)}%"
-  ></div>
-  <div class="inline-hp inline-uses flexrow">
-    <input
-      type="text"
-      value={hpValue}
-      {@attach InputAttachments.selectOnFocus}
-      onchange={onHpChange}
-      class="uninput uses-value hp-value color-text-default"
-      disabled={!context.editable}
-    />
-    <span class="divider color-text-gold flexshrink">/</span>
-    <span class="uses-max hp-max color-text-lighter">{effectiveMaxHp}</span>
+{#if context.unlocked || hpValue > 0 || item.system.hp?.max == 0}
+  <div class="meter-container inline-hp-container">
+    <div
+      class="meter meter-small progress hit-points"
+      style="--bar-percentage: {hpPct.toFixed(0)}%"
+    ></div>
+    <div class="inline-hp inline-uses flexrow">
+      <input
+        type="text"
+        value={hpValue}
+        {@attach InputAttachments.selectOnFocus}
+        onchange={onHpChange}
+        class="uninput uses-value hp-value color-text-default"
+        disabled={!context.editable}
+      />
+      <span class="divider color-text-gold flexshrink">/</span>
+      <span class="uses-max hp-max color-text-lighter">{effectiveMaxHp}</span>
+    </div>
   </div>
-</div>
 {/if}

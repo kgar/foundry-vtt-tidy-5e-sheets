@@ -20,8 +20,7 @@ import type {
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { isNil } from 'src/utils/data';
@@ -33,7 +32,7 @@ import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>,
@@ -101,25 +100,18 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         return item.dependentOrigin?.active !== false;
       });
 
-      const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-        context,
-        { hasActionsTab: false, canEquip: false },
-      );
-
       const inventory: ActorInventoryTypes =
         Inventory.getDefaultInventorySections(this.document);
-
-      const rowActions = TableRowActionsRuntime.getInventoryRowActions(
-        context,
-        { canEquip: false, hasActionsTab: false, canAttune: false },
-      );
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
           const ctx = (context.itemContext[item.id] ??= {});
-          ctx.rowActions = rowActions.filter((action) =>
-            checkCondition(action, { item }),
-          );
+          ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: item,
+            sheetDocument: context.document,
+          });
 
           const isWithinContainer = this.actor.items.has(item.system.container);
 

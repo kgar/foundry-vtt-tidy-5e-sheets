@@ -8,21 +8,18 @@
   import { Activities } from 'src/features/activities/activities';
   import type {
     ActivityItemContext,
-    ActivityRowAction,
-    ActivityRowActionPropsData,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+  import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
-  import { checkCondition } from 'src/utils/iteration';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -37,10 +34,6 @@
       .useBasicTheme ?? false,
   );
 
-  let rowActions = $derived(
-    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
-  );
-
   let section = $derived({
     ...SheetSections.EMPTY,
     columns: ActivityColumnRuntime.getColumnSpecifications(
@@ -50,23 +43,10 @@
     ),
   });
 
-  const rowActionsMap = $derived(
-    activities.reduce<Record<string, ActivityRowAction<any>[]>>(
-      (prev, entry) => {
-        prev[entry.id] = rowActions.filter((action) =>
-          checkCondition(action, { activity: entry.activity }),
-        );
-
-        return prev;
-      },
-      {},
-    ),
-  );
-
   const rowActionInfo = $derived(
-    TableRowActionsRuntime.getRowActionWidthInfo(
+    RowActionRuntimeBase.getRowActionWidthInfo(
       activities,
-      (entry) => rowActionsMap[entry.id],
+      (entry) => entry.rowActions,
     ),
   );
 
@@ -95,10 +75,6 @@
   {#snippet body()}
     {#each activities as ctx (ctx.activity.id)}
       {const configurable = $derived(Activities.isConfigurable(ctx.activity))}
-      {const ctxWithRowActions = $derived({
-        ...ctx,
-        rowActions: rowActionsMap[ctx.id],
-      })}
 
       <TidyTableRow
         rowAttributes={{
@@ -138,19 +114,20 @@
 
         <TidyTableCustomCells
           {hiddenColumns}
-          ctx={ctxWithRowActions}
+          {ctx}
           entry={ctx.activity}
           {section}
           {context}
         />
 
-        <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-          {const data = $derived<ActivityRowActionPropsData>({
+        <RowActionsColumn
+          columnWidth="{rowActionInfo.widthRems}rem"
+          rowActions={ctx.rowActions}
+          data={{
             activity: ctx.activity,
             ctx: ctx.activity,
-          })}
-          <TableRowActions {data} {rowActions} />
-        </TidyTableCell>
+          }}
+        />
       </TidyTableRow>
     {/each}
   {/snippet}

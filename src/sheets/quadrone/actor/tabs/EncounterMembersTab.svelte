@@ -5,7 +5,7 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
@@ -17,11 +17,9 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
+  import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
-  import type { ActorRowActionPropsData } from 'src/types/types';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -34,10 +32,6 @@
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
   const localize = FoundryAdapter.localize;
-
-  let rowActions: any[] = $derived(
-    TableRowActionsRuntime.getEncounterMemberRowActions(context),
-  );
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -97,7 +91,7 @@
         {const visibleItemCount = $derived(section.members.length)}
 
         {const rowActionInfo = $derived(
-          TableRowActionsRuntime.getRowActionWidthInfo(
+          RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
           ),
@@ -156,19 +150,14 @@
                   {hiddenColumns}
                 />
 
-                <TidyTableCell
+                <RowActionsColumn
                   columnWidth="{rowActionInfo.widthRems}rem"
-                  class="tidy-table-actions"
-                  attributes={{
-                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                  }}
-                >
-                  {const data = $derived<ActorRowActionPropsData>({
+                  rowActions={member.rowActions}
+                  data={{
                     actor: member.actor,
                     ctx: member,
-                  })}
-                  <TableRowActions rowActions={member.rowActions} {data} />
-                </TidyTableCell>
+                  }}
+                />
               </div>
             {/each}
           {/snippet}

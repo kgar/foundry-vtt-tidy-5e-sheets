@@ -5,7 +5,7 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -26,13 +26,12 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type {
-    ActorRowActionPropsData,
-    DraftAnimalSection,
     InventorySection,
+    VehicleDraftAnimalSection,
   } from 'src/types/types';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -61,7 +60,7 @@
 
   let sections = $derived(
     buildVehicleStatblockSections(context, tabId) as (
-      InventorySection | DraftAnimalSection
+      InventorySection | VehicleDraftAnimalSection
     )[],
   );
 
@@ -338,7 +337,7 @@
       {:else if section.type === 'draft'}
         {#if section.show}
           {const rowActionInfo = $derived(
-            TableRowActionsRuntime.getRowActionWidthInfo(
+            RowActionRuntimeBase.getRowActionWidthInfo(
               section.members,
               (entry) => entry.rowActions,
             ),
@@ -461,23 +460,14 @@
                           {section}
                         />
 
-                        <TidyTableCell
+                        <RowActionsColumn
                           columnWidth="{rowActionInfo.widthRems}rem"
-                          class="tidy-table-actions"
-                          attributes={{
-                            ['data-tidy-column-key']:
-                              CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                          }}
-                        >
-                          {const data = $derived<ActorRowActionPropsData>({
+                          rowActions={member.rowActions}
+                          data={{
                             actor: member.actor,
                             ctx: member,
-                          })}
-                          <TableRowActions
-                            rowActions={member.rowActions}
-                            {data}
-                          />
-                        </TidyTableCell>
+                          }}
+                        />
                       {/snippet}
                     </TidyTableRow>
                   {/if}

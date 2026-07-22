@@ -45,7 +45,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 export class Tidy5eNpcSheet
   extends getTidy5eActorSheetClassicV2Base<NpcSheetContext>(
@@ -765,10 +765,12 @@ export class Tidy5eNpcSheet
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
+        this,
         panelItem.container,
         {
-          hasActor: true,
           unlocked: context.unlocked,
+          owner: context.owner,
+          editable: context.editable,
         },
       );
     }
@@ -934,8 +936,10 @@ export class Tidy5eNpcSheet
           item.system.activities,
         )?.map((activity) =>
           Activities.getActivityItemContext(
+            this,
             activity,
-            this.isEditable && this.isEditMode,
+            this.isEditMode && this.isEditable,
+            this.isEditable,
           ),
         );
 

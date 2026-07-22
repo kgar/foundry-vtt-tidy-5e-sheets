@@ -43,7 +43,12 @@
           item,
           item.system.activities,
         ).map<ActivityItemContext>((activity) =>
-          Activities.getActivityItemContext(activity, context.unlocked),
+          Activities.getActivityItemContext(
+            context.document.sheet,
+            activity,
+            context.unlocked,
+            context.editable,
+          ),
         )
       : [];
   });

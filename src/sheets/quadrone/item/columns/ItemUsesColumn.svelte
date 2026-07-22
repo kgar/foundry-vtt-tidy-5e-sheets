@@ -1,7 +1,7 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/runtime/types';
+  import type { ColumnCellProps } from 'src/types/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
@@ -68,10 +68,13 @@
 {:else if item.system.linkedActivity}
   {const ctx = $derived(
     Activities.getActivityItemContext(
+      context.sheet,
       item.system.linkedActivity,
       context.unlocked,
+      context.editable,
     ),
   )}
+
   <ActivityUsesColumn
     rowContext={ctx}
     rowDocument={ctx.activity}

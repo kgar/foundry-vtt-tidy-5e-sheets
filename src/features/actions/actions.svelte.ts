@@ -19,8 +19,8 @@ import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from '../containers/Container';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -46,6 +46,7 @@ const activationTypeSortValues: Record<string, number> = {
   special: 8,
 };
 
+// Classic Only
 export async function getActorActionSections(
   actor: Actor5e,
 ): Promise<ActionSectionClassic[]> {
@@ -67,6 +68,7 @@ export async function getActorActionSections(
   }
 }
 
+// Classic Only
 export function getSortedActions(
   section: ActionSectionClassic,
   sortMode: string,
@@ -87,6 +89,7 @@ export function getSortedActions(
   });
 }
 
+// Classic Only
 function buildActionSections(
   actor: Actor5e,
   actionItems: ActionItem[],
@@ -365,6 +368,7 @@ function getActivityFirstDamage(item: Item5e) {
   };
 }
 
+// Classic Only
 async function mapActionItem(item: Item5e): Promise<ActionItem> {
   try {
     let calculatedDerivedDamage = Array.isArray(item.labels.damages)
@@ -409,10 +413,15 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
 
     let containerContents: ContainerContents | undefined = undefined;
     if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      containerContents = await Container.getContainerContents(item, {
-        hasActor: false,
-        unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
-      });
+      containerContents = await Container.getContainerContents(
+        item.actor.sheet,
+        item,
+        {
+          unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
+          owner: item.isOwner,
+          editable: item.actor.sheet.isEditable,
+        },
+      );
     }
 
     return {

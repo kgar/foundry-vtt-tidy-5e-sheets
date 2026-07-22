@@ -1,9 +1,9 @@
-import {
-  TidyFlags,
-  type EncounterCombatantSettings,
-  type EncounterCombatantsSettings,
-} from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import type {
+  EncounterCombatantSettings,
+  EncounterCombatantsSettings,
+} from 'src/foundry/TidyFlags.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 
@@ -34,7 +34,7 @@ export class CombatantSettings {
 
   static getEntry(
     encounter: Actor5e,
-    identifier: string
+    identifier: string,
   ): EncounterCombatantSettings {
     const entry = CombatantSettings.get(encounter)[identifier] ?? {
       ...CombatantSettings.defaultSettings,
@@ -55,7 +55,7 @@ export class CombatantSettings {
 
   static async insertOrUpdate(
     encounter: Actor5e,
-    data: Partial<EncounterCombatantSettings>
+    data: Partial<EncounterCombatantSettings>,
   ): Promise<void> {
     const settings = TidyFlags.combatantSettings.get(encounter);
 
@@ -68,7 +68,7 @@ export class CombatantSettings {
 
   static _prepareInsertOrUpdate(
     settings: EncounterCombatantsSettings,
-    data: Partial<EncounterCombatantSettings>
+    data: Partial<EncounterCombatantSettings>,
   ) {
     if (isNil(data.identifier)) {
       return;
@@ -78,7 +78,7 @@ export class CombatantSettings {
 
     const toSave = FoundryAdapter.mergeObject(
       settings[data.identifier] ?? { ...CombatantSettings.defaultSettings },
-      data
+      data,
     );
 
     settings[toSave.identifier] = toSave;
@@ -86,7 +86,7 @@ export class CombatantSettings {
 
   static async bulkInsertOrUpdate(
     encounter: Actor5e,
-    data: Record<string, Partial<EncounterCombatantSettings>>
+    data: Record<string, Partial<EncounterCombatantSettings>>,
   ) {
     const settings = TidyFlags.combatantSettings.get(encounter);
 
@@ -105,12 +105,12 @@ export class CombatantSettings {
    */
   static _trimUnusedSettings(
     encounter: Actor5e,
-    settings: EncounterCombatantsSettings
+    settings: EncounterCombatantsSettings,
   ) {
     const identifiers = new Set<string>(
       encounter.system.members
         .map((m: any) => CombatantSettings._prepareIdentifier(m.uuid))
-        .concat(Object.keys(TidyFlags.placeholders.get(encounter)))
+        .concat(Object.keys(TidyFlags.placeholders.get(encounter))),
     );
 
     for (const key of Object.keys(settings)) {

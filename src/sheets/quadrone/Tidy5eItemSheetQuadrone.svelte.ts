@@ -30,7 +30,6 @@ import type {
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
-  AdvancementRowAction,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -47,13 +46,13 @@ import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { getThemeV2 } from 'src/theme/theme';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
-import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
+import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import { AdvancementColumnRuntime } from 'src/runtime/tables/AdvancementColumnRuntime.svelte';
-import { checkCondition } from 'src/utils/iteration';
+import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
+import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
+import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -332,8 +331,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             })
             ?.map((activity: Activity5e) =>
               Activities.getActivityItemContext(
+                this,
                 activity,
                 documentSheetContext.unlocked,
+                documentSheetContext.editable,
               ),
             )
             .sort((a: any, b: any) => a.sort - b.sort),
@@ -346,7 +347,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           dataset: {},
           label: 'DND5E.ACTIVITY.Title.other',
           sectionActions: SectionActions.getItemActivityHeaderActions(
-            this.isEditable,
+            documentSheetContext.editable,
           ),
         },
       ],
@@ -714,7 +715,16 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               hasTooltip: true,
               effect: effect,
               riders: [],
-              rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+              rowActions: EffectRowActionRuntime.getRowActions({
+                app: context.document.sheet,
+                data: {
+                  owner: effect.isOwner,
+                  unlocked: context.unlocked,
+                  editable: context.editable,
+                },
+                rowDocument: effect,
+                sheetDocument: context.document,
+              }),
             });
             if (riderIds.has(id)) riders.push(ctx);
             else arr.push(ctx);
@@ -746,7 +756,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ([key, value]) =>
         ({
           ...value,
-          canCreate: this.isEditable && !value.isEnchantment && !value.disabled,
+          canCreate:
+            context.editable && !value.isEnchantment && !value.disabled,
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
           sectionActions: [],
@@ -794,10 +805,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         -1)
       : -1;
 
-    let tableRowActions: AdvancementRowAction[] = $derived(
-      TableRowActionsRuntime.getItemAdvancementRowActions(unlocked, item),
-    );
-
     // Improperly configured advancements
     if (item.advancement.needingConfiguration.length) {
       advancement[CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED] = {
@@ -813,9 +820,16 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               tags: this._getItemAdvancementTags(a, unlocked),
               classes: [a.icon?.endsWith('.svg') ? 'svg' : ''].filterJoin(' '),
               summary: '',
-              rowActions: tableRowActions.filter((action) =>
-                checkCondition(action, a),
-              ),
+              rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
+                app: this,
+                data: {
+                  unlocked,
+                  owner: this.document.isOwner,
+                  editable: editable,
+                },
+                sheetDocument: this.document,
+                rowDocument: a,
+              }),
               value: '',
             }) satisfies AdvancementItemContext,
         ),
@@ -853,9 +867,16 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               classes: [
                 advancement.icon?.endsWith('.svg') ? 'svg' : '',
               ].filterJoin(' '),
-              rowActions: tableRowActions.filter((action) =>
-                checkCondition(action, advancement),
-              ),
+              rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
+                app: this,
+                data: {
+                  unlocked,
+                  owner: this.document.isOwner,
+                  editable: editable,
+                },
+                sheetDocument: this.document,
+                rowDocument: advancement,
+              }),
             }) satisfies AdvancementItemContext,
         ),
       );

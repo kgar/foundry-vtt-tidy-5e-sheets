@@ -1,4 +1,4 @@
-import type { PortraitMenuCommand } from '../..';
+import type { PortraitMenuCommand } from 'src/api/api.types';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 
 /**

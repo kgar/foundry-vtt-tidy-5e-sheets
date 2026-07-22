@@ -17,9 +17,10 @@
   import InventoryTable from '../../shared/InventoryTable.svelte';
   import ActionTable from '../../shared/ActionTable.svelte';
   import { SettingsProvider } from 'src/settings/settings.svelte';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { tick } from 'svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -94,7 +95,6 @@
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
 
   let tabName = $derived(localize(tab?.title ?? ''));
-
 </script>
 
 <ItemsActionBar bind:searchCriteria {sections} {tabId} />
@@ -117,10 +117,12 @@
       {#each sections as section}
         {#if 'type' in section}
           {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
-              section.items,
-              searchResults.uuids,
-            ))}
+            {const hasViewableItems = $derived(
+              ItemVisibility.hasViewableItems(
+                section.items,
+                searchResults.uuids,
+              ),
+            )}
 
             {#if section.show && hasViewableItems}
               <SpellTable
@@ -131,10 +133,12 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
-            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
-              section.items,
-              searchResults.uuids,
-            ))}
+            {const hasViewableItems = $derived(
+              ItemVisibility.hasViewableItems(
+                section.items,
+                searchResults.uuids,
+              ),
+            )}
             {#if section.show && hasViewableItems}
               <InventoryTable
                 containingDocument={context.document}
@@ -150,10 +154,12 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
-              section.items,
-              searchResults.uuids,
-            ))}
+            {const hasViewableItems = $derived(
+              ItemVisibility.hasViewableItems(
+                section.items,
+                searchResults.uuids,
+              ),
+            )}
             {#if section.show && hasViewableItems}
               <FeatureTable
                 {section}
@@ -163,10 +169,12 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
-            {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
-              section.items,
-              searchResults.uuids,
-            ))}
+            {const hasViewableItems = $derived(
+              ItemVisibility.hasViewableItems(
+                section.items,
+                searchResults.uuids,
+              ),
+            )}
             {#if section.show && hasViewableItems}
               <ActionTable
                 {inlineToggleService}
@@ -225,11 +233,12 @@
       {/if}
     </div>
     <div class="sheet-footer-right footer-content-right flexshrink">
-      <button 
-        type="button" 
+      <button
+        type="button"
         aria-label="TIDY5E.SheetLock.Empty.Hint"
-        class="button button-borderless button-icon-only" 
-        data-tooltip="TIDY5E.SheetLock.Empty.Hint">
+        class="button button-borderless button-icon-only"
+        data-tooltip="TIDY5E.SheetLock.Empty.Hint"
+      >
         <i class="fas fa-circle-question"></i>
       </button>
       {#if context.editable}

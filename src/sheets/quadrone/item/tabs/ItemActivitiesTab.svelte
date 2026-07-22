@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
-  import { getContext, type Component } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -9,19 +8,14 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActions from '../../../../components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
-  import type {
-    ActivityRowAction,
-    ActivityRowActionPropsData,
-  } from 'src/types/types';
+  import RowActionsColumn from '../columns/RowActionsColumn.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -31,26 +25,6 @@
   );
 
   const localize = FoundryAdapter.localize;
-
-  let rowActions: ActivityRowAction<any>[] = $derived(
-    TableRowActionsRuntime.getActivityRowActions(context.unlocked),
-  );
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  let section = $derived.by(() => {
-    const result = {
-      ...SheetSections.EMPTY,
-      canCreate: context.editable,
-      columns: ActivityColumnRuntime.getColumnSpecifications(
-        context.document,
-        tabId,
-        'activities',
-      ),
-    };
-
-    return result;
-  });
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -63,7 +37,7 @@
   {#each context.activities as section (section.key)}
     {#if section.show}
       {const rowActionInfo = $derived(
-        TableRowActionsRuntime.getRowActionWidthInfo(
+        RowActionRuntimeBase.getRowActionWidthInfo(
           section.activities,
           (entry) => entry.rowActions,
         ),
@@ -166,13 +140,14 @@
                   {section}
                 />
 
-                <TidyTableCell columnWidth="{rowActionInfo.widthRems}rem">
-                  {const data = $derived<ActivityRowActionPropsData>({
+                <RowActionsColumn
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  rowActions={ctx.rowActions}
+                  data={{
                     activity: ctx.activity,
                     ctx,
-                  })}
-                  <TableRowActions {rowActions} {data} />
-                </TidyTableCell>
+                  }}
+                />
               {/snippet}
             </TidyActivityTableRow>
           {/each}

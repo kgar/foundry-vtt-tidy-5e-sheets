@@ -9,17 +9,17 @@
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
-  import { AdvancementColumnRuntime } from 'src/runtime/tables/AdvancementColumnRuntime.svelte';
+  import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import TableRowActions from 'src/components/table-quadrone/parts/TableRowActions.svelte';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import type {
-    AdvancementRowAction,
-    AdvancementRowActionPropsData,
-  } from 'src/types/types';
+    ItemAdvancementRowAction,
+    ItemAdvancementRowActionPropsData,
+  } from 'src/types/row-actions.types';
+  import RowActionsColumn from '../columns/RowActionsColumn.svelte';
 
   let localize = FoundryAdapter.localize;
 
@@ -41,7 +41,7 @@
 <div {@attach observeResize(onResize)} class="tidy-table-container">
   {#each context.advancement as section (section.key)}
     {let longestRowActionArray = $derived(
-      section.items.reduce<AdvancementRowAction[]>((prev, curr) => {
+      section.items.reduce<ItemAdvancementRowAction[]>((prev, curr) => {
         return prev.length > curr.rowActions.length ? prev : curr.rowActions;
       }, []),
     )}
@@ -58,7 +58,7 @@
     )}
 
     {const rowActionInfo = $derived(
-      TableRowActionsRuntime.getRowActionWidthInfo(
+      RowActionRuntimeBase.getRowActionWidthInfo(
         section.items,
         (_entry) => arrayWithMostActions,
       ),
@@ -135,17 +135,14 @@
                 {section}
               />
 
-              <TidyTableCell
+              <RowActionsColumn
                 columnWidth="{rowActionInfo.widthRems}rem"
-                class="tidy-table-actions"
-                attributes={{
-                  ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
+                rowActions={advancement.rowActions}
+                data={{
+                  id: advancement.id,
+                  item: context.document,
                 }}
-              >
-                {const data =
-                  $derived<AdvancementRowActionPropsData>(advancement)}
-                <TableRowActions rowActions={advancement.rowActions} {data} />
-              </TidyTableCell>
+              />
             {/snippet}
           </TidyAdvancementTableRow>
         {/each}

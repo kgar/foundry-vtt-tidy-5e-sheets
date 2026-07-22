@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    EncounterMemberQuadroneContext,
+    EncounterMemberCombatantQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
 
   type Props = {
     rowContext:
-      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
       | EncounterPlaceholderQuadroneContext;
   };
 
@@ -39,10 +38,13 @@
 <a
   role="button"
   tabindex="0"
-  class={['tidy-table-button action-combat-visibility', { disabled: !context.editable }]}
+  class={[
+    'tidy-table-button action-combat-visibility',
+    { disabled: !context.editable },
+  ]}
   aria-label={label}
   data-tooltip
-  onclick={(ev) =>
+  onclick={() =>
     context.editable && context.sheet.toggleCombatantVisibility(identifier)}
   onkeypress={(ev) => {
     if (ev.key === 'Enter' || ev.key === ' ') {

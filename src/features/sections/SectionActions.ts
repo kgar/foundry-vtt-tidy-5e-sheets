@@ -1,16 +1,13 @@
 import { ActorItemRuntime } from '../../runtime/ActorItemRuntime';
 import type {
   Actor5e,
-  CrewSection,
-  DraftAnimalSection,
   GroupMemberQuadroneContext,
   GroupMemberSection,
-  PassengerSection,
   SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { EventHelper } from 'src/utils/events';

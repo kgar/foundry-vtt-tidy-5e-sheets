@@ -7,12 +7,11 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ActorRowAction,
-  CrewMemberContext,
-  DraftAnimalContext,
-  DraftAnimalSection,
+  VehicleCrewMemberContext,
+  VehicleDraftAnimalContext,
+  VehicleDraftAnimalSection,
   InventorySection,
-  PassengerMemberContext,
+  VehiclePassengerMemberContext,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
@@ -31,14 +30,19 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
-import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
-import { checkCondition } from 'src/utils/iteration';
+import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { VehicleMemberColumnRuntime } from 'src/runtime/table-columns/VehicleCrewMemberColumnRuntime';
+import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
+import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
+import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
+import { DraftAnimalMemberRowActionRuntime } from 'src/runtime/table-row-actions/DraftAnimalRowActions.svelte';
+import { PassengerRowActionRuntime } from 'src/runtime/table-row-actions/PassengerRowActionRuntime.svelte';
+import { UnassignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/UnassignedCrewRowActionRuntime.svelte';
+import { AssignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/AssignedCrewRowActionRuntime.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -75,6 +79,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
       removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
       removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
+      unassignCrew: Tidy5eVehicleSheetQuadrone.#onUnassignCrew,
     },
   };
 
@@ -354,10 +359,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
-    const draftRowActions =
-      TableRowActionsRuntime.getDraftAnimalRowActions(context);
-
-    const drafted: DraftAnimalSection = {
+    const drafted: VehicleDraftAnimalSection = {
       ...SheetSections.EMPTY,
       type: 'draft',
       key: 'draft',
@@ -385,10 +387,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             subtitle: this._getSubtitle(actor),
             quantity: 1,
             name: actor.name,
-            rowActions: draftRowActions.filter(
-              (action) => checkCondition(action, { actor }),
-            ),
-          } satisfies DraftAnimalContext,
+            rowActions: DraftAnimalMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
+          } satisfies VehicleDraftAnimalContext,
         };
       }),
     );
@@ -431,23 +436,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
 
     const { value: assignedCrewContextValue, broken: brokenAssignedCrewUuids } =
-      await this.resolveCrewMemberContext(
-        assigned,
-        TableRowActionsRuntime.getAssignedCrewRowActions(context),
-        assignments,
-      );
+      await this.resolveCrewMemberContext(context, assigned, assignments);
     context.crew.assigned.members = assignedCrewContextValue;
 
     const {
       value: unassignedCrewContextValue,
       broken: brokenUnassignedCrewUuids,
-    } = await this.resolveCrewMemberContext(
-      unassigned,
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        CONSTANTS.SECTION_TYPE_CREW,
-      ),
-    );
+    } = await this.resolveCrewMemberContext(context, unassigned);
     context.crew.unassigned.members = unassignedCrewContextValue;
 
     // Add the actual number of broken passengers, even if duplicate actor UUIDs.
@@ -466,11 +461,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
     const uuids: string[] = context.system.passengers.value;
     const groups = this.groupCrew(uuids);
-    const rowActions =
-      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
-        context,
-        CONSTANTS.SECTION_TYPE_PASSENGERS,
-      );
 
     const passengerResult = await Promise.all(
       Object.keys(groups).map(async (uuid) => {
@@ -481,13 +471,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         }
 
         const value = {
+          type: 'passengers',
           actor,
           subtitle: this._getSubtitle(actor),
           quantity: groups[uuid],
-          rowActions: rowActions.filter(
-            (action) => checkCondition(action, { actor }),
-          ),
-        } satisfies PassengerMemberContext;
+          rowActions: PassengerRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
+        } satisfies VehiclePassengerMemberContext;
 
         return {
           uuid,
@@ -509,14 +503,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
-    const statblockRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { canEquip: false, hasActionsTab: false, canAttune: false },
-    );
-
-    const statblockSpellRowActions =
-      TableRowActionsRuntime.getSpellRowActions(context);
-
     const statblock: Record<string, InventorySection> = {
       [CONSTANTS.ITEM_TYPE_FEAT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -588,11 +574,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       },
     };
 
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: false, canEquip: true, canAttune: false },
-    );
-
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections(this.document);
 
@@ -613,9 +594,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
 
       // partition to section
       if (itemIsInventoryType && !item.system.isMountable) {
-        ctx.rowActions = inventoryRowActions.filter(
-          (action) => checkCondition(action, { item }),
-        );
+        ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+          app: context.sheet,
+          data: context,
+          rowDocument: item,
+          sheetDocument: context.document,
+        });
 
         // Cargo
         Inventory.applyInventoryItemToSection({
@@ -632,9 +616,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.linkedActivity
       ) {
-        ctx.rowActions = statblockRowActions.filter(
-          (action) => checkCondition(action, { item }),
-        );
+        ctx.rowActions = SpellRowActionRuntime.getRowActions({
+          app: context.sheet,
+          data: context,
+          rowDocument: item,
+          sheetDocument: context.document,
+        });
 
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
@@ -645,16 +632,21 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           customSectionOptions: {
             canCreate: false,
           },
-          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_SPELL,
         });
       } else {
-        const rowActions = itemIsInventoryType
-          ? inventoryRowActions
-          : statblockRowActions;
-
-        ctx.rowActions = rowActions.filter(
-          (action) => checkCondition(action, { item }),
-        );
+        ctx.rowActions = itemIsInventoryType
+          ? InventoryRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: item,
+              sheetDocument: context.document,
+            })
+          : FeatureRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: item,
+              sheetDocument: context.document,
+            });
 
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
@@ -665,7 +657,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           customSectionOptions: {
             canCreate: false,
           },
-          fallbackInventoryKey: CONSTANTS.ITEM_TYPE_FEAT,
         });
       }
     }
@@ -1026,7 +1017,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     await this.actor.update(actorUpdates);
   }
 
-  async _unassignCrew(memberUuid: string, item: Item5e) {
+  async _unassignCrew(memberUuid: string, itemUuid: string) {
+    let item = await fromUuid(itemUuid);
+
+    if (!item) {
+      return;
+    }
+
     let crew = foundry.utils.getProperty(item, 'system.crew.value');
 
     crew = [...crew];
@@ -1091,6 +1088,21 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
     if (uuid) {
       return this.removeUnassignedCrew(uuid);
+    }
+  }
+
+  static async #onUnassignCrew(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const memberUuid =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
+    const itemUuid =
+      target.closest<HTMLElement>('[data-item-uuid]')?.dataset.itemUuid;
+
+    if (memberUuid && itemUuid) {
+      return this._unassignCrew(memberUuid, itemUuid);
     }
   }
 
@@ -1168,7 +1180,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         (m) => m.actor.uuid === document.uuid,
       )?.assignedTo;
 
-      await this._unassignCrew(document.uuid, currentAssignedItem);
+      await this._unassignCrew(document.uuid, currentAssignedItem.uuid);
     }
 
     if (src === dest) {
@@ -1214,15 +1226,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
    * Resolve crew UUIDs.
    */
   async resolveCrewMemberContext(
+    context: VehicleSheetQuadroneContext,
     group: Record<string, number>,
-    rowActions: ActorRowAction[],
-    // Actor UUID to Item UUIDs set
     actorToItemAssignments?: Record<string, string[]>,
   ): Promise<{
-    value: CrewMemberContext[];
+    value: VehicleCrewMemberContext[];
     broken: string[];
   }> {
-    const value: CrewMemberContext[] = [];
+    const value: VehicleCrewMemberContext[] = [];
     const broken: string[] = [];
 
     for (const [uuid, quantity] of Object.entries(group)) {
@@ -1244,27 +1255,35 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       if (actorToItemAssignments?.[uuid]) {
         for (const item of actorToItemAssignments[uuid]) {
           value.push({
+            type: 'crew',
             uuid,
             quantity,
             actor,
             cr,
             subtitle,
             assignedTo: item,
-            rowActions: rowActions.filter(
-              (action) => checkCondition(action, { actor }),
-            ),
+            rowActions: AssignedCrewMemberRowActionRuntime.getRowActions({
+              app: context.sheet,
+              data: context,
+              rowDocument: actor,
+              sheetDocument: context.document,
+            }),
           });
         }
       } else {
         value.push({
+          type: 'crew',
           uuid,
           quantity,
           actor,
           cr,
           subtitle,
-          rowActions: rowActions.filter(
-            (action) => checkCondition(action, { actor }),
-          ),
+          rowActions: UnassignedCrewMemberRowActionRuntime.getRowActions({
+            app: context.sheet,
+            data: context,
+            rowDocument: actor,
+            sheetDocument: context.document,
+          }),
         });
       }
     }

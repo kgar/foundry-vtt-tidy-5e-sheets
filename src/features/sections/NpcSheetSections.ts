@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { TableColumnRuntimeBase } from 'src/runtime/tables/TableColumnRuntimeBase.svelte';
+import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type { NpcAbilitySection } from 'src/types/types';
 
