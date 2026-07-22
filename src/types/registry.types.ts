@@ -11,6 +11,15 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
+// TOOD: Use a sheets barrel
+import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import type { Tidy5eEncounterSheetClassic } from 'src/sheets/classic/Tidy5eEncounterSheetClassic.svelte';
+import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
+import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
+import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -22,6 +31,20 @@ import type {
  * @category Configuration
  */
 export type TidyConfig = {
+  applications: {
+    actor: {
+      Tidy5eCharacterSheetQuadrone: typeof Tidy5eCharacterSheetQuadrone;
+      Tidy5eNpcSheetQuadrone: typeof Tidy5eNpcSheetQuadrone;
+      Tidy5eVehicleSheetQuadrone: typeof Tidy5eVehicleSheetQuadrone;
+      Tidy5eGroupSheetQuadrone: typeof Tidy5eGroupSheetQuadrone;
+      Tidy5eEncounterSheetQuadrone: typeof Tidy5eEncounterSheetQuadrone;
+    };
+    item: {
+      Tidy5eItemSheetQuadrone: typeof Tidy5eItemSheetQuadrone;
+      Tidy5eContainerSheetQuadrone: typeof Tidy5eContainerSheetQuadrone;
+    };
+    // anything else?
+  };
   components: TidyComponentRegistry;
   partitions: TidyPartitionRegistry;
   rowActions: TidyRowActionRegistry;

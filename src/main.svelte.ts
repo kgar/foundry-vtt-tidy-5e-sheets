@@ -1,48 +1,61 @@
-import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
-import './less/tidy5e.less';
-import './less/tidy5e.css';
-import { SettingsProvider, initSettings } from './settings/settings.svelte';
-import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
-import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
-import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svelte';
-import { CONSTANTS } from './constants';
-import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
-import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
-import { MigrationTally } from 'src/migrations/MigrationTally';
-import { setupIntegrations } from './integration/integration';
-import { TidyHooks } from './foundry/TidyHooks';
-import { initKeybindings } from './keybindings/keybind-init';
-import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic.svelte';
+import './less/tidy5e.css';
+import './less/tidy5e.less';
+import './theme/theme-quadrone-detached';
+import '@melloware/coloris/dist/coloris.css';
+import { CONSTANTS } from './constants';
+import { debug } from './utils/logging';
 import { DebugTools } from './utils/DebugTools';
+import { formatResourcePathForCss } from './utils/path';
+import { FoundryAdapter } from './foundry/foundry-adapter';
+import { getRegistryComponents } from './init/components';
+import { getRegistryPartitions } from './init/partitions';
+import { getRowActionsRegistry as getRowActionRegistry } from './init/row-actions';
+import { initKeybindings } from './keybindings/keybind-init';
+import { initReadyHooks } from './features/ready-hooks';
+import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
+import { loadConditionalStyles } from './utils/css-loading';
+import { MigrationTally } from 'src/migrations/MigrationTally';
+import { preloadSheetImages } from './utils/preload-images';
+import { SettingsProvider, initSettings } from './settings/settings.svelte';
+import { setupIntegrations } from './integration/integration';
+import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
+import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
+import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import { Tidy5eContainerSheetQuadrone } from './sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
-import { initReadyHooks } from './features/ready-hooks';
-import '@melloware/coloris/dist/coloris.css';
-import { debug } from './utils/logging';
-import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
-import { Tidy5eVehicleSheetQuadrone } from './sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
-import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
-import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
-import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
-import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
 import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterSheetClassic.svelte';
-import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
-import { formatResourcePathForCss } from './utils/path';
-import { preloadSheetImages } from './utils/preload-images';
-import './theme/theme-quadrone-detached';
-import { loadConditionalStyles } from './utils/css-loading';
-import { getRowActionsRegistry as getRowActionRegistry } from './init/row-actions';
-import { getRegistryPartitions } from './init/partitions';
-import { getRegistryComponents } from './init/components';
+import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic.svelte';
+import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
+import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
+import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
+import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
+import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svelte';
+import { Tidy5eVehicleSheetQuadrone } from './sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
+import { TidyHooks } from './foundry/TidyHooks';
+import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
 
 Hooks.once('init', () => {
   initSettings();
 
   // Establish Tidy config registry as early as possible.
   CONFIG.TIDY5E = {
+    applications: {
+      actor: {
+        Tidy5eCharacterSheetQuadrone: Tidy5eCharacterSheetQuadrone,
+        Tidy5eEncounterSheetQuadrone: Tidy5eEncounterSheetQuadrone,
+        Tidy5eGroupSheetQuadrone: Tidy5eGroupSheetQuadrone,
+        Tidy5eNpcSheetQuadrone: Tidy5eNpcSheetQuadrone,
+        Tidy5eVehicleSheetQuadrone: Tidy5eVehicleSheetQuadrone,
+      },
+      item: {
+        Tidy5eItemSheetQuadrone: Tidy5eItemSheetQuadrone,
+        Tidy5eContainerSheetQuadrone: Tidy5eContainerSheetQuadrone,
+      },
+    },
     components: getRegistryComponents(),
     partitions: getRegistryPartitions(),
     rowActions: getRowActionRegistry(),
