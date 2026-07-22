@@ -25,8 +25,9 @@ export abstract class RowActionRuntimeBase<
     const rowActions = CONFIG.TIDY5E.partitions.rowActions[this.domain];
 
     for (const key of rowActions) {
-      const action = CONFIG.TIDY5E.rowActions[this.domain][key] as
-        TRowAction | undefined;
+      const action = CONFIG.TIDY5E.features.rowActions[this.domain][key] as
+        | TRowAction
+        | undefined;
 
       if (action && checkCondition(action, args)) {
         result.push(action);
