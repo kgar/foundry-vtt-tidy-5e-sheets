@@ -266,7 +266,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
           type: 'member',
-          // TODO: separate the combatant member context from the encounter member context. They are for different uses.
           rowActions: EncounterMemberRowActionRuntime.getRowActions({
             app: context.sheet,
             data: context,
