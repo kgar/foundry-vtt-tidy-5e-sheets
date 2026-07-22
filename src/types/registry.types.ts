@@ -45,8 +45,8 @@ export type TidyConfig = {
     // anything else?
   };
   components: TidyComponentRegistry;
+  features: TidyFeatureRegistry;
   partitions: TidyPartitionRegistry;
-  rowActions: TidyRowActionRegistry;
 };
 
 /**
@@ -59,6 +59,24 @@ export type TidyComponentRegistry = {
   /** Components for the Row Actions feature. */
   rowActions: Record<string, Component<any>>;
 };
+
+/**
+ * A collection of features that can be configured and extended.
+ */
+export type TidyFeatureRegistry = {
+  /** Configure row actions for Tidy's tables. */
+  rowActions: TidyRowActionRegistry;
+  // to do: columns
+  // to do: tabs
+  // to do: filters
+  // to do: sort
+  // to do: headerControls
+  // to do: customContent
+  // to do: customActorTraits
+  // to do: inspiration
+  // to do: tabDocumentTypes
+  // to do: etc.
+}
 
 /**
  * The organization schemes for Tidy's features. Each feature can have a different approach
@@ -147,7 +165,7 @@ export type TidyRowActionRegistry = {
   vehicleUnassignedCrew: Record<string, VehicleCrewRowAction>;
 };
 
-export type RowActionRegistryDomain = keyof CONFIG['TIDY5E']['rowActions'];
+export type RowActionRegistryDomain = keyof CONFIG['TIDY5E']['features']['rowActions'];
 
 export type RowActionOf<D extends RowActionRegistryDomain> =
-  CONFIG['TIDY5E']['rowActions'][D][keyof CONFIG['TIDY5E']['rowActions'][D]];
+  CONFIG['TIDY5E']['features']['rowActions'][D][keyof CONFIG['TIDY5E']['features']['rowActions'][D]];
