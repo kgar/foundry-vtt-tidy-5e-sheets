@@ -8,20 +8,6 @@ import { ItemColumnRuntime } from './table-columns/ItemColumnRuntime.svelte';
 import { TabDocumentItemTypesRuntime } from './item/TabDocumentItemTypesRuntime';
 import { VehicleMemberColumnRuntime } from './table-columns/VehicleCrewMemberColumnRuntime';
 import { AdvancementColumnRuntime } from './table-columns/AdvancementColumnRuntime.svelte';
-import { InventoryRowActionRuntime } from './table-row-actions/InventoryRowActionRuntime.svelte';
-import { FeatureRowActionRuntime } from './table-row-actions/FeatureRowActionRuntime.svelte';
-import { SpellRowActionRuntime } from './table-row-actions/SpellRowActionRuntime.svelte';
-import { ContainerContentsRowActionRuntime } from './table-row-actions/ContainerContentsRowActionRuntime.svelte';
-import { EffectRowActionRuntime } from './table-row-actions/EffectRowActionRuntime.svelte';
-import { ActivityRowActionRuntime } from './table-row-actions/ActivityRowActionRuntime.svelte';
-import { GroupMemberRowActionRuntime } from './table-row-actions/GroupMemberRowActionRuntime.svelte';
-import { EncounterMemberRowActionRuntime } from './table-row-actions/EncounterMemberRowActions.svelte';
-import { DraftAnimalMemberRowActionRuntime } from './table-row-actions/DraftAnimalRowActions.svelte';
-import { UnassignedCrewMemberRowActionRuntime } from './table-row-actions/UnassignedCrewRowActionRuntime.svelte';
-import { PassengerRowActionRuntime } from './table-row-actions/PassengerRowActionRuntime.svelte';
-import { AssignedCrewMemberRowActionRuntime } from './table-row-actions/AssignedCrewRowActionRuntime.svelte';
-import { EncounterCombatantMemberRowActionRuntime } from './table-row-actions/EncounterCombatantRowActionRuntime.svelte';
-import { ItemAdvancementMemberRowActionRuntime } from './table-row-actions/ItemAdvancementRowActions.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
