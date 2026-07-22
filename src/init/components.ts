@@ -4,7 +4,7 @@ import GenericActionButton from 'src/components/table-quadrone/table-buttons/Gen
 export function getRegistryComponents(): TidyComponentRegistry {
   return {
     rowActions: {
-      generic: GenericActionButton,
+      GenericActionButton: GenericActionButton,
     },
   };
 }
