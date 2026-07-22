@@ -9,7 +9,6 @@
 
 - [ ] Document row action customization and recipes as part of the wiki. Tag it with the tentative Tidy version.
 
-
 ## Stretch
 
 - [ ] Refactoring consideration: `CONFIG.TIDY5E` can replace the concept of the various runtimes. Each can be represented in config, among other useful things like first-class reusable Tidy components. Another bigger refactor opportunity worth pursuing when all other matters have been settled.
