@@ -1,6 +1,16 @@
 
 ## To Do
 
+- [ ] Pull column types into their own types file
+- [ ] Resolve type deficiencies with the current column types and task out additional work as needed
+- [ ] Add columns to TidyFeaturesRegistry (includes width)
+- [ ] Add column partitions (includes ordering and priority)
+- [ ] Add column components
+- [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
+- [ ] Ensure - I can use plain JavaScript to alter an existing column
+- [ ] Ensure - I can use plain JavaScript to remove a column from the registry
+- [ ] Ensure - I can use plain JavaScript to remove a column from a partition or from all partitions
+- [ ] Consider - Do I need helpers for outside callers to get columns partitioned properly? Seems like a lot of work they'd have to do, otherwise... Maybe some code examples will clear it up.
 - [ ] Consider - types/index.ts to export all into a pure barrel file, and import from `@/types` wherever types are needed
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
