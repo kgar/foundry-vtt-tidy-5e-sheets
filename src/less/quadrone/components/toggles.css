@@ -9,7 +9,7 @@
       position: relative;
       background-color: rgba(0, 0, 0, 0.50);
       border: none;
-      transition: background-color 0.5s ease, border-color 0.5s ease;
+      transition: background-color var(--t5e-transition-default), border-color var(--t5e-transition-default);
       border-radius: 2rem;
       border: 0.0625rem solid var(--t5e-component-field-border);
 
@@ -18,7 +18,7 @@
       }
 
       .thumb-icon {
-        background-color: var(--t5e-color-palette-white);
+        background-color: var(--t5e-color-text-lighter);
         border-radius: 100%;
         font-size: calc(0.6875rem);
         position: absolute;
@@ -32,7 +32,11 @@
         inset-block-end: 0;
         align-self: center;
         inset-inline-start: 0.125rem;
-        transition: all var(--t5e-transition-default);
+
+        /* transition: all var(--t5e-transition-default); */
+        &:before {
+          margin-block-start: 0.5px;
+        }
       }
 
       &[aria-checked='true'] {
@@ -40,6 +44,7 @@
         background-color: oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h);
 
         .thumb-icon {
+          background-color: var(--t5e-color-text-default);
           transform: translateX(1rem);
         }
 
@@ -54,7 +59,7 @@
 
       &:hover {
         cursor: pointer;
-        background-color: var(--t5e-theme-color-default);
+        background-color: var(--t5e-theme-color-lighter);
 
         .thumb-icon {
           background-color: var(--t5e-color-palette-white);

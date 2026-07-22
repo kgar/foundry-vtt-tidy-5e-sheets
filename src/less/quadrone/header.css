@@ -258,6 +258,7 @@
         flex: 1;
         margin-block: 0 var(--t5e-size-halfx);
         margin-inline: var(--t5e-size-2x);
+        /* padding-block: 0.5rem; */
         height: 2.75rem;
       }
 

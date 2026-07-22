@@ -46,7 +46,6 @@
     .window-title {
       color: var(--t5e-color-text-default);
       font: var(--t5e-font-label-medium);
-      margin-block-end: 0.0625rem;
     }
 
     .header-control {
@@ -101,7 +100,9 @@
       color: var(--t5e-theme-color-foreground-diminished);
       transition: all var(--t5e-transition-default);
 
-      &:hover {
+      &:hover,
+      &:focus-within,
+      &:active {
         color: var(--t5e-theme-color-foreground);
         border-radius: 100%;
         background: rgba(0, 0, 0, 0.12);
@@ -116,7 +117,9 @@
       button.header-control {
         color: var(--t5e-text-icon-lighter);
 
-        &:hover {
+        &:hover,
+        &:focus-within,
+        &:active {
           color: var(--t5e-color-icon-default);
         }
       }
@@ -487,7 +490,7 @@
     border: none;
     background: var(--t5e-enricher-background);
     padding-block-start: var(--t5e-size-1) var(--t5e-size-halfx);
-    padding-inline: 0.1875rem;
+    padding-inline: var(--t5e-size-1) var(--t5e-size-halfx);
 
     &:has(.enricher-action) {
       padding-inline-end: 0;
@@ -644,18 +647,33 @@
 
     &.minimized .window-header {
       background: var(--t5e-component-card-darker);
+
+      button.header-control:hover,
+      button.header-control:focus-within,
+      button.header-control:active {
+        background: rgba(0, 0, 0, 1);
+        border-color: transparent;
+      }
     }
 
     .window-header {
-      button.header-control:hover {
+
+      button.header-control:hover,
+      button.header-control:focus-within,
+      button.header-control:active {
         background: rgba(0, 0, 0, 0.5);
+        border-color: transparent;
       }
     }
 
     .controls-dropdown {
       .header-control > button {
-        &:hover {
+
+        &:hover,
+        &:focus-within,
+        &:active {
           background: rgba(0, 0, 0, 1);
+          border-color: transparent;
         }
       }
     }
@@ -700,7 +718,9 @@
       button.header-control {
         color: var(--t5e-color-icon-button);
 
-        &:hover {
+        &:hover,
+        &:focus-within,
+        &:active {
           color: var(--t5e-color-icon-default);
         }
       }

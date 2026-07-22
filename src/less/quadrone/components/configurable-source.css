@@ -1,4 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone) {
+
   /* Configurable Source */
   .configurable-source {
     display: flex;
@@ -9,7 +10,6 @@
       display: flex;
       align-items: center;
       justify-self: center;
-    
       background: none;
       border: none;
       padding: 0;
@@ -17,14 +17,14 @@
       color: var(--t5e-color-text-lighter);
       width: 1.75rem;
       height: 1.75rem;
-    
+
       &:hover,
       &:focus {
         background: none;
         border: none;
         color: var(--t5e-color-text-default);
       }
-    
+
       i {
         font-size: 0.8125rem;
       }
@@ -32,13 +32,8 @@
   }
 
   .source-text {
-    color: var(--t5e-color-text-lighter, #4b4a44);
-    font-size: 0.8125rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-top: 0.125rem;
-
+    color: var(--t5e-color-text-lightest, #4b4a44);
+    font: var(--t5e-font-body-medium);
     flex: 1;
     min-width: 0;
   }

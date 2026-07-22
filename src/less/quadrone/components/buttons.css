@@ -59,7 +59,7 @@
     &:active:not(:disabled) {
       --icon-fill: var(--t5e-theme-color-foreground-diminished);
       color: var(--button-text);
-      border: 0.0625rem solid var(--button-border);
+      border: var(--t5e-size-1) solid var(--button-border);
       background: var(--button-background);
 
       :where(i) {
@@ -72,7 +72,7 @@
     }
 
     &.button-secondary {
-      border: 0.0625rem solid var(--button-border);
+      border: var(--t5e-size-1) solid var(--button-border);
       background: var(--button-background);
       color: var(--button-text);
 
@@ -90,7 +90,7 @@
 
     &.button {
       background: var(--button-background);
-      border: 0.0625rem solid var(--button-border);
+      border: var(--t5e-size-1) solid var(--button-border);
       color: var(--button-text);
       --icon-color: var(--button-icon);
 
@@ -238,8 +238,8 @@
   .button-group {
     box-sizing: border-box;
     box-shadow: var(--t5e-drop-shadow-field);
-    border: 0.0625rem solid var(--t5e-component-field-border);
-    border-radius: 0.125rem;
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+    border-radius: var(--t5e-size-halfx);
     display: flex;
     flex-direction: row;
     gap: 0;
@@ -248,12 +248,12 @@
     &.wrap {
       height: auto;
       flex-wrap: wrap;
-      background-color: var(--t5e-color-gold);
-      gap: 0.0625rem;
+      background-color: var(--t5e-component-field-border);
+      gap: var(--t5e-size-1);
 
       .tab-option {
         border: none;
-        border-radius: 0.0625rem;
+        border-radius: var(--t5e-size-1);
         flex: 1 1 auto;
       }
     }
@@ -265,10 +265,10 @@
     :is(button, .button) {
       --button-padding-inline-start: 0.625rem;
       --button-padding-inline-end: 0.625rem;
-      border-width: 0 0.0625rem 0 0;
+      border-width: 0 var(--t5e-size-1) 0 0;
       box-shadow: none;
       min-height: calc(var(--t5e-field-size-default) - 0.125rem);
-      outline: 0.0625rem solid transparent;
+      outline: var(--t5e-size-1) solid transparent;
 
       &:hover,
       &:active,
@@ -277,7 +277,7 @@
           outline-color: var(--t5e-component-field-border-hover);
 
           &:not(:last-child) {
-            border-width: 0 0.0625rem 0 0;
+            border-width: 0 var(--t5e-size-1) 0 0;
           }
         }
       }
@@ -354,7 +354,7 @@
         font-size: 0.5rem;
         position: absolute;
         right: 0.125rem;
-        bottom: 0.0625rem;
+        bottom: var(--t5e-size-1);
         color: var(--t5e-color-gold);
       }
 
@@ -371,7 +371,7 @@
       flex-direction: column;
       gap: 0.5rem;
       background: var(--t5e-component-card-darker);
-      border: 0.0625rem solid var(--t5e-component-field-border);
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border);
       border-radius: 0.25rem;
       z-index: 2;
       white-space: nowrap;
@@ -418,7 +418,7 @@
 
     menu {
       width: fit-content;
-      border: 0.0625rem solid var(--t5e-component-field-border);
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border);
       gap: 1.125rem;
       min-width: 16.25rem;
       max-width: 35rem;
@@ -503,15 +503,6 @@
     :is(button, .button) {
       &.exclude {
         background: transparent;
-      }
-
-      &.button-toggle,
-      &.button-primary {
-        --button-border: var(--button-background);
-
-        &:hover:not(:disabled) {
-          --button-border-hover: var(--button-background-hover);
-        }
       }
 
       &.button-icon-only:not(:disabled):hover {

@@ -14,13 +14,13 @@
 
 <button
   type="button"
-  class="button button-borderless"
+  class="button button-borderless button-icon-only"
   title={FoundryAdapter.localize(command.tooltip ?? '')}
   onclick={(event) => command.execute?.({ event, item: item })}
   tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+  data-tooltip={FoundryAdapter.localize(command.label ?? '')}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>
   {/if}
-  {FoundryAdapter.localize(command.label ?? '')}
 </button>
