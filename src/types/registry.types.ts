@@ -11,7 +11,7 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
-// TOOD: Use a sheets barrel
+// TODO: Use a sheets barrel
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
