@@ -1,11 +1,17 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
   import { error } from 'src/utils/logging';
   import ListItemsTooltip from 'src/tooltips/ListItemsTooltip.svelte';
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
+  import type { ActivityItemContext } from 'src/types/types';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Activity5e;
+    rowContext: ActivityItemContext;
+  };
+
+  let { rowDocument, rowContext }: Props = $props();
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
@@ -23,7 +29,9 @@
   }
 
   let tooltip = $state<ListItemsTooltip>();
-  let labels = $derived(rowDocument.labels.damages?.map((d: any) => d.label) ?? []);
+  let labels = $derived(
+    rowDocument.labels.damages?.map((d: any) => d.label) ?? [],
+  );
 </script>
 
 <ListItemsTooltip
@@ -38,7 +46,9 @@
 >
   {#each rowDocument.labels.damages ?? [] as damage}
     {const formula = $derived(getTrimmedExpression(damage.formula))}
-    {const damageHealingIcon = $derived(damageHealingTypeIcons[damage.damageType])}
+    {const damageHealingIcon = $derived(
+      damageHealingTypeIcons[damage.damageType],
+    )}
     <div class="flexrow damage-formula-container">
       <span class="flexshrink damage-formula truncate">{formula}</span>
       {#if damageHealingIcon}

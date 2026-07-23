@@ -75,11 +75,7 @@
     ),
   )}
 
-  <ActivityUsesColumn
-    rowContext={ctx}
-    rowDocument={ctx.activity}
-    section={SheetSections.EMPTY}
-  />
+  <ActivityUsesColumn rowContext={ctx} rowDocument={ctx.activity} />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

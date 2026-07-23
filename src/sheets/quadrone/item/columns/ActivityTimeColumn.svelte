@@ -1,10 +1,14 @@
 <script lang="ts">
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
 
-  let { rowDocument: activity, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Activity5e;
+  };
+
+  let { rowDocument: activity }: Props = $props();
 
   let inferredActivation = $derived(activity.activation);
 
@@ -30,7 +34,9 @@
 
 {#if !isNil(text, '')}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {!isNil(inferredActivation?.value) ? inferredActivation?.value + '&nbsp;' : ''}
+    {!isNil(inferredActivation?.value)
+      ? inferredActivation?.value + '&nbsp;'
+      : ''}
     {localize(text).trim()}
   </span>
 {:else}

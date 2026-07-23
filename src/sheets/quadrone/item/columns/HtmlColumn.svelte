@@ -1,7 +1,9 @@
 <script lang="ts">
-  type Props = string;
+  type Props = {
+    html: string;
+  };
 
-  let html: Props = $props();
+  let { html }: Props = $props();
 </script>
 
 {@html html}

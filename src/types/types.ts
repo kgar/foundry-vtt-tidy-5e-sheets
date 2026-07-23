@@ -56,7 +56,10 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
-import type { SectionColumnContext } from './columns.types';
+import type {
+  SectionColumnContext,
+  SectionColumnSpecificationsV2,
+} from './columns.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -236,10 +239,12 @@ export type FacilitySection = {
   items: Item5e[];
 } & TidySectionBase;
 
-export type ActivitySection = {
+export type ActivitySection = Omit<TidySectionBase, 'columns'> & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-} & TidySectionBase;
+  // TODO: Find all instances of this override and remove after mainlining v2 into section base
+  columns: SectionColumnSpecificationsV2;
+};
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
@@ -412,8 +417,7 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
+  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -425,8 +429,7 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  | SheetPinItemContext
-  | SheetPinActivityContext
+  SheetPinItemContext | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -892,11 +895,7 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'rounded';
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1036,8 +1035,7 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  | HTMLElement
-  | { get(index: number): HTMLElement };
+  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;

@@ -10,16 +10,13 @@
   import { CONSTANTS } from 'src/constants';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
-  import type {
-    ItemAdvancementRowAction,
-    ItemAdvancementRowActionPropsData,
-  } from 'src/types/row-actions.types';
+  import type { ItemAdvancementRowAction } from 'src/types/row-actions.types';
   import RowActionsColumn from '../columns/RowActionsColumn.svelte';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
 
   let localize = FoundryAdapter.localize;
 
@@ -80,7 +77,7 @@
             </h3>
           </TidyTableHeaderCell>
 
-          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+          <TidyTableCustomHeaderCellsV2 {context} {hiddenColumns} {section} />
 
           <TidyTableHeaderCell
             class="header-cell-actions"
@@ -127,7 +124,7 @@
                 </div>
               </TidyTableCell>
 
-              <TidyTableCustomCells
+              <TidyTableCustomCellsV2
                 {context}
                 ctx={advancement}
                 entry={advancement}

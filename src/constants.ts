@@ -15,9 +15,9 @@ export const CONSTANTS = {
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
   COLUMN_KEY_ROW_ACTIONS: 'actions',
   COLUMN_SPEC_SECTION_KEY_DEFAULT:
-    'default section key fallback for column specs',
-  COLUMN_SPEC_TAB_KEY_DEFAULT: 'default tab key fallback for column specs',
-  COLUMN_SPEC_TYPE_KEY_DEFAULT: 'default sheet type fallback for column specs',
+    'tidy5e-sheet-default',
+  COLUMN_SPEC_TAB_KEY_DEFAULT: 'tidy5e-sheet-default',
+  COLUMN_SPEC_TYPE_KEY_DEFAULT: 'tidy5e-sheet-default',
   SECTION_KEY_ASSIGNED: 'assigned',
   SECTION_KEY_UNASSIGNED: 'unassigned',
   SECTION_KEY_PASSENGERS: 'passengers',

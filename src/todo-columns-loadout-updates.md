@@ -1,7 +1,14 @@
 
 ## To Do
 
+- [ ] Implement the new column setup end-to-end with Activities to feel out the process and vet what works best
+- [ ] Now ItemAdvancement
 - [ ] Resolve type deficiencies with the current column types and task out additional work as needed
+- [ ] Design the registry types
+- [ ] Design the partitions types
+- [ ] Add common, general-purpose column components that provide universally common things—value/max, meter, meter with value/max, value, incrementer input, etc.
+- [ ] Finalize the other domains (most likely going to match Row Action domains)
+- [ ] Implement column registry and partitions for each of the domains
 - [ ] Add columns to TidyFeaturesRegistry (includes width)
 - [ ] Add column partitions (includes ordering and priority)
 - [ ] Add column components
@@ -13,6 +20,8 @@
 - [ ] Consider - types/index.ts to export all into a pure barrel file, and import from `@/types` wherever types are needed
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
+- [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
+- [ ] The "Column" components are not really columns. They are column (header) contents.
 
 ## After Next Release
 

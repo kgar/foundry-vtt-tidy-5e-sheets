@@ -20,6 +20,8 @@
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCellsV2 from './parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from './parts/TidyTableCustomHeaderCellsV2.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -36,11 +38,11 @@
 
   let section = $derived({
     ...SheetSections.EMPTY,
-    columns: ActivityColumnRuntime.getColumnSpecifications(
-      item,
-      CONSTANTS.TAB_ITEM_ACTIVITIES,
-      'activity',
-    ),
+    columns: ActivityColumnRuntime.getColumnSpecifications({
+      sheetDocumentType: item.type,
+      tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
+      sectionKey: 'activity',
+    }),
   });
 
   const rowActionInfo = $derived(
@@ -67,7 +69,7 @@
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>
-      <TidyTableCustomHeaderCells {hiddenColumns} {section} {context} />
+      <TidyTableCustomHeaderCellsV2 {hiddenColumns} {section} {context} />
       <TidyTableHeaderCell columnWidth="{rowActionInfo.widthRems}rem"
       ></TidyTableHeaderCell>
     </TidyTableHeaderRow>
@@ -112,7 +114,7 @@
           </span>
         </TidyTableCell>
 
-        <TidyTableCustomCells
+        <TidyTableCustomCellsV2
           {hiddenColumns}
           {ctx}
           entry={ctx.activity}

@@ -338,11 +338,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               ),
             )
             .sort((a: any, b: any) => a.sort - b.sort),
-          columns: ActivityColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_ITEM_ACTIVITIES,
-            CONSTANTS.TAB_ITEM_ACTIVITIES,
-          ),
+          columns: ActivityColumnRuntime.getColumnSpecifications({
+            sheetDocumentType: this.document,
+            tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
+            sectionKey: CONSTANTS.TAB_ITEM_ACTIVITIES,
+          }),
           show: true,
           dataset: {},
           label: 'DND5E.ACTIVITY.Title.other',
@@ -903,11 +903,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ([level, context]: [string, AdvancementSectionContext]) => ({
         key: level,
         show: true,
-        columns: AdvancementColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT,
-          level,
-        ),
+        columns: AdvancementColumnRuntime.getColumnSpecifications({
+          sheetDocumentType: this.document.type,
+          tabId: CONSTANTS.TAB_ITEM_ADVANCEMENT,
+          sectionKey: level,
+        }),
         configured: context.configured,
         items: context.items,
         label:

@@ -25,6 +25,7 @@ import type {
   ItemAdvancementRowAction,
   ItemRowAction,
 } from './row-actions.types';
+import type { SectionColumnSpecificationsV2 } from './columns.types';
 
 export type PropertyContext = {
   active: string[];
@@ -156,9 +157,10 @@ export type ItemNameContext = {
 
 export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
 
-export type ActivitySectionQuadrone = {
+export type ActivitySectionQuadrone = Omit<TidySectionBase, 'columns'> & {
   activities: ActivityItemContext[];
-} & TidySectionBase;
+  columns: SectionColumnSpecificationsV2;
+};
 
 export type ItemSheetQuadroneContext = {
   activities: ActivitySectionQuadrone[];
@@ -417,9 +419,10 @@ export type ContainerContents = {
   itemContext: Record<string, ContainerItemContext>;
 };
 
-export type AdvancementSection = TidySectionBase & {
+export type AdvancementSection = Omit<TidySectionBase, 'column'> & {
   items: AdvancementItemContext[];
   configured: 'partial' | 'full' | false;
+  columns: SectionColumnSpecificationsV2;
 };
 
 export type AdvancementItemContext = {

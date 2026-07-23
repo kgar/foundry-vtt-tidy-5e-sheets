@@ -5,8 +5,15 @@
   import type { ColumnCellProps } from 'src/types/columns.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
+  import type { ActivityItemContext } from 'src/types/types';
 
-  let { rowDocument: activity, rowContext: ctx }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Activity5e;
+    rowContext: ActivityItemContext;
+  };
+
+  let { rowDocument: activity, rowContext: ctx }: Props = $props();
 
   let conceal = $derived(activity.item.system.identified === false);
 

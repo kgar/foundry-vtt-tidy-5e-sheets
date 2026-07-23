@@ -2,16 +2,37 @@ import type { Component, ComponentProps } from 'svelte';
 import type { ClassValue } from 'svelte/elements';
 import type { TidySectionBase } from './types';
 
-type ColumnHeaderV2<
+export type ColumnHeaderPropsData<TSheetDocument, TSheetContext> = {
+  sheetDocument: TSheetDocument;
+  sheetContext: TSheetContext;
+};
+
+export type ColumnHeaderV2<
   TSheetDocument,
   TSheetContext,
   TComponent extends Component<any> = Component<any>,
 > = {
   component: TComponent;
-  props: (args: {
-    document: TSheetDocument;
-    context: TSheetContext;
-  }) => ComponentProps<TComponent>;
+  props: (
+    args: ColumnHeaderPropsData<TSheetDocument, TSheetContext>,
+  ) => ComponentProps<TComponent>;
+  /**
+   * Denotes the classes to place on the Tidy Table Header Cell
+   * which encloses this content.
+   */
+  classes?: ClassValue;
+};
+
+export type ColumnCellPropsData<
+  TSheetDocument,
+  TSheetContext,
+  TRowDocument,
+  TRowContext,
+> = {
+  sheetDocument: TSheetDocument;
+  sheetContext: TSheetContext;
+  rowDocument: TRowDocument;
+  rowContext: TRowContext;
 };
 
 type ColumnCellV2<
@@ -22,12 +43,19 @@ type ColumnCellV2<
   TComponent extends Component<any> = Component<any>,
 > = {
   component: TComponent;
-  props: (args: {
-    sheetDocument: TSheetDocument;
-    sheetContext: TSheetContext;
-    rowDocument: TRowDocument;
-    rowContext: TRowContext;
-  }) => ComponentProps<TComponent>;
+  props: (
+    args: ColumnCellPropsData<
+      TSheetDocument,
+      TSheetContext,
+      TRowDocument,
+      TRowContext
+    >,
+  ) => ComponentProps<TComponent>;
+  /**
+   * Denotes the classes to place on the Tidy Table Cell
+   * which encloses this content.
+   */
+  classes?: ClassValue;
 };
 
 // The column you store in the registry
@@ -36,11 +64,17 @@ export type ColumnSpecificationV2<
   TSheetContext,
   TRowDocument,
   TRowContext,
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
 > = {
-  header: ColumnHeaderV2<TSheetDocument, TSheetContext>;
-  headerClasses?: ClassValue;
-  cell: ColumnCellV2<TSheetDocument, TSheetContext, TRowDocument, TRowContext>;
-  cellClasses?: ClassValue;
+  header: ColumnHeaderV2<TSheetDocument, TSheetContext, TColumnHeaderContent>;
+  cell: ColumnCellV2<
+    TSheetDocument,
+    TSheetContext,
+    TRowDocument,
+    TRowContext,
+    TColumnCellContent
+  >;
   widthRems: number;
   condition?: (
     data: ColumnSpecificationConditionArgs<TSheetDocument>,
@@ -48,18 +82,12 @@ export type ColumnSpecificationV2<
 };
 
 export type ColumnPartitions = {
-  // Document Name may not be necessary since Tidy doesn't have document type name collisions between Actor and Item.
-  // But it'd be future-proof for further Tidy expansion 💀
-  [documentName: string]: {
-    [documentType: string]: {
-      [tabId: string]: {
-        [sectionKey: string]: {
-          // Question: how do I correlate a column key to a domain?
-          // Answer: You would need to have a full partition spec for each domain.
-          // Question: do I implement column domains?
-          // Answer: <researching> 🥼
-          [columnKey: string]: ColumnSpecificationPartitionData;
-        };
+  [documentType: 'tidy5e-sheet-default' | string]: {
+    [tabId: 'tidy5e-sheet-default' | string]: {
+      [sectionKey: 'tidy5e-sheet-default' | string]: {
+        [
+          columnKey: 'tidy5e-sheet-default' | string
+        ]: ColumnSpecificationPartitionData;
       };
     };
   };
@@ -71,19 +99,27 @@ export type ColumnSpecificationPartitionData = {
 };
 
 export type ConfiguredColumnSpecificationV2<
-  TSheetDocument,
-  TSheetContext,
-  TRowDocument,
-  TRowContext,
+  TSheetDocument extends object = any,
+  TSheetContext extends object = any,
+  TRowDocument extends object = any,
+  TRowContext extends object = any,
 > = ColumnSpecificationV2<
   TSheetDocument,
   TSheetContext,
   TRowDocument,
   TRowContext
-> & {
-  priority: number;
-  order: number;
+> &
+  ColumnSpecificationPartitionData & {
+    key: string;
+  };
+
+export type SectionColumnSpecificationsV2 = {
+  sorted: (keyof SectionColumnSpecificationsV2['map'])[];
+  prioritized: (keyof SectionColumnSpecificationsV2['map'])[];
+  map: Record<string, ConfiguredColumnSpecificationV2>;
 };
+
+// V1
 
 export type ColumnSpecification = {
   headerContent?:
@@ -192,3 +228,9 @@ export type DefaultTableColumn = Omit<
 >;
 
 export type DefaultTableColumns = Record<string, DefaultTableColumn>;
+
+export type ColumnPartitionOptions = {
+  sheetDocumentType?: string;
+  tabId?: string;
+  sectionKey?: string;
+};

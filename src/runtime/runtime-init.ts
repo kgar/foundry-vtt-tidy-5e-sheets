@@ -22,8 +22,6 @@ export function initRuntime() {
  */
 export function initRuntimeOnReady() {
   // Columns
-  ActivityColumnRuntime.initOnReady();
-  AdvancementColumnRuntime.initOnReady();
   EffectColumnRuntime.initOnReady();
   EncounterMemberColumnRuntime.initOnReady();
   GroupMemberColumnRuntime.initOnReady();
