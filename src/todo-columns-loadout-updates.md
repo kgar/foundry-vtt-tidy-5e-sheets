@@ -26,3 +26,36 @@
 - [ ] // TODO: Determine how to make managing row action styles less hardcoded and more configured.
 - [ ] Try a CSS Grid / Sub-grid approach Tidy tables. This would eliminate the need to calculate row actions width and open lots of doors, if it were performant.
 - [ ] Write a script that takes an allowlist of svelte directories and generates `_module.ts` files for them. It includes named exports such as `export {default as AttuneButton} from "./AttuneButton.svelte";`
+
+## Scratch Notes 🐕
+
+### Column Domains?
+
+Sometimes, there's a very strong domain identity like Vehicle Item or Vehicle Member, which can be solely dependent upon row context. Other times, the domain is weaker or more generic, like ItemUsesColumn, which can be used across inventory items, spell items, feature items, etc.
+
+Ad hoc domains I see in the column files:
+
+- advancement
+- inventory
+- spell
+- feature
+- item (that's any item, it doesn't use rowContext at all or rowContext is `any`)
+- groupMember
+- container
+- activity
+- effect
+- encounterMember
+- actor (groupMember / encounterMember)
+- vehicleMember (crew / draft animal / passenger)
+- vehicleItem
+- vehicleUnassignedPassengers (unassigned crew / passengers)
+
+Domains to support:
+
+It really seems like row actions' domains work perfectly for columns as well. Well, almost perfectly. I think there will need to be some duplication of registry data--e.g., some spell and inventory registrations will use the same column--but the important part is that the responsibility to pass correct information to the column component is enforced in both locations. The only real downside here is the amount of extra labor to change a fundamental column across multiple domains, which is really a non-issue when it comes to customizing Foundry.
+
+Consider - the emergence of these commonly held domains means we can potentially design the type definitions with a central list of domains in mind, enforcing holistic updates when adding new domains or changing existing ones. In the case of columns, it adds some duplication around registering columns, but ultimately, it will pay off in consistency and cohesiveness of design.. I think. I'll have to try it out.
+
+### Column Props?
+
+Column props have rigidly adhered to `ColumnCellProps<TDocument = any, TContext = any, TSection = TidySectionBase>` and specified their required document/context/(sometimes?) section within the component. This has led to something of a Type disconnect where some columns can be bandied about

@@ -1,6 +1,89 @@
-import type { Component } from "svelte";
-import type { ClassValue } from "svelte/elements";
-import type { TidySectionBase } from "./types";
+import type { Component, ComponentProps } from 'svelte';
+import type { ClassValue } from 'svelte/elements';
+import type { TidySectionBase } from './types';
+
+type ColumnHeaderV2<
+  TSheetDocument,
+  TSheetContext,
+  TComponent extends Component<any> = Component<any>,
+> = {
+  component: TComponent;
+  props: (args: {
+    document: TSheetDocument;
+    context: TSheetContext;
+  }) => ComponentProps<TComponent>;
+};
+
+type ColumnCellV2<
+  TSheetDocument,
+  TSheetContext,
+  TRowDocument,
+  TRowContext,
+  TComponent extends Component<any> = Component<any>,
+> = {
+  component: TComponent;
+  props: (args: {
+    sheetDocument: TSheetDocument;
+    sheetContext: TSheetContext;
+    rowDocument: TRowDocument;
+    rowContext: TRowContext;
+  }) => ComponentProps<TComponent>;
+};
+
+// The column you store in the registry
+export type ColumnSpecificationV2<
+  TSheetDocument,
+  TSheetContext,
+  TRowDocument,
+  TRowContext,
+> = {
+  header: ColumnHeaderV2<TSheetDocument, TSheetContext>;
+  headerClasses?: ClassValue;
+  cell: ColumnCellV2<TSheetDocument, TSheetContext, TRowDocument, TRowContext>;
+  cellClasses?: ClassValue;
+  widthRems: number;
+  condition?: (
+    data: ColumnSpecificationConditionArgs<TSheetDocument>,
+  ) => boolean;
+};
+
+export type ColumnPartitions = {
+  // Document Name may not be necessary since Tidy doesn't have document type name collisions between Actor and Item.
+  // But it'd be future-proof for further Tidy expansion 💀
+  [documentName: string]: {
+    [documentType: string]: {
+      [tabId: string]: {
+        [sectionKey: string]: {
+          // Question: how do I correlate a column key to a domain?
+          // Answer: You would need to have a full partition spec for each domain.
+          // Question: do I implement column domains?
+          // Answer: <researching> 🥼
+          [columnKey: string]: ColumnSpecificationPartitionData;
+        };
+      };
+    };
+  };
+};
+
+export type ColumnSpecificationPartitionData = {
+  priority: number;
+  order: number;
+};
+
+export type ConfiguredColumnSpecificationV2<
+  TSheetDocument,
+  TSheetContext,
+  TRowDocument,
+  TRowContext,
+> = ColumnSpecificationV2<
+  TSheetDocument,
+  TSheetContext,
+  TRowDocument,
+  TRowContext
+> & {
+  priority: number;
+  order: number;
+};
 
 export type ColumnSpecification = {
   headerContent?:
