@@ -539,8 +539,8 @@
   }
 
   .tidy-table-row {
-    padding-block-end: var(--t5e-size-halfx);
-    padding-block-start: var(--t5e-size-halfx);
+    padding-inline-start: 0.1875rem;
+    padding-block: var(--t5e-size-halfx);
   }
 
   &.container {
