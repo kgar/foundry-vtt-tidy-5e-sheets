@@ -37,18 +37,18 @@
   }: Props = $props();
 
   function change(path: string, delta: number) {
-    if (spentPath && !isNil(max)) {
-      value += delta;
-      const uses = clamp(0, value, max);
-      const spent = max - uses;
+    let newValue = value + delta;
 
-      return actor.update({
-        [spentPath]: spent,
-      });
+    if (spentPath && !isNil(max)) {
+      const spent = max - clamp(0, newValue, max);
+
+      // change reality to accommodate `spent`
+      newValue = spent;
+      path = spentPath;
     }
 
     return actor.update({
-      [path]: value + delta,
+      [path]: newValue,
     });
   }
 </script>

@@ -36,13 +36,13 @@
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {inferredActivation?.value != null && inferredActivation?.value !== '' ? inferredActivation.value + '&nbsp;' : ''}
+    {@html inferredActivation?.value != null && inferredActivation?.value !== '' ? inferredActivation.value + '&nbsp;' : ''}
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}
   {const fullLabel = $derived(getFullLabel().trim())}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {fullLabel.trim()}
+    {@html fullLabel.trim()}
   </span>
 {:else}
   <span class="color-text-disabled">—</span>
