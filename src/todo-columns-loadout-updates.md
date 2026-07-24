@@ -1,18 +1,22 @@
 
 ## To Do
 
-- [ ] upgrade containerContents
-- [ ] upgrade effect
-- [ ] upgrade encounterCombatant
-- [ ] upgrade encounterMember
-- [ ] upgrade feature
-- [ ] upgrade groupMember
-- [ ] upgrade inventory
-- [ ] upgrade spell
-- [ ] upgrade vehicleAssignedCrew
-- [ ] upgrade vehicleDraftAnimal
-- [ ] upgrade vehiclePassenger
-- [ ] upgrade vehicleUnassignedCrew
+- [ ] implement inventory columns / partition
+  - WIP - src\registry\features\columns.ts - customizing props for the column components and implementing prop callbacks
+- [ ] implement containerContents columns / partition
+- [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
+- [ ] be able to specify width and condition overrides in column partition data ;)
+- [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
+- [ ] implement effect columns / partition
+- [ ] implement encounterCombatant columns / partition
+- [ ] implement encounterMember columns / partition
+- [ ] implement feature columns / partition
+- [ ] implement groupMember columns / partition
+- [ ] implement spell columns / partition
+- [ ] implement vehicleAssignedCrew columns / partition
+- [ ] implement vehicleDraftAnimal columns / partition
+- [ ] implement vehiclePassenger columns / partition
+- [ ] implement vehicleUnassignedCrew columns / partition
 - [ ] Resolve type deficiencies with the current column types and task out additional work as needed
 - [ ] Design the registry types
 - [ ] Design the partitions types
@@ -33,6 +37,8 @@
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
 - [ ] The "Column" components are not really columns. They are column (header) contents.
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
+- [ ] // TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
+- [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 
 ## After Next Release
 

@@ -19,7 +19,20 @@ import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSh
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
-import type { ColumnPartitions, ColumnSpecificationV2 } from './columns.types';
+import type {
+  ActivityColumnSpec,
+  ColumnPartitions,
+  ColumnSpecificationV2,
+  EffectColumnSpec,
+  EncounterCombatantColumnSpec,
+  EncounterMemberColumnSpec,
+  GroupMemberColumnSpec,
+  ItemAdvancementColumnSpec,
+  ItemColumnSpec,
+  VehicleCrewColumnSpec,
+  VehicleDraftAnimalColumnSpec,
+  VehiclePassengerColumnSpec,
+} from './columns.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import type { ActivityItemContext, Actor5e } from './types';
 import type {
@@ -73,10 +86,10 @@ export type TidyComponentRegistry = {
  * A collection of features that can be configured and extended.
  */
 export type TidyFeatureRegistry = {
+  /** Configure columns for Tidy's tables. */
   columns: TidyColumnRegistry;
   /** Configure row actions for Tidy's tables. */
   rowActions: TidyRowActionRegistry;
-  // to do: columns
   // to do: tabs
   // to do: filters
   // to do: sort
@@ -89,19 +102,34 @@ export type TidyFeatureRegistry = {
 };
 
 export type TidyColumnRegistry = {
-  activity: Record<
-    string,
-    ColumnSpecificationV2<
-      Actor5e | Item5e,
-      any,
-      Activity5e,
-      ActivityItemContext
-    >
-  >;
-  itemAdvancement: Record<
-    string,
-    ColumnSpecificationV2<Item5e, any, Advancement5e, AdvancementItemContext>
-  >;
+  /** Columns for activities. */
+  activity: Record<string, ActivityColumnSpec>;
+  /** Columns for container contents. */
+  containerContents: Record<string, ItemColumnSpec>;
+  /** Columns for effects. */
+  effect: Record<string, EffectColumnSpec>;
+  /** Columns for encounter combatants. */
+  encounterCombatant: Record<string, EncounterCombatantColumnSpec>;
+  /** Columns for encounter members. */
+  encounterMember: Record<string, EncounterMemberColumnSpec>;
+  /** Columns for features. */
+  feature: Record<string, ItemColumnSpec>;
+  /** Columns for group members. */
+  groupMember: Record<string, GroupMemberColumnSpec>;
+  /** Columns for inventory (consumable, equipment, weapon, etc.)s. */
+  inventory: Record<string, ItemColumnSpec>;
+  /** Columns for item advancements. */
+  itemAdvancement: Record<string, ItemAdvancementColumnSpec>;
+  /** Columns for spells. */
+  spell: Record<string, ItemColumnSpec>;
+  /** Columns for a vehicle's assigned crews. */
+  vehicleAssignedCrew: Record<string, VehicleCrewColumnSpec>;
+  /** Columns for a vehicle's draft animals. */
+  vehicleDraftAnimal: Record<string, VehicleDraftAnimalColumnSpec>;
+  /** Columns for a vehicle's passengers. */
+  vehiclePassenger: Record<string, VehiclePassengerColumnSpec>;
+  /** Columns for a vehicle's unassigned crews. */
+  vehicleUnassignedCrew: Record<string, VehicleCrewColumnSpec>;
 };
 
 /**

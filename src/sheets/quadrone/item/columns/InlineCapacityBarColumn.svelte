@@ -1,17 +1,20 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
-  import type { ContainerItemContext } from 'src/types/item.types';
+  import type { ContainerContents } from 'src/types/item.types';
 
-  let { rowDocument, rowContext }: ColumnCellProps<any, ContainerItemContext> =
-    $props();
+  type Props = {
+    rowDocument: any;
+    containerContents?: ContainerContents;
+  };
+
+  let { rowDocument, containerContents }: Props = $props();
 </script>
 
 <div class="inline-container-capacity-bar">
-  {#if rowContext.containerContents}
+  {#if containerContents}
     <CapacityBar
       container={rowDocument}
-      capacity={rowContext.containerContents.capacity}
+      capacity={containerContents.capacity}
       showTracker={false}
     />
   {/if}

@@ -153,7 +153,7 @@ export type ActivityColumnSpec<
   TColumnCellContent
 >;
 
-export type AdvancementColumnSpec<
+export type ItemAdvancementColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
 > = ColumnSpecificationV2<
