@@ -339,9 +339,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             )
             .sort((a: any, b: any) => a.sort - b.sort),
           columns: ActivityColumnRuntime.getColumnSpecifications({
-            sheetDocumentType: this.document,
+            sheetDocument: this.document,
             tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
             sectionKey: CONSTANTS.TAB_ITEM_ACTIVITIES,
+            editable: documentSheetContext.editable,
+            owner: this.document.isOwner,
+            unlocked: documentSheetContext.unlocked,
           }),
           show: true,
           dataset: {},
@@ -904,9 +907,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         key: level,
         show: true,
         columns: AdvancementColumnRuntime.getColumnSpecifications({
-          sheetDocumentType: this.document.type,
+          sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ITEM_ADVANCEMENT,
           sectionKey: level,
+          editable: editable,
+          owner: this.document.isOwner,
+          unlocked: unlocked,
         }),
         configured: context.configured,
         items: context.items,

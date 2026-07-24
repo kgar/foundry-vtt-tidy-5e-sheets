@@ -39,9 +39,12 @@
   let section = $derived({
     ...SheetSections.EMPTY,
     columns: ActivityColumnRuntime.getColumnSpecifications({
-      sheetDocumentType: item.type,
+      sheetDocument: item,
       tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
       sectionKey: 'activity',
+      editable: context.editable,
+      owner: context.owner,
+      unlocked: context.unlocked,
     }),
   });
 

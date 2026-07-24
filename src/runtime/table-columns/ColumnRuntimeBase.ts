@@ -7,6 +7,8 @@ import type {
   ConfiguredColumnSpecificationV2,
 } from 'src/types/columns.types';
 import type { ColumnRegistryDomain, ColumnOf } from 'src/types/registry.types';
+import { checkCondition } from 'src/utils/iteration';
+import { warn } from 'src/utils/logging';
 
 export abstract class ColumnRuntimeBase<
   TDomain extends ColumnRegistryDomain,
@@ -21,7 +23,7 @@ export abstract class ColumnRuntimeBase<
     options: ColumnPartitionOptions,
   ): SectionColumnSpecificationsV2 {
     for (let type of [
-      options.sheetDocumentType,
+      options.sheetDocument.type,
       CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT,
     ]) {
       if (!type) {
@@ -61,6 +63,19 @@ export abstract class ColumnRuntimeBase<
               TColumnSpecification | undefined;
 
             if (!spec) {
+              warn('Column not found', false, {
+                domain: this.domain,
+                tab,
+                section,
+                key,
+                data,
+                options,
+              });
+
+              continue;
+            }
+
+            if (!checkCondition(spec, options)) {
               continue;
             }
 

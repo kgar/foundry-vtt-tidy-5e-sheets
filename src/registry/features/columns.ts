@@ -1,7 +1,11 @@
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import HtmlColumn from 'src/sheets/quadrone/item/columns/HtmlColumn.svelte';
 import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
-import type { ColumnSpecificationV2 } from 'src/types/columns.types';
+import type {
+  ActivityColumnSpec,
+  AdvancementColumnSpec,
+  ColumnSpecificationV2,
+} from 'src/types/columns.types';
 import type {
   Advancement5e,
   AdvancementItemContext,
@@ -14,30 +18,6 @@ import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeCol
 import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
 import type { Component } from 'svelte';
 import AdvancementValueColumn from 'src/sheets/quadrone/item/columns/AdvancementValueColumn.svelte';
-
-type ActivityDomainColumnSpec<
-  TColumnHeaderContent extends Component<any> = Component<any>,
-  TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
-  Actor5e | Item5e,
-  any,
-  Activity5e,
-  ActivityItemContext,
-  TColumnHeaderContent,
-  TColumnCellContent
->;
-
-type AdvancementDomainColumnSpec<
-  TColumnHeaderContent extends Component<any> = Component<any>,
-  TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
-  Item5e,
-  any,
-  Advancement5e,
-  AdvancementItemContext,
-  TColumnHeaderContent,
-  TColumnCellContent
->;
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -58,7 +38,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           classes: 'inline-uses',
         },
         widthRems: 5,
-      } satisfies ActivityDomainColumnSpec<
+      } satisfies ActivityColumnSpec<
         typeof HtmlColumn,
         typeof ActivityUsesColumn
       >,
@@ -77,7 +57,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 5,
-      } satisfies ActivityDomainColumnSpec<
+      } satisfies ActivityColumnSpec<
         typeof HtmlColumn,
         typeof ActivityTimeColumn
       >,
@@ -96,7 +76,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 5,
-      } satisfies ActivityDomainColumnSpec<
+      } satisfies ActivityColumnSpec<
         typeof HtmlColumn,
         typeof ActivityDamageFormulasColumn
       >,
@@ -114,7 +94,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 4,
-      } satisfies AdvancementDomainColumnSpec<
+      } satisfies AdvancementColumnSpec<
         typeof HtmlColumn,
         typeof AdvancementValueColumn
       >,

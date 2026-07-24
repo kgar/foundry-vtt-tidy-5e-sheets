@@ -1,6 +1,28 @@
 import type { Component, ComponentProps } from 'svelte';
 import type { ClassValue } from 'svelte/elements';
-import type { TidySectionBase } from './types';
+import type {
+  ActiveEffect5e,
+  ActiveEffectContext,
+  ActivityItemContext,
+  Actor5e,
+  EncounterMemberCombatantQuadroneContext,
+  EncounterMemberQuadroneContext,
+  EncounterPlaceholderQuadroneContext,
+  EncounterSheetQuadroneContext,
+  GroupMemberQuadroneContext,
+  GroupSheetQuadroneContext,
+  TidySectionBase,
+  VehicleCrewMemberContext,
+  VehicleDraftAnimalContext,
+  VehiclePassengerMemberContext,
+  VehicleSheetQuadroneContext,
+} from './types';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type {
+  Item5e,
+  Advancement5e,
+  AdvancementItemContext,
+} from './item.types';
 
 export type ColumnHeaderPropsData<TSheetDocument, TSheetContext> = {
   sheetDocument: TSheetDocument;
@@ -119,6 +141,126 @@ export type SectionColumnSpecificationsV2 = {
   map: Record<string, ConfiguredColumnSpecificationV2>;
 };
 
+export type ActivityColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e | Item5e,
+  any,
+  Activity5e,
+  ActivityItemContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type AdvancementColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Item5e,
+  any,
+  Advancement5e,
+  AdvancementItemContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type EncounterCombatantColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  EncounterSheetQuadroneContext,
+  Actor5e,
+  EncounterMemberCombatantQuadroneContext | EncounterPlaceholderQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type EncounterMemberColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  EncounterSheetQuadroneContext,
+  Actor5e,
+  EncounterMemberQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type GroupMemberColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  GroupSheetQuadroneContext,
+  Actor5e,
+  GroupMemberQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type ItemColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e | Item5e,
+  any,
+  Item5e,
+  any,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type EffectColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e | Item5e,
+  any,
+  ActiveEffect5e,
+  ActiveEffectContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type VehicleCrewColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  VehicleSheetQuadroneContext,
+  Actor5e,
+  VehicleCrewMemberContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type VehicleDraftAnimalColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  VehicleSheetQuadroneContext,
+  Actor5e,
+  VehicleDraftAnimalContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type VehiclePassengerColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecificationV2<
+  Actor5e,
+  VehicleSheetQuadroneContext,
+  Actor5e,
+  VehiclePassengerMemberContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
 // V1
 
 export type ColumnSpecification = {
@@ -194,7 +336,20 @@ export type ColumnCellProps<
 };
 
 export type ColumnSpecificationConditionArgs<TDocument = any> = {
+  /** The sheet document related to this usage of the column specification. */
   sheetDocument: TDocument;
+
+  /** The current user owns this document. */
+  owner: boolean;
+
+  /** The document is in Edit mode. */
+  unlocked: boolean;
+
+  /**
+   * The user has edit permissions to the document, and the document
+   * is not read-only / inside a locked compendium.
+   */
+  editable: boolean;
 };
 
 export type ColumnSpecSectionKeysToColumns = Record<
@@ -229,8 +384,10 @@ export type DefaultTableColumn = Omit<
 
 export type DefaultTableColumns = Record<string, DefaultTableColumn>;
 
-export type ColumnPartitionOptions = {
-  sheetDocumentType?: string;
+export type ColumnPartitionOptions = ColumnSpecificationConditionArgs & {
+  /** The relevant tab for these columns. If left blank, Tidy assumes the default/fallback columns. */
   tabId?: string;
+
+  /** The relevant section key for these columns.  If left blank, Tidy assumes the default/fallback columns. */
   sectionKey?: string;
 };

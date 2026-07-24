@@ -419,7 +419,7 @@ export type ContainerContents = {
   itemContext: Record<string, ContainerItemContext>;
 };
 
-export type AdvancementSection = Omit<TidySectionBase, 'column'> & {
+export type AdvancementSection = Omit<TidySectionBase, 'columns'> & {
   items: AdvancementItemContext[];
   configured: 'partial' | 'full' | false;
   columns: SectionColumnSpecificationsV2;

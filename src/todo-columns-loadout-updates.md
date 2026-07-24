@@ -1,8 +1,18 @@
 
 ## To Do
 
-- [ ] Implement the new column setup end-to-end with Activities to feel out the process and vet what works best
-- [ ] Now ItemAdvancement
+- [ ] upgrade containerContents
+- [ ] upgrade effect
+- [ ] upgrade encounterCombatant
+- [ ] upgrade encounterMember
+- [ ] upgrade feature
+- [ ] upgrade groupMember
+- [ ] upgrade inventory
+- [ ] upgrade spell
+- [ ] upgrade vehicleAssignedCrew
+- [ ] upgrade vehicleDraftAnimal
+- [ ] upgrade vehiclePassenger
+- [ ] upgrade vehicleUnassignedCrew
 - [ ] Resolve type deficiencies with the current column types and task out additional work as needed
 - [ ] Design the registry types
 - [ ] Design the partitions types
@@ -22,6 +32,7 @@
   - [ ] And partition types in whatever way makes the most sense.
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
 - [ ] The "Column" components are not really columns. They are column (header) contents.
+- [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 
 ## After Next Release
 
