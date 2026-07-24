@@ -1,8 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/columns.types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument: item, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Item5e;
+    // TODO: eliminate any
+    rowContext: any;
+  };
+
+  let { rowDocument: item, rowContext }: Props = $props();
 
   let weight = $derived(
     FoundryAdapter.formatNumber(

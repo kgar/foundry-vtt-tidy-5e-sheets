@@ -1,9 +1,8 @@
 
 ## To Do
 
-- [ ] implement inventory columns / partition
-  - WIP - src\registry\features\columns.ts - customizing props for the column components and implementing prop callbacks
-- [ ] implement containerContents columns / partition
+- [ ] Cross over inventory sections to new column runtime base
+- [ ] Cross over containerContents sections to new column runtime base
 - [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
 - [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 

@@ -151,6 +151,8 @@ export type TidyPartitionRegistry = {
    */
   columns: {
     activity: ColumnPartitions;
+    containerContents: ColumnPartitions;
+    inventory: ColumnPartitions;
     itemAdvancement: ColumnPartitions;
     // todo - the rest of the domains
   };

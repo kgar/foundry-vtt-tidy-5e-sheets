@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { VehicleItemQuadroneContext } from 'src/types/types';
-  import type { ColumnCellProps } from 'src/types/columns.types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let {
-    rowDocument,
-    rowContext,
-  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
+  type Props = {
+    rowDocument: Item5e;
+    rowContext: VehicleItemQuadroneContext;
+  };
+
+  let { rowDocument, rowContext }: Props = $props();
 
   const value = $derived(
     rowContext.crew?.filter((c) => c.actor && !c.brokenLink).length ?? 0,

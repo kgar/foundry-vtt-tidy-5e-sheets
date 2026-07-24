@@ -5,89 +5,10 @@ import type {
 import { CONSTANTS } from 'src/constants';
 import { getDefaultItemColumns } from './default-item-columns';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import VehicleItemHpColumn from 'src/sheets/quadrone/item/columns/VehicleItemHpColumn.svelte';
-import VehicleItemUsesColumn from 'src/sheets/quadrone/item/columns/VehicleItemUsesColumn.svelte';
-import VehicleItemCrewColumn from 'src/sheets/quadrone/item/columns/VehicleItemCrewColumn.svelte';
 
 class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
   getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
     const columns = getDefaultItemColumns();
-
-    const standardContainerColumns = {
-      capacityTracker: {
-        ...columns.capacityTracker,
-        order: 100,
-        priority: 200,
-      },
-      capacityBar: { ...columns.capacityBar, order: 200, priority: 100 },
-    } satisfies Record<string, ColumnSpecification>;
-
-    const standardInventoryColumns = {
-      uses: {
-        ...columns.uses,
-        order: 100,
-        priority: 400,
-      },
-      time: {
-        ...columns.time,
-        order: 200,
-        priority: 500,
-      },
-      price: {
-        ...columns.price,
-        order: 300,
-        priority: 100,
-      },
-      quantity: {
-        ...columns.quantity,
-        order: 400,
-        priority: 300,
-      },
-      weight: {
-        ...columns.weight,
-        order: 500,
-        priority: 200,
-      },
-    } satisfies Record<string, ColumnSpecification>;
-
-    const standardWeaponColumns = {
-      charges: {
-        ...columns.uses,
-        order: 100,
-        priority: 400,
-      },
-      time: {
-        ...columns.time,
-        order: 200,
-        priority: 500,
-      },
-      roll: {
-        ...columns.roll,
-        order: 300,
-        priority: 700,
-      },
-      formula: {
-        ...columns.formula,
-        order: 400,
-        priority: 600,
-      },
-      price: {
-        ...columns.price,
-        order: 500,
-        priority: 100,
-      },
-      quantity: {
-        ...columns.quantity,
-        order: 600,
-        priority: 300,
-      },
-      weight: {
-        ...columns.weight,
-        order: 700,
-        priority: 200,
-      },
-    } satisfies Record<string, ColumnSpecification>;
 
     const standardSpellColumns = {
       uses: {
@@ -106,7 +27,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         priority: 100,
       },
       time: {
-        ...standardInventoryColumns.time,
+        ...columns.time,
         order: 300,
         priority: 500,
       },
@@ -121,122 +42,15 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         priority: 600,
       },
       roll: {
-        ...standardWeaponColumns.roll,
+        ...columns.roll,
         order: 600,
         priority: 700,
       },
     } satisfies Record<string, ColumnSpecification>;
 
-    const standardLootColumns = {
-      price: {
-        ...columns.price,
-        order: 100,
-        priority: 200,
-      },
-      quantity: {
-        ...columns.quantity,
-        order: 200,
-        priority: 300,
-      },
-      weight: {
-        ...columns.weight,
-        order: 300,
-        priority: 100,
-      },
-    } satisfies Record<string, ColumnSpecification>;
-
-    const standardConsumableColumns = {
-      uses: {
-        ...columns.uses,
-        order: 100,
-        priority: 300,
-      },
-      time: {
-        ...columns.time,
-        order: 200,
-        priority: 500,
-      },
-      price: {
-        ...columns.price,
-        order: 300,
-        priority: 200,
-      },
-      quantity: {
-        ...columns.quantity,
-        order: 400,
-        priority: 400,
-      },
-      weight: {
-        ...columns.weight,
-        order: 500,
-        priority: 100,
-      },
-    } satisfies Record<string, ColumnSpecification>;
-
-    const creatureInventorySections = {
-      [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
-      [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
-      [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-      [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
-      [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
-    };
-
-    const vehicleItemColumns = {
-      hp: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.HP'),
-        },
-        cellContent: {
-          type: 'component',
-          component: VehicleItemHpColumn,
-        },
-        order: 10,
-        priority: 100,
-        widthRems: 5,
-      },
-      uses: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Uses'),
-        },
-        cellContent: {
-          type: 'component',
-          component: VehicleItemUsesColumn,
-        },
-        widthRems: 4,
-        order: 20,
-        priority: 100,
-      },
-      crew: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
-        },
-        cellContent: {
-          type: 'component',
-          component: VehicleItemCrewColumn,
-        },
-        widthRems: 4,
-        order: 30,
-        priority: 80,
-      },
-    } satisfies Record<string, ColumnSpecification>;
-
     return {
-      [CONSTANTS.SHEET_TYPE_CONTAINER]: {
-        [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
-          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
-        },
-      },
       [CONSTANTS.SHEET_TYPE_CHARACTER]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
-        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
-        },
+        // Feature
         [CONSTANTS.TAB_CHARACTER_FEATURES]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             uses: { ...columns.uses, order: 100, priority: 500 },
@@ -252,6 +66,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
         [CONSTANTS.TAB_STATBLOCK]: {
+          // inventory, spell, and feature
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },
             uses: { ...columns.uses, order: 200, priority: 600 },
@@ -262,16 +77,16 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
             time: { ...columns.time, order: 700, priority: 800 },
           },
         },
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
         [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          // Spell
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
-          [CONSTANTS.ITEM_TYPE_WEAPON]: vehicleItemColumns,
+          // Spell
           [CONSTANTS.ITEM_TYPE_SPELL]: standardSpellColumns,
-          [CONSTANTS.ITEM_TYPE_EQUIPMENT]: vehicleItemColumns,
+          // Inventory and features
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },
             uses: { ...columns.uses, order: 200, priority: 600 },
@@ -284,13 +99,8 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
       },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
-          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
-        },
         [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+          // Feature
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             charges: { ...columns.uses, order: 100, priority: 500 },
             roll: { ...columns.roll, order: 200, priority: 400 },

@@ -19,6 +19,9 @@ import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityCol
 import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
+import VehicleItemHpColumn from 'src/sheets/quadrone/item/columns/VehicleItemHpColumn.svelte';
+import VehicleItemUsesColumn from 'src/sheets/quadrone/item/columns/VehicleItemUsesColumn.svelte';
+import VehicleItemCrewColumn from 'src/sheets/quadrone/item/columns/VehicleItemCrewColumn.svelte';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -82,7 +85,119 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof ActivityDamageFormulasColumn
       >,
     },
-    containerContents: {},
+    containerContents: {
+      capacityBar: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: '' }),
+        },
+        cell: {
+          component: InlineCapacityBarColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+            containerContents: args.rowContext?.containerContents,
+          }),
+          classes: 'text-cell',
+        },
+        widthRems: 7,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof InlineCapacityBarColumn
+      >,
+      capacityTracker: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: '' }),
+        },
+        cell: {
+          component: InlineCapacityTrackerColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+          classes: 'text-cell',
+        },
+        widthRems: 7,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof InlineCapacityTrackerColumn
+      >,
+      price: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: FoundryAdapter.localize('DND5E.Price') }),
+        },
+        cell: {
+          component: ItemPriceColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5.5,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemPriceColumn>,
+      quantity: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({
+            html: FoundryAdapter.localize('DND5E.Quantity'),
+          }),
+        },
+        cell: {
+          component: ItemQuantityColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemQuantityColumn>,
+      time: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({
+            html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
+          }),
+        },
+        cell: {
+          component: ItemTimeColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTimeColumn>,
+      uses: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
+        },
+        cell: {
+          component: ItemUsesColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+          classes: 'inline-uses',
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemUsesColumn>,
+      weight: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: FoundryAdapter.localize('DND5E.Weight') }),
+        },
+        cell: {
+          component: ItemWeightColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemWeightColumn>,
+    },
     effect: {},
     encounterCombatant: {},
     encounterMember: {},
@@ -114,7 +229,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: InlineCapacityTrackerColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
           classes: 'text-cell',
         },
         widthRems: 7,
@@ -129,7 +247,9 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemUsesColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
           classes: 'inline-uses',
         },
         widthRems: 4,
@@ -143,7 +263,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemDamageFormulasColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 5,
       } satisfies ItemColumnSpec<
@@ -157,7 +280,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemPriceColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 5.5,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemPriceColumn>,
@@ -170,7 +296,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemQuantityColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 5,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemQuantityColumn>,
@@ -183,7 +312,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemRollColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 3.125,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRollColumn>,
@@ -196,7 +328,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemTimeColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 4,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTimeColumn>,
@@ -207,11 +342,58 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemUsesColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
           classes: 'inline-uses',
         },
         widthRems: 4,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemUsesColumn>,
+      vehicleItemHp: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: FoundryAdapter.localize('DND5E.HP') }),
+        },
+        cell: {
+          component: VehicleItemHpColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof VehicleItemHpColumn>,
+      vehicleItemUses: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
+        },
+        cell: {
+          component: VehicleItemUsesColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleItemUsesColumn
+      >,
+      vehicleItemCrew: {
+        header: {
+          component: HtmlColumn,
+          props: (args) => ({
+            html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+          }),
+        },
+        cell: {
+          component: VehicleItemCrewColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+            rowContext: args.rowContext,
+          }),
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleItemCrewColumn
+      >,
       weight: {
         header: {
           component: HtmlColumn,
@@ -219,7 +401,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         cell: {
           component: ItemWeightColumn,
-          props: (args) => ({}),
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
         },
         widthRems: 5,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemWeightColumn>,

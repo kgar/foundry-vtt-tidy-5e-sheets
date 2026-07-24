@@ -1,10 +1,13 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import ItemPriceSummary from '../parts/header/ItemPriceSummary.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument: item }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
 
-let conceal = $derived(item.system.identified === false);
+  let { rowDocument: item }: Props = $props();
+  let conceal = $derived(item.system.identified === false);
 </script>
 
 {#if !conceal}
