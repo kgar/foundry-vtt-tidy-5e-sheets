@@ -62,7 +62,7 @@
   <Search bind:searchCriteria />
 
   {#if pinnedFilters.length}
-    <div class="button-group">
+    <div class="button-group hide-under-400">
       {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
         <FilterToggle
           filter={pinnedFilter}

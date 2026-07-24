@@ -72,20 +72,6 @@
       </div>
     {/if}
 
-    {#if context.memberContext.npc.length && context.difficulty?.label}
-      <div class="difficulty-row flexrow">
-        <div
-          class="pill pill-medium flexshrink"
-          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
-            .label}"
-        >
-          {context.difficulty.label}
-        </div>
-
-        <EncounterXPBudgetBar difficulty={context.difficulty} />
-      </div>
-    {/if}
-
     {#each context.members as section (section.key)}
       {#if section.show && section.members.length}
         {const visibleItemCount = $derived(section.members.length)}
