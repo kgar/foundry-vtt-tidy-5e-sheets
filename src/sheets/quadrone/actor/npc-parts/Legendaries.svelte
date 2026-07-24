@@ -1,9 +1,7 @@
 <script lang="ts">
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import NpcScoreTrackerCard from './NpcScoreTrackerCard.svelte';
-  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
@@ -24,6 +22,7 @@
   <NpcScoreTrackerCard
     actor={context.actor}
     label={localize('DND5E.LegendaryAction.Label')}
+    spentPath="system.resources.legact.spent"
     value={context.system.resources.legact.value}
     valuePath="system.resources.legact.value"
     valueTooltip="DND5E.LegendaryAction.Remaining"
@@ -39,6 +38,7 @@
   <NpcScoreTrackerCard
     actor={context.actor}
     label={localize('DND5E.LegendaryResistance.Label')}
+    spentPath="system.resources.legres.spent"
     value={context.system.resources.legres.value}
     valuePath="system.resources.legres.value"
     valueTooltip="DND5E.LegendaryResistance.Remaining"
@@ -126,19 +126,19 @@
         {localize('DND5E.Initiative')}
       </span>
       {#if context.unlocked}
-      <TextInputQuadrone
-        id="{appId}-lair-action"
-        document={context.actor}
-        field="system.resources.lair.initiative"
-        value={context.system.resources.lair.initiative ?? ''}
-        placeholder={localize('DND5E.InitiativeAbbr')}
-        enableDeltaChanges={true}
-        selectOnFocus={true}
-        saveEmptyAsNull={true}
-        disabled={!context.unlocked}
-        data-tooltip={'DND5E.LAIR.Action.Initiative'}
-        class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
-      />
+        <TextInputQuadrone
+          id="{appId}-lair-action"
+          document={context.actor}
+          field="system.resources.lair.initiative"
+          value={context.system.resources.lair.initiative ?? ''}
+          placeholder={localize('DND5E.InitiativeAbbr')}
+          enableDeltaChanges={true}
+          selectOnFocus={true}
+          saveEmptyAsNull={true}
+          disabled={!context.unlocked}
+          data-tooltip={'DND5E.LAIR.Action.Initiative'}
+          class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
+        />
       {:else}
         <span class="font-label-large color-text-default flexshrink">
           {context.system.resources.lair.initiative ?? ''}

@@ -1,12 +1,14 @@
 <script lang="ts">
-  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
+  import { clamp } from 'src/utils/numbers';
 
   interface Props {
     actor: any;
     label: string;
     min?: number;
+    spentPath?: string;
     value: number;
     valuePath?: string;
     valueTooltip?: string;
@@ -31,9 +33,20 @@
     unlocked = true,
     showFiligree = true,
     icon = 'dragon',
+    spentPath,
   }: Props = $props();
 
   function change(path: string, delta: number) {
+    if (spentPath && !isNil(max)) {
+      value += delta;
+      const uses = clamp(0, value, max);
+      const spent = max - uses;
+
+      return actor.update({
+        [spentPath]: spent,
+      });
+    }
+
     return actor.update({
       [path]: value + delta,
     });
@@ -69,6 +82,17 @@
             step="1"
             class={['value', { uninput: !unlocked }]}
             data-tooltip={valueTooltip}
+            onchange={(ev) => {
+              if (spentPath) {
+                return FoundryAdapter.handleDocumentUsesChanged(
+                  ev,
+                  actor,
+                  valuePath,
+                  spentPath,
+                  maxPath,
+                );
+              }
+            }}
           />
         {:else}
           <span data-tooltip={valueTooltip} class="value color-text-default"
