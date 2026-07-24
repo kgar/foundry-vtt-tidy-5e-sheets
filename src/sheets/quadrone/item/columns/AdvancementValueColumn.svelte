@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
-  import type { AdvancementItemContext } from 'src/types/item.types';
+  import type { Advancement5e } from 'src/types/item.types';
   import { isNil } from 'src/utils/data';
 
-  let {
-    rowDocument: advancement,
-  }: ColumnCellProps<AdvancementItemContext, AdvancementItemContext> = $props();
+  type Props = {
+    rowDocument: Advancement5e;
+  };
+
+  let { rowDocument: advancement }: Props = $props();
 </script>
 
 {#if !isNil(advancement.value)}

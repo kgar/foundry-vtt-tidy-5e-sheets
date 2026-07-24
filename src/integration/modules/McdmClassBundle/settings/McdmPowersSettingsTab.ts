@@ -7,10 +7,12 @@ import type { TabOptions } from 'src/runtime/types';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type {
   ActorSheetQuadroneContext,
-  ConfiguredSectionColumnSpecification,
-  SectionColumnContext,
   SectionCommand,
 } from 'src/types/types';
+import type {
+  ConfiguredSectionColumnSpecification,
+  SectionColumnContext,
+} from 'src/types/columns.types';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import SectionActions from 'src/features/sections/SectionActions';

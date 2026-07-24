@@ -1,12 +1,12 @@
 <script lang="ts">
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
   import type {
-    ColumnCellProps,
     VehicleCrewMemberContext,
     VehicleCrewSection,
     VehiclePassengerMemberContext,
     VehiclePassengerSection,
   } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   let {

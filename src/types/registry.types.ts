@@ -19,6 +19,27 @@ import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSh
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
+import type {
+  ActivityColumnSpec,
+  ColumnPartitions,
+  ColumnSpecificationV2,
+  EffectColumnSpec,
+  EncounterCombatantColumnSpec,
+  EncounterMemberColumnSpec,
+  GroupMemberColumnSpec,
+  ItemAdvancementColumnSpec,
+  ItemColumnSpec,
+  VehicleCrewColumnSpec,
+  VehicleDraftAnimalColumnSpec,
+  VehiclePassengerColumnSpec,
+} from './columns.types';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type { ActivityItemContext, Actor5e } from './types';
+import type {
+  Advancement5e,
+  AdvancementItemContext,
+  Item5e,
+} from './item.types';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -56,6 +77,7 @@ export type TidyConfig = {
  * @category Configuration
  */
 export type TidyComponentRegistry = {
+  columns: Record<string, Component<any>>;
   /** Components for the Row Actions feature. */
   rowActions: Record<string, Component<any>>;
 };
@@ -64,9 +86,10 @@ export type TidyComponentRegistry = {
  * A collection of features that can be configured and extended.
  */
 export type TidyFeatureRegistry = {
+  /** Configure columns for Tidy's tables. */
+  columns: TidyColumnRegistry;
   /** Configure row actions for Tidy's tables. */
   rowActions: TidyRowActionRegistry;
-  // to do: columns
   // to do: tabs
   // to do: filters
   // to do: sort
@@ -76,7 +99,38 @@ export type TidyFeatureRegistry = {
   // to do: inspiration
   // to do: tabDocumentTypes
   // to do: etc.
-}
+};
+
+export type TidyColumnRegistry = {
+  /** Columns for activities. */
+  activity: Record<string, ActivityColumnSpec>;
+  /** Columns for container contents. */
+  containerContents: Record<string, ItemColumnSpec>;
+  /** Columns for effects. */
+  effect: Record<string, EffectColumnSpec>;
+  /** Columns for encounter combatants. */
+  encounterCombatant: Record<string, EncounterCombatantColumnSpec>;
+  /** Columns for encounter members. */
+  encounterMember: Record<string, EncounterMemberColumnSpec>;
+  /** Columns for features. */
+  feature: Record<string, ItemColumnSpec>;
+  /** Columns for group members. */
+  groupMember: Record<string, GroupMemberColumnSpec>;
+  /** Columns for inventory (consumable, equipment, weapon, etc.)s. */
+  inventory: Record<string, ItemColumnSpec>;
+  /** Columns for item advancements. */
+  itemAdvancement: Record<string, ItemAdvancementColumnSpec>;
+  /** Columns for spells. */
+  spell: Record<string, ItemColumnSpec>;
+  /** Columns for a vehicle's assigned crews. */
+  vehicleAssignedCrew: Record<string, VehicleCrewColumnSpec>;
+  /** Columns for a vehicle's draft animals. */
+  vehicleDraftAnimal: Record<string, VehicleDraftAnimalColumnSpec>;
+  /** Columns for a vehicle's passengers. */
+  vehiclePassenger: Record<string, VehiclePassengerColumnSpec>;
+  /** Columns for a vehicle's unassigned crews. */
+  vehicleUnassignedCrew: Record<string, VehicleCrewColumnSpec>;
+};
 
 /**
  * The organization schemes for Tidy's features. Each feature can have a different approach
@@ -87,6 +141,20 @@ export type TidyFeatureRegistry = {
  * @category Configuration
  */
 export type TidyPartitionRegistry = {
+  /**
+   * Partitions for Tidy Columns. Update these partitions at runtime to control sort order,
+   * visibility priority, and inclusion/exclusion at the full hierarchy of Foundry granularity:
+   * Document Name, Document Type, Tab ID, and Section Key.
+   *
+   * For each level, if no suitable partition is found, Tidy sometimes uses a default fallback
+   * partition, keyed as `tidy5e-sheet-default`
+   */
+  columns: {
+    activity: ColumnPartitions;
+    itemAdvancement: ColumnPartitions;
+    // todo - the rest of the domains
+  };
+
   /**
    * Partitions for Tidy Row Actions. Update these partitions at runtime to control sort order
    * and whether a row action will be included.
@@ -165,7 +233,14 @@ export type TidyRowActionRegistry = {
   vehicleUnassignedCrew: Record<string, VehicleCrewRowAction>;
 };
 
-export type RowActionRegistryDomain = keyof CONFIG['TIDY5E']['features']['rowActions'];
+export type RowActionRegistryDomain =
+  keyof CONFIG['TIDY5E']['features']['rowActions'];
 
 export type RowActionOf<D extends RowActionRegistryDomain> =
   CONFIG['TIDY5E']['features']['rowActions'][D][keyof CONFIG['TIDY5E']['features']['rowActions'][D]];
+
+export type ColumnRegistryDomain =
+  keyof CONFIG['TIDY5E']['features']['columns'];
+
+export type ColumnOf<D extends ColumnRegistryDomain> =
+  CONFIG['TIDY5E']['features']['columns'][D][keyof CONFIG['TIDY5E']['features']['columns'][D]];

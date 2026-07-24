@@ -5,8 +5,8 @@
     EncounterSheetQuadroneContext,
     SpellbookSection,
     TidySectionBase,
-    ColumnHeaderProps,
   } from 'src/types/types';
+  import type { ColumnHeaderProps } from 'src/types/columns.types';
 
   let {
     sheetContext,

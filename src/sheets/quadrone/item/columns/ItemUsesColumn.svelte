@@ -1,7 +1,7 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
@@ -75,11 +75,7 @@
     ),
   )}
 
-  <ActivityUsesColumn
-    rowContext={ctx}
-    rowDocument={ctx.activity}
-    section={SheetSections.EMPTY}
-  />
+  <ActivityUsesColumn rowContext={ctx} rowDocument={ctx.activity} />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

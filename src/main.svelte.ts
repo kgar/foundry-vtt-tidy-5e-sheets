@@ -35,9 +35,7 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import { loadConditionalStyles } from './utils/css-loading';
-import { getRowActionsRegistry as getRowActionRegistry } from './init/row-actions';
-import { getRegistryPartitions } from './init/partitions';
-import { getRegistryComponents } from './init/components';
+import * as registry from './registry';
 
 Hooks.once('init', () => {
   initSettings();
@@ -57,11 +55,15 @@ Hooks.once('init', () => {
         Tidy5eContainerSheetQuadrone: Tidy5eContainerSheetQuadrone,
       },
     },
-    components: getRegistryComponents(),
+    components: registry.getRegistryComponents(),
     features: {
-      rowActions: getRowActionRegistry(),
+      columns: registry.getColumnsRegistry(),
+      rowActions: registry.getRowActionsRegistry(),
     },
-    partitions: getRegistryPartitions(),
+    partitions: {
+      columns: registry.getColumnPartitions(),
+      rowActions: registry.getRowActionPartitions(),
+    },
   };
 
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;

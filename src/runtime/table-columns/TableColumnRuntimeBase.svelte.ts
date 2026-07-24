@@ -4,7 +4,7 @@ import type {
   ConfiguredSectionColumnSpecification,
   SectionColumnContext,
   SectionColumnSpecifications,
-} from 'src/types/types';
+} from 'src/types/columns.types';
 import { CONSTANTS } from 'src/constants';
 
 export abstract class TableColumnRuntimeBase {
@@ -30,9 +30,6 @@ export abstract class TableColumnRuntimeBase {
     tabId: string,
     sectionKey: string,
   ): SectionColumnSpecifications {
-    const map: Record<string, ConfiguredSectionColumnSpecification> = {};
-    const allSpecs: ConfiguredSectionColumnSpecification[] = [];
-
     for (let type of [
       sheetDocument.type,
       CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT,
@@ -47,6 +44,9 @@ export abstract class TableColumnRuntimeBase {
           if (!specs) {
             continue;
           }
+
+          const map: Record<string, ConfiguredSectionColumnSpecification> = {};
+          const allSpecs: ConfiguredSectionColumnSpecification[] = [];
 
           for (const [key, spec] of Object.entries(specs)) {
             const configuredSpec: ConfiguredSectionColumnSpecification = {

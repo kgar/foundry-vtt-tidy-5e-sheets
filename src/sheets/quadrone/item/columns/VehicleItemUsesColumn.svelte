@@ -6,10 +6,8 @@
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type {
-    VehicleItemQuadroneContext,
-    ColumnCellProps,
-  } from 'src/types/types';
+  import type { VehicleItemQuadroneContext } from 'src/types/types';
+  import type { ColumnCellProps } from 'src/types/columns.types';
 
   let {
     rowDocument: item,
@@ -101,11 +99,7 @@
     ),
   )}
 
-  <ActivityUsesColumn
-    rowContext={ctx}
-    rowDocument={ctx.activity}
-    section={SheetSections.EMPTY}
-  />
+  <ActivityUsesColumn rowContext={ctx} rowDocument={ctx.activity} />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

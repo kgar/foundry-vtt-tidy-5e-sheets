@@ -56,6 +56,10 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
+import type {
+  SectionColumnContext,
+  SectionColumnSpecificationsV2,
+} from './columns.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -235,10 +239,12 @@ export type FacilitySection = {
   items: Item5e[];
 } & TidySectionBase;
 
-export type ActivitySection = {
+export type ActivitySection = Omit<TidySectionBase, 'columns'> & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-} & TidySectionBase;
+  // TODO: Find all instances of this override and remove after mainlining v2 into section base
+  columns: SectionColumnSpecificationsV2;
+};
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
@@ -305,6 +311,8 @@ export type ItemSaveContext = {
     value: number;
   };
 };
+
+// TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
 
 export type CharacterItemContext = {
   actionSubtitle?: string; // Quadrone only
@@ -1831,116 +1839,6 @@ export type AnyActorSheetQuadroneContext =
   | VehicleSheetQuadroneContext
   | GroupSheetQuadroneContext
   | EncounterSheetQuadroneContext;
-
-/* COLUMNS */
-
-export type ColumnSpecification = {
-  headerContent?:
-    | {
-        type: 'component';
-        component: Component<ColumnHeaderProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (sheetDocument: any, sheetContext: any) => string;
-      }
-    | {
-        type: 'html';
-        html: string;
-      };
-  cellContent:
-    | {
-        type: 'component';
-        component: Component<ColumnCellProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (rowDocument: any, rowContext: any) => string;
-      };
-  widthRems: number; // default: 5 (rem)
-  priority: number;
-  order: number;
-  headerClasses?: ClassValue;
-  cellClasses?: ClassValue;
-  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
-};
-
-export type ConfiguredSectionColumnSpecification =
-  ConfiguredColumnSpecification;
-
-export type SectionColumnSpecifications = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredColumnSpecification>;
-};
-
-export type SectionColumnContext = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredSectionColumnSpecification>;
-};
-
-/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
-export type ConfiguredColumnSpecification = ColumnSpecification & {
-  key: string;
-  widthRems: number;
-};
-
-export type ColumnHeaderProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  sheetDocument: TDocument;
-  sheetContext: TContext;
-  section: TSection;
-};
-
-export type ColumnCellProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  rowDocument: TDocument;
-  rowContext: TContext;
-  section: TSection;
-};
-
-export type ColumnSpecificationConditionArgs<TDocument = any> = {
-  sheetDocument: TDocument;
-};
-
-export type ColumnSpecSectionKeysToColumns = Record<
-  string | symbol,
-  Record<string, ColumnSpecification>
->;
-
-export type ColumnSpecTabIdsToSectionKeys = Record<
-  string,
-  ColumnSpecSectionKeysToColumns
->;
-
-export type ColumnSpecDocumentTypesToTabs = Record<
-  string,
-  ColumnSpecTabIdsToSectionKeys
->;
-
-export type DefaultColumnSpecTabsToColumns = Record<
-  string,
-  ColumnSpecification[]
->;
-
-export type DefaultColumnSpecDocumentTypesToTabs = Record<
-  string,
-  DefaultColumnSpecTabsToColumns
->;
-
-export type DefaultTableColumn = Omit<
-  ColumnSpecification,
-  'order' | 'priority'
->;
-
-export type DefaultTableColumns = Record<string, DefaultTableColumn>;
 
 /* BANKED INSPIRATION */
 
