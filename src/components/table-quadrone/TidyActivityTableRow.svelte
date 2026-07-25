@@ -1,24 +1,22 @@
 <script lang="ts">
-  import {
-    type ActivityItemContext,
-    type OnItemToggledFn,
-  } from 'src/types/types';
-  import { getContext, type Snippet } from 'svelte';
+  import { type ActivityItemContext } from 'src/types/types';
+  import { type Snippet } from 'svelte';
   import { CONSTANTS } from 'src/constants';
-  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
-  import TidyActivitySummary from './TidyActivitySummary.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { isUserInteractable } from 'src/utils/element';
+
+  // Activities have no summary content yet, so this row deliberately has no
+  // expand behavior. See TidyActivitySummary and the commented-out expand
+  // indicator in ItemActivitiesTab for the eventual wire-up.
 
   interface Props {
     ctx: ActivityItemContext;
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
-    children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
-    expanded?: boolean;
+    children?: Snippet;
   }
 
   let {
@@ -27,19 +25,7 @@
     hidden = false,
     attributes,
     children,
-    expanded = $bindable(false),
   }: Props = $props();
-
-  const onActivityToggled = getContext<OnItemToggledFn>(
-    CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
-  );
-
-  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
-
-  async function toggleSummary() {
-    expanded = !expanded;
-    onActivityToggled?.(ctx.id, expanded, location);
-  }
 
   let configurable = $derived(Activities.isConfigurable(ctx.activity));
 </script>
@@ -51,7 +37,7 @@
     ['data-configurable']: configurable,
   }}
   rowContainerClass="activity"
-  rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
+  rowClass="tidy-table-row-v2 {rowClass}"
   rowAttributes={{
     ['data-tidy-table-row']: '',
     ['data-tidy-always-draggable']: '',
@@ -69,11 +55,5 @@
   onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
   {...attributes}
 >
-  {@render children?.({ toggleSummary, expanded: expanded })}
-
-  {#snippet afterRow()}
-    <ExpandableContainer {expanded}>
-      <TidyActivitySummary activity={ctx.activity} />
-    </ExpandableContainer>
-  {/snippet}
+  {@render children?.()}
 </TidyTableRow>
