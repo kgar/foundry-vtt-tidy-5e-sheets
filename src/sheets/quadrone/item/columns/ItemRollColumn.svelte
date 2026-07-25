@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ColumnCellProps } from 'src/types/types';
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
-
-  let context = $derived(getSheetContext());
+  let { rowContext }: ColumnCellProps = $props();
 </script>
 
 {#if !isNil(rowContext.toHit)}
