@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
-  import type { ActiveEffect5e, ActiveEffectContext } from 'src/types/types';
+  import type { ActiveEffectContext } from 'src/types/types';
 
-  let {
-    rowDocument,
-    rowContext,
-    section,
-  }: ColumnCellProps<ActiveEffect5e, ActiveEffectContext> = $props();
+  type Props = {
+    rowContext: ActiveEffectContext;
+  };
+
+  let { rowContext }: Props = $props();
 </script>
 
 <span class="truncate">

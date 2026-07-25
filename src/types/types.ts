@@ -57,7 +57,9 @@ import type {
   VehiclePassengerRowAction,
 } from './row-actions.types';
 import type {
-  SectionColumnContext,
+  ActivityColumnSpec,
+  EffectColumnSpec,
+  ItemColumnSpec,
   SectionColumnSpecificationsV2,
 } from './columns.types';
 
@@ -182,6 +184,7 @@ export type InventorySection = {
   type: typeof CONSTANTS.SECTION_TYPE_INVENTORY;
   items: Item5e[];
   canCreate: boolean;
+  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
 } & TidySectionBase;
 
 export type EffectFavoriteSection = {
@@ -209,7 +212,6 @@ export type TidySectionBase = {
   show: boolean; // default: true
   isExternal?: boolean;
   sectionActions: SectionCommand[];
-  columns: SectionColumnContext;
 };
 
 export type SectionCommand = {
@@ -232,6 +234,7 @@ export type FeatureSection = {
   hasActions?: boolean;
   hasUses?: boolean;
   canCreate: boolean;
+  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
 } & TidySectionBase;
 
 export type FacilitySection = {
@@ -239,16 +242,16 @@ export type FacilitySection = {
   items: Item5e[];
 } & TidySectionBase;
 
-export type ActivitySection = Omit<TidySectionBase, 'columns'> & {
+export type ActivitySection = TidySectionBase & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-  // TODO: Find all instances of this override and remove after mainlining v2 into section base
-  columns: SectionColumnSpecificationsV2;
+  columns: SectionColumnSpecificationsV2<ActivityColumnSpec>;
 };
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
   items: Item5e[];
+  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
 } & TidySectionBase;
 
 export type SimpleEditableColumn = {
@@ -291,6 +294,7 @@ export type SpellbookSection = {
   override?: number;
   slot: string;
   method: string;
+  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
 } & TidySectionBase;
 
 export type AvailableLevel = {
@@ -1034,6 +1038,7 @@ export type ActiveEffectContext = {
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   TidySectionBase & {
     canCreate: boolean;
+    columns: SectionColumnSpecificationsV2<EffectColumnSpec>;
   };
 
 export type HTMLElementOrGettable =
@@ -1341,7 +1346,7 @@ export type SheetTabSection =
   | CustomItemSectionQuadrone;
 
 export type CharacterSheetQuadroneContext = {
-  actions: TidyItemSectionBase[];
+  actions: (InventorySection | FeatureSection | SpellbookSection)[];
   background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: ActorClassEntryContext[];

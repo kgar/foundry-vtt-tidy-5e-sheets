@@ -6,12 +6,13 @@
     TidySectionBase,
   } from 'src/types/types';
 
+  // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
   type Props = {
     ctx?: any;
     entry?: any;
     hiddenColumns?: Set<string>;
-    section: Omit<TidySectionBase, 'columns'> & {
-      columns: SectionColumnSpecificationsV2;
+    section: TidySectionBase & {
+      columns: SectionColumnSpecificationsV2<any>;
     };
     context: DocumentSheetQuadroneContext<any>;
   };

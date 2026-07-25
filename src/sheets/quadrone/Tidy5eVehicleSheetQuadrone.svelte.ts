@@ -575,7 +575,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     };
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     const inventoryTypes = Inventory.getInventoryTypes();
 
@@ -605,6 +609,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypes,
@@ -625,6 +634,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
 
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           tabId: CONSTANTS.TAB_STATBLOCK,
           inventory: statblock,
           item: item,
@@ -650,6 +664,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
 
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           tabId: CONSTANTS.TAB_STATBLOCK,
           inventory: statblock,
           item: item,
@@ -669,6 +688,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypes,

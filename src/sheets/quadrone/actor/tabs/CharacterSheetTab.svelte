@@ -168,7 +168,9 @@
                 sheetDocument={context.document}
               />
             {/if}
-          {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
+
+            <!-- TODO: mixedItem domain -->
+            <!-- {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
             {const hasViewableItems = $derived(
               ItemVisibility.hasViewableItems(
                 section.items,
@@ -184,7 +186,7 @@
                 sheetDocument={context.document}
                 {tabId}
               />
-            {/if}
+            {/if} -->
           {/if}
         {/if}
       {/each}

@@ -885,7 +885,6 @@ export class Tidy5eCharacterSheet
       label: 'DND5E.Effects',
       show: true,
       sectionActions: [], // quadrone only
-      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
     };
     const favoriteEffects = (
       this.actor.system.favorites as CharacterFavorite[]
@@ -978,11 +977,17 @@ export class Tidy5eCharacterSheet
   }
 
   _prepareItems(context: CharacterSheetContext) {
+    const columnArgs = {
+      editable: context.editable,
+      owner: context.owner,
+      unlocked: context.unlocked,
+    };
+
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(context.document, columnArgs);
     const favoriteInventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document, {
+      Inventory.getDefaultInventorySections(context, columnArgs, {
         canCreate: false,
       });
 
@@ -1095,7 +1100,12 @@ export class Tidy5eCharacterSheet
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection({
-        sheetDocument: this.document,
+        sheetDocument: context.document,
+        columnOptions: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory: inventory,
         item: item,
@@ -1112,6 +1122,11 @@ export class Tidy5eCharacterSheet
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypes,
@@ -1128,6 +1143,11 @@ export class Tidy5eCharacterSheet
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.document,
         tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+        columnOptions: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         inventory: favoriteInventory,
         item: item,
         defaultInventoryTypes: inventoryTypes,
@@ -1193,7 +1213,7 @@ export class Tidy5eCharacterSheet
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildClassicFeaturesSections(
-        this.actor,
+        context,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         species,
         backgrounds,
@@ -1207,7 +1227,7 @@ export class Tidy5eCharacterSheet
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildClassicFeaturesSections(
-        this.actor,
+        context,
         CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favorites.species,
         favorites.backgrounds,
@@ -1230,7 +1250,6 @@ export class Tidy5eCharacterSheet
         label: bastionFacilitiesLabel,
         show: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
     ];
 

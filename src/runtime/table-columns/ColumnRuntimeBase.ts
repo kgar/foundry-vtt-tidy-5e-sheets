@@ -17,11 +17,18 @@ export abstract class ColumnRuntimeBase<
 > {
   abstract readonly domain: TDomain;
 
+  readonly EMPTY_COLUMN_SPECS: SectionColumnSpecificationsV2<TColumnSpecification> =
+    Object.freeze({
+      map: {},
+      prioritized: [],
+      sorted: [],
+    });
+
   _minWidthRems: number = CONSTANTS.COLUMN_PRIMARY_MIN_WIDTH_REMS;
 
   getColumnSpecifications(
     options: ColumnPartitionOptions,
-  ): SectionColumnSpecificationsV2 {
+  ): SectionColumnSpecificationsV2<TColumnSpecification> {
     for (let type of [
       options.sheetDocument.type,
       CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT,
@@ -55,8 +62,12 @@ export abstract class ColumnRuntimeBase<
             continue;
           }
 
-          const map: Record<string, ConfiguredColumnSpecificationV2> = {};
-          const allSpecs: ConfiguredColumnSpecificationV2[] = [];
+          const map: Record<
+            string,
+            ConfiguredColumnSpecificationV2<TColumnSpecification>
+          > = {};
+          const allSpecs: ConfiguredColumnSpecificationV2<TColumnSpecification>[] =
+            [];
 
           for (const [key, data] of Object.entries(partitionData)) {
             const spec = CONFIG.TIDY5E.features.columns[this.domain][key] as
@@ -79,11 +90,12 @@ export abstract class ColumnRuntimeBase<
               continue;
             }
 
-            const configuredSpec: ConfiguredColumnSpecificationV2 = {
-              key,
-              ...spec,
-              ...data,
-            };
+            const configuredSpec: ConfiguredColumnSpecificationV2<TColumnSpecification> =
+              {
+                key,
+                ...spec,
+                ...data,
+              };
             map[key] = configuredSpec;
 
             allSpecs.push(configuredSpec);
@@ -114,7 +126,7 @@ export abstract class ColumnRuntimeBase<
 
   determineHiddenColumns(
     inlineSizePx: number,
-    schematics: SectionColumnSpecificationsV2,
+    schematics: SectionColumnSpecificationsV2<TColumnSpecification>,
     minWidthRemsOverride?: number,
   ): Set<string> {
     let minWidthRems = minWidthRemsOverride ?? this._minWidthRems;
@@ -127,7 +139,7 @@ export abstract class ColumnRuntimeBase<
       availableRems -= col.widthRems;
 
       if (availableRems < minWidthRems) {
-        toHide.add(col.key);
+        toHide.add(key);
       }
     }
 

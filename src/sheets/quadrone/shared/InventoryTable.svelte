@@ -13,6 +13,8 @@
   import { isNil } from 'src/utils/data';
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
 
   type Props = {
     containingDocument: any;
@@ -56,13 +58,28 @@
       ? sheetDocument
       : sheetDocument.actor,
   );
+
+  const rowActionInfo = $derived(
+    RowActionRuntimeBase.getRowActionWidthInfo(
+      section.items,
+      (entry) => itemContext[entry.id]?.rowActions,
+    ),
+  );
+
+  let hiddenColumns = $derived(
+    InventoryColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
+  );
 </script>
 
 <TidyItemTable
   {section}
+  {hiddenColumns}
+  {rowActionInfo}
   entries={section.items}
   entryContext={itemContext}
-  {sectionsInlineWidth}
   entryToggleMap={containerToggleMap}
   {tabId}
   {root}

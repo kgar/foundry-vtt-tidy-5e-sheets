@@ -8,8 +8,8 @@
 
   type Props = {
     hiddenColumns?: Set<string>;
-    section: Omit<TidySectionBase, 'columns'> & {
-      columns: SectionColumnSpecificationsV2;
+    section: TidySectionBase & {
+      columns: SectionColumnSpecificationsV2<any>;
     };
     context: DocumentSheetQuadroneContext<any>;
     expanded?: boolean;

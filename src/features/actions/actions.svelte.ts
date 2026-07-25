@@ -8,9 +8,8 @@ import type {
   ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
-  CharacterItemQuadroneContext,
   CharacterSheetQuadroneContext,
-  CustomItemSectionQuadrone,
+  FeatureSection,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -19,8 +18,8 @@ import { debug, error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from '../containers/Container';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+import type { ColumnPartitionOptions } from 'src/types/columns.types';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -107,7 +106,6 @@ function buildActionSections(
       key: activationType,
       show: true,
       sectionActions: [],
-      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
     };
   });
 
@@ -126,7 +124,6 @@ function buildActionSections(
           section: customSectionName,
         },
         sectionActions: [],
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       customSection.actions.push(actionItem);
     } else {
@@ -141,7 +138,6 @@ function buildActionSections(
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
         sectionActions: [],
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
       });
       section.actions.push(actionItem);
     }
@@ -154,7 +150,7 @@ export function getCharacterSheetTabActionSectionsQuadrone(
   actor: Actor5e,
   context: CharacterSheetQuadroneContext,
   options?: Partial<TidyItemSectionBase>,
-): CustomItemSectionQuadrone[] {
+): FeatureSection[] {
   try {
     let eligibleItems: Item5e[] = actor.items.filter(
       (item: Item5e) =>
@@ -162,8 +158,7 @@ export function getCharacterSheetTabActionSectionsQuadrone(
     );
 
     return buildActionSectionsQuadrone(
-      actor,
-      context.itemContext,
+      context,
       CONSTANTS.TAB_ACTOR_ACTIONS,
       eligibleItems,
       options,
@@ -175,31 +170,38 @@ export function getCharacterSheetTabActionSectionsQuadrone(
 }
 
 function buildActionSectionsQuadrone(
-  actor: Actor5e,
-  itemContext: Record<string, CharacterItemQuadroneContext>,
+  context: CharacterSheetQuadroneContext,
   tabId: string,
   items: Item5e[],
-  options?: Partial<CustomItemSectionQuadrone>,
-): CustomItemSectionQuadrone[] {
+  options?: Partial<FeatureSection>,
+): FeatureSection[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-  let actionSections: Record<string, CustomItemSectionQuadrone> = {};
+  let actionSections: Record<string, FeatureSection> = {};
+
+  const sharedColumnSpecParams: ColumnPartitionOptions = {
+    sheetDocument: context.actor,
+    tabId: tabId,
+    editable: context.editable,
+    owner: context.owner,
+    unlocked: context.unlocked,
+  };
 
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
-      type: CONSTANTS.SECTION_TYPE_CUSTOM,
+      type: CONSTANTS.SECTION_TYPE_FEATURE,
       items: [],
       dataset: {},
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
       sectionActions: [],
-      columns: ItemColumnRuntime.getColumnSpecifications(
-        actor,
-        tabId,
-        activationType,
-      ),
+      columns: FeatureColumnRuntime.getColumnSpecifications({
+        ...sharedColumnSpecParams,
+        sectionKey: activationType,
+      }),
+      canCreate: false,
       ...options,
     };
   });
@@ -209,7 +211,7 @@ function buildActionSectionsQuadrone(
     const customSectionName = TidyFlags.actionSection.get(item);
     if (customSectionName) {
       const customSection = (actionSections[customSectionName] ??= {
-        type: CONSTANTS.SECTION_TYPE_CUSTOM,
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         items: [],
         dataset: {},
         key: customSectionName,
@@ -220,11 +222,11 @@ function buildActionSectionsQuadrone(
           section: customSectionName,
         },
         sectionActions: [],
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          customSectionName,
-        ),
+        columns: FeatureColumnRuntime.getColumnSpecifications({
+          ...sharedColumnSpecParams,
+          sectionKey: customSectionName,
+        }),
+        canCreate: false,
         ...options,
       });
 
@@ -236,18 +238,18 @@ function buildActionSectionsQuadrone(
       );
 
       const section = (actionSections[activationType] ??= {
-        type: CONSTANTS.SECTION_TYPE_CUSTOM,
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         items: [],
         dataset: {},
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
         sectionActions: [],
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          activationType,
-        ),
+        columns: FeatureColumnRuntime.getColumnSpecifications({
+          ...sharedColumnSpecParams,
+          sectionKey: activationType,
+        }),
+        canCreate: false,
         ...options,
       });
       section.items.push(item);

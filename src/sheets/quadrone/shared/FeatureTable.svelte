@@ -1,6 +1,8 @@
 <script lang="ts">
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
@@ -18,12 +20,8 @@
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
   }
 
-  let {
-    section,
-    sheetDocument,
-    sectionsInlineWidth,
-    itemToggleMap,
-  }: Props = $props();
+  let { section, sheetDocument, sectionsInlineWidth, itemToggleMap }: Props =
+    $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -33,13 +31,28 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+
+  const rowActionInfo = $derived(
+    RowActionRuntimeBase.getRowActionWidthInfo(
+      section.items,
+      (entry) => context.itemContext[entry.id]?.rowActions,
+    ),
+  );
+
+  let hiddenColumns = $derived(
+    FeatureColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
+  );
 </script>
 
 <TidyItemTable
   {section}
+  {hiddenColumns}
+  {rowActionInfo}
   entries={section.items}
   entryContext={context.itemContext}
-  {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
 >

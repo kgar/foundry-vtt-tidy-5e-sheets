@@ -10,17 +10,16 @@
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
-  import type { SectionColumnSpecifications } from 'src/types/columns.types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
   import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -77,7 +76,7 @@
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
 
-          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+          <TidyTableCustomHeaderCellsV2 {context} {hiddenColumns} {section} />
 
           <TidyTableHeaderCell
             class="header-cell-actions"
@@ -101,7 +100,6 @@
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,
-            section.columns,
             hiddenColumns,
             section,
             rowActionInfo.widthRems,
@@ -109,7 +107,6 @@
           {#each effectContext.effect.riders as rider}
             {@render EffectRow(
               rider,
-              section.columns,
               hiddenColumns,
               section,
               rowActionInfo.widthRems,
@@ -124,7 +121,6 @@
 
 {#snippet EffectRow(
   ctx: ActiveEffectContext,
-  columns: SectionColumnSpecifications,
   hiddenColumns: Set<string>,
   section: ActiveEffectSection,
   rowActionsColumnWidthRems: number,
@@ -170,7 +166,7 @@
         </a>
       </TidyTableCell>
 
-      <TidyTableCustomCells
+      <TidyTableCustomCellsV2
         {context}
         {ctx}
         entry={ctx}

@@ -996,7 +996,11 @@ export class Tidy5eNpcSheet
     const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
@@ -1004,6 +1008,11 @@ export class Tidy5eNpcSheet
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypesArray,
@@ -1019,6 +1028,11 @@ export class Tidy5eNpcSheet
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypesArray,

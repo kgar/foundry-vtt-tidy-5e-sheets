@@ -22,7 +22,6 @@ import type {
   FeatureSection,
   TidyItemSectionBase,
   SheetTabSection,
-  CustomItemSectionQuadrone,
   ActionItemInclusionMode,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
@@ -60,10 +59,10 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { arrayTransfer } from 'src/utils/array';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -338,7 +337,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       );
 
       actionSections.forEach((section) => {
-        section.type = CONSTANTS.SECTION_TYPE_CUSTOM;
+        section.type = CONSTANTS.SECTION_TYPE_FEATURE;
         section.sectionActions = SectionActions.getActionHeaderActions(
           this.actor,
           this.actor.isOwner,
@@ -368,7 +367,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   createSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
     const inventoryTypes = Inventory.getInventoryTypes();
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     // Get eligible items (note: in Origin Sections, we do not dump out their containers into the top-level table; nesting is supported).
     const partitions = (this.actor.items as any[])
@@ -400,6 +403,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     for (let item of partitions.items) {
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.actor,
+        columnOptions: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory: inventory,
         item: item,
@@ -425,8 +433,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     // Features
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
-        this.actor,
-        context.unlocked,
+        context,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         partitions.feats,
         {
@@ -470,9 +477,9 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       sheet: Tidy5eCharacterSheetQuadrone,
       key: string,
       items: Item5e[],
-    ): CustomItemSectionQuadrone {
+    ): FeatureSection {
       return {
-        type: CONSTANTS.SECTION_TYPE_CUSTOM,
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         dataset: [],
         items: items,
         key: key,
@@ -483,12 +490,16 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         },
         isExternal: false,
         show: true,
+        canCreate: false,
         sectionActions: [],
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          sheet.document,
-          CONSTANTS.TAB_ACTOR_ACTIONS,
-          key,
-        ),
+        columns: FeatureColumnRuntime.getColumnSpecifications({
+          owner: context.owner,
+          sheetDocument: context.document,
+          unlocked: context.unlocked,
+          tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+          editable: context.editable,
+          sectionKey: key,
+        }),
       };
     }
 
@@ -746,7 +757,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     const inclusionMode = this.getSheetTabInclusionMode();
     const sheetTabOrganization = this.getSheetTabSectionOrganization();
@@ -850,6 +865,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.actor,
         tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+        columnOptions: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         inventory: inventory,
         item: item,
         defaultInventoryTypes: inventoryTypes,
@@ -864,7 +884,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       CONSTANTS.TAB_ACTOR_INVENTORY,
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
-        context.actor,
+        context,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypes,
@@ -927,8 +952,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
-        this.actor,
-        context.unlocked,
+        context,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         feats,
         {

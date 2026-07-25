@@ -15,6 +15,8 @@
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { ClassValue } from 'svelte/elements';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import { SpellColumnRuntime } from 'src/runtime/table-columns/SpellColumnRuntime';
 
   interface Props {
     section: SpellbookSection;
@@ -81,13 +83,28 @@
         }
       : {},
   );
+
+  const rowActionInfo = $derived(
+    RowActionRuntimeBase.getRowActionWidthInfo(
+      section.items,
+      (entry) => context.itemContext[entry.id]?.rowActions,
+    ),
+  );
+
+  let hiddenColumns = $derived(
+    SpellColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
+  );
 </script>
 
 <TidyItemTable
   {section}
+  {hiddenColumns}
+  {rowActionInfo}
   entries={section.items}
   entryContext={context.itemContext}
-  {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
   {rowClassFunction}

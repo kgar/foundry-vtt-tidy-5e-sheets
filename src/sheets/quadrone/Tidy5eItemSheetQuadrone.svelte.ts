@@ -764,11 +764,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
           sectionActions: [],
-          columns: EffectColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_EFFECTS,
-            value.key,
-          ),
+          columns: EffectColumnRuntime.getColumnSpecifications({
+            sheetDocument: context.document,
+            tabId: CONSTANTS.TAB_EFFECTS,
+            sectionKey: value.key,
+            editable: context.editable,
+            owner: context.document.isOwner,
+            unlocked: context.unlocked,
+          }),
           key,
         }) satisfies ActiveEffectSection,
     );

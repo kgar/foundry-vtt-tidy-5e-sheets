@@ -121,24 +121,18 @@ export type ColumnSpecificationPartitionData = {
 };
 
 export type ConfiguredColumnSpecificationV2<
-  TSheetDocument extends object = any,
-  TSheetContext extends object = any,
-  TRowDocument extends object = any,
-  TRowContext extends object = any,
-> = ColumnSpecificationV2<
-  TSheetDocument,
-  TSheetContext,
-  TRowDocument,
-  TRowContext
-> &
+  TSpec extends ColumnSpecificationV2<any, any, any, any, any, any>,
+> = TSpec &
   ColumnSpecificationPartitionData & {
     key: string;
   };
 
-export type SectionColumnSpecificationsV2 = {
-  sorted: (keyof SectionColumnSpecificationsV2['map'])[];
-  prioritized: (keyof SectionColumnSpecificationsV2['map'])[];
-  map: Record<string, ConfiguredColumnSpecificationV2>;
+export type SectionColumnSpecificationsV2<
+  TSpec extends ConfiguredColumnSpecificationV2<any>,
+> = {
+  sorted: (keyof SectionColumnSpecificationsV2<TSpec>['map'])[];
+  prioritized: (keyof SectionColumnSpecificationsV2<TSpec>['map'])[];
+  map: Record<string, TSpec>;
 };
 
 export type ActivityColumnSpec<

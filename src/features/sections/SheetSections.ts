@@ -38,8 +38,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
 import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
 import { Inventory } from './Inventory';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
+import { SpellColumnRuntime } from 'src/runtime/table-columns/SpellColumnRuntime';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -65,7 +65,8 @@ export class SheetSections {
   }
 
   static applySpellToSection(
-    actor: Actor5e,
+    context:
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -80,7 +81,7 @@ export class SheetSections {
 
     const section: SpellbookSection = (spellbook[customSectionName] ??=
       SheetSections.createSpellbookSection(
-        actor,
+        context,
         tabId,
         customSectionName,
         options,
@@ -90,7 +91,8 @@ export class SheetSections {
   }
 
   static createSpellbookSection(
-    actor: Actor5e,
+    context:
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     options: Partial<SpellbookSection>,
@@ -115,11 +117,14 @@ export class SheetSections {
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
       method: '',
-      columns: ItemColumnRuntime.getColumnSpecifications(
-        actor,
+      columns: SpellColumnRuntime.getColumnSpecifications({
+        sheetDocument: context.actor,
         tabId,
-        customSectionName,
-      ),
+        sectionKey: customSectionName,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      }),
       ...options,
     };
   }
@@ -195,11 +200,14 @@ export class SheetSections {
         method: s.id,
         show: true,
         sectionActions: options.sectionActions ?? [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          context.document,
+        columns: SpellColumnRuntime.getColumnSpecifications({
+          sheetDocument: context.document,
           tabId,
-          s.slot,
-        ),
+          sectionKey: s.slot,
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        }),
       };
 
       return section;
@@ -217,7 +225,7 @@ export class SheetSections {
 
     customSectionSpells.forEach((spell) => {
       SheetSections.applySpellToSection(
-        context.document,
+        context,
         tabId,
         spellbookMap,
         spell,
@@ -230,7 +238,7 @@ export class SheetSections {
       tabId,
     ).forEach((s) => {
       spellbookMap[s] ??= SheetSections.createSpellbookSection(
-        context.document,
+        context,
         tabId,
         s,
         {

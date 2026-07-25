@@ -1,21 +1,25 @@
 
 ## To Do
 
+- [ ] Create the itemMixed domain
+  - [ ] Resolve <!-- TODO: mixedItem domain -->
+  - [ ] Ensure mixedItem columns / partitions are set up for 
+  - [ ] Ensure Character Sheet Tab in Action Economy mode gets the mixedItem columns
+- [x] implement effect columns / partition
+- [ ] implement encounterCombatant columns / partition
+- [ ] implement encounterMember columns / partition
+- [x] implement feature columns / partition
+- [ ] implement groupMember columns / partition
+- [x] implement spell columns / partition
+- [ ] implement vehicleAssignedCrew columns / partition
+- [ ] implement vehicleDraftAnimal columns / partition
+- [ ] implement vehiclePassenger columns / partition
+- [ ] implement vehicleUnassignedCrew columns / partition
 - [ ] Cross over inventory sections to new column runtime base
 - [ ] Cross over containerContents sections to new column runtime base
 - [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
 - [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
-- [ ] implement effect columns / partition
-- [ ] implement encounterCombatant columns / partition
-- [ ] implement encounterMember columns / partition
-- [ ] implement feature columns / partition
-- [ ] implement groupMember columns / partition
-- [ ] implement spell columns / partition
-- [ ] implement vehicleAssignedCrew columns / partition
-- [ ] implement vehicleDraftAnimal columns / partition
-- [ ] implement vehiclePassenger columns / partition
-- [ ] implement vehicleUnassignedCrew columns / partition
 - [ ] Resolve type deficiencies with the current column types and task out additional work as needed
 - [ ] Design the registry types
 - [ ] Design the partitions types
@@ -38,6 +42,7 @@
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] // TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
+- [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
 
 ## After Next Release
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
+  import type { Item5e } from 'src/types/item.types';
   import { isNil } from 'src/utils/data';
 
-  let { rowDocument }: ColumnCellProps = $props();
+  let { rowDocument }: { rowDocument: Item5e } = $props();
 </script>
 
 {#if !isNil(rowDocument.system.requirements, '')}

@@ -101,7 +101,11 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       });
 
       const inventory: ActorInventoryTypes =
-        Inventory.getDefaultInventorySections(this.document);
+        Inventory.getDefaultInventorySections(this.document, {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        });
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
@@ -132,6 +136,11 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypes,
@@ -147,6 +156,11 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       ).forEach((s) => {
         inventory[s] ??= Inventory.createInventorySection(
           this.document,
+          {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           CONSTANTS.TAB_ACTOR_INVENTORY,
           s,
           inventoryTypes,

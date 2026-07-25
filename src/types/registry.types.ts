@@ -150,11 +150,34 @@ export type TidyPartitionRegistry = {
    * partition, keyed as `tidy5e-sheet-default`
    */
   columns: {
+    /** Partitions for activity columns. */
     activity: ColumnPartitions;
+    /** Partitions for container contents columns. */
     containerContents: ColumnPartitions;
+    /** Partitions for effect columns. */
+    effect: ColumnPartitions;
+    /** Partitions for encounter combatant columns. */
+    encounterCombatant: ColumnPartitions;
+    /** Partitions for encounter member columns. */
+    encounterMember: ColumnPartitions;
+    /** Partitions for feature columns. */
+    feature: ColumnPartitions;
+    /** Partitions for group member columns. */
+    groupMember: ColumnPartitions;
+    /** Partitions for inventory (consumable, equipment, weapon, etc.) columns. */
     inventory: ColumnPartitions;
+    /** Partitions for item advancement columns. */
     itemAdvancement: ColumnPartitions;
-    // todo - the rest of the domains
+    /** Partitions for spell columns. */
+    spell: ColumnPartitions;
+    /** Partitions for a vehicle's assigned crew columns. */
+    vehicleAssignedCrew: ColumnPartitions;
+    /** Partitions for a vehicle's draft animal columns. */
+    vehicleDraftAnimal: ColumnPartitions;
+    /** Partitions for a vehicle's passenger columns. */
+    vehiclePassenger: ColumnPartitions;
+    /** Partitions for a vehicle's unassigned crew columns. */
+    vehicleUnassignedCrew: ColumnPartitions;
   };
 
   /**

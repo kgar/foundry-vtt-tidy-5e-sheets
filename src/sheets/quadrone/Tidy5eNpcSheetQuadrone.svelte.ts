@@ -37,10 +37,10 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 
 export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC,
@@ -325,7 +325,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     type NpcPartitions = {
       inventoryItems: Item5e[];
@@ -386,11 +390,14 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         dataset[TidyFlags.section.prop] = customSectionName;
       }
 
-      const columns = ItemColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_STATBLOCK,
-        id,
-      );
+      const columns = FeatureColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_STATBLOCK,
+        sectionKey: id,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
       return {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -505,6 +512,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       const ctx = (context.itemContext[item.id] ??= {});
       Inventory.applyInventoryItemToSection({
         sheetDocument: this.document,
+        columnOptions: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
         inventory: inventory,
         item: item,
@@ -521,6 +533,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypes,
