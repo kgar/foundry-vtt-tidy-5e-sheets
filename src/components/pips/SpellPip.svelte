@@ -14,34 +14,44 @@
     $props();
 
   let isEmpty = $derived(index >= uses);
-  let previousIsEmpty = $state<boolean | null>(null);
+  let previousIsEmpty: boolean | null = null;
 
   let pipEl: HTMLElement;
 
   $effect(() => {
-    if (previousIsEmpty === null) {
-      previousIsEmpty = isEmpty;
+    const currentIsEmpty = isEmpty;
+
+    if (previousIsEmpty === currentIsEmpty) {
       return;
     }
 
-    if (previousIsEmpty !== isEmpty) {
-      let className = !isEmpty ? 'animate-restored' : 'animate-expended';
-      let controller = new AbortController();
+    const wasFirstRun = previousIsEmpty === null;
+    previousIsEmpty = currentIsEmpty;
 
-      // Trigger onetime animation, remove the class, and stop listening to events.
-      pipEl.addEventListener(
-        'transitionend',
-        () => {
-          pipEl.classList.remove(className);
-          controller.abort();
-        },
-        { signal: controller.signal },
-      );
-
-      pipEl.classList.add(className);
-
-      previousIsEmpty = isEmpty;
+    if (wasFirstRun) {
+      return;
     }
+
+    const className = !currentIsEmpty ? 'animate-restored' : 'animate-expended';
+    const controller = new AbortController();
+
+    // Trigger onetime animation, remove the class, and stop listening to events.
+    pipEl.addEventListener(
+      'transitionend',
+      () => {
+        pipEl.classList.remove(className);
+        controller.abort();
+      },
+      { signal: controller.signal },
+    );
+
+    pipEl.classList.add(className);
+
+    // If the pip changes or drops mid-animation drop the listener
+    return () => {
+      controller.abort();
+      pipEl.classList.remove(className);
+    };
   });
 </script>
 
