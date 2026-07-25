@@ -6,12 +6,9 @@
     index: number;
     temp?: boolean;
     onclick?: MouseEventHandler<HTMLAnchorElement>;
-    onmouseenter?: MouseEventHandler<HTMLAnchorElement>;
-    onmouseleave?: MouseEventHandler<HTMLAnchorElement>;
   }
 
-  let { uses, index, temp, onclick, onmouseenter, onmouseleave }: Props =
-    $props();
+  let { uses, index, temp, onclick }: Props = $props();
 
   let isEmpty = $derived(index >= uses);
   let previousIsEmpty: boolean | null = null;
@@ -61,6 +58,4 @@
   class:inactive={isEmpty}
   class:active={!isEmpty}
   {onclick}
-  {onmouseenter}
-  {onmouseleave}
 ></a>
