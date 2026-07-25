@@ -25,37 +25,89 @@
     ...rest
   }: Props = $props();
 
-  let showExpandedClass = $state(expanded);
-  let overflowYHidden = $state(!expanded);
-  let renderContents = $state(expanded);
+  let showExpandedClass = $state(true);
+  let overflowYHidden = $state(false);
+  let renderContents = $state(true);
   let expandableContainer: HTMLElement;
+  let initialized = false;
 
-  const usesTransitions = !usePerformanceMode();
+  const usesTransitions = $derived(!usePerformanceMode());
+  const transitionFallbackMs = 500;
+
+  $effect.pre(() => {
+    if (initialized) {
+      return;
+    }
+
+    initialized = true;
+    showExpandedClass = expanded;
+    overflowYHidden = !expanded;
+    renderContents = expanded;
+  });
 
   $effect(() => {
+    const target = expanded;
+
+    if (untrack(() => showExpandedClass) === target) {
+      return;
+    }
+
     if (!usesTransitions) {
-      showExpandedClass = expanded;
+      showExpandedClass = target;
       onStart();
       onEnd();
       return;
     }
 
+    const controller = new AbortController();
+
+    // Release collapsed content in case of no transitions/changes
+    const fallback = setTimeout(() => {
+      onStart();
+      onEnd();
+    }, transitionFallbackMs);
+
+    // Nested expandables and child animations bubble their events up to here.
+    const isOwnTransition = (ev: TransitionEvent) =>
+      ev.target === expandableContainer;
+
+    const finish = () => {
+      clearTimeout(fallback);
+      controller.abort();
+      onEnd();
+    };
+
     expandableContainer.addEventListener(
       'transitionstart',
-      () => {
+      (ev) => {
+        if (!isOwnTransition(ev)) {
+          return;
+        }
+
+        clearTimeout(fallback);
         onStart();
       },
-      { once: true },
-    );
-    expandableContainer.addEventListener(
-      'transitionend',
-      () => {
-        onEnd();
-      },
-      { once: true },
+      { signal: controller.signal },
     );
 
-    showExpandedClass = expanded;
+    expandableContainer.addEventListener(
+      'transitionend',
+      (ev) => isOwnTransition(ev) && finish(),
+      { signal: controller.signal },
+    );
+
+    expandableContainer.addEventListener(
+      'transitioncancel',
+      (ev) => isOwnTransition(ev) && finish(),
+      { signal: controller.signal },
+    );
+
+    showExpandedClass = target;
+
+    return () => {
+      clearTimeout(fallback);
+      controller.abort();
+    };
   });
 
   $effect(() => {
