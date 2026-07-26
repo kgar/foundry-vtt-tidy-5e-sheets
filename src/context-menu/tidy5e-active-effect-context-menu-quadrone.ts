@@ -43,7 +43,9 @@ export function getActiveEffectContextOptionsQuadrone(
         app._renderChild(effect.item.sheet, {
           mode: CONSTANTS.SHEET_MODE_PLAY,
         }),
-      condition: () => !!effect.item,
+      condition: () =>
+        !!effect.item &&
+        app.document.documentName !== CONSTANTS.DOCUMENT_NAME_ITEM,
     },
     {
       name: effect.disabled
