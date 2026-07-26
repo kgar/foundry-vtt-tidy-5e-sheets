@@ -132,6 +132,7 @@
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.combatants,
             (entry) => entry.rowActions,
+            context.unlocked ? section.sectionActions : [],
           ),
         )}
 

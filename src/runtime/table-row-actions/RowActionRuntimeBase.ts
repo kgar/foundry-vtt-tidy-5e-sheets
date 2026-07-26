@@ -53,6 +53,7 @@ export abstract class RowActionRuntimeBase<
   static getRowActionWidthInfo<TEntry>(
     entries: TEntry[],
     rowActionFn: (entry: TEntry) => any[] | undefined,
+    sectionActions: any[] = [],
   ) {
     let maxRowActionsCount = 1;
 
@@ -62,6 +63,8 @@ export abstract class RowActionRuntimeBase<
         (rowActionFn(entry) ?? []).length,
       );
     }
+
+    maxRowActionsCount = Math.max(maxRowActionsCount, sectionActions.length);
 
     const widthRems = this.calculateRowActionWidthRems(maxRowActionsCount);
     const widthPx = widthRems * foundryCoreSettings.value.fontSizePx;

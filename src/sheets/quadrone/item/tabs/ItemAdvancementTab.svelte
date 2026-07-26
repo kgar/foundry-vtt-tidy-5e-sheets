@@ -58,6 +58,7 @@
       RowActionRuntimeBase.getRowActionWidthInfo(
         section.items,
         (_entry) => arrayWithMostActions,
+        context.unlocked ? section.sectionActions : [],
       ),
     )}
 

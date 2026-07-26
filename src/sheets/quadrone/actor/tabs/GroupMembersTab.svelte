@@ -103,6 +103,7 @@
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
+            context.unlocked ? section.sectionActions : [],
           ),
         )}
 

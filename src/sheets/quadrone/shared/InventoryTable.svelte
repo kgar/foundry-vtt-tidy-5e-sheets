@@ -15,6 +15,7 @@
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   type Props = {
     containingDocument: any;
@@ -51,6 +52,8 @@
 
   const localize = FoundryAdapter.localize;
 
+  let context = $derived(getSheetContext());
+
   let containerToggleMap = $derived(inlineToggleService.map);
 
   let actor = $derived(
@@ -63,6 +66,7 @@
     RowActionRuntimeBase.getRowActionWidthInfo(
       section.items,
       (entry) => itemContext[entry.id]?.rowActions,
+      context.unlocked ? section.sectionActions : [],
     ),
   );
 
