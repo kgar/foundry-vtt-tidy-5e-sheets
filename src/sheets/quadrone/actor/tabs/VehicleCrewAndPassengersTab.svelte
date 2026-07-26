@@ -8,13 +8,15 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { CONSTANTS } from 'src/constants';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { VehicleAssignedCrewColumnRuntime } from 'src/runtime/table-columns/VehicleAssignedCrewColumnRuntime';
+  import { VehiclePassengerColumnRuntime } from 'src/runtime/table-columns/VehiclePassengerColumnRuntime';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -174,8 +176,8 @@
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each context.crewAndPassengers as section (section.key)}
       {#if section.members.length || section.showEmptyState}
+        <!-- TODO: Someday, eliminate this duplicated nonsense required by TypeScript -->
         {const rowActionInfo = $derived(
-          // TODO: Someday, eliminate this duplicated nonsense required by TypeScript
           section.type === 'crew'
             ? RowActionRuntimeBase.getRowActionWidthInfo(
                 section.members,
@@ -187,11 +189,17 @@
               ),
         )}
 
+        <!-- TODO: Someday, eliminate this duplicated effort -->
         {const hiddenColumns = $derived(
-          VehicleMemberColumnRuntime.determineHiddenColumns(
-            sectionsInlineWidth - rowActionInfo.widthPx,
-            section.columns,
-          ),
+          section.type === 'crew'
+            ? VehicleAssignedCrewColumnRuntime.determineHiddenColumns(
+                sectionsInlineWidth - rowActionInfo.widthPx,
+                section.columns,
+              )
+            : VehiclePassengerColumnRuntime.determineHiddenColumns(
+                sectionsInlineWidth - rowActionInfo.widthPx,
+                section.columns,
+              ),
         )}
         <TidyTable key={section.key} data-area={section.type}>
           {#snippet header(expanded)}
@@ -207,7 +215,7 @@
                 {/if}
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
+              <TidyTableCustomHeaderCellsV2
                 {context}
                 {hiddenColumns}
                 {section}
@@ -265,21 +273,13 @@
                     </span>
                   </a>
                 </TidyTableCell>
-                <TidyTableCustomCells
+                <TidyTableCustomCellsV2
                   {context}
                   ctx={member}
                   entry={member.actor}
                   {hiddenColumns}
                   {section}
                 />
-
-                <TidyTableCell
-                  columnWidth="{rowActionInfo.widthRems}rem"
-                  class="tidy-table-actions"
-                  attributes={{
-                    ['data-tidy-column-key']: CONSTANTS.COLUMN_KEY_ROW_ACTIONS,
-                  }}
-                ></TidyTableCell>
 
                 <!-- TODO: TypeScript cracks me up. There is a long, academic explanation about why this repetition is needed, but it would be nice to somehow eliminate the duplication one day. -->
                 {#if member.type === 'crew'}

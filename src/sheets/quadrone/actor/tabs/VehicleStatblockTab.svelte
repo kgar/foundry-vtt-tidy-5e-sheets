@@ -13,8 +13,6 @@
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import {
     createSearchResultsState,
@@ -32,6 +30,9 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
   import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
+  import { VehicleDraftAnimalColumnRuntime } from 'src/runtime/table-columns/VehicleDraftAnimalColumnRuntime';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -278,6 +279,7 @@
 
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each sections as section (section.key)}
+      <!-- TODO: Handle vehicle feats and spells also -->
       {#if section.type === 'inventory'}
         <!-- 
             Only hide empty tables at the component rendering level, so that 
@@ -360,7 +362,7 @@
           )}
 
           {const hiddenColumns = $derived(
-            ItemColumnRuntime.determineHiddenColumns(
+            VehicleDraftAnimalColumnRuntime.determineHiddenColumns(
               sectionsInlineWidth - rowActionInfo.widthPx,
               section.columns,
             ),
@@ -380,7 +382,7 @@
                   >
                 </TidyTableHeaderCell>
 
-                <TidyTableCustomHeaderCells
+                <TidyTableCustomHeaderCellsV2
                   {context}
                   {hiddenColumns}
                   {section}
@@ -468,7 +470,7 @@
                           </a>
                         </TidyTableCell>
 
-                        <TidyTableCustomCells
+                        <TidyTableCustomCellsV2
                           {context}
                           ctx={member}
                           entry={member.actor}

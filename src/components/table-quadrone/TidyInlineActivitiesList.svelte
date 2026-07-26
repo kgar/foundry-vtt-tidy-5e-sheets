@@ -16,8 +16,6 @@
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
-  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
   import TidyTableCustomCellsV2 from './parts/TidyTableCustomCellsV2.svelte';

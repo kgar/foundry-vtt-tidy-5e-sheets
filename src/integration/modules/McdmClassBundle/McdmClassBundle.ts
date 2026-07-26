@@ -17,6 +17,19 @@ import type { TidySectionBase } from 'src/types/types';
 import { buildMcdmPowersSettingsTab } from './settings/McdmPowersSettingsTab';
 import { loadConditionalStyles } from 'src/utils/css-loading';
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
+import type {
+  ConfiguredColumnSpecificationV2,
+  ItemColumnSpec,
+  SectionColumnSpecificationsV2,
+} from 'src/types/columns.types';
+import HtmlColumn from 'src/sheets/quadrone/item/columns/HtmlColumn.svelte';
+import ItemUsesColumn from 'src/sheets/quadrone/item/columns/ItemUsesColumn.svelte';
+import McdmPowerSpecialtyColumn from './McdmPowerSpecialtyColumn.svelte';
+import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
+import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
+import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
+import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
+import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 
 declare global {
   interface CONFIG extends OriginalConfig {
@@ -51,6 +64,9 @@ export type PowersSection = {
   items: Item5e[];
   uses?: number;
   canCreate: boolean;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
@@ -172,5 +188,153 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
     ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_NPC][
       this.powersTabId
     ] = filterPins;
+
+    // Column Registration
+    const columns = CONFIG.TIDY5E.features.columns.customItem;
+
+    columns[`${this.moduleId}-powers-concentration`] = {
+      cell: {
+        component: HtmlColumn,
+        props: (args) => {
+          const html = !args.rowDocument.requiresConcentration
+            ? ''
+            : `
+              <span class="concentration-icon">
+                <dnd5e-icon src="systems/dnd5e/icons/svg/statuses/concentrating.svg">
+              </span>
+            `;
+
+          return { html };
+        },
+      },
+      widthRems: 2,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof HtmlColumn>;
+    columns[`${this.moduleId}-powers-uses`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
+      },
+      cell: {
+        component: ItemUsesColumn,
+        props: (args) => ({
+          rowDocument: args.rowDocument,
+        }),
+        classes: 'inline-uses',
+      },
+      widthRems: 4,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemUsesColumn>;
+    columns[`${this.moduleId}-powers-specialty`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
+      },
+      cell: {
+        component: McdmPowerSpecialtyColumn,
+        props: (args) => ({
+          rowDocument: args.rowDocument,
+        }),
+      },
+      widthRems: 3.5,
+    } satisfies ItemColumnSpec<
+      typeof HtmlColumn,
+      typeof McdmPowerSpecialtyColumn
+    >;
+    columns[`${this.moduleId}-powers-time`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
+        }),
+      },
+      cell: {
+        component: ItemTimeColumn,
+        props: (args) => ({
+          rowDocument: args.rowDocument,
+        }),
+      },
+      widthRems: 4,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTimeColumn>;
+    columns[`${this.moduleId}-powers-formula`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Formula'),
+        }),
+      },
+      cell: {
+        component: ItemDamageFormulasColumn,
+        props: (args) => ({
+          rowContext: args.rowContext,
+          rowDocument: args.rowDocument,
+        }),
+      },
+      widthRems: 5,
+    } satisfies ItemColumnSpec<
+      typeof HtmlColumn,
+      typeof ItemDamageFormulasColumn
+    >;
+    columns[`${this.moduleId}-powers-target`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
+        }),
+      },
+      cell: {
+        component: ItemTargetColumn,
+        props: (args) => ({ rowDocument: args.rowDocument }),
+      },
+      widthRems: 5,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTargetColumn>;
+    columns[`${this.moduleId}-powers-range`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
+        }),
+      },
+      cell: {
+        component: ItemRangeColumn,
+        props: (args) => ({ rowDocument: args.rowDocument }),
+      },
+      widthRems: 5,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRangeColumn>;
+    columns[`${this.moduleId}-powers-roll`] = {
+      header: {
+        component: HtmlColumn,
+        props: () => ({
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Roll'),
+        }),
+      },
+      cell: {
+        component: ItemRollColumn,
+        props: (args) => ({
+          rowContext: args.rowContext,
+          rowDocument: args.rowDocument,
+        }),
+      },
+      widthRems: 3.125,
+    } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRollColumn>;
+
+    // Column Partitioning
+
+    // TODO: CONFIG.TIDY5E.utils.setColumnPartition(myPartitionConfig, { tabId: this.powersTabId });
+    const defaultTypePartitions = (CONFIG.TIDY5E.partitions.columns.customItem[
+      CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT
+    ] ??= {});
+
+    const powersTabPartitions = (defaultTypePartitions[this.powersTabId] ??=
+      {});
+
+    powersTabPartitions[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] = {
+      [`${this.moduleId}-powers-concentration`]: { order: 100, priority: 900 },
+      [`${this.moduleId}-powers-uses`]: { order: 200, priority: 200 },
+      [`${this.moduleId}-powers-specialty`]: { order: 300, priority: 100 },
+      [`${this.moduleId}-powers-time`]: { order: 400, priority: 500 },
+      [`${this.moduleId}-powers-formula`]: { order: 500, priority: 300 },
+      [`${this.moduleId}-powers-target`]: { order: 600, priority: 400 },
+      [`${this.moduleId}-powers-range`]: { order: 700, priority: 600 },
+      [`${this.moduleId}-powers-roll`]: { order: 800, priority: 700 },
+    };
   }
 }

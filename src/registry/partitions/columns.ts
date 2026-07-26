@@ -43,6 +43,7 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         },
       },
     },
+    customItem: {},
     effect: {
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {

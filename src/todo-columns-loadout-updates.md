@@ -1,6 +1,7 @@
 ## To Do
 
-- [ ] Get Vehicle Sheet working again with new column setup
+- [ ] Vehicle statblock tab - <!-- TODO: Handle vehicle feats and spells also -->
+- [ ] ensure magical tattoo integration works
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
@@ -27,6 +28,7 @@
 }
 ```
 - [ ] Adult Red Dragon has a random Equip row action. For that tab, we shouldn't see such things. Uh oh, is the row action system not flexible enough for that?
+- [ ] // TODO: CONFIG.TIDY5E.utils.setColumnPartition(myPartitionConfig, { tabId: this.powersTabId });
 
 
 ## hightouch

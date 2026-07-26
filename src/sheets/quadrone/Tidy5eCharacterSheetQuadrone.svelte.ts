@@ -503,10 +503,14 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       };
     }
 
+    // Track which sections exist
     let sectionsMap: Record<string, SheetTabSection> = {};
+    
+    // Consolidate shared sections into generic feature sections
     for (let section of sheetTabSections) {
       const mappedSection = sectionsMap[section.key];
 
+      // Apply new section to map
       if (!mappedSection) {
         sectionsMap[section.key] = section;
         continue;
@@ -514,6 +518,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       const incomingItems = section.items;
 
+      // Shared section detected; non-feature shared sections are overwritten 
+      // to be feature sections and now contain their items and incoming items
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
@@ -526,6 +532,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         continue;
       }
 
+      // Existing shared feature section gets its feature items.
       mappedSection.items.push(...incomingItems);
     }
 

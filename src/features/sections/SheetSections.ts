@@ -63,9 +63,7 @@ export class SheetSections {
 
   static applySpellToSection(
     context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -91,9 +89,7 @@ export class SheetSections {
 
   static createSpellbookSection(
     context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     options: Partial<SpellbookSection>,
@@ -176,9 +172,7 @@ export class SheetSections {
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
     context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
@@ -516,7 +510,12 @@ export class SheetSections {
   }
 
   static configureVehicleStatblockSections(
-    sections: (InventorySection | VehicleDraftAnimalSection)[],
+    sections: (
+      | InventorySection
+      | SpellbookSection
+      | FeatureSection
+      | VehicleDraftAnimalSection
+    )[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>,
@@ -749,9 +748,7 @@ export class SheetSections {
 
   static configureFeatures<
     TSection extends
-      | CharacterFeatureSection
-      | FeatureSection
-      | NpcAbilitySection,
+      CharacterFeatureSection | FeatureSection | NpcAbilitySection,
   >(
     features: TSection[],
     context:

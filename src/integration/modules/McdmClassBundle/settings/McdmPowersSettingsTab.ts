@@ -20,6 +20,7 @@ import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
 import type { PowersSection } from '../McdmClassBundle';
 import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
+import { CustomItemColumnRuntime } from 'src/runtime/table-columns/CustomItemColumnRuntime';
 
 export function buildMcdmPowersSections(
   context: ActorSheetQuadroneContext,
@@ -76,67 +77,6 @@ export function buildMcdmPowersSections(
     sectionActions.push(SectionActions.getCreateItemHeaderSectionAction());
   }
 
-  const defaultColumns = getDefaultItemColumns();
-  const allSpecs: ConfiguredSectionColumnSpecification[] = [
-    {
-      key: 'concentration',
-      headerContent: {
-        type: 'html',
-        html: '',
-      },
-      cellContent: {
-        type: 'callback',
-        callback: (rowDocument, rowContext) => {
-          if (!rowDocument.requiresConcentration) return '';
-          return `
-              <span class="concentration-icon">
-                <dnd5e-icon src="systems/dnd5e/icons/svg/statuses/concentrating.svg">
-              </span>
-            `;
-        },
-      },
-      widthRems: 2,
-      order: 100,
-      priority: 900,
-    },
-    { ...defaultColumns.uses, key: 'uses', order: 200, priority: 200 },
-    {
-      key: 'specialty',
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize(
-          'MCDMCB.TALENT.POWERS.SPECIALTIES.Header',
-        ),
-      },
-      cellContent: {
-        type: 'component',
-        component: McdmPowerSpecialtyColumn,
-      },
-      widthRems: 3.5,
-      order: 300,
-      priority: 100,
-    },
-    { ...defaultColumns.time, key: 'time', order: 400, priority: 500 },
-    { ...defaultColumns.formula, key: 'formula', order: 500, priority: 300 },
-    { ...defaultColumns.target, key: 'target', order: 600, priority: 400 },
-    { ...defaultColumns.range, key: 'range', order: 700, priority: 600 },
-    { ...defaultColumns.roll, key: 'roll', order: 800, priority: 700 },
-  ];
-
-  const columns: SectionColumnContext = {
-    map: allSpecs.reduce<Record<string, ConfiguredSectionColumnSpecification>>(
-      (prev, curr) => {
-        prev[curr.key] = curr;
-        return prev;
-      },
-      {},
-    ),
-    prioritized: allSpecs
-      .toSorted((a, b) => b.priority - a.priority)
-      .map((s) => s.key),
-    sorted: allSpecs.toSorted((a, b) => a.order - b.order).map((s) => s.key),
-  };
-
   const allSections: PowersSection[] = [];
 
   for (const [order, powers] of Object.entries(orderToPowersMap)) {
@@ -152,7 +92,14 @@ export function buildMcdmPowersSections(
       canCreate: true,
       sectionActions,
       show: sectionConfig?.[`order${order}`]?.show !== false,
-      columns,
+      columns: CustomItemColumnRuntime.getColumnSpecifications({
+        sheetDocument: context.document,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+        sectionKey: `order${order}`,
+        tabId: tabId,
+      }),
     };
 
     allSections.push(section);
@@ -171,7 +118,14 @@ export function buildMcdmPowersSections(
       canCreate: true,
       sectionActions,
       show: sectionConfig?.[sectionKey]?.show !== false,
-      columns,
+      columns: CustomItemColumnRuntime.getColumnSpecifications({
+        sheetDocument: context.document,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+        sectionKey: 'powers',
+        tabId: tabId,
+      }),
     };
 
     allSections.push(section);

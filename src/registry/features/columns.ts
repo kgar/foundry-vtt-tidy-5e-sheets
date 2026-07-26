@@ -229,6 +229,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         widthRems: 5,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemWeightColumn>,
     },
+    customItem: {},
     effect: {
       source: {
         header: {

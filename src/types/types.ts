@@ -65,7 +65,9 @@ import type {
   GroupMemberColumnSpec,
   ItemColumnSpec,
   SectionColumnSpecificationsV2,
+  VehicleCrewColumnSpec,
   VehicleDraftAnimalColumnSpec,
+  VehiclePassengerColumnSpec,
 } from './columns.types';
 
 export type Actor5e = any;
@@ -1774,6 +1776,9 @@ export type VehicleCrewSection = {
   members: VehicleCrewMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<VehicleCrewColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type CrewSections = {
@@ -1795,6 +1800,9 @@ export type VehiclePassengerSection = {
   members: VehiclePassengerMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<VehiclePassengerColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {

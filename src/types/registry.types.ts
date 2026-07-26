@@ -106,6 +106,11 @@ export type TidyColumnRegistry = {
   activity: Record<string, ActivityColumnSpec>;
   /** Columns for container contents. */
   containerContents: Record<string, ItemColumnSpec>;
+  /**
+   * Columns for unspecified custom item types, meant for integrating modules
+   * with custom item types to register their columns here.
+   */
+  customItem: Record<string, ItemColumnSpec>;
   /** Columns for effects. */
   effect: Record<string, EffectColumnSpec>;
   /** Columns for encounter combatants. */
@@ -154,6 +159,8 @@ export type TidyPartitionRegistry = {
     activity: ColumnPartitions;
     /** Partitions for container contents columns. */
     containerContents: ColumnPartitions;
+    /** Partitions for custom item columns. */
+    customItem: ColumnPartitions;
     /** Partitions for effect columns. */
     effect: ColumnPartitions;
     /** Partitions for encounter combatant columns. */
