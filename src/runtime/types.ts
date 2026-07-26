@@ -90,11 +90,11 @@ export type RegisteredItemSummaryCommand = {
   execute?: (params: RegisteredItemSummaryCommandExecuteParams) => void;
 };
 
-/** Only available where the sheet tracks inline expansion, such as inventory tables. */
 export type ItemSummaryCommandContext = {
   inlineToggleService?: InlineToggleService;
   tabId?: string;
   containerContentsExpanded?: boolean;
+  toggleSummary?: (override?: boolean) => void;
 };
 
 export type RegisteredItemSummaryCommandEnabledParams = {

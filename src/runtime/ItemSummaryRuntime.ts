@@ -66,12 +66,11 @@ export class ItemSummaryRuntime {
       iconClass: (params) =>
         isContainer(params.item) ? 'fa-solid fa-box-open' : 'fa-solid fa-eye',
     },
-    // TODO: kgar help, there's no way to collapse an item right now
-    // {
-    //   id: 'collapse',
-    //   execute: (params) => params.toggleSummary?.(false),
-    //   iconClass: 'fa-solid fa-chevron-up',
-    // },
+    {
+      enabled: (params) => !!params.toggleSummary,
+      execute: (params) => params.toggleSummary?.(false),
+      iconClass: 'fa-solid fa-chevron-up',
+    },
   ];
 
   static registerItemSummaryCommands(commands: ItemSummaryCommand[]) {
