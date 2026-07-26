@@ -157,6 +157,9 @@
         {const hasContainerExpander = $derived(
           'containerContents' in ctx && !!ctx.containerContents,
         )}
+        {const isContainer = $derived(
+          entry.type === CONSTANTS.ITEM_TYPE_CONTAINER,
+        )}
 
         <TidyItemTableRow
           item={entry}
@@ -179,14 +182,19 @@
             <a
               class={[
                 'tidy-table-row-use-button',
-                { disabled: !context.editable },
+                { disabled: !context.editable && !isContainer },
               ]}
-              data-action="use"
-              data-has-roll-modes
+              data-action={isContainer ? 'showDocument' : 'use'}
+              data-uuid={isContainer ? entry.uuid : undefined}
+              data-has-roll-modes={isContainer ? undefined : true}
             >
               <img class="item-image" alt={entry.name} src={entry.img} />
               <span class="roll-prompt">
-                <i class="fa-solid fa-dice-d20"></i>
+                <i
+                  class={isContainer
+                    ? 'fa-solid fa-box-open'
+                    : 'fa-solid fa-dice-d20'}
+                ></i>
               </span>
             </a>
 

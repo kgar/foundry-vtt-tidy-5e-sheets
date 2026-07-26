@@ -1,7 +1,6 @@
 <script lang="ts">
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
-  import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { Enrichers } from 'src/features/enrichers/Enrichers';
@@ -22,10 +21,6 @@
   }
 
   let { chatData, item, afterInlineActivities, ctx }: Props = $props();
-
-  let itemSummaryCommands = $derived(
-    ItemSummaryRuntime.getItemSummaryCommands(item),
-  );
 
   let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
 
@@ -117,9 +112,7 @@
       {/if}
     </div>
     <div class="right-aligned-elements">
-      {#if itemSummaryCommands.length}
-        <ItemSummaryCommandButtonList {item} />
-      {/if}
+      <ItemSummaryCommandButtonList {item} />
     </div>
   </div>
 </div>
