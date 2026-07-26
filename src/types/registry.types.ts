@@ -22,7 +22,7 @@ import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCon
 import type {
   ActivityColumnSpec,
   ColumnPartitions,
-  ColumnSpecificationV2,
+  ColumnSpecification,
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
   EncounterMemberColumnSpec,

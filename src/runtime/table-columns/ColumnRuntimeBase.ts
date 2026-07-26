@@ -1,10 +1,10 @@
 import { CONSTANTS } from 'src/constants';
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 import type {
-  ColumnSpecificationV2,
+  ColumnSpecification,
   ColumnPartitionOptions,
-  SectionColumnSpecificationsV2,
-  ConfiguredColumnSpecificationV2,
+  SectionColumnSpecifications,
+  ConfiguredColumnSpecification,
 } from 'src/types/columns.types';
 import type { ColumnRegistryDomain, ColumnOf } from 'src/types/registry.types';
 import { checkCondition } from 'src/utils/iteration';
@@ -12,13 +12,13 @@ import { warn } from 'src/utils/logging';
 
 export abstract class ColumnRuntimeBase<
   TDomain extends ColumnRegistryDomain,
-  TColumnSpecification extends ColumnSpecificationV2<any, any, any, any> =
+  TColumnSpecification extends ColumnSpecification<any, any, any, any> =
     ColumnOf<TDomain>,
 > {
   abstract readonly domain: TDomain;
 
-  readonly EMPTY_COLUMN_SPECS: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<TColumnSpecification>
+  readonly EMPTY_COLUMN_SPECS: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<TColumnSpecification>
   > = Object.freeze({
     map: {},
     prioritized: [],
@@ -29,8 +29,8 @@ export abstract class ColumnRuntimeBase<
 
   getColumnSpecifications(
     options: ColumnPartitionOptions,
-  ): SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<TColumnSpecification>
+  ): SectionColumnSpecifications<
+    ConfiguredColumnSpecification<TColumnSpecification>
   > {
     for (let type of [
       options.sheetDocument.type,
@@ -67,9 +67,9 @@ export abstract class ColumnRuntimeBase<
 
           const map: Record<
             string,
-            ConfiguredColumnSpecificationV2<TColumnSpecification>
+            ConfiguredColumnSpecification<TColumnSpecification>
           > = {};
-          const allSpecs: ConfiguredColumnSpecificationV2<TColumnSpecification>[] =
+          const allSpecs: ConfiguredColumnSpecification<TColumnSpecification>[] =
             [];
 
           for (const [key, data] of Object.entries(partitionData)) {
@@ -93,7 +93,7 @@ export abstract class ColumnRuntimeBase<
               continue;
             }
 
-            const configuredSpec: ConfiguredColumnSpecificationV2<TColumnSpecification> =
+            const configuredSpec: ConfiguredColumnSpecification<TColumnSpecification> =
               {
                 key,
                 ...spec,
@@ -130,7 +130,7 @@ export abstract class ColumnRuntimeBase<
 
   determineHiddenColumns(
     inlineSizePx: number,
-    schematics: SectionColumnSpecificationsV2<TColumnSpecification>,
+    schematics: SectionColumnSpecifications<TColumnSpecification>,
     minWidthRemsOverride?: number,
   ): Set<string> {
     let minWidthRems = minWidthRemsOverride ?? this._minWidthRems;

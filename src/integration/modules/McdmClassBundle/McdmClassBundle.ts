@@ -18,9 +18,9 @@ import { buildMcdmPowersSettingsTab } from './settings/McdmPowersSettingsTab';
 import { loadConditionalStyles } from 'src/utils/css-loading';
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import type {
-  ConfiguredColumnSpecificationV2,
+  ConfiguredColumnSpecification,
   ItemColumnSpec,
-  SectionColumnSpecificationsV2,
+  SectionColumnSpecifications,
 } from 'src/types/columns.types';
 import HtmlColumn from 'src/sheets/quadrone/item/columns/HtmlColumn.svelte';
 import ItemUsesColumn from 'src/sheets/quadrone/item/columns/ItemUsesColumn.svelte';
@@ -64,8 +64,8 @@ export type PowersSection = {
   items: Item5e[];
   uses?: number;
   canCreate: boolean;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
   >;
 } & TidySectionBase;
 

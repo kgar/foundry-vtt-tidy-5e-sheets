@@ -5,17 +5,17 @@
   } from 'src/types/types';
   import TidyTableHeaderCell from '../TidyTableHeaderCell.svelte';
   import type {
-    ColumnSpecificationV2,
-    ConfiguredColumnSpecificationV2,
-    SectionColumnSpecificationsV2,
+    ColumnSpecification,
+    ConfiguredColumnSpecification,
+    SectionColumnSpecifications,
   } from 'src/types/columns.types';
 
   type Props = {
     hiddenColumns?: Set<string>;
     section: TidySectionBase & {
-      columns: SectionColumnSpecificationsV2<
-        ConfiguredColumnSpecificationV2<
-          ColumnSpecificationV2<any, any, any, any, any, any>
+      columns: SectionColumnSpecifications<
+        ConfiguredColumnSpecification<
+          ColumnSpecification<any, any, any, any, any, any>
         >
       >;
     };

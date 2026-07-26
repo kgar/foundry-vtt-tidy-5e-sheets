@@ -58,13 +58,13 @@ import type {
 } from './row-actions.types';
 import type {
   ActivityColumnSpec,
-  ConfiguredColumnSpecificationV2,
+  ConfiguredColumnSpecification,
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
   EncounterMemberColumnSpec,
   GroupMemberColumnSpec,
   ItemColumnSpec,
-  SectionColumnSpecificationsV2,
+  SectionColumnSpecifications,
   VehicleCrewColumnSpec,
   VehicleDraftAnimalColumnSpec,
   VehiclePassengerColumnSpec,
@@ -191,8 +191,8 @@ export type InventorySection = {
   type: typeof CONSTANTS.SECTION_TYPE_INVENTORY;
   items: Item5e[];
   canCreate: boolean;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -243,8 +243,8 @@ export type FeatureSection = {
   hasActions?: boolean;
   hasUses?: boolean;
   canCreate: boolean;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -256,16 +256,16 @@ export type FacilitySection = {
 export type ActivitySection = TidySectionBase & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ActivityColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ActivityColumnSpec>
   >;
 };
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
   items: Item5e[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -309,8 +309,8 @@ export type SpellbookSection = {
   override?: number;
   slot: string;
   method: string;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -1055,8 +1055,8 @@ export type ActiveEffectContext = {
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   TidySectionBase & {
     canCreate: boolean;
-    columns: SectionColumnSpecificationsV2<
-      ConfiguredColumnSpecificationV2<EffectColumnSpec>
+    columns: SectionColumnSpecifications<
+      ConfiguredColumnSpecification<EffectColumnSpec>
     >;
   };
 
@@ -1485,8 +1485,8 @@ export type MultiActorMemberPortraitContext = {
 
 export type GroupMemberSection = {
   members: GroupMemberQuadroneContext[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<GroupMemberColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<GroupMemberColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -1673,8 +1673,8 @@ export type EncounterPlaceholderQuadroneContext = {
 
 export type EncounterMemberSection = TidySectionBase & {
   members: EncounterMemberQuadroneContext[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<EncounterMemberColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<EncounterMemberColumnSpec>
   >;
 };
 
@@ -1683,8 +1683,8 @@ export type EncounterCombatSection = TidySectionBase & {
     | EncounterMemberCombatantQuadroneContext
     | EncounterPlaceholderQuadroneContext
   )[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<EncounterCombatantColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<EncounterCombatantColumnSpec>
   >;
 };
 
@@ -1754,8 +1754,8 @@ export type VehicleDraftAnimalContext = {
 export type VehicleDraftAnimalSection = {
   type: 'draft';
   members: VehicleDraftAnimalContext[];
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<VehicleDraftAnimalColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehicleDraftAnimalColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -1776,8 +1776,8 @@ export type VehicleCrewSection = {
   members: VehicleCrewMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<VehicleCrewColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehicleCrewColumnSpec>
   >;
 } & TidySectionBase;
 
@@ -1800,8 +1800,8 @@ export type VehiclePassengerSection = {
   members: VehiclePassengerMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
-  columns: SectionColumnSpecificationsV2<
-    ConfiguredColumnSpecificationV2<VehiclePassengerColumnSpec>
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehiclePassengerColumnSpec>
   >;
 } & TidySectionBase;
 

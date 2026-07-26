@@ -11,7 +11,6 @@ import type {
   EncounterSheetQuadroneContext,
   GroupMemberQuadroneContext,
   GroupSheetQuadroneContext,
-  TidySectionBase,
   VehicleCrewMemberContext,
   VehicleDraftAnimalContext,
   VehiclePassengerMemberContext,
@@ -29,7 +28,7 @@ export type ColumnHeaderPropsData<TSheetDocument, TSheetContext> = {
   sheetContext: TSheetContext;
 };
 
-export type ColumnHeaderV2<
+export type ColumnHeader<
   TSheetDocument,
   TSheetContext,
   TComponent extends Component<any> = Component<any>,
@@ -57,7 +56,7 @@ export type ColumnCellPropsData<
   rowContext: TRowContext;
 };
 
-type ColumnCellV2<
+type ColumnCell<
   TSheetDocument,
   TSheetContext,
   TRowDocument,
@@ -81,7 +80,7 @@ type ColumnCellV2<
 };
 
 // The column you store in the registry
-export type ColumnSpecificationV2<
+export type ColumnSpecification<
   TSheetDocument,
   TSheetContext,
   TRowDocument,
@@ -89,8 +88,8 @@ export type ColumnSpecificationV2<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
 > = {
-  header?: ColumnHeaderV2<TSheetDocument, TSheetContext, TColumnHeaderContent>;
-  cell: ColumnCellV2<
+  header?: ColumnHeader<TSheetDocument, TSheetContext, TColumnHeaderContent>;
+  cell: ColumnCell<
     TSheetDocument,
     TSheetContext,
     TRowDocument,
@@ -122,25 +121,25 @@ export type ColumnSpecificationPartitionData = {
   order: number;
 };
 
-export type ConfiguredColumnSpecificationV2<
-  TSpec extends ColumnSpecificationV2<any, any, any, any, any, any>,
+export type ConfiguredColumnSpecification<
+  TSpec extends ColumnSpecification<any, any, any, any, any, any>,
 > = TSpec &
   ColumnSpecificationPartitionData & {
     key: string;
   };
 
-export type SectionColumnSpecificationsV2<
-  TSpec extends ConfiguredColumnSpecificationV2<any>,
+export type SectionColumnSpecifications<
+  TSpec extends ConfiguredColumnSpecification<any>,
 > = {
-  sorted: (keyof SectionColumnSpecificationsV2<TSpec>['map'])[];
-  prioritized: (keyof SectionColumnSpecificationsV2<TSpec>['map'])[];
+  sorted: (keyof SectionColumnSpecifications<TSpec>['map'])[];
+  prioritized: (keyof SectionColumnSpecifications<TSpec>['map'])[];
   map: Record<string, TSpec>;
 };
 
 export type ActivityColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e | Item5e,
   any,
   Activity5e,
@@ -152,7 +151,7 @@ export type ActivityColumnSpec<
 export type ItemAdvancementColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Item5e,
   any,
   Advancement5e,
@@ -164,7 +163,7 @@ export type ItemAdvancementColumnSpec<
 export type EncounterCombatantColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   EncounterSheetQuadroneContext,
   Actor5e,
@@ -176,7 +175,7 @@ export type EncounterCombatantColumnSpec<
 export type EncounterMemberColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   EncounterSheetQuadroneContext,
   Actor5e,
@@ -188,7 +187,7 @@ export type EncounterMemberColumnSpec<
 export type GroupMemberColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   GroupSheetQuadroneContext,
   Actor5e,
@@ -200,7 +199,7 @@ export type GroupMemberColumnSpec<
 export type ItemColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e | Item5e,
   any,
   Item5e,
@@ -212,7 +211,7 @@ export type ItemColumnSpec<
 export type EffectColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e | Item5e,
   any,
   ActiveEffect5e,
@@ -224,7 +223,7 @@ export type EffectColumnSpec<
 export type VehicleCrewColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   VehicleSheetQuadroneContext,
   Actor5e,
@@ -236,7 +235,7 @@ export type VehicleCrewColumnSpec<
 export type VehicleDraftAnimalColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   VehicleSheetQuadroneContext,
   Actor5e,
@@ -248,7 +247,7 @@ export type VehicleDraftAnimalColumnSpec<
 export type VehiclePassengerColumnSpec<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
-> = ColumnSpecificationV2<
+> = ColumnSpecification<
   Actor5e,
   VehicleSheetQuadroneContext,
   Actor5e,

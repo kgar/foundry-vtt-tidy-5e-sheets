@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SectionColumnSpecificationsV2 } from 'src/types/columns.types';
+  import type { SectionColumnSpecifications } from 'src/types/columns.types';
   import TidyTableCell from '../TidyTableCell.svelte';
   import type {
     DocumentSheetQuadroneContext,
@@ -12,7 +12,7 @@
     entry?: any;
     hiddenColumns?: Set<string>;
     section: TidySectionBase & {
-      columns: SectionColumnSpecificationsV2<any>;
+      columns: SectionColumnSpecifications<any>;
     };
     context: DocumentSheetQuadroneContext<any>;
   };
