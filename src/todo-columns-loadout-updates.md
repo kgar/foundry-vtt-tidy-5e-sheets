@@ -1,26 +1,9 @@
-
 ## To Do
 
-
-- [ ] Create the itemMixed domain
-  - [ ] Resolve <!-- TODO: mixedItem domain -->
-  - [ ] Ensure mixedItem columns / partitions are set up for 
-  - [ ] Ensure Character Sheet Tab in Action Economy mode gets the mixedItem columns
 - [ ] make sure you didn't miss any cellClasses or headerClasses; check every original runtime file over on github
-- [ ] Cross over inventory sections to new column runtime base
-- [ ] Cross over containerContents sections to new column runtime base
 - [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
 - [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
-- [ ] Resolve type deficiencies with the current column types and task out additional work as needed
-- [ ] Design the registry types
-- [ ] Design the partitions types
-- [ ] Add common, general-purpose column components that provide universally common things—value/max, meter, meter with value/max, value, incrementer input, etc.
-- [ ] Finalize the other domains (most likely going to match Row Action domains)
-- [ ] Implement column registry and partitions for each of the domains
-- [ ] Add columns to TidyFeaturesRegistry (includes width)
-- [ ] Add column partitions (includes ordering and priority)
-- [ ] Add column components
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
 - [ ] Ensure - I can use plain JavaScript to alter an existing column
 - [ ] Ensure - I can use plain JavaScript to remove a column from the registry
@@ -30,16 +13,27 @@
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
-- [ ] The "Column" components are not really columns. They are column (header) contents.
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] // TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 - [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
 - [ ] // TODO: Universalize section type <-> column domain
 
+## hightouch
+
+- [ ] Add common, general-purpose column components that provide universally common things—value/max, meter, meter with value/max, value, incrementer input, etc.
+
 ## After Next Release
 
 - [ ] Document row action customization and recipes as part of the wiki. Tag it with the tentative Tidy version.
+- [ ] Document column customization and recipes as part of the wiki. Tag it with the tentative Tidy version.
+
+## Under consideration
+
+- [ ] Create the itemMixed domain
+  - [ ] Resolve <!-- TODO: mixedItem domain -->
+  - [ ] Ensure mixedItem columns / partitions are set up for 
+  - [ ] Ensure Character Sheet Tab in Action Economy mode gets the mixedItem columns
 
 ## Stretch
 
