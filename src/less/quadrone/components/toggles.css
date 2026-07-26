@@ -206,4 +206,16 @@
       }
     }
   }
+
+  &.theme-light {
+    [role='switch'] {
+      background-color: rgba(0, 0, 0, 0.24);
+
+      &[aria-checked='true'] .thumb-icon,
+      .thumb-icon {
+        background-color: var(--t5e-color-palette-white);
+        color: var(--t5e-color-palette-black);
+      }
+    }
+  }
 }

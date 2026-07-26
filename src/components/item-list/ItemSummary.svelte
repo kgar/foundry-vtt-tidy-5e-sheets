@@ -1,7 +1,6 @@
 <script lang="ts">
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
-  import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
@@ -23,10 +22,6 @@
 
   let additionalItemProps = $derived(
     ItemProperties.getAdditionalItemProperties(item),
-  );
-
-  let itemSummaryCommands = $derived(
-    ItemSummaryRuntime.getItemSummaryCommands(item),
   );
 
   let concealDetails = $derived(FoundryAdapter.concealDetails(item));
@@ -56,7 +51,6 @@
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
   <InlineActivitiesList {item} {activities} />
-  <HorizontalLineSeparator />
 {/if}
 <div
   class="item-summary"
@@ -70,22 +64,15 @@
         })}
       </div>
     {/await}
-    <HorizontalLineSeparator />
   {/if}
 
   <div data-target="system.description.value" data-uuid={item.uuid}>
     {@html chatData.description}
   </div>
 
-  {#if itemSummaryCommands.length}
-    <HorizontalLineSeparator />
-    <div class="inline-wrapped-elements">
-      <ItemSummaryCommandButtonList {item} />
-    </div>
-  {/if}
+  <ItemSummaryCommandButtonList {item} />
 
   {#if chatData.properties}
-    <HorizontalLineSeparator />
     <div
       class="inline-wrapped-elements"
       class:conceal-content={concealDetails}
@@ -103,6 +90,5 @@
   {/if}
 </div>
 {#if activities.length && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
-  <HorizontalLineSeparator />
   <InlineActivitiesList {item} {activities} />
 {/if}

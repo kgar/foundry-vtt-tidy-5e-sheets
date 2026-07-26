@@ -819,7 +819,7 @@
 
   /* Inline Activities */
   .tidy-table.inline-activities-table {
-    margin-block: 0 var(--t5e-size-2x);
+    margin-block: var(--t5e-size-1x) var(--t5e-size-2x);
     margin-inline: var(--t5e-size-1x) 0;
 
     .tidy-table-header-row {

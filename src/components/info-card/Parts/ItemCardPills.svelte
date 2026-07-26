@@ -3,7 +3,6 @@
   import HorizontalLineSeparator from '../../layout/HorizontalLineSeparator.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemSummaryCommandButtonList from '../../item-summary/ItemSummaryCommandButtonList.svelte';
-  import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
   import PropertyTag from 'src/components/properties/PropertyTag.svelte';
 
@@ -19,9 +18,6 @@
     ItemProperties.getAdditionalItemProperties(item),
   );
   let itemProps = $derived(chatData?.properties ?? []);
-  let itemSummaryCommands = $derived(
-    ItemSummaryRuntime.getItemSummaryCommands(item),
-  );
 
   function getSpecialProperties(item: Item5e | undefined): string[] {
     const props: string[] = [];
@@ -69,9 +65,4 @@
     {/each}
   </div>
 {/if}
-{#if itemSummaryCommands.length}
-  <HorizontalLineSeparator />
-  <div class="inline-wrapped-elements">
-    <ItemSummaryCommandButtonList {item} />
-  </div>
-{/if}
+<ItemSummaryCommandButtonList {item} />
