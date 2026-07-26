@@ -1209,6 +1209,7 @@
     padding-inline: 0;
 
     .condition {
+      --icon-fill: var(--t5e-color-text-lightest);
       padding-block: var(--t5e-size-1x);
       padding-inline: var(--t5e-size-1x);
       margin-block: 0;
@@ -1218,7 +1219,7 @@
       border-radius: var(--t5e-size-halfx);
       border: var(--t5e-size-1) solid var(--t5e-component-card-default);
       box-sizing: border-box;
-      --icon-fill: var(--t5e-color-text-lightest);
+      text-decoration: none;
 
       label {
         color: var(--t5e-color-text-lighter);

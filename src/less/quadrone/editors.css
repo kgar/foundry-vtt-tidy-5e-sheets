@@ -119,6 +119,15 @@
           padding: var(--t5e-size-halfx) var(--t5e-size-2x);
           color: var(--t5e-theme-color-foreground);
         }
+
+        .inline-roll {
+          --icon-fill: var(--t5e-theme-color-foreground-diminished);
+          background: none;
+
+          &:hover {
+            --icon-fill: var(--t5e-theme-color-foreground);
+          }
+        }
       }
 
       th,
@@ -180,6 +189,8 @@
 
       tbody {
         tr {
+          background: revert-layer;
+
           &:nth-child(odd) {
             background: var(--t5e-component-card-lighter);
           }
