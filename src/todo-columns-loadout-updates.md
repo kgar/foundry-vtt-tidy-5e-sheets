@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] make sure you didn't miss any cellClasses or headerClasses; check every original runtime file over on github
 - [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
 - [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
@@ -18,6 +17,8 @@
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 - [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
 - [ ] // TODO: Universalize section type <-> column domain
+- [ ] Test for missing column warnings in all sheets
+- [ ] Compare all columns with main branch's version
 
 ## hightouch
 
