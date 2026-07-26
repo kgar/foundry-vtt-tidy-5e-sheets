@@ -24,6 +24,7 @@
   import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
   import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
   import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -134,7 +135,13 @@
                 class="header-cell-actions"
                 columnWidth="{rowActionInfo.widthRems}rem"
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-              ></TidyTableHeaderCell>
+              >
+                <SectionActionsColumnHeader
+                  {section}
+                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                  sheetDocument={context.document}
+                />
+              </TidyTableHeaderCell>
             </TidyTableHeaderRow>
           {/snippet}
           {#snippet body()}
