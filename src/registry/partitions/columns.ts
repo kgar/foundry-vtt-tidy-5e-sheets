@@ -59,7 +59,7 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             cr: { order: 100, priority: 100 },
-            quantity: { order: 400, priority: 200 },
+            quantity: { order: 200, priority: 200 },
             initiative: { order: 300, priority: 300 },
           },
         },
