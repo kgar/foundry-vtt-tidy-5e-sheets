@@ -7,7 +7,7 @@ import { warn } from 'src/utils/logging';
 export function getActiveEffectContextOptionsQuadrone(
   effect: any,
   app: any,
-  element: HTMLElement
+  element: HTMLElement,
 ) {
   const effectParent = effect.parent;
 
@@ -27,7 +27,7 @@ export function getActiveEffectContextOptionsQuadrone(
 
   const isConcentrationEffect = FoundryAdapter.isConcentrationEffect(
     effect,
-    app
+    app,
   );
 
   const isInFavorites = !!element.closest('.favorites');
@@ -35,6 +35,16 @@ export function getActiveEffectContextOptionsQuadrone(
   const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
 
   let tidy5eKgarContextOptions: ContextMenuEntry[] = [
+    {
+      name: 'TIDY5E.ContextMenuActionViewItem',
+      icon: '<i class="fas fa-eye fa-fw"></i>',
+      group: 'common',
+      callback: () =>
+        app._renderChild(effect.item.sheet, {
+          mode: CONSTANTS.SHEET_MODE_PLAY,
+        }),
+      condition: () => !!effect.item,
+    },
     {
       name: effect.disabled
         ? 'DND5E.ContextMenuActionEnable'
@@ -84,7 +94,7 @@ export function getActiveEffectContextOptionsQuadrone(
               name: effect.name,
             }),
           },
-          { save: true }
+          { save: true },
         ),
       condition: () => !isInFavorites && canEditEffect(effect),
       group: 'common',
