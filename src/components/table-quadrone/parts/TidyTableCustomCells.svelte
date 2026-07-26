@@ -1,15 +1,19 @@
 <script lang="ts">
+  import type { SectionColumnSpecifications } from 'src/types/columns.types';
   import TidyTableCell from '../TidyTableCell.svelte';
   import type {
     DocumentSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
 
+  // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
   type Props = {
     ctx?: any;
     entry?: any;
     hiddenColumns?: Set<string>;
-    section: TidySectionBase;
+    section: TidySectionBase & {
+      columns: SectionColumnSpecifications<any>;
+    };
     context: DocumentSheetQuadroneContext<any>;
   };
 
@@ -28,17 +32,16 @@
 
   <TidyTableCell
     columnWidth="{column.widthRems}rem"
-    class={[column.cellClasses, { hidden }]}
+    class={[column.cell.classes, { hidden }]}
     attributes={{ ['data-tidy-column-key']: column.key }}
   >
-    {#if column.cellContent.type === 'callback'}
-      {@html column.cellContent.callback?.(context.document, context)}
-    {:else if column.cellContent.type === 'component'}
-      <column.cellContent.component
-        rowContext={ctx}
-        rowDocument={entry}
-        {section}
-      />
-    {/if}
+    <column.cell.component
+      {...column.cell.props({
+        sheetDocument: context.document,
+        sheetContext: context,
+        rowDocument: entry,
+        rowContext: ctx,
+      })}
+    />
   </TidyTableCell>
 {/each}

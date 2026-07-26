@@ -4,10 +4,10 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
     VehicleSheetQuadroneContext,
-    ColumnCellProps,
   } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
+  let { rowDocument }: { rowDocument: Item5e } = $props();
 
   let context =
     $derived(

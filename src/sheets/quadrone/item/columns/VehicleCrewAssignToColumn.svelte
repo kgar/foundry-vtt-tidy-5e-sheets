@@ -1,13 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import type { VehicleCrewMemberContext } from 'src/types/types';
+  import type { Actor5e } from 'src/types/types';
 
-  let {
-    rowDocument,
-    rowContext,
-  }: ColumnCellProps<any, VehicleCrewMemberContext> = $props();
+  let { rowDocument }: { rowDocument: Actor5e } = $props();
 
   const context = $derived(getVehicleSheetQuadroneContext());
   const localize = FoundryAdapter.localize;

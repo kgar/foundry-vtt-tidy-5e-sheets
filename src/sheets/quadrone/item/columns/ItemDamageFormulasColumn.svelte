@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
   import { error } from 'src/utils/logging';
@@ -8,8 +7,13 @@
   import { CONSTANTS } from 'src/constants';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { TidyTableToggleSummaryFunction } from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
+
+  let { rowDocument }: Props = $props();
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
@@ -24,7 +28,7 @@
       error(
         'An error occurred while preparing a damage formula for the formula column',
         false,
-        { error: e, rowDocument, rowContext },
+        { error: e, rowDocument },
       );
     }
     return formula;
@@ -54,7 +58,9 @@
 >
   {#each topTwoDamages ?? [] as damage, i}
     {const formula = $derived(getTrimmedExpression(damage.formula))}
-    {const damageHealingIcon = $derived(damageHealingTypeIcons[damage.damageType])}
+    {const damageHealingIcon = $derived(
+      damageHealingTypeIcons[damage.damageType],
+    )}
     <div class="flexrow damage-formula-container">
       <span class="flexshrink damage-formula truncate">{formula}</span>
       {#if damageHealingIcon}

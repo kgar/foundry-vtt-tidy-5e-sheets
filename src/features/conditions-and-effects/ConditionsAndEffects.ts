@@ -12,7 +12,6 @@ import type {
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
-import { checkCondition } from 'src/utils/iteration';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 
 export class ConditionsAndEffects {
@@ -195,11 +194,14 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         sectionActions,
-        columns: EffectColumnRuntime.getColumnSpecifications(
-          context.document,
-          CONSTANTS.TAB_EFFECTS,
-          key,
-        ),
+        columns: EffectColumnRuntime.getColumnSpecifications({
+          sheetDocument: context.document,
+          tabId: CONSTANTS.TAB_EFFECTS,
+          sectionKey: key,
+          editable: context.editable,
+          owner: context.document.isOwner,
+          unlocked: context.unlocked,
+        }),
       });
     }
 
@@ -263,11 +265,14 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         sectionActions,
-        columns: EffectColumnRuntime.getColumnSpecifications(
-          context.document,
-          CONSTANTS.TAB_EFFECTS,
-          key,
-        ),
+        columns: EffectColumnRuntime.getColumnSpecifications({
+          sheetDocument: context.document,
+          tabId: CONSTANTS.TAB_EFFECTS,
+          sectionKey: key,
+          editable: context.editable,
+          owner: context.document.isOwner,
+          unlocked: context.unlocked,
+        }),
       });
     }
 

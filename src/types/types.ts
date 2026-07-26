@@ -56,6 +56,19 @@ import type {
   ItemRowAction,
   VehiclePassengerRowAction,
 } from './row-actions.types';
+import type {
+  ActivityColumnSpec,
+  ConfiguredColumnSpecification,
+  EffectColumnSpec,
+  EncounterCombatantColumnSpec,
+  EncounterMemberColumnSpec,
+  GroupMemberColumnSpec,
+  ItemColumnSpec,
+  SectionColumnSpecifications,
+  VehicleCrewColumnSpec,
+  VehicleDraftAnimalColumnSpec,
+  VehiclePassengerColumnSpec,
+} from './columns.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -178,6 +191,9 @@ export type InventorySection = {
   type: typeof CONSTANTS.SECTION_TYPE_INVENTORY;
   items: Item5e[];
   canCreate: boolean;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type EffectFavoriteSection = {
@@ -205,7 +221,6 @@ export type TidySectionBase = {
   show: boolean; // default: true
   isExternal?: boolean;
   sectionActions: SectionCommand[];
-  columns: SectionColumnContext;
 };
 
 export type SectionCommand = {
@@ -228,6 +243,9 @@ export type FeatureSection = {
   hasActions?: boolean;
   hasUses?: boolean;
   canCreate: boolean;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type FacilitySection = {
@@ -235,14 +253,20 @@ export type FacilitySection = {
   items: Item5e[];
 } & TidySectionBase;
 
-export type ActivitySection = {
+export type ActivitySection = TidySectionBase & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-} & TidySectionBase;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ActivityColumnSpec>
+  >;
+};
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
   items: Item5e[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type SimpleEditableColumn = {
@@ -285,6 +309,9 @@ export type SpellbookSection = {
   override?: number;
   slot: string;
   method: string;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type AvailableLevel = {
@@ -1026,6 +1053,9 @@ export type ActiveEffectContext = {
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   TidySectionBase & {
     canCreate: boolean;
+    columns: SectionColumnSpecifications<
+      ConfiguredColumnSpecification<EffectColumnSpec>
+    >;
   };
 
 export type HTMLElementOrGettable =
@@ -1333,7 +1363,7 @@ export type SheetTabSection =
   | CustomItemSectionQuadrone;
 
 export type CharacterSheetQuadroneContext = {
-  actions: TidyItemSectionBase[];
+  actions: (InventorySection | FeatureSection | SpellbookSection)[];
   background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: ActorClassEntryContext[];
@@ -1453,6 +1483,9 @@ export type MultiActorMemberPortraitContext = {
 
 export type GroupMemberSection = {
   members: GroupMemberQuadroneContext[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<GroupMemberColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
@@ -1638,6 +1671,9 @@ export type EncounterPlaceholderQuadroneContext = {
 
 export type EncounterMemberSection = TidySectionBase & {
   members: EncounterMemberQuadroneContext[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<EncounterMemberColumnSpec>
+  >;
 };
 
 export type EncounterCombatSection = TidySectionBase & {
@@ -1645,6 +1681,9 @@ export type EncounterCombatSection = TidySectionBase & {
     | EncounterMemberCombatantQuadroneContext
     | EncounterPlaceholderQuadroneContext
   )[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<EncounterCombatantColumnSpec>
+  >;
 };
 
 export type EncounterMembersQuadroneContext = {
@@ -1713,6 +1752,9 @@ export type VehicleDraftAnimalContext = {
 export type VehicleDraftAnimalSection = {
   type: 'draft';
   members: VehicleDraftAnimalContext[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehicleDraftAnimalColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type VehicleCrewMemberContext = {
@@ -1732,6 +1774,9 @@ export type VehicleCrewSection = {
   members: VehicleCrewMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehicleCrewColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type CrewSections = {
@@ -1753,6 +1798,9 @@ export type VehiclePassengerSection = {
   members: VehiclePassengerMemberContext[];
   showEmptyState: boolean;
   showCount: boolean;
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<VehiclePassengerColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
@@ -1790,7 +1838,12 @@ export type VehicleSheetQuadroneContext = {
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellComponentLabels: Record<string, string>;
-  statblock: (InventorySection | VehicleDraftAnimalSection)[];
+  statblock: (
+    | InventorySection
+    | SpellbookSection
+    | FeatureSection
+    | VehicleDraftAnimalSection
+  )[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
     currentSpeed: TravelSpeedConfigEntry;
@@ -1831,116 +1884,6 @@ export type AnyActorSheetQuadroneContext =
   | VehicleSheetQuadroneContext
   | GroupSheetQuadroneContext
   | EncounterSheetQuadroneContext;
-
-/* COLUMNS */
-
-export type ColumnSpecification = {
-  headerContent?:
-    | {
-        type: 'component';
-        component: Component<ColumnHeaderProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (sheetDocument: any, sheetContext: any) => string;
-      }
-    | {
-        type: 'html';
-        html: string;
-      };
-  cellContent:
-    | {
-        type: 'component';
-        component: Component<ColumnCellProps>;
-      }
-    | {
-        type: 'callback';
-        callback: (rowDocument: any, rowContext: any) => string;
-      };
-  widthRems: number; // default: 5 (rem)
-  priority: number;
-  order: number;
-  headerClasses?: ClassValue;
-  cellClasses?: ClassValue;
-  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
-};
-
-export type ConfiguredSectionColumnSpecification =
-  ConfiguredColumnSpecification;
-
-export type SectionColumnSpecifications = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredColumnSpecification>;
-};
-
-export type SectionColumnContext = {
-  sorted: (keyof SectionColumnContext['map'])[];
-  prioritized: (keyof SectionColumnContext['map'])[];
-  map: Record<string, ConfiguredSectionColumnSpecification>;
-};
-
-/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
-export type ConfiguredColumnSpecification = ColumnSpecification & {
-  key: string;
-  widthRems: number;
-};
-
-export type ColumnHeaderProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  sheetDocument: TDocument;
-  sheetContext: TContext;
-  section: TSection;
-};
-
-export type ColumnCellProps<
-  TDocument = any,
-  TContext = any,
-  TSection = TidySectionBase,
-> = {
-  rowDocument: TDocument;
-  rowContext: TContext;
-  section: TSection;
-};
-
-export type ColumnSpecificationConditionArgs<TDocument = any> = {
-  sheetDocument: TDocument;
-};
-
-export type ColumnSpecSectionKeysToColumns = Record<
-  string | symbol,
-  Record<string, ColumnSpecification>
->;
-
-export type ColumnSpecTabIdsToSectionKeys = Record<
-  string,
-  ColumnSpecSectionKeysToColumns
->;
-
-export type ColumnSpecDocumentTypesToTabs = Record<
-  string,
-  ColumnSpecTabIdsToSectionKeys
->;
-
-export type DefaultColumnSpecTabsToColumns = Record<
-  string,
-  ColumnSpecification[]
->;
-
-export type DefaultColumnSpecDocumentTypesToTabs = Record<
-  string,
-  DefaultColumnSpecTabsToColumns
->;
-
-export type DefaultTableColumn = Omit<
-  ColumnSpecification,
-  'order' | 'priority'
->;
-
-export type DefaultTableColumns = Record<string, DefaultTableColumn>;
 
 /* BANKED INSPIRATION */
 

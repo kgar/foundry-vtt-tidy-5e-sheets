@@ -1,25 +1,28 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import type { ColumnCellProps } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
+    EncounterMemberCombatantQuadroneContext,
     EncounterMemberQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
 
   let {
-    rowDocument: _,
     rowContext,
-  }: ColumnCellProps<
-    any,
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
-  > = $props();
+  }: {
+    rowContext:
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext;
+  } = $props();
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
   async function handleChange(
     ev: Event & { currentTarget: EventTarget & HTMLInputElement },
-    memberContext: EncounterMemberQuadroneContext,
+    memberContext:
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext,
   ) {
     const input = ev.currentTarget;
     const newValue = input.value ?? '';

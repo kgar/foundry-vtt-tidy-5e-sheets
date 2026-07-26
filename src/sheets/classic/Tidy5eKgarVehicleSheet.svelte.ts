@@ -37,6 +37,8 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
 
 export class Tidy5eVehicleSheet
   extends getTidy5eActorSheetClassicV2Base<VehicleSheetContext>(
@@ -273,6 +275,7 @@ export class Tidy5eVehicleSheet
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
         },
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
       },
       useActionsFeature: actorUsesActionFeature(this.actor),
       utilities: utilities,
@@ -287,6 +290,7 @@ export class Tidy5eVehicleSheet
           type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
           ['system.type.value']: 'vehicle',
         },
+        columns: InventoryColumnRuntime.EMPTY_COLUMN_SPECS,
       },
       weaponStations: {
         ...SheetSections.EMPTY,
@@ -299,6 +303,7 @@ export class Tidy5eVehicleSheet
           type: CONSTANTS.ITEM_TYPE_WEAPON,
           ['system.type.value']: 'siege',
         },
+        columns: InventoryColumnRuntime.EMPTY_COLUMN_SPECS,
       },
       ...defaultDocumentContext,
     };
@@ -399,7 +404,11 @@ export class Tidy5eVehicleSheet
   }
 
   _prepareVehicleItems(context: VehicleSheetContext) {
-    const inventory = Inventory.getDefaultInventorySections(this.document);
+    const inventory = Inventory.getDefaultInventorySections(this.document, {
+      editable: context.editable,
+      owner: context.owner,
+      unlocked: context.unlocked,
+    });
     const inventoryTypes = Inventory.getInventoryTypes();
 
     context.items.forEach((item) => {
@@ -424,6 +433,11 @@ export class Tidy5eVehicleSheet
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypes,

@@ -9,18 +9,17 @@
     ActiveEffectContext,
     ActiveEffectSection,
     CharacterSheetQuadroneContext,
-    SectionColumnSpecifications,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
   import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -51,6 +50,7 @@
       RowActionRuntimeBase.getRowActionWidthInfo(
         section.effects,
         (entry) => entry.rowActions,
+        context.unlocked ? section.sectionActions : [],
       ),
     )}
 
@@ -86,7 +86,6 @@
           >
             <EffectActionsColumnHeader
               {section}
-              sheetContext={context}
               sheetDocument={context.document}
             />
           </TidyTableHeaderCell>
@@ -101,7 +100,6 @@
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,
-            section.columns,
             hiddenColumns,
             section,
             rowActionInfo.widthRems,
@@ -109,7 +107,6 @@
           {#each effectContext.effect.riders as rider}
             {@render EffectRow(
               rider,
-              section.columns,
               hiddenColumns,
               section,
               rowActionInfo.widthRems,
@@ -124,7 +121,6 @@
 
 {#snippet EffectRow(
   ctx: ActiveEffectContext,
-  columns: SectionColumnSpecifications,
   hiddenColumns: Set<string>,
   section: ActiveEffectSection,
   rowActionsColumnWidthRems: number,

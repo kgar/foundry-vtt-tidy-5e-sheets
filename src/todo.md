@@ -1,5 +1,7 @@
 ## kgar To Do
 
+- [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
+- [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] review system sheets for forms handling. Are they using forms? Is there any way to prevent unwanted changes to an actor during submission?
 - [ ] Extract and share: TidyTableRowUseButton

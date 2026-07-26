@@ -5,6 +5,7 @@ import type {
   GroupMemberSection,
   SectionCommand,
   TidyItemSectionBase,
+  TidySectionBase,
 } from 'src/types/types';
 import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -70,7 +71,7 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
-    if (owner) {
+    if (canCreate(section, owner)) {
       controls.push(this.getCreateItemHeaderSectionAction());
     }
 
@@ -118,7 +119,7 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
-    if (owner) {
+    if (canCreate(section, owner)) {
       controls.push(this.getCreateItemHeaderSectionAction());
     }
 
@@ -146,7 +147,7 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
-    if (owner) {
+    if (canCreate(section, owner)) {
       controls.push(this.getCreateItemHeaderSectionAction());
     }
 
@@ -448,3 +449,11 @@ class SectionActions {
 const singleton = new SectionActions();
 
 export default singleton;
+
+function canCreate(section: TidySectionBase, owner: boolean) {
+  return (
+    (('canCreate' in section && section.canCreate) ||
+      !('canCreate' in section)) &&
+    owner
+  );
+}

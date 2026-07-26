@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument }: ColumnCellProps = $props();
+  let { rowDocument }: { rowDocument: Item5e } = $props();
 </script>
 
 {#if rowDocument.labels.recovery}

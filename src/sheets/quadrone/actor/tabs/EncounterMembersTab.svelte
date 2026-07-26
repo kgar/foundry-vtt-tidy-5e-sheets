@@ -13,13 +13,13 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
+  import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -80,6 +80,7 @@
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
+            context.unlocked ? section.sectionActions : [],
           ),
         )}
 
@@ -108,7 +109,6 @@
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
                 <MemberActionsColumnHeader
-                  {section}
                   sheetDocument={context.document}
                   sheetContext={context}
                 />

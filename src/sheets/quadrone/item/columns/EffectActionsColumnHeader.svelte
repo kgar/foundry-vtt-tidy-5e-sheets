@@ -1,11 +1,17 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActiveEffectSection, ColumnHeaderProps } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
+  import type {
+    ActiveEffectSection,
+    Actor5e,
+    TidySectionBase,
+  } from 'src/types/types';
 
   let {
     sheetDocument,
     section,
-  }: ColumnHeaderProps<any, any, ActiveEffectSection> = $props();
+  }: { sheetDocument: Actor5e | Item5e; section: ActiveEffectSection } =
+    $props();
 
   let localize = FoundryAdapter.localize;
 

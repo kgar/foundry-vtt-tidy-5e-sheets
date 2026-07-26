@@ -1,14 +1,17 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
   import { Activities } from 'src/features/activities/activities';
-  import { SheetSections } from 'src/features/sections/SheetSections';
+  import type { Item5e } from 'src/types/item.types';
 
-  let { rowDocument: item }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
+
+  let { rowDocument: item }: Props = $props();
 
   let conceal = $derived(item.system.identified === false);
 
@@ -75,11 +78,7 @@
     ),
   )}
 
-  <ActivityUsesColumn
-    rowContext={ctx}
-    rowDocument={ctx.activity}
-    section={SheetSections.EMPTY}
-  />
+  <ActivityUsesColumn rowContext={ctx} rowDocument={ctx.activity} />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

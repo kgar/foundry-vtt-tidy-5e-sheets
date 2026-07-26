@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
   import type {
+    Actor5e,
+    EncounterMemberCombatantQuadroneContext,
     EncounterMemberQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
@@ -8,15 +9,18 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { CombatantSettings } from 'src/features/combat/CombatantSettings';
-    import { isNil } from 'src/utils/data';
+  import { isNil } from 'src/utils/data';
 
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<
-    any,
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
-  > = $props();
+  }: {
+    rowDocument: Actor5e | undefined;
+    rowContext:
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext;
+  } = $props();
 
   let context = $derived(getEncounterSheetQuadroneContext());
 

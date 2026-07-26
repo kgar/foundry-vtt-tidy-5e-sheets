@@ -1,4 +1,7 @@
-<script lang="ts">
+<script
+  lang="ts"
+  generics="TSection extends InventorySection | FeatureSection | SpellbookSection"
+>
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
@@ -7,31 +10,35 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorItemQuadroneContext,
     CharacterSheetQuadroneContext,
+    FeatureSection,
+    InventorySection,
     NpcSheetQuadroneContext,
-    TidyItemSectionBase,
+    SpellbookSection,
   } from 'src/types/types';
   import { type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
   import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
-  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
-  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import type { Item5e } from 'src/types/item.types';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
 
   interface Props {
-    section: TidyItemSectionBase;
+    section: TSection;
+    hiddenColumns: Set<string>;
+    rowActionInfo: ReturnType<
+      typeof RowActionRuntimeBase.getRowActionWidthInfo
+    >;
     entries: Item5e[];
     entryContext: Record<string, ActorItemQuadroneContext>;
-    sectionsInlineWidth: number;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
     headerRowClasses?: ClassValue;
@@ -51,8 +58,9 @@
   let {
     entries,
     section,
+    hiddenColumns,
+    rowActionInfo,
     entryContext,
-    sectionsInlineWidth,
     entryToggleMap,
     tabId,
     rowClassFunction,
@@ -79,20 +87,6 @@
     );
 
   const localize = FoundryAdapter.localize;
-
-  const rowActionInfo = $derived(
-    RowActionRuntimeBase.getRowActionWidthInfo(
-      section.items,
-      (entry) => entryContext[entry.id]?.rowActions,
-    ),
-  );
-
-  let hiddenColumns = $derived(
-    ItemColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth - rowActionInfo.widthPx,
-      section.columns,
-    ),
-  );
 
   // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
 
@@ -231,7 +225,9 @@
                 </span>
               </a>
             </TidyTableCell>
+
             {@render afterFirstCell?.(entry, ctx)}
+
             <TidyTableCustomCells
               {hiddenColumns}
               {ctx}

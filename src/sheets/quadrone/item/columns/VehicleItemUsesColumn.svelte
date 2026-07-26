@@ -5,16 +5,13 @@
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
   import { Activities } from 'src/features/activities/activities';
-  import { SheetSections } from 'src/features/sections/SheetSections';
-  import type {
-    VehicleItemQuadroneContext,
-    ColumnCellProps,
-  } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let {
-    rowDocument: item,
-    rowContext,
-  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
+
+  let { rowDocument: item }: Props = $props();
 
   let conceal = $derived(item.system.identified === false);
 
@@ -101,11 +98,7 @@
     ),
   )}
 
-  <ActivityUsesColumn
-    rowContext={ctx}
-    rowDocument={ctx.activity}
-    section={SheetSections.EMPTY}
-  />
+  <ActivityUsesColumn rowContext={ctx} rowDocument={ctx.activity} />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

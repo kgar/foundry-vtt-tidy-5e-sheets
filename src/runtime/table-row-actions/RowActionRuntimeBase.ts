@@ -5,7 +5,7 @@ import type {
 } from 'src/types/registry.types';
 import type { TableRowAction } from 'src/types/row-actions.types';
 import { checkCondition } from 'src/utils/iteration';
-import { debug } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 
 type ConditionArgs<T extends TableRowAction<any, any, any>> =
   T['condition'] extends ((args: infer A) => boolean) | undefined ? A : never;
@@ -26,13 +26,17 @@ export abstract class RowActionRuntimeBase<
 
     for (const key of rowActions) {
       const action = CONFIG.TIDY5E.features.rowActions[this.domain][key] as
-        | TRowAction
-        | undefined;
+        TRowAction | undefined;
 
       if (action && checkCondition(action, args)) {
         result.push(action);
       } else if (!action) {
-        debug('Action not found', { key, domain: this.domain, action, args });
+        warn('Action not found', false, {
+          key,
+          domain: this.domain,
+          action,
+          args,
+        });
       }
     }
 
@@ -49,6 +53,7 @@ export abstract class RowActionRuntimeBase<
   static getRowActionWidthInfo<TEntry>(
     entries: TEntry[],
     rowActionFn: (entry: TEntry) => any[] | undefined,
+    sectionActions: any[] = [],
   ) {
     let maxRowActionsCount = 1;
 
@@ -58,6 +63,8 @@ export abstract class RowActionRuntimeBase<
         (rowActionFn(entry) ?? []).length,
       );
     }
+
+    maxRowActionsCount = Math.max(maxRowActionsCount, sectionActions.length);
 
     const widthRems = this.calculateRowActionWidthRems(maxRowActionsCount);
     const widthPx = widthRems * foundryCoreSettings.value.fontSizePx;

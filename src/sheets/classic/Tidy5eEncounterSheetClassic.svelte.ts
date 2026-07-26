@@ -54,7 +54,6 @@ import {
 import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 import EncounterSheet from './encounter/EncounterSheet.svelte';
-import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 
 type MemberStats = {
   memberCount: number;
@@ -420,13 +419,22 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
     const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: this.isEditable,
+        owner: this.document.isOwner,
+        unlocked: options.mode === CONSTANTS.SHEET_MODE_EDIT,
+      });
 
     for (let item of uncontainedItems) {
       if (inventoryTypes.has(item.type)) {
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: this.isEditable,
+            owner: this.document.isOwner,
+            unlocked: options.mode === CONSTANTS.SHEET_MODE_EDIT,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypesArray,
@@ -443,6 +451,11 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: this.isEditable,
+          owner: this.document.isOwner,
+          unlocked: options.mode === CONSTANTS.SHEET_MODE_EDIT,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypesArray,
@@ -573,7 +586,6 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
         isExternal: false,
         showCrColumn: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
       },
     };
 

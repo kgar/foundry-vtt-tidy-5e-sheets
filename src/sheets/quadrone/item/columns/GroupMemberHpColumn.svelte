@@ -1,14 +1,11 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
   import type {
+    Actor5e,
     EncounterMemberQuadroneContext,
     GroupMemberQuadroneContext,
   } from 'src/types/types';
   import { Tidy5eNpcSheetQuadrone } from '../../Tidy5eNpcSheetQuadrone.svelte';
-  import {
-    getGroupSheetQuadroneContext,
-    getSheetContext,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
@@ -17,10 +14,10 @@
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<
-    any,
-    GroupMemberQuadroneContext | EncounterMemberQuadroneContext
-  > = $props();
+  }: {
+    rowDocument: Actor5e;
+    rowContext: GroupMemberQuadroneContext | EncounterMemberQuadroneContext;
+  } = $props();
 
   let hpValue = $derived(rowDocument.system.attributes?.hp?.value ?? 0);
   let tempHpValue = $derived(rowDocument.system.attributes?.hp?.temp ?? 0);

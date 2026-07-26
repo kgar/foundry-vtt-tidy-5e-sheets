@@ -5,7 +5,6 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -14,8 +13,6 @@
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import {
     createSearchResultsState,
@@ -25,13 +22,16 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
-  import type {
-    InventorySection,
-    VehicleDraftAnimalSection,
-  } from 'src/types/types';
+  import type { VehicleSheetQuadroneContext } from 'src/types/types';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
+  import { VehicleDraftAnimalColumnRuntime } from 'src/runtime/table-columns/VehicleDraftAnimalColumnRuntime';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import FeatureTable from '../../shared/FeatureTable.svelte';
+  import SpellTable from '../../shared/SpellTable.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -59,9 +59,10 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(
-    buildVehicleStatblockSections(context, tabId) as (
-      InventorySection | VehicleDraftAnimalSection
-    )[],
+    buildVehicleStatblockSections(
+      context,
+      tabId,
+    ) as VehicleSheetQuadroneContext['statblock'][number][],
   );
 
   $effect(() => {
@@ -73,7 +74,7 @@
         criteria: searchCriteria,
         itemContext: context.itemContext,
         sections: sections.filter(
-          (s) => s.type === CONSTANTS.SECTION_TYPE_INVENTORY,
+          (s) => s.type !== CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
         ),
         tabId,
       });
@@ -287,12 +288,29 @@
           section.key === CONSTANTS.ITEM_TYPE_SPELL &&
             section.items.length === 0,
         )}
+
         {#if section.show && !emptyAndShouldHide}
+          {const rowActionInfo = $derived(
+            RowActionRuntimeBase.getRowActionWidthInfo(
+              section.items,
+              (entry) => context.itemContext[entry.id]?.rowActions,
+              context.unlocked ? section.sectionActions : [],
+            ),
+          )}
+
+          {let hiddenColumns = $derived(
+            InventoryColumnRuntime.determineHiddenColumns(
+              sectionsInlineWidth - rowActionInfo.widthPx,
+              section.columns,
+            ),
+          )}
+
           <TidyItemTable
             {section}
+            {hiddenColumns}
+            {rowActionInfo}
             entries={section.items}
             entryContext={context.itemContext}
-            {sectionsInlineWidth}
             entryToggleMap={itemToggleMap}
             {tabId}
           >
@@ -301,11 +319,9 @@
                 {const buttonTextKey = $derived(
                   section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT
                     ? 'TIDY5E.Vehicle.Equipment.EmptyState'
-                    : section.key === CONSTANTS.ITEM_TYPE_FEAT
-                      ? 'TIDY5E.Vehicle.Features.EmptyState'
-                      : section.key === CONSTANTS.ITEM_TYPE_WEAPON
-                        ? 'TIDY5E.Vehicle.Weapons.EmptyState'
-                        : null,
+                    : section.key === CONSTANTS.ITEM_TYPE_WEAPON
+                      ? 'TIDY5E.Vehicle.Weapons.EmptyState'
+                      : null,
                 )}
 
                 {#if buttonTextKey}
@@ -334,17 +350,51 @@
             {/snippet}
           </TidyItemTable>
         {/if}
+      {:else if section.type === 'feature'}
+        <FeatureTable
+          {itemToggleMap}
+          {section}
+          {sectionsInlineWidth}
+          sheetDocument={context.document}
+        >
+          {#snippet bodyNoEntries()}
+            {#if !hideEmptyStates}
+              <div class="inventory-empty empty-state-container">
+                <button
+                  type="button"
+                  class="button button-tertiary"
+                  onclick={() =>
+                    context.document.sheet._addDocument({
+                      tabId,
+                      data: section.dataset,
+                    })}
+                >
+                  <i class="fas fa-plus"></i>
+                  {localize('TIDY5E.Vehicle.Features.EmptyState')}
+                </button>
+              </div>
+            {/if}
+          {/snippet}
+        </FeatureTable>
+      {:else if section.type === 'spellbook' && section.items.length}
+        <SpellTable
+          {itemToggleMap}
+          {section}
+          {sectionsInlineWidth}
+          sheetDocument={context.document}
+        />
       {:else if section.type === 'draft'}
         {#if section.show}
           {const rowActionInfo = $derived(
             RowActionRuntimeBase.getRowActionWidthInfo(
               section.members,
               (entry) => entry.rowActions,
+              context.unlocked ? section.sectionActions : [],
             ),
           )}
 
           {const hiddenColumns = $derived(
-            ItemColumnRuntime.determineHiddenColumns(
+            VehicleDraftAnimalColumnRuntime.determineHiddenColumns(
               sectionsInlineWidth - rowActionInfo.widthPx,
               section.columns,
             ),

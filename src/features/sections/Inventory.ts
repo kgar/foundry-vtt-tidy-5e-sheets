@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
+import type { ColumnSpecificationConditionArgs } from 'src/types/columns.types';
 import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
@@ -36,6 +37,8 @@ export class Inventory {
 
   static getDefaultInventorySections(
     sheetDocument: Actor5e | Item5e,
+    // TODO: gotta simplify this code
+    columnOptions: Omit<ColumnSpecificationConditionArgs, 'sheetDocument'>,
     options: Partial<InventorySection> = {},
   ): Record<string, InventorySection> {
     const inventoryTypes = Inventory.getInventoryTypes();
@@ -56,11 +59,12 @@ export class Inventory {
         custom: undefined,
         isExternal: false,
         sectionActions: [],
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          sheetDocument,
-          CONSTANTS.TAB_ACTOR_INVENTORY,
-          type,
-        ),
+        columns: InventoryColumnRuntime.getColumnSpecifications({
+          ...columnOptions,
+          sheetDocument: sheetDocument,
+          tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          sectionKey: type,
+        }),
         ...options,
       };
     }
@@ -71,6 +75,8 @@ export class Inventory {
   static applyInventoryItemToSection(params: {
     /** The sheet document where the items are to be presented. */
     sheetDocument: Actor5e | Item5e;
+    /** Universally shared column options. */
+    columnOptions: Omit<ColumnSpecificationConditionArgs, 'sheetDocument'>;
     /** The tab ID where the items will be shown. */
     tabId: string;
     /** The current inventory state to be updated by this function. */
@@ -88,6 +94,7 @@ export class Inventory {
       sheetDocument,
       tabId,
       inventory,
+      columnOptions,
       item,
       defaultInventoryTypes,
       customSectionOptions,
@@ -106,6 +113,7 @@ export class Inventory {
     const customSection: InventorySection = (inventory[customSectionName] ??=
       Inventory.createInventorySection(
         sheetDocument,
+        columnOptions,
         tabId,
         customSectionName,
         defaultInventoryTypes,
@@ -117,6 +125,7 @@ export class Inventory {
 
   static createInventorySection(
     sheetDocument: Actor5e | Item5e,
+    columnOptions: Omit<ColumnSpecificationConditionArgs, 'sheetDocument'>,
     tabId: string,
     customSectionName: string,
     defaultInventoryTypes: string[],
@@ -135,11 +144,12 @@ export class Inventory {
       },
       show: true,
       sectionActions: [],
-      columns: ItemColumnRuntime.getColumnSpecifications(
-        sheetDocument,
+      columns: InventoryColumnRuntime.getColumnSpecifications({
+        sheetDocument: sheetDocument,
         tabId,
-        customSectionName,
-      ),
+        sectionKey: customSectionName,
+        ...columnOptions,
+      }),
       ...customSectionOptions,
     };
   }
@@ -171,13 +181,18 @@ export class Inventory {
 
   static async getContainerContentsInventory(
     container: Item5e,
+    columnOptions: Omit<ColumnSpecificationConditionArgs, 'sheetDocument'>,
     options: Partial<InventorySection> = {
       canCreate: false,
     },
   ): Promise<InventorySection[]> {
     const containerItems = (await container.system.contents).values();
 
-    const inventory = Inventory.getDefaultInventorySections(container, options);
+    const inventory = Inventory.getDefaultInventorySections(
+      container,
+      columnOptions,
+      options,
+    );
 
     const inventoryTypes = Inventory.getInventoryTypes();
 
@@ -185,6 +200,7 @@ export class Inventory {
       Inventory.applyInventoryItemToSection({
         sheetDocument: container,
         tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+        columnOptions,
         inventory,
         item,
         defaultInventoryTypes: inventoryTypes,

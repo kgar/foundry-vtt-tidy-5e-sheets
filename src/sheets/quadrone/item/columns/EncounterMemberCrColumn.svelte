@@ -1,7 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
   import type {
+    Actor5e,
+    EncounterMemberCombatantQuadroneContext,
     EncounterMemberQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
@@ -9,14 +10,19 @@
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<
-    any,
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
-  > = $props();
+  }: {
+    rowDocument: Actor5e | undefined;
+    rowContext:
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext;
+  } = $props();
 </script>
 
-{#if rowContext.type === 'member' && rowDocument.system.details.cr}
-  {const formattedCr = $derived(FoundryAdapter.formatCr(rowDocument.system.details.cr))}
+{#if rowContext.type === 'member' && rowDocument?.system.details.cr}
+  {const formattedCr = $derived(
+    FoundryAdapter.formatCr(rowDocument.system.details.cr),
+  )}
   <span class="cr-value font-label-large color-text-default">{formattedCr}</span
   >
 {:else}

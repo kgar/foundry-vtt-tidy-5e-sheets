@@ -7,11 +7,15 @@
     CharacterItemQuadroneContext,
     NpcItemQuadroneContext,
     VehicleItemQuadroneContext,
+    FeatureSection,
   } from 'src/types/types';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
+  import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+  import { getActorSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
-    section: TidyItemSectionBase;
+    section: FeatureSection;
     itemContext: Record<
       string,
       | CharacterItemQuadroneContext
@@ -33,14 +37,32 @@
     tabId,
   }: Props = $props();
 
+  let context = $derived(getActorSheetQuadroneContext());
+
   let itemToggleMap = $derived(inlineToggleService.map);
+
+  const rowActionInfo = $derived(
+    RowActionRuntimeBase.getRowActionWidthInfo(
+      section.items,
+      (entry) => itemContext[entry.id]?.rowActions,
+      context.unlocked ? section.sectionActions : [],
+    ),
+  );
+
+  let hiddenColumns = $derived(
+    FeatureColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth - rowActionInfo.widthPx,
+      section.columns,
+    ),
+  );
 </script>
 
 <TidyItemTable
   {section}
+  {hiddenColumns}
+  {rowActionInfo}
   entries={section.items}
   entryContext={itemContext}
-  {sectionsInlineWidth}
   entryToggleMap={itemToggleMap}
   {tabId}
 >

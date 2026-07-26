@@ -1,10 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
   import { isNil } from 'src/utils/data';
   import { firstOfSet } from 'src/utils/set';
 
-  let { rowDocument: item, rowContext }: ColumnCellProps = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
+
+  let { rowDocument: item }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -36,7 +40,9 @@
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {@html inferredActivation?.value != null && inferredActivation?.value !== '' ? inferredActivation.value + '&nbsp;' : ''}
+    {@html inferredActivation?.value != null && inferredActivation?.value !== ''
+      ? inferredActivation.value + '&nbsp;'
+      : ''}
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}

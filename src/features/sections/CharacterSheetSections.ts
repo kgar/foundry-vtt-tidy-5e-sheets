@@ -10,16 +10,18 @@ import type {
   FeatureSection,
   EffectFavoriteSection,
   ActivitySection,
+  CharacterSheetQuadroneContext,
+  CharacterSheetContext,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(
-    actor: any,
+    context: CharacterSheetContext,
     tabId: string,
     races: any[],
     backgrounds: any[],
@@ -42,11 +44,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
         show: true,
         sectionActions: [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
-        ),
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
         ...options,
       },
       background: {
@@ -60,11 +58,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
         show: true,
         sectionActions: [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
-        ),
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
         ...options,
       },
       classes: {
@@ -79,11 +73,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
         show: true,
         sectionActions: [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
-        ),
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
         ...options,
       },
       active: {
@@ -102,11 +92,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
         show: true,
         sectionActions: [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
-        ),
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
         ...options,
       },
       passive: {
@@ -122,18 +108,14 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,
         sectionActions: [], // for the UI Overhaul
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          actor,
-          tabId,
-          CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
-        ),
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
         ...options,
       },
     };
 
     customFeats.forEach((f) =>
       CharacterSheetSections.applyCharacterFeatureToSection(
-        actor,
+        context,
         tabId,
         features,
         f,
@@ -142,11 +124,11 @@ export class CharacterSheetSections {
     );
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      actor,
+      context,
       tabId,
     ).forEach((s) => {
       features[s] ??= CharacterSheetSections.createFeatureSection(
-        actor,
+        context,
         tabId,
         s,
         {
@@ -160,7 +142,7 @@ export class CharacterSheetSections {
   }
 
   static applyCharacterFeatureToSection(
-    sheetDocument: Actor5e,
+    context: CharacterSheetQuadroneContext | CharacterSheetContext,
     tabId: string,
     features: Record<string, CharacterFeatureSection>,
     feat: Item5e,
@@ -175,7 +157,7 @@ export class CharacterSheetSections {
     const customSection: CharacterFeatureSection = (features[
       customSectionName
     ] ??= CharacterSheetSections.createFeatureSection(
-      sheetDocument,
+      context,
       tabId,
       customSectionName,
       customSectionOptions,
@@ -185,7 +167,7 @@ export class CharacterSheetSections {
   }
 
   static createFeatureSection(
-    sheetDocument: Actor5e,
+    context: CharacterSheetQuadroneContext | CharacterSheetContext,
     tabId: string,
     customSectionName: string,
     customSectionOptions: Partial<CharacterFeatureSection>,
@@ -211,18 +193,20 @@ export class CharacterSheetSections {
       },
       show: true,
       sectionActions: [], // for the UI Overhaul
-      columns: ItemColumnRuntime.getColumnSpecifications(
-        sheetDocument,
+      columns: FeatureColumnRuntime.getColumnSpecifications({
+        sheetDocument: context.document,
         tabId,
-        customSectionName,
-      ),
+        sectionKey: customSectionName,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      }),
       ...customSectionOptions,
     };
   }
 
   static buildQuadroneFeatureSections(
-    actor: Actor5e,
-    unlocked: boolean,
+    context: CharacterSheetQuadroneContext,
     tabId: string,
     feats: Item5e[],
     options: Partial<CharacterFeatureSection>,
@@ -240,7 +224,7 @@ export class CharacterSheetSections {
       options: Partial<CharacterFeatureSection>,
     ) {
       return CharacterSheetSections.createQuadroneFeatureSection({
-        actor,
+        context,
         tabId,
         key,
         title: FoundryAdapter.localize('DND5E.FeaturesClass', {
@@ -259,7 +243,7 @@ export class CharacterSheetSections {
     let otherFeaturesKey = 'tidy-feature-section-others';
 
     const otherFeaturesSection = this.createQuadroneFeatureSection({
-      actor,
+      context,
       tabId,
       key: otherFeaturesKey,
       title: FoundryAdapter.localize('DND5E.FeaturesOther'),
@@ -274,7 +258,7 @@ export class CharacterSheetSections {
         // Partition/Create Custom Section and add item
         let section = (featuresMap[customSection] ??=
           this.createQuadroneFeatureSection({
-            actor,
+            context,
             tabId,
             key: customSection,
             title: FoundryAdapter.localize(customSection),
@@ -293,7 +277,7 @@ export class CharacterSheetSections {
           .getFlag('dnd5e', CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN)
           ?.split('.') ?? [];
       // get adv origin
-      let originItem = actor.items.get(originId);
+      let originItem = context.actor.items.get(originId);
 
       if (originItem) {
         let key = buildOriginKey(originId);
@@ -317,13 +301,13 @@ export class CharacterSheetSections {
       section.items.push(feat);
     }
 
-    if (unlocked) {
+    if (context.unlocked) {
       featuresMap[otherFeaturesKey] ??= otherFeaturesSection;
 
-      Object.values(actor.classes)
-        .concat(Object.values(actor.itemTypes.background))
-        .concat(Object.values(actor.itemTypes.race))
-        .concat(Object.values(actor.itemTypes.subclass))
+      Object.values(context.actor.classes)
+        .concat(Object.values(context.actor.itemTypes.background))
+        .concat(Object.values(context.actor.itemTypes.race))
+        .concat(Object.values(context.actor.itemTypes.subclass))
         .forEach((originItem: Item5e) => {
           let key = buildOriginKey(originItem.id);
           featuresMap[key] ??= buildOriginSection(key, originItem, options);
@@ -331,11 +315,11 @@ export class CharacterSheetSections {
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      actor,
+      context.actor,
       tabId,
     ).forEach((s) => {
       featuresMap[s] ??= CharacterSheetSections.createQuadroneFeatureSection({
-        actor,
+        context,
         tabId,
         key: s,
         options,
@@ -358,7 +342,7 @@ export class CharacterSheetSections {
 
     let sectionSort: Record<string, number> = {};
 
-    Object.values(actor.classes).forEach((cls: Item5e) => {
+    Object.values(context.actor.classes).forEach((cls: Item5e) => {
       let sortIndex = cls.system.isOriginalClass ? 0 : (i += 2);
       const clsKey = buildOriginKey(cls.id);
       sectionSort[clsKey] = sortIndex;
@@ -369,12 +353,12 @@ export class CharacterSheetSections {
       }
     });
 
-    actor.itemTypes.background.forEach((bg: Item5e) => {
+    context.actor.itemTypes.background.forEach((bg: Item5e) => {
       i += 1;
       sectionSort[buildOriginKey(bg.id)] = i;
     });
 
-    actor.itemTypes.race.forEach((species: Item5e) => {
+    context.actor.itemTypes.race.forEach((species: Item5e) => {
       i += 1;
       sectionSort[buildOriginKey(species.id)] = i;
     });
@@ -388,7 +372,7 @@ export class CharacterSheetSections {
   }
 
   static createQuadroneFeatureSection(args: {
-    actor: Actor5e;
+    context: CharacterSheetQuadroneContext;
     tabId: string;
     key: string;
     title: string;
@@ -412,11 +396,14 @@ export class CharacterSheetSections {
       dataset: {},
       custom,
       canCreate: true,
-      columns: ItemColumnRuntime.getColumnSpecifications(
-        args.actor,
-        args.tabId,
-        args.key,
-      ),
+      columns: FeatureColumnRuntime.getColumnSpecifications({
+        sheetDocument: args.context.actor,
+        tabId: args.tabId,
+        sectionKey: args.key,
+        editable: args.context.editable,
+        owner: args.context.owner,
+        unlocked: args.context.unlocked,
+      }),
       ...args.options,
     };
   }
@@ -496,7 +483,7 @@ export class CharacterSheetSections {
   }
 
   static createGenericFavoriteSection(
-    actor: Actor5e,
+    context: CharacterSheetQuadroneContext,
     tabId: string,
     key: string,
     items: Item5e[],
@@ -515,7 +502,14 @@ export class CharacterSheetSections {
       isExternal: false,
       show: true,
       sectionActions: [], // for the UI Overhaul
-      columns: ItemColumnRuntime.getColumnSpecifications(actor, tabId, key),
+      columns: FeatureColumnRuntime.getColumnSpecifications({
+        sheetDocument: context.actor,
+        tabId,
+        sectionKey: key,
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      }),
     };
   }
 }

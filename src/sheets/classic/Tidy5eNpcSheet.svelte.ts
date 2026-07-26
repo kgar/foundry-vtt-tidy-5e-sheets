@@ -45,7 +45,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { getTidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mapGetOrInsert } from 'src/utils/map';
-import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 
 export class Tidy5eNpcSheet
   extends getTidy5eActorSheetClassicV2Base<NpcSheetContext>(
@@ -865,7 +865,7 @@ export class Tidy5eNpcSheet
         key: 'weapons',
         show: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       },
       [CONSTANTS.NPC_ABILITY_SECTION_ACTIONS]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -880,7 +880,7 @@ export class Tidy5eNpcSheet
         key: 'actions',
         show: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       },
       [CONSTANTS.NPC_ABILITY_SECTION_PASSIVE]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -892,7 +892,7 @@ export class Tidy5eNpcSheet
         show: true,
         hasUses: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       },
       [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -903,7 +903,7 @@ export class Tidy5eNpcSheet
         key: 'equipment',
         show: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       },
       [CONSTANTS.NPC_ABILITY_SECTION_CLASSES]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -915,7 +915,7 @@ export class Tidy5eNpcSheet
         show: true,
         isClass: true,
         sectionActions: [], // quadrone only
-        columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       },
     };
 
@@ -996,7 +996,11 @@ export class Tidy5eNpcSheet
     const inventoryTypesArray = Inventory.getInventoryTypes();
     const inventoryTypes = new Set(inventoryTypesArray);
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections(this.document);
+      Inventory.getDefaultInventorySections(this.document, {
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      });
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       context.actor,
@@ -1004,6 +1008,11 @@ export class Tidy5eNpcSheet
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(
         this.document,
+        {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        },
         CONSTANTS.TAB_ACTOR_INVENTORY,
         s,
         inventoryTypesArray,
@@ -1019,6 +1028,11 @@ export class Tidy5eNpcSheet
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
           tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
+          columnOptions: {
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          },
           inventory: inventory,
           item: item,
           defaultInventoryTypes: inventoryTypesArray,

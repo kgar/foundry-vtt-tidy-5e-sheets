@@ -1,15 +1,13 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type {
-    VehicleItemQuadroneContext,
-    ColumnCellProps,
-  } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
-  let {
-    rowDocument: item,
-    rowContext,
-  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
+  type Props = {
+    rowDocument: Item5e;
+  };
+
+  let { rowDocument: item }: Props = $props();
 
   let context = $derived(getSheetContext());
 

@@ -17,13 +17,14 @@
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -103,6 +104,7 @@
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
             (entry) => entry.rowActions,
+            context.unlocked ? section.sectionActions : [],
           ),
         )}
 
@@ -122,12 +124,24 @@
                   <span class="table-header-count">{visibleItemCount}</span>
                 </h3>
               </TidyTableHeaderCell>
-              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
+              <TidyTableCustomHeaderCells
+                {context}
+                {hiddenColumns}
+                {section}
+              />
+
               <TidyTableHeaderCell
                 class="header-cell-actions"
                 columnWidth="{rowActionInfo.widthRems}rem"
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-              ></TidyTableHeaderCell>
+              >
+                <SectionActionsColumnHeader
+                  {section}
+                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                  sheetDocument={context.document}
+                />
+              </TidyTableHeaderCell>
             </TidyTableHeaderRow>
           {/snippet}
           {#snippet body()}

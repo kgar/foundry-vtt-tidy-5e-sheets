@@ -43,9 +43,10 @@ import {
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
-import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
+import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
 import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
 import { EncounterCombatantMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatantRowActionRuntime.svelte';
+import { EncounterCombatantColumnRuntime } from 'src/runtime/table-columns/EncounterCombatantColumnRuntime';
 
 export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -323,11 +324,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           dataset: {},
           label: 'TIDY5E.Encounter.CombatantsSection.Title',
           show: true,
-          columns: EncounterMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_ACTOR_COMBAT,
-            CONSTANTS.SHEET_TYPE_NPC,
-          ),
+          columns: EncounterCombatantColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_ACTOR_COMBAT,
+            sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          }),
           combatants: combatants.sort(
             (a, b) =>
               (b.initiative ?? 0) - (a.initiative ?? 0) ||
@@ -351,11 +355,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           sectionActions: [],
           show: true,
           dataset: {},
-          columns: EncounterMemberColumnRuntime.getColumnSpecifications(
-            context.document,
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.SHEET_TYPE_NPC,
-          ),
+          columns: EncounterMemberColumnRuntime.getColumnSpecifications({
+            sheetDocument: context.document,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+            editable: context.editable,
+            owner: context.owner,
+            unlocked: context.unlocked,
+          }),
         },
       ],
       skills: [...skills.values()].sort((a, b) =>

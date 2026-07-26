@@ -13,15 +13,15 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import type { PowersSection } from './McdmClassBundle';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import { CustomItemColumnRuntime } from 'src/runtime/table-columns/CustomItemColumnRuntime';
 
   interface Props {
     sections: PowersSection[];
@@ -66,11 +66,12 @@
         RowActionRuntimeBase.getRowActionWidthInfo(
           section.items,
           (entry) => context.itemContext[entry.id]?.rowActions,
+          context.unlocked ? section.sectionActions : [],
         ),
       )}
 
       {let hiddenColumns = $derived(
-        ItemColumnRuntime.determineHiddenColumns(
+        CustomItemColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth - rowActionInfo.widthPx,
           section.columns,
         ),

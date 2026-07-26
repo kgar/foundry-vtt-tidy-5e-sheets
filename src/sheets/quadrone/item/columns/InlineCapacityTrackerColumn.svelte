@@ -1,19 +1,21 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
-  import type { ContainerItemContext } from 'src/types/item.types';
+  import type { ContainerContents, Item5e } from 'src/types/item.types';
   import CapacityTracker from '../../container/parts/CapacityTracker.svelte';
 
-  let { rowDocument, rowContext }: ColumnCellProps<any, ContainerItemContext> =
-    $props();
+  type Props = {
+    rowDocument: Item5e;
+    rowContext: { containerContents?: ContainerContents };
+  };
+
+  let { rowDocument, rowContext }: Props = $props();
 </script>
 
-
 <div class="inline-container-capacity-tracker">
-    {#if rowContext.containerContents}
-        <CapacityTracker
-          container={rowDocument}
-          capacity={rowContext.containerContents.capacity}
-          showIcon={false}
-        />
-    {/if}
+  {#if rowContext.containerContents}
+    <CapacityTracker
+      container={rowDocument}
+      capacity={rowContext.containerContents.capacity}
+      showIcon={false}
+    />
+  {/if}
 </div>

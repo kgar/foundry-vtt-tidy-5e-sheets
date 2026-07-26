@@ -168,23 +168,6 @@
                 sheetDocument={context.document}
               />
             {/if}
-          {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
-            {const hasViewableItems = $derived(
-              ItemVisibility.hasViewableItems(
-                section.items,
-                searchResults.uuids,
-              ),
-            )}
-            {#if section.show && hasViewableItems}
-              <ActionTable
-                {inlineToggleService}
-                itemContext={context.itemContext}
-                {section}
-                {sectionsInlineWidth}
-                sheetDocument={context.document}
-                {tabId}
-              />
-            {/if}
           {/if}
         {/if}
       {/each}

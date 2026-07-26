@@ -1,11 +1,7 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/types';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type { Actor5e } from 'src/types/types';
 
-  let {
-    rowDocument,
-    rowContext,
-  }: ColumnCellProps<any, GroupMemberQuadroneContext> = $props();
+  let { rowDocument }: { rowDocument: Actor5e } = $props();
 
   let crewCount = $derived(
     rowDocument.system.cargo.crew.reduce(
@@ -25,7 +21,10 @@
   class="meter meter-small progress capacity"
   style="--bar-percentage: {crewPct}%;"
 ></div>
-<div class="flexrow truncate damage-formula-container" data-tooltip={`${crewCount} / ${crewMax}`}>
+<div
+  class="flexrow truncate damage-formula-container"
+  data-tooltip={`${crewCount} / ${crewMax}`}
+>
   <span class="font-data-medium color-text-default">{crewCount}</span>
   <span class="font-body-medium color-text-lightest separator">/</span>
   <span class="font-label-medium color-text-default">{crewMax}</span>

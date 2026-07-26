@@ -338,11 +338,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               ),
             )
             .sort((a: any, b: any) => a.sort - b.sort),
-          columns: ActivityColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_ITEM_ACTIVITIES,
-            CONSTANTS.TAB_ITEM_ACTIVITIES,
-          ),
+          columns: ActivityColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
+            sectionKey: CONSTANTS.TAB_ITEM_ACTIVITIES,
+            editable: documentSheetContext.editable,
+            owner: this.document.isOwner,
+            unlocked: documentSheetContext.unlocked,
+          }),
           show: true,
           dataset: {},
           label: 'DND5E.ACTIVITY.Title.other',
@@ -761,11 +764,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           dataset: {}, // TODO: put things that help with effect creation via _addDocument here
           show: !value.hidden || !!value.effects.length,
           sectionActions: [],
-          columns: EffectColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_EFFECTS,
-            value.key,
-          ),
+          columns: EffectColumnRuntime.getColumnSpecifications({
+            sheetDocument: context.document,
+            tabId: CONSTANTS.TAB_EFFECTS,
+            sectionKey: value.key,
+            editable: context.editable,
+            owner: context.document.isOwner,
+            unlocked: context.unlocked,
+          }),
           key,
         }) satisfies ActiveEffectSection,
     );
@@ -903,11 +909,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ([level, context]: [string, AdvancementSectionContext]) => ({
         key: level,
         show: true,
-        columns: AdvancementColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT,
-          level,
-        ),
+        columns: AdvancementColumnRuntime.getColumnSpecifications({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_ITEM_ADVANCEMENT,
+          sectionKey: level,
+          editable: editable,
+          owner: this.document.isOwner,
+          unlocked: unlocked,
+        }),
         configured: context.configured,
         items: context.items,
         label:

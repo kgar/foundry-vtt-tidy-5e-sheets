@@ -16,10 +16,10 @@
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
-  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
-  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -36,11 +36,14 @@
 
   let section = $derived({
     ...SheetSections.EMPTY,
-    columns: ActivityColumnRuntime.getColumnSpecifications(
-      item,
-      CONSTANTS.TAB_ITEM_ACTIVITIES,
-      'activity',
-    ),
+    columns: ActivityColumnRuntime.getColumnSpecifications({
+      sheetDocument: item,
+      tabId: CONSTANTS.TAB_ITEM_ACTIVITIES,
+      sectionKey: 'activity',
+      editable: context.editable,
+      owner: context.owner,
+      unlocked: context.unlocked,
+    }),
   });
 
   const rowActionInfo = $derived(

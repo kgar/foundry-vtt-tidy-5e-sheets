@@ -7,14 +7,14 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
-  import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
-  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
-  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { EncounterCombatantColumnRuntime } from 'src/runtime/table-columns/EncounterCombatantColumnRuntime';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -132,11 +132,12 @@
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.combatants,
             (entry) => entry.rowActions,
+            context.unlocked ? section.sectionActions : [],
           ),
         )}
 
         {const hiddenColumns = $derived(
-          EncounterMemberColumnRuntime.determineHiddenColumns(
+          EncounterCombatantColumnRuntime.determineHiddenColumns(
             sectionsInlineWidth - rowActionInfo.widthPx,
             section.columns,
           ),
@@ -152,7 +153,11 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+              <TidyTableCustomHeaderCells
+                {context}
+                {hiddenColumns}
+                {section}
+              />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
@@ -160,7 +165,6 @@
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
                 <MemberActionsColumnHeader
-                  {section}
                   sheetDocument={context.document}
                   sheetContext={context}
                 />

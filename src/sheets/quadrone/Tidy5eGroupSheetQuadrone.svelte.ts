@@ -40,8 +40,8 @@ import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
-import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime.svelte';
 import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
+import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -177,11 +177,14 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
-          columns: GroupMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.SHEET_TYPE_CHARACTER,
-          ),
+          columns: GroupMemberColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: CONSTANTS.SHEET_TYPE_CHARACTER,
+            editable: actorContext.editable,
+            owner: actorContext.owner,
+            unlocked: actorContext.unlocked,
+          }),
         },
       ],
       [
@@ -193,11 +196,14 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
-          columns: GroupMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.SHEET_TYPE_NPC,
-          ),
+          columns: GroupMemberColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+            editable: actorContext.editable,
+            owner: actorContext.owner,
+            unlocked: actorContext.unlocked,
+          }),
         },
       ],
       [
@@ -209,11 +215,14 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           show: true,
           dataset: {},
           sectionActions: [],
-          columns: GroupMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.SHEET_TYPE_VEHICLE,
-          ),
+          columns: GroupMemberColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: CONSTANTS.SHEET_TYPE_VEHICLE,
+            editable: actorContext.editable,
+            owner: actorContext.owner,
+            unlocked: actorContext.unlocked,
+          }),
         },
       ],
     ]);
@@ -266,11 +275,14 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             creationItemTypes: [],
           },
           sectionActions: [],
-          columns: GroupMemberColumnRuntime.getColumnSpecifications(
-            this.document,
-            CONSTANTS.TAB_MEMBERS,
-            key,
-          ),
+          columns: GroupMemberColumnRuntime.getColumnSpecifications({
+            sheetDocument: this.document,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: key,
+            editable: actorContext.editable,
+            owner: actorContext.owner,
+            unlocked: actorContext.unlocked,
+          }),
         }),
       );
 
