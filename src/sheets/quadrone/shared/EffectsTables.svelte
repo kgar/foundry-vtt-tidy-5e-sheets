@@ -86,7 +86,6 @@
           >
             <EffectActionsColumnHeader
               {section}
-              sheetContext={context}
               sheetDocument={context.document}
             />
           </TidyTableHeaderCell>

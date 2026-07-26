@@ -165,7 +165,6 @@
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
                 <MemberActionsColumnHeader
-                  {section}
                   sheetDocument={context.document}
                   sheetContext={context}
                 />

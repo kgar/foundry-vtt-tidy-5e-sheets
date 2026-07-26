@@ -101,11 +101,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {context}
-                {section}
-                {hiddenColumns}
-              />
+              <TidyTableCustomHeaderCells {context} {section} {hiddenColumns} />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
@@ -113,7 +109,6 @@
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
                 <MemberActionsColumnHeader
-                  {section}
                   sheetDocument={context.document}
                   sheetContext={context}
                 />

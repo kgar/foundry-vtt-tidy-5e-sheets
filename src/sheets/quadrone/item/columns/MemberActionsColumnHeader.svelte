@@ -1,22 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    Actor5e,
-    EncounterSheetQuadroneContext,
-    SpellbookSection,
-    TidySectionBase,
-  } from 'src/types/types';
-  import type { ColumnHeaderProps } from 'src/types/columns.types';
+  import type { Actor5e, EncounterSheetQuadroneContext } from 'src/types/types';
 
   let {
     sheetContext,
     sheetDocument,
-    section: _,
-  }: ColumnHeaderProps<
-    Actor5e,
-    EncounterSheetQuadroneContext,
-    TidySectionBase | SpellbookSection
-  > = $props();
+  }: {
+    sheetDocument: Actor5e;
+    sheetContext: EncounterSheetQuadroneContext;
+  } = $props();
 
   let localize = FoundryAdapter.localize;
 

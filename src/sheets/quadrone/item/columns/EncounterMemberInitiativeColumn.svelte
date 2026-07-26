@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import type {
     Actor5e,
     EncounterMemberCombatantQuadroneContext,

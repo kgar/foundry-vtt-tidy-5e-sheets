@@ -9,16 +9,11 @@ import type {
   ActorSheetQuadroneContext,
   SectionCommand,
 } from 'src/types/types';
-import type {
-  ConfiguredSectionColumnSpecification,
-  SectionColumnContext,
-} from 'src/types/columns.types';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import SectionActions from 'src/features/sections/SectionActions';
 import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
 import type { PowersSection } from '../McdmClassBundle';
-import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { CustomItemColumnRuntime } from 'src/runtime/table-columns/CustomItemColumnRuntime';
 

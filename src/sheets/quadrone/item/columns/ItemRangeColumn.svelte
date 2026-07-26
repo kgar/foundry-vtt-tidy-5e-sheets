@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
-    import type { Item5e } from 'src/types/item.types';
+  import type { Item5e } from 'src/types/item.types';
 
   let { rowDocument }: { rowDocument: Item5e } = $props();
 
