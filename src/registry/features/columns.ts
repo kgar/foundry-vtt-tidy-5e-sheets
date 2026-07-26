@@ -52,6 +52,7 @@ import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColu
 import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/VehicleCrewMemberAssignedColumn.svelte';
 import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/VehicleMemberQuantityColumn.svelte';
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
+import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -546,6 +547,25 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       >,
     },
     groupMember: {
+      crew: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+          }),
+        },
+        cell: {
+          component: GroupVehicleCrewColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+          classes: 'truncate',
+        },
+        widthRems: 3.75,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupVehicleCrewColumn
+      >,
       inspiration: {
         header: {
           component: HtmlColumn,

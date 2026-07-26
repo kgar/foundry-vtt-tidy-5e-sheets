@@ -100,7 +100,6 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
         [CONSTANTS.TAB_STATBLOCK]: {
-          // inventory, spell, and feature
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { order: 100, priority: 400 },
             uses: { order: 200, priority: 600 },
@@ -161,7 +160,6 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
     inventory: {
       [CONSTANTS.SHEET_TYPE_NPC]: {
         [CONSTANTS.TAB_STATBLOCK]: {
-          // TODO: copy over to spell and feature for NPC Statblock Default
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { order: 100, priority: 400 },
             uses: { order: 200, priority: 600 },
@@ -245,7 +243,6 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
     spell: {
       [CONSTANTS.SHEET_TYPE_NPC]: {
         [CONSTANTS.TAB_STATBLOCK]: {
-          // inventory, spell, and feature
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { order: 100, priority: 400 },
             uses: { order: 200, priority: 600 },
