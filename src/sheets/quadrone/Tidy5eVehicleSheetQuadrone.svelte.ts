@@ -339,14 +339,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     // Section Actions
 
     context.statblock.forEach((section) => {
-      if (section.type === CONSTANTS.SECTION_TYPE_INVENTORY) {
+      if (section.type !== CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS) {
         section.sectionActions = SectionActions.getStandardItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
           section,
         );
-      } else if (section.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS) {
+      } else {
         section.sectionActions = SectionActions.getVehicleMemberHeaderActions(
           CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
         );
@@ -572,7 +572,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         canCreate: true,
         label,
         dataset: {
-          ['type']: CONSTANTS.ITEM_TYPE_FEAT,
+          ['type']: key,
         },
         key,
         sectionActions: [],
@@ -601,7 +601,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       [CONSTANTS.ITEM_TYPE_SPELL]: {
         type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
         items: [],
-        canCreate: true,
+        canCreate: false,
         label: 'TYPES.Item.spellPl',
         dataset: {},
         key: CONSTANTS.ITEM_TYPE_SPELL,
