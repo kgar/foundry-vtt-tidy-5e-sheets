@@ -20,6 +20,8 @@
   import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -100,7 +102,11 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells {context} {section} {hiddenColumns} />
+              <TidyTableCustomHeaderCellsV2
+                {context}
+                {section}
+                {hiddenColumns}
+              />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
@@ -128,7 +134,7 @@
               >
                 <EncounterMemberNameCell {member} />
 
-                <TidyTableCustomCells
+                <TidyTableCustomCellsV2
                   {context}
                   ctx={member}
                   entry={member.actor}

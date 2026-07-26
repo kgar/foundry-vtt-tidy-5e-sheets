@@ -60,6 +60,8 @@ import type {
   ActivityColumnSpec,
   ConfiguredColumnSpecificationV2,
   EffectColumnSpec,
+  EncounterCombatantColumnSpec,
+  EncounterMemberColumnSpec,
   GroupMemberColumnSpec,
   ItemColumnSpec,
   SectionColumnSpecificationsV2,
@@ -1669,6 +1671,9 @@ export type EncounterPlaceholderQuadroneContext = {
 
 export type EncounterMemberSection = TidySectionBase & {
   members: EncounterMemberQuadroneContext[];
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<EncounterMemberColumnSpec>
+  >;
 };
 
 export type EncounterCombatSection = TidySectionBase & {
@@ -1676,6 +1681,9 @@ export type EncounterCombatSection = TidySectionBase & {
     | EncounterMemberCombatantQuadroneContext
     | EncounterPlaceholderQuadroneContext
   )[];
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<EncounterCombatantColumnSpec>
+  >;
 };
 
 export type EncounterMembersQuadroneContext = {

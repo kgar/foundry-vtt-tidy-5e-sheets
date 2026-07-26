@@ -24,6 +24,8 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -122,7 +124,13 @@
                   <span class="table-header-count">{visibleItemCount}</span>
                 </h3>
               </TidyTableHeaderCell>
-              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+
+              <TidyTableCustomHeaderCellsV2
+                {context}
+                {hiddenColumns}
+                {section}
+              />
+
               <TidyTableHeaderCell
                 class="header-cell-actions"
                 columnWidth="{rowActionInfo.widthRems}rem"
@@ -150,7 +158,7 @@
               >
                 <GroupMemberNameCell {member} />
                 {#if member.canObserve}
-                  <TidyTableCustomCells
+                  <TidyTableCustomCellsV2
                     {context}
                     ctx={member}
                     entry={member.actor}

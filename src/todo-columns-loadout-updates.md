@@ -1,6 +1,8 @@
 ## To Do
 
-- [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
+- [ ] Get Vehicle Sheet working again with new column setup
+- [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
+- [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
 - [ ] Ensure - I can use plain JavaScript to alter an existing column
 - [ ] Ensure - I can use plain JavaScript to remove a column from the registry
@@ -9,15 +11,12 @@
 - [ ] Consider - types/index.ts to export all into a pure barrel file, and import from `@/types` wherever types are needed
   - [ ] If yes, then also bring all the API types into the core types folder. We don't want types spread out all over the codebase.
   - [ ] And partition types in whatever way makes the most sense.
-- [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
-- [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
-- [ ] // TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 - [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
 - [ ] // TODO: Universalize section type <-> column domain
 - [ ] Test for missing column warnings in all sheets
-- [ ] Compare all columns with main branch's version
-- [ ] This type seems like it needs to be assigned to an alias for convenience:
+- [ ] Compare all columns with main branch's version with two Foundry instances
+- [ ] This particular set of types show up a lot. Try to find a way to shorten this reasonably and keep it understandable.
 ```ts
 {
   columns: SectionColumnSpecificationsV2<
@@ -27,10 +26,17 @@
   >;
 }
 ```
+- [ ] Adult Red Dragon has a random Equip row action. For that tab, we shouldn't see such things. Uh oh, is the row action system not flexible enough for that?
+
 
 ## hightouch
 
 - [ ] Add common, general-purpose column components that provide universally common things—value/max, meter, meter with value/max, value, incrementer input, etc.
+
+## Random Reusable Column Ideas
+
+- [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
+
 
 ## After Next Release
 
@@ -43,6 +49,21 @@
   - [ ] Resolve <!-- TODO: mixedItem domain -->
   - [ ] Ensure mixedItem columns / partitions are set up for 
   - [ ] Ensure Character Sheet Tab in Action Economy mode gets the mixedItem columns
+- [ ] // TODO: Make common actor item context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
+
+
+## The `widthRems` situation
+
+`widthRems` is too rigid. We can't require everyone use rem for their columns. However, the current setup is wholly reliant on the columns being measured in rems exclusively, which it converts to px via the Foundry setting for font size 🫣
+
+Maybe we could use a measurement clone to measure any widths we need to measure. That would require some careful planning, because a CSS grid style table with dynamic widths like minmax would be highly situational.
+
+Maybe we could measure columns at mount time and use those px measurements for calculating show/hide.
+
+Some other options:
+- `position: absolute; left: -9999px` or something like that so that hidden entries are still measurable; start all columns hidden until measurements are taken.
+- MutationObserver to catch dynamic column width changes and recalc.
+
 
 ## Stretch
 

@@ -15,6 +15,9 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { EncounterCombatantColumnRuntime } from 'src/runtime/table-columns/EncounterCombatantColumnRuntime';
+  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
+  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -136,7 +139,7 @@
         )}
 
         {const hiddenColumns = $derived(
-          EncounterMemberColumnRuntime.determineHiddenColumns(
+          EncounterCombatantColumnRuntime.determineHiddenColumns(
             sectionsInlineWidth - rowActionInfo.widthPx,
             section.columns,
           ),
@@ -152,7 +155,11 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
+              <TidyTableCustomHeaderCellsV2
+                {context}
+                {hiddenColumns}
+                {section}
+              />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
@@ -196,7 +203,7 @@
                   <EncounterMemberNameCell {member} />
                 {/if}
 
-                <TidyTableCustomCells
+                <TidyTableCustomCellsV2
                   {context}
                   ctx={combatant}
                   {section}
