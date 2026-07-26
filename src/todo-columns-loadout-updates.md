@@ -1,5 +1,6 @@
 ## To Do
 
+- [ ] Consider - the MCDM plugin situation - it would ideal if it could register its own domain and partition rather than needing customItem. Then the API utils should supply functions for managing this. MCDM plugin should not have to touch any runtime services directly.
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
