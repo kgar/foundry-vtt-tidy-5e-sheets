@@ -31,14 +31,16 @@
     class={[column.cellClasses, { hidden }]}
     attributes={{ ['data-tidy-column-key']: column.key }}
   >
-    {#if column.cellContent.type === 'callback'}
-      {@html column.cellContent.callback?.(context.document, context)}
-    {:else if column.cellContent.type === 'component'}
-      <column.cellContent.component
-        rowContext={ctx}
-        rowDocument={entry}
-        {section}
-      />
+    {#if !hidden}
+      {#if column.cellContent.type === 'callback'}
+        {@html column.cellContent.callback?.(context.document, context)}
+      {:else if column.cellContent.type === 'component'}
+        <column.cellContent.component
+          rowContext={ctx}
+          rowDocument={entry}
+          {section}
+        />
+      {/if}
     {/if}
   </TidyTableCell>
 {/each}
