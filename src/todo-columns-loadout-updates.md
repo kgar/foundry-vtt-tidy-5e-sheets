@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
 - [ ] Ensure - I can use plain JavaScript to alter an existing column
@@ -18,6 +17,16 @@
 - [ ] // TODO: Universalize section type <-> column domain
 - [ ] Test for missing column warnings in all sheets
 - [ ] Compare all columns with main branch's version
+- [ ] This type seems like it needs to be assigned to an alias for convenience:
+```ts
+{
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<
+      ColumnSpecificationV2<any, any, any, any, any, any>
+    >
+  >;
+}
+```
 
 ## hightouch
 

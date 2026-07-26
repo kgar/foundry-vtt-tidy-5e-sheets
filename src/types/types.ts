@@ -59,8 +59,10 @@ import type {
 import type {
   ActivityColumnSpec,
   EffectColumnSpec,
+  GroupMemberColumnSpec,
   ItemColumnSpec,
   SectionColumnSpecificationsV2,
+  VehicleDraftAnimalColumnSpec,
 } from './columns.types';
 
 export type Actor5e = any;
@@ -423,7 +425,8 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  AttributeItemPinContext | AttributeActivityPinContext;
+  | AttributeItemPinContext
+  | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -435,7 +438,8 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  SheetPinItemContext | SheetPinActivityContext
+  | SheetPinItemContext
+  | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -901,7 +905,11 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1042,7 +1050,8 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   };
 
 export type HTMLElementOrGettable =
-  HTMLElement | { get(index: number): HTMLElement };
+  | HTMLElement
+  | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1466,6 +1475,7 @@ export type MultiActorMemberPortraitContext = {
 
 export type GroupMemberSection = {
   members: GroupMemberQuadroneContext[];
+  columns: SectionColumnSpecificationsV2<GroupMemberColumnSpec>;
 } & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
@@ -1726,6 +1736,7 @@ export type VehicleDraftAnimalContext = {
 export type VehicleDraftAnimalSection = {
   type: 'draft';
   members: VehicleDraftAnimalContext[];
+  columns: SectionColumnSpecificationsV2<VehicleDraftAnimalColumnSpec>;
 } & TidySectionBase;
 
 export type VehicleCrewMemberContext = {

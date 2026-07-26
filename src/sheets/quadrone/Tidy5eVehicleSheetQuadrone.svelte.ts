@@ -36,7 +36,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
-import { VehicleMemberColumnRuntime } from 'src/runtime/table-columns/VehicleCrewMemberColumnRuntime';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
@@ -47,6 +46,10 @@ import { AssignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-action
 import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 import { SpellColumnRuntime } from 'src/runtime/table-columns/SpellColumnRuntime';
 import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
+import { VehicleAssignedCrewColumnRuntime } from 'src/runtime/table-columns/VehicleAssignedCrewColumnRuntime';
+import { VehicleUnassignedCrewColumnRuntime } from 'src/runtime/table-columns/VehicleUnassignedCrewColumnRuntime';
+import { VehiclePassengerColumnRuntime } from 'src/runtime/table-columns/VehiclePassengerColumnRuntime';
+import { VehicleDraftAnimalColumnRuntime } from 'src/runtime/table-columns/VehicleDraftAnimalColumnRuntime';
 
 const localize = FoundryAdapter.localize;
 
@@ -207,11 +210,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
       members: [],
       key: CONSTANTS.SECTION_KEY_ASSIGNED,
-      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-        CONSTANTS.SECTION_KEY_ASSIGNED,
-      ),
+      columns: VehicleAssignedCrewColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        sectionKey: CONSTANTS.SECTION_KEY_ASSIGNED,
+        editable: actorContext.editable,
+        owner: actorContext.owner,
+        unlocked: actorContext.unlocked,
+      }),
       showCount: true,
       showEmptyState: false,
       sectionActions: SectionActions.getVehicleMemberHeaderActions(
@@ -225,11 +231,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
       members: [],
       key: CONSTANTS.SECTION_KEY_UNASSIGNED,
-      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-        CONSTANTS.SECTION_KEY_UNASSIGNED,
-      ),
+      columns: VehicleUnassignedCrewColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        sectionKey: CONSTANTS.SECTION_KEY_UNASSIGNED,
+        editable: actorContext.editable,
+        owner: actorContext.owner,
+        unlocked: actorContext.unlocked,
+      }),
       showCount: false,
       showEmptyState: true,
       sectionActions: SectionActions.getVehicleMemberHeaderActions(
@@ -243,11 +252,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       label: 'DND5E.VEHICLE.Crew.Passengers',
       members: [],
       key: CONSTANTS.SECTION_KEY_PASSENGERS,
-      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-        CONSTANTS.SECTION_KEY_PASSENGERS,
-      ),
+      columns: VehiclePassengerColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        sectionKey: CONSTANTS.SECTION_KEY_PASSENGERS,
+        editable: actorContext.editable,
+        owner: actorContext.owner,
+        unlocked: actorContext.unlocked,
+      }),
       showCount: true,
       showEmptyState: true,
       sectionActions: SectionActions.getVehicleMemberHeaderActions(
@@ -369,11 +381,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       key: 'draft',
       label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
       members: [],
-      columns: VehicleMemberColumnRuntime.getColumnSpecifications(
-        this.document,
-        CONSTANTS.TAB_STATBLOCK,
-        'draft',
-      ),
+      columns: VehicleDraftAnimalColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_STATBLOCK,
+        sectionKey: 'draft',
+        editable: context.editable,
+        owner: context.owner,
+        unlocked: context.unlocked,
+      }),
     };
 
     const members = await Promise.all(

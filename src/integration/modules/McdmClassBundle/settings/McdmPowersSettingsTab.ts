@@ -18,7 +18,6 @@ import { ItemUtils } from 'src/utils/ItemUtils';
 import SectionActions from 'src/features/sections/SectionActions';
 import { MCDM_CLASS_BUNDLE_CONSTANTS } from '../McdmClassBundleConstants';
 import type { PowersSection } from '../McdmClassBundle';
-import { getDefaultItemColumns } from 'src/runtime/table-columns/default-item-columns';
 import McdmPowerSpecialtyColumn from '../McdmPowerSpecialtyColumn.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 

@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 import type { Item5e } from 'src/types/item.types';
 import type { NpcAbilitySection } from 'src/types/types';
 
@@ -19,7 +19,7 @@ export class NpcSheetSections {
   static applyAbilityToSection(
     abilities: Record<string, NpcAbilitySection>,
     feat: Item5e,
-    customSectionOptions: Partial<NpcAbilitySection>
+    customSectionOptions: Partial<NpcAbilitySection>,
   ) {
     const customSectionName = TidyFlags.section.get(feat);
 
@@ -30,7 +30,7 @@ export class NpcSheetSections {
     const customSection: NpcAbilitySection = (abilities[customSectionName] ??=
       NpcSheetSections.createFeatureSection(
         customSectionName,
-        customSectionOptions
+        customSectionOptions,
       ));
 
     customSection.items.push(feat);
@@ -38,7 +38,7 @@ export class NpcSheetSections {
 
   static createFeatureSection(
     customSectionName: string,
-    customSectionOptions: Partial<NpcAbilitySection>
+    customSectionOptions: Partial<NpcAbilitySection>,
   ): NpcAbilitySection {
     return {
       type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -56,7 +56,7 @@ export class NpcSheetSections {
       },
       show: true,
       sectionActions: [], // quadrone only
-      columns: TableColumnRuntimeBase.getEmptyColumnSpecs(), // quadrone only
+      columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS, // quadrone only
       ...customSectionOptions,
     };
   }

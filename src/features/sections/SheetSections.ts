@@ -4,7 +4,6 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSectionClassic,
   Actor5e,
-  ActorItemQuadroneContext,
   ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
@@ -38,7 +37,6 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
 import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
 import { Inventory } from './Inventory';
-import { TableColumnRuntimeBase } from 'src/runtime/table-columns/TableColumnRuntimeBase.svelte';
 import { SpellColumnRuntime } from 'src/runtime/table-columns/SpellColumnRuntime';
 
 export class SheetSections {
@@ -57,7 +55,6 @@ export class SheetSections {
     key: '',
     show: true,
     sectionActions: [],
-    columns: TableColumnRuntimeBase.getEmptyColumnSpecs(),
   });
 
   static itemSupportsCustomSections(itemType: string) {
@@ -66,7 +63,9 @@ export class SheetSections {
 
   static applySpellToSection(
     context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+      | CharacterSheetContext
+      | NpcSheetContext
+      | ActorSheetQuadroneContext,
     tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -92,7 +91,9 @@ export class SheetSections {
 
   static createSpellbookSection(
     context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+      | CharacterSheetContext
+      | NpcSheetContext
+      | ActorSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     options: Partial<SpellbookSection>,
@@ -175,7 +176,9 @@ export class SheetSections {
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
     context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+      | CharacterSheetContext
+      | NpcSheetContext
+      | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
@@ -746,7 +749,9 @@ export class SheetSections {
 
   static configureFeatures<
     TSection extends
-      CharacterFeatureSection | FeatureSection | NpcAbilitySection,
+      | CharacterFeatureSection
+      | FeatureSection
+      | NpcAbilitySection,
   >(
     features: TSection[],
     context:

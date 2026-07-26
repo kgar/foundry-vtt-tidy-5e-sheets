@@ -116,6 +116,8 @@ export type ColumnPartitions = {
 };
 
 export type ColumnSpecificationPartitionData = {
+  widthRems?: number;
+  condition?: (data: ColumnSpecificationConditionArgs<any>) => boolean;
   priority: number;
   order: number;
 };

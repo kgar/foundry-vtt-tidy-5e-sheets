@@ -71,7 +71,8 @@ export abstract class ColumnRuntimeBase<
 
           for (const [key, data] of Object.entries(partitionData)) {
             const spec = CONFIG.TIDY5E.features.columns[this.domain][key] as
-              TColumnSpecification | undefined;
+              | TColumnSpecification
+              | undefined;
 
             if (!spec) {
               warn('Column not found', false, {
@@ -96,6 +97,7 @@ export abstract class ColumnRuntimeBase<
                 ...spec,
                 ...data,
               };
+
             map[key] = configuredSpec;
 
             allSpecs.push(configuredSpec);
