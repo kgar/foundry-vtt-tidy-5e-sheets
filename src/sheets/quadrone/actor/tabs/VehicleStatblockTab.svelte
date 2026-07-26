@@ -22,10 +22,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
-  import type {
-    InventorySection,
-    VehicleDraftAnimalSection,
-  } from 'src/types/types';
+  import type { VehicleSheetQuadroneContext } from 'src/types/types';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
@@ -33,6 +30,8 @@
   import { VehicleDraftAnimalColumnRuntime } from 'src/runtime/table-columns/VehicleDraftAnimalColumnRuntime';
   import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
   import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
+  import FeatureTable from '../../shared/FeatureTable.svelte';
+  import SpellTable from '../../shared/SpellTable.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -60,9 +59,10 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(
-    buildVehicleStatblockSections(context, tabId) as (
-      InventorySection | VehicleDraftAnimalSection
-    )[],
+    buildVehicleStatblockSections(
+      context,
+      tabId,
+    ) as VehicleSheetQuadroneContext['statblock'][number][],
   );
 
   $effect(() => {
@@ -74,7 +74,7 @@
         criteria: searchCriteria,
         itemContext: context.itemContext,
         sections: sections.filter(
-          (s) => s.type === CONSTANTS.SECTION_TYPE_INVENTORY,
+          (s) => s.type !== CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS,
         ),
         tabId,
       });
@@ -279,7 +279,6 @@
 
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each sections as section (section.key)}
-      <!-- TODO: Handle vehicle feats and spells also -->
       {#if section.type === 'inventory'}
         <!-- 
             Only hide empty tables at the component rendering level, so that 
@@ -319,11 +318,9 @@
                 {const buttonTextKey = $derived(
                   section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT
                     ? 'TIDY5E.Vehicle.Equipment.EmptyState'
-                    : section.key === CONSTANTS.ITEM_TYPE_FEAT
-                      ? 'TIDY5E.Vehicle.Features.EmptyState'
-                      : section.key === CONSTANTS.ITEM_TYPE_WEAPON
-                        ? 'TIDY5E.Vehicle.Weapons.EmptyState'
-                        : null,
+                    : section.key === CONSTANTS.ITEM_TYPE_WEAPON
+                      ? 'TIDY5E.Vehicle.Weapons.EmptyState'
+                      : null,
                 )}
 
                 {#if buttonTextKey}
@@ -352,6 +349,39 @@
             {/snippet}
           </TidyItemTable>
         {/if}
+      {:else if section.type === 'feature'}
+        <FeatureTable
+          {itemToggleMap}
+          {section}
+          {sectionsInlineWidth}
+          sheetDocument={context.document}
+        >
+          {#snippet bodyNoEntries()}
+            {#if !hideEmptyStates}
+              <div class="inventory-empty empty-state-container">
+                <button
+                  type="button"
+                  class="button button-tertiary"
+                  onclick={() =>
+                    context.document.sheet._addDocument({
+                      tabId,
+                      data: section.dataset,
+                    })}
+                >
+                  <i class="fas fa-plus"></i>
+                  {localize('TIDY5E.Vehicle.Features.EmptyState')}
+                </button>
+              </div>
+            {/if}
+          {/snippet}
+        </FeatureTable>
+      {:else if section.type === 'spellbook'}
+        <SpellTable
+          {itemToggleMap}
+          {section}
+          {sectionsInlineWidth}
+          sheetDocument={context.document}
+        />
       {:else if section.type === 'draft'}
         {#if section.show}
           {const rowActionInfo = $derived(

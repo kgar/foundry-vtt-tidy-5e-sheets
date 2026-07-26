@@ -32,7 +32,7 @@
   import TidyTableCustomCellsV2 from './parts/TidyTableCustomCellsV2.svelte';
 
   interface Props {
-    section: InventorySection | FeatureSection | SpellbookSection;
+    section: TSection;
     hiddenColumns: Set<string>;
     rowActionInfo: ReturnType<
       typeof RowActionRuntimeBase.getRowActionWidthInfo

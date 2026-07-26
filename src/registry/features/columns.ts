@@ -53,6 +53,7 @@ import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/Ve
 import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/VehicleMemberQuantityColumn.svelte';
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
+import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleDtColumn.svelte';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -567,6 +568,25 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof HtmlColumn,
         typeof GroupVehicleCrewColumn
       >,
+      dt: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.HITPOINTS.DT.abbr'),
+          }),
+        },
+        cell: {
+          component: GroupVehicleDtColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+          classes: 'truncate',
+        },
+        widthRems: 3,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupVehicleDtColumn
+      >,
       inspiration: {
         header: {
           component: HtmlColumn,
@@ -871,21 +891,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       >,
     },
     spell: {
-      uses: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
-        },
-        cell: {
-          component: ItemUsesColumn,
-          props: (args) => ({
-            rowContext: args.rowContext,
-            rowDocument: args.rowDocument,
-          }),
-          classes: 'inline-uses',
-        },
-        widthRems: 4,
-      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemUsesColumn>,
       components: {
         header: {
           component: HtmlColumn,
@@ -900,51 +905,25 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof HtmlColumn,
         typeof ItemSpellComponentsColumn
       >,
-      school: {
+      formula: {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: `<i class="fa-solid fa-cauldron" data-tooltip="DND5E.SpellSchool"></i>`,
+            html: FoundryAdapter.localize('DND5E.SpellHeader.Formula'),
           }),
         },
         cell: {
-          component: ItemSpellSchoolColumn,
-          props: (args) => ({ rowDocument: args.rowDocument }),
-        },
-        widthRems: 2.5,
-      } satisfies ItemColumnSpec<
-        typeof HtmlColumn,
-        typeof ItemSpellSchoolColumn
-      >,
-      time: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
-          }),
-        },
-        cell: {
-          component: ItemTimeColumn,
+          component: ItemDamageFormulasColumn,
           props: (args) => ({
             rowContext: args.rowContext,
             rowDocument: args.rowDocument,
           }),
         },
-        widthRems: 4,
-      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTimeColumn>,
-      target: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
-          }),
-        },
-        cell: {
-          component: ItemTargetColumn,
-          props: (args) => ({ rowDocument: args.rowDocument }),
-        },
         widthRems: 5,
-      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTargetColumn>,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof ItemDamageFormulasColumn
+      >,
       range: {
         header: {
           component: HtmlColumn,
@@ -958,6 +937,17 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         widthRems: 5,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRangeColumn>,
+      recovery: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Recovery') }),
+        },
+        cell: {
+          component: ItemRecoveryColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 6.25,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRecoveryColumn>,
       roll: {
         header: {
           component: HtmlColumn,
@@ -974,6 +964,66 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         },
         widthRems: 3.125,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRollColumn>,
+      school: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: `<i class="fa-solid fa-cauldron" data-tooltip="DND5E.SpellSchool"></i>`,
+          }),
+        },
+        cell: {
+          component: ItemSpellSchoolColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 2.5,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof ItemSpellSchoolColumn
+      >,
+      target: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
+          }),
+        },
+        cell: {
+          component: ItemTargetColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTargetColumn>,
+      time: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
+          }),
+        },
+        cell: {
+          component: ItemTimeColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemTimeColumn>,
+      uses: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Uses') }),
+        },
+        cell: {
+          component: ItemUsesColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+          classes: 'inline-uses',
+        },
+        widthRems: 4,
+      } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemUsesColumn>,
     },
     vehicleAssignedCrew: {
       cr: {

@@ -565,12 +565,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       },
     };
 
-    const createFeatureSection = (key: string) => {
+    const createFeatureSection = (key: string, label: string) => {
       const section: FeatureSection = {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         items: [],
         canCreate: true,
-        label: 'DND5E.Features',
+        label,
         dataset: {
           ['type']: CONSTANTS.ITEM_TYPE_FEAT,
         },
@@ -593,6 +593,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const features: Record<string, FeatureSection> = {
       [CONSTANTS.ITEM_TYPE_FEAT]: createFeatureSection(
         CONSTANTS.ITEM_TYPE_FEAT,
+        'DND5E.Features',
       ),
     };
 
@@ -728,8 +729,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           continue;
         }
 
-        const section = (features[customSectionName] ??=
-          createFeatureSection(customSectionName));
+        const section = (features[customSectionName] ??= createFeatureSection(
+          customSectionName,
+          customSectionName,
+        ));
 
         section.items.push(item);
       }
@@ -768,7 +771,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
-        const newSharedSection = createFeatureSection(section.key);
+        const newSharedSection = createFeatureSection(
+          section.key,
+          section.label,
+        );
         sectionsMap[section.key] = newSharedSection;
         newSharedSection.items.push(...mappedItems, ...incomingItems);
 

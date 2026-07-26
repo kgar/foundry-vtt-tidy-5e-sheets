@@ -9,8 +9,9 @@
     CharacterSheetQuadroneContext,
     FeatureSection,
     NpcSheetQuadroneContext,
+    VehicleSheetQuadroneContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
   interface Props {
@@ -18,17 +19,25 @@
     sheetDocument: Actor5e;
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
+    bodyNoEntries?: Snippet;
   }
 
-  let { section, sheetDocument, sectionsInlineWidth, itemToggleMap }: Props =
-    $props();
+  let {
+    section,
+    sheetDocument,
+    sectionsInlineWidth,
+    itemToggleMap,
+    bodyNoEntries,
+  }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let context =
     $derived(
       getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+        | CharacterSheetQuadroneContext
+        | NpcSheetQuadroneContext
+        | VehicleSheetQuadroneContext
       >(),
     );
 
@@ -55,6 +64,7 @@
   entryContext={context.itemContext}
   entryToggleMap={itemToggleMap}
   {tabId}
+  {bodyNoEntries}
 >
   {#snippet afterFirstCell(entry)}
     {#if 'inspirationSource' in context && context.inspirationSource?.itemId === entry.id}

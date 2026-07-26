@@ -29,6 +29,7 @@
 ```
 - [ ] Adult Red Dragon has a random Equip row action. For that tab, we shouldn't see such things. Uh oh, is the row action system not flexible enough for that?
 - [ ] // TODO: CONFIG.TIDY5E.utils.setColumnPartition(myPartitionConfig, { tabId: this.powersTabId });
+- [ ] Alphabetize all column registry domain props
 
 
 ## hightouch
