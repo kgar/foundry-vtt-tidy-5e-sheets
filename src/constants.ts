@@ -39,6 +39,7 @@ export const CONSTANTS = {
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
   COLUMN_PRIMARY_MIN_WIDTH_REMS: 12.5,
+  // TODO: Universalize section type <-> column domain
   SECTION_TYPE_ACTIVITY: 'activity',
   SECTION_TYPE_CARGO: 'cargo',
   SECTION_TYPE_CUSTOM: 'custom',

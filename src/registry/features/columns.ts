@@ -31,6 +31,8 @@ import ItemRecoveryColumn from 'src/sheets/quadrone/item/columns/ItemRecoveryCol
 import ItemFeatureSourceColumn from 'src/sheets/quadrone/item/columns/ItemFeatureSourceColumn.svelte';
 import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpellComponentsColumn.svelte';
 import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
+import VehicleMemberCrColumn from 'src/sheets/quadrone/item/columns/VehicleMemberCrColumn.svelte';
+import VehicleMemberHpColumn from 'src/sheets/quadrone/item/columns/VehicleMemberHpColumn.svelte';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -630,7 +632,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: ItemSpellComponentsColumn,
           props: (args) => ({ rowDocument: args.rowDocument }),
         },
-        widthRems: 5,
+        widthRems: 5.625,
       } satisfies ItemColumnSpec<
         typeof HtmlColumn,
         typeof ItemSpellComponentsColumn
@@ -646,7 +648,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: ItemSpellSchoolColumn,
           props: (args) => ({ rowDocument: args.rowDocument }),
         },
-        widthRems: 5,
+        widthRems: 2.5,
       } satisfies ItemColumnSpec<
         typeof HtmlColumn,
         typeof ItemSpellSchoolColumn
@@ -711,7 +713,44 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRollColumn>,
     },
     vehicleAssignedCrew: {},
-    vehicleDraftAnimal: {},
+    vehicleDraftAnimal: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberCrColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberCrColumn
+      >,
+      hp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('TIDY5E.Vehicle.Equipment.HP.Label'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberHpColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies ItemColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberHpColumn
+      >,
+    },
     vehiclePassenger: {},
     vehicleUnassignedCrew: {},
   };

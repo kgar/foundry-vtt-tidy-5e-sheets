@@ -5,7 +5,6 @@
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -32,6 +31,7 @@
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
+  import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
 
   const localize = FoundryAdapter.localize;
 
@@ -287,12 +287,28 @@
           section.key === CONSTANTS.ITEM_TYPE_SPELL &&
             section.items.length === 0,
         )}
+
         {#if section.show && !emptyAndShouldHide}
+          {const rowActionInfo = $derived(
+            RowActionRuntimeBase.getRowActionWidthInfo(
+              section.items,
+              (entry) => context.itemContext[entry.id]?.rowActions,
+            ),
+          )}
+
+          {let hiddenColumns = $derived(
+            InventoryColumnRuntime.determineHiddenColumns(
+              sectionsInlineWidth - rowActionInfo.widthPx,
+              section.columns,
+            ),
+          )}
+
           <TidyItemTable
             {section}
+            {hiddenColumns}
+            {rowActionInfo}
             entries={section.items}
             entryContext={context.itemContext}
-            {sectionsInlineWidth}
             entryToggleMap={itemToggleMap}
             {tabId}
           >

@@ -43,6 +43,7 @@
 - [ ] // TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 - [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
+- [ ] // TODO: Universalize section type <-> column domain
 
 ## After Next Release
 

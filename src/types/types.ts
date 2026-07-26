@@ -1803,7 +1803,12 @@ export type VehicleSheetQuadroneContext = {
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellComponentLabels: Record<string, string>;
-  statblock: (InventorySection | VehicleDraftAnimalSection)[];
+  statblock: (
+    | InventorySection
+    | SpellbookSection
+    | FeatureSection
+    | VehicleDraftAnimalSection
+  )[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
     currentSpeed: TravelSpeedConfigEntry;

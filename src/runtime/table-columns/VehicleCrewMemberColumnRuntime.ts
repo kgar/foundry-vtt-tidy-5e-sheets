@@ -16,8 +16,6 @@ type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
 class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
   getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
-    const defaultItemColumns = getDefaultItemColumns();
-
     const localize = FoundryAdapter.localize;
 
     const crColumn: ColumnSpecificationBase = {

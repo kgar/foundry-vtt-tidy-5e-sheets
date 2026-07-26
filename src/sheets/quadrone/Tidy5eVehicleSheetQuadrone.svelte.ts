@@ -16,6 +16,8 @@ import type {
   TravelSpeedConfigEntry,
   VehicleItemQuadroneContext,
   VehicleSheetQuadroneContext,
+  FeatureSection,
+  SpellbookSection,
 } from 'src/types/types';
 import VehicleSheet from './actor/VehicleSheet.svelte';
 import { mount } from 'svelte';
@@ -34,7 +36,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { isNil } from 'src/utils/data';
-import { ItemColumnRuntime } from 'src/runtime/table-columns/ItemColumnRuntime.svelte';
 import { VehicleMemberColumnRuntime } from 'src/runtime/table-columns/VehicleCrewMemberColumnRuntime';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
@@ -43,6 +44,9 @@ import { DraftAnimalMemberRowActionRuntime } from 'src/runtime/table-row-actions
 import { PassengerRowActionRuntime } from 'src/runtime/table-row-actions/PassengerRowActionRuntime.svelte';
 import { UnassignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/UnassignedCrewRowActionRuntime.svelte';
 import { AssignedCrewMemberRowActionRuntime } from 'src/runtime/table-row-actions/AssignedCrewRowActionRuntime.svelte';
+import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+import { SpellColumnRuntime } from 'src/runtime/table-columns/SpellColumnRuntime';
+import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
 
 const localize = FoundryAdapter.localize;
 
@@ -503,9 +507,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
-    const statblock: Record<string, InventorySection> = {
+    const statblock: Record<
+      string,
+      InventorySection | FeatureSection | SpellbookSection
+    > = {
       [CONSTANTS.ITEM_TYPE_FEAT]: {
-        type: CONSTANTS.SECTION_TYPE_INVENTORY,
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         items: [],
         canCreate: true,
         label: 'DND5E.Features',
@@ -515,14 +522,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         key: CONSTANTS.ITEM_TYPE_FEAT,
         sectionActions: [],
         show: true,
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          CONSTANTS.ITEM_TYPE_FEAT,
-        ),
+        columns: FeatureColumnRuntime.getColumnSpecifications({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          sectionKey: CONSTANTS.ITEM_TYPE_FEAT,
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        }),
       },
       [CONSTANTS.ITEM_TYPE_SPELL]: {
-        type: CONSTANTS.SECTION_TYPE_INVENTORY,
+        type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
         items: [],
         canCreate: true,
         label: 'TYPES.Item.spellPl',
@@ -530,11 +540,18 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         key: CONSTANTS.ITEM_TYPE_SPELL,
         sectionActions: [],
         show: true,
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          CONSTANTS.ITEM_TYPE_SPELL,
-        ),
+        columns: SpellColumnRuntime.getColumnSpecifications({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          sectionKey: CONSTANTS.ITEM_TYPE_SPELL,
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        }),
+        canPrepare: false,
+        usesSlots: false,
+        slot: '',
+        method: '',
       },
       [CONSTANTS.ITEM_TYPE_WEAPON]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -548,11 +565,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         key: CONSTANTS.ITEM_TYPE_WEAPON,
         sectionActions: [],
         show: true,
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          CONSTANTS.ITEM_TYPE_WEAPON,
-        ),
+        columns: InventoryColumnRuntime.getColumnSpecifications({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          sectionKey: CONSTANTS.ITEM_TYPE_WEAPON,
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        }),
       },
       [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -566,11 +586,14 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         key: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         sectionActions: [],
         show: true,
-        columns: ItemColumnRuntime.getColumnSpecifications(
-          this.document,
-          CONSTANTS.TAB_STATBLOCK,
-          CONSTANTS.ITEM_TYPE_EQUIPMENT,
-        ),
+        columns: InventoryColumnRuntime.getColumnSpecifications({
+          sheetDocument: this.document,
+          tabId: CONSTANTS.TAB_STATBLOCK,
+          sectionKey: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+        }),
       },
     };
 
@@ -632,35 +655,15 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           sheetDocument: context.document,
         });
 
-        Inventory.applyInventoryItemToSection({
-          sheetDocument: this.document,
-          columnOptions: {
-            editable: context.editable,
-            owner: context.owner,
-            unlocked: context.unlocked,
-          },
-          tabId: CONSTANTS.TAB_STATBLOCK,
-          inventory: statblock,
-          item: item,
-          defaultInventoryTypes: statblockTypes,
-          customSectionOptions: {
-            canCreate: false,
-          },
+        // TODO: Put all spells in the spell section
+        // TODO: Use a Record<string, DomainSectionType> for each domain; create mixedType custom sections as needed as a post operation.
+      } else if (itemIsInventoryType) {
+        ctx.rowActions = InventoryRowActionRuntime.getRowActions({
+          app: context.sheet,
+          data: context,
+          rowDocument: item,
+          sheetDocument: context.document,
         });
-      } else {
-        ctx.rowActions = itemIsInventoryType
-          ? InventoryRowActionRuntime.getRowActions({
-              app: context.sheet,
-              data: context,
-              rowDocument: item,
-              sheetDocument: context.document,
-            })
-          : FeatureRowActionRuntime.getRowActions({
-              app: context.sheet,
-              data: context,
-              rowDocument: item,
-              sheetDocument: context.document,
-            });
 
         Inventory.applyInventoryItemToSection({
           sheetDocument: this.document,
@@ -676,6 +679,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           customSectionOptions: {
             canCreate: false,
           },
+        });
+      } else if (item.type === CONSTANTS.ITEM_TYPE_FEAT) {
+        ctx.rowActions = FeatureRowActionRuntime.getRowActions({
+          app: context.sheet,
+          data: context,
+          rowDocument: item,
+          sheetDocument: context.document,
         });
       }
     }
