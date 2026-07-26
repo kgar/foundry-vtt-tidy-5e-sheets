@@ -58,6 +58,7 @@ import type {
 } from './row-actions.types';
 import type {
   ActivityColumnSpec,
+  ConfiguredColumnSpecificationV2,
   EffectColumnSpec,
   GroupMemberColumnSpec,
   ItemColumnSpec,
@@ -186,7 +187,9 @@ export type InventorySection = {
   type: typeof CONSTANTS.SECTION_TYPE_INVENTORY;
   items: Item5e[];
   canCreate: boolean;
-  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type EffectFavoriteSection = {
@@ -236,7 +239,9 @@ export type FeatureSection = {
   hasActions?: boolean;
   hasUses?: boolean;
   canCreate: boolean;
-  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type FacilitySection = {
@@ -247,13 +252,17 @@ export type FacilitySection = {
 export type ActivitySection = TidySectionBase & {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-  columns: SectionColumnSpecificationsV2<ActivityColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ActivityColumnSpec>
+  >;
 };
 
 export type VehicleFeatureSection = {
   type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
   items: Item5e[];
-  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type SimpleEditableColumn = {
@@ -296,7 +305,9 @@ export type SpellbookSection = {
   override?: number;
   slot: string;
   method: string;
-  columns: SectionColumnSpecificationsV2<ItemColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type AvailableLevel = {
@@ -425,8 +436,7 @@ export type AttributeActivityPinContext = {
 } & AttributePinFlag & { type: 'activity' };
 
 export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
+  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -438,8 +448,7 @@ export type SheetPinActivityContext = {
 } & SheetPinFlag & { type: 'activity' };
 
 export type SheetPinContext = (
-  | SheetPinItemContext
-  | SheetPinActivityContext
+  SheetPinItemContext | SheetPinActivityContext
 ) & {
   tabIds: Set<string>;
 };
@@ -905,11 +914,7 @@ export type DocumentPreparationWarning = Partial<{
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'rounded';
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
 
@@ -1046,12 +1051,13 @@ export type ActiveEffectContext = {
 export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
   TidySectionBase & {
     canCreate: boolean;
-    columns: SectionColumnSpecificationsV2<EffectColumnSpec>;
+    columns: SectionColumnSpecificationsV2<
+      ConfiguredColumnSpecificationV2<EffectColumnSpec>
+    >;
   };
 
 export type HTMLElementOrGettable =
-  | HTMLElement
-  | { get(index: number): HTMLElement };
+  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1475,7 +1481,9 @@ export type MultiActorMemberPortraitContext = {
 
 export type GroupMemberSection = {
   members: GroupMemberQuadroneContext[];
-  columns: SectionColumnSpecificationsV2<GroupMemberColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<GroupMemberColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
@@ -1736,7 +1744,9 @@ export type VehicleDraftAnimalContext = {
 export type VehicleDraftAnimalSection = {
   type: 'draft';
   members: VehicleDraftAnimalContext[];
-  columns: SectionColumnSpecificationsV2<VehicleDraftAnimalColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<VehicleDraftAnimalColumnSpec>
+  >;
 } & TidySectionBase;
 
 export type VehicleCrewMemberContext = {

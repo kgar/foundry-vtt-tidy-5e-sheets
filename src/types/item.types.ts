@@ -27,6 +27,7 @@ import type {
 } from './row-actions.types';
 import type {
   ActivityColumnSpec,
+  ConfiguredColumnSpecificationV2,
   ItemAdvancementColumnSpec,
   SectionColumnSpecificationsV2,
 } from './columns.types';
@@ -163,7 +164,9 @@ export type ActivitySection = { activities: Activity5e[] } & TidySectionBase;
 
 export type ActivitySectionQuadrone = TidySectionBase & {
   activities: ActivityItemContext[];
-  columns: SectionColumnSpecificationsV2<ActivityColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ActivityColumnSpec>
+  >;
 };
 
 export type ItemSheetQuadroneContext = {
@@ -426,7 +429,9 @@ export type ContainerContents = {
 export type AdvancementSection = TidySectionBase & {
   items: AdvancementItemContext[];
   configured: 'partial' | 'full' | false;
-  columns: SectionColumnSpecificationsV2<ItemAdvancementColumnSpec>;
+  columns: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<ItemAdvancementColumnSpec>
+  >;
 };
 
 export type AdvancementItemContext = {

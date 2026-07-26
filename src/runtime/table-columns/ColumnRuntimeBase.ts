@@ -17,18 +17,21 @@ export abstract class ColumnRuntimeBase<
 > {
   abstract readonly domain: TDomain;
 
-  readonly EMPTY_COLUMN_SPECS: SectionColumnSpecificationsV2<TColumnSpecification> =
-    Object.freeze({
-      map: {},
-      prioritized: [],
-      sorted: [],
-    });
+  readonly EMPTY_COLUMN_SPECS: SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<TColumnSpecification>
+  > = Object.freeze({
+    map: {},
+    prioritized: [],
+    sorted: [],
+  });
 
   _minWidthRems: number = CONSTANTS.COLUMN_PRIMARY_MIN_WIDTH_REMS;
 
   getColumnSpecifications(
     options: ColumnPartitionOptions,
-  ): SectionColumnSpecificationsV2<TColumnSpecification> {
+  ): SectionColumnSpecificationsV2<
+    ConfiguredColumnSpecificationV2<TColumnSpecification>
+  > {
     for (let type of [
       options.sheetDocument.type,
       CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT,
@@ -71,8 +74,7 @@ export abstract class ColumnRuntimeBase<
 
           for (const [key, data] of Object.entries(partitionData)) {
             const spec = CONFIG.TIDY5E.features.columns[this.domain][key] as
-              | TColumnSpecification
-              | undefined;
+              TColumnSpecification | undefined;
 
             if (!spec) {
               warn('Column not found', false, {
