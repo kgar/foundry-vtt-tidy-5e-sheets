@@ -194,6 +194,37 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
             time: { order: 700, priority: 800 },
           },
         },
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.ITEM_TYPE_WEAPON]: {
+            uses: { order: 100, priority: 400 },
+            time: { order: 200, priority: 500 },
+            price: { order: 300, priority: 100 },
+            quantity: { order: 400, priority: 300 },
+            weight: { order: 500, priority: 200 },
+          },
+        },
+      },
+      [CONSTANTS.SHEET_TYPE_GROUP]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.ITEM_TYPE_WEAPON]: {
+            uses: { order: 100, priority: 400 },
+            time: { order: 200, priority: 500 },
+            price: { order: 300, priority: 100 },
+            quantity: { order: 400, priority: 300 },
+            weight: { order: 500, priority: 200 },
+          },
+        },
+      },
+      [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.ITEM_TYPE_WEAPON]: {
+            uses: { order: 100, priority: 400 },
+            time: { order: 200, priority: 500 },
+            price: { order: 300, priority: 100 },
+            quantity: { order: 400, priority: 300 },
+            weight: { order: 500, priority: 200 },
+          },
+        },
       },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
