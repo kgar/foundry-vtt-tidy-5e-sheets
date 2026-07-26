@@ -376,7 +376,7 @@
             {/if}
           {/snippet}
         </FeatureTable>
-      {:else if section.type === 'spellbook'}
+      {:else if section.type === 'spellbook' && section.items.length}
         <SpellTable
           {itemToggleMap}
           {section}

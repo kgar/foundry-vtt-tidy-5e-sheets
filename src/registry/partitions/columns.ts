@@ -242,32 +242,6 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
       },
     },
     spell: {
-      [CONSTANTS.SHEET_TYPE_NPC]: {
-        [CONSTANTS.TAB_STATBLOCK]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
-            recovery: { order: 100, priority: 400 },
-            uses: { order: 200, priority: 600 },
-            roll: { order: 300, priority: 800 },
-            formula: { order: 400, priority: 700 },
-            range: { order: 500, priority: 300 },
-            target: { order: 600, priority: 800 },
-            time: { order: 700, priority: 800 },
-          },
-        },
-      },
-      [CONSTANTS.SHEET_TYPE_VEHICLE]: {
-        [CONSTANTS.TAB_STATBLOCK]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
-            recovery: { order: 100, priority: 400 },
-            uses: { order: 200, priority: 600 },
-            roll: { order: 300, priority: 800 },
-            formula: { order: 400, priority: 700 },
-            range: { order: 500, priority: 300 },
-            target: { order: 600, priority: 800 },
-            time: { order: 700, priority: 800 },
-          },
-        },
-      },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
