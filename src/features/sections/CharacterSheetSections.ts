@@ -482,7 +482,6 @@ export class CharacterSheetSections {
     return Object.values(sectionsMap);
   }
 
-  // TODO: mixedItem domain
   static createGenericFavoriteSection(
     context: CharacterSheetQuadroneContext,
     tabId: string,

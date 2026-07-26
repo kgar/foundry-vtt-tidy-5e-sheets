@@ -333,8 +333,6 @@ export type ItemSaveContext = {
   };
 };
 
-// TODO: Make common actor context or make common pieces, like InventoryItemContext, ContainerItemContext, etc.
-
 export type CharacterItemContext = {
   actionSubtitle?: string; // Quadrone only
   activities?: ActivityItemContext[];
