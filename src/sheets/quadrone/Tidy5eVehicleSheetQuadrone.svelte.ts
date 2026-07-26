@@ -743,9 +743,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const featureSections = Object.values(features);
 
     let statblockSections = [
-      ...mountableSections,
-      ...spellSections,
       ...featureSections,
+      ...spellSections,
+      ...mountableSections,
     ];
 
     // Track which sections exist
