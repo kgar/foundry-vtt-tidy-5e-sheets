@@ -43,7 +43,7 @@ import {
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
-import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime.svelte';
+import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
 import { EncounterMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterMemberRowActions.svelte';
 import { EncounterCombatantMemberRowActionRuntime } from 'src/runtime/table-row-actions/EncounterCombatantRowActionRuntime.svelte';
 

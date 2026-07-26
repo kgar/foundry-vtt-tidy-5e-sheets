@@ -2,10 +2,7 @@
   import type { ColumnCellProps } from 'src/types/columns.types';
   import type { VehicleCrewMemberContext } from 'src/types/types';
 
-  let {
-    rowDocument,
-    rowContext,
-  }: ColumnCellProps<any, VehicleCrewMemberContext> = $props();
+  let { rowContext }: { rowContext: VehicleCrewMemberContext } = $props();
 </script>
 
 {#if rowContext.assignedTo}

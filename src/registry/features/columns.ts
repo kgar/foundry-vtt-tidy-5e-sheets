@@ -3,8 +3,14 @@ import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesCol
 import type {
   ActivityColumnSpec,
   EffectColumnSpec,
+  EncounterCombatantColumnSpec,
+  EncounterMemberColumnSpec,
+  GroupMemberColumnSpec,
   ItemAdvancementColumnSpec,
   ItemColumnSpec,
+  VehicleCrewColumnSpec,
+  VehicleDraftAnimalColumnSpec,
+  VehiclePassengerColumnSpec,
 } from 'src/types/columns.types';
 import type { TidyColumnRegistry } from 'src/types/registry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -33,6 +39,19 @@ import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpel
 import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
 import VehicleMemberCrColumn from 'src/sheets/quadrone/item/columns/VehicleMemberCrColumn.svelte';
 import VehicleMemberHpColumn from 'src/sheets/quadrone/item/columns/VehicleMemberHpColumn.svelte';
+import EncounterMemberCrColumn from 'src/sheets/quadrone/item/columns/EncounterMemberCrColumn.svelte';
+import EncounterMemberQuantityColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQuantityColumn.svelte';
+import EncounterMemberInitiativeColumn from 'src/sheets/quadrone/item/columns/EncounterMemberInitiativeColumn.svelte';
+import EncounterMemberQtyFormulaColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQtyFormulaColumn.svelte';
+import GroupMemberHpColumn from 'src/sheets/quadrone/item/columns/GroupMemberHpColumn.svelte';
+import GroupXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte';
+import GroupMemberInspirationColumn from 'src/sheets/quadrone/item/columns/GroupMemberInspirationColumn.svelte';
+import GroupMemberHdColumn from 'src/sheets/quadrone/item/columns/GroupMemberHdColumn.svelte';
+import GroupMemberAcColumn from 'src/sheets/quadrone/item/columns/GroupMemberAcColumn.svelte';
+import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte';
+import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/VehicleCrewMemberAssignedColumn.svelte';
+import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/VehicleMemberQuantityColumn.svelte';
+import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -247,8 +266,152 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof EffectDurationColumn
       >,
     },
-    encounterCombatant: {},
-    encounterMember: {},
+    encounterCombatant: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: EncounterMemberCrColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 2.5,
+      } satisfies EncounterCombatantColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberCrColumn
+      >,
+      quantity: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Quantity') }),
+        },
+        cell: {
+          component: EncounterMemberQuantityColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4.75,
+      } satisfies EncounterCombatantColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberQuantityColumn
+      >,
+      initiative: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Initiative') }),
+        },
+        cell: {
+          component: EncounterMemberInitiativeColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4.5,
+      } satisfies EncounterCombatantColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberInitiativeColumn
+      >,
+    },
+    encounterMember: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: EncounterMemberCrColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 2.5,
+      } satisfies EncounterMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberCrColumn
+      >,
+      quantity: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Quantity') }),
+        },
+        cell: {
+          component: EncounterMemberQuantityColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4.75,
+      } satisfies EncounterMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberQuantityColumn
+      >,
+      qtyFormulaColumn: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Formula') }),
+        },
+        cell: {
+          component: EncounterMemberQtyFormulaColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+          }),
+        },
+        widthRems: 4,
+      } satisfies EncounterMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof EncounterMemberQtyFormulaColumn
+      >,
+      hp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.HP') }),
+        },
+        cell: {
+          component: GroupMemberHpColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 2.5,
+      } satisfies EncounterMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberHpColumn
+      >,
+      npcXp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'DND5E.ExperiencePoints.Abbreviation',
+            ),
+          }),
+        },
+        cell: {
+          component: GroupXpColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 4,
+      } satisfies EncounterMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupXpColumn
+      >,
+    },
     feature: {
       charges: {
         header: {
@@ -382,7 +545,94 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof ItemFeatureSourceColumn
       >,
     },
-    groupMember: {},
+    groupMember: {
+      inspiration: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Inspiration') }),
+        },
+        cell: {
+          component: GroupMemberInspirationColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3.75,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberInspirationColumn
+      >,
+      hp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.HP') }),
+        },
+        cell: {
+          component: GroupMemberHpColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3.75,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberHpColumn
+      >,
+      hd: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.HitDie') }),
+        },
+        cell: {
+          component: GroupMemberHdColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3.75,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberHdColumn
+      >,
+      ac: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.AC') }),
+        },
+        cell: {
+          component: GroupMemberAcColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberAcColumn
+      >,
+      xp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'DND5E.ExperiencePoints.Abbreviation',
+            ),
+          }),
+        },
+        cell: {
+          component: GroupCharacterXpColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3.75,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupCharacterXpColumn
+      >,
+    },
     inventory: {
       capacityBar: {
         header: {
@@ -712,7 +962,56 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         widthRems: 3.125,
       } satisfies ItemColumnSpec<typeof HtmlColumn, typeof ItemRollColumn>,
     },
-    vehicleAssignedCrew: {},
+    vehicleAssignedCrew: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberCrColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 3,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberCrColumn
+      >,
+      hp: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('TIDY5E.Vehicle.Equipment.HP.Label'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberHpColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 4,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberHpColumn
+      >,
+      assigned: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Assigned'),
+          }),
+        },
+        cell: {
+          component: VehicleCrewMemberAssignedColumn,
+          props: (args) => ({ rowContext: args.rowContext }),
+        },
+        widthRems: 10,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleCrewMemberAssignedColumn
+      >,
+    },
     vehicleDraftAnimal: {
       cr: {
         header: {
@@ -728,7 +1027,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 5,
-      } satisfies ItemColumnSpec<
+      } satisfies VehicleDraftAnimalColumnSpec<
         typeof HtmlColumn,
         typeof VehicleMemberCrColumn
       >,
@@ -746,12 +1045,108 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 5,
-      } satisfies ItemColumnSpec<
+      } satisfies VehicleDraftAnimalColumnSpec<
         typeof HtmlColumn,
         typeof VehicleMemberHpColumn
       >,
     },
-    vehiclePassenger: {},
-    vehicleUnassignedCrew: {},
+    vehiclePassenger: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberCrColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies VehiclePassengerColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberCrColumn
+      >,
+      qty: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.QuantityAbbr'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberQuantityColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies VehiclePassengerColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberQuantityColumn
+      >,
+    },
+    vehicleUnassignedCrew: {
+      cr: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.AbbreviationCR'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberCrColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 3,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberCrColumn
+      >,
+      qty: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.QuantityAbbr'),
+          }),
+        },
+        cell: {
+          component: VehicleMemberQuantityColumn,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 5,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleMemberQuantityColumn
+      >,
+      assignTo: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'TIDY5E.Vehicle.Member.AssignTo.Label',
+            ),
+          }),
+        },
+        cell: {
+          component: VehicleCrewAssignToColumn,
+          props: (args) => ({
+            rowDocument: args.rowDocument,
+          }),
+        },
+        widthRems: 10,
+      } satisfies VehicleCrewColumnSpec<
+        typeof HtmlColumn,
+        typeof VehicleCrewAssignToColumn
+      >,
+    },
   };
 }

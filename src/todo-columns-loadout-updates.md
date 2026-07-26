@@ -1,20 +1,12 @@
 
 ## To Do
 
+
 - [ ] Create the itemMixed domain
   - [ ] Resolve <!-- TODO: mixedItem domain -->
   - [ ] Ensure mixedItem columns / partitions are set up for 
   - [ ] Ensure Character Sheet Tab in Action Economy mode gets the mixedItem columns
-- [x] implement effect columns / partition
-- [ ] implement encounterCombatant columns / partition
-- [ ] implement encounterMember columns / partition
-- [x] implement feature columns / partition
-- [ ] implement groupMember columns / partition
-- [x] implement spell columns / partition
-- [ ] implement vehicleAssignedCrew columns / partition
-- [ ] implement vehicleDraftAnimal columns / partition
-- [ ] implement vehiclePassenger columns / partition
-- [ ] implement vehicleUnassignedCrew columns / partition
+- [ ] make sure you didn't miss any cellClasses or headerClasses; check every original runtime file over on github
 - [ ] Cross over inventory sections to new column runtime base
 - [ ] Cross over containerContents sections to new column runtime base
 - [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar

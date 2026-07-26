@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
   import type {
+    Actor5e,
+    EncounterMemberCombatantQuadroneContext,
     EncounterMemberQuadroneContext,
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
@@ -8,14 +9,18 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
+    import type { EncounterMemberContext } from 'src/types/group.types';
 
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<
-    any,
-    EncounterMemberQuadroneContext | EncounterPlaceholderQuadroneContext
-  > = $props();
+  }: {
+    rowDocument: Actor5e | undefined;
+    rowContext:
+      | EncounterMemberQuadroneContext
+      | EncounterMemberCombatantQuadroneContext
+      | EncounterPlaceholderQuadroneContext;
+  } = $props();
 
   let context = $derived(getEncounterSheetQuadroneContext());
 

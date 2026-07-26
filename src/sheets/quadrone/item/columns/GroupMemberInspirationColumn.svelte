@@ -1,12 +1,14 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/types/columns.types';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type { Actor5e, GroupMemberQuadroneContext } from 'src/types/types';
   import InspirationBadge from '../../actor/character-parts/InspirationBadge.svelte';
 
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<any, GroupMemberQuadroneContext> = $props();
+  }: {
+    rowDocument: Actor5e;
+    rowContext: GroupMemberQuadroneContext;
+  } = $props();
 </script>
 
 {#if 'inspiration' in rowDocument.system.attributes}

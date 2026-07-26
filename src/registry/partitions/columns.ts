@@ -53,8 +53,30 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         },
       },
     },
-    encounterCombatant: {},
-    encounterMember: {},
+    encounterCombatant: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { order: 100, priority: 100 },
+            quantity: { order: 400, priority: 200 },
+            initiative: { order: 300, priority: 300 },
+          },
+        },
+      },
+    },
+    encounterMember: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { order: 100, priority: 500 },
+            quantity: { order: 400, priority: 500 },
+            qtyFormulaColumn: { order: 400, priority: 500 },
+            hp: { order: 300, priority: 300 },
+            npcXp: { order: 400, priority: 500 },
+          },
+        },
+      },
+    },
     feature: {
       [CONSTANTS.SHEET_TYPE_CHARACTER]: {
         [CONSTANTS.TAB_ACTOR_ACTIONS]: {
@@ -104,7 +126,38 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         },
       },
     },
-    groupMember: {},
+    groupMember: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+            inspiration: { order: 100, priority: 400 },
+            hp: { order: 200, priority: 500 },
+            hd: { order: 300, priority: 100 },
+            ac: { order: 400, priority: 200 },
+            xp: { order: 500, priority: 300 },
+          },
+          [CONSTANTS.SHEET_TYPE_NPC]: {
+            hp: { order: 100, priority: 400 },
+            hd: { order: 200, priority: 100 },
+            ac: { order: 300, priority: 200 },
+            xp: { order: 400, priority: 300 },
+          },
+          [CONSTANTS.SHEET_TYPE_VEHICLE]: {
+            hp: { order: 100, priority: 400 },
+            ac: { order: 200, priority: 300 },
+            dt: { order: 300, priority: 200 },
+            crew: { order: 400, priority: 100 },
+          },
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            inspiration: { order: 100, priority: 400 },
+            hp: { order: 200, priority: 500 },
+            hd: { order: 300, priority: 100 },
+            ac: { order: 400, priority: 200 },
+            xp: { order: 500, priority: 300 },
+          },
+        },
+      },
+    },
     inventory: {
       [CONSTANTS.SHEET_TYPE_NPC]: {
         [CONSTANTS.TAB_STATBLOCK]: {
@@ -123,14 +176,14 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
           [CONSTANTS.ITEM_TYPE_WEAPON]: {
-            vehicleItemHp: { order: 10, priority: 100 },
-            vehicleItemUses: { order: 20, priority: 100 },
-            vehicleItemCrew: { order: 30, priority: 80 },
+            vehicleItemHp: { order: 100, priority: 100 },
+            vehicleItemUses: { order: 200, priority: 100 },
+            vehicleItemCrew: { order: 300, priority: 80 },
           },
           [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
-            vehicleItemHp: { order: 10, priority: 100 },
-            vehicleItemUses: { order: 20, priority: 100 },
-            vehicleItemCrew: { order: 30, priority: 80 },
+            vehicleItemHp: { order: 100, priority: 100 },
+            vehicleItemUses: { order: 200, priority: 100 },
+            vehicleItemCrew: { order: 300, priority: 80 },
           },
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { order: 100, priority: 400 },
@@ -218,9 +271,47 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         },
       },
     },
-    vehicleAssignedCrew: {},
-    vehicleDraftAnimal: {},
-    vehiclePassenger: {},
-    vehicleUnassignedCrew: {},
+    vehicleAssignedCrew: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { priority: 100, order: 100 },
+            hp: { priority: 200, order: 200 },
+            assigned: { priority: 300, order: 300 },
+          },
+        },
+      },
+    },
+    vehicleDraftAnimal: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { priority: 100, order: 100 },
+            hp: { priority: 200, order: 200 },
+          },
+        },
+      },
+    },
+    vehiclePassenger: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { priority: 100, order: 100 },
+            qty: { priority: 200, order: 200 },
+          },
+        },
+      },
+    },
+    vehicleUnassignedCrew: {
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            cr: { priority: 100, order: 100 },
+            qty: { priority: 200, order: 200 },
+            assignTo: { priority: 300, order: 300 },
+          },
+        },
+      },
+    },
   };
 }

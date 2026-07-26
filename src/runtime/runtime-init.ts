@@ -1,7 +1,7 @@
 import { ItemFilterRuntime } from './item/ItemFilterRuntime.svelte';
 import { ItemSortRuntime } from './item/ItemSortRuntime.svelte';
 import { GroupMemberColumnRuntime } from './table-columns/GroupMemberColumnRuntime.svelte';
-import { EncounterMemberColumnRuntime } from './table-columns/EncounterMemberColumnRuntime.svelte';
+import { EncounterMemberColumnRuntime } from './table-columns/EncounterMemberColumnRuntime';
 import { TabDocumentItemTypesRuntime } from './item/TabDocumentItemTypesRuntime';
 import { VehicleMemberColumnRuntime } from './table-columns/VehicleCrewMemberColumnRuntime';
 

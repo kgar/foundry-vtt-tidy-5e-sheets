@@ -1,12 +1,7 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import type { ColumnCellProps } from 'src/types/columns.types';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type { Actor5e } from 'src/types/types';
 
-  let {
-    rowDocument,
-    rowContext,
-  }: ColumnCellProps<any, GroupMemberQuadroneContext> = $props();
+  let { rowDocument }: { rowDocument: Actor5e } = $props();
 </script>
 
 {#if rowDocument.system.details.xp}
@@ -19,7 +14,6 @@
       >{rowDocument.system.details.xp.value}</span
     >
   {:else if rowDocument.system.details.xp.value}
-
     <span class="font-label-large color-text-default"
       >{rowDocument.system.details.xp.value.toLocaleString()}</span
     >
