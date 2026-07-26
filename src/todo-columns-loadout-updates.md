@@ -1,7 +1,5 @@
 ## To Do
 
-- [ ] Vehicle statblock tab - <!-- TODO: Handle vehicle feats and spells also -->
-- [ ] ensure magical tattoo integration works
 - [ ] Consider - `widthRems` is not future proof. Should we do something else? or use an object-based approach that can support a callback for raw value, a measurement obj (measurement "px", "rem", numeric value), or a raw string value?
 - [ ] ColumnRuntimeBase always uses the same condition data. This is extremely convenient and saves lines of code. Consider doing likewise for row actions.
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them
@@ -15,8 +13,6 @@
 - [ ] Review file sizes and wieldiness of the column registry / partitions. Divide, barrel, and conquer as needed.
 - [ ] // TODO: Support generics here and base the domain on the provided TSection['columns'] or something like it
 - [ ] // TODO: Universalize section type <-> column domain
-- [ ] Test for missing column warnings in all sheets
-- [ ] Compare all columns with main branch's version with two Foundry instances
 - [ ] This particular set of types show up a lot. Try to find a way to shorten this reasonably and keep it understandable.
 ```ts
 {
