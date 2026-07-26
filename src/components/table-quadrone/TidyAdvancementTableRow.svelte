@@ -14,7 +14,6 @@
     attributes?: Record<string, any>;
     children?: Snippet;
     afterRow?: Snippet;
-    expanded?: boolean;
   }
 
   let {
@@ -25,7 +24,6 @@
     attributes,
     children,
     afterRow: insideAfterRowSnippet,
-    expanded = $bindable(false),
   }: Props = $props();
 
   let doc = $derived(item.system.advancement?.get(advancement.id));
@@ -36,7 +34,7 @@
     ['data-id']: advancement?.id,
   }}
   rowContainerClass="activity"
-  rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
+  rowClass="tidy-table-row-v2 {rowClass}"
   rowAttributes={{
     ['data-tidy-always-draggable']: '',
     ['data-tidy-table-row']: '',
