@@ -18,8 +18,8 @@
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
-  import TidyTableCustomCellsV2 from './parts/TidyTableCustomCellsV2.svelte';
-  import TidyTableCustomHeaderCellsV2 from './parts/TidyTableCustomHeaderCellsV2.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -70,7 +70,7 @@
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>
-      <TidyTableCustomHeaderCellsV2 {hiddenColumns} {section} {context} />
+      <TidyTableCustomHeaderCells {hiddenColumns} {section} {context} />
       <TidyTableHeaderCell columnWidth="{rowActionInfo.widthRems}rem"
       ></TidyTableHeaderCell>
     </TidyTableHeaderRow>
@@ -115,7 +115,7 @@
           </span>
         </TidyTableCell>
 
-        <TidyTableCustomCellsV2
+        <TidyTableCustomCells
           {hiddenColumns}
           {ctx}
           entry={ctx.activity}

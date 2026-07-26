@@ -19,8 +19,8 @@
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
-  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
-  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { CustomItemColumnRuntime } from 'src/runtime/table-columns/CustomItemColumnRuntime';
 
   interface Props {
@@ -91,7 +91,7 @@
               <span class="table-header-count">{section.items.length}</span>
             </TidyTableHeaderCell>
 
-            <TidyTableCustomHeaderCellsV2
+            <TidyTableCustomHeaderCells
               {section}
               {expanded}
               {hiddenColumns}
@@ -172,7 +172,7 @@
                   </a>
                 </TidyTableCell>
 
-                <TidyTableCustomCellsV2
+                <TidyTableCustomCells
                   {section}
                   {ctx}
                   entry={item}

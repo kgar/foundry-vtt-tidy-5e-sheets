@@ -14,8 +14,8 @@
   import { observeResize } from 'src/features/resize-observation/attachments';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import RowActionsColumn from '../columns/RowActionsColumn.svelte';
-  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
-  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -61,7 +61,7 @@
               </h3>
             </TidyTableHeaderCell>
 
-            <TidyTableCustomHeaderCellsV2
+            <TidyTableCustomHeaderCells
               {hiddenColumns}
               {section}
               {context}
@@ -133,7 +133,7 @@
                   {/if}
                 </TidyTableCell>
 
-                <TidyTableCustomCellsV2
+                <TidyTableCustomCells
                   {context}
                   {ctx}
                   entry={ctx.activity}

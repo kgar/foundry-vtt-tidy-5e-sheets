@@ -22,8 +22,8 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
-  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
-  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
@@ -125,7 +125,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCellsV2
+              <TidyTableCustomHeaderCells
                 {context}
                 {hiddenColumns}
                 {section}
@@ -164,7 +164,7 @@
               >
                 <GroupMemberNameCell {member} />
                 {#if member.canObserve}
-                  <TidyTableCustomCellsV2
+                  <TidyTableCustomCells
                     {context}
                     ctx={member}
                     entry={member.actor}

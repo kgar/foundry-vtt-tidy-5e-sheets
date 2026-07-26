@@ -28,8 +28,8 @@
   import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
   import type { Item5e } from 'src/types/item.types';
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
-  import TidyTableCustomHeaderCellsV2 from './parts/TidyTableCustomHeaderCellsV2.svelte';
-  import TidyTableCustomCellsV2 from './parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
 
   interface Props {
     section: TSection;
@@ -113,7 +113,7 @@
         <span class="table-header-count">{entries.length}</span>
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
-      <TidyTableCustomHeaderCellsV2
+      <TidyTableCustomHeaderCells
         {hiddenColumns}
         {section}
         {context}
@@ -228,7 +228,7 @@
 
             {@render afterFirstCell?.(entry, ctx)}
 
-            <TidyTableCustomCellsV2
+            <TidyTableCustomCells
               {hiddenColumns}
               {ctx}
               {entry}

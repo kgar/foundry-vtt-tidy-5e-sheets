@@ -18,8 +18,8 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
   import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
-  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
-  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   interface Props {
     inlineWidth: number;
@@ -77,7 +77,7 @@
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
 
-          <TidyTableCustomHeaderCellsV2 {context} {hiddenColumns} {section} />
+          <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
           <TidyTableHeaderCell
             class="header-cell-actions"
@@ -167,7 +167,7 @@
         </a>
       </TidyTableCell>
 
-      <TidyTableCustomCellsV2
+      <TidyTableCustomCells
         {context}
         {ctx}
         entry={ctx}

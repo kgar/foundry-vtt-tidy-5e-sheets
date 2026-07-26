@@ -13,8 +13,8 @@
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
   import { EncounterCombatantColumnRuntime } from 'src/runtime/table-columns/EncounterCombatantColumnRuntime';
-  import TidyTableCustomHeaderCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCellsV2.svelte';
-  import TidyTableCustomCellsV2 from 'src/components/table-quadrone/parts/TidyTableCustomCellsV2.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -153,7 +153,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCellsV2
+              <TidyTableCustomHeaderCells
                 {context}
                 {hiddenColumns}
                 {section}
@@ -201,7 +201,7 @@
                   <EncounterMemberNameCell {member} />
                 {/if}
 
-                <TidyTableCustomCellsV2
+                <TidyTableCustomCells
                   {context}
                   ctx={combatant}
                   {section}
