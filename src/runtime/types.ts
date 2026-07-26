@@ -6,6 +6,7 @@ import type {
 } from 'src/api/api.types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 import type { CONSTANTS } from 'src/constants';
+import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item.types';
 import type {
@@ -76,21 +77,34 @@ export type SheetLayout =
   | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
   | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 
+/** A display value which can vary with the item's current state, such as a container's expanded contents. */
+export type ItemSummaryCommandValue<T> =
+  | T
+  | ((params: RegisteredItemSummaryCommandEnabledParams) => T);
+
 export type RegisteredItemSummaryCommand = {
-  label?: string;
-  iconClass?: string;
-  tooltip?: string;
+  label?: ItemSummaryCommandValue<string>;
+  iconClass?: ItemSummaryCommandValue<string>;
+  tooltip?: ItemSummaryCommandValue<string>;
   enabled?: (params: RegisteredItemSummaryCommandEnabledParams) => boolean;
   execute?: (params: RegisteredItemSummaryCommandExecuteParams) => void;
 };
 
+/** Only available where the sheet tracks inline expansion, such as inventory tables. */
+export type ItemSummaryCommandContext = {
+  inlineToggleService?: InlineToggleService;
+  tabId?: string;
+  containerContentsExpanded?: boolean;
+};
+
 export type RegisteredItemSummaryCommandEnabledParams = {
   item: Item5e;
-};
-export type RegisteredItemSummaryCommandExecuteParams = {
-  event: PointerEvent | MouseEvent;
-  item: Item5e;
-};
+} & ItemSummaryCommandContext;
+
+export type RegisteredItemSummaryCommandExecuteParams =
+  RegisteredItemSummaryCommandEnabledParams & {
+    event: PointerEvent | MouseEvent;
+  };
 
 export type RegisteredPortraitMenuCommand = {
   label?: string;
@@ -131,7 +145,8 @@ export type RegisteredCustomActorTrait = {
   title: string;
   alwaysShow: boolean | undefined;
   openConfiguration:
-    ((params: RegisteredTraitOpenConfigurationParams) => void) | undefined;
+    | ((params: RegisteredTraitOpenConfigurationParams) => void)
+    | undefined;
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;
