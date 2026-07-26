@@ -1,6 +1,5 @@
 ## To Do
 
-- [ ] be able to exclude header, and then header should not be rendered; then update capacityTracker and capacityBar
 - [ ] be able to specify width and condition overrides in column partition data ;)
 - [ ] `TitleColumn` - takes unlocalized text and localizes it, takes any HTML attributes for the title maybe? 
 - [ ] Ensure - I can use plain JavaScript to add a new column to the registry and then pop it into the partitions wherever I need them

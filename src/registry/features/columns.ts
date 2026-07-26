@@ -655,10 +655,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
     },
     inventory: {
       capacityBar: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({ html: '' }),
-        },
         cell: {
           component: InlineCapacityBarColumn,
           props: (args) => ({
@@ -673,10 +669,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         typeof InlineCapacityBarColumn
       >,
       capacityTracker: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({ html: '' }),
-        },
         cell: {
           component: InlineCapacityTrackerColumn,
           props: (args) => ({

@@ -89,7 +89,7 @@ export type ColumnSpecificationV2<
   TColumnHeaderContent extends Component<any> = Component<any>,
   TColumnCellContent extends Component<any> = Component<any>,
 > = {
-  header: ColumnHeaderV2<TSheetDocument, TSheetContext, TColumnHeaderContent>;
+  header?: ColumnHeaderV2<TSheetDocument, TSheetContext, TColumnHeaderContent>;
   cell: ColumnCellV2<
     TSheetDocument,
     TSheetContext,
