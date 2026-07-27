@@ -192,6 +192,26 @@
     line-height: normal;
   }
 
+  .effect-pill-image {
+    flex: 0 0 auto;
+    width: var(--t5e-size-5x);
+    height: var(--t5e-size-5x);
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--t5e-size-1);
+  }
+
+  .effect-name {
+    display: flex;
+    flex-direction: column;
+    margin-inline-end: var(--t5e-size-1x);
+  }
+
+  .effect-pill-category {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   &.theme-dark,
   .theme-dark {
     .pill {

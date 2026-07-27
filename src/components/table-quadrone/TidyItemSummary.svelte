@@ -6,6 +6,7 @@
   import { CONSTANTS } from 'src/constants';
   import { Enrichers } from 'src/features/enrichers/Enrichers';
   import TidyInlineActivitiesList from './TidyInlineActivitiesList.svelte';
+  import TidyInlineEffectsList from './TidyInlineEffectsList.svelte';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
   import { settings } from 'src/settings/settings.svelte';
@@ -98,6 +99,8 @@
       </span>
     {/if}
   </div>
+  
+  <TidyInlineEffectsList {item} />
 
   <div
     class="inline-wrapped-elements user-select-text"

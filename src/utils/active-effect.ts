@@ -3,7 +3,30 @@ import { isNil } from './data';
 import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
+/**
+ * Map category types from `EffectsElement.prepareCategories` to `DND5E.EffectType` 
+ * labels for the switch pills.
+ */
+const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
+  temporary: 'DND5E.EffectType.Temporary',
+  passive: 'DND5E.EffectType.Passive',
+  inactive: 'DND5E.EffectType.Inactive',
+  suppressed: 'DND5E.EffectType.Unavailable',
+};
+
 export class ActiveEffectsHelper {
+  /**
+   * Get the short-form label for an effect category, e.g. "Passive" for the
+   * "Passive Effects" category. Falls back to the category's own label for any
+   * category the system adds later.
+   */
+  static getEffectCategoryTypeLabel(category: {
+    type: string;
+    label: string;
+  }): string {
+    return EFFECT_CATEGORY_TYPE_LABEL_KEYS[category.type] ?? category.label;
+  }
+
   static isActiveEffectAppliedToField(document: any, field: string) {
     try {
       return (
