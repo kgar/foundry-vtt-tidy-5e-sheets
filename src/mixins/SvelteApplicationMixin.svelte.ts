@@ -299,7 +299,7 @@ export function getSvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      this.#frameListenerCleanup();
+      this.#abortframeListeners();
       this._dragTrackingCleanupOnWindowClose?.();
       this._unsubscribeAllHooks();
 
@@ -344,7 +344,7 @@ export function getSvelteApplicationMixin<
     _attachFrameListeners() {
       // Foundry can re-run the render workflow on an open application
       // (detach / reattach), so clear anything from a prior pass first.
-      this.#frameListenerCleanup();
+      this.#abortframeListeners();
 
       const originalContextImpl = CONFIG.ux.ContextMenu;
 
@@ -430,7 +430,7 @@ export function getSvelteApplicationMixin<
 
     #frameListenerAbortController?: AbortController;
 
-    #frameListenerCleanup() {
+    #abortframeListeners() {
       this.#frameListenerAbortController?.abort();
       this.#frameListenerAbortController = undefined;
 
