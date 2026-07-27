@@ -117,7 +117,7 @@
   "TIDY5E.ContextMenuActionUnprepare": "Unprepare",
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionView": "View",
-  "TIDY5E.ContextMenuActionViewItem": "View Item",
+  "TIDY5E.ContextMenuActionViewItem": "View Source Item",
   "TIDY5E.ContextMenuActionDelete": "Delete",
   "TIDY5E.ContextMenuActionPickColor": "Pick Color",
   "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
