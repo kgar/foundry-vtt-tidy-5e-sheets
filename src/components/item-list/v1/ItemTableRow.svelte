@@ -1,3 +1,12 @@
+<script module lang="ts">
+  import type { ItemChatData as ItemChatDataType } from 'src/types/item.types';
+
+  const emptyChatData: ItemChatDataType = {
+    description: '',
+    properties: [],
+  };
+</script>
+
 <script lang="ts">
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../ItemSummary.svelte';
@@ -39,11 +48,6 @@
     rowAttributes,
     children,
   }: Props = $props();
-
-  const emptyChatData: ItemChatData = {
-    description: '',
-    properties: [],
-  };
 
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
@@ -149,7 +153,7 @@
     {@render children?.({ toggleSummary })}
   </div>
   {#if item}
-    <ExpandableContainer expanded={showSummary}>
+    <ExpandableContainer expanded={showSummary} deferRendering>
       <ItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
   {/if}

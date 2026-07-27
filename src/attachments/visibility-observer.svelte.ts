@@ -20,6 +20,19 @@ export function visibilityObserver(
 ): Attachment<HTMLElement> {
   return (element: HTMLElement) => {
     options.toObserve ??= [element];
+
+    // `toAffect` can point at elements outside this attachment's component
+    // (e.g., the sheet window header).
+    // Track what we applied to undo it on teardown.
+    const appliedClasses = [
+      options.trackWhenOffScreen
+        ? options.offScreenClass ?? defaultOffScreenClass
+        : undefined,
+      options.trackWhenOnScreen
+        ? options.onScreenClass ?? defaultOnScreenClass
+        : undefined,
+    ].filter((c) => c !== undefined);
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (var entry of entries) {
@@ -57,6 +70,19 @@ export function visibilityObserver(
 
     return () => {
       observer.disconnect();
+
+      if (!appliedClasses.length) {
+        return;
+      }
+
+      // For 'self', the affected elements are whichever observed element the
+      // callback happened to fire for; the full observed set covers them all.
+      const affected =
+        options.toAffect === 'self'
+          ? options.toObserve ?? []
+          : options.toAffect ?? [];
+
+      affected.forEach((el) => el?.classList.remove(...appliedClasses));
     };
   };
 }

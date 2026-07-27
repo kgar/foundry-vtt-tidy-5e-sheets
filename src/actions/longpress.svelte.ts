@@ -7,42 +7,49 @@ export function longpress(
   const threshold = options?.threshold ?? 500;
 
   $effect(() => {
-    const handleMouseDown = () => {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => {
-        options?.callback?.(node);
-      }, threshold);
-
-      const cancel = () => {
-        clearTimeout(timeout);
-        controller.abort();
-      };
-
-      let cancellableActions: (keyof HTMLElementEventMap)[] = [
-        'mouseleave',
-        'mouseup',
-        'touchend',
-        'touchmove', // TODO: use `touchleave` whenever it's widely available
-      ];
-
-      cancellableActions.forEach((a) =>
-        node.addEventListener(a, cancel, {
-          signal: controller.signal,
-        })
-      );
-    };
-
     const controller = new AbortController();
 
-    node.addEventListener('mousedown', handleMouseDown, {
+    // Don't let unmounting mid-press leave a timer for a detached node.
+    let pendingPress: ReturnType<typeof setTimeout> | undefined;
+
+    const cancel = () => {
+      clearTimeout(pendingPress);
+      pendingPress = undefined;
+    };
+
+    const handlePressStart = () => {
+      cancel();
+
+      pendingPress = setTimeout(() => {
+        pendingPress = undefined;
+        options?.callback?.(node);
+      }, threshold);
+    };
+
+    let cancellableActions: (keyof HTMLElementEventMap)[] = [
+      'mouseleave',
+      'mouseup',
+      'touchend',
+      'touchmove', // TODO: use `touchleave` whenever it's widely available
+    ];
+
+    node.addEventListener('mousedown', handlePressStart, {
       signal: controller.signal,
     });
-    node.addEventListener('touchstart', handleMouseDown, {
+    node.addEventListener('touchstart', handlePressStart, {
       signal: controller.signal,
       passive: true,
     });
 
+    cancellableActions.forEach((a) =>
+      node.addEventListener(a, cancel, {
+        signal: controller.signal,
+        passive: true,
+      })
+    );
+
     return () => {
+      cancel();
       controller.abort();
     };
   });

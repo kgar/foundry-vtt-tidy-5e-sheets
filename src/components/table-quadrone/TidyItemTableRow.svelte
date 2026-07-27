@@ -1,5 +1,12 @@
-<script module>
+<script module lang="ts">
+  import type { ItemChatData as ItemChatDataType } from 'src/types/item.types';
+
   export type TidyTableToggleSummaryFunction = (override?: boolean) => void;
+
+  const emptyChatData: ItemChatDataType = {
+    description: '',
+    properties: [],
+  };
 </script>
 
 <script lang="ts">
@@ -43,11 +50,6 @@
     expanded = $bindable(false),
     ctx,
   }: Props = $props();
-
-  const emptyChatData: ItemChatData = {
-    description: '',
-    properties: [],
-  };
 
   const expandedItemData = getContext<ExpandedItemData | undefined>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,

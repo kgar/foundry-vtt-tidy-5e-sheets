@@ -1,3 +1,13 @@
+<script module lang="ts">
+  import type { EffectSummaryData as EffectSummaryDataType } from 'src/types/types';
+
+  const emptySummaryData: EffectSummaryDataType = {
+    description: {
+      value: '',
+    },
+  };
+</script>
+
 <script lang="ts">
   import { type OnItemToggledFn } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
@@ -37,12 +47,6 @@
     expanded = !expanded;
     onEffectToggled?.(effectContext.effect.id, expanded, location);
   }
-
-  let emptySummaryData: EffectSummaryData = {
-    description: {
-      value: '',
-    },
-  };
 
   let summaryData = $state<EffectSummaryData | undefined>();
 
@@ -86,7 +90,7 @@
   {@render children?.({ toggleSummary, expanded: expanded })}
 
   {#snippet afterRow()}
-    <ExpandableContainer {expanded}>
+    <ExpandableContainer {expanded} deferRendering>
       <TidyEffectSummary
         activeEffect={effectContext.effect}
         summaryData={summaryData ?? emptySummaryData}
