@@ -1,11 +1,13 @@
 .tidy5e-sheet {
 
+  /* TODO: Port to quadrone */
+
   /* NPC Stat Blocks */
   .statblock.npc {
     --statblock-color-gold: var(--t5e-color-gold, rgba(159, 146, 117, 1));
     --statblock-theme-color-default: rgba(116, 27, 43, 1);
     --statblock-theme-color-darkest: oklch(from var(--t5e-theme-color-default) calc(l * 0.75) calc(c * 1.2) h);
-    --statblock-weight-label: var(--font-weight-label, 500);
+    --statblock-weight-label: bold;
     --statblock-font-title-medium: var(--t5e-font-title-medium, 400 var(--font-size-28) 'Modesto Condensed', 'Palatino Linotype', serif);
     --statblock-font-title-small: var(--t5e-font-title-small, 400 var(--font-size-18) 'Modesto Condensed', 'Palatino Linotype', serif);
     --statblock-text-header: var(--t5e-theme-color-darkest);
@@ -26,8 +28,6 @@
 
   &.theme-dark {
     .statblock.npc {
-      --statblock-text-primary: var(--statblock-text-primary);
-      --statblock-text-header: var(--statblock-text-secondary);
       --statblock-dividers: var(--statblock-color-gold);
       --statblock-ability-header-1st: rgba(255, 255, 255, 0.12);
       --statblock-ability-header-2nd: rgba(255, 255, 255, 0.24);
@@ -35,6 +35,7 @@
       --statblock-ability-stat-2nd: rgba(255, 255, 255, 0.32);
       --statblock-text-primary: var(--t5e-color-text-default, rgb(255, 255, 255));
       --statblock-text-secondary: var(--t5e-color-text-lighter, rgba(207, 210, 218, 1));
+      --statblock-text-header: var(--statblock-text-secondary);
       --statblock-text-gold: var(--t5e-color-text-gold-emphasis, rgba(192, 173, 129, 1));
       --statblock-background: var(--t5e-component-card-default, rgba(22, 24, 29, 1));
     }
@@ -64,16 +65,16 @@
       background: var(--statblock-background);
       content: '';
       z-index: -1;
-      top: 0.125rem;
-      left: 0.125rem;
-      bottom: 0.125rem;
-      right: 0.125rem;
+      top: var(--t5e-size-1x);
+      left: var(--t5e-size-1x);
+      bottom: var(--t5e-size-1x);
+      right: var(--t5e-size-1x);
     }
 
     &::after {
       position: absolute;
       content: '';
-      border: 0.125rem solid var(--statblock-color-gold);
+      border: var(--t5e-size-1x) solid var(--statblock-color-gold);
       border-radius: 1.625rem;
       top: 0;
       left: 0;
@@ -83,15 +84,15 @@
     }
 
     .statblock-title {
-      margin-top: 0.125rem;
-      border-bottom: 0.0625rem solid var(--statblock-dividers);
+      margin-top: var(--t5e-size-1x);
+      border-bottom: var(--t5e-size-1) solid var(--statblock-dividers);
 
       a {
         align-items: center;
         background: none;
         border-radius: 0;
         border: 0;
-        border-bottom: 0.0625rem solid var(--statblock-dividers);
+        border-bottom: var(--t5e-size-1) solid var(--statblock-dividers);
         color: var(--statblock-text-header);
         display: flex;
         font: var(--statblock-font-title-medium);
@@ -120,7 +121,7 @@
     .statblock-tags {
       color: var(--statblock-text-secondary);
       font-style: italic;
-      margin-bottom: var(--t5e-size-2x);
+      margin-block-end: var(--t5e-size-2x);
     }
 
     .statblock-content {
@@ -135,13 +136,14 @@
 
     .statblock-header {
       break-inside: avoid;
+      margin-block-end: var(--t5e-size-2x);
 
       dl {
         display: flex;
         flex-wrap: wrap;
 
         div {
-          display: flex;
+          display: inline;
           flex: 1 0 100%;
           gap: 0.25rem;
 
@@ -150,9 +152,9 @@
           }
 
           dt {
-            color: var(--statblock-text-primary);
+            color: var(--statblock-text-gold);
             font-weight: var(--statblock-weight-label);
-            padding-right: 0.125rem;
+            padding-right: var(--t5e-size-1x);
           }
 
           dd {
@@ -177,8 +179,8 @@
       }
 
       .abilities {
-        margin-top: 0.125rem;
-        margin-bottom: 0.125rem;
+        margin-top: var(--t5e-size-1x);
+        margin-bottom: var(--t5e-size-1x);
         padding-bottom: 0.25rem;
 
         table,
@@ -210,6 +212,10 @@
           }
         }
 
+        enriched-content {
+          display: inline;
+        }
+
         a,
         button {
           display: contents;
@@ -234,7 +240,7 @@
       }
 
       h5.statblock-actions-title {
-        border-bottom: 0.0625rem solid var(--statblock-dividers);
+        border-bottom: var(--t5e-size-1) solid var(--statblock-dividers);
         font: var(--statblock-font-title-small);
       }
     }
@@ -254,17 +260,17 @@
     .statblock-header .abilities {
       display: flex;
       flex-direction: row;
-      gap: 0.0625rem;
+      gap: var(--t5e-size-1);
 
       .ability {
         background: var(--statblock-ability-header-1st);
-        border-radius: 0.0625rem;
+        border-radius: var(--t5e-size-1);
         display: flex;
         flex-direction: column;
         align-items: center;
         flex: 1;
         max-width: initial;
-        padding: 0.0625rem;
+        padding: var(--t5e-size-1);
 
         .name {
           color: var(--statblock-text-header);
@@ -291,7 +297,7 @@
 
         table {
           border-collapse: separate;
-          border-spacing: 0 0.0625rem;
+          border-spacing: 0 var(--t5e-size-1);
         }
 
         thead th {
@@ -310,7 +316,7 @@
 
         tbody {
           tr {
-            border-radius: 0.0625rem;
+            border-radius: var(--t5e-size-1);
 
             &:nth-of-type(odd) {
 

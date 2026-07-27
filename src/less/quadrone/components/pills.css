@@ -192,6 +192,10 @@
     line-height: normal;
   }
 
+  .effect-pill {
+    padding-inline-start: var(--t5e-size-halfx);
+  }
+
   .effect-pill-image {
     flex: 0 0 auto;
     width: var(--t5e-size-5x);
@@ -199,6 +203,14 @@
     object-fit: cover;
     object-position: top center;
     border-radius: var(--t5e-size-1);
+  }
+
+  /* Fallback icon for effects without an image */
+  i.effect-pill-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--t5e-color-icon-diminished);
   }
 
   .effect-name {

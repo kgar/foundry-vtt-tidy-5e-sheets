@@ -7,6 +7,7 @@
     EffectCategory,
   } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import EffectPillSwitch from './EffectPillSwitch.svelte';
 
   interface Props {
@@ -14,6 +15,29 @@
   }
 
   let { item = null }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
+
+  function getEffectNotes(
+    category: EffectCategory<ActiveEffect5e>,
+    effect: ActiveEffect5e,
+    riderParentNames: Record<string, string[]>,
+  ): string[] {
+    const notes: string[] = [];
+
+    // Category info, like why suppressed effects are inactive
+    notes.push(...(category.info ?? []));
+
+    const parentNames = riderParentNames[effect.id];
+
+    if (parentNames?.length) {
+      notes.push(
+        `${localize('DND5E.EFFECT.RIDER.Effect')}, ${parentNames.join(', ')}`,
+      );
+    }
+
+    return notes;
+  }
 
   let context =
     $derived(
@@ -37,6 +61,8 @@
         { parent: item },
       );
 
+    const riderParentNames = ActiveEffectsHelper.getRiderEffectParentNames(item);
+
     return Object.values(categories)
       .filter((category) => !category.isEnchantment)
       .flatMap((category) =>
@@ -44,7 +70,9 @@
           effect,
           categoryLabel: ActiveEffectsHelper.getEffectCategoryTypeLabel(category),
           enabled: !effect.disabled,
-          toggleDisabled: !editable || !effect.isOwner,
+          // Unavailable effects are marked disabled at the category level
+          toggleDisabled: !editable || !effect.isOwner || !!category.disabled,
+          notes: getEffectNotes(category, effect, riderParentNames),
         })),
       );
   });
@@ -58,7 +86,7 @@
         categoryLabel={entry.categoryLabel}
         enabled={entry.enabled}
         disabled={entry.toggleDisabled}
-        // data-effect-id={entry.effect.id} data-parent-id={item?.id}
+        notes={entry.notes}
       />
     {/each}
   </div>
