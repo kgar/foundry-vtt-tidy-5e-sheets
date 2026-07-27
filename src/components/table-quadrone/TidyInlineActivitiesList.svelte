@@ -14,7 +14,6 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
@@ -29,10 +28,6 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   let section = $derived({
     ...SheetSections.EMPTY,
@@ -63,7 +58,7 @@
   class="inline-activities-table"
 >
   {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+    <TidyTableHeaderRow class="no-background">
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
       </TidyTableHeaderCell>

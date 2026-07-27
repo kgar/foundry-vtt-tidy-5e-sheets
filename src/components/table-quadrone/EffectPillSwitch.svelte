@@ -42,7 +42,7 @@
 
 {#snippet contents()}
   {#if showFallbackIcon}
-    <i class="fas fa-bolt effect-pill-image color-text-gold"></i>
+    <i class="fas fa-bolt effect-pill-image"></i>
   {:else}
     <img
       class="effect-pill-image"

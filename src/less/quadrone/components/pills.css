@@ -153,18 +153,18 @@
       --icon-fill: var(--t5e-color-icon-diminished);
 
       & i {
-        color: var(--t5e-color-icon-diminished);
+        color: var(--icon-fill);
       }
     }
 
     &:has(.toggle:checked) {
       & > :first-child {
-        --icon-fill: var(--t5e-color-icon-default);
+        --icon-fill: var(--t5e-color-text-gold);
         transition: --icon-fill 0.15s ease-in-out;
       }
 
       & i {
-        color: var(--t5e-color-icon-default);
+        color: var(--icon-fill);
       }
     }
 
@@ -206,11 +206,11 @@
   }
 
   /* Fallback icon for effects without an image */
-  i.effect-pill-image {
+  .pill i.effect-pill-image {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--t5e-color-icon-diminished);
+    color: var(--t5e-color-text-gold);
   }
 
   .effect-name {
@@ -258,12 +258,12 @@
         border-color: var(--t5e-component-field-border-hover);
       }
 
-      i {
+      i:not(.effect-pill-image) {
         color: var(--t5e-color-icon-disabled);
       }
 
       &:has(.toggle:checked) {
-        i {
+        i:not(.effect-pill-image) {
           color: var(--t5e-color-icon-default);
         }
       }

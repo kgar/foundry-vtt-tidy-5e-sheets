@@ -6,7 +6,6 @@
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import ActivityUses from './ActivityUses.svelte';
-  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemImage from './ItemImage.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
