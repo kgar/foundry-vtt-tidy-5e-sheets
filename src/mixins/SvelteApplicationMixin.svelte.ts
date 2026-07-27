@@ -138,6 +138,9 @@ export function getSvelteApplicationMixin<
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
+      // Clear hooks on each pass to avoid stacking duplicates
+      this._unsubscribeAllHooks();
+
       const element = await super._renderFrame(options);
 
       EventHelper.subscribeToDynamicContentRenderEvents(element, () => {
@@ -296,13 +299,16 @@ export function getSvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      this.themeSettingsSubscription?.unsubscribe();
+      this.#frameListenerCleanup();
       this._dragTrackingCleanupOnWindowClose?.();
-
-      this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
-      this._hookSubscriptions = [];
+      this._unsubscribeAllHooks();
 
       await super.close(options);
+    }
+
+    _unsubscribeAllHooks() {
+      this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
+      this._hookSubscriptions = [];
     }
 
     _tearDown(options: ApplicationClosingOptions = {}) {
@@ -336,6 +342,10 @@ export function getSvelteApplicationMixin<
     themeSettingsSubscription?: Unsubscribable;
 
     _attachFrameListeners() {
+      // Foundry can re-run the render workflow on an open application
+      // (detach / reattach), so clear anything from a prior pass first.
+      this.#frameListenerCleanup();
+
       const originalContextImpl = CONFIG.ux.ContextMenu;
 
       // Tidy swaps in its Floating Context Menu for the menu header wire-up.
@@ -349,9 +359,13 @@ export function getSvelteApplicationMixin<
         CONFIG.ux.ContextMenu = originalContextImpl;
       }
 
+      const frameListenerController = new AbortController();
+      this.#frameListenerAbortController = frameListenerController;
+
       this.element.addEventListener(
         'plugins',
         this._onConfigurePlugins.bind(this),
+        { signal: frameListenerController.signal },
       );
 
       this.themeSettingsSubscription =
@@ -361,16 +375,20 @@ export function getSvelteApplicationMixin<
 
       try {
         // If a controls dropdown button is clicked, close the controls dropdown.
-        this.element.addEventListener('click', (ev: MouseEvent) => {
-          const target = ev.target;
-          if (!(target instanceof HTMLElement)) {
-            return;
-          }
+        this.element.addEventListener(
+          'click',
+          (ev: MouseEvent) => {
+            const target = ev.target;
+            if (!(target instanceof HTMLElement)) {
+              return;
+            }
 
-          if (target.closest(`${HEADER_CONTROLS_DROPDOWN_SELECTOR} button`)) {
-            this.toggleControls(false);
-          }
-        });
+            if (target.closest(`${HEADER_CONTROLS_DROPDOWN_SELECTOR} button`)) {
+              this.toggleControls(false);
+            }
+          },
+          { signal: frameListenerController.signal },
+        );
         this.element
           .querySelector(HEADER_CONTROLS_DROPDOWN_SELECTOR)
           ?.addEventListener(
@@ -399,7 +417,7 @@ export function getSvelteApplicationMixin<
 
               this.toggleControls(false);
             },
-            {},
+            { signal: frameListenerController.signal },
           );
       } catch (e) {
         error(
@@ -408,6 +426,16 @@ export function getSvelteApplicationMixin<
           { error: e, sheet: this },
         );
       }
+    }
+
+    #frameListenerAbortController?: AbortController;
+
+    #frameListenerCleanup() {
+      this.#frameListenerAbortController?.abort();
+      this.#frameListenerAbortController = undefined;
+
+      this.themeSettingsSubscription?.unsubscribe();
+      this.themeSettingsSubscription = undefined;
     }
 
     /**

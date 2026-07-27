@@ -8,7 +8,7 @@
     title?: string | undefined;
     columnWidth?: string | null;
     hideUnder?: number;
-    children?: Snippet<[any]>;
+    children?: Snippet;
     class?: ClassValue;
     attributes?: HTMLAttributes<HTMLElement>;
   }
@@ -24,16 +24,6 @@
   }: Props = $props();
 
   let hideUnderClass = $derived(!!hideUnder ? `hide-under-${hideUnder}` : '');
-
-  let isHovering = $state(false);
-
-  function mouseEnter(ev: MouseEvent) {
-    isHovering = true;
-  }
-
-  function mouseLeave(ev: MouseEvent) {
-    isHovering = false;
-  }
 </script>
 
 <div
@@ -41,10 +31,8 @@
   class:primary
   {title}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
-  onmouseenter={mouseEnter}
-  onmouseleave={mouseLeave}
   style:--tidy-table-column-width={columnWidth}
   {...attributes}
 >
-  {@render children?.({ isHovering })}
+  {@render children?.()}
 </div>

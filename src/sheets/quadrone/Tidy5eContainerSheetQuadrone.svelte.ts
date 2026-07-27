@@ -815,6 +815,11 @@ export class Tidy5eContainerSheetQuadrone
       locationSet?.add(location);
     } else {
       locationSet?.delete(location);
+
+      // Drop entry once nothing is expanded to clear map entries
+      if (locationSet?.size === 0) {
+        this.expandedItems.delete(itemId);
+      }
     }
   }
 }

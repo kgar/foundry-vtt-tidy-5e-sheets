@@ -1,3 +1,12 @@
+<script module lang="ts">
+  import type { ItemChatData as ItemChatDataType } from 'src/types/item.types';
+
+  const emptyChatData: ItemChatDataType = {
+    description: '',
+    properties: [],
+  };
+</script>
+
 <script lang="ts">
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -29,11 +38,6 @@
     hidden = false,
     children,
   }: Props = $props();
-
-  const emptyChatData: ItemChatData = {
-    description: '',
-    properties: [],
-  };
 
   const expandedItemData = getContext<ExpandedItemData>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
@@ -145,7 +149,7 @@
   {@render children?.({ toggleSummary })}
 
   {#snippet afterRow()}
-    <ExpandableContainer expanded={showSummary}>
+    <ExpandableContainer expanded={showSummary} deferRendering>
       <ItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
   {/snippet}

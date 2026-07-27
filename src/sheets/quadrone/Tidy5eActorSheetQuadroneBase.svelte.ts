@@ -2400,6 +2400,11 @@ export function getTidy5eActorSheetQuadroneBase<
         locationSet?.add(location);
       } else {
         locationSet?.delete(location);
+
+        // Drop entry once nothing is expanded to clear map entries
+        if (locationSet?.size === 0) {
+          this.expandedItems.delete(itemId);
+        }
       }
     }
   }
