@@ -4,58 +4,59 @@
     --t5e-table-header-background-right: transparent;
     --t5e-theme-basic: transparent;
 
-    .tidy-table-header-row {
-      --t5e-method-color: transparent;
-      --t5e-theme-color-foreground: var(--t5e-component-card-foreground);
-      --t5e-theme-color-foreground-disabled: var(--t5e-component-card-foreground-disabled);
-      --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
-      --t5e-theme-color-foreground-darker: var(--t5e-component-card-foreground-darker);
-      --t5e-theme-color-foreground-darker-disabled: var(--t5e-component-card-foreground-disabled);
-      --t5e-theme-color-foreground-darker-diminished: var(--t5e-component-card-foreground-diminished);
-      border-radius: 0;
-      border-width: 0 0 0.0625rem 0;
-      border-bottom: 0.0625rem solid var(--t5e-component-card-default);
-      box-shadow: none;
-      color: var(--t5e-color-text-lighter);
-      padding-bottom: 0.125rem;
-
-      .header-label-cell {
-        overflow: visible;
-
-        .expand-button {
-          margin-left: -0.25rem;
-        }
-
-        h3 {
-          color: var(--t5e-component-card-foreground);
-        }
-      }
-
-      &.diminished {
-        color: var(--t5e-color-text-lightest);
-
-        .header-label-cell h3 {
-          color: var(--t5e-color-text-lightest);
-        }
-      }
-
-      &:hover {
-        border-bottom-color: var(--t5e-theme-color-lighter);
-
-        .tidy-table-header-cell,
-        .table-header-count {
-          color: var(--t5e-theme-color-foreground);
-        }
-
-        .header-label-cell h3 {
-          color: var(--t5e-text-color-default);
-        }
-      }
-    }
-
     &.theme-light {
       .tidy-table-header-row {
         border-bottom-color: rgba(0, 0, 0, 0.16);
+      }
+    }
+  }
+
+  &.theme-basic .tidy-table-header-row,
+  .tidy-table-header-row.no-background {
+    --t5e-method-color: transparent;
+    --t5e-theme-color-foreground: var(--t5e-component-card-foreground);
+    --t5e-theme-color-foreground-disabled: var(--t5e-component-card-foreground-disabled);
+    --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
+    --t5e-theme-color-foreground-darker: var(--t5e-component-card-foreground-darker);
+    --t5e-theme-color-foreground-darker-disabled: var(--t5e-component-card-foreground-disabled);
+    --t5e-theme-color-foreground-darker-diminished: var(--t5e-component-card-foreground-diminished);
+    border-radius: 0;
+    border-width: 0 0 0.0625rem 0;
+    border-bottom: 0.0625rem solid var(--t5e-component-card-default);
+    box-shadow: none;
+    color: var(--t5e-color-text-lighter);
+    padding-bottom: 0.125rem;
+
+    .header-label-cell {
+      overflow: visible;
+
+      .expand-button {
+        margin-left: -0.25rem;
+      }
+
+      h3 {
+        color: var(--t5e-component-text-lighter);
+      }
+    }
+
+    &.diminished {
+      color: var(--t5e-color-text-lightest);
+
+      .header-label-cell h3 {
+        color: var(--t5e-color-text-lightest);
+      }
+    }
+
+    &:hover {
+      border-bottom-color: var(--t5e-theme-color-lighter);
+
+      .tidy-table-header-cell,
+      .table-header-count {
+        color: var(--t5e-theme-color-foreground);
+      }
+
+      .header-label-cell h3 {
+        color: var(--t5e-text-color-default);
       }
     }
   }
@@ -221,7 +222,7 @@
   }
 
   &:not(.theme-basic) {
-    .tidy-table-header-row {
+    .tidy-table-header-row:not(.no-background) {
       &.diminished {
         --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
         --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);

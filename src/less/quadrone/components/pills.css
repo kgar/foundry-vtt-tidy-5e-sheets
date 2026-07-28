@@ -153,18 +153,18 @@
       --icon-fill: var(--t5e-color-icon-diminished);
 
       & i {
-        color: var(--t5e-color-icon-diminished);
+        color: var(--icon-fill);
       }
     }
 
     &:has(.toggle:checked) {
       & > :first-child {
-        --icon-fill: var(--t5e-color-icon-default);
+        --icon-fill: var(--t5e-color-text-gold);
         transition: --icon-fill 0.15s ease-in-out;
       }
 
       & i {
-        color: var(--t5e-color-icon-default);
+        color: var(--icon-fill);
       }
     }
 
@@ -190,6 +190,38 @@
     font-size: 0.75rem;
     font-weight: 500;
     line-height: normal;
+  }
+
+  .effect-pill {
+    padding-inline-start: var(--t5e-size-halfx);
+  }
+
+  .effect-pill-image {
+    flex: 0 0 auto;
+    width: var(--t5e-size-5x);
+    height: var(--t5e-size-5x);
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--t5e-size-1);
+  }
+
+  /* Fallback icon for effects without an image */
+  .pill i.effect-pill-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--t5e-color-text-gold);
+  }
+
+  .effect-name {
+    display: flex;
+    flex-direction: column;
+    margin-inline-end: var(--t5e-size-1x);
+  }
+
+  .effect-pill-category {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   &.theme-dark,
@@ -226,12 +258,12 @@
         border-color: var(--t5e-component-field-border-hover);
       }
 
-      i {
+      i:not(.effect-pill-image) {
         color: var(--t5e-color-icon-disabled);
       }
 
       &:has(.toggle:checked) {
-        i {
+        i:not(.effect-pill-image) {
           color: var(--t5e-color-icon-default);
         }
       }

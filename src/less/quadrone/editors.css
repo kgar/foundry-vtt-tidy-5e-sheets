@@ -472,22 +472,23 @@
         transform: scaleY(-1);
       }
     }
-  }
 
-  .editor {
     figure {
       margin: var(--t5e-size-2x) 0;
     }
 
     figcaption {
-      color: var(--t5e-color-text-gold-emphasis);
       display: flex;
       flex-direction: column;
-      font: var(--t5e-font-label-medium);
       gap: var(--t5e-size-2x);
       margin: var(--t5e-size-2x) 0;
       text-align: right;
       font-style: italic;
+
+      .embed-caption {
+        color: var(--t5e-color-text-gold-emphasis);
+        font: var(--t5e-font-label-medium);
+      }
     }
   }
 
