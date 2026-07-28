@@ -142,6 +142,15 @@
   }
 
   let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
+  
+  function getRollIcon() {
+    let rollIcon = 'fa';
+    let itemType = getType();
+    if (itemType === 'container') { rollIcon += ' fa-box-open'; }
+    else if (isSpell) { rollIcon += ' ' + spellMethodIcon; }
+    else rollIcon += ' fa-dice-d20';
+    return rollIcon;
+  }
 </script>
 
 {#snippet spellSlots(section: any, slotKey: string, cssClass: string)}
@@ -190,23 +199,22 @@
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
 >
   <div class="pin-document-image">
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
       role="button"
       tabindex="0"
-      class={['tidy-table-row-use-button', { disabled: !context.editable }]}
-      onclick={(ev) =>
-        context.editable && context.sheet.tryUseItem(ctx.document, ev)}
-      onkeydown={(ev) =>
-        ev.key === 'Enter' ||
-        (ev.key === ' ' &&
-          context.editable &&
-          context.sheet.tryUseItem(ctx.document, ev))}
-      data-has-roll-modes
+      class={[
+        'tidy-table-row-use-button',
+        { disabled: !context.editable && pinType !== 'container' },
+      ]}
+      data-action={pinType === 'container' ? 'showDocument' : 'use'}
+      data-uuid={pinType === 'container' ? ctx.document.uuid : undefined}
+      data-has-roll-modes={pinType === 'container' ? undefined : true}
       aria-label={ctx.document.name}
     >
       <img class="item-image" alt={ctx.document.name} src={ctx.document.img} />
       <span class="roll-prompt">
-        <i class={[isSpell ? spellMethodIcon : 'fa fa-dice-d20']}></i>
+        <i class={[getRollIcon()]}></i>
       </span>
     </a>
   </div>
