@@ -66,6 +66,7 @@ export type TidyConfig = {
     // anything else?
   };
   components: TidyComponentRegistry;
+  description: string;
   features: TidyFeatureRegistry;
   partitions: TidyPartitionRegistry;
 };

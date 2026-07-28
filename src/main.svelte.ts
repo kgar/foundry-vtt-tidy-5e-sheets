@@ -56,6 +56,7 @@ Hooks.once('init', () => {
       },
     },
     components: registry.getRegistryComponents(),
+    description: "Version Alpha: Work in progress. Expect API breakage while development on this configuration object continues.",
     features: {
       columns: registry.getColumnsRegistry(),
       rowActions: registry.getRowActionsRegistry(),
