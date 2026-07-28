@@ -70,7 +70,8 @@
     searchCriteria;
 
     untrack(() => {
-      searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      searchResults.search = searchCriteria;
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
         criteria: searchCriteria,
         itemContext: context.itemContext,
         sections: sections.filter(

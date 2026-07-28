@@ -53,6 +53,7 @@
   );
 
   $effect(() => {
+    searchResults.search = searchCriteria;
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: context.itemContext,

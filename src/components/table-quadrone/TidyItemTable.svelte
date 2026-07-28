@@ -100,6 +100,7 @@
   key={section.key}
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
+  expandedOverride={searchResults.hasActiveSearch}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow

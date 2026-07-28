@@ -1,10 +1,12 @@
 import { CONSTANTS } from 'src/constants';
+import { isNil } from 'src/utils/data';
 import { getContext, setContext } from 'svelte';
 
 export type MaybeSearchResults = Set<string> | undefined;
 
 export function createSearchResultsState() {
   let uuids = $state<MaybeSearchResults>();
+  let search = $state<string>();
 
   return {
     get uuids() {
@@ -15,6 +17,12 @@ export function createSearchResultsState() {
     },
     show(uuid: string) {
       return !uuids || uuids.has(uuid);
+    },
+    get hasActiveSearch() {
+      return !isNil(search?.trim(), '');
+    },
+    set search(value: string) {
+      search = value;
     },
   };
 }
@@ -29,7 +37,7 @@ export function getSearchResultsContext() {
 }
 
 export function setSearchResultsContext(
-  value: ReturnType<typeof createSearchResultsState>
+  value: ReturnType<typeof createSearchResultsState>,
 ) {
   setContext(searchKey, value);
 }

@@ -64,6 +64,7 @@
   );
 
   $effect(() => {
+    searchResults.search = searchCriteria;
     searchResults.uuids = !isNil(searchCriteria)
       ? new Set(
           context.system.members

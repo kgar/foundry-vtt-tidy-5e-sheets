@@ -34,6 +34,7 @@
   setSearchResultsContext(searchResults);
 
   $effect(() => {
+    searchResults.search = searchCriteria;
     searchResults.uuids = FoundryAdapter.searchActors(
       searchCriteria,
       context.system.members.map((m) => m.actor),

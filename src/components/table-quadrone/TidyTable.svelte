@@ -16,6 +16,7 @@
     dataset?: Record<string, string>;
     header?: Snippet<[boolean]>;
     body?: Snippet;
+    expandedOverride?: boolean;
   }
 
   let {
@@ -24,6 +25,7 @@
     header,
     body,
     dataset,
+    expandedOverride = false,
     ...rest
   }: Props = $props();
 
@@ -69,8 +71,8 @@
   {...attributes}
   {...datasetAttributes}
 >
-  {@render header?.(expanded)}
-  <ExpandableContainer {expanded} deferRendering>
+  {@render header?.(expanded || expandedOverride)}
+  <ExpandableContainer expanded={expanded || expandedOverride} deferRendering>
     <div class="item-table-body">
       {@render body?.()}
     </div>

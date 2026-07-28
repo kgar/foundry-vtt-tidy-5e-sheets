@@ -37,6 +37,7 @@
         x.type !== CONSTANTS.SECTION_TYPE_ACTIVITY,
     );
 
+    searchResults.search = searchCriteria;
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: context.itemContext,
