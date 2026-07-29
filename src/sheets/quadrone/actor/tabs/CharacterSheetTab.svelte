@@ -8,14 +8,12 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SpellTable from '../../shared/SpellTable.svelte';
   import FeatureTable from '../../shared/FeatureTable.svelte';
   import InventoryTable from '../../shared/InventoryTable.svelte';
-  import ActionTable from '../../shared/ActionTable.svelte';
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { tick } from 'svelte';
@@ -35,18 +33,6 @@
   setSearchResultsContext(searchResults);
 
   let sections = $derived(context.sheetTabSections);
-
-  let showSheetPins = $state(true);
-
-  // Sync from persisted preference when context/tab changes; persist on toggle via onclick
-  $effect(() => {
-    showSheetPins =
-      UserSheetPreferencesService.getDocumentTypeTabPreference(
-        context.document.type,
-        tabId,
-        'showSheetPins',
-      ) ?? true;
-  });
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -100,9 +86,7 @@
 <ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content" bind:this={tabContent}>
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <SheetPins />
 
   <div
     class="tidy-table-container"
@@ -190,28 +174,6 @@
             : localize(
                 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
               )}
-        </button>
-        <button
-          type="button"
-          class="button button-small button-borderless"
-          onclick={async () => {
-            showSheetPins = !showSheetPins;
-            await UserSheetPreferencesService.setDocumentTypeTabPreference(
-              context.document.type,
-              tabId,
-              'showSheetPins',
-              showSheetPins,
-            );
-            await tick();
-            tabContent?.scrollTo({ top: 0 });
-          }}
-        >
-          <i class="fas fa-thumbtack"></i>
-          {localize(
-            showSheetPins
-              ? 'TIDY5E.Utilities.HideSheetPins'
-              : 'TIDY5E.Utilities.ShowSheetPins',
-          )}
         </button>
       {/if}
     </div>

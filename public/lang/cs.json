@@ -974,7 +974,6 @@
         "Label": "Připnutý deník",
         "LabelPl": "Připnuté deníky"
     },
-    "TIDY5E.Utilities.ShowSheetPins": "Zobrazit připnuté deníky",
     "TIDY5E.InspirationAdd": "Přidat inspiraci",
     "TIDY5E.InspirationRemove": "Odebrat inspiraci",
     "TIDY5E.LegendaryAbbr": "LA",
@@ -1029,7 +1028,6 @@
         "name": "Záložka deníku postavy: Automaticky včetně použitelných položek",
         "hint": "Automaticky včetně všech aktuálně použitelných položek, kouzla a schopností v záložce deníku."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Skrýt špendlíky deníku",
     "TIDY5E.AbilityRoll": "Ověření vlastnosti {ability}",
     "TIDY5E.AbbrProficiency": "ZD",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrovství se zbraní: {mastery}",

@@ -17,7 +17,6 @@
   } from 'src/features/search/search.svelte';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context =
     $derived(
@@ -41,14 +40,6 @@
     SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
 
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
-  );
-
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -57,15 +48,12 @@
       tabId: tabId,
     });
   });
-
 </script>
 
 <ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} />
 
 <div class="tab-content">
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <SheetPins />
 
   <SpellTables
     sections={spellbook}

@@ -1,7 +1,6 @@
 import type { SectionOptionGroup } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { TabOptions } from 'src/runtime/types';
@@ -14,18 +13,18 @@ import type {
 
 export function buildActorSpellbookTabOptions(
   context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): TabOptions {
   const localize = FoundryAdapter.localize;
 
   const sections = SheetSections.configureSpellbook(
     context.actor,
     tabId,
-    context.spellbook
+    context.spellbook,
   );
 
   const actorHasSpells = context.actor.items.some(
-    (item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL
+    (item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL,
   );
 
   const optionsGroups: SectionOptionGroup[] = [
@@ -74,12 +73,6 @@ export function buildActorSpellbookTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
-    {
       title: 'TIDY5E.DisplayOptionsActor.Title',
       settings: [
         {
@@ -93,7 +86,7 @@ export function buildActorSpellbookTabOptions(
       ],
     },
     ...(actorHasSpells
-      ? [
+      ? ([
           {
             title: 'TIDY5E.Utilities.Tools',
             settings: [
@@ -103,12 +96,12 @@ export function buildActorSpellbookTabOptions(
                 label: 'TIDY5E.Utilities.AssignSpellsToClasses',
                 onclick: (_ev, app) =>
                   app.navigator?.selectTab(
-                    TidySheetSettingsTabIds.spellAssignments
+                    TidySheetSettingsTabIds.spellAssignments,
                   ),
               },
             ],
           },
-        ] satisfies SectionOptionGroup[]
+        ] satisfies SectionOptionGroup[])
       : []),
   ];
 
@@ -117,7 +110,7 @@ export function buildActorSpellbookTabOptions(
   const resolvedTitle =
     typeof rawTitle === 'function'
       ? (rawTitle as () => string)()
-      : (rawTitle as string | undefined) ?? '';
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {

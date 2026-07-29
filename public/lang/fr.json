@@ -986,7 +986,6 @@
         "hint": "Nouvelle Tidy Sheets seulement : Configurez l'emplacement des commandes d'en-tête de feuille."
     },
     "TIDY5E.GMOnly.Title": "MD seleument",
-    "TIDY5E.Utilities.ShowSheetPins": "Afficher les sélections épingler de la feuille",
     "TIDY5E.SheetPin": {
         "LabelPl": "Épingles de la feuille",
         "Label": "Épingle de la feuille"
@@ -1035,7 +1034,6 @@
         "name": "Onglet Fiche de personnage : inclure automatiquement les objets utilisables",
         "hint": "Inclure automatiquement tous les objets, sorts et fonctionnalités actuellement utilisables dans l'onglet de la fiche."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Masquer les épingles de la fiche",
     "TIDY5E.Drakkenheim": {
         "Contamination": {
             "rollSave": "Jet de sauvegarde de contamination",

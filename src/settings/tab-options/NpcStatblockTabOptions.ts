@@ -4,7 +4,6 @@ import type {
 } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import { CONSTANTS } from 'src/constants';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { TabOptions } from 'src/runtime/types';
@@ -18,20 +17,20 @@ import type {
 
 export function buildNpcStatblockSections(
   context: NpcSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): (FeatureSection | SpellbookSection)[] {
   return SheetSections.configureStatblock(
     context.features,
     context,
     tabId,
     UserSheetPreferencesService.getByType(context.actor.type),
-    TidyFlags.sectionConfig.get(context.actor)?.[tabId]
+    TidyFlags.sectionConfig.get(context.actor)?.[tabId],
   );
 }
 
 export function buildNpcStatblockTabOptions(
   context: NpcSheetQuadroneContext,
-  tabId: string
+  tabId: string,
 ): TabOptions {
   const localize = FoundryAdapter.localize;
   const sections = buildNpcStatblockSections(context, tabId);
@@ -72,7 +71,7 @@ export function buildNpcStatblockTabOptions(
             {
               label: FoundryAdapter.localize(
                 'TIDY5E.UseSpecificDefaultValue.Label',
-                { value: FoundryAdapter.localize(legendariesDefaultTextKey) }
+                { value: FoundryAdapter.localize(legendariesDefaultTextKey) },
               ),
               value: null,
             },
@@ -103,15 +102,15 @@ export function buildNpcStatblockTabOptions(
                 'TIDY5E.UseSpecificDefaultValue.Label',
                 {
                   value: FoundryAdapter.localize(
-                    spellbookInStatblockDefaultTextKey
+                    spellbookInStatblockDefaultTextKey,
                   ),
-                }
+                },
               ),
               value: null,
             },
           ],
           selected: TidyFlags.includeSpellbookInNpcStatblockTab.get(
-            context.actor
+            context.actor,
           ),
           prop: TidyFlags.includeSpellbookInNpcStatblockTab.prop,
           doc: context.actor,
@@ -136,10 +135,6 @@ export function buildNpcStatblockTabOptions(
           prop: spellbookInStatblockProp,
           default: spellbookInStatblockUserPreference,
         },
-        SheetPinsProvider.getGlobalSectionSetting(
-          context.document.type,
-          tabId
-        ),
       ],
     },
   ];
@@ -149,7 +144,7 @@ export function buildNpcStatblockTabOptions(
   const resolvedTitle =
     typeof rawTitle === 'function'
       ? (rawTitle as () => string)()
-      : (rawTitle as string | undefined) ?? '';
+      : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
 
   return {

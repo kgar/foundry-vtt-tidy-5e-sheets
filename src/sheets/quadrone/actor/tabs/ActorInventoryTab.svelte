@@ -20,6 +20,7 @@
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+
   let context =
     $derived(
       getSheetContext<
@@ -47,14 +48,6 @@
     ),
   );
 
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
-  );
-
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -63,15 +56,12 @@
       tabId: tabId,
     });
   });
-
 </script>
 
 <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
 <div class="tab-content">
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <SheetPins />
 
   <CharacterEncumbranceRow />
 

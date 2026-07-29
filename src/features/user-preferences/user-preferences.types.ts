@@ -3,7 +3,6 @@ import type { CONSTANTS } from 'src/constants';
 export type UserSheetTypeTabPreferences = {
   sort?: string;
   sidebarExpanded?: boolean;
-  showSheetPins?: boolean;
 };
 
 export type UserSheetPreference = {

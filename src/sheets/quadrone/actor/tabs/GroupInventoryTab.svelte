@@ -41,14 +41,6 @@
     ),
   );
 
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
-  );
-
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -165,9 +157,7 @@
 <div class="tab-right-column">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
   <div class="tab-content">
-    {#if showSheetPins}
-      <SheetPins />
-    {/if}
+    <SheetPins />
 
     <InventoryTables
       sections={inventory}

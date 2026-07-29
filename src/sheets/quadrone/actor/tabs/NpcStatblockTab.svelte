@@ -8,7 +8,6 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
@@ -37,21 +36,12 @@
 
   let sections = $derived(
     buildNpcStatblockSections(context, tabId) as (
-      | FeatureSection
-      | SpellbookSection
+      FeatureSection | SpellbookSection
     )[],
   );
 
   let hasAtLeastOneItem = $derived(
     sections.some((section) => section.items.length > 0),
-  );
-
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
   );
 
   $effect(() => {
@@ -73,9 +63,7 @@
     </div>
   {/if}
 
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <SheetPins />
 
   {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">

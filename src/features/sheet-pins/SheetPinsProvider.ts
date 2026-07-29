@@ -4,8 +4,6 @@ import { error } from 'src/utils/logging';
 import type { SheetItemPinFlag, SheetPin } from 'src/foundry/TidyFlags.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CONSTANTS } from 'src/constants';
-import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { BooleanSetting } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import type {
   Actor5e,
   SheetPinContext,
@@ -191,29 +189,6 @@ export class SheetPinsProvider {
     return getSheetPinFlagsForTab(targetDocument.actor, tabId)?.find(
       (x) => x.id === relativeUuid,
     )?.resource;
-  }
-
-  static getGlobalSectionSetting(
-    documentType: string,
-    tabId: string,
-  ): BooleanSetting {
-    return {
-      type: 'boolean',
-      label: 'TIDY5E.Utilities.ShowSheetPins',
-      doc: game.user,
-      prop: UserSheetPreferencesService.getTabProp(
-        documentType,
-        tabId,
-        'showSheetPins',
-        true,
-      ),
-      default: true,
-      checked: UserSheetPreferencesService.getDocumentTypeTabPreference(
-        documentType,
-        tabId,
-        'showSheetPins',
-      ),
-    };
   }
 
   static sortPins(

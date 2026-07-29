@@ -971,7 +971,6 @@
     "TIDY5E.GMOnly.Title": "Tylko MG",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globalne domyślne opcje wyświetlania",
     "TIDY5E.Character.Sidebar.Title": "Skonfiguruj panel boczny",
-    "TIDY5E.Utilities.ShowSheetPins": "Pokaż przypięcia karty",
     "TIDY5E.SheetPin": {
         "Label": "Przypięcie karty",
         "LabelPl": "Przypięcia karty"
@@ -1031,7 +1030,6 @@
         "name": "Zakładka karty postaci: Automatycznie uwzględniaj używalne przedmioty",
         "hint": "Automatycznie uwzględniaj w zakładce Karta wszystkie aktualnie używalne przedmioty, zaklęcia i zdolności."
     },
-    "TIDY5E.Utilities.HideSheetPins": "Ukryj przypięcia karty",
     "TIDY5E.AbilityRoll": "Test {ability}",
     "TIDY5E.AbbrProficiency": "Prof.",
     "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrzostwo broni: {mastery}",

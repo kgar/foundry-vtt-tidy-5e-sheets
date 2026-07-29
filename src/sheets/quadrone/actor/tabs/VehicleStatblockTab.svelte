@@ -4,7 +4,6 @@
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext, untrack } from 'svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -96,14 +95,6 @@
       }
     });
   });
-
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
-  );
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -203,9 +194,7 @@
 <ItemsActionBar bind:searchCriteria {sections} {tabId} />
 
 <div class="tab-content">
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <SheetPins />
 
   <!-- Vehicle Actions Tracker (when stations are OFF) -->
   {#if showActionsPin}

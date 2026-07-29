@@ -942,8 +942,6 @@
     "TIDY5E.Vehicle.Passenger.EmptyState": "Arraste e solte os passageiros aqui ou clique para adicionar.",
     "TIDY5E.GMOnly.Title": "Apenas Mestre",
     "TIDY5E.Utilities.CastActivityMissingSpell": "Nenhuma magia está anexada a esta atividade.",
-    "TIDY5E.Utilities.ShowSheetPins": "Mostrar Fixados da Ficha",
-    "TIDY5E.Utilities.HideSheetPins": "Ocultar Fixados da Ficha",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na guia Bloco de Estatísticas",
     "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transfere todas as moedas para o ator principal",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opções Globais de Exibição Padrão",

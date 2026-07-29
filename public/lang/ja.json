@@ -813,7 +813,6 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "発動アクティビティ呪文グループ化",
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "追加呪文セクション",
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "アイテムごとにセクション",
-    "TIDY5E.Utilities.ShowSheetPins": "シートピンを表示",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "データブロックタブに伝説/住処トラッカーを表示",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "データブロックタブに呪文書セクションを含める",
     "TIDY5E.Section": {

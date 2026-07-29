@@ -78,12 +78,6 @@ export function buildCharacterSheetTabOptions(
         } satisfies RadioSetting<boolean | null>,
       ],
     },
-    {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
-      settings: [
-        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
-      ],
-    },
   ];
 
   const tab = context.tabs.find((t) => t.id === tabId);
@@ -93,9 +87,7 @@ export function buildCharacterSheetTabOptions(
       ? (rawTitle as () => string)()
       : ((rawTitle as string | undefined) ?? '');
   const tabName = localize(resolvedTitle);
-  const defaultSections = context.sheet.createSheetTabOriginSections(
-    context
-  );
+  const defaultSections = context.sheet.createSheetTabOriginSections(context);
 
   return {
     tabId,
