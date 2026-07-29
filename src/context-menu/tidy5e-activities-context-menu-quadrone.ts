@@ -15,8 +15,7 @@ export function getContextMenuOptionsQuadrone(
 
   const isInFavorites = !!element.closest('.favorites');
 
-  const { tabId } =
-    element.closest<HTMLElement>('[data-tab-id]')?.dataset ?? {};
+  const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
 

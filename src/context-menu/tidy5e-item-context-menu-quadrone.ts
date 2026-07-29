@@ -31,8 +31,7 @@ export function getItemContextOptionsQuadrone(
 
   const isInFavorites = !!element.closest('.favorites');
 
-  const { tabId = '' } =
-    element.closest<HTMLElement>('[data-tab-id]')?.dataset ?? {};
+  const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
 
   let options: ContextMenuEntry[] = [];
 
@@ -377,12 +376,17 @@ export function getItemContextOptionsQuadrone(
   options.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: () => SheetPinsProvider.pin(item, tabId, 'item'),
+    callback: () => {
+      if (tabId) {
+        SheetPinsProvider.pin(item, tabId, 'item');
+      }
+    },
     condition: () =>
       item.isOwner &&
       item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
+      tabId &&
       !SheetPinsProvider.isPinned(item, tabId),
     group: 'customize',
   });
@@ -390,12 +394,17 @@ export function getItemContextOptionsQuadrone(
   options.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: () => SheetPinsProvider.unpin(item, tabId),
+    callback: () => {
+      if (tabId) {
+        SheetPinsProvider.unpin(item, tabId);
+      }
+    },
     condition: () =>
       item.isOwner &&
       item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
+      tabId &&
       SheetPinsProvider.isPinned(item, tabId),
     group: 'customize',
   });
@@ -406,24 +415,32 @@ export function getItemContextOptionsQuadrone(
     options.push({
       name: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () =>
-        SheetPinsProvider.setItemResourceType(item, tabId, 'limited-uses'),
+      callback: () => {
+        if (tabId) {
+          SheetPinsProvider.setItemResourceType(item, tabId, 'limited-uses');
+        }
+      },
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
+        tabId &&
         SheetPinsProvider.getResourceType(item, tabId) !== 'limited-uses',
       group: 'customize',
     });
     options.push({
       name: 'TIDY5E.ContextMenuActionShowQuantity',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () =>
-        SheetPinsProvider.setItemResourceType(item, tabId, 'quantity'),
+      callback: () => {
+        if (tabId) {
+          SheetPinsProvider.setItemResourceType(item, tabId, 'quantity');
+        }
+      },
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
+        tabId &&
         SheetPinsProvider.getResourceType(item, tabId) !== 'quantity',
       group: 'customize',
     });

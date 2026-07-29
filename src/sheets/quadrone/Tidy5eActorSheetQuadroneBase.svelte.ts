@@ -1506,9 +1506,7 @@ export function getTidy5eActorSheetQuadroneBase<
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: { id: string; doc: any },
     ) {
-      const { tabId } =
-        event.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
-        {};
+      const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(event);
 
       if (!tabId) {
         warn('Unable to pin. Tab ID not found.', false, { event, data });
@@ -1543,9 +1541,7 @@ export function getTidy5eActorSheetQuadroneBase<
         return;
       }
 
-      const { tabId } =
-        event.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
-        {};
+      const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(event);
 
       if (!tabId) {
         warn('Unable to sort pins. Tab ID not found.', false, { event, srcId });

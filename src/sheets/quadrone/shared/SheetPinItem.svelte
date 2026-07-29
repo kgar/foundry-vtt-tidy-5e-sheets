@@ -234,9 +234,7 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            const { tabId } =
-              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
-              {};
+            const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(ev);
 
             if (tabId) {
               SheetPinsProvider.setAlias(
@@ -253,10 +251,9 @@
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
-            const { tabId } =
-              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
-              {};
+            const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(ev);
 
+            // TODO: Find another way to get our hands on this input than a positional approach.
             const input =
               ev.currentTarget.previousElementSibling?.querySelector('input');
 
