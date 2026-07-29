@@ -7,13 +7,16 @@ export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
   app: any,
   configurable: boolean,
-  element: HTMLElement
+  element: HTMLElement,
 ): ContextMenuEntry[] {
   const isUnlockedForOwner =
     activity.item.isOwner &&
     !FoundryAdapter.isLockedInCompendium(activity.item);
 
   const isInFavorites = !!element.closest('.favorites');
+
+  const { tabId } =
+    element.closest<HTMLElement>('[data-tab-id]')?.dataset ?? {};
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
 
@@ -75,25 +78,35 @@ export function getContextMenuOptionsQuadrone(
   entries.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: async () => await SheetPinsProvider.pin(activity, 'activity'),
+    callback: async () => {
+      if (tabId) {
+        await SheetPinsProvider.pin(activity, 'activity', tabId);
+      }
+    },
     condition: () =>
       app.actor &&
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       SheetPinsProvider.isPinnable(activity, 'activity') &&
-      !SheetPinsProvider.isPinned(activity),
+      tabId &&
+      !SheetPinsProvider.isPinned(activity, tabId),
     group: 'pins',
   });
 
   entries.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: async () => await SheetPinsProvider.unpin(activity),
+    callback: async () => {
+      if (tabId) {
+        await SheetPinsProvider.unpin(activity, tabId);
+      }
+    },
     condition: () =>
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       SheetPinsProvider.isPinnable(activity, 'activity') &&
-      SheetPinsProvider.isPinned(activity),
+      tabId &&
+      SheetPinsProvider.isPinned(activity, tabId),
     group: 'pins',
   });
 

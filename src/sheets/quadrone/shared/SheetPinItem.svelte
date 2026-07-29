@@ -142,13 +142,15 @@
   }
 
   let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
-  
+
   function getRollIcon() {
     let rollIcon = 'fa';
     let itemType = getType();
-    if (itemType === 'container') { rollIcon += ' fa-box-open'; }
-    else if (isSpell) { rollIcon += ' ' + spellMethodIcon; }
-    else rollIcon += ' fa-dice-d20';
+    if (itemType === 'container') {
+      rollIcon += ' fa-box-open';
+    } else if (isSpell) {
+      rollIcon += ' ' + spellMethodIcon;
+    } else rollIcon += ' fa-dice-d20';
     return rollIcon;
   }
 </script>
@@ -232,7 +234,17 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            SheetPinsProvider.setAlias(ctx.document, ev.currentTarget.value);
+            const { tabId } =
+              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+              {};
+
+            if (tabId) {
+              SheetPinsProvider.setAlias(
+                ctx.document,
+                tabId,
+                ev.currentTarget.value,
+              );
+            }
             return false;
           }}
         />
@@ -241,10 +253,15 @@
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
+            const { tabId } =
+              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+              {};
+
             const input =
               ev.currentTarget.previousElementSibling?.querySelector('input');
-            if (input) {
-              SheetPinsProvider.setAlias(ctx.document, input.value);
+
+            if (input && tabId) {
+              SheetPinsProvider.setAlias(ctx.document, tabId, input.value);
             }
             isEditing = false;
             return false;

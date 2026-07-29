@@ -27,10 +27,12 @@ export function getItemContextOptionsQuadrone(
   const itemParent = item.actor ? item.actor : item.parent;
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
-  const isCharacter =
-    itemParentIsActor && itemParent.system.isCharacter;
+  const isCharacter = itemParentIsActor && itemParent.system.isCharacter;
 
   const isInFavorites = !!element.closest('.favorites');
+
+  const { tabId = '' } =
+    element.closest<HTMLElement>('[data-tab-id]')?.dataset ?? {};
 
   let options: ContextMenuEntry[] = [];
 
@@ -324,33 +326,33 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
-      app._renderChild(new SectionSelectorApplication({
-        flag: TidyFlags.section.prop,
-        sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-        callingDocument: itemParent ?? item,
-        document: item,
-      }))
+      app._renderChild(
+        new SectionSelectorApplication({
+          flag: TidyFlags.section.prop,
+          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          callingDocument: itemParent ?? item,
+          document: item,
+        }),
+      ),
   });
 
-  let actionSectionContextName =
-    itemParent?.system.isCharacter
+  let actionSectionContextName = itemParent?.system.isCharacter
+    ? FoundryAdapter.localize(
+        'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+        { tabName: FoundryAdapter.localize('Sheet') },
+      )
+    : itemParent?.system.isNPC
       ? FoundryAdapter.localize(
           'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-          { tabName: FoundryAdapter.localize('Sheet') },
+          { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
         )
-      : itemParent?.system.isNPC
-        ? FoundryAdapter.localize(
-            'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-            { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
-          )
-        : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
+      : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
 
-  let actionSectionConfigTitle =
-    itemParent?.system.isCharacter
-      ? FoundryAdapter.localize('Sheet')
-      : itemParent?.system.isNPC
-        ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
-        : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
+  let actionSectionConfigTitle = itemParent?.system.isCharacter
+    ? FoundryAdapter.localize('Sheet')
+    : itemParent?.system.isNPC
+      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+      : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
 
   options.push({
     name: actionSectionContextName,
@@ -369,32 +371,32 @@ export function getItemContextOptionsQuadrone(
           callingDocument: itemParent ?? item,
           document: item,
         }),
-      )
+      ),
   });
 
   options.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: () => SheetPinsProvider.pin(item, 'item'),
+    callback: () => SheetPinsProvider.pin(item, 'item', tabId),
     condition: () =>
       item.isOwner &&
       item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
-      !SheetPinsProvider.isPinned(item),
+      !SheetPinsProvider.isPinned(item, tabId),
     group: 'customize',
   });
 
   options.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: () => SheetPinsProvider.unpin(item),
+    callback: () => SheetPinsProvider.unpin(item, tabId),
     condition: () =>
       item.isOwner &&
       item.actor &&
       !FoundryAdapter.isLockedInCompendium(item) &&
       SheetPinsProvider.isPinnable(item, 'item') &&
-      SheetPinsProvider.isPinned(item),
+      SheetPinsProvider.isPinned(item, tabId),
     group: 'customize',
   });
 
@@ -405,23 +407,24 @@ export function getItemContextOptionsQuadrone(
       name: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
       callback: () =>
-        SheetPinsProvider.setItemResourceType(item, 'limited-uses'),
+        SheetPinsProvider.setItemResourceType(item, tabId, 'limited-uses'),
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
-        SheetPinsProvider.getResourceType(item) !== 'limited-uses',
+        SheetPinsProvider.getResourceType(item, tabId) !== 'limited-uses',
       group: 'customize',
     });
     options.push({
       name: 'TIDY5E.ContextMenuActionShowQuantity',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => SheetPinsProvider.setItemResourceType(item, 'quantity'),
+      callback: () =>
+        SheetPinsProvider.setItemResourceType(item, tabId, 'quantity'),
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
-        SheetPinsProvider.getResourceType(item) !== 'quantity',
+        SheetPinsProvider.getResourceType(item, tabId) !== 'quantity',
       group: 'customize',
     });
   }
@@ -437,8 +440,7 @@ export function getItemContextOptionsQuadrone(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'be-careful',
-    callback: () =>
-      item.deleteDialog({ sheet: app }),
+    callback: () => item.deleteDialog({ sheet: app }),
   });
 
   return options;

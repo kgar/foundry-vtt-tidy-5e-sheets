@@ -1507,7 +1507,8 @@ export function getTidy5eActorSheetQuadroneBase<
       data: { id: string; doc: any },
     ) {
       const { tabId } =
-        event.currentTarget.closest<HTMLElement>('data-tab-id')?.dataset ?? {};
+        event.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+        {};
 
       if (!tabId) {
         warn('Unable to pin. Tab ID not found.', false, { event, data });
@@ -1542,41 +1543,20 @@ export function getTidy5eActorSheetQuadroneBase<
         return;
       }
 
-      let source;
-      let target;
+      const { tabId } =
+        event.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+        {};
 
-      // TODO: defer to SheetPinsProvider ; maybe also rename to SheetPinsService ;)
-
-      const siblings = TidyFlags.sheetPins
-        .get(this.actor)
-        .filter((f: SheetPin) => {
-          if (f.id === targetId) target = f;
-          else if (f.id === srcId) source = f;
-          return f.id !== srcId;
-        });
-
-      const updates = foundry.utils.performIntegerSort(source, {
-        target,
-        siblings,
-      });
-
-      const pins = TidyFlags.sheetPins
-        .get(this.actor)
-        .reduce(
-          (map: Map<string, SheetPin>, f: SheetPin) => map.set(f.id, { ...f }),
-          new Map<string, SheetPin>(),
-        );
-
-      for (const { target, update } of updates) {
-        const pin = pins.get(target.id);
-        if (pin && update) {
-          foundry.utils.mergeObject(pin, update);
-        }
+      if (!tabId) {
+        warn('Unable to sort pins. Tab ID not found.', false, { event, srcId });
+        return;
       }
 
-      return await TidyFlags.sheetPins.set(
-        this.actor,
-        Array.from(pins.values()),
+      return await SheetPinsProvider.sortPins(
+        this.document,
+        tabId,
+        srcId,
+        targetId,
       );
     }
 

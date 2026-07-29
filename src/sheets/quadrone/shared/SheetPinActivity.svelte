@@ -3,11 +3,15 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getActorSheetQuadroneContext, getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getActorSheetQuadroneContext,
+    getSheetContext,
+  } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
+  import { getContext } from 'svelte';
 
   interface Props {
     ctx: SheetPinActivityContext;
@@ -130,7 +134,16 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            SheetPinsProvider.setAlias(ctx.document, ev.currentTarget.value);
+            const { tabId } =
+              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+              {};
+            if (tabId) {
+              SheetPinsProvider.setAlias(
+                ctx.document,
+                tabId,
+                ev.currentTarget.value,
+              );
+            }
             return false;
           }}
         />
@@ -139,10 +152,16 @@
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
+            const { tabId } =
+              ev.currentTarget.closest<HTMLElement>('[data-tab-id]')?.dataset ??
+              {};
+
+            // TODO: Find another way to get our hands on this input than a positional approach.
             const input =
               ev.currentTarget.previousElementSibling?.querySelector('input');
-            if (input) {
-              SheetPinsProvider.setAlias(ctx.document, input.value);
+
+            if (input && tabId) {
+              SheetPinsProvider.setAlias(ctx.document, tabId, input.value);
             }
             isEditing = false;
             return false;

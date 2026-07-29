@@ -2,10 +2,15 @@
 
 ### Sheet Pins
 
-- [ ] Correct SheetPinProvider errors
+- [x] Correct SheetPinProvider errors
 - [ ] // TODO: Use SheetPinsProvider to manage as much preparation as possible ; the only thing
 - [ ] Ensure all sheet pins support the tabId default fallback for now
 - [ ] Remove setting to Show/Hide pins on a given tab. Now you can just remove the pins from that tab.
+- [ ] // TODO: Find another way to get our hands on this input than a positional approach.
+- [ ] Getting tabId based on ancestor data-tab-id is great, but the code for getting that is duplicated all over the place. Consolidate to somewhere central that makes sense,... or give up and put it in FoundryAdapter. Hmm, maybe CONFIG.TIDY5E.utils.getTabIdFromElement(), ...FromEvent() ?
+- [ ] Review the parameter order for various SheetPinsProvider functions. I'm thinking Tab ID goes right after the document
+- [ ] Ensure sheetDocument and targetDocument are delineated in SheetPinsProvider clearly
+- [ ] Add JsDoc to SheetPinsProvider.
 
 ### The Accretion Disk of To Do's
 

@@ -185,8 +185,9 @@ export class SheetPinsProvider {
   static getResourceType(doc: any, tabId: string): string | undefined {
     const relativeUuid = this.getRelativeUUID(doc);
 
-    return getSheetPinFlagsForTab(doc.actor, tabId)?.find((x) => x.id === relativeUuid)
-      ?.resource;
+    return getSheetPinFlagsForTab(doc.actor, tabId)?.find(
+      (x) => x.id === relativeUuid,
+    )?.resource;
   }
 
   static getGlobalSectionSetting(
@@ -212,8 +213,45 @@ export class SheetPinsProvider {
     };
   }
 
-  static sortPins(doc: Actor5e | Item5e, tabId: string) {
-    // TODO: Continue here
+  static sortPins(
+    sheetDocument: Actor5e | Item5e,
+    tabId: string,
+    srcId: string,
+    targetId: string,
+  ) {
+    let source;
+    let target;
+
+    const pinFlags = getSheetPinFlagsForTab(sheetDocument, tabId);
+
+    const siblings = [...pinFlags].filter((f: SheetPin) => {
+      if (f.id === targetId) target = f;
+      else if (f.id === srcId) source = f;
+      return f.id !== srcId;
+    });
+
+    const updates = foundry.utils.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+
+    const pins = [...pinFlags].reduce(
+      (map: Map<string, SheetPin>, f: SheetPin) => map.set(f.id, { ...f }),
+      new Map<string, SheetPin>(),
+    );
+
+    for (const { target, update } of updates) {
+      const pin = pins.get(target.id);
+      if (pin && update) {
+        foundry.utils.mergeObject(pin, update);
+      }
+    }
+
+    return TidyFlags.sheetPins.setByTabId(
+      sheetDocument,
+      tabId,
+      Array.from(pins.values()),
+    );
   }
 }
 

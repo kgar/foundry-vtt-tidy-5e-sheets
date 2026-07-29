@@ -11,9 +11,7 @@
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const sheetPins = $derived(
-    context.sheetPins?.filter((p) => p.tabIds.has(tabId)) ?? [],
-  );
+  const sheetPins = $derived(context.sheetPins[tabId] ?? []);
 </script>
 
 {#if sheetPins.length}
