@@ -1,5 +1,14 @@
 ## kgar To Do
 
+### Sheet Pins
+
+- [ ] Correct SheetPinProvider errors
+- [ ] // TODO: Use SheetPinsProvider to manage as much preparation as possible ; the only thing
+- [ ] Ensure all sheet pins support the tabId default fallback for now
+- [ ] Remove setting to Show/Hide pins on a given tab. Now you can just remove the pins from that tab.
+
+### The Accretion Disk of To Do's
+
 - [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
