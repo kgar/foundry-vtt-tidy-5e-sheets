@@ -5,8 +5,8 @@ const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
 ) => {
   return (
     element
-      ?.closest<HTMLElement>('[data-tab-id]')
-      ?.getAttribute('data-tab-id') ?? null
+      ?.closest<HTMLElement>('[data-tab-contents-for]')
+      ?.getAttribute('data-tab-contents-for') ?? null
   );
 };
 

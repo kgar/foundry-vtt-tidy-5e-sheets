@@ -10,12 +10,13 @@ import type {
   TabIdsToSheetPinsContext,
 } from 'src/types/types';
 import { Activities } from '../activities/activities';
+import { legacyGetAppropriateSheetPins } from './legacy-sheet-pins-functions';
 
 export class SheetPinsProvider {
   static async getSheetPinsContext(
     sheetDocument: Actor5e | Item5e,
   ): Promise<TabIdsToSheetPinsContext> {
-    let pinsContext = TidyFlags.sheetPins.get(sheetDocument);
+    let pinsContext = TidyFlags.tabSheetPins.get(sheetDocument);
 
     let result: TabIdsToSheetPinsContext = {};
 
@@ -117,7 +118,7 @@ export class SheetPinsProvider {
 
     newPins = await preparePinsForForSaving(targetDocument, newPins);
 
-    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, newPins);
+    return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, newPins);
   }
 
   static async unpin(targetDocument: Item5e | Activity5e, tabId: string) {
@@ -133,7 +134,7 @@ export class SheetPinsProvider {
 
     newPins = await preparePinsForForSaving(targetDocument, newPins);
 
-    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, newPins);
+    return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, newPins);
   }
 
   static getRelativeUUID(doc: any) {
@@ -157,7 +158,7 @@ export class SheetPinsProvider {
 
     pins = await preparePinsForForSaving(targetDocument, pins);
 
-    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, pins);
+    return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
   static async setAlias(
@@ -177,7 +178,7 @@ export class SheetPinsProvider {
 
     pins = await preparePinsForForSaving(targetDocument, pins);
 
-    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, pins);
+    return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
   static getResourceType(
@@ -225,10 +226,26 @@ export class SheetPinsProvider {
       }
     }
 
-    return TidyFlags.sheetPins.setByTabId(
+    return TidyFlags.tabSheetPins.setByTabId(
       sheetDocument,
       tabId,
       Array.from(pins.values()),
+    );
+  }
+
+  static getSheetPinsToDisplay(
+    sheetDocument: any,
+    sheetPins: TabIdsToSheetPinsContext,
+    tabId: string,
+  ) {
+    return (
+      sheetPins[tabId] ??
+      legacyGetAppropriateSheetPins(
+        sheetDocument,
+        tabId,
+        sheetPins[CONSTANTS.PARTITION_MODULE_DEFAULT],
+      ) ??
+      []
     );
   }
 }
@@ -237,7 +254,7 @@ function getSheetPinFlagsForTab(
   sheetDocument: Actor5e | Item5e,
   tabId: string,
 ) {
-  let pinsByTabId = TidyFlags.sheetPins.get(sheetDocument);
+  let pinsByTabId = TidyFlags.tabSheetPins.get(sheetDocument);
 
   return (
     pinsByTabId[tabId] ?? pinsByTabId[CONSTANTS.PARTITION_MODULE_DEFAULT] ?? []

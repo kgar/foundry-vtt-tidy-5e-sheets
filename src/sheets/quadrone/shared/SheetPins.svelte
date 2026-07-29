@@ -6,12 +6,19 @@
   import { error } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const sheetPins = $derived(context.sheetPins[tabId] ?? []);
+  const sheetPins = $derived(
+    SheetPinsProvider.getSheetPinsToDisplay(
+      context.document,
+      context.tabSheetPins,
+      tabId,
+    ),
+  );
 </script>
 
 {#if sheetPins.length}

@@ -909,22 +909,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [];
-
-    // TODO: Somehow share the mountable logic somewhere
-    const originTab =
-      Inventory.isItemInventoryType(item) && !item.system.isMountable
-        ? CONSTANTS.TAB_ACTOR_INVENTORY
-        : CONSTANTS.TAB_STATBLOCK;
-
-    if (originTab) {
-      tabIds.push(originTab);
-    }
-
-    return tabIds;
-  }
-
   _prepareTravelSpeeds(): VehicleSheetQuadroneContext['travelSpeeds'] {
     const travelUnits = this.actor.system.attributes.travel?.units;
     const travelPaceEntries = this._buildTravelPaceEntries();

@@ -1246,25 +1246,26 @@ export class TidyFlags {
   /**
    * Denotes the items and activities which have been pinned to a significant tab on a sheet.
    */
-  static sheetPins = {
-    key: 'sheetPins' as const,
-    prop: TidyFlags.getFlagPropertyPath('sheetPins'),
+  static tabSheetPins = {
+    key: 'tabSheetPins' as const,
+    prop: TidyFlags.getFlagPropertyPath('tabSheetPins'),
     /** Gets the actor's sheet pins. */
     get(actor: Actor5e): SheetPinFlag {
-      const raw = TidyFlags.tryGetFlag<SheetPinFlag | SheetPinLegacyFlag>(
-        actor,
-        TidyFlags.sheetPins.key,
-      );
+      const data =
+        TidyFlags.tryGetFlag<SheetPinFlag>(actor, TidyFlags.tabSheetPins.key) ??
+        {};
 
       // Rolling compatibility - if the flag is a flat array, use the default partition to denote this setup applies to any tab
       // Keep until game.release.generation < 17
-      if (Array.isArray(raw)) {
-        return {
-          [CONSTANTS.PARTITION_MODULE_DEFAULT]: [...raw],
-        };
+      const legacyData = TidyFlags.tryGetFlag<SheetPinLegacyFlag>(
+        actor,
+        'sheetPins',
+      );
+      if (legacyData && Array.isArray(legacyData)) {
+        data[CONSTANTS.PARTITION_MODULE_DEFAULT] = [...legacyData];
       }
 
-      return raw ? { ...raw } : {};
+      return data ? { ...data } : {};
     },
     /** Sets the actor's sheet pins. */
     // TODO: Uncomment when done with development and this is no longer being called by existing callers.
@@ -1278,13 +1279,18 @@ export class TidyFlags {
       value: SheetPin[],
     ): Promise<void> {
       // Get the existing. Update it. Fully replace the flag.
-      const data = TidyFlags.sheetPins.get(actor);
+      const data = TidyFlags.tabSheetPins.get(actor);
 
       data[tabId] = value;
 
       const replace = game.release.generation >= 14;
 
-      return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value, replace);
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.tabSheetPins.key,
+        data,
+        replace,
+      );
     },
   };
 

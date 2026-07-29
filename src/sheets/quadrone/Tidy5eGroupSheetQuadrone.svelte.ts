@@ -456,16 +456,6 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     });
   }
 
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_MEMBERS];
-
-    if (Inventory.isItemInventoryType(item)) {
-      tabIds.push(CONSTANTS.TAB_ACTOR_INVENTORY);
-    }
-
-    return tabIds;
-  }
-
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
   /* -------------------------------------------- */

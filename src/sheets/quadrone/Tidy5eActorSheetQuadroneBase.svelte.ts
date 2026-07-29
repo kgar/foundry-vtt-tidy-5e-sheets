@@ -338,7 +338,9 @@ export function getTidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        sheetPins: await SheetPinsProvider.getSheetPinsContext(this.document),
+        tabSheetPins: await SheetPinsProvider.getSheetPinsContext(
+          this.document,
+        ),
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
@@ -1034,8 +1036,6 @@ export function getTidy5eActorSheetQuadroneBase<
         subtitle: details.type.subtype,
       };
     }
-
-    protected abstract _getSheetPinTabIdsForItem(item: Item5e): string[];
 
     /* -------------------------------------------- */
     /*  Component Management                        */

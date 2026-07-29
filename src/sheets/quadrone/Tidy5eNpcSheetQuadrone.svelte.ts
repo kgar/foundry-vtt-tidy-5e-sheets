@@ -673,22 +673,6 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     return [npcSpellcasting];
   }
 
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_STATBLOCK];
-
-    const originTab = Inventory.isItemInventoryType(item)
-      ? CONSTANTS.TAB_ACTOR_INVENTORY
-      : item.type === CONSTANTS.ITEM_TYPE_SPELL
-        ? CONSTANTS.TAB_ACTOR_SPELLBOOK
-        : null;
-
-    if (originTab) {
-      tabIds.push(originTab);
-    }
-
-    return tabIds;
-  }
-
   protected _getSpecialTraits(): ActorTraitContext[] {
     const traits = super._getSpecialTraits();
 
