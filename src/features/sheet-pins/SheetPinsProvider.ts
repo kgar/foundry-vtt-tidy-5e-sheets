@@ -15,9 +15,9 @@ import { Activities } from '../activities/activities';
 
 export class SheetPinsProvider {
   static async getSheetPinsContext(
-    doc: Actor5e | Item5e,
+    sheetDocument: Actor5e | Item5e,
   ): Promise<TabIdsToSheetPinsContext> {
-    let pinsContext = TidyFlags.sheetPins.get(doc);
+    let pinsContext = TidyFlags.sheetPins.get(sheetDocument);
 
     let result: TabIdsToSheetPinsContext = {};
 
@@ -25,7 +25,7 @@ export class SheetPinsProvider {
       const pins: SheetPinContext[] = [];
       result[tabId] = pins;
       for (const pin of flagPins) {
-        let document = await fromUuid(pin.id, { relative: doc });
+        let document = await fromUuid(pin.id, { relative: sheetDocument });
 
         if (!document) {
           continue;
@@ -49,40 +49,48 @@ export class SheetPinsProvider {
     return result;
   }
 
-  static isPinnable(doc: Item5e | Activity5e, type: SheetPin['type']): boolean {
+  static isPinnable(
+    targetDocument: Item5e | Activity5e,
+    type: SheetPin['type'],
+  ): boolean {
     return type === 'item'
-      ? !!doc.system.schema.fields.uses ||
-          doc.type === CONSTANTS.ITEM_TYPE_CONTAINER
+      ? !!targetDocument.system.schema.fields.uses ||
+          targetDocument.type === CONSTANTS.ITEM_TYPE_CONTAINER
       : type === 'activity'
-        ? !!doc.schema.fields.uses
+        ? !!targetDocument.schema.fields.uses
         : false;
   }
 
-  static isPinned(doc: Item5e | Activity5e, tabId: string): boolean {
-    const pins = doc.actor ? getSheetPinFlagsForTab(doc.actor, tabId) : [];
+  static isPinned(targetDocument: Item5e | Activity5e, tabId: string): boolean {
+    const pins = targetDocument.actor
+      ? getSheetPinFlagsForTab(targetDocument.actor, tabId)
+      : [];
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
     return pins.some((x) => x.id === relativeUuid);
   }
 
-  static async pin(doc: any, type: SheetPin['type'], tabId: string) {
-    if (!doc.actor || this.isPinned(doc, tabId)) {
+  static async pin(targetDocument: any, type: SheetPin['type'], tabId: string) {
+    if (!targetDocument.actor || this.isPinned(targetDocument, tabId)) {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
     if (
       relativeUuid.startsWith('.') &&
-      (await fromUuid(relativeUuid, { relative: doc.actor })) === null
+      (await fromUuid(relativeUuid, { relative: targetDocument.actor })) ===
+        null
     ) {
       // Assume that an ID starting with a "." is a relative ID.
-      error(`The item with id ${doc.id} is not owned by actor ${doc.actor.id}`);
+      error(
+        `The item with id ${targetDocument.id} is not owned by actor ${targetDocument.actor.id}`,
+      );
       return;
     }
 
-    const pins = getSheetPinFlagsForTab(doc.actor, tabId);
+    const pins = getSheetPinFlagsForTab(targetDocument.actor, tabId);
 
     let maxSort = 0;
     let newPins = pins.map((p) => {
@@ -103,31 +111,31 @@ export class SheetPinsProvider {
         id: relativeUuid,
         sort: maxSort + CONST.SORT_INTEGER_DENSITY,
         resource:
-          doc.type === CONSTANTS.ITEM_TYPE_CONSUMABLE
+          targetDocument.type === CONSTANTS.ITEM_TYPE_CONSUMABLE
             ? 'quantity'
             : 'limited-uses',
       });
     }
 
-    newPins = await this.preparePinsForForSaving(doc, newPins);
+    newPins = await preparePinsForForSaving(targetDocument, newPins);
 
-    return TidyFlags.sheetPins.setByTabId(doc.actor, tabId, newPins);
+    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, newPins);
   }
 
-  static async unpin(doc: Item5e | Activity5e, tabId: string) {
-    if (!doc.actor || !this.isPinned(doc, tabId)) {
+  static async unpin(targetDocument: Item5e | Activity5e, tabId: string) {
+    if (!targetDocument.actor || !this.isPinned(targetDocument, tabId)) {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
-    const pins = getSheetPinFlagsForTab(doc.actor, tabId);
+    const pins = getSheetPinFlagsForTab(targetDocument.actor, tabId);
 
     let newPins = pins.filter((x) => x.id !== relativeUuid);
 
-    newPins = await this.preparePinsForForSaving(doc, newPins);
+    newPins = await preparePinsForForSaving(targetDocument, newPins);
 
-    return TidyFlags.sheetPins.setByTabId(doc.actor, tabId, newPins);
+    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, newPins);
   }
 
   static getRelativeUUID(doc: any) {
@@ -135,13 +143,13 @@ export class SheetPinsProvider {
   }
 
   static async setItemResourceType(
-    item: Item5e,
+    targetDocument: Item5e,
     tabId: string,
     resourceType: SheetItemPinFlag['resource'],
   ) {
-    let pins = getSheetPinFlagsForTab(item.actor, tabId);
+    let pins = getSheetPinFlagsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(item);
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -149,15 +157,19 @@ export class SheetPinsProvider {
       pinToUpdate.resource = resourceType;
     }
 
-    pins = await this.preparePinsForForSaving(item, pins);
+    pins = await preparePinsForForSaving(targetDocument, pins);
 
-    return TidyFlags.sheetPins.setByTabId(item.actor, tabId, pins);
+    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
-  static async setAlias(doc: Item5e, tabId: string, alias: string) {
-    let pins = getSheetPinFlagsForTab(doc.actor, tabId);
+  static async setAlias(
+    targetDocument: Item5e | Activity5e,
+    tabId: string,
+    alias: string,
+  ) {
+    let pins = getSheetPinFlagsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -165,27 +177,18 @@ export class SheetPinsProvider {
       pinToUpdate.alias = alias;
     }
 
-    pins = await this.preparePinsForForSaving(doc, pins);
+    pins = await preparePinsForForSaving(targetDocument, pins);
 
-    return TidyFlags.sheetPins.setByTabId(doc.actor, tabId, pins);
+    return TidyFlags.sheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
-  static async preparePinsForForSaving(pinnedDoc: any, pins: SheetPin[]) {
-    let pinsToSave = [];
+  static getResourceType(
+    targetDocument: Item5e | Activity5e,
+    tabId: string,
+  ): string | undefined {
+    const relativeUuid = this.getRelativeUUID(targetDocument);
 
-    for (let pin of pins) {
-      if (await fromUuid(pin.id, { relative: pinnedDoc.actor })) {
-        pinsToSave.push(pin);
-      }
-    }
-
-    return pinsToSave;
-  }
-
-  static getResourceType(doc: any, tabId: string): string | undefined {
-    const relativeUuid = this.getRelativeUUID(doc);
-
-    return getSheetPinFlagsForTab(doc.actor, tabId)?.find(
+    return getSheetPinFlagsForTab(targetDocument.actor, tabId)?.find(
       (x) => x.id === relativeUuid,
     )?.resource;
   }
@@ -255,10 +258,25 @@ export class SheetPinsProvider {
   }
 }
 
-function getSheetPinFlagsForTab(doc: Actor5e | Item5e, tabId: string) {
-  let pinsByTabId = TidyFlags.sheetPins.get(doc.actor);
+function getSheetPinFlagsForTab(
+  sheetDocument: Actor5e | Item5e,
+  tabId: string,
+) {
+  let pinsByTabId = TidyFlags.sheetPins.get(sheetDocument);
 
   return (
     pinsByTabId[tabId] ?? pinsByTabId[CONSTANTS.PARTITION_MODULE_DEFAULT] ?? []
   );
+}
+
+async function preparePinsForForSaving(targetDocument: any, pins: SheetPin[]) {
+  let pinsToSave = [];
+
+  for (let pin of pins) {
+    if (await fromUuid(pin.id, { relative: targetDocument.actor })) {
+      pinsToSave.push(pin);
+    }
+  }
+
+  return pinsToSave;
 }
