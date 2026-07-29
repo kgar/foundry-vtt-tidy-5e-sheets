@@ -1,3 +1,5 @@
+import type { CONSTANTS } from "src/constants";
+
 export type TidyFlagNamedNotes = {
   name: string;
   value: string;
@@ -45,7 +47,13 @@ export type SheetActivityPinFlag = SheetPinBase & {
   resource: 'limited-uses';
 };
 
-export type SheetPinFlag = SheetItemPinFlag | SheetActivityPinFlag;
+export type SheetPin = SheetItemPinFlag | SheetActivityPinFlag;
+
+export type SheetPinLegacyFlag = SheetPin[];
+
+export type SheetPinFlag = {
+  [tabId: string]: SheetPin[];
+};
 
 export type DocumentJournalEntry = {
   id: string;
@@ -88,7 +96,10 @@ export type EncounterPlaceholder = {
 };
 
 /** An object of identifiers to Encounter Combatant Settings. */
-export type EncounterCombatantsSettings = Record<string, EncounterCombatantSettings>;
+export type EncounterCombatantsSettings = Record<
+  string,
+  EncounterCombatantSettings
+>;
 
 /**
  * Settings related to a combatant in the Encounter Sheet combat tab.

@@ -15,6 +15,8 @@ import type {
   EncounterPlaceholder,
   EncounterCombatantsSettings,
   SheetPinFlag,
+  SheetPinLegacyFlag,
+  SheetPin,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
@@ -1248,15 +1250,41 @@ export class TidyFlags {
     key: 'sheetPins' as const,
     prop: TidyFlags.getFlagPropertyPath('sheetPins'),
     /** Gets the actor's sheet pins. */
-    get(actor: Actor5e): SheetPinFlag[] {
-      return (
-        TidyFlags.tryGetFlag<SheetPinFlag[]>(actor, TidyFlags.sheetPins.key) ??
-        []
+    get(actor: Actor5e): SheetPinFlag {
+      const raw = TidyFlags.tryGetFlag<SheetPinFlag | SheetPinLegacyFlag>(
+        actor,
+        TidyFlags.sheetPins.key,
       );
+
+      // Rolling compatibility - if the flag is a flat array, use the default partition to denote this setup applies to any tab
+      // Keep until game.release.generation < 17
+      if (Array.isArray(raw)) {
+        return {
+          [CONSTANTS.PARTITION_MODULE_DEFAULT]: [...raw],
+        };
+      }
+
+      return raw ? { ...raw } : {};
     },
     /** Sets the actor's sheet pins. */
-    set(actor: Actor5e, value: SheetPinFlag[]): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value);
+    // TODO: Uncomment when done with development and this is no longer being called by existing callers.
+    // set(actor: Actor5e, value: SheetPin[]): Promise<void> {
+    //   return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value, true);
+    // },
+    /** Sets the actor's sheet pins. */
+    setByTabId(
+      actor: Actor5e,
+      tabId: string,
+      value: SheetPin[],
+    ): Promise<void> {
+      // Get the existing. Update it. Fully replace the flag.
+      const data = TidyFlags.sheetPins.get(actor);
+
+      data[tabId] = value;
+
+      const replace = game.release.generation >= 14;
+
+      return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value, replace);
     },
   };
 

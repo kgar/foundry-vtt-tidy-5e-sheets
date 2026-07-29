@@ -41,6 +41,7 @@ import type {
   MessageBus,
   SheetPinContext,
   SpellcastingClassContext,
+  TabIdsToSheetPinsContext,
 } from 'src/types/types';
 import { randomItem, splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
@@ -68,7 +69,7 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
-import type { SheetPinFlag } from 'src/foundry/TidyFlags.types';
+import type { SheetPin } from 'src/foundry/TidyFlags.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -337,7 +338,7 @@ export function getTidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        sheetPins: await this._getSheetPins(),
+        sheetPins: await SheetPinsProvider.getSheetPinsContext(this.document),
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
@@ -1036,42 +1037,6 @@ export function getTidy5eActorSheetQuadroneBase<
 
     protected abstract _getSheetPinTabIdsForItem(item: Item5e): string[];
 
-    async _getSheetPins(): Promise<SheetPinContext[]> {
-      let flagPins = TidyFlags.sheetPins
-        .get(this.actor)
-        .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
-
-      let pins: SheetPinContext[] = [];
-
-      for (const pin of flagPins) {
-        let document = await fromUuid(pin.id, { relative: this.actor });
-
-        if (document) {
-          if (pin.type === 'item') {
-            pins.push({
-              ...pin,
-              linkedUses: Activities.getLinkedUses(document),
-              document,
-              tabIds: new Set(this._getSheetPinTabIdsForItem(document)),
-            });
-          } else if (pin.type === 'activity') {
-            pins.push({
-              ...pin,
-              document,
-              tabIds: new Set(this._getSheetPinTabIdsForItem(document.item)),
-            });
-          }
-        } else {
-          // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
-          debug(
-            `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`,
-          );
-        }
-      }
-
-      return pins;
-    }
-
     /* -------------------------------------------- */
     /*  Component Management                        */
     /* -------------------------------------------- */
@@ -1541,22 +1506,25 @@ export function getTidy5eActorSheetQuadroneBase<
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: { id: string; doc: any },
     ) {
-      // If not pinned, then pin it
-      const currentPins = TidyFlags.sheetPins.get(this.actor);
+      const { tabId } =
+        event.currentTarget.closest<HTMLElement>('data-tab-id')?.dataset ?? {};
 
-      const pinType: SheetPinFlag['type'] | undefined =
-        data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
-          ? 'item'
-          : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
-            ? 'activity'
-            : undefined;
-
-      if (!pinType) {
+      if (!tabId) {
+        warn('Unable to pin. Tab ID not found.', false, { event, data });
         return;
       }
 
-      if (!currentPins.find((x) => x.id === data.id)) {
-        await SheetPinsProvider.pin(data.doc, pinType);
+      if (!SheetPinsProvider.isPinned(this.document, tabId)) {
+        const pinType: SheetPin['type'] | undefined =
+          data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+            ? 'item'
+            : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
+              ? 'activity'
+              : undefined;
+
+        if (pinType) {
+          await SheetPinsProvider.pin(data.doc, pinType, tabId);
+        }
       }
 
       return await this._onSortPins(event, data.id);
@@ -1577,9 +1545,11 @@ export function getTidy5eActorSheetQuadroneBase<
       let source;
       let target;
 
+      // TODO: defer to SheetPinsProvider ; maybe also rename to SheetPinsService ;)
+
       const siblings = TidyFlags.sheetPins
         .get(this.actor)
-        .filter((f: SheetPinFlag) => {
+        .filter((f: SheetPin) => {
           if (f.id === targetId) target = f;
           else if (f.id === srcId) source = f;
           return f.id !== srcId;
@@ -1593,9 +1563,8 @@ export function getTidy5eActorSheetQuadroneBase<
       const pins = TidyFlags.sheetPins
         .get(this.actor)
         .reduce(
-          (map: Map<string, SheetPinFlag>, f: SheetPinFlag) =>
-            map.set(f.id, { ...f }),
-          new Map<string, SheetPinFlag>(),
+          (map: Map<string, SheetPin>, f: SheetPin) => map.set(f.id, { ...f }),
+          new Map<string, SheetPin>(),
         );
 
       for (const { target, update } of updates) {
