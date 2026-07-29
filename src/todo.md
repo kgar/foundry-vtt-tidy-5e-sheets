@@ -2,12 +2,15 @@
 
 ### Sheet Pins
 
-- [ ] Getting tabId based on ancestor data-tab-id is great, but the code for getting that is duplicated all over the place. Consolidate to somewhere central that makes sense,... or give up and put it in FoundryAdapter. Hmm, maybe CONFIG.TIDY5E.utils.getTabIdFromElement(), ...FromEvent() ?
+- [ ] Test and fix and finalize
+  - [ ] New Sheet / New Usage
+  - [ ] Sheet with legacy pins / start using new pins
+  - [ ] Check all affected sheet settings dialogs
 - [ ] Add JsDoc to SheetPinsProvider.
-- [ ] // TODO: Find another way to get our hands on this input than a positional approach.
 
 ### The Accretion Disk of To Do's
 
+- [ ] // TODO: Find another way to get our hands on this input than a positional approach.
 - [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
