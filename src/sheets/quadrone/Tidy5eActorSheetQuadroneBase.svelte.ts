@@ -1524,7 +1524,7 @@ export function getTidy5eActorSheetQuadroneBase<
               : undefined;
 
         if (pinType) {
-          await SheetPinsProvider.pin(data.doc, pinType, tabId);
+          await SheetPinsProvider.pin(data.doc, tabId, pinType);
         }
       }
 

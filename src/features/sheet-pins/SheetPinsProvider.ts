@@ -71,7 +71,7 @@ export class SheetPinsProvider {
     return pins.some((x) => x.id === relativeUuid);
   }
 
-  static async pin(targetDocument: any, type: SheetPin['type'], tabId: string) {
+  static async pin(targetDocument: any, tabId: string, type: SheetPin['type']) {
     if (!targetDocument.actor || this.isPinned(targetDocument, tabId)) {
       return;
     }

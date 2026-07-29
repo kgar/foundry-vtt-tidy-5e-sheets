@@ -377,7 +377,7 @@ export function getItemContextOptionsQuadrone(
   options.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: () => SheetPinsProvider.pin(item, 'item', tabId),
+    callback: () => SheetPinsProvider.pin(item, tabId, 'item'),
     condition: () =>
       item.isOwner &&
       item.actor &&

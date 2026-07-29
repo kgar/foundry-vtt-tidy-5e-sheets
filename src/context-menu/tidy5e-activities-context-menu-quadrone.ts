@@ -80,7 +80,7 @@ export function getContextMenuOptionsQuadrone(
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     callback: async () => {
       if (tabId) {
-        await SheetPinsProvider.pin(activity, 'activity', tabId);
+        await SheetPinsProvider.pin(activity, tabId, 'activity');
       }
     },
     condition: () =>
