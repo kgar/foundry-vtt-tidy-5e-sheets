@@ -1255,8 +1255,9 @@ export class TidyFlags {
         TidyFlags.tryGetFlag<SheetPinFlag>(actor, TidyFlags.tabSheetPins.key) ??
         {};
 
-      // Rolling compatibility - if the flag is a flat array, use the default partition to denote this setup applies to any tab
-      // Keep until game.release.generation < 17
+      // Rolling updates / backwards compatibility - if the flag is a flat array,
+      // use the default partition to denote this setup applies to any tab.
+      // Keep while game.release.generation < 17
       const legacyData = TidyFlags.tryGetFlag<SheetPinLegacyFlag>(
         actor,
         'sheetPins',
@@ -1267,11 +1268,6 @@ export class TidyFlags {
 
       return data ? { ...data } : {};
     },
-    /** Sets the actor's sheet pins. */
-    // TODO: Uncomment when done with development and this is no longer being called by existing callers.
-    // set(actor: Actor5e, value: SheetPin[]): Promise<void> {
-    //   return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value, true);
-    // },
     /** Sets the actor's sheet pins. */
     setByTabId(
       actor: Actor5e,

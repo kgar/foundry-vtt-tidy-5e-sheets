@@ -2,7 +2,6 @@
 
 ### Sheet Pins
 
-- [ ] Add JsDoc to SheetPinsProvider.
 - [ ] Is `tabSheetPins` right? Or can I come up with a better name? What about just ... `pins`? Eventually, there may be filter pins. Will it be clear what's going on?
 
 ### The Accretion Disk of To Do's

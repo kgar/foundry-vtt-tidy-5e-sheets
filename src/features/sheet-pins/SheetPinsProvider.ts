@@ -12,7 +12,17 @@ import type {
 import { Activities } from '../activities/activities';
 import { legacyGetAppropriateSheetPins } from './legacy-sheet-pins-functions';
 
+/**
+ * The controller/manager for all things related to Sheet Pins.
+ * Also the layer of abstraction between sheets/components and the
+ * underlying sheet pin flag data.
+ */
 export class SheetPinsProvider {
+  /**
+   * Gets all sheet pins for a given document, partitioned by tab ID.
+   * @param sheetDocument the document which owns the sheet pins
+   * @returns a record of tab IDs to sheet pins, e.g., `{ inventory: [...], action: [...], features: [...] }`
+   */
   static async getSheetPinsContext(
     sheetDocument: Actor5e | Item5e,
   ): Promise<TabIdsToSheetPinsContext> {
@@ -48,6 +58,12 @@ export class SheetPinsProvider {
     return result;
   }
 
+  /**
+   * Determines if a document can be pinned.
+   * @param targetDocument the document to be pinned
+   * @param type the type of document being pinned, e.g., "item" or "activity"
+   * @returns `true` if the document is pinnable
+   */
   static isPinnable(
     targetDocument: Item5e | Activity5e,
     type: SheetPin['type'],
@@ -60,6 +76,12 @@ export class SheetPinsProvider {
         : false;
   }
 
+  /**
+   * Determines if a document is currently pinned to a specific tab
+   * @param targetDocument the document whose pin status should be checked
+   * @param tabId the ID for the relevant tab
+   * @returns `true` if the document is pinned to the target tab
+   */
   static isPinned(targetDocument: Item5e | Activity5e, tabId: string): boolean {
     const pins = targetDocument.actor
       ? getSheetPinsForTab(targetDocument.actor, tabId)
@@ -70,6 +92,13 @@ export class SheetPinsProvider {
     return pins.some((x) => x.id === relativeUuid);
   }
 
+  /**
+   * Pins a target document to a specific tab of the sheet document.
+   * @param targetDocument the document to be pinned
+   * @param tabId the ID of the tab where the document should be pinned
+   * @param type the type of document to be pinned, e.g., "item" or "activity"
+   * @returns the result of updating the parent document's flags
+   */
   static async pin(targetDocument: any, tabId: string, type: SheetPin['type']) {
     if (!targetDocument.actor || this.isPinned(targetDocument, tabId)) {
       return;
@@ -125,6 +154,12 @@ export class SheetPinsProvider {
     );
   }
 
+  /**
+   * Unpins a target document from a specific tab of the related sheet document.
+   * @param targetDocument the document to be unpinned
+   * @param tabId the ID of the tab where the document should be unpinned
+   * @returns the result of updating the parent document's flags
+   */
   static async unpin(targetDocument: Item5e | Activity5e, tabId: string) {
     if (!targetDocument.actor || !this.isPinned(targetDocument, tabId)) {
       return;
@@ -145,8 +180,16 @@ export class SheetPinsProvider {
     );
   }
 
-  static getRelativeUUID(doc: any) {
-    return doc.getRelativeUUID?.(doc.actor) ?? doc.relativeUUID;
+  /**
+   * Gets the relative UUID of a given document. For use with favorite-like settings which store a relative UUID, such as sheet pins.
+   * @param targetDocument the document whose relative UUID should be retrieved
+   * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
+   */
+  static getRelativeUUID(targetDocument: any) {
+    return (
+      targetDocument.getRelativeUUID?.(targetDocument.actor) ??
+      targetDocument.relativeUUID
+    );
   }
 
   static async setItemResourceType(
@@ -169,6 +212,13 @@ export class SheetPinsProvider {
     return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
+  /**
+   * Sets an alias for a given sheet pin on a given tab
+   * @param targetDocument the document whose pin data should be updated
+   * @param tabId the ID of the tab where the pin settings should be updated
+   * @param alias the alias to apply to the sheet pin
+   * @returns the result of updating the parent document's flags
+   */
   static async setAlias(
     targetDocument: Item5e | Activity5e,
     tabId: string,
@@ -189,6 +239,12 @@ export class SheetPinsProvider {
     return TidyFlags.tabSheetPins.setByTabId(targetDocument.actor, tabId, pins);
   }
 
+  /**
+   * Determines what resource type is currently configured for a pinned document on a given tab.
+   * @param targetDocument the document whose pin data should be checked
+   * @param tabId tha ID of the tab where the pins settings should be checked
+   * @returns the resource type, e.g., "limited-uses" or "quantity"
+   */
   static getResourceType(
     targetDocument: Item5e | Activity5e,
     tabId: string,
@@ -200,6 +256,14 @@ export class SheetPinsProvider {
     )?.resource;
   }
 
+  /**
+   * Sorts pins based on a drag/drop from source to target.
+   * @param sheetDocument the document which owns the pins
+   * @param tabId the tab ID where the pins should be sorted
+   * @param srcId the ID of the pin which was dragged
+   * @param targetId the ID of the pin which received a dropped pin
+   * @returns the result of updating the parent document's flags
+   */
   static sortPins(
     sheetDocument: Actor5e | Item5e,
     tabId: string,
@@ -241,6 +305,17 @@ export class SheetPinsProvider {
     );
   }
 
+  /**
+   * Gets the sheet pin context entries for displaying on a given tab.  
+   * **Note**: This method provides temporary support for reading the legacy / fallback partition 
+   * which is part of the previous version of sheet pins. Without calling this method,
+   * we no longer support a rolling update with backwards compatibility.  
+   * Support for backwards compatibility here should last while game.release.generation < 17
+   * @param sheetDocument the document which owns the pins
+   * @param sheetPins the sheet pins context prepared by the sheet
+   * @param tabId the tab ID where the sheet pins should be displayed
+   * @returns an array of sheet pin contexts with the data needed to properly display the pins
+   */
   static getSheetPinContextsToDisplay(
     sheetDocument: any,
     sheetPins: TabIdsToSheetPinsContext,
