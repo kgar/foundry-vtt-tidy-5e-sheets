@@ -10,7 +10,10 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { isNil } from 'src/utils/data';
-import type { ActionItemInclusionMode } from 'src/types/types';
+import type {
+  ActionItemInclusionMode,
+  AggregatePinTabInfo,
+} from 'src/types/types';
 
 /**
  * Prepare an array of context menu options which are available for owned Item documents.
@@ -390,6 +393,27 @@ export function getItemContextOptionsQuadrone(
       !SheetPinsProvider.isPinned(item, tabId),
     group: 'customize',
   });
+
+  const aggregatePinTab = app.aggregatePinTab as AggregatePinTabInfo | null;
+
+  if (aggregatePinTab)
+    options.push({
+      name: FoundryAdapter.localize(
+        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
+      ),
+      icon: `<i class="fa-solid fa-thumbtack"></i>`,
+      callback: () => {
+        SheetPinsProvider.pin(item, aggregatePinTab.tabId, 'item');
+      },
+      condition: () =>
+        item.isOwner &&
+        item.actor &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        SheetPinsProvider.isPinnable(item, 'item') &&
+        !SheetPinsProvider.isPinned(item, aggregatePinTab.tabId),
+      group: 'customize',
+    });
 
   options.push({
     name: 'TIDY5E.ContextMenuActionUnpin',

@@ -2,6 +2,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+import type { AggregatePinTabInfo } from 'src/types/types';
 
 export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
@@ -91,6 +92,32 @@ export function getContextMenuOptionsQuadrone(
       !SheetPinsProvider.isPinned(activity, tabId),
     group: 'pins',
   });
+
+  const aggregatePinTab = app.aggregatePinTabId as AggregatePinTabInfo | null;
+
+  if (aggregatePinTab) {
+    entries.push({
+      name: FoundryAdapter.localize(
+        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
+      ),
+      icon: `<i class="fa-solid fa-thumbtack"></i>`,
+      callback: async () => {
+        await SheetPinsProvider.pin(
+          activity,
+          aggregatePinTab.tabId,
+          'activity',
+        );
+      },
+      condition: () =>
+        app.actor &&
+        activity.item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(activity.item) &&
+        SheetPinsProvider.isPinnable(activity, 'activity') &&
+        !SheetPinsProvider.isPinned(activity, aggregatePinTab.tabId),
+      group: 'pins',
+    });
+  }
 
   entries.push({
     name: 'TIDY5E.ContextMenuActionUnpin',

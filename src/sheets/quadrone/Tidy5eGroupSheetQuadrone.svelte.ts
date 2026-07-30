@@ -36,8 +36,6 @@ import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import type { Item5e } from 'src/types/item.types';
-import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
@@ -50,6 +48,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
     value: undefined,
   });
+  aggregatePinTab = {
+    id: CONSTANTS.TAB_MEMBERS,
+    name: 'DND5E.Group.Member.other',
+  };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);

@@ -33,15 +33,14 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorSpeedSenseEntryContext,
   ActorTraitContext,
+  AggregatePinTabInfo,
   CreatureTypeContext,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   Folder,
   LocationToSearchTextMap,
   MessageBus,
-  SheetPinContext,
   SpellcastingClassContext,
-  TabIdsToSheetPinsContext,
 } from 'src/types/types';
 import { randomItem, splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
@@ -50,10 +49,7 @@ import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
-import {
-  TidySheetSettingsQuadroneApplication,
-  TidySheetSettingsTabIds,
-} from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -63,7 +59,7 @@ import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
-import { debug, warn } from 'src/utils/logging';
+import { warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -82,6 +78,8 @@ export function getTidy5eActorSheetQuadroneBase<
       foundry.applications.sheets.ActorSheetV2,
     ),
   ) {
+    /** An optional tab which can receive pins from other tabs. */
+    abstract aggregatePinTab: AggregatePinTabInfo | null;
     abstract currentTabId: string;
     itemFilterService: ItemFilterService;
     messageBus = $state<MessageBus>({ message: undefined });

@@ -69,6 +69,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 ) {
   currentTabId: string;
   currentSidebarTabId: string;
+  aggregatePinTab = { id: CONSTANTS.TAB_ACTOR_ACTIONS, name: 'Sheet' };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);

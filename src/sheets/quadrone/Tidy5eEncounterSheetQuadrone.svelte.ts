@@ -57,6 +57,10 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
     value: undefined,
   });
+  aggregatePinTab = {
+    id: CONSTANTS.TAB_MEMBERS,
+    name: 'DND5E.ENCOUNTER.Tab.Members',
+  };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);

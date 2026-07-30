@@ -1924,3 +1924,11 @@ export type BankedInspirationConfiguration = {
     actor: any,
   ) => BankedInspirationCount | Promise<BankedInspirationCount>;
 };
+
+/** Information about a tab which is able to house sheet pins from other tabs. */
+export type AggregatePinTabInfo = {
+  /** The tab ID. */
+  tabId: string;
+  /** Unlocalized tab name. */
+  tabName: string;
+}
