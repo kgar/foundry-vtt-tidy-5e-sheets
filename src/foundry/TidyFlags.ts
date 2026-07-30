@@ -1255,7 +1255,7 @@ export class TidyFlags {
         TidyFlags.tryGetFlag<SheetPinFlag>(actor, TidyFlags.tabSheetPins.key) ??
         {};
 
-      // Rolling updates / backwards compatibility - if the flag is a flat array,
+      // Rolling updates / backwards compatibility - if legacy flag's array data is available,
       // use the default partition to denote this setup applies to any tab.
       // Keep while game.release.generation < 17
       const legacyData = TidyFlags.tryGetFlag<SheetPinLegacyFlag>(
