@@ -39,7 +39,11 @@ export class ThemeQuadrone {
         let rarityIdentifier = key.toLowerCase().slugify();
 
         stylesheet.insertRule(
-          `.tidy5e-sheet.quadrone .rarity.${rarityIdentifier} { --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier}) }`
+          `@layer modules { 
+            .tidy5e-sheet.quadrone .rarity.${rarityIdentifier} { 
+              --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier}) 
+            }
+          }`,
         );
       });
 
@@ -47,14 +51,16 @@ export class ThemeQuadrone {
         let methodIdentifier = key.toLowerCase().slugify();
 
         stylesheet.insertRule(
-          `.tidy5e-sheet.quadrone .method-${methodIdentifier} { --t5e-method-color: var(--t5e-color-spellcasting-${methodIdentifier}) }`
+          `@layer modules {
+            .tidy5e-sheet.quadrone .method-${methodIdentifier} { --t5e-method-color: var(--t5e-color-spellcasting-${methodIdentifier}) }
+          }`,
         );
       });
     });
   }
 
   static getDefaultThemeSettings(
-    alternateDefaults: Partial<ThemeSettingsV3> = {}
+    alternateDefaults: Partial<ThemeSettingsV3> = {},
   ): ThemeSettingsV3 {
     const defaults = {
       accentColor: this.DEFAULT_ACCENT_COLOR,
@@ -78,7 +84,7 @@ export class ThemeQuadrone {
     const stored =
       SettingsProvider.settings.worldThemeSettings.get() ??
       FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
-        'worldThemeSettings'
+        'worldThemeSettings',
       ) ??
       this.getDefaultThemeSettings();
     return foundry.utils.mergeObject(this.getDefaultThemeSettings(), stored);
@@ -102,7 +108,7 @@ export class ThemeQuadrone {
   }
 
   static getSheetThemeSettings(
-    options: ThemeSettingsConfigurationOptions
+    options: ThemeSettingsConfigurationOptions,
   ): ThemeSettingsV3 {
     options.applyWorldThemeSetting ??= true;
 
@@ -118,7 +124,7 @@ export class ThemeQuadrone {
 
       defaultSettings = foundry.utils.mergeObject(
         defaultSettings,
-        parentSettings
+        parentSettings,
       );
     }
 
@@ -135,7 +141,7 @@ export class ThemeQuadrone {
 
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
-      sheetFlagSettings
+      sheetFlagSettings,
     ) as ThemeSettingsV3;
 
     if (
@@ -160,14 +166,14 @@ export class ThemeQuadrone {
   static getTidyStyleSheet() {
     return Array.from(document.styleSheets).find(
       // @ts-expect-error
-      (s) => coalesce(s?.ownerNode?.id, s?.id) === this.tagId
+      (s) => coalesce(s?.ownerNode?.id, s?.id) === this.tagId,
     )!;
   }
 
   static applyStyleDeclarations(
     declarations: ThemeQuadroneStyleDeclaration[],
     doc?: any,
-    idOverride?: string
+    idOverride?: string,
   ) {
     // identify all relevant styles
     const identifierKey = doc
@@ -189,7 +195,7 @@ export class ThemeQuadrone {
 
       // insert styles
       for (const declaration of declarations) {
-        stylesheet.insertRule(this.toRuleString(declaration));
+        stylesheet.insertRule(this.toModuleLayerRuleString(declaration));
       }
     }
 
@@ -198,10 +204,10 @@ export class ThemeQuadrone {
     }
   }
 
-  static toRuleString(declaration: ThemeQuadroneStyleDeclaration) {
-    return `${declaration.selector} { ${declaration.ruleset
+  static toModuleLayerRuleString(declaration: ThemeQuadroneStyleDeclaration) {
+    return `@layer modules { ${declaration.selector} { ${declaration.ruleset
       .map((r) => `${r.property}: ${r.value}`)
-      .join('; ')} }`;
+      .join('; ')} } }`;
   }
 
   static readonly tagId = 'tidy5e-sheets-quadrone-theme-settings';
@@ -213,7 +219,7 @@ export class ThemeQuadrone {
   }
 
   static applyCurrentThemeSettingsToStylesheet(
-    options: ThemeSettingsConfigurationOptions = {}
+    options: ThemeSettingsConfigurationOptions = {},
   ) {
     const themeSettings =
       options.settingsOverride ??
@@ -225,7 +231,7 @@ export class ThemeQuadrone {
   }
 
   static subscribeAndReactToThemeSettingsChanges(
-    options: ThemeSettingsConfigurationOptions
+    options: ThemeSettingsConfigurationOptions,
   ): Unsubscribable {
     const hookId = TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe(
       (doc?: any, liveThemeOverride?: ThemeSettingsV3) => {
@@ -242,7 +248,7 @@ export class ThemeQuadrone {
           });
           options.callback?.({ settingsOverride: liveThemeOverride });
         }
-      }
+      },
     );
 
     return {
@@ -265,9 +271,9 @@ export class ThemeQuadrone {
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
       SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
       FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
-        'worldThemeSettings'
+        'worldThemeSettings',
       )?.portraitShape,
-      this.DEFAULT_PORTRAIT_SHAPE
+      this.DEFAULT_PORTRAIT_SHAPE,
     ) as PortraitShape;
   }
 
@@ -281,7 +287,7 @@ export class ThemeQuadrone {
 
   static async syncSystemTokenPortraitSetting(
     doc: any,
-    newShape?: PortraitShape
+    newShape?: PortraitShape,
   ) {
     await doc.update({
       [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
@@ -294,7 +300,7 @@ export class ThemeQuadrone {
     stylesheet.replaceSync(
       Array.from(ogStylesheet.cssRules)
         .map((rule) => rule.cssText)
-        .join('\n')
+        .join('\n'),
     );
     this._externalStylesheets.add(stylesheet);
   }

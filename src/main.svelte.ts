@@ -56,7 +56,8 @@ Hooks.once('init', () => {
       },
     },
     components: registry.getRegistryComponents(),
-    description: "Version Alpha: Work in progress. Expect API breakage while development on this configuration object continues.",
+    description:
+      'Version Alpha: Work in progress. Expect API breakage while development on this configuration object continues.',
     features: {
       columns: registry.getColumnsRegistry(),
       rowActions: registry.getRowActionsRegistry(),
@@ -286,14 +287,18 @@ Hooks.once('setup', async () => {
   document.head.append(style);
 
   // Note: When popout is added to core, this may need to be changed to use .sheet.insertRule
-  style.textContent = Object.entries(CONFIG.DND5E.currencies)
+  const styleText = Object.entries(CONFIG.DND5E.currencies)
     .map(
       ([key, val]) =>
         `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${formatResourcePathForCss(
           val.icon,
         )}"); }`,
     )
-    .join('\n\n');
+    .join('\n    ');
+
+  style.textContent = `@layer modules {
+    ${styleText}
+  }`;
 });
 
 function registerCustomTidyRollRequests() {
