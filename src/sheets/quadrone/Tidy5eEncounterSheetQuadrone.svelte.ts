@@ -58,8 +58,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     value: undefined,
   });
   aggregatePinTab = {
-    id: CONSTANTS.TAB_MEMBERS,
-    name: 'DND5E.ENCOUNTER.Tab.Members',
+    tabId: CONSTANTS.TAB_MEMBERS,
+    tabName: 'DND5E.ENCOUNTER.Tab.Members',
   };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {

@@ -407,6 +407,7 @@ export function getItemContextOptionsQuadrone(
         SheetPinsProvider.pin(item, aggregatePinTab.tabId, 'item');
       },
       condition: () =>
+        tabId !== aggregatePinTab.tabId &&
         item.isOwner &&
         item.actor &&
         !FoundryAdapter.isLockedInCompendium(item) &&

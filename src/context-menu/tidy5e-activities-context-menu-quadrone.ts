@@ -110,6 +110,7 @@ export function getContextMenuOptionsQuadrone(
         );
       },
       condition: () =>
+        tabId !== aggregatePinTab.tabId &&
         app.actor &&
         activity.item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(activity.item) &&

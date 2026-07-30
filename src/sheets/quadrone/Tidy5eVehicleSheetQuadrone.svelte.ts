@@ -59,8 +59,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
 ) {
   currentTabId: string;
   aggregatePinTab = {
-    id: CONSTANTS.TAB_MEMBERS,
-    name: 'TIDY5E.StatblockTabName',
+    tabId: CONSTANTS.TAB_MEMBERS,
+    tabName: 'TIDY5E.StatblockTabName',
   };
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
