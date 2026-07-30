@@ -3,10 +3,14 @@ import type { TidyPublicUtils } from 'src/types/registry.types';
 const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
   element,
 ) => {
+  const tabDataEl = element?.closest<HTMLElement>(
+    '[data-tab-contents-for], [data-tab-id]',
+  );
+
   return (
-    element
-      ?.closest<HTMLElement>('[data-tab-contents-for]')
-      ?.getAttribute('data-tab-contents-for') ?? null
+    tabDataEl?.getAttribute('data-tab-contents-for') ??
+    tabDataEl?.getAttribute('data-tab-id') ??
+    null
   );
 };
 
