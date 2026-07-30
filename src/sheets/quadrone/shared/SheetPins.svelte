@@ -13,7 +13,7 @@
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   const sheetPins = $derived(
-    SheetPinsProvider.getSheetPinsToDisplay(
+    SheetPinsProvider.getSheetPinContextsToDisplay(
       context.document,
       context.tabSheetPins,
       tabId,

@@ -3,12 +3,13 @@ import type { Item5e } from 'src/types/item.types';
 import type { Actor5e, SheetPinContext } from 'src/types/types';
 import { Inventory } from '../sections/Inventory';
 import { SheetSections } from '../sections/SheetSections';
+import type { SheetPin } from 'src/foundry/TidyFlags.types';
 
 /** Compatibility layer for the original sheetPins implementation. Good while game.release.generation < 17 */
 export function legacyGetAppropriateSheetPins(
   sheetDocument: Actor5e | Item5e,
   tabId: string,
-  pins: SheetPinContext[] | undefined,
+  pins: (SheetPinContext | SheetPin)[] | undefined,
 ) {
   if (!pins) {
     return undefined;
@@ -16,19 +17,19 @@ export function legacyGetAppropriateSheetPins(
 
   switch (sheetDocument.type) {
     case CONSTANTS.SHEET_TYPE_CHARACTER: {
-      return getCharacterLegacyPins(tabId, pins);
+      return getCharacterLegacyPins(sheetDocument, tabId, pins);
     }
     case CONSTANTS.SHEET_TYPE_NPC: {
-      return getNpcLegacyPins(tabId, pins);
+      return getNpcLegacyPins(sheetDocument, tabId, pins);
     }
     case CONSTANTS.SHEET_TYPE_VEHICLE: {
-      return getVehicleLegacyPins(tabId, pins);
+      return getVehicleLegacyPins(sheetDocument, tabId, pins);
     }
     case CONSTANTS.SHEET_TYPE_GROUP: {
-      return getGroupLegacyPins(tabId, pins);
+      return getGroupLegacyPins(sheetDocument, tabId, pins);
     }
     case CONSTANTS.SHEET_TYPE_ENCOUNTER: {
-      return getEncounterLegacyPins(tabId, pins);
+      return getEncounterLegacyPins(sheetDocument, tabId, pins);
     }
     default: {
       return [];
@@ -36,13 +37,20 @@ export function legacyGetAppropriateSheetPins(
   }
 }
 
-function getCharacterLegacyPins(tabId: string, pins: SheetPinContext[]) {
+function getCharacterLegacyPins(
+  sheetDocument: any,
+  tabId: string,
+  pins: (SheetPinContext | SheetPin)[],
+) {
   if (tabId === CONSTANTS.TAB_ACTOR_ACTIONS) {
     return pins;
   }
 
   return pins.filter((pin) => {
-    const item = pin.document.item ?? pin.document;
+    const document = fromUuidSync(pin.id, { relative: sheetDocument });
+
+    const item = document?.item ?? document;
+
     if (!item) {
       return false;
     }
@@ -59,13 +67,20 @@ function getCharacterLegacyPins(tabId: string, pins: SheetPinContext[]) {
   });
 }
 
-function getNpcLegacyPins(tabId: string, pins: SheetPinContext[]) {
+function getNpcLegacyPins(
+  sheetDocument: any,
+  tabId: string,
+  pins: (SheetPinContext | SheetPin)[],
+) {
   if (tabId === CONSTANTS.TAB_STATBLOCK) {
     return pins;
   }
 
   return pins.filter((pin) => {
-    const item = pin.document.item ?? pin.document;
+    const document = fromUuidSync(pin.id, { relative: sheetDocument });
+
+    const item = document?.item ?? document;
+
     if (!item) {
       return false;
     }
@@ -79,13 +94,20 @@ function getNpcLegacyPins(tabId: string, pins: SheetPinContext[]) {
   });
 }
 
-function getVehicleLegacyPins(tabId: string, pins: SheetPinContext[]) {
+function getVehicleLegacyPins(
+  sheetDocument: any,
+  tabId: string,
+  pins: (SheetPinContext | SheetPin)[],
+) {
   if (tabId === CONSTANTS.TAB_STATBLOCK) {
     return pins;
   }
 
   return pins.filter((pin) => {
-    const item = pin.document.item ?? pin.document;
+    const document = fromUuidSync(pin.id, { relative: sheetDocument });
+
+    const item = document?.item ?? document;
+
     if (!item) {
       return false;
     }
@@ -98,13 +120,19 @@ function getVehicleLegacyPins(tabId: string, pins: SheetPinContext[]) {
   });
 }
 
-function getGroupLegacyPins(tabId: string, pins: SheetPinContext[]) {
+function getGroupLegacyPins(
+  sheetDocument: any,
+  tabId: string,
+  pins: (SheetPinContext | SheetPin)[],
+) {
   if (tabId === CONSTANTS.TAB_MEMBERS) {
     return pins;
   }
 
   return pins.filter((pin) => {
-    const item = pin.document.item ?? pin.document;
+    const document = fromUuidSync(pin.id, { relative: sheetDocument });
+
+    const item = document?.item ?? document;
 
     if (!item) {
       return false;
@@ -117,13 +145,19 @@ function getGroupLegacyPins(tabId: string, pins: SheetPinContext[]) {
   });
 }
 
-function getEncounterLegacyPins(tabId: string, pins: SheetPinContext[]) {
+function getEncounterLegacyPins(
+  sheetDocument: any,
+  tabId: string,
+  pins: (SheetPinContext | SheetPin)[],
+) {
   if (tabId === CONSTANTS.TAB_MEMBERS) {
     return pins;
   }
 
   return pins.filter((pin) => {
-    const item = pin.document.item ?? pin.document;
+    const document = fromUuidSync(pin.id, { relative: sheetDocument });
+
+    const item = document?.item ?? document;
 
     if (!item) {
       return false;
