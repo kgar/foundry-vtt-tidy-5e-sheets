@@ -110,7 +110,7 @@ export function getContextMenuOptionsQuadrone(
     group: 'pins',
   });
 
-  const aggregatePinTab = app.aggregatePinTabId as AggregatePinTabInfo | null;
+  const aggregatePinTab = app.aggregatePinTab as AggregatePinTabInfo | null;
 
   if (aggregatePinTab) {
     entries.push({
