@@ -15,7 +15,8 @@ const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
 };
 
 const getTabIdFromEvent: TidyPublicUtils['getTabIdFromEvent'] = (event) => {
-  return getTabIdFromElement(event.target);
+  // svelte likes to eschew event.target, but we need it here
+  return getTabIdFromElement((event as Event & { target: HTMLElement }).target);
 };
 
 export function getUtils(): TidyPublicUtils {
