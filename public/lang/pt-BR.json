@@ -1144,5 +1144,8 @@
         "title": "Trocar Valor de Atributo e Modificador",
         "name": "Trocar Valor de Atributo e Modificador",
         "hint": "Troca o valor do atributo e o modificador nos cabeçalhos da ficha."
-    }
+    },
+    "TIDY5E.ContextMenuActionViewItem": "Ver Item de Origem",
+    "TIDY5E.ContextMenuActionPickColor": "Escolher Cor",
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Remover {value} link(s) inválido(s)"
 }
