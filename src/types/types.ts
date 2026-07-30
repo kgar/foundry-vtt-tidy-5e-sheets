@@ -452,7 +452,7 @@ export type SheetPinActivityContext = {
 
 export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
 
-export type TabIdsToSheetPinsContext = {
+export type TabSheetPinsContext = {
   [tabId: string]: SheetPinContext[];
 };
 
@@ -1170,7 +1170,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
-  tabSheetPins: TabIdsToSheetPinsContext;
+  tabSheetPins: TabSheetPinsContext;
   portrait: {
     src: string;
     isRandom: boolean;

@@ -336,7 +336,7 @@ export function getTidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        tabSheetPins: await SheetPinsProvider.getSheetPinsContext(
+        tabSheetPins: await SheetPinsProvider.getTabSheetPinsContext(
           this.document,
         ),
         portrait: await this._preparePortrait(this.actor),

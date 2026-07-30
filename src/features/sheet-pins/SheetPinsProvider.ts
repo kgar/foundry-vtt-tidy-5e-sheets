@@ -7,7 +7,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
   SheetPinContext,
-  TabIdsToSheetPinsContext,
+  TabSheetPinsContext,
 } from 'src/types/types';
 import { Activities } from '../activities/activities';
 import { legacyGetAppropriateSheetPins } from './legacy-sheet-pins-functions';
@@ -23,12 +23,12 @@ export class SheetPinsProvider {
    * @param sheetDocument the document which owns the sheet pins
    * @returns a record of tab IDs to sheet pins, e.g., `{ inventory: [...], action: [...], features: [...] }`
    */
-  static async getSheetPinsContext(
+  static async getTabSheetPinsContext(
     sheetDocument: Actor5e | Item5e,
-  ): Promise<TabIdsToSheetPinsContext> {
+  ): Promise<TabSheetPinsContext> {
     let pinsContext = TidyFlags.tabSheetPins.get(sheetDocument);
 
-    let result: TabIdsToSheetPinsContext = {};
+    let result: TabSheetPinsContext = {};
 
     for (const [tabId, flagPins] of Object.entries(pinsContext)) {
       const pins: SheetPinContext[] = [];
@@ -320,7 +320,7 @@ export class SheetPinsProvider {
    */
   static getSheetPinContextsToDisplay(
     sheetDocument: any,
-    sheetPins: TabIdsToSheetPinsContext,
+    sheetPins: TabSheetPinsContext,
     tabId: string,
   ) {
     return (
