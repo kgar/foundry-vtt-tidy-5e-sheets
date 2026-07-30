@@ -93,6 +93,23 @@ export function getContextMenuOptionsQuadrone(
     group: 'pins',
   });
 
+  entries.push({
+    name: 'TIDY5E.ContextMenuActionUnpin',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: async () => {
+      if (tabId) {
+        await SheetPinsProvider.unpin(activity, tabId);
+      }
+    },
+    condition: () =>
+      activity.item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(activity.item) &&
+      SheetPinsProvider.isPinnable(activity, 'activity') &&
+      tabId &&
+      SheetPinsProvider.isPinned(activity, tabId),
+    group: 'pins',
+  });
+
   const aggregatePinTab = app.aggregatePinTabId as AggregatePinTabInfo | null;
 
   if (aggregatePinTab) {
@@ -119,23 +136,6 @@ export function getContextMenuOptionsQuadrone(
       group: 'pins',
     });
   }
-
-  entries.push({
-    name: 'TIDY5E.ContextMenuActionUnpin',
-    icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: async () => {
-      if (tabId) {
-        await SheetPinsProvider.unpin(activity, tabId);
-      }
-    },
-    condition: () =>
-      activity.item.isOwner &&
-      !FoundryAdapter.isLockedInCompendium(activity.item) &&
-      SheetPinsProvider.isPinnable(activity, 'activity') &&
-      tabId &&
-      SheetPinsProvider.isPinned(activity, tabId),
-    group: 'pins',
-  });
 
   // Be Careful - These are the no-going-back changes
 

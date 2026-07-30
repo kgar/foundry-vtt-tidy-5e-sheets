@@ -47,7 +47,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
 ) {
   currentTabId: string;
   aggregatePinTab = {
-    tabId: CONSTANTS.TAB_MEMBERS,
+    tabId: CONSTANTS.TAB_STATBLOCK,
     tabName: 'TIDY5E.StatblockTabName',
   };
 

@@ -394,6 +394,24 @@ export function getItemContextOptionsQuadrone(
     group: 'customize',
   });
 
+  options.push({
+    name: 'TIDY5E.ContextMenuActionUnpin',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: () => {
+      if (tabId) {
+        SheetPinsProvider.unpin(item, tabId);
+      }
+    },
+    condition: () =>
+      item.isOwner &&
+      item.actor &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      SheetPinsProvider.isPinnable(item, 'item') &&
+      tabId &&
+      SheetPinsProvider.isPinned(item, tabId),
+    group: 'customize',
+  });
+
   const aggregatePinTab = app.aggregatePinTab as AggregatePinTabInfo | null;
 
   if (aggregatePinTab)
@@ -415,24 +433,6 @@ export function getItemContextOptionsQuadrone(
         !SheetPinsProvider.isPinned(item, aggregatePinTab.tabId),
       group: 'customize',
     });
-
-  options.push({
-    name: 'TIDY5E.ContextMenuActionUnpin',
-    icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: () => {
-      if (tabId) {
-        SheetPinsProvider.unpin(item, tabId);
-      }
-    },
-    condition: () =>
-      item.isOwner &&
-      item.actor &&
-      !FoundryAdapter.isLockedInCompendium(item) &&
-      SheetPinsProvider.isPinnable(item, 'item') &&
-      tabId &&
-      SheetPinsProvider.isPinned(item, tabId),
-    group: 'customize',
-  });
 
   const isSheetPin = !!element.closest('[data-pin-id]');
 
