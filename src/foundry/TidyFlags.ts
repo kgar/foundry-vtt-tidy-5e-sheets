@@ -14,7 +14,9 @@ import type {
   EncounterPlaceholders,
   EncounterPlaceholder,
   EncounterCombatantsSettings,
-  SheetPinFlag,
+  TabSheetPinFlagData,
+  SheetPinLegacyFlag,
+  AnySheetPinFlagData,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
@@ -1244,19 +1246,47 @@ export class TidyFlags {
   /**
    * Denotes the items and activities which have been pinned to a significant tab on a sheet.
    */
-  static sheetPins = {
-    key: 'sheetPins' as const,
-    prop: TidyFlags.getFlagPropertyPath('sheetPins'),
+  static tabSheetPins = {
+    key: 'tabSheetPins' as const,
+    prop: TidyFlags.getFlagPropertyPath('tabSheetPins'),
     /** Gets the actor's sheet pins. */
-    get(actor: Actor5e): SheetPinFlag[] {
-      return (
-        TidyFlags.tryGetFlag<SheetPinFlag[]>(actor, TidyFlags.sheetPins.key) ??
-        []
+    get(actor: Actor5e): TabSheetPinFlagData {
+      const data =
+        TidyFlags.tryGetFlag<TabSheetPinFlagData>(actor, TidyFlags.tabSheetPins.key) ??
+        {};
+
+      // Rolling updates / backwards compatibility - if legacy flag's array data is available,
+      // use the default partition to denote this setup applies to any tab.
+      // Keep while game.release.generation < 17
+      const legacyData = TidyFlags.tryGetFlag<SheetPinLegacyFlag>(
+        actor,
+        'sheetPins',
       );
+      if (legacyData && Array.isArray(legacyData)) {
+        data[CONSTANTS.PARTITION_MODULE_DEFAULT] = [...legacyData];
+      }
+
+      return data ? { ...data } : {};
     },
     /** Sets the actor's sheet pins. */
-    set(actor: Actor5e, value: SheetPinFlag[]): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value);
+    setByTabId(
+      actor: Actor5e,
+      tabId: string,
+      value: AnySheetPinFlagData[],
+    ): Promise<void> {
+      // Get the existing. Update it. Fully replace the flag.
+      const data = TidyFlags.tabSheetPins.get(actor);
+
+      data[tabId] = value;
+
+      const replace = game.release.generation >= 14;
+
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.tabSheetPins.key,
+        data,
+        replace,
+      );
     },
   };
 

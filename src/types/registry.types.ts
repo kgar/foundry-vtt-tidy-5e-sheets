@@ -22,7 +22,6 @@ import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCon
 import type {
   ActivityColumnSpec,
   ColumnPartitions,
-  ColumnSpecification,
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
   EncounterMemberColumnSpec,
@@ -33,13 +32,6 @@ import type {
   VehicleDraftAnimalColumnSpec,
   VehiclePassengerColumnSpec,
 } from './columns.types';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
-import type { ActivityItemContext, Actor5e } from './types';
-import type {
-  Advancement5e,
-  AdvancementItemContext,
-  Item5e,
-} from './item.types';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -69,6 +61,7 @@ export type TidyConfig = {
   description: string;
   features: TidyFeatureRegistry;
   partitions: TidyPartitionRegistry;
+  utils: TidyPublicUtils;
 };
 
 /**
@@ -277,3 +270,10 @@ export type ColumnRegistryDomain =
 
 export type ColumnOf<D extends ColumnRegistryDomain> =
   CONFIG['TIDY5E']['features']['columns'][D][keyof CONFIG['TIDY5E']['features']['columns'][D]];
+
+export type TidyPublicUtils = {
+  getTabIdFromElement: (
+    element: HTMLElement | null | undefined,
+  ) => string | null;
+  getTabIdFromEvent: (event: Event) => string | null;
+};

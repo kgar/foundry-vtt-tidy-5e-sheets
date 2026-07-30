@@ -975,7 +975,7 @@ export class SheetSections {
 
   static showInFeatures(item: Item5e) {
     return (
-      !item.type.includes([
+      ![
         CONSTANTS.ITEM_TYPE_CONTAINER,
         CONSTANTS.ITEM_TYPE_SPELL,
         CONSTANTS.ITEM_TYPE_BACKGROUND,
@@ -983,7 +983,7 @@ export class SheetSections {
         CONSTANTS.ITEM_TYPE_SUBCLASS,
         CONSTANTS.ITEM_TYPE_RACE,
         CONSTANTS.ITEM_TYPE_FACILITY,
-      ]) && !Inventory.isItemInventoryType(item)
+      ].includes(item.type) && !Inventory.isItemInventoryType(item)
     );
   }
 }

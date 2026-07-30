@@ -2,18 +2,21 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+import type { AggregatePinTabInfo } from 'src/types/types';
 
 export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
   app: any,
   configurable: boolean,
-  element: HTMLElement
+  element: HTMLElement,
 ): ContextMenuEntry[] {
   const isUnlockedForOwner =
     activity.item.isOwner &&
     !FoundryAdapter.isLockedInCompendium(activity.item);
 
   const isInFavorites = !!element.closest('.favorites');
+
+  const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
 
@@ -75,27 +78,64 @@ export function getContextMenuOptionsQuadrone(
   entries.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: async () => await SheetPinsProvider.pin(activity, 'activity'),
+    callback: async () => {
+      if (tabId) {
+        await SheetPinsProvider.pin(activity, tabId, 'activity');
+      }
+    },
     condition: () =>
       app.actor &&
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       SheetPinsProvider.isPinnable(activity, 'activity') &&
-      !SheetPinsProvider.isPinned(activity),
+      tabId &&
+      !SheetPinsProvider.isPinned(activity, tabId),
     group: 'pins',
   });
 
   entries.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: async () => await SheetPinsProvider.unpin(activity),
+    callback: async () => {
+      if (tabId) {
+        await SheetPinsProvider.unpin(activity, tabId);
+      }
+    },
     condition: () =>
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       SheetPinsProvider.isPinnable(activity, 'activity') &&
-      SheetPinsProvider.isPinned(activity),
+      tabId &&
+      SheetPinsProvider.isPinned(activity, tabId),
     group: 'pins',
   });
+
+  const aggregatePinTab = app.aggregatePinTab as AggregatePinTabInfo | null;
+
+  if (aggregatePinTab) {
+    entries.push({
+      name: FoundryAdapter.localize(
+        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
+      ),
+      icon: `<i class="fa-solid fa-thumbtack"></i>`,
+      callback: async () => {
+        await SheetPinsProvider.pin(
+          activity,
+          aggregatePinTab.tabId,
+          'activity',
+        );
+      },
+      condition: () =>
+        tabId !== aggregatePinTab.tabId &&
+        app.actor &&
+        activity.item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(activity.item) &&
+        SheetPinsProvider.isPinnable(activity, 'activity') &&
+        !SheetPinsProvider.isPinned(activity, aggregatePinTab.tabId),
+      group: 'pins',
+    });
+  }
 
   // Be Careful - These are the no-going-back changes
 

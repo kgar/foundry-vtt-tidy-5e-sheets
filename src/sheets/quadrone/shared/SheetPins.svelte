@@ -6,13 +6,18 @@
   import { error } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   const sheetPins = $derived(
-    context.sheetPins?.filter((p) => p.tabIds.has(tabId)) ?? [],
+    SheetPinsProvider.getSheetPinContextsToDisplay(
+      context.document,
+      context.tabSheetPins,
+      tabId,
+    ),
   );
 </script>
 

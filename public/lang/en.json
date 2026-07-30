@@ -123,6 +123,7 @@
   "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
   "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
   "TIDY5E.ContextMenuActionPin": "Pin to top",
+  "TIDY5E.ContextMenuActionPinToSpecificTab": "Pin to {tabName} tab",
   "TIDY5E.ContextMenuActionUnpin": "Unpin from top",
   "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
   "TIDY5E.ContextMenuActionShowQuantity": "Show Quantity",
@@ -1025,8 +1026,6 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
   "TIDY5E.Utilities.CastActivityMissingSpell": "No spell is attached to this activity.",
-  "TIDY5E.Utilities.ShowSheetPins": "Show Sheet Pins",
-  "TIDY5E.Utilities.HideSheetPins": "Hide Sheet Pins",
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",
   "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {

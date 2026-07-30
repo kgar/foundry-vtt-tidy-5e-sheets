@@ -69,6 +69,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 ) {
   currentTabId: string;
   currentSidebarTabId: string;
+  aggregatePinTab = { tabId: CONSTANTS.TAB_ACTOR_ACTIONS, tabName: 'Sheet' };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -505,7 +506,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     // Track which sections exist
     let sectionsMap: Record<string, SheetTabSection> = {};
-    
+
     // Consolidate shared sections into generic feature sections
     for (let section of sheetTabSections) {
       const mappedSection = sectionsMap[section.key];
@@ -518,7 +519,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       const incomingItems = section.items;
 
-      // Shared section detected; non-feature shared sections are overwritten 
+      // Shared section detected; non-feature shared sections are overwritten
       // to be feature sections and now contain their items and incoming items
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
@@ -1226,24 +1227,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         };
       }),
     );
-  }
-
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_ACTOR_ACTIONS];
-
-    const originTab = Inventory.isItemInventoryType(item)
-      ? CONSTANTS.TAB_ACTOR_INVENTORY
-      : item.type === CONSTANTS.ITEM_TYPE_SPELL
-        ? CONSTANTS.TAB_ACTOR_SPELLBOOK
-        : SheetSections.showInFeatures(item)
-          ? CONSTANTS.TAB_CHARACTER_FEATURES
-          : null;
-
-    if (originTab) {
-      tabIds.push(originTab);
-    }
-
-    return tabIds;
   }
 
   /* -------------------------------------------- */

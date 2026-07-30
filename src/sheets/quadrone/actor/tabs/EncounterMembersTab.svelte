@@ -10,7 +10,6 @@
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -38,14 +37,6 @@
   function onResize(entry: ResizeObserverEntry) {
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
-
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      CONSTANTS.TAB_MEMBERS,
-      'showSheetPins',
-    ) ?? true,
-  );
 </script>
 
 <MembersTabSidebar />
@@ -54,9 +45,7 @@
 
 <div class="tab-right-column">
   <div class="tab-content" {@attach observeResize(onResize)}>
-    {#if showSheetPins}
-      <SheetPins />
-    {/if}
+    <SheetPins />
 
     {#if context.memberContext.npc.length && context.difficulty?.label}
       <div class="difficulty-row flexrow">

@@ -58,7 +58,10 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   CONSTANTS.SHEET_TYPE_VEHICLE,
 ) {
   currentTabId: string;
-
+  aggregatePinTab = {
+    tabId: CONSTANTS.TAB_STATBLOCK,
+    tabName: 'TIDY5E.StatblockTabName',
+  };
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
     this.currentTabId = CONSTANTS.TAB_VEHICLE_ATTRIBUTES;
@@ -907,22 +910,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     if (item.type === 'equipment' || item.type === 'weapon') {
       ctx.threshold = item.system.hp?.dt ? item.system.hp.dt : '—';
     }
-  }
-
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [];
-
-    // TODO: Somehow share the mountable logic somewhere
-    const originTab =
-      Inventory.isItemInventoryType(item) && !item.system.isMountable
-        ? CONSTANTS.TAB_ACTOR_INVENTORY
-        : CONSTANTS.TAB_STATBLOCK;
-
-    if (originTab) {
-      tabIds.push(originTab);
-    }
-
-    return tabIds;
   }
 
   _prepareTravelSpeeds(): VehicleSheetQuadroneContext['travelSpeeds'] {

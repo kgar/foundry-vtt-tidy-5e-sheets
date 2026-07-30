@@ -25,7 +25,8 @@ import type {
   DocumentJournalEntries,
   AttributePinFlag,
   EncounterPlaceholder,
-  SheetPinFlag,
+  SheetItemPinFlagData,
+  SheetActivityPinFlagData,
 } from 'src/foundry/TidyFlags.types';
 import type { DataField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -443,16 +444,16 @@ export type AttributePinContext =
 export type SheetPinItemContext = {
   document: Item5e;
   linkedUses?: LinkedUses;
-} & SheetPinFlag & { type: 'item' };
+} & SheetItemPinFlagData;
 
 export type SheetPinActivityContext = {
   document: Activity5e;
-} & SheetPinFlag & { type: 'activity' };
+} & SheetActivityPinFlagData;
 
-export type SheetPinContext = (
-  SheetPinItemContext | SheetPinActivityContext
-) & {
-  tabIds: Set<string>;
+export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
+
+export type TabSheetPinsContext = {
+  [tabId: string]: SheetPinContext[];
 };
 
 export type CharacterFacilitiesContext = {
@@ -1169,7 +1170,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
-  sheetPins: SheetPinContext[];
+  tabSheetPins: TabSheetPinsContext;
   portrait: {
     src: string;
     isRandom: boolean;
@@ -1923,3 +1924,11 @@ export type BankedInspirationConfiguration = {
     actor: any,
   ) => BankedInspirationCount | Promise<BankedInspirationCount>;
 };
+
+/** Information about a tab which is able to house sheet pins from other tabs. */
+export type AggregatePinTabInfo = {
+  /** The tab ID. */
+  tabId: string;
+  /** Unlocalized tab name. */
+  tabName: string;
+}

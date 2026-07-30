@@ -65,6 +65,7 @@ Hooks.once('init', () => {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
     },
+    utils: registry.getUtils(),
   };
 
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;

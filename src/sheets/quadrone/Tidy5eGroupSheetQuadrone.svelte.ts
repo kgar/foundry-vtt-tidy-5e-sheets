@@ -36,8 +36,6 @@ import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import type { Item5e } from 'src/types/item.types';
-import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
@@ -50,6 +48,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
     value: undefined,
   });
+  aggregatePinTab = {
+    tabId: CONSTANTS.TAB_MEMBERS,
+    tabName: 'DND5E.Group.Member.other',
+  };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -454,16 +456,6 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
       groupTool.identifiers.add(actor.uuid);
     });
-  }
-
-  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_MEMBERS];
-
-    if (Inventory.isItemInventoryType(item)) {
-      tabIds.push(CONSTANTS.TAB_ACTOR_INVENTORY);
-    }
-
-    return tabIds;
   }
 
   /* -------------------------------------------- */

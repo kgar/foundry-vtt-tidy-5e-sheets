@@ -42,14 +42,6 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  const showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      CONSTANTS.TAB_MEMBERS,
-      'showSheetPins',
-    ) ?? true,
-  );
-
   let searchCriteria = $state('');
 
   const searchResults = createSearchResultsState();
@@ -88,9 +80,7 @@
   />
 
   <div class="tab-content" {@attach observeResize(onResize)}>
-    {#if showSheetPins}
-      <SheetPins />
-    {/if}
+    <SheetPins />
 
     {#each sections as section (section.key)}
       {const hasViewableItems = $derived(
@@ -125,11 +115,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {context}
-                {hiddenColumns}
-                {section}
-              />
+              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
