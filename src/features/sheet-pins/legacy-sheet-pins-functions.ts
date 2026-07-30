@@ -3,13 +3,13 @@ import type { Item5e } from 'src/types/item.types';
 import type { Actor5e, SheetPinContext } from 'src/types/types';
 import { Inventory } from '../sections/Inventory';
 import { SheetSections } from '../sections/SheetSections';
-import type { SheetPin } from 'src/foundry/TidyFlags.types';
+import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 
 /** Compatibility layer for the original sheetPins implementation. Good while game.release.generation < 17 */
 export function legacyGetAppropriateSheetPins(
   sheetDocument: Actor5e | Item5e,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[] | undefined,
+  pins: (SheetPinContext | AnySheetPinFlagData)[] | undefined,
 ) {
   if (!pins) {
     return undefined;
@@ -40,7 +40,7 @@ export function legacyGetAppropriateSheetPins(
 function getCharacterLegacyPins(
   sheetDocument: any,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[],
+  pins: (SheetPinContext | AnySheetPinFlagData)[],
 ) {
   if (tabId === CONSTANTS.TAB_ACTOR_ACTIONS) {
     return pins;
@@ -70,7 +70,7 @@ function getCharacterLegacyPins(
 function getNpcLegacyPins(
   sheetDocument: any,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[],
+  pins: (SheetPinContext | AnySheetPinFlagData)[],
 ) {
   if (tabId === CONSTANTS.TAB_STATBLOCK) {
     return pins;
@@ -97,7 +97,7 @@ function getNpcLegacyPins(
 function getVehicleLegacyPins(
   sheetDocument: any,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[],
+  pins: (SheetPinContext | AnySheetPinFlagData)[],
 ) {
   if (tabId === CONSTANTS.TAB_STATBLOCK) {
     return pins;
@@ -123,7 +123,7 @@ function getVehicleLegacyPins(
 function getGroupLegacyPins(
   sheetDocument: any,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[],
+  pins: (SheetPinContext | AnySheetPinFlagData)[],
 ) {
   if (tabId === CONSTANTS.TAB_MEMBERS) {
     return pins;
@@ -148,7 +148,7 @@ function getGroupLegacyPins(
 function getEncounterLegacyPins(
   sheetDocument: any,
   tabId: string,
-  pins: (SheetPinContext | SheetPin)[],
+  pins: (SheetPinContext | AnySheetPinFlagData)[],
 ) {
   if (tabId === CONSTANTS.TAB_MEMBERS) {
     return pins;

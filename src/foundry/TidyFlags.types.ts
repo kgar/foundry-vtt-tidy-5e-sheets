@@ -1,5 +1,3 @@
-import type { CONSTANTS } from "src/constants";
-
 export type TidyFlagNamedNotes = {
   name: string;
   value: string;
@@ -29,7 +27,7 @@ export type AttributeActivityPinFlag = AttributePinBase & {
 
 export type AttributePinFlag = AttributeItemPinFlag | AttributeActivityPinFlag;
 
-type SheetPinBase = {
+type SheetPinFlagDataBase = {
   /** The Item UUID, generally relative to the owning character */
   id: string;
   /** The sort value */
@@ -37,22 +35,23 @@ type SheetPinBase = {
   alias?: string;
 };
 
-export type SheetItemPinFlag = SheetPinBase & {
+export type SheetItemPinFlagData = SheetPinFlagDataBase & {
   type: 'item';
   resource: 'limited-uses' | 'quantity';
 };
 
-export type SheetActivityPinFlag = SheetPinBase & {
+export type SheetActivityPinFlagData = SheetPinFlagDataBase & {
   type: 'activity';
   resource: 'limited-uses';
 };
 
-export type SheetPin = SheetItemPinFlag | SheetActivityPinFlag;
+export type AnySheetPinFlagData =
+  SheetItemPinFlagData | SheetActivityPinFlagData;
 
-export type SheetPinLegacyFlag = SheetPin[];
+export type SheetPinLegacyFlag = AnySheetPinFlagData[];
 
-export type SheetPinFlag = {
-  [tabId: string]: SheetPin[];
+export type TabSheetPinFlagData = {
+  [tabId: string]: AnySheetPinFlagData[];
 };
 
 export type DocumentJournalEntry = {

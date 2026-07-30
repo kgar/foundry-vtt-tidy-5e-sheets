@@ -1,7 +1,7 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import { error } from 'src/utils/logging';
-import type { SheetItemPinFlag, SheetPin } from 'src/foundry/TidyFlags.types';
+import type { SheetItemPinFlagData, AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CONSTANTS } from 'src/constants';
 import type {
@@ -68,7 +68,7 @@ export class SheetPinsProvider {
    */
   static isPinnable(
     targetDocument: Item5e | Activity5e,
-    type: SheetPin['type'],
+    type: AnySheetPinFlagData['type'],
   ): boolean {
     return type === 'item'
       ? !!targetDocument.system.schema.fields.uses ||
@@ -101,7 +101,7 @@ export class SheetPinsProvider {
    * @param type the type of document to be pinned, e.g., "item" or "activity"
    * @returns the result of updating the parent document's flags
    */
-  static async pin(targetDocument: any, tabId: string, type: SheetPin['type']) {
+  static async pin(targetDocument: any, tabId: string, type: AnySheetPinFlagData['type']) {
     if (!targetDocument.actor || this.isPinned(targetDocument, tabId)) {
       return;
     }
@@ -197,7 +197,7 @@ export class SheetPinsProvider {
   static async setItemResourceType(
     targetDocument: Item5e,
     tabId: string,
-    resourceType: SheetItemPinFlag['resource'],
+    resourceType: SheetItemPinFlagData['resource'],
   ) {
     let pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
@@ -277,7 +277,7 @@ export class SheetPinsProvider {
 
     const pinFlags = getSheetPinsForTab(sheetDocument, tabId);
 
-    const siblings = [...pinFlags].filter((f: SheetPin) => {
+    const siblings = [...pinFlags].filter((f: AnySheetPinFlagData) => {
       if (f.id === targetId) target = f;
       else if (f.id === srcId) source = f;
       return f.id !== srcId;
@@ -289,8 +289,8 @@ export class SheetPinsProvider {
     });
 
     const pins = [...pinFlags].reduce(
-      (map: Map<string, SheetPin>, f: SheetPin) => map.set(f.id, { ...f }),
-      new Map<string, SheetPin>(),
+      (map: Map<string, AnySheetPinFlagData>, f: AnySheetPinFlagData) => map.set(f.id, { ...f }),
+      new Map<string, AnySheetPinFlagData>(),
     );
 
     for (const { target, update } of updates) {
@@ -349,7 +349,7 @@ function getSheetPinsForTab(sheetDocument: Actor5e | Item5e, tabId: string) {
   );
 }
 
-async function preparePinsForForSaving(targetDocument: any, pins: SheetPin[]) {
+async function preparePinsForForSaving(targetDocument: any, pins: AnySheetPinFlagData[]) {
   let pinsToSave = [];
 
   for (let pin of pins) {

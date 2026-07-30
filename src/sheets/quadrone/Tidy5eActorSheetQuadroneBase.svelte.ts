@@ -65,7 +65,7 @@ import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
-import type { SheetPin } from 'src/foundry/TidyFlags.types';
+import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1512,7 +1512,7 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (!SheetPinsProvider.isPinned(data.doc, tabId)) {
-        const pinType: SheetPin['type'] | undefined =
+        const pinType: AnySheetPinFlagData['type'] | undefined =
           data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
             ? 'item'
             : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY

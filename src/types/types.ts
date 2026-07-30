@@ -25,8 +25,8 @@ import type {
   DocumentJournalEntries,
   AttributePinFlag,
   EncounterPlaceholder,
-  SheetItemPinFlag,
-  SheetActivityPinFlag,
+  SheetItemPinFlagData,
+  SheetActivityPinFlagData,
 } from 'src/foundry/TidyFlags.types';
 import type { DataField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -444,11 +444,11 @@ export type AttributePinContext =
 export type SheetPinItemContext = {
   document: Item5e;
   linkedUses?: LinkedUses;
-} & SheetItemPinFlag;
+} & SheetItemPinFlagData;
 
 export type SheetPinActivityContext = {
   document: Activity5e;
-} & SheetActivityPinFlag;
+} & SheetActivityPinFlagData;
 
 export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
 

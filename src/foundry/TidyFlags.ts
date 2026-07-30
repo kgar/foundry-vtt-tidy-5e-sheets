@@ -14,9 +14,9 @@ import type {
   EncounterPlaceholders,
   EncounterPlaceholder,
   EncounterCombatantsSettings,
-  SheetPinFlag,
+  TabSheetPinFlagData,
   SheetPinLegacyFlag,
-  SheetPin,
+  AnySheetPinFlagData,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
@@ -1250,9 +1250,9 @@ export class TidyFlags {
     key: 'tabSheetPins' as const,
     prop: TidyFlags.getFlagPropertyPath('tabSheetPins'),
     /** Gets the actor's sheet pins. */
-    get(actor: Actor5e): SheetPinFlag {
+    get(actor: Actor5e): TabSheetPinFlagData {
       const data =
-        TidyFlags.tryGetFlag<SheetPinFlag>(actor, TidyFlags.tabSheetPins.key) ??
+        TidyFlags.tryGetFlag<TabSheetPinFlagData>(actor, TidyFlags.tabSheetPins.key) ??
         {};
 
       // Rolling updates / backwards compatibility - if legacy flag's array data is available,
@@ -1272,7 +1272,7 @@ export class TidyFlags {
     setByTabId(
       actor: Actor5e,
       tabId: string,
-      value: SheetPin[],
+      value: AnySheetPinFlagData[],
     ): Promise<void> {
       // Get the existing. Update it. Fully replace the flag.
       const data = TidyFlags.tabSheetPins.get(actor);
