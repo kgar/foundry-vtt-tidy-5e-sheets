@@ -1183,5 +1183,6 @@
         "hint": "Scambia punteggio caratteristica e modificatore nelle intestazioni scheda."
     },
     "TIDY5E.ContextMenuActionPickColor": "Scegli Colore",
-    "TIDY5E.Vehicle.RemoveBrokenLinks": "Rimuovi {value} link(s) danneggiati"
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Rimuovi {value} link(s) danneggiati",
+    "TIDY5E.ContextMenuActionViewItem": "Visualizza Elemento Origine"
 }
