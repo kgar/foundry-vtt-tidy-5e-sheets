@@ -53,6 +53,8 @@ export class SheetPinsProvider {
           });
         }
       }
+
+      pins.sort((a, b) => a.sort - b.sort);
     }
 
     return result;
@@ -307,7 +309,7 @@ export class SheetPinsProvider {
 
   /**
    * Gets the sheet pin context entries for displaying on a given tab.  
-   * **Note**: This method provides temporary support for reading the legacy / fallback partition 
+   * **Note**: This method provides temporary support for reading the legacy / fallback partition
    * which is part of the previous version of sheet pins. Without calling this method,
    * we no longer support a rolling update with backwards compatibility.  
    * Support for backwards compatibility here should last while game.release.generation < 17

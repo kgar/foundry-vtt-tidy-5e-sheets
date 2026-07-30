@@ -1511,7 +1511,7 @@ export function getTidy5eActorSheetQuadroneBase<
         return;
       }
 
-      if (!SheetPinsProvider.isPinned(this.document, tabId)) {
+      if (!SheetPinsProvider.isPinned(data.doc, tabId)) {
         const pinType: SheetPin['type'] | undefined =
           data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
             ? 'item'

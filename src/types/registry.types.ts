@@ -275,7 +275,5 @@ export type TidyPublicUtils = {
   getTabIdFromElement: (
     element: HTMLElement | null | undefined,
   ) => string | null;
-  getTabIdFromEvent: (
-    event: Event & { currentTarget: HTMLElement },
-  ) => string | null;
+  getTabIdFromEvent: (event: Event & { target: HTMLElement }) => string | null;
 };

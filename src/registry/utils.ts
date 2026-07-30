@@ -15,7 +15,7 @@ const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
 };
 
 const getTabIdFromEvent: TidyPublicUtils['getTabIdFromEvent'] = (event) => {
-  return getTabIdFromElement(event.currentTarget);
+  return getTabIdFromElement(event.target);
 };
 
 export function getUtils(): TidyPublicUtils {
