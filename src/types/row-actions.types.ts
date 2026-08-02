@@ -41,6 +41,12 @@ export type CommonConditionContextData = {
    * is not read-only / inside a locked compendium.
    */
   editable: boolean;
+
+  /**
+   * Any additional custom contextual data that is needed internally
+   * for the module to provide more flexibility and features.
+   */
+  [customContextData: string]: any;
 };
 
 /**

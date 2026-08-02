@@ -1,9 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
-  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
-    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
-  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
