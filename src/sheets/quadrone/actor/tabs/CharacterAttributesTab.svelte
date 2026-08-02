@@ -8,8 +8,8 @@
 <div class="tab-content">
   <div class="columns">
     <div class="attributes-column">
-      <SkillsCard />
-      <ToolsCard />
+      <SkillsCard tooltipDirection="RIGHT" />
+      <ToolsCard tooltipDirection="RIGHT" />
     </div>
     <div class="attributes-column">
       <SavingThrowsCard />

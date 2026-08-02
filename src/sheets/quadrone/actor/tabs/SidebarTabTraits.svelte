@@ -12,9 +12,9 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<SkillsCard showFiligree={false} />
+<SkillsCard showFiligree={false} tooltipDirection="RIGHT" />
 
-<ToolsCard showFiligree={false} />
+<ToolsCard showFiligree={false} tooltipDirection="RIGHT" />
 
 <div class="list traits">
   <CharacterTraitPills configButtonLocation="label">
@@ -25,7 +25,10 @@
         label={localize('DND5E.SpecialTraits')}
         entries={context.specialTraits}
         configurationTooltip={localize('DND5E.SpecialTraits')}
-        configAttributes={{ 'data-action': 'configureTab', 'data-tab-id': CONSTANTS.TAB_CHARACTER_ATTRIBUTES }}
+        configAttributes={{
+          'data-action': 'configureTab',
+          'data-tab-id': CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+        }}
         icon="fa-solid fa-star"
       />
     {/snippet}
