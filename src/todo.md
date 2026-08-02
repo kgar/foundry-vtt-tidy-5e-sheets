@@ -1,11 +1,10 @@
 ## The Accretion Disk of To Do's
 
-- [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 - [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Convert Sheet Pin eventing to sheet actions
+- [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
-- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
