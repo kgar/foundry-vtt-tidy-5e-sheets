@@ -1577,6 +1577,7 @@ export type GroupTraits = {
   specials: GroupTrait[];
   speeds: MeasurableGroupTrait<number>[];
   tools: GroupTrait[];
+  masteries: GroupTrait[];
 };
 
 export type TravelPaceConfigEntry = {
@@ -1931,4 +1932,4 @@ export type AggregatePinTabInfo = {
   tabId: string;
   /** Unlocalized tab name. */
   tabName: string;
-}
+};

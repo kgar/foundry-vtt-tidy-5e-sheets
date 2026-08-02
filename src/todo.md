@@ -1,6 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
