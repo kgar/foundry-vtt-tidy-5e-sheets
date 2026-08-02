@@ -1,11 +1,6 @@
 ## The Accretion Disk of To Do's
 
-- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
-- [ ] (confirm fixed) Character: HD bar has a cursor pointer, but there's no interactivity related to it
-- [ ] (confirming with hightouch; might remove) Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
-- [ ] (should be resolved; confirm) For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
-- [ ] (might be done) Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 - [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Convert Sheet Pin eventing to sheet actions
@@ -77,8 +72,11 @@
 
 ## hightouch To Do
 
+- [ ] Facility Details - Harvest UI at bottom needs some better layout applied to it. "Greenhouse" is an example of a facility with Harvest capabilities built in.
+- [ ] (confirming with hightouch; might remove) Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] NPC Sheet - Important NPC - Sidebar - HD value/max button, border changes from none to solid and causes visual shifting when clicking it.
+- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 - [ ] Clicking and holding on the initiative button shows a red square.
 - [ ] Surface edit icon in non-edit mode Biography tab
 - [ ] Add fallback image for broken image links (text appears today)
