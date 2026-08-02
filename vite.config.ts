@@ -5,7 +5,7 @@ import path, { resolve } from 'path';
 const s_PACKAGE_ID = 'modules/tidy5e-sheet';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   root: 'src/',
   base: `/${s_PACKAGE_ID}/`,
   publicDir: path.resolve(__dirname, 'public'),
@@ -35,7 +35,83 @@ export default defineConfig({
       src: path.resolve('./src'),
     },
   },
-  plugins: [svelte({ configFile: '../svelte.config.js' })],
+  plugins: [
+    svelte({ configFile: '../svelte.config.js' }),
+    {
+      name: 'vite-css-layer-injector',
+      enforce: 'pre',
+      transform(code, id) {
+        if (mode !== 'development' || !id.endsWith('.css')) {
+          return;
+        }
+
+        // Extract all @import rules
+        const importRegex = /@import\s+(['"][^'"]+['"])([^;]*);/g;
+
+        let imports: { full: string; path: string; rest: string }[] = [];
+
+        let remainder = code
+          .replace(importRegex, (full, path, rest) => {
+            imports.push({ full, path, rest });
+            return ''; // remove import from remainder
+          })
+          .trim();
+
+        // Rewrite imports to include layer(modules) if missing
+        const rewrittenImports = imports.map(({ full, path, rest }) => {
+          if (/layer\s*\(/.test(rest)) {
+            return full; // already has a layer(...)
+          }
+          return `@import ${path} layer(modules);`;
+        });
+
+        // If there are no imports at all, wrap whole file
+        if (imports.length === 0) {
+          return {
+            code: `@layer modules {\n${code}\n}`,
+            map: null,
+          };
+        }
+
+        // If imports exist but remainder is empty, only rewrite imports
+        if (remainder.length === 0) {
+          return {
+            code: rewrittenImports.join('\n'),
+            map: null,
+          };
+        }
+
+        // If imports exist and remainder exists, rejoin them all.
+        // Wrap the remainder in the modules layer if layering is not already being used.
+        const effectiveRemainder = remainder.includes('@layer')
+          ? remainder
+          : `@layer modules {\n${remainder}\n}`;
+
+        return {
+          code: rewrittenImports.join('\n') + '\n' + effectiveRemainder,
+          map: null,
+        };
+      },
+    },
+    {
+      name: 'vite-less-layer-wrapper',
+      enforce: 'pre',
+      transform(code, id) {
+        if (
+          mode !== 'development' ||
+          !id.endsWith('.less') ||
+          code.includes('@layer')
+        ) {
+          return;
+        }
+
+        return {
+          code: `@layer modules {\n${code}\n}`,
+          map: null,
+        };
+      },
+    },
+  ],
   build: {
     cssCodeSplit: true,
     outDir: path.resolve(__dirname, 'dist'),
@@ -58,4 +134,4 @@ export default defineConfig({
     sourcemap: true,
     minify: 'esbuild',
   },
-});
+}));
