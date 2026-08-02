@@ -17,9 +17,14 @@
   type Props = {
     showFiligree?: boolean;
     showProficiency?: boolean;
+    tooltipDirection?: string;
   };
 
-  let { showFiligree = true, showProficiency = true }: Props = $props();
+  let {
+    showFiligree = true,
+    showProficiency = true,
+    tooltipDirection,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -79,7 +84,10 @@
       {#each context.tools as tool (tool.key)}
         {const modTotal = $derived(getModifierData(tool.total))}
 
-        <li data-reference-tooltip={references[tool.key]}>
+        <li
+          data-reference-tooltip={references[tool.key]}
+          data-tooltip-direction={tooltipDirection}
+        >
           {#if showProficiency}
             <ProficiencyCycle
               actor={context.actor}

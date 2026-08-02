@@ -20,12 +20,14 @@
     defaultExpansionState?: boolean;
     showProficiency?: boolean;
     showFiligree?: boolean;
+    tooltipDirection?: string;
   };
 
   let {
     defaultExpansionState = true,
     showFiligree = true,
     showProficiency = true,
+    tooltipDirection,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -77,6 +79,7 @@
         <li
           class="skill-list-item"
           data-reference-tooltip={references[skill.key]}
+          data-tooltip-direction={tooltipDirection}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skill.key}
         >

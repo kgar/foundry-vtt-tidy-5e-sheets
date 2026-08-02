@@ -1,7 +1,6 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavorites.svelte';
-import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
 import SidebarTabTraits from 'src/sheets/quadrone/actor/tabs/SidebarTabTraits.svelte';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
