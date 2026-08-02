@@ -24,7 +24,6 @@
 
   let selectedTabId: string = $derived(context.currentTabId);
 
-
   // TODO: Combine these across sheets somehow?
   // Sidebar expanded setting, updates live.
   let sidebarExpandedPreference = $derived.by(() => {
@@ -45,8 +44,9 @@
     untrack(() => {
       const type = context.actor.type;
       const tabId = selectedTabId;
-      const stored = UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
-        ?.sidebarExpanded;
+      const stored =
+        UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
+          ?.sidebarExpanded;
       if (stored !== expanded) {
         UserSheetPreferencesService.setDocumentTypeTabPreference(
           type,
@@ -122,26 +122,19 @@
               data-tidy-sheet-part="sheet-header-actions-container"
             >
               {#if context.editable}
-                <button
-                  type="button"
-                  class="button button-icon-only short-rest button-gold"
-                  data-tooltip="DND5E.REST.Short.Label"
-                  aria-label={localize('DND5E.REST.Short.Label')}
-                  onclick={() => context.actor.shortRest()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-utensils"></i>
-                </button>
-                <button
-                  type="button"
-                  class="button button-icon-only long-rest button-gold"
-                  data-tooltip="DND5E.REST.Long.Label"
-                  aria-label={localize('DND5E.REST.Long.Label')}
-                  onclick={() => context.actor.longRest()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-campground"></i>
-                </button>
+                {#each Object.entries(context.config.restTypes) as [key, rest]}
+                  <button
+                    type="button"
+                    class="button button-icon-only short-rest button-gold"
+                    data-tooltip=""
+                    aria-label={localize(rest.label)}
+                    data-action="rest"
+                    data-type={key}
+                    disabled={!context.editable}
+                  >
+                    <i class={rest.icon}></i>
+                  </button>
+                {/each}
               {/if}
             </div>
           </div>
@@ -198,7 +191,9 @@
               data-type="initiative"
               data-has-roll-modes
             >
-              <span class="ability-abbr color-text-gold">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-abbr color-text-gold"
+                >{localize('DND5E.InitiativeAbbr')}</span
+              >
               <span class="ability-label-container initiative-bonus">
                 <span class="modifier color-text-lightest">
                   {ini.sign}

@@ -1,7 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 - [ ] (confirm fixed) Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] (confirming with hightouch; might remove) Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
@@ -79,6 +77,8 @@
 
 ## hightouch To Do
 
+- [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
+- [ ] NPC Sheet - Important NPC - Sidebar - HD value/max button, border changes from none to solid and causes visual shifting when clicking it.
 - [ ] Clicking and holding on the initiative button shows a red square.
 - [ ] Surface edit icon in non-edit mode Biography tab
 - [ ] Add fallback image for broken image links (text appears today)
