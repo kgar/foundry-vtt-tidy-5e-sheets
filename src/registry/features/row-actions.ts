@@ -68,6 +68,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
         condition: (args) =>
           // TODO: remove doc type logic after partitioning
           args.sheetDocument.system.isCharacter &&
+          args.data.usesSheetTab &&
           args.data.editable &&
           !args.data.unlocked,
         props: (args) => ({
@@ -190,6 +191,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
         condition: (args) =>
           // TODO: remove doc type logic after partitioning
           args.sheetDocument.system.isCharacter &&
+          args.data.usesSheetTab &&
           args.data.editable &&
           !args.data.unlocked,
         props: (args) => ({
@@ -265,6 +267,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
         condition: (args) =>
           // TODO: remove doc type logic after partitioning
           args.sheetDocument.system.isCharacter &&
+          args.data.usesSheetTab &&
           args.data.editable &&
           !args.data.unlocked,
         props: (args) => ({
@@ -403,6 +406,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
         condition: (args) =>
           // TODO: remove doc type logic after partitioning
           args.sheetDocument.system.isCharacter &&
+          args.data.usesSheetTab &&
           args.data.editable &&
           !args.data.unlocked,
         props: (args) => ({

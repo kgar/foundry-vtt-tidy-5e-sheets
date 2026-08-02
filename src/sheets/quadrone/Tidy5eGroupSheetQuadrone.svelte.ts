@@ -243,6 +243,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     let specials = new Map<string, GroupTrait>();
     let speeds = new Map<string, MeasurableGroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
+    let masteries = new Map<string, GroupTrait>();
 
     let skilled = new Map<string, GroupMemberQuadroneContext[]>([
       [CONSTANTS.SHEET_TYPE_CHARACTER, []],
@@ -346,6 +347,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         // Abilities
         this._prepareMemberAbilities(actor, abilities);
 
+        // Masteries
+        this._prepareMemberMasteries(actor, masteries);
+
         // Skills
         skilled.get(actor.type)?.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
@@ -403,6 +407,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         languages: [...languages.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang),
         ),
+        masteries: [...masteries.values()].sort((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang),
+        ),
         senses: [...senses.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang),
         ),
@@ -456,6 +463,18 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
       groupTool.identifiers.add(actor.uuid);
     });
+  }
+
+  _prepareMemberMasteries(actor: any, masteries: Map<string, GroupTrait>) {
+    for (const key of actor.system.traits?.weaponProf?.mastery?.value ?? []) {
+      const groupMastery = mapGetOrInsertComputed(masteries, key, (key) => ({
+        key,
+        label: dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key,
+        identifiers: new Set<string>(),
+      }));
+
+      groupMastery.identifiers.add(actor.uuid);
+    }
   }
 
   /* -------------------------------------------- */

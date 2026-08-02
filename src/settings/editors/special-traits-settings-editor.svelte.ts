@@ -53,9 +53,9 @@ export function getSpecialTraitsSettingsEditor(
     };
     const sections: Record<string, SpecialTraitSectionField[]> = {};
 
-    // Always show the effective value, after active effects, because Special Traits application
-    //  doesn't have a sheet mode mechanism to toggle views.
-    const source = document;
+    // Do NOT show the effective value (after active effects), because it will
+    // lead to a compounding stacking of bonuses being saved to the source data.
+    const source = document.toObject();
 
     flags.classes = Object.values(document.classes)
       .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
@@ -122,13 +122,13 @@ export function getSpecialTraitsSettingsEditor(
           {
             field: document.system.schema.fields.traits.fields.important,
             name: 'system.traits.important',
-            value: document.system.traits.important,
+            value: source.system.traits.important,
           },
         ],
       });
     }
 
-    return { flags, originalClass: document.system.details.originalClass };
+    return { flags, originalClass: source.system.details.originalClass };
   }
 
   return {

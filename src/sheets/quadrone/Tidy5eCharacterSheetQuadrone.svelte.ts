@@ -275,18 +275,17 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       );
     }
 
+    const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
+
+    const usesSheetTab = tabs.some((t) => t.id === CONSTANTS.TAB_ACTOR_ACTIONS);
+
     // Prepare owned items
-    this._prepareItems(context);
+    this._prepareItems(context, usesSheetTab);
 
     await this._prepareFacilities(context);
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
-
-    const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
-
-    // TODO: Incorporate user preference for whether to auto-populate or to fill with just those that are specifically indicated.
-    const usesSheetTab = tabs.some((t) => t.id === CONSTANTS.TAB_ACTOR_ACTIONS);
 
     if (usesSheetTab) {
       // TODO: create single, unified approach which takes eligible items, effects, activities,
@@ -755,7 +754,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return entries;
   }
 
-  _prepareItems(context: CharacterSheetQuadroneContext) {
+  _prepareItems(context: CharacterSheetQuadroneContext, usesSheetTab: boolean) {
     const eligibleItems = Array.from(this.actor.items).filter(
       (item: Item5e) => {
         // Suppress riders for disabled enchantments
@@ -836,7 +835,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
             // Contained items get row actions like any other item
             ctx.rowActions = InventoryRowActionRuntime.getRowActions({
               app: context.sheet,
-              data: context,
+              data: {
+                editable: context.editable,
+                owner: context.owner,
+                unlocked: context.unlocked,
+                usesSheetTab,
+              },
               rowDocument: item,
               sheetDocument: context.document,
             });
@@ -865,7 +869,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       ctx.rowActions = InventoryRowActionRuntime.getRowActions({
         app: context.sheet,
-        data: context,
+        data: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+          usesSheetTab,
+        },
         rowDocument: item,
         sheetDocument: context.document,
       });
@@ -913,7 +922,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = SpellRowActionRuntime.getRowActions({
         app: context.sheet,
-        data: context,
+        data: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+          usesSheetTab,
+        },
         rowDocument: item,
         sheetDocument: context.document,
       });
@@ -952,7 +966,12 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.rowActions = FeatureRowActionRuntime.getRowActions({
         app: context.sheet,
-        data: context,
+        data: {
+          editable: context.editable,
+          owner: context.owner,
+          unlocked: context.unlocked,
+          usesSheetTab,
+        },
         rowDocument: item,
         sheetDocument: context.document,
       });

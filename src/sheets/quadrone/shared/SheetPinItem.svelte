@@ -226,25 +226,13 @@
   <div class="pin-details">
     {#if context.unlocked && isEditing}
       <div class="pin-name-container flexrow" title={ctx.document.name}>
-        <TextInput
+        {let input = $state<HTMLInputElement>()}
+        <input
+          bind:this={input}
+          type="text"
           class="pin-name"
-          document={ctx.document}
-          field="name"
           value={ctx.alias}
-          selectOnFocus={true}
           placeholder={ctx.document.name}
-          onSaveChange={(ev) => {
-            const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(ev);
-
-            if (tabId) {
-              SheetPinsProvider.setAlias(
-                ctx.document,
-                tabId,
-                ev.currentTarget.value,
-              );
-            }
-            return false;
-          }}
         />
         <button
           type="button"
@@ -252,10 +240,6 @@
           aria-label="Save Alias"
           onclick={(ev) => {
             const tabId = CONFIG.TIDY5E.utils.getTabIdFromEvent(ev);
-
-            // TODO: Find another way to get our hands on this input than a positional approach.
-            const input =
-              ev.currentTarget.previousElementSibling?.querySelector('input');
 
             if (input && tabId) {
               SheetPinsProvider.setAlias(ctx.document, tabId, input.value);

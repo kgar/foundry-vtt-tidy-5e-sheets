@@ -29,7 +29,12 @@
           <i class="fa-solid fa-dice"></i>
           {localize('DND5E.HitDice')}
         </h4>
-        <div class="flexshrink hit-dice-container">
+        <button
+          type="button"
+          data-action={context.editable ? 'rest' : ''}
+          data-type="short"
+          class="flexshrink hit-dice-container button-borderless"
+        >
           <span class="value font-label-medium"
             >{context.system.attributes.hd.value}</span
           >
@@ -37,7 +42,7 @@
           <span class="max font-label-medium"
             >{context.system.attributes.hd.max}</span
           >
-        </div>
+        </button>
         <!-- <div class="flexshrink hit-dice-container">
           <div
             class="meter progress hit-die view-only"
