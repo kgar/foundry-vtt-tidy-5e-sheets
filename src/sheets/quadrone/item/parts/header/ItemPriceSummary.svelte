@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
@@ -39,9 +40,18 @@
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
 
   let conceal = $derived(item.system.identified === false && !gmEditMode);
+
+  let appId = $derived(context.document.id);
 </script>
 
-<div data-tooltip={title} class="item-price {cssClass}" {...rest}>
+<div
+  data-tooltip={title}
+  data-action="emphasize"
+  data-emphasize-tab-id={CONSTANTS.TAB_ITEM_DETAILS}
+  data-emphasize-selector="[id='{appId}-price-value']"
+  class="item-price pointer {cssClass}"
+  {...rest}
+>
   <!-- Currency Image -->
   {#if icon}
     <i
