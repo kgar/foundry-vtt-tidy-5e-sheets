@@ -256,7 +256,7 @@ export class TidySheetSettingsQuadroneApplication
   /**
    * The pane for undo/use defaults.
    */
-  getActivePane(): SettingsEditor<unknown> | undefined {
+  getActivePane(): SettingsEditorController | undefined {
     const currentTabId = this.currentTabId ?? TidySheetSettingsTabIds.theme;
     switch (currentTabId) {
       case TidySheetSettingsTabIds.theme:
