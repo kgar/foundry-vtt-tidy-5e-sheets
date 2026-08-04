@@ -276,9 +276,56 @@ export class TidySheetSettingsQuadroneApplication
           return undefined;
         }
         const tabId = currentTabId.slice('sheet:'.length);
-        // Special traits keeps its own in-pane controls.
+        // Character tab is a composite of its own visibility settings and Special Traits
         if (tabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES) {
-          return undefined;
+          // TODO: find a better place and maybe a utility for making composites.
+          const tabApp =
+            this.sheetTabOptionsEditorByTabId.get(tabId ?? '') ??
+            this.sheetTabsConfigurationSettingsTab;
+
+          const settingsEditor = this.specialTraitsChildApp;
+
+          const compositeHost: SettingsEditorController = $derived({
+            canUndo: settingsEditor?.canUndo || tabApp?.canUndo,
+            canUseDefault:
+              settingsEditor?.canUseDefault || tabApp?.canUseDefault,
+            hasChanges: settingsEditor?.hasChanges || tabApp?.hasChanges,
+            save: async () => {
+              await settingsEditor?.save();
+              await tabApp?.save();
+            },
+            undoChanges: async () => {
+              settingsEditor?.undoChanges();
+              tabApp?.undoChanges();
+            },
+            useDefault: async () => {
+              const proceed = await foundry.applications.api.DialogV2.confirm({
+                window: {
+                  title: FoundryAdapter.localize(
+                    'TIDY5E.UseDefaultDialog.title',
+                  ),
+                },
+                content: `<p>${FoundryAdapter.localize(
+                  'TIDY5E.UseDefaultDialog.text',
+                )}</p>`,
+              });
+
+              if (!proceed) {
+                return;
+              }
+
+              await settingsEditor?.resetToDefault();
+              await tabApp?.resetToDefault();
+            },
+            useDefaultLabel:
+              settingsEditor?.useDefaultLabel ?? tabApp?.useDefaultLabel,
+            resetToDefault: async () => {
+              await settingsEditor?.resetToDefault();
+              await tabApp?.resetToDefault();
+            },
+          });
+
+          return compositeHost;
         }
         // Fall back to tabDisplaySettingsTab for tabs that only have visibility
         // controls (the placeholder pane) — changes land there either way.
