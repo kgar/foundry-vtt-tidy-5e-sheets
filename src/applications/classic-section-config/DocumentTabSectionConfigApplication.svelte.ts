@@ -8,6 +8,7 @@ import type { SectionConfig } from 'src/features/sections/sections.types';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
 import { DocumentSheetDialog } from 'src/applications/DocumentSheetDialog.svelte';
+import { confirmUseDefault } from 'src/settings/editors/settings-editors.svelte';
 
 type SectionConfigConstructorArgs = {
   sections: TidySectionBase[];
@@ -98,14 +99,7 @@ export class DocumentTabSectionConfigApplication extends DocumentSheetDialog<
   }
 
   private async _useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
-      )}</p>`,
-    });
+    const proceed = await confirmUseDefault();
 
     if (!proceed) {
       return;

@@ -1,5 +1,5 @@
 import { settings } from 'src/settings/settings.svelte';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type HomebrewConfigContext = {
@@ -72,14 +72,7 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
     useDefaultLabel: undefined,
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;

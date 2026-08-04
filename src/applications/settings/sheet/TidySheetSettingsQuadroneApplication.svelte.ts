@@ -36,9 +36,10 @@ import {
   type HeaderControlConfigContextItem,
   type WorldHeaderControlConfigurationSettingsEditor,
 } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
-import type {
-  SettingsEditor,
-  SettingsEditorController,
+import {
+  confirmUseDefault,
+  createCompositeEditorController,
+  type SettingsEditorController,
 } from 'src/settings/editors/settings-editors.svelte';
 import {
   getSheetTabsConfigurationSettingsEditor,
@@ -279,53 +280,13 @@ export class TidySheetSettingsQuadroneApplication
         // Character tab is a composite of its own visibility settings and Special Traits
         if (tabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES) {
           // TODO: find a better place and maybe a utility for making composites.
-          const tabApp =
+          const compositeController = createCompositeEditorController(
+            this.specialTraitsChildApp,
             this.sheetTabOptionsEditorByTabId.get(tabId ?? '') ??
-            this.sheetTabsConfigurationSettingsTab;
+              this.sheetTabsConfigurationSettingsTab,
+          );
 
-          const settingsEditor = this.specialTraitsChildApp;
-
-          const compositeHost: SettingsEditorController = $derived({
-            canUndo: settingsEditor?.canUndo || tabApp?.canUndo,
-            canUseDefault:
-              settingsEditor?.canUseDefault || tabApp?.canUseDefault,
-            hasChanges: settingsEditor?.hasChanges || tabApp?.hasChanges,
-            save: async () => {
-              await settingsEditor?.save();
-              await tabApp?.save();
-            },
-            undoChanges: async () => {
-              settingsEditor?.undoChanges();
-              tabApp?.undoChanges();
-            },
-            useDefault: async () => {
-              const proceed = await foundry.applications.api.DialogV2.confirm({
-                window: {
-                  title: FoundryAdapter.localize(
-                    'TIDY5E.UseDefaultDialog.title',
-                  ),
-                },
-                content: `<p>${FoundryAdapter.localize(
-                  'TIDY5E.UseDefaultDialog.text',
-                )}</p>`,
-              });
-
-              if (!proceed) {
-                return;
-              }
-
-              await settingsEditor?.resetToDefault();
-              await tabApp?.resetToDefault();
-            },
-            useDefaultLabel:
-              settingsEditor?.useDefaultLabel ?? tabApp?.useDefaultLabel,
-            resetToDefault: async () => {
-              await settingsEditor?.resetToDefault();
-              await tabApp?.resetToDefault();
-            },
-          });
-
-          return compositeHost;
+          return compositeController;
         }
         // Fall back to tabDisplaySettingsTab for tabs that only have visibility
         // controls (the placeholder pane) — changes land there either way.
@@ -367,14 +328,7 @@ export class TidySheetSettingsQuadroneApplication
 
   // TODO: Aren't the individual editors also prompting for Use Default?
   async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text',
-      )}</p>`,
-    });
+    const proceed = await confirmUseDefault();
 
     if (!proceed) {
       return;

@@ -14,9 +14,10 @@ import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/wor
 import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
 import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
 import { getDefaultSheetPreferencesSettingsEditor } from 'src/settings/editors/default-sheet-preferences-settings-editor.svelte';
-import type {
-  SettingsEditor,
-  SettingsEditorController,
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+  type SettingsEditorController,
 } from 'src/settings/editors/settings-editors.svelte';
 import {
   getWorldSheetConfigurationSettingsEditor,
@@ -174,14 +175,7 @@ export class WorldSettingsQuadroneApplication
 
   /** Confirm once, then stage system defaults across every page. */
   async useDefault() {
-    const proceed = await foundry.applications.api.DialogV2.confirm({
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-      },
-      content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text',
-      )}</p>`,
-    });
+    const proceed = await confirmUseDefault();
 
     if (!proceed) {
       return;
