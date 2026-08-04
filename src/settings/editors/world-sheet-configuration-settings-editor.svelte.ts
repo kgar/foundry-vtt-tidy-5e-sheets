@@ -1,5 +1,5 @@
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import type {
   HeaderControlConfigContextItem,
   WorldHeaderControlConfigurationSettingsEditor,
@@ -131,14 +131,7 @@ export function getWorldSheetConfigurationSettingsEditor(
     },
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;

@@ -371,10 +371,10 @@
         app={app.spellSourceItemAssignmentsChildApp}
       />
     {:else if activeSelectedId === SETTINGS_SPECIAL_TRAITS && app.specialTraitsChildApp}
-      <SpecialTraitsPane app={app.specialTraitsChildApp} />
+      <SpecialTraitsPane settingsEditor={app.specialTraitsChildApp} />
     {:else if selectedSheetTabId === CONSTANTS.TAB_CHARACTER_ATTRIBUTES && app.specialTraitsChildApp}
       <SpecialTraitsPane
-        app={app.specialTraitsChildApp}
+        settingsEditor={app.specialTraitsChildApp}
         tabId={selectedSheetTabId}
         bind:tabConfigEntry={app.sheetTabsConfigurationSettingsTab.value.entry}
       />

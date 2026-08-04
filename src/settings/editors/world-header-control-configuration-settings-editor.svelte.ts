@@ -2,7 +2,7 @@ import {
   FoundryAdapter,
   type DocumentSheetConstructor,
 } from 'src/foundry/foundry-adapter';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import type { SheetHeaderControlPosition } from 'src/api/api.types';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 import { settings } from 'src/settings/settings.svelte';
@@ -188,14 +188,7 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
     useDefaultLabel: 'TIDY5E.UseDefault',
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;
