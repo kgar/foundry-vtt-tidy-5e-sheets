@@ -1,6 +1,20 @@
 ## The Accretion Disk of To Do's
 
 - [ ] Convert Sheet Pin eventing to sheet actions
+  - Actions
+    - [ ] (spell) onPipClick - index, uuid, slotKey
+      - editable only
+      - data-action="togglePip" data-n (1-based) data-prop (e.g., system.attributes.exhaustion) | adjusts for "spent" when needed
+    - [x] ~~Edit Alias~~ - Probably cannot do this one. This is just toggling state in the svelte component.
+    - [x] ~~~Save Alias / SheetPinsProvider.setAlias~ - data-item-id / data-activity-id, .pin-name~~ - probably shouldn't do this one, because it also has the side effect of toggling state. It belongs squarely in svelte's domain.
+    - [ ] saveValueChange / handleDocumentUsesChanged
+      - use data-name="path-here", data-item-id, data-activity-id on the markup ; this will trigger _onChangeForm > _processEmbeddedDocumentChange
+      - need to add special handling for uses `spent`. base-actor-sheet around line 1307 has one way of detecting and doing it. I should consider doing it that way so that things are more compatible with default.
+    - [ ] Recharge charges
+      - data-action="recharge", data-item-id, data-activity-id, | is curated specifically for item.system.uses.rollRecharge and activity.uses.rollRecharge, needs to know what item is being affected
+    - [ ] Change quantity
+      - use data-name="path-here", data-item-id
+- [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
@@ -64,6 +78,44 @@
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
+
+## Toggle Pip
+
+```js
+  /**
+   * Handle toggling a pip on the character sheet.
+   * @this {BaseActorSheet}
+   * @param {Event} event         Triggering click event.
+   * @param {HTMLElement} target  Button that was clicked.
+   */
+  static #togglePip(event, target) {
+    const n = Number(target.closest("[data-n]")?.dataset.n);
+    const prop = target.dataset.prop ?? target.closest("[data-prop]")?.dataset.prop;
+    if ( !Number.isNumeric(n) || !prop ) return;
+    let value = foundry.utils.getProperty(this.actor, prop);
+    if ( (value === n) && prop.endsWith(".spent") ) value++;
+    else if ( value === n ) value--;
+    else value = n;
+    this.submit({ updateData: { [prop]: value } });
+  }
+```
+
+## Recharge
+
+```js
+        /**
+   * Handle recharging an item.
+   * @param {Item5e|Activity} entry         The entity being recharged.
+   * @param {object} [options]
+   * @param {PointerEvent} [options.event]  The triggering event.
+   * @returns {Promise<Roll|void>}
+   * @protected
+   */
+  _onRollRecharge(entry, { event }={}) {
+    if ( entry instanceof Item5e ) return entry.system.uses?.rollRecharge({ apply: true, event });
+    return entry.uses?.rollRecharge({ apply: true, event });
+  }
+```
 
 ## hightouch To Do
 
