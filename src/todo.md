@@ -1,7 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
-- [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
 - [ ] Convert Sheet Pin eventing to sheet actions
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
