@@ -124,6 +124,22 @@
 
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
+    {const hasCombatants = $derived(
+      context.combat.some((section) => section.combatants.length),
+    )}
+    {#if !hasCombatants && context.editable}
+      <div class="inventory-empty empty-state-container">
+        <button
+          type="button"
+          class="button button-tertiary"
+          onclick={() => context.sheet._browseAddNpc()}
+        >
+          <i class="fas fa-plus"></i>
+          {localize('TIDY5E.Encounter.AddMember.Label')}
+        </button>
+      </div>
+    {/if}
+
     {#each context.combat as section (section.key)}
       {#if section.show && section.combatants.length}
         {const visibleItemCount = $derived(section.combatants.length)}
@@ -153,11 +169,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {context}
-                {hiddenColumns}
-                {section}
-              />
+              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"
