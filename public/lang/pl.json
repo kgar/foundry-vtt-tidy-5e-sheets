@@ -1149,5 +1149,9 @@
         "name": "Pokaż systemowe podpowiedzi narzędzi"
     },
     "TIDY5E.UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
-    "TIDY5E.UndoChanges": "Cofnij zmiany"
+    "TIDY5E.UndoChanges": "Cofnij zmiany",
+    "TIDY5E.ContextMenuActionPinToSpecificTab": "Przypnij do zakładki {tabName}",
+    "TIDY5E.ContextMenuActionPickColor": "Wybierz kolor",
+    "TIDY5E.ContextMenuActionViewItem": "Podgląd przedmiotu głównego",
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Usuń {value} niepoprawnych połączeń"
 }
