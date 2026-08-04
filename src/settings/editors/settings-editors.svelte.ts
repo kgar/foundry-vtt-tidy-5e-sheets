@@ -1,3 +1,5 @@
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
 export type SettingsEditor<T> = SettingsEditorController & {
   /** Get the current staged value. */
   get value(): T;
@@ -37,3 +39,48 @@ export type SettingsEditorController = {
   /** Overrides the default "Use Global Defaults" label. */
   useDefaultLabel?: string;
 };
+
+export function createCompositeEditorController(
+  ...controllers: (SettingsEditorController | undefined)[]
+): SettingsEditorController {
+  return {
+    canUndo: controllers.some((editor) => !!editor?.canUndo),
+    canUseDefault: controllers.some((editor) => !!editor?.canUseDefault),
+    hasChanges: controllers.some((editor) => !!editor?.hasChanges),
+    save: async () => {
+      for (const controller of controllers) {
+        await controller?.save();
+      }
+    },
+    undoChanges: () => {
+      for (const controller of controllers) {
+        controller?.undoChanges();
+      }
+    },
+    useDefault: async () => {
+      if (await confirmUseDefault()) {
+        for (const controller of controllers) {
+          await controller?.resetToDefault();
+        }
+      }
+    },
+    useDefaultLabel: controllers.find((editor) => !!editor?.useDefaultLabel)
+      ?.useDefaultLabel,
+    resetToDefault: async () => {
+      for (const controller of controllers) {
+        await controller?.resetToDefault();
+      }
+    },
+  };
+}
+
+export async function confirmUseDefault(): Promise<boolean> {
+  return await foundry.applications.api.DialogV2.confirm({
+    window: {
+      title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+    },
+    content: `<p>${FoundryAdapter.localize(
+      'TIDY5E.UseDefaultDialog.text',
+    )}</p>`,
+  });
+}

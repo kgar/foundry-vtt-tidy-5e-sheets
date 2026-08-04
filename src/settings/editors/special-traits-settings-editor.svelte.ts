@@ -4,7 +4,7 @@ import type {
   SpecialTraits as Flags,
 } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type SpecialTraitsContext = {
@@ -165,14 +165,7 @@ export function getSpecialTraitsSettingsEditor(
     },
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;

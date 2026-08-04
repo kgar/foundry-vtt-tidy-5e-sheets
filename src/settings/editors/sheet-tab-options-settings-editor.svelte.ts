@@ -1,5 +1,5 @@
 import type { Actor5e } from 'src/types/types';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { mapGetOrInsert } from 'src/utils/map';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -310,14 +310,7 @@ export function getSheetTabOptionsSettingsEditor(
     },
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;

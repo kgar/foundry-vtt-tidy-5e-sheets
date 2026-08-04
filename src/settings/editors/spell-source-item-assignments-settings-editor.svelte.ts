@@ -1,5 +1,5 @@
 import type { Actor5e } from 'src/types/types';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -105,14 +105,7 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
     },
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;

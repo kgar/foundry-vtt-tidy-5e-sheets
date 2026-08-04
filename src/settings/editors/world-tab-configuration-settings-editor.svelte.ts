@@ -17,7 +17,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
-import type { SettingsEditor } from './settings-editors.svelte';
+import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
 
 export type WorldTabConfigurationSettingsEditor = SettingsEditor<
   TabConfigContextEntry[]
@@ -201,14 +201,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     useDefaultLabel: undefined,
 
     async useDefault() {
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: {
-          title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
-        },
-        content: `<p>${FoundryAdapter.localize(
-          'TIDY5E.UseDefaultDialog.text',
-        )}</p>`,
-      });
+      const proceed = await confirmUseDefault();
 
       if (!proceed) {
         return;
