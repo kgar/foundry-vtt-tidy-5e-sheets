@@ -292,8 +292,8 @@
         "hint": "Zabrání nePJům měnit množství u položky."
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Používat volitelný barevný motiv?",
-        "hint": "Zobrazit barvy volitelného motivu"
+        "name": "Používat vlastní barevný motiv?",
+        "hint": "Zobrazit barvy vlastního motivu"
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
         "name": "Hlavní důraz"
@@ -459,7 +459,10 @@
         "options.viewers": "Uživatelský přístup",
         "options.visibility": "Zobrazit záložku",
         "showTabTooltip": "Zobrazit tuto záložku",
-        "hideTabTooltip": "Skrýt tuto záložku"
+        "hideTabTooltip": "Skrýt tuto záložku",
+        "headers.tab": "Záložka",
+        "headers.userVisibility": "Viditelnost uživatelů",
+        "headers.showTab": "Zobrazit záložku"
     },
     "TIDY5E.SpellSourceItemAssignments.Identifier": "Identifikátor zdrojového povolání",
     "TIDY5E.Settings.Migrations": {
@@ -583,7 +586,7 @@
         "ActionTooltip": "Po umístění záložky Akce vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
         "Label": "Sekce",
         "Default": "Výchozí sekce",
-        "Tooltip": "Po umístění do deníku aktéra vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
+        "Tooltip": "Po umístění do deníku aktéra vytvoř pro tuto položku vlastní sekci, nebo ji pro výchozí chování ponech prázdnou.",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
         "SectionSelectorChooseSectionTooltip": "Vyber sekci",
         "LabelPl": "Sekce",
@@ -592,7 +595,8 @@
         "SectionSelectorSaveNewSection": "Uložit novou sekci",
         "SectionSelectorChooseActionSectionTooltip": "Zvol sekci Akce",
         "SectionSelectorCreateNewSection": "Vytvořit novou sekci",
-        "SectionSelectorChooseTabSectionTooltip": "Zvol sekci {tabName}"
+        "SectionSelectorChooseTabSectionTooltip": "Zvol sekci {tabName}",
+        "ShowSection": "Zobrazení sekce"
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Nastavit maximum připravených kouzel",
@@ -1142,5 +1146,14 @@
         "resetHint": "Obnovit všechna nastavení světa v denících Tidy 5e na výchozí hodnoty. Tato akce je nevratná."
     },
     "TIDY5E.UseGlobalDefaults": "Použít globální výchozí nastavení",
-    "TIDY5E.UndoChanges": "Vrátit změny"
+    "TIDY5E.UndoChanges": "Vrátit změny",
+    "TIDY5E.ContextMenuActionViewItem": "Zobrazit zdrojovou položku",
+    "TIDY5E.ContextMenuActionPickColor": "Zvol barvu",
+    "TIDY5E.ContextMenuActionPinToSpecificTab": "Připnout k záložce {tabName}",
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "title": "Prohoz hodnoty vlastnosti a její opravy",
+        "name": "Prohoz hodnoty vlastnosti a její opravy",
+        "hint": "Prohoz hodnoty vlastnosti a její opravy v záhlaví deníku."
+    },
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů"
 }
