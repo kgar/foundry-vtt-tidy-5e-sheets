@@ -2,9 +2,6 @@
 
 - [ ] Convert Sheet Pin eventing to sheet actions
   - Actions
-    - [ ] (spell) onPipClick - index, uuid, slotKey
-      - editable only
-      - data-action="togglePip" data-n (1-based) data-prop (e.g., system.attributes.exhaustion) | adjusts for "spent" when needed
     - [x] ~~Edit Alias~~ - Probably cannot do this one. This is just toggling state in the svelte component.
     - [x] ~~~Save Alias / SheetPinsProvider.setAlias~ - data-item-id / data-activity-id, .pin-name~~ - probably shouldn't do this one, because it also has the side effect of toggling state. It belongs squarely in svelte's domain.
     - [ ] saveValueChange / handleDocumentUsesChanged
