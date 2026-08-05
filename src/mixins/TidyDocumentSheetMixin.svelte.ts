@@ -96,6 +96,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         toggle: TidyDocumentSheet.#toggle,
         'transfer-currency': TidyDocumentSheet.#transferCurrency,
         configureTab: TidyDocumentSheet.#configureTab,
+        togglePip: TidyDocumentSheet.#togglePip,
       },
     };
 
@@ -965,6 +966,45 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       this.openSheetSettings(target.dataset.tabId);
+    }
+
+    static async #togglePip(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const n = Number(target.closest<HTMLElement>('[data-n]')?.dataset.n);
+      const prop =
+        target.dataset.prop ??
+        target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
+
+      if (!Number.isNumeric(n) || !prop) {
+        return;
+      }
+
+      let value = foundry.utils.getProperty(this.actor, prop);
+
+      value =
+        value === n && prop.endsWith('.spent')
+          ? // `spent` needs special inverse treatment
+            value + 1
+          : value === n
+            ? // popping off the top pip
+              value - 1
+            : value > n
+              // expending all pips beyond and including the clicked pip
+              // note: this is how Tidy has historically done this,
+              // whereas the default sheets will keep the clicked
+              // pip unexpended.
+              ? n - 1
+              // increase value to match the clicked empty pip
+              : n;
+
+      this.submit({ updateData: { [prop]: value } });
     }
 
     /**

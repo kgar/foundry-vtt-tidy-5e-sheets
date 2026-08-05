@@ -11,6 +11,8 @@
   import SpellPip from 'src/components/pips/SpellPip.svelte';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
+  import SpellPipQuadrone from 'src/components/pips/SpellPipQuadrone.svelte';
+  import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -163,17 +165,11 @@
       <span class="{cssClass}-max">{section?.max}</span>
     </span>
   {:else if spellSlotTrackerMode === 'spell-slots-pips'}
-    <div class="pips spell-pips">
-      {#each { length: section?.max ?? 0 }, index}
-        <SpellPip
-          uses={section?.value ?? 0}
-          {index}
-          temp={index >= section?.max}
-          onclick={() =>
-            context.editable && onPipClick(index, section, slotKey)}
-        />
-      {/each}
-    </div>
+    <SpellPipsQuadrone
+      max={section?.max}
+      prop="system.spells.{slotKey}.value"
+      uses={section?.value}
+    />
   {/if}
 {/snippet}
 
