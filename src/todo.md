@@ -1,5 +1,7 @@
 ## The Accretion Disk of To Do's
 
+- [ ] Test system.uses.value with Foundry standard
+- [ ] Test actvity uses.value with Foundry standard
 - [ ] Convert Sheet Pin eventing to sheet actions
   - Actions
     - [x] ~~Edit Alias~~ - Probably cannot do this one. This is just toggling state in the svelte component.
@@ -75,27 +77,6 @@
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
-
-## Toggle Pip
-
-```js
-  /**
-   * Handle toggling a pip on the character sheet.
-   * @this {BaseActorSheet}
-   * @param {Event} event         Triggering click event.
-   * @param {HTMLElement} target  Button that was clicked.
-   */
-  static #togglePip(event, target) {
-    const n = Number(target.closest("[data-n]")?.dataset.n);
-    const prop = target.dataset.prop ?? target.closest("[data-prop]")?.dataset.prop;
-    if ( !Number.isNumeric(n) || !prop ) return;
-    let value = foundry.utils.getProperty(this.actor, prop);
-    if ( (value === n) && prop.endsWith(".spent") ) value++;
-    else if ( value === n ) value--;
-    else value = n;
-    this.submit({ updateData: { [prop]: value } });
-  }
-```
 
 ## Recharge
 
