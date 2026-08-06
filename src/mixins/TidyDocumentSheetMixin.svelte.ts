@@ -10,6 +10,7 @@ import type {
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import type {
+  Actor5e,
   CustomContent,
   DocumentSheetV2Context,
   Tab,
@@ -24,7 +25,6 @@ import {
 import { tick } from 'svelte';
 import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
-import { processInputChangeDelta } from 'src/utils/form';
 import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,
@@ -45,6 +45,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -145,9 +146,26 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const { target } = event;
-      if (!target) {
+      if (!event.target) {
         return;
+      }
+
+      // Only apply sheet-level processing to inputs that opt into standard Foundry form management via name and data-name attributes.
+      const isSelfSufficientInput =
+        !event.target.name && !event.target.dataset.name;
+      if (isSelfSufficientInput) {
+        return;
+      }
+
+      const { targetDocument } = this._getDocumentSubmissionInformation(event);
+
+      // Process delta changes
+      if (
+        event.target.matches(
+          `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+        )
+      ) {
+        dnd5e.utils.parseInputDelta(event.target, targetDocument);
       }
 
       try {
@@ -156,12 +174,11 @@ export function getTidyExtensibleDocumentSheetMixin<
           return;
         }
 
-        const isSelfSufficientInput = !event.target.name;
-        if (isSelfSufficientInput) {
-          return;
+        // TODO: when a save fails, this returns `undefined`. An input with a bogus delta value can be stuck with the inaccurate value until the sheet is closed and reopened. Figure out how to make the input be restored to its intended value cleanly.
+        const result = await super._onChangeForm(formConfig, event);
+        if (result === undefined) {
+          // TODO: if undefined, use `target` to fetch the real value and force-correct the input with bad data
         }
-
-        super._onChangeForm(formConfig, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
@@ -392,22 +409,13 @@ export function getTidyExtensibleDocumentSheetMixin<
     async _onEmbeddedDocumentInputChange(
       event: InputEvent & { target: HTMLInputElement },
     ) {
-      const itemId =
-        event.target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
-
-      const item = !!itemId ? await this.getItem(itemId) : null;
-
-      const activityId =
-        event.target.closest<HTMLElement>('[data-activity-id]')?.dataset
-          .activityId;
-
-      const activity = item?.system.activities?.get(activityId);
+      const { activity, item } = this._getDocumentSubmissionInformation(event);
 
       if (activity) {
         return await this._processEmbeddedDocumentChange(event, activity);
       }
 
-      if (itemId) {
+      if (item) {
         return await this._processEmbeddedDocumentChange(event, item);
       }
     }
@@ -421,34 +429,28 @@ export function getTidyExtensibleDocumentSheetMixin<
       const field = event.target.getAttribute('data-name')!;
 
       let valueToSave: string | number = event.target.value;
+      const valueAsNumber = Number(valueToSave);
 
-      // For deltas, parse the resulting delta value
-      if (event.target.matches('[inputmode="numeric"]')) {
-        valueToSave = processInputChangeDelta(
-          event.target.value,
-          doc,
-          field,
-        )?.toString();
+      // Special case handling for Item uses.
+      if (
+        doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+        event.target.dataset.name === 'system.uses.value' &&
+        !isNaN(valueAsNumber)
+      ) {
+        return await doc.update({
+          'system.uses.spent': doc.system.uses.max - valueAsNumber,
+        });
+      } else if (
+        doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
+        event.target.dataset.name === 'uses.value'
+      ) {
+        return await doc.item.updateActivity(doc.id, {
+          'uses.spent': doc.uses.max - valueAsNumber,
+        });
       }
 
-      // For numeric changes, enforce min/max on the value to save
-      if (event.target.matches('[inputmode="numeric"], [type="number"]')) {
-        const minAttribute = event.target.getAttribute('min');
-        const min = !isNil(minAttribute, '') ? Number(minAttribute) : -Infinity;
-
-        const maxAttribute = event.target.getAttribute('max');
-        const max = !isNil(maxAttribute, '') ? Number(maxAttribute) : Infinity;
-
-        const valueAsNumber = Number(valueToSave);
-        valueToSave = Math.clamp(valueAsNumber, min, max);
-
-        if (doc && !Number.isNaN(valueToSave)) {
-          event.target.value = valueToSave?.toString();
-        }
-      }
-
-      // Save the value to the document, whatever that value ultimately became
-      await doc.update({ [field]: valueToSave });
+      // Standard case: save the intended value.
+      return await doc.update({ [field]: valueToSave });
     }
 
     getItem(id?: string) {
@@ -487,6 +489,34 @@ export function getTidyExtensibleDocumentSheetMixin<
           e,
         );
       }
+    }
+
+    _getDocumentSubmissionInformation(
+      event: Event & { target: HTMLElement },
+    ): Partial<{
+      itemId: string;
+      item: Item5e;
+      activityId: string;
+      activity: Activity5e;
+      targetDocument: Actor5e | Item5e | Activity5e;
+    }> {
+      const input = event.target;
+      const { itemId } =
+        input.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+      const sheetDocument = this.document;
+      const item = sheetDocument?.items?.get(itemId);
+      const { activityId } =
+        input.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
+      const activity = item?.system.activities?.get(activityId);
+      const targetDocument = activity ?? item ?? sheetDocument;
+
+      return {
+        itemId,
+        item,
+        activityId,
+        activity,
+        targetDocument,
+      };
     }
 
     /* -------------------------------------------- */
@@ -996,13 +1026,13 @@ export function getTidyExtensibleDocumentSheetMixin<
             ? // popping off the top pip
               value - 1
             : value > n
-              // expending all pips beyond and including the clicked pip
-              // note: this is how Tidy has historically done this,
-              // whereas the default sheets will keep the clicked
-              // pip unexpended.
-              ? n - 1
-              // increase value to match the clicked empty pip
-              : n;
+              ? // expending all pips beyond and including the clicked pip
+                // note: this is how Tidy has historically done this,
+                // whereas the default sheets will keep the clicked
+                // pip unexpended.
+                n - 1
+              : // increase value to match the clicked empty pip
+                n;
 
       this.submit({ updateData: { [prop]: value } });
     }
