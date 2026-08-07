@@ -41,10 +41,9 @@
 
 <ItemTable key={section.key} data-custom-section={section.custom ? true : null}>
   {#snippet header()}
-    {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
-      section.items,
-      searchResults.uuids,
-    ))}
+    {const visibleItemCount = $derived(
+      ItemVisibility.countVisibleItems(section.items, searchResults.uuids),
+    )}
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {localize(section.label ?? 'DND5E.Features')}
@@ -87,13 +86,11 @@
           </ItemTableCell>
           <ItemTableCell baseWidth="3.125rem">
             {#if item.isOnCooldown}
-              <RechargeControl
-                document={item}
-                field={'system.uses.spent'}
-                uses={item.system.uses}
-              />
+              <RechargeControl document={item} uses={item.system.uses} />
             {:else if item.hasRecharge}
-              {const remaining = $derived(item.system.uses.max - item.system.uses.spent)}
+              {const remaining = $derived(
+                item.system.uses.max - item.system.uses.spent,
+              )}
               {#if remaining > 1}
                 <span>{remaining}</span>
               {/if}

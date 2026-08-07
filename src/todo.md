@@ -1,10 +1,5 @@
 ## The Accretion Disk of To Do's
 
-
-- [ ] Convert Sheet Pin eventing to sheet actions
-  - Actions
-    - [ ] Recharge charges
-      - data-action="recharge", data-item-id, data-activity-id, | is curated specifically for item.system.uses.rollRecharge and activity.uses.rollRecharge, needs to know what item is being affected
 - [ ] Convert all columns to use data-name
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.

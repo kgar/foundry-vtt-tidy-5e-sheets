@@ -214,14 +214,15 @@
     {/if}
     {#each features as section (section.key)}
       {#if section.show}
-        {const featureEntries = $derived(section.items.map((item) => ({
-          item,
-          ctx: context.itemContext[item.id],
-        })))}
-        {const visibleItemCount = $derived(ItemVisibility.countVisibleItems(
-          section.items,
-          searchResults.uuids,
-        ))}
+        {const featureEntries = $derived(
+          section.items.map((item) => ({
+            item,
+            ctx: context.itemContext[item.id],
+          })),
+        )}
+        {const visibleItemCount = $derived(
+          ItemVisibility.countVisibleItems(section.items, searchResults.uuids),
+        )}
         {#if context.unlocked || visibleItemCount > 0}
           <ItemTable
             key={section.key}
@@ -306,12 +307,12 @@
                         {#if item.isOnCooldown}
                           <RechargeControl
                             document={item}
-                            field={'system.uses.spent'}
                             uses={item.system.uses}
                           />
                         {:else if item.hasRecharge}
-                          {const remaining =
-                            $derived(item.system.uses.max - item.system.uses.spent)}
+                          {const remaining = $derived(
+                            item.system.uses.max - item.system.uses.spent,
+                          )}
                           {#if remaining > 1}
                             <span>{remaining}</span>
                           {/if}

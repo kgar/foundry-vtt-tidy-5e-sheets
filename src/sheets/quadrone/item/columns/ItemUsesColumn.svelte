@@ -40,7 +40,8 @@
   {#if item.hasRecharge && item.isOnCooldown}
     <a
       class={['item-list-button', { disabled: !item.isOwner }]}
-      data-tooltip={rechargeLabel}
+      data-tooltip=""
+      aria-label={rechargeLabel}
       onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>

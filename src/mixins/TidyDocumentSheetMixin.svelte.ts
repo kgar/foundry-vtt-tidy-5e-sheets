@@ -85,19 +85,20 @@ export function getTidyExtensibleDocumentSheetMixin<
         controls: [],
       },
       actions: {
+        'activity-use': TidyDocumentSheet.#useActivity,
         //changeMode: PrimarySheet5e.#changeMode,
+        configureTab: TidyDocumentSheet.#configureTab,
         currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
+        recharge: TidyDocumentSheet.#recharge,
         showContextMenu: TidyDocumentSheet.#showContextMenu,
         showDocument: TidyDocumentSheet.#showDocument,
-        use: TidyDocumentSheet.#useItem,
-        'activity-use': TidyDocumentSheet.#useActivity,
         toggle: TidyDocumentSheet.#toggle,
-        'transfer-currency': TidyDocumentSheet.#transferCurrency,
-        configureTab: TidyDocumentSheet.#configureTab,
         togglePip: TidyDocumentSheet.#togglePip,
+        'transfer-currency': TidyDocumentSheet.#transferCurrency,
+        use: TidyDocumentSheet.#useItem,
       },
     };
 
@@ -1244,6 +1245,40 @@ export function getTidyExtensibleDocumentSheetMixin<
       });
 
       return this._renderChild(settings);
+    }
+
+    static async #recharge(
+      this: TidyDocumentSheet,
+      event: Event,
+      _target: HTMLElement,
+    ) {
+      const { item, activity } = this._getDocumentSubmissionInformation(
+        event as Event & { target: HTMLElement },
+      );
+
+      this._onRollRecharge(activity ?? item, { event });
+    }
+
+    _onRollRecharge(
+      entry: Item5e | Activity5e,
+      { event }: Partial<{ event: Event }> = {},
+    ) {
+      const isItem = entry instanceof dnd5e.documents.Item5e;
+      const autoSucceed = event && 'shiftKey' in event && event.shiftKey;
+
+      if (autoSucceed && isItem) {
+        return entry.update({ ['system.uses.spent']: 0 });
+      }
+
+      if (autoSucceed) {
+        return entry.item.updateActivity(entry.id, { ['uses.spent']: 0 });
+      }
+
+      if (isItem) {
+        return entry.system.uses?.rollRecharge({ apply: true, event });
+      }
+
+      return entry.uses?.rollRecharge({ apply: true, event });
     }
 
     /* -------------------------------------------- */

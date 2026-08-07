@@ -98,12 +98,12 @@
               {#if ctx.isOnCooldown}
                 <RechargeControl
                   document={ctx.activity}
-                  field={'uses.spent'}
                   uses={ctx.activity.uses}
                 />
               {:else if ctx.hasRecharge}
-                {const remaining =
-                  $derived(ctx.activity.uses.max - ctx.activity.uses.spent)}
+                {const remaining = $derived(
+                  ctx.activity.uses.max - ctx.activity.uses.spent,
+                )}
                 {#if remaining > 1}
                   <span>{remaining}</span>
                 {/if}

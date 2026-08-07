@@ -299,7 +299,7 @@
         -->
         <div class="pin-counter {ctx.resource}">
           {#if pinType === 'limited-uses-recharging'}
-            <RechargeControl document={ctx.document} field={spentProp} {uses} />
+            <RechargeControl document={ctx.document} {uses} />
           {:else if pinType === 'limited-uses-recharged'}
             <span class="inline-uses color-text-default charged-text">
               <input
