@@ -29,7 +29,7 @@
   {const quantity = $derived(rowContext.quantity.value?.toString() ?? '')}
 
   {#if context.unlocked}
-    <InlineQuantityTracker
+    <!-- <InlineQuantityTracker
       aria-label={localize('DND5E.Quantity')}
       data-tooltip="DND5E.Quantity"
       min="0"
@@ -42,7 +42,7 @@
         );
         input.value = quantity;
       }}
-    />
+    /> -->
   {:else}
     <span class="font-label-large color-text-default"
       >{rowContext.quantity.value}</span

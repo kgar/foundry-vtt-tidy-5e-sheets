@@ -1,17 +1,15 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Eliminate quadrone usage of FoundryAdapter.handleDocumentUsesChanged
-  - [ ] Implement spent support for system.resources.legact.value and plug in
-  - [ ] Implement spent support for system.resources.legres.value and plug in
-- [ ] NpcScoreTrackerCard - use data-action="increase" and data-action="decrease" on the buttons
-- [ ] Convert InlineItemQuantityTracker to use data-name, data-action="increase", and data-action="decrease"
-  - Might need special handling for src\sheets\quadrone\item\columns\EncounterMemberQuantityColumn.svelte
+
+- [ ] src\sheets\quadrone\item\columns\EncounterMemberQuantityColumn.svelte - add special handling for adjusting encounter member quantity. Then uncomment and implement tracker.
+- [ ] src\sheets\quadrone\item\columns\VehicleMemberQuantityColumn.svelte - add special handling for adjusting vehicle member quantity. Then uncomment and implement tracker.
 - [ ] Convert all columns to use data-name
   - [ ] src\sheets\quadrone\item\columns\EncounterMemberInitiativeColumn.svelte - this will likely need some subclass override
   - [ ] src\sheets\quadrone\item\columns\EncounterMemberQtyFormulaColumn.svelte - this will likely need some subclass override
 - [ ] src\sheets\quadrone\actor\character-parts\InspirationBadge.svelte - move all eventing to the character sheet for handling inspo toggling, increase/decrease, etc.
 - [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
 - [ ] src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
+- [ ] src\sheets\quadrone\actor\parts\SpellSlotTracker.svelte - convert to name or data-name, and basic inputs
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.

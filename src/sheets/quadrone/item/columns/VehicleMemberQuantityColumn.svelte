@@ -24,8 +24,8 @@
   }
 </script>
 
-<InlineQuantityTracker
+<!-- <InlineQuantityTracker
   value={rowContext.quantity}
   onIncrement={() => handleChange('+1')}
   onDecrement={() => handleChange('-1')}
-/>
+/> -->

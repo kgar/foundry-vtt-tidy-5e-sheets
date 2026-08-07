@@ -24,6 +24,6 @@
   min="0"
   {disabled}
   inputmode="numeric"
-  data-name={field}
+  property={field}
   value={quantity}
 />

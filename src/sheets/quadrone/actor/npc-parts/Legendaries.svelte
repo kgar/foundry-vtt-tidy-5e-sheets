@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -20,9 +21,7 @@
 
 {#if context.showLegendaryActions}
   <NpcScoreTrackerCard
-    actor={context.actor}
     label={localize('DND5E.LegendaryAction.Label')}
-    spentPath="system.resources.legact.spent"
     value={context.system.resources.legact.value}
     valuePath="system.resources.legact.value"
     valueTooltip="DND5E.LegendaryAction.Remaining"
@@ -36,9 +35,7 @@
 
 {#if context.showLegendaryResistances}
   <NpcScoreTrackerCard
-    actor={context.actor}
     label={localize('DND5E.LegendaryResistance.Label')}
-    spentPath="system.resources.legres.spent"
     value={context.system.resources.legres.value}
     valuePath="system.resources.legres.value"
     valueTooltip="DND5E.LegendaryResistance.Remaining"
@@ -126,18 +123,17 @@
         {localize('DND5E.Initiative')}
       </span>
       {#if context.unlocked}
-        <TextInputQuadrone
+        <input
+          type="text"
           id="{appId}-lair-action"
-          document={context.actor}
-          field="system.resources.lair.initiative"
+          inputmode="numeric"
+          data-name="system.resources.lair.initiative"
           value={context.system.resources.lair.initiative ?? ''}
           placeholder={localize('DND5E.InitiativeAbbr')}
-          enableDeltaChanges={true}
-          selectOnFocus={true}
-          saveEmptyAsNull={true}
-          disabled={!context.unlocked}
-          data-tooltip={'DND5E.LAIR.Action.Initiative'}
+          data-tooltip="DND5E.LAIR.Action.Initiative"
           class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
+          disabled={!context.unlocked}
+          {@attach InputAttachments.selectOnFocus}
         />
       {:else}
         <span class="font-label-large color-text-default flexshrink">

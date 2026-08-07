@@ -92,6 +92,8 @@ export function getTidyExtensibleDocumentSheetMixin<
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
+        increase: TidyDocumentSheet.#increase,
+        decrease: TidyDocumentSheet.#decrease,
         recharge: TidyDocumentSheet.#recharge,
         showContextMenu: TidyDocumentSheet.#showContextMenu,
         showDocument: TidyDocumentSheet.#showDocument,
@@ -170,8 +172,15 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       try {
+        const proceedWithDefaultFormHandling =
+          await this._onChangeFormReadyToSave(event);
+
+        if (proceedWithDefaultFormHandling === false) {
+          return;
+        }
+
         if (event.target.matches('[data-name]')) {
-          await this._onEmbeddedDocumentInputChange(event);
+          await this._onSingleInputChange(event);
           return;
         }
 
@@ -185,6 +194,16 @@ export function getTidyExtensibleDocumentSheetMixin<
           ui.notifications.error(failure.message),
         );
       }
+    }
+
+    /**
+     * Optional override for sheet to perform document-specific changes.
+     * Return `false` to prevent the default form change save behavior.
+     */
+    protected async _onChangeFormReadyToSave(
+      _event: any,
+    ): Promise<false | undefined> {
+      return undefined;
     }
 
     /** @override */
@@ -407,21 +426,15 @@ export function getTidyExtensibleDocumentSheetMixin<
       super._updateFrame(options);
     }
 
-    async _onEmbeddedDocumentInputChange(
+    async _onSingleInputChange(
       event: InputEvent & { target: HTMLInputElement },
     ) {
-      const { activity, item } = this._getDocumentSubmissionInformation(event);
+      const { targetDocument } = this._getDocumentSubmissionInformation(event);
 
-      if (activity) {
-        return await this._processEmbeddedDocumentChange(event, activity);
-      }
-
-      if (item) {
-        return await this._processEmbeddedDocumentChange(event, item);
-      }
+      return await this._processSingleInputChange(event, targetDocument);
     }
 
-    private async _processEmbeddedDocumentChange(
+    async _processSingleInputChange(
       event: InputEvent & { target: HTMLInputElement },
       doc: any,
     ) {
@@ -430,28 +443,46 @@ export function getTidyExtensibleDocumentSheetMixin<
       const field = event.target.getAttribute('data-name')!;
 
       let valueToSave: string | number = event.target.value;
-      const valueAsNumber = Number(valueToSave);
 
+      if (
+        event.target.matches(
+          '[type="number"], [data-dype="Number"], [inputmode="numeric"]',
+        )
+      ) {
+        const valueAsNumber = Number.isNumeric(valueToSave)
+          ? Number(valueToSave)
+          : valueToSave;
+
+        return await this._updateNumericProperty(doc, field, valueAsNumber);
+      }
+
+      return await doc.update({ [field]: valueToSave });
+    }
+
+    async _updateNumericProperty(
+      targetDocument: any,
+      prop: string,
+      value: number | string,
+    ) {
       // Special case handling for Item uses.
       if (
-        doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
-        event.target.dataset.name === 'system.uses.value' &&
-        !isNaN(valueAsNumber)
+        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+        prop === 'system.uses.value'
       ) {
-        return await doc.update({
-          'system.uses.spent': doc.system.uses.max - valueAsNumber,
+        return await targetDocument.update({
+          'system.uses.spent': targetDocument.system.uses.max - (value as any),
         });
       } else if (
-        doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
-        event.target.dataset.name === 'uses.value'
+        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
+        prop === 'uses.value'
       ) {
-        return await doc.item.updateActivity(doc.id, {
-          'uses.spent': doc.uses.max - valueAsNumber,
+        return await targetDocument.item.updateActivity(targetDocument.id, {
+          'uses.spent': targetDocument.uses.max - (value as any),
         });
       }
 
       // Standard case: save the intended value.
-      return await doc.update({ [field]: valueToSave });
+      return await targetDocument.update({ [prop]: value });
     }
 
     getItem(id?: string) {
@@ -959,11 +990,77 @@ export function getTidyExtensibleDocumentSheetMixin<
       await fp.browse();
     }
 
+    static async #increase(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._increase(event, target)) === false) {
+        return;
+      }
+
+      return await this._onAdjustProperty(event, target, 1);
+    }
+
+    protected async _increase(
+      _event: Event,
+      _target: HTMLElement,
+    ): Promise<any> {}
+
+    async _onAdjustProperty(event: Event, target: HTMLElement, amount: number) {
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event as Event & { target: HTMLElement },
+      );
+
+      const prop = target.dataset.property;
+
+      if (!prop) {
+        return;
+      }
+
+      let value = FoundryAdapter.getProperty<number>(targetDocument, prop) ?? 0;
+
+      value += amount;
+
+      const input = target.parentElement?.querySelector('input');
+      const min = Number.isNumeric(input?.dataset.min)
+        ? Number(input?.dataset.min)
+        : -Infinity;
+      const max = Number.isNumeric(input?.dataset.max)
+        ? Number(input?.dataset.max)
+        : Infinity;
+
+      value = Math.clamp(value, min, max);
+
+      if (isNaN(value)) {
+        return;
+      }
+
+      return await this._updateNumericProperty(targetDocument, prop, value);
+    }
+
+    static async #decrease(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._decrease(event, target)) === false) {
+        return;
+      }
+
+      this._onAdjustProperty(event, target, -1);
+    }
+
+    protected async _decrease(
+      event: Event,
+      target: HTMLElement,
+    ): Promise<any> {}
+
     /**
      * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
      * @param args The tab where this Add operation is occurring, and other optional parameters.
      */
-    async _addDocument(args: {
+    async _addDocument(_args: {
       tabId: string;
       customSection?: string;
       creationItemTypes?: string[];
@@ -972,8 +1069,8 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     static async #currency(
       this: TidyDocumentSheet,
-      event: Event,
-      target: HTMLElement,
+      _event: Event,
+      _target: HTMLElement,
     ) {
       return new dnd5e.applications.CurrencyManager({
         document: this.document,
