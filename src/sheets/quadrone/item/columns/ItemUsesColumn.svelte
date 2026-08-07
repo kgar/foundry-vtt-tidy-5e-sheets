@@ -59,10 +59,10 @@
   {:else}
     <input
       type="text"
+      inputmode="numeric"
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
-      onchange={(event) =>
-        FoundryAdapter.handleDocumentUsesChanged(event, item)}
+      data-name="system.uses.value"
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />

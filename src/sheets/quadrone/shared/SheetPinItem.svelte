@@ -57,19 +57,6 @@
       };
     });
 
-  function saveValueChange(
-    ev: Event & { currentTarget: EventTarget & HTMLInputElement },
-  ): boolean {
-    FoundryAdapter.handleDocumentUsesChanged(
-      ev,
-      usesDocument,
-      valueProp,
-      spentProp,
-      maxProp,
-    );
-    return false;
-  }
-
   const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   const spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
   const spellSlotTrackerMode = $derived(
@@ -129,17 +116,6 @@
 
   // TODO: Send this down in the pin context data.
   const pinType = $derived(getType());
-
-  function onPipClick(index: number, section: any, slotKey: string) {
-    if (!section) return;
-
-    const isEmpty = index >= (section?.value ?? 0);
-    const value = isEmpty ? index + 1 : index;
-
-    context.actor.update({
-      [`system.spells.${slotKey}.value`]: value,
-    });
-  }
 
   let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
 

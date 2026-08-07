@@ -35,7 +35,8 @@
         type="text"
         value={hpValue}
         {@attach InputAttachments.selectOnFocus}
-        onchange={onHpChange}
+        inputmode="numeric"
+        data-name="system.hp.value"
         class="uninput uses-value hp-value color-text-default"
         disabled={!context.editable}
       />

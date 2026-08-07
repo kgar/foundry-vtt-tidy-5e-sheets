@@ -25,29 +25,15 @@
       : ctx.document.img,
   );
 
-  const { usesDocument, value, maxText } = $derived.by(() => {
+  const { value, maxText } = $derived.by(() => {
     const uses = ctx.document.uses;
 
     return {
-      usesDocument: ctx.document,
       uses: uses,
       value: (uses.max ?? 0) - uses.spent,
       maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
     };
   });
-
-  function saveValueChange(
-    ev: Event & { currentTarget: EventTarget & HTMLInputElement },
-  ): boolean {
-    FoundryAdapter.handleDocumentUsesChanged(
-      ev,
-      usesDocument,
-      'uses.value',
-      'uses.spent',
-      'uses.max',
-    );
-    return false;
-  }
 
   let context = $derived(getActorSheetQuadroneContext());
 

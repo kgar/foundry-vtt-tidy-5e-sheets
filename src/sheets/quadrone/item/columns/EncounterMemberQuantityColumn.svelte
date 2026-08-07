@@ -7,9 +7,7 @@
   } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
-    import type { EncounterMemberContext } from 'src/types/group.types';
 
   let {
     rowDocument,

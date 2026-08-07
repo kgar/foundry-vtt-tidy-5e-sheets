@@ -1,6 +1,5 @@
 <script lang="ts">
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
 
@@ -16,24 +15,14 @@
 
 <span class="inline-uses">
   {#if context.owner}
-    <TextInputQuadrone
-      document={favorite.item}
+    <input
+      type="text"
       id={`favorite-item-${favorite.item.item?.id}`}
-      field="system.uses.value"
-      enableDeltaChanges={true}
+      data-name="system.uses.value"
+      inputmode="numeric"
       class="uninput uses-value"
       value={uses.value}
-      selectOnFocus={true}
-      onSaveChange={(event) => {
-        const el = event.currentTarget;
-        FoundryAdapter.handleDocumentUsesChanged(event, favorite.item).then(
-          () => {
-            el?.select();
-          },
-        );
-
-        return false;
-      }}
+      {@attach InputAttachments.selectOnFocus}
     />
   {:else}
     <span class="uses-value color-text-default">

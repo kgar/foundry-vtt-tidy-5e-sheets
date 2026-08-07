@@ -2,7 +2,6 @@
   import type { Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import InlineQuantityTracker from './InlineQuantityTracker.svelte';
-  import { processInputChangeDeltaFromValues } from 'src/utils/form';
 
   interface Props {
     item: Item5e;
@@ -24,15 +23,7 @@
   data-tooltip="DND5E.Quantity"
   min="0"
   {disabled}
-  onchange={async (ev) => {
-    const input = ev.currentTarget;
-    await item.update({
-      [field]: processInputChangeDeltaFromValues(
-        ev.currentTarget.value,
-        quantity,
-      ),
-    });
-    input.value = quantity;
-  }}
+  inputmode="numeric"
+  data-name={field}
   value={quantity}
 />
