@@ -1,18 +1,11 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Test system.uses.value with Foundry standard
-- [ ] Test actvity uses.value with Foundry standard
+
 - [ ] Convert Sheet Pin eventing to sheet actions
   - Actions
-    - [x] ~~Edit Alias~~ - Probably cannot do this one. This is just toggling state in the svelte component.
-    - [x] ~~~Save Alias / SheetPinsProvider.setAlias~ - data-item-id / data-activity-id, .pin-name~~ - probably shouldn't do this one, because it also has the side effect of toggling state. It belongs squarely in svelte's domain.
-    - [ ] saveValueChange / handleDocumentUsesChanged
-      - use data-name="path-here", data-item-id, data-activity-id on the markup ; this will trigger _onChangeForm > _processEmbeddedDocumentChange
-      - need to add special handling for uses `spent`. base-actor-sheet around line 1307 has one way of detecting and doing it. I should consider doing it that way so that things are more compatible with default.
     - [ ] Recharge charges
       - data-action="recharge", data-item-id, data-activity-id, | is curated specifically for item.system.uses.rollRecharge and activity.uses.rollRecharge, needs to know what item is being affected
-    - [ ] Change quantity
-      - use data-name="path-here", data-item-id
+- [ ] Convert all columns to use data-name
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.

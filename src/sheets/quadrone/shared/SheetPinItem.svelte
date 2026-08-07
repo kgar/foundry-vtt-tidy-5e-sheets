@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
@@ -8,11 +7,10 @@
   import type { SheetPinItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
-  import SpellPip from 'src/components/pips/SpellPip.svelte';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
-  import SpellPipQuadrone from 'src/components/pips/SpellPipQuadrone.svelte';
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -304,13 +302,13 @@
             <RechargeControl document={ctx.document} field={spentProp} {uses} />
           {:else if pinType === 'limited-uses-recharged'}
             <span class="inline-uses color-text-default charged-text">
-              <TextInput
+              <input
+                type="text"
+                inputmode="numeric"
                 class={['uninput uses-value', { diminished: value < 1 }]}
-                document={usesDocument}
-                field={spentProp}
+                data-name={valueProp}
+                {@attach InputAttachments.selectOnFocus}
                 {value}
-                onSaveChange={(ev) => saveValueChange(ev)}
-                selectOnFocus={true}
               />
               <span class="divider color-text-gold-emphasis">/</span>
               <span class="uses-max">{maxText}</span>
@@ -330,24 +328,25 @@
             )}
           {:else if pinType === 'limited-uses'}
             <span class="inline-uses color-text-default">
-              <TextInput
+              <input
+                type="text"
+                inputmode="numeric"
                 class={['uninput uses-value', { diminished: value < 1 }]}
-                document={usesDocument}
-                field={spentProp}
+                data-name={valueProp}
+                {@attach InputAttachments.selectOnFocus}
                 {value}
-                onSaveChange={(ev) => saveValueChange(ev)}
-                selectOnFocus={true}
               />
               <span class="divider color-text-gold-emphasis">/</span>
               <span class="uses-max">{maxText}</span>
             </span>
           {:else if pinType === 'quantity'}
-            <TextInput
+            <input
+              type="text"
               class={['uninput uses-value centered', { diminished: value < 1 }]}
-              document={ctx.document}
-              field={'system.quantity'}
+              data-name={'system.quantity'}
+              inputmode="numeric"
               value={ctx.document.system.quantity}
-              selectOnFocus={true}
+              {@attach InputAttachments.selectOnFocus}
             />
           {/if}
         </div>
