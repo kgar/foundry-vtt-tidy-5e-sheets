@@ -42,6 +42,10 @@
     }
   }
 
+  .pips .pip-end {
+    display: none;
+  }
+
   &.theme-light .pips.spell-pips {
     --pip-color: var(--t5e-theme-color-default);
     --pip-border-color: var(--t5e-theme-color-default);

@@ -32,7 +32,7 @@
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { isItemInActionList } from 'src/features/actions/actions.svelte';
-  
+
   let context = $derived(getVehicleSheetContext());
 
   const localize = FoundryAdapter.localize;
@@ -123,10 +123,12 @@
 {#snippet featuresTable()}
   {const section = $derived(context.features)}
   {#if context.unlocked || section.items.length}
-    {const itemEntries = $derived(section.items.map((item) => ({
-      item,
-      ctx: context.itemContext[item.id],
-    })))}
+    {const itemEntries = $derived(
+      section.items.map((item) => ({
+        item,
+        ctx: context.itemContext[item.id],
+      })),
+    )}
 
     <ItemTable key={section.key}>
       {#snippet header()}
@@ -177,14 +179,11 @@
 
               <ItemTableCell baseWidth="3.125rem">
                 {#if item.isOnCooldown}
-                  <RechargeControl
-                    document={item}
-                    field={'system.uses.spent'}
-                    uses={item.system.uses}
-                  />
+                  <RechargeControl document={item} uses={item.system.uses} />
                 {:else if item.hasRecharge}
-                  {const remaining =
-                    $derived(item.system.uses.max - item.system.uses.spent)}
+                  {const remaining = $derived(
+                    item.system.uses.max - item.system.uses.spent,
+                  )}
                   {#if remaining > 1}
                     <span>{remaining}</span>
                   {/if}
@@ -222,10 +221,12 @@
 
 {#snippet stationsTable(section: InventorySection)}
   {#if context.unlocked || section.items.length}
-    {const itemEntries = $derived(section.items.map((item) => ({
-      item,
-      ctx: context.itemContext[item.id],
-    })))}
+    {const itemEntries = $derived(
+      section.items.map((item) => ({
+        item,
+        ctx: context.itemContext[item.id],
+      })),
+    )}
 
     <ItemTable key={section.key}>
       {#snippet header()}

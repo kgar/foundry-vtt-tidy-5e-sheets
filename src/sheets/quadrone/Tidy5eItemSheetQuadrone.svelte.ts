@@ -53,6 +53,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
+import { delay } from 'src/utils/asynchrony';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -108,7 +109,18 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
-      [ImportSheetControl.actionName]: async function (this: any) {
+      emphasize: async function (
+        this: Tidy5eItemSheetQuadrone,
+        _event,
+        target,
+      ) {
+        const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+        await this.emphasize(emphasizeTabId, emphasizeSelector);
+      },
+      [ImportSheetControl.actionName]: async function (
+        this: Tidy5eItemSheetQuadrone,
+      ) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
       sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
@@ -177,8 +189,18 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   }
 
   selectTab(tabId: string) {
-    this.onTabSelected(tabId);
-    this.render();
+    this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
+  }
+
+  async emphasize(tabId: string | undefined, selector: string | undefined) {
+    if (tabId) {
+      this.selectTab(tabId);
+    }
+
+    if (selector) {
+      await delay(1);
+      this.element.ownerDocument.querySelector(selector)?.focus();
+    }
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {

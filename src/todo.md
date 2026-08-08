@@ -1,12 +1,16 @@
 ## The Accretion Disk of To Do's
 
-- [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
-- [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
-- [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
-- [ ] Convert Sheet Pin eventing to sheet actions
+
+- [ ] src\sheets\quadrone\item\columns\VehicleMemberQuantityColumn.svelte - add special handling for adjusting vehicle member quantity. Then uncomment and implement tracker.
+- [ ] Convert all columns to use data-name
+  - [ ] src\sheets\quadrone\item\columns\EncounterMemberInitiativeColumn.svelte - this will likely need some subclass override
+  - [ ] src\sheets\quadrone\item\columns\EncounterMemberQtyFormulaColumn.svelte - this will likely need some subclass override
+- [ ] src\sheets\quadrone\actor\character-parts\InspirationBadge.svelte - move all eventing to the character sheet for handling inspo toggling, increase/decrease, etc.
+- [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
+- [ ] src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
+- [ ] src\sheets\quadrone\actor\parts\SpellSlotTracker.svelte - convert to name or data-name, and basic inputs
+- [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
-- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
-- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] review system sheets for forms handling. Are they using forms? Is there any way to prevent unwanted changes to an actor during submission?
@@ -72,6 +76,7 @@
 
 ## hightouch To Do
 
+- [ ] (hightouch, let's discuss) Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Facility Details - Harvest UI at bottom needs some better layout applied to it. "Greenhouse" is an example of a facility with Harvest capabilities built in.
 - [ ] (confirming with hightouch; might remove) Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.

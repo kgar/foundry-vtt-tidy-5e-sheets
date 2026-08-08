@@ -1,11 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
-  import type {
-    ActiveEffectSection,
-    Actor5e,
-    TidySectionBase,
-  } from 'src/types/types';
+  import type { ActiveEffectSection, Actor5e } from 'src/types/types';
 
   let {
     sheetDocument,

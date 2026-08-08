@@ -61,6 +61,22 @@
       </div>
     {/if}
 
+    {const hasMembers = $derived(
+      context.members.some((section) => section.members.length),
+    )}
+    {#if !hasMembers && context.editable}
+      <div class="inventory-empty empty-state-container">
+        <button
+          type="button"
+          class="button button-tertiary"
+          onclick={() => context.sheet._browseAddNpc()}
+        >
+          <i class="fas fa-plus"></i>
+          {localize('TIDY5E.Encounter.AddMember.Label')}
+        </button>
+      </div>
+    {/if}
+
     {#each context.members as section (section.key)}
       {#if section.show && section.members.length}
         {const visibleItemCount = $derived(section.members.length)}
@@ -113,6 +129,7 @@
                 style:--t5e-member-color-hover={member.highlightColor}
                 data-tidy-draggable
                 data-member-uuid={member.actor.uuid}
+                data-index={member.index}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
               >
                 <EncounterMemberNameCell {member} />

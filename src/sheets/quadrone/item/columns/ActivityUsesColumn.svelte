@@ -26,12 +26,6 @@
     }),
   );
 
-  function onRechargeClicked(ev: MouseEvent) {
-    ev.shiftKey
-      ? activity.update({ ['uses.spent']: 0 })
-      : activity.uses?.rollRecharge({ apply: true, event: ev });
-  }
-
   let { rechargeRange, diceIconClass } = $derived(
     getUsesRechargeDiceRange(activity.uses),
   );
@@ -43,8 +37,10 @@
   {#if ctx.hasRecharge && ctx.isOnCooldown}
     <a
       class={['item-list-button', { disabled: !activity.item.isOwner }]}
-      data-tooltip={rechargeLabel}
-      onclick={(ev) => activity.item.isOwner && onRechargeClicked(ev)}
+      data-activity-id={activity.id}
+      data-tooltip=""
+      aria-label={rechargeLabel}
+      data-action="recharge"
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
       <span class="recharge-range-text text-data">
@@ -59,20 +55,21 @@
       <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
     </span>
   {:else}
+    <!-- 
+      Activity Uses must specify the item ID, because it could be included  
+      in a Cast Activity Spell table row whose related item ID would not
+      yield the activity to be updated.
+    -->
     <input
       type="text"
+      inputmode="numeric"
       value={activity.uses.value}
       {@attach InputAttachments.selectOnFocus}
-      onchange={(event) =>
-        FoundryAdapter.handleDocumentUsesChanged(
-          event,
-          activity,
-          'uses.value',
-          'uses.spent',
-          'uses.max',
-        )}
+      data-name="uses.value"
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
+      data-item-id={activity.item.id}
+      data-activity-id={activity.id}
     />
     <span class="color-text-gold">/</span>
     <span class="uses-max color-text-lighter">{activity.uses.max}</span>

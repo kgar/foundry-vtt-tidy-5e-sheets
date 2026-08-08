@@ -10,6 +10,7 @@ import type {
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import type {
+  Actor5e,
   CustomContent,
   DocumentSheetV2Context,
   Tab,
@@ -23,8 +24,6 @@ import {
 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
 import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
-import { isNil } from 'src/utils/data';
-import { processInputChangeDelta } from 'src/utils/form';
 import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,
@@ -45,6 +44,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -84,18 +84,22 @@ export function getTidyExtensibleDocumentSheetMixin<
         controls: [],
       },
       actions: {
+        'activity-use': TidyDocumentSheet.#useActivity,
         //changeMode: PrimarySheet5e.#changeMode,
+        configureTab: TidyDocumentSheet.#configureTab,
         currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
+        increase: TidyDocumentSheet.#increase,
+        decrease: TidyDocumentSheet.#decrease,
+        recharge: TidyDocumentSheet.#recharge,
         showContextMenu: TidyDocumentSheet.#showContextMenu,
         showDocument: TidyDocumentSheet.#showDocument,
-        use: TidyDocumentSheet.#useItem,
-        'activity-use': TidyDocumentSheet.#useActivity,
         toggle: TidyDocumentSheet.#toggle,
+        togglePip: TidyDocumentSheet.#togglePip,
         'transfer-currency': TidyDocumentSheet.#transferCurrency,
-        configureTab: TidyDocumentSheet.#configureTab,
+        use: TidyDocumentSheet.#useItem,
       },
     };
 
@@ -144,28 +148,61 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const { target } = event;
-      if (!target) {
+      if (!event.target) {
         return;
       }
 
+      // Only apply sheet-level processing to inputs that opt into standard Foundry form management via name and data-name attributes.
+      const isSelfSufficientInput =
+        !event.target.name && !event.target.dataset.name;
+      if (isSelfSufficientInput) {
+        return;
+      }
+
+      const { targetDocument } = this._getDocumentSubmissionInformation(event);
+
+      // Process delta changes
+      if (
+        event.target.matches(
+          `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+        )
+      ) {
+        dnd5e.utils.parseInputDelta(event.target, targetDocument);
+      }
+
       try {
+        const proceedWithDefaultFormHandling =
+          await this._onChangeFormReadyToSave(event);
+
+        if (proceedWithDefaultFormHandling === false) {
+          return;
+        }
+
         if (event.target.matches('[data-name]')) {
-          await this._onEmbeddedDocumentInputChange(event);
+          await this._onSingleInputChange(event);
           return;
         }
 
-        const isSelfSufficientInput = !event.target.name;
-        if (isSelfSufficientInput) {
-          return;
+        // TODO: when a save fails, this returns `undefined`. An input with a bogus delta value can be stuck with the inaccurate value until the sheet is closed and reopened. Figure out how to make the input be restored to its intended value cleanly.
+        const result = await super._onChangeForm(formConfig, event);
+        if (result === undefined) {
+          // TODO: if undefined, use `target` to fetch the real value and force-correct the input with bad data
         }
-
-        super._onChangeForm(formConfig, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
         );
       }
+    }
+
+    /**
+     * Optional override for sheet to perform document-specific changes.
+     * Return `false` to prevent the default form change save behavior.
+     */
+    protected async _onChangeFormReadyToSave(
+      _event: any,
+    ): Promise<false | undefined> {
+      return undefined;
     }
 
     /** @override */
@@ -388,30 +425,15 @@ export function getTidyExtensibleDocumentSheetMixin<
       super._updateFrame(options);
     }
 
-    async _onEmbeddedDocumentInputChange(
+    async _onSingleInputChange(
       event: InputEvent & { target: HTMLInputElement },
     ) {
-      const itemId =
-        event.target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+      const { targetDocument } = this._getDocumentSubmissionInformation(event);
 
-      const item = !!itemId ? await this.getItem(itemId) : null;
-
-      const activityId =
-        event.target.closest<HTMLElement>('[data-activity-id]')?.dataset
-          .activityId;
-
-      const activity = item?.system.activities?.get(activityId);
-
-      if (activity) {
-        return await this._processEmbeddedDocumentChange(event, activity);
-      }
-
-      if (itemId) {
-        return await this._processEmbeddedDocumentChange(event, item);
-      }
+      return await this._processSingleInputChange(event, targetDocument);
     }
 
-    private async _processEmbeddedDocumentChange(
+    async _processSingleInputChange(
       event: InputEvent & { target: HTMLInputElement },
       doc: any,
     ) {
@@ -421,33 +443,45 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       let valueToSave: string | number = event.target.value;
 
-      // For deltas, parse the resulting delta value
-      if (event.target.matches('[inputmode="numeric"]')) {
-        valueToSave = processInputChangeDelta(
-          event.target.value,
-          doc,
-          field,
-        )?.toString();
+      if (
+        event.target.matches(
+          '[type="number"], [data-dype="Number"], [inputmode="numeric"]',
+        )
+      ) {
+        const valueAsNumber = Number.isNumeric(valueToSave)
+          ? Number(valueToSave)
+          : valueToSave;
+
+        return await this._updateNumericProperty(doc, field, valueAsNumber);
       }
 
-      // For numeric changes, enforce min/max on the value to save
-      if (event.target.matches('[inputmode="numeric"], [type="number"]')) {
-        const minAttribute = event.target.getAttribute('min');
-        const min = !isNil(minAttribute, '') ? Number(minAttribute) : -Infinity;
+      return await doc.update({ [field]: valueToSave });
+    }
 
-        const maxAttribute = event.target.getAttribute('max');
-        const max = !isNil(maxAttribute, '') ? Number(maxAttribute) : Infinity;
-
-        const valueAsNumber = Number(valueToSave);
-        valueToSave = Math.clamp(valueAsNumber, min, max);
-
-        if (doc && !Number.isNaN(valueToSave)) {
-          event.target.value = valueToSave?.toString();
-        }
+    async _updateNumericProperty(
+      targetDocument: any,
+      prop: string,
+      value: number | string,
+    ) {
+      // Special case handling for Item uses.
+      if (
+        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+        prop === 'system.uses.value'
+      ) {
+        return await targetDocument.update({
+          'system.uses.spent': targetDocument.system.uses.max - (value as any),
+        });
+      } else if (
+        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
+        prop === 'uses.value'
+      ) {
+        return await targetDocument.item.updateActivity(targetDocument.id, {
+          'uses.spent': targetDocument.uses.max - (value as any),
+        });
       }
 
-      // Save the value to the document, whatever that value ultimately became
-      await doc.update({ [field]: valueToSave });
+      // Standard case: save the intended value.
+      return await targetDocument.update({ [prop]: value });
     }
 
     getItem(id?: string) {
@@ -486,6 +520,34 @@ export function getTidyExtensibleDocumentSheetMixin<
           e,
         );
       }
+    }
+
+    _getDocumentSubmissionInformation(
+      event: Event & { target: HTMLElement },
+    ): Partial<{
+      itemId: string;
+      item: Item5e;
+      activityId: string;
+      activity: Activity5e;
+      targetDocument: Actor5e | Item5e | Activity5e;
+    }> {
+      const input = event.target;
+      const { itemId } =
+        input.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+      const sheetDocument = this.document;
+      const item = sheetDocument?.items?.get(itemId);
+      const { activityId } =
+        input.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
+      const activity = item?.system.activities?.get(activityId);
+      const targetDocument = activity ?? item ?? sheetDocument;
+
+      return {
+        itemId,
+        item,
+        activityId,
+        activity,
+        targetDocument,
+      };
     }
 
     /* -------------------------------------------- */
@@ -927,11 +989,77 @@ export function getTidyExtensibleDocumentSheetMixin<
       await fp.browse();
     }
 
+    static async #increase(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._increase(event, target)) === false) {
+        return;
+      }
+
+      return await this._onAdjustProperty(event, target, 1);
+    }
+
+    protected async _increase(
+      _event: Event,
+      _target: HTMLElement,
+    ): Promise<any> {}
+
+    async _onAdjustProperty(event: Event, target: HTMLElement, amount: number) {
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event as Event & { target: HTMLElement },
+      );
+
+      const prop = target.dataset.property;
+
+      if (!prop) {
+        return;
+      }
+
+      let value = FoundryAdapter.getProperty<number>(targetDocument, prop) ?? 0;
+
+      value += amount;
+
+      const input = target.parentElement?.querySelector('input');
+      const min = Number.isNumeric(input?.dataset.min)
+        ? Number(input?.dataset.min)
+        : -Infinity;
+      const max = Number.isNumeric(input?.dataset.max)
+        ? Number(input?.dataset.max)
+        : Infinity;
+
+      value = Math.clamp(value, min, max);
+
+      if (isNaN(value)) {
+        return;
+      }
+
+      return await this._updateNumericProperty(targetDocument, prop, value);
+    }
+
+    static async #decrease(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._decrease(event, target)) === false) {
+        return;
+      }
+
+      this._onAdjustProperty(event, target, -1);
+    }
+
+    protected async _decrease(
+      event: Event,
+      target: HTMLElement,
+    ): Promise<any> {}
+
     /**
      * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
      * @param args The tab where this Add operation is occurring, and other optional parameters.
      */
-    async _addDocument(args: {
+    async _addDocument(_args: {
       tabId: string;
       customSection?: string;
       creationItemTypes?: string[];
@@ -940,8 +1068,8 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     static async #currency(
       this: TidyDocumentSheet,
-      event: Event,
-      target: HTMLElement,
+      _event: Event,
+      _target: HTMLElement,
     ) {
       return new dnd5e.applications.CurrencyManager({
         document: this.document,
@@ -965,6 +1093,45 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       this.openSheetSettings(target.dataset.tabId);
+    }
+
+    static async #togglePip(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const n = Number(target.closest<HTMLElement>('[data-n]')?.dataset.n);
+      const prop =
+        target.dataset.prop ??
+        target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
+
+      if (!Number.isNumeric(n) || !prop) {
+        return;
+      }
+
+      let value = foundry.utils.getProperty(this.actor, prop);
+
+      value =
+        value === n && prop.endsWith('.spent')
+          ? // `spent` needs special inverse treatment
+            value + 1
+          : value === n
+            ? // popping off the top pip
+              value - 1
+            : value > n
+              ? // expending all pips beyond and including the clicked pip
+                // note: this is how Tidy has historically done this,
+                // whereas the default sheets will keep the clicked
+                // pip unexpended.
+                n - 1
+              : // increase value to match the clicked empty pip
+                n;
+
+      this.submit({ updateData: { [prop]: value } });
     }
 
     /**
@@ -1174,6 +1341,40 @@ export function getTidyExtensibleDocumentSheetMixin<
       });
 
       return this._renderChild(settings);
+    }
+
+    static async #recharge(
+      this: TidyDocumentSheet,
+      event: Event,
+      _target: HTMLElement,
+    ) {
+      const { item, activity } = this._getDocumentSubmissionInformation(
+        event as Event & { target: HTMLElement },
+      );
+
+      this._onRollRecharge(activity ?? item, { event });
+    }
+
+    _onRollRecharge(
+      entry: Item5e | Activity5e,
+      { event }: Partial<{ event: Event }> = {},
+    ) {
+      const isItem = entry instanceof dnd5e.documents.Item5e;
+      const autoSucceed = event && 'shiftKey' in event && event.shiftKey;
+
+      if (autoSucceed && isItem) {
+        return entry.update({ ['system.uses.spent']: 0 });
+      }
+
+      if (autoSucceed) {
+        return entry.item.updateActivity(entry.id, { ['uses.spent']: 0 });
+      }
+
+      if (isItem) {
+        return entry.system.uses?.rollRecharge({ apply: true, event });
+      }
+
+      return entry.uses?.rollRecharge({ apply: true, event });
     }
 
     /* -------------------------------------------- */

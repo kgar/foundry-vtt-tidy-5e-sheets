@@ -6,7 +6,6 @@
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { CombatantSettings } from 'src/features/combat/CombatantSettings';
   import { isNil } from 'src/utils/data';
@@ -23,8 +22,6 @@
   } = $props();
 
   let context = $derived(getEncounterSheetQuadroneContext());
-
-  let localize = FoundryAdapter.localize;
 
   let initiative = $derived(rowContext.initiative?.toString() ?? '');
 

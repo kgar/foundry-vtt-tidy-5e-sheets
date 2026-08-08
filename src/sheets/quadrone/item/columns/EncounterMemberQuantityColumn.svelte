@@ -7,9 +7,7 @@
   } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
-    import type { EncounterMemberContext } from 'src/types/group.types';
 
   let {
     rowDocument,
@@ -36,14 +34,7 @@
       data-tooltip="DND5E.Quantity"
       min="0"
       value={quantity}
-      onchange={async (ev) => {
-        const input = ev.currentTarget;
-        await context.sheet.updateMemberQuantity(
-          rowDocument.uuid,
-          ev.currentTarget.value,
-        );
-        input.value = quantity;
-      }}
+      property="quantity.value"
     />
   {:else}
     <span class="font-label-large color-text-default"

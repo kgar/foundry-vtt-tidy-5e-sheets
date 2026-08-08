@@ -41,7 +41,7 @@ import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
-import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { delay } from 'src/utils/asynchrony';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -116,6 +116,15 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
+      emphasize: async function (
+        this: Tidy5eContainerSheetQuadrone,
+        _event,
+        target,
+      ) {
+        const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+        await this.emphasize(emphasizeTabId, emphasizeSelector);
+      },
       sheetSettings: async function (this: Tidy5eContainerSheetQuadrone) {
         this.openSheetSettings();
       },
@@ -148,8 +157,18 @@ export class Tidy5eContainerSheetQuadrone
   };
 
   selectTab(tabId: string) {
-    this.onTabSelected(tabId);
-    this.render();
+    this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
+  }
+
+  async emphasize(tabId: string | undefined, selector: string | undefined) {
+    if (tabId) {
+      this.selectTab(tabId);
+    }
+
+    if (selector) {
+      await delay(1);
+      this.element.ownerDocument.querySelector(selector)?.focus();
+    }
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {

@@ -66,6 +66,7 @@ import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
+import { delay } from 'src/utils/asynchrony';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -80,7 +81,6 @@ export function getTidy5eActorSheetQuadroneBase<
   ) {
     /** An optional tab which can receive pins from other tabs. */
     abstract aggregatePinTab: AggregatePinTabInfo | null;
-    abstract currentTabId: string;
     itemFilterService: ItemFilterService;
     messageBus = $state<MessageBus>({ message: undefined });
     searchFilters: LocationToSearchTextMap = new SvelteMap<string, string>();
@@ -161,6 +161,15 @@ export function getTidy5eActorSheetQuadroneBase<
         frame: true,
       },
       actions: {
+        emphasize: async function (
+          this: Tidy5eActorSheetQuadroneBase,
+          _event,
+          target,
+        ) {
+          const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+          await this.emphasize(emphasizeTabId, emphasizeSelector);
+        },
         findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         restoreTransformation: async function (
           this: Tidy5eActorSheetQuadroneBase,
@@ -215,11 +224,6 @@ export function getTidy5eActorSheetQuadroneBase<
       }`;
     }
 
-    selectTab(tabId: string) {
-      this.onTabSelected(tabId);
-      this.render();
-    }
-
     _getActorSvelteContext(): [key: string, value: any][] {
       return [
         [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
@@ -254,6 +258,21 @@ export function getTidy5eActorSheetQuadroneBase<
           this.inlineToggleService,
         ],
       ];
+    }
+
+    selectTab(tabId: string) {
+      this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
+    }
+
+    async emphasize(tabId: string | undefined, selector: string | undefined) {
+      if (tabId) {
+        this.selectTab(tabId);
+      }
+
+      if (selector) {
+        await delay(1);
+        this.element.ownerDocument.querySelector(selector)?.focus();
+      }
     }
 
     /* -------------------------------------------- */
