@@ -1643,6 +1643,7 @@ export type EncounterMemberQuadroneContext = {
   canEdit: boolean;
   highlightColor: string | undefined;
   includeInCombat: boolean;
+  index: number;
   initiative: number | undefined;
   name: string;
   portrait: MultiActorMemberPortraitContext;

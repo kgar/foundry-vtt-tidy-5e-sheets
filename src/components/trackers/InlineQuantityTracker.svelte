@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { HTMLInputAttributes } from 'svelte/elements';
-  import { processInputChangeDeltaFromValues } from 'src/utils/form';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Props = {
@@ -23,6 +22,7 @@
   <span class="quantity-tracker-input-wrapper">
     <input
       type="text"
+      inputmode="numeric"
       class="quantity-tracker-input"
       {@attach InputAttachments.selectOnFocus}
       data-name={property}

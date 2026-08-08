@@ -24,7 +24,6 @@ import {
 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
 import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
-import { isNil } from 'src/utils/data';
 import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,

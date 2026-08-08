@@ -233,7 +233,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
 
     const memberContexts = await Promise.all(
-      members.map(async ({ actor, quantity }) => {
+      members.map(async ({ actor, quantity }, index) => {
         const combatantSettings = CombatantSettings.getEntry(
           this.actor,
           actor.uuid,
@@ -265,6 +265,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
+          index,
           name: actor.name,
           portrait: await this._preparePortrait(actor),
           initiative: combatantSettings.initiative,
@@ -434,7 +435,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
-  updateMemberQuantity(uuid: string, newValue: string) {
+  updateMemberQuantity(uuid: string, newValue: string | number) {
     return this.updateMember(uuid, (member) => {
       const currentQuantity = member.quantity.value;
       const newQuantity =
@@ -741,6 +742,41 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     });
   }
 
+  override async _onAdjustProperty(
+    event: Event,
+    target: HTMLElement,
+    amount: number,
+  ): Promise<any> {
+    const index = target.closest<HTMLElement>('[data-index]')?.dataset.index;
+
+    if (index === undefined) {
+      return super._onAdjustProperty(event, target, amount);
+    }
+
+    const property = target.dataset.property;
+
+    if (!property) {
+      return;
+    }
+
+    // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared?
+    const input = target.parentElement?.querySelector('input');
+    const min = input?.min ? Number(input.min) : -Infinity;
+    const max = input?.max ? Number(input.max) : Infinity;
+
+    const members = this.actor.system.toObject().members;
+    const member = members[index];
+
+    const originalValue =
+      FoundryAdapter.getProperty<number>(member, property) ?? 0;
+
+    let newValue = Math.clamp(originalValue + amount, min, max);
+
+    foundry.utils.setProperty(member, property, newValue);
+
+    this.actor.update({ 'system.members': members });
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
@@ -751,5 +787,30 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
+  }
+
+  async _onChangeForm(formConfig: unknown, event: any) {
+    const { name } = event.target.dataset;
+
+    const index = Number(event.target.closest('[data-index]')?.dataset.index);
+
+    if (Number.isNaN(index) || !name) {
+      return super._onChangeForm(formConfig, event);
+    }
+
+    const members = this.actor.system.toObject().members;
+
+    if (
+      // TODO: I've used this twice now. Where can I share it?
+      event.target.matches(
+        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+      )
+    ) {
+      dnd5e.utils.parseInputDelta(event.target, members[index]);
+    }
+
+    foundry.utils.setProperty(members[index], name, event.target.value);
+
+    this.actor.update({ 'system.members': members });
   }
 }

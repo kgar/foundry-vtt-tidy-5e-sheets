@@ -23,7 +23,6 @@
   data-tooltip="DND5E.Quantity"
   min="0"
   {disabled}
-  inputmode="numeric"
   property={field}
   value={quantity}
 />

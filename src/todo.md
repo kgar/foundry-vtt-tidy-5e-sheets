@@ -1,7 +1,6 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] src\sheets\quadrone\item\columns\EncounterMemberQuantityColumn.svelte - add special handling for adjusting encounter member quantity. Then uncomment and implement tracker.
 - [ ] src\sheets\quadrone\item\columns\VehicleMemberQuantityColumn.svelte - add special handling for adjusting vehicle member quantity. Then uncomment and implement tracker.
 - [ ] Convert all columns to use data-name
   - [ ] src\sheets\quadrone\item\columns\EncounterMemberInitiativeColumn.svelte - this will likely need some subclass override

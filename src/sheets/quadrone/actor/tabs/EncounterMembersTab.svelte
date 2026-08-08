@@ -129,6 +129,7 @@
                 style:--t5e-member-color-hover={member.highlightColor}
                 data-tidy-draggable
                 data-member-uuid={member.actor.uuid}
+                data-index={member.index}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
               >
                 <EncounterMemberNameCell {member} />

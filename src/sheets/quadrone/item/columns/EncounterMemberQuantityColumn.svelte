@@ -29,20 +29,13 @@
   {const quantity = $derived(rowContext.quantity.value?.toString() ?? '')}
 
   {#if context.unlocked}
-    <!-- <InlineQuantityTracker
+    <InlineQuantityTracker
       aria-label={localize('DND5E.Quantity')}
       data-tooltip="DND5E.Quantity"
       min="0"
       value={quantity}
-      onchange={async (ev) => {
-        const input = ev.currentTarget;
-        await context.sheet.updateMemberQuantity(
-          rowDocument.uuid,
-          ev.currentTarget.value,
-        );
-        input.value = quantity;
-      }}
-    /> -->
+      property="quantity.value"
+    />
   {:else}
     <span class="font-label-large color-text-default"
       >{rowContext.quantity.value}</span
