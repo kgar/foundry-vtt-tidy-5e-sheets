@@ -5,27 +5,28 @@
     VehicleCrewMemberContext,
     VehiclePassengerMemberContext,
   } from 'src/types/types';
-  import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let {
-    rowDocument,
     rowContext,
   }: {
     rowDocument: Actor5e;
     rowContext: VehicleCrewMemberContext | VehiclePassengerMemberContext;
   } = $props();
-
-  const context = $derived(getVehicleSheetQuadroneContext());
-
-  function handleChange(delta: string) {
-    const type = rowContext.type;
-
-    context.sheet.applyDeltaToCrew(type, rowDocument.uuid, delta);
-  }
 </script>
 
-<!-- <InlineQuantityTracker
+<InlineQuantityTracker
+  aria-label={FoundryAdapter.localize('DND5E.Quantity')}
+  data-tooltip="DND5E.Quantity"
+  min="0"
   value={rowContext.quantity}
-  onIncrement={() => handleChange('+1')}
-  onDecrement={() => handleChange('-1')}
-/> -->
+  property="crewQuantity:value"
+  decreaseAction="adjustCrew"
+  decreaseAttributes={{
+    'data-delta': '-1',
+  }}
+  increaseAction="adjustCrew"
+  increaseAttributes={{
+    'data-delta': '+1',
+  }}
+/>

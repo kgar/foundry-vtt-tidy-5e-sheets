@@ -5,9 +5,21 @@
   type Props = {
     property: string;
     containerAttributes?: HTMLAttributes<HTMLElement>;
+    increaseAction?: string;
+    increaseAttributes?: HTMLAttributes<HTMLAnchorElement>;
+    decreaseAction?: string;
+    decreaseAttributes?: HTMLAttributes<HTMLAnchorElement>;
   } & HTMLInputAttributes;
 
-  let { property, containerAttributes, ...attributes }: Props = $props();
+  let {
+    property,
+    containerAttributes,
+    decreaseAction,
+    decreaseAttributes,
+    increaseAction,
+    increaseAttributes,
+    ...attributes
+  }: Props = $props();
 </script>
 
 <article
@@ -16,8 +28,9 @@
 >
   <a
     class="command decrementer"
-    data-action="decrease"
+    data-action={decreaseAction ?? 'decrease'}
     data-property={property}
+    {...decreaseAttributes}
   >
     <i class="fa-solid fa-minus"></i>
   </a>
@@ -33,8 +46,9 @@
   </span>
   <a
     class="command incrementer"
-    data-action="increase"
+    data-action={increaseAction ?? 'increase'}
     data-property={property}
+    {...increaseAttributes}
   >
     <i class="fa-solid fa-plus"></i>
   </a>

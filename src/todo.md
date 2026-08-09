@@ -1,8 +1,7 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] src\sheets\quadrone\item\columns\VehicleMemberQuantityColumn.svelte - add special handling for adjusting vehicle member quantity. Then uncomment and implement tracker.
-- [ ] src\sheets\quadrone\actor\character-parts\InspirationBadge.svelte - move all eventing to the character sheet for handling inspo toggling, increase/decrease, etc.
+- [ ] src\sheets\quadrone\actor\character-parts\InspirationBadge.svelte - move all eventing to the character sheet for handling inspo toggling, increaseInspiration/decreaseInspiration, etc.
 - [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
 - [ ] src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
 - [ ] src\sheets\quadrone\actor\parts\SpellSlotTracker.svelte - convert to name or data-name, and basic inputs
