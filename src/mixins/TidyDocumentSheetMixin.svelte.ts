@@ -1280,9 +1280,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const { itemId } =
-        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
-      const item = await this.getItem(itemId);
+      const { item } = this._getDocumentSubmissionInformation(target);
 
       if (!item) {
         return;
@@ -1304,16 +1302,12 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const { itemId } =
-        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
-      const { activityId } =
-        target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
-      const item = await this.getItem(itemId);
+      const { activity } = this._getDocumentSubmissionInformation(target);
 
-      if (!item) {
+      if (!activity) {
         return;
       }
-      const activity = item.system.activities?.get(activityId);
+
       await activity.use({ event, options: { sheet: this } });
     }
 

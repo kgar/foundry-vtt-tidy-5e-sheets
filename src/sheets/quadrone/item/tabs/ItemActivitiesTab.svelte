@@ -92,13 +92,6 @@
                   class={['tidy-table-row-use-button']}
                   aria-label={ctx.activity.name}
                   data-action="activity-use"
-                  onkeydown={(ev) =>
-                    ev.key === 'Enter' ||
-                    (ev.key === ' ' &&
-                      ctx.activity.use({
-                        event: ev,
-                        options: { sheet: context.sheet },
-                      }))}
                   data-has-roll-modes
                 >
                   <img class="item-image" alt="" src={ctx.activity.img} />

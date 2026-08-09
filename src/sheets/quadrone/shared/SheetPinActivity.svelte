@@ -88,9 +88,7 @@
       role="button"
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
-      onclick={(event) =>
-        context.editable &&
-        ctx.document.use({ event, options: { sheet: context.sheet } })}
+      data-action="activity-use"
       data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
