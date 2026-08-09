@@ -1,8 +1,8 @@
 ## The Accretion Disk of To Do's
 
 
+
 - [ ] // TODO: Send this down in the pin context data.
-- [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] Extract and share: TidyTableRowUseButton / Convert to sheet action
 - [ ] Sheet cleanup - "Sheet Actions" section - alphabetize/group by sheet action handler, add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
