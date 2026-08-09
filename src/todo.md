@@ -1,7 +1,6 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] refactor - _getDocumentSubmissionInformation - accept target HTMLElement instead of event
 - [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
 - [ ] Review Group sheet for data-action / data-name / name opportunities.
 - [ ] // TODO: Send this down in the pin context data.

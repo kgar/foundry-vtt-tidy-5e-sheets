@@ -159,7 +159,9 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const { targetDocument } = this._getDocumentSubmissionInformation(event);
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event.target,
+      );
 
       // Process delta changes
       if (
@@ -439,7 +441,9 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       // Standard Embedded or Top-Level Document Submission Information
-      const { targetDocument } = this._getDocumentSubmissionInformation(event);
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event.target,
+      );
 
       return await this._processSingleInputChange(event, targetDocument);
     }
@@ -538,22 +542,19 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
     }
 
-    _getDocumentSubmissionInformation(
-      event: Event & { target: HTMLElement },
-    ): Partial<{
+    _getDocumentSubmissionInformation(target: HTMLElement): Partial<{
       itemId: string;
       item: Item5e;
       activityId: string;
       activity: Activity5e;
       targetDocument: Actor5e | Item5e | Activity5e;
     }> {
-      const input = event.target;
       const { itemId } =
-        input.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
       const sheetDocument = this.document;
       const item = sheetDocument?.items?.get(itemId);
       const { activityId } =
-        input.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
+        target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
       const activity = item?.system.activities?.get(activityId);
       const targetDocument = activity ?? item ?? sheetDocument;
 
@@ -1023,9 +1024,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     ): Promise<any> {}
 
     async _onAdjustProperty(event: Event, target: HTMLElement, amount: number) {
-      const { targetDocument } = this._getDocumentSubmissionInformation(
-        event as Event & { target: HTMLElement },
-      );
+      const { targetDocument } = this._getDocumentSubmissionInformation(target);
 
       const prop = target.dataset.property;
 
@@ -1362,11 +1361,9 @@ export function getTidyExtensibleDocumentSheetMixin<
     static async #recharge(
       this: TidyDocumentSheet,
       event: Event,
-      _target: HTMLElement,
+      target: HTMLElement,
     ) {
-      const { item, activity } = this._getDocumentSubmissionInformation(
-        event as Event & { target: HTMLElement },
-      );
+      const { item, activity } = this._getDocumentSubmissionInformation(target);
 
       this._onRollRecharge(activity ?? item, { event });
     }
