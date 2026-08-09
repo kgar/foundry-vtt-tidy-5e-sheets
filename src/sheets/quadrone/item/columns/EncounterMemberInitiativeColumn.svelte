@@ -24,20 +24,6 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let initiative = $derived(rowContext.initiative?.toString() ?? '');
-
-  function onInitiativeChange(newValue: string): Promise<void> | undefined {
-    let initiative: number | undefined = +newValue;
-
-    if (isNaN(initiative) || isNil(newValue)) {
-      initiative = undefined;
-    }
-
-    return CombatantSettings.insertOrUpdate(context.actor, {
-      identifier:
-        rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
-      initiative: initiative,
-    });
-  }
 </script>
 
 {#if context.unlocked}
@@ -47,19 +33,17 @@
     <input
       type="text"
       class="quantity-tracker-input"
+      inputmode="numeric"
       {@attach InputAttachments.selectOnFocus}
       value={initiative}
-      onchange={async (ev) => {
-        const input = ev.currentTarget;
-        await onInitiativeChange(input.value);
-        input.value = initiative;
-      }}
+      data-name="combatantSettings:initiative"
     />
 
     {#if rowContext.type === 'member'}
       <button
+        type="button"
         class="button button-roll button-icon-only button-borderless flexshrink"
-        onclick={(ev) => context.sheet.prerollInitiative(ev, rowDocument)}
+        data-action="prerollInitiative"
         data-has-roll-modes
       >
         <i class="fa-solid fa-dice-d20"></i>

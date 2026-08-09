@@ -23,6 +23,14 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
+
+  // When the quantity column is in the combat table,
+  // it needs to put member index directly on the
+  // quantity tracker, since non-member updates are done
+  // on this tab, such as initiative.
+  let index = $derived(
+    rowContext.type === 'member' ? rowContext.index : undefined,
+  );
 </script>
 
 {#if rowContext.type === 'member'}
@@ -35,6 +43,9 @@
       min="0"
       value={quantity}
       property="quantity.value"
+      containerAttributes={{
+        'data-index': index,
+      }}
     />
   {:else}
     <span class="font-label-large color-text-default"

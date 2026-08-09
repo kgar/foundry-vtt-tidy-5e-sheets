@@ -7,9 +7,11 @@
 
 <a
   class={['tidy-table-button', { disabled: !context.editable }]}
-  aria-label={FoundryAdapter.localize('TIDY5E.Encounter.AddPlaceholderToCombatTracker.Label')}
+  aria-label={FoundryAdapter.localize(
+    'TIDY5E.Encounter.AddPlaceholderToCombatTracker.Label',
+  )}
   data-tooltip
-  onclick={(ev) => context.editable && context.sheet.onAddPlaceholder(ev)}
+  data-action={context.editable ? 'addToCombatAsPlaceholder' : undefined}
 >
   <i class="fa-solid fa-circle-dashed"></i>
 </a>

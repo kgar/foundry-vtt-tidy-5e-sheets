@@ -37,7 +37,7 @@
   class={['tidy-table-button', { disabled: !context.editable }]}
   aria-label={label}
   data-tooltip
-  onclick={() => context.editable && onDelete()}
+  data-action={context.editable ? 'removeMember' : undefined}
 >
   <i class="fa-solid fa-trash fa-fw"></i>
 </a>

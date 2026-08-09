@@ -14,13 +14,7 @@
 
   let { rowContext }: Props = $props();
 
-  const localize = FoundryAdapter.localize;
-
   let context = $derived(getEncounterSheetQuadroneContext());
-
-  let identifier = $derived(
-    rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
-  );
 
   let include = $derived(rowContext.includeInCombat);
 </script>
@@ -35,12 +29,7 @@
       : 'TIDY5E.Encounter.Combat.ExcludeFromCombat.Tooltip',
   )}
   data-tooltip
-  onclick={() => context.sheet.toggleCombatantInclusion(identifier)}
-  onkeypress={(ev) => {
-    if (ev.key === 'Enter' || ev.key === ' ') {
-      context.sheet.toggleCombatantInclusion(identifier);
-    }
-  }}
+  data-action={context.editable ? 'toggleCombatantInclusion' : undefined}
 >
   {#if include}
     <i class="fa-solid fa-toggle-large-on enabled"></i>

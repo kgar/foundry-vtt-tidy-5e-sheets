@@ -1,16 +1,18 @@
 <script lang="ts">
-  import type { HTMLInputAttributes } from 'svelte/elements';
+  import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Props = {
     property: string;
+    containerAttributes?: HTMLAttributes<HTMLElement>;
   } & HTMLInputAttributes;
 
-  let { property, ...attributes }: Props = $props();
+  let { property, containerAttributes, ...attributes }: Props = $props();
 </script>
 
 <article
   class={['tidy-inline-quantity-tracker', { disabled: attributes.disabled }]}
+  {...containerAttributes}
 >
   <a
     class="command decrementer"

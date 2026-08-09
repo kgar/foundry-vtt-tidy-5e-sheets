@@ -16,10 +16,6 @@
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
-  let identifier = $derived(
-    rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
-  );
-
   const visible = $derived(rowContext.visible);
 
   const label = $derived(
@@ -44,13 +40,7 @@
   ]}
   aria-label={label}
   data-tooltip
-  onclick={() =>
-    context.editable && context.sheet.toggleCombatantVisibility(identifier)}
-  onkeypress={(ev) => {
-    if (ev.key === 'Enter' || ev.key === ' ') {
-      context.editable && context.sheet.toggleCombatantVisibility(identifier);
-    }
-  }}
+  data-action={context.editable ? 'toggleCombatantVisibility' : undefined}
 >
   <i class={iconClass}></i>
 </a>

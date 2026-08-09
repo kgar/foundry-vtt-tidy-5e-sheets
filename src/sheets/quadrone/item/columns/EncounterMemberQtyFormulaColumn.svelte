@@ -4,25 +4,19 @@
   import type {
     EncounterMemberCombatantQuadroneContext,
     EncounterMemberQuadroneContext,
-    EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
 
   let {
     rowContext,
   }: {
-    rowContext:
-      | EncounterMemberQuadroneContext
-      | EncounterMemberCombatantQuadroneContext
-      | EncounterPlaceholderQuadroneContext;
+    rowContext: EncounterMemberQuadroneContext;
   } = $props();
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
   async function handleChange(
     ev: Event & { currentTarget: EventTarget & HTMLInputElement },
-    memberContext:
-      | EncounterMemberQuadroneContext
-      | EncounterMemberCombatantQuadroneContext,
+    memberContext: EncounterMemberQuadroneContext,
   ) {
     const input = ev.currentTarget;
     const newValue = input.value ?? '';
@@ -30,12 +24,10 @@
   }
 </script>
 
-{#if rowContext.type === 'member'}
-  <input
-    type="text"
-    onchange={(ev) => handleChange(ev, rowContext)}
-    {@attach InputAttachments.selectOnFocus}
-    value={rowContext.quantity.formula}
-    placeholder={context.unlocked ? '1d4+1' : '—'}
-  />
-{/if}
+<input
+  type="text"
+  onchange={(ev) => handleChange(ev, rowContext)}
+  {@attach InputAttachments.selectOnFocus}
+  value={rowContext.quantity.formula}
+  placeholder={context.unlocked ? '1d4+1' : '—'}
+/>

@@ -133,6 +133,7 @@ export class TidyFlags {
    */
   static encounterDifficultyTargetGroupId = {
     key: 'encounterDifficultyTargetGroupId' as const,
+    prop: TidyFlags.getFlagPropertyPath('encounterDifficultyTargetGroupId'),
     /** Gets the group ID. */
     get(user: any): string | null | undefined {
       return TidyFlags.tryGetFlag<string>(
