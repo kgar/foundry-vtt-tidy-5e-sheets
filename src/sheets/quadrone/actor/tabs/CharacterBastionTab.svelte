@@ -181,15 +181,17 @@
         </div>
         <ul class="facility-list unlist">
           {#each context.facilities.special.chosen as chosen}
-            {const bgImg = $derived(chosen.img.includes(
-              'systems/dnd5e/icons/svg/items/facility.svg',
-            )
-              ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
-              : chosen.img)}
+            {const bgImg = $derived(
+              chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
+                ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+                : chosen.img,
+            )}
 
-            {const img = $derived(!chosen.disabled
-              ? chosen.img
-              : context.config.facilities.orders.repair.icon)}
+            {const img = $derived(
+              !chosen.disabled
+                ? chosen.img
+                : context.config.facilities.orders.repair.icon,
+            )}
 
             <li
               class={[
@@ -253,10 +255,7 @@
               </div>
 
               {#if chosen.hirelings.length}
-                <div
-                  class="facility-occupants"
-                  data-prop="system.hirelings"
-                >
+                <div class="facility-occupants" data-prop="system.hirelings">
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
                   </div>
@@ -277,10 +276,7 @@
                 </div>
               {/if}
               {#if chosen.defenders.length}
-                <div
-                  class="facility-occupants"
-                  data-prop="system.defenders"
-                >
+                <div class="facility-occupants" data-prop="system.defenders">
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
                   </div>
@@ -374,15 +370,17 @@
 
         <ul class="facility-list unlist">
           {#each context.facilities.basic.chosen as chosen}
-            {const bgImg = $derived(chosen.img.includes(
-              'systems/dnd5e/icons/svg/items/facility.svg',
-            )
-              ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
-              : chosen.img)}
+            {const bgImg = $derived(
+              chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
+                ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+                : chosen.img,
+            )}
 
-            {const img = $derived(!chosen.disabled
-              ? chosen.img
-              : context.config.facilities.orders.repair.icon)}
+            {const img = $derived(
+              !chosen.disabled
+                ? chosen.img
+                : context.config.facilities.orders.repair.icon,
+            )}
 
             <li
               class="facility basic"
@@ -393,8 +391,6 @@
               class:building={chosen.building}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
               style="--underlay: url('{bgImg}')"
-              data-info-card={'item'}
-              data-info-card-entity-uuid={chosen.facility.uuid}
             >
               <div class="facility-header">
                 <!-- svelte-ignore a11y_missing_attribute -->

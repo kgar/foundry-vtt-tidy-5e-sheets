@@ -73,8 +73,6 @@
     ['data-tidy-always-draggable']: '',
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.EFFECT_TABLE_ROW,
-    ['data-info-card']: 'effect',
-    ['data-info-card-entity-uuid']: effectContext.uuid,
     ['data-parent-id']: effectContext?.parentId ?? effectContext?.parent?.id,
   }}
   {hidden}

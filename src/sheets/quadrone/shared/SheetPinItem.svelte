@@ -164,8 +164,6 @@
   class="sheet-pin"
   data-tidy-draggable
   data-item-id={ctx.document.id}
-  data-info-card={'item'}
-  data-info-card-entity-uuid={ctx.document.uuid}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}

@@ -79,8 +79,6 @@
   data-item-id={ctx.document.item.id}
   data-activity-id={ctx.document.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
-  data-info-card={'activity'}
-  data-info-card-entity-uuid={ctx.document.uuid}
   data-configurable="true"
   data-pin-id={ctx.id}
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}

@@ -43,7 +43,7 @@
   let {
     item,
     contextMenu = null,
-    rowClass = '',
+    rowClass,
     hidden = false,
     children,
     afterInlineActivities,
@@ -130,8 +130,6 @@
     ['data-tidy-table-row']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,
     ['data-tidy-item-type']: item?.type ?? 'unknown',
-    ['data-info-card']: item ? 'item' : null,
-    ['data-info-card-entity-uuid']: item?.uuid ?? null,
   }}
   rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
   ondblclick={(event) =>

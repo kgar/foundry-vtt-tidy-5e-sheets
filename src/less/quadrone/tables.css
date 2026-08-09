@@ -979,7 +979,7 @@
       flex: 0 1 content;
     }
 
-    input[type="number"] {
+    .spell-slot-uses {
       font-family: var(--t5e-font-family-title);
       font-size: var(--font-size-16);
       max-width: var(--t5e-field-size-default);

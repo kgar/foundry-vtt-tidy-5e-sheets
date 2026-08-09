@@ -42,8 +42,6 @@
     ['data-tidy-table-row']: '',
     ['data-tidy-always-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
-    ['data-info-card']: 'activity',
-    ['data-info-card-entity-uuid']: ctx.activity.uuid,
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
   }}
   {hidden}

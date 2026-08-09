@@ -170,6 +170,8 @@ export function getTidy5eActorSheetQuadroneBase<
 
           await this.emphasize(emphasizeTabId, emphasizeSelector);
         },
+        decreaseSlots: Tidy5eActorSheetQuadroneBase.#decreaseSlots,
+        increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
         findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         restoreTransformation: async function (
           this: Tidy5eActorSheetQuadroneBase,
@@ -2028,6 +2030,37 @@ export function getTidy5eActorSheetQuadroneBase<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    static async #decreaseSlots(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const slot = target.closest<HTMLElement>('[data-slot]')?.dataset.slot;
+
+      if (slot) {
+        return await this._adjustSlots(slot, -1);
+      }
+    }
+
+    _adjustSlots(slot: string, amount: number) {
+      const prop = `system.spells.${slot}.value`;
+
+      const existingValue = FoundryAdapter.getProperty<number>(
+        this.document,
+        prop,
+      );
+
+      if (!Number.isNumeric(existingValue)) {
+        return;
+      }
+
+      return this.document.update({
+        [prop]: existingValue + amount,
+      });
+    }
+
+    /* -------------------------------------------- */
+
     /**
      * Handle finding an available item of a given type.
      */
@@ -2049,6 +2082,8 @@ export function getTidy5eActorSheetQuadroneBase<
         classIdentifier,
       });
     }
+
+    /* -------------------------------------------- */
 
     /**
      * Handle finding an available item of a given type.
@@ -2124,6 +2159,22 @@ export function getTidy5eActorSheetQuadroneBase<
         options: { sheet: item.parent?.sheet ?? item.container?.sheet },
       });
     }
+
+    /* -------------------------------------------- */
+
+    static async #increaseSlots(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const slot = target.closest<HTMLElement>('[data-slot]')?.dataset.slot;
+
+      if (slot) {
+        return await this._adjustSlots(slot, 1);
+      }
+    }
+
+    /* -------------------------------------------- */
 
     /**
      * Handle known rolls.

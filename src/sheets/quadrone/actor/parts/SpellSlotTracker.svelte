@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CharacterSheetQuadroneContext,
@@ -36,22 +36,24 @@
     type="button"
     class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
     disabled={uses <= 0 || !context.editable}
+    data-action="decreaseSlots"
     onclick={() => updateSlots(uses - 1)}
   >
     <i class="fa-solid fa-hexagon-minus"></i>
   </button>
   {#if context.unlocked}
-    <NumberInputQuadrone
-      document={context.actor}
-      field="system.spells.{section.slot}.value"
+    <input
+      type="text"
+      inputmode="numeric"
+      data-name="system.spells.{section.slot}.value"
       class={[
         'spell-slot-uses uninput uses-value color-text-default',
         { ['has-temp-slots']: hasTempSlots },
       ]}
       value={uses}
       placeholder="0"
-      min="0"
-      step="1"
+      data-min="0"
+      {@attach InputAttachments.selectOnFocus}
     />
   {:else}
     <span
@@ -67,6 +69,7 @@
   <button
     type="button"
     class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
+    data-action="increaseSlots"
     onclick={() => updateSlots(uses + 1)}
     disabled={!context.editable}
   >
