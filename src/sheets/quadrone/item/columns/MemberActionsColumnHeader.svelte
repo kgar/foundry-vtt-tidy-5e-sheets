@@ -4,17 +4,12 @@
 
   let {
     sheetContext,
-    sheetDocument,
   }: {
     sheetDocument: Actor5e;
     sheetContext: EncounterSheetQuadroneContext;
   } = $props();
 
   let localize = FoundryAdapter.localize;
-
-  function onAddClicked() {
-    sheetDocument.sheet._browseAddNpc();
-  }
 </script>
 
 {#if sheetContext.editable}
@@ -22,7 +17,7 @@
     class="tidy-table-button"
     aria-label={localize('TIDY5E.Encounter.AddMember.Label')}
     data-tooltip
-    onclick={onAddClicked}
+    data-action="browseAddNpc"
   >
     <i class="fas fa-plus"></i>
   </a>

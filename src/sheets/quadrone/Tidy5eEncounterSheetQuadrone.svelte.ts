@@ -89,6 +89,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         Tidy5eEncounterSheetQuadrone.#addNewLairPlaceholder,
       addNewPlaceholder: Tidy5eEncounterSheetQuadrone.#addNewPlaceholder,
       award: Tidy5eEncounterSheetQuadrone.#award,
+      browseAddNpc: Tidy5eEncounterSheetQuadrone.#browseAddNpc,
       editPlaceholderImage: Tidy5eEncounterSheetQuadrone.#editPlaceholderImage,
       prerollInitiative: Tidy5eEncounterSheetQuadrone.#prerollInitiative,
       prerollAllInitiatives:
@@ -787,6 +788,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     );
   }
 
+  static async #browseAddNpc(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    this._browseAddNpc();
+  }
+
   static async #editPlaceholderImage(
     this: Tidy5eEncounterSheetQuadrone,
     _event: Event,
@@ -1070,8 +1079,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         ? await this._onPlaceholderChanged(event, placeholderId, prop)
         : undefined;
     }
-
-    
 
     return await super._onChangeForm(formConfig, event);
   }

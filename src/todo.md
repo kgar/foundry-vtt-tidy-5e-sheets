@@ -1,7 +1,6 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
 - [ ] Review Group sheet for data-action / data-name / name opportunities.
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
