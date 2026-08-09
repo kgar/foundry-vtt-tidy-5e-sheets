@@ -64,12 +64,8 @@
         <div class="list-values">
           <select
             class="combat-difficulty-target"
-            data-name=""
-            onchange={(ev) =>
-              TidyFlags.encounterDifficultyTargetGroupId.set(
-                game.user,
-                ev.currentTarget.value,
-              )}
+            data-name="currentUser:{TidyFlags.encounterDifficultyTargetGroupId
+              .prop}"
             value={context.difficulty.targetId}
           >
             {#each [...context.difficulty.availableTargets].sort((a, b) => Number(b.primary) - Number(a.primary)) as target}

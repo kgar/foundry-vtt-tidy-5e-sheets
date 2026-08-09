@@ -428,9 +428,25 @@ export function getTidyExtensibleDocumentSheetMixin<
     async _onSingleInputChange(
       event: InputEvent & { target: HTMLInputElement },
     ) {
+      const { name } = event.target.dataset;
+
+      // Current User updates
+      const isCurrentUserUpdate = name?.startsWith('currentUser:');
+
+      if (isCurrentUserUpdate && !!name) {
+        const prop = name.split('currentUser:').at(-1);
+        return prop ? await this._onCurrentUserUpdated(event, prop) : undefined;
+      }
+
+      // Standard Embedded or Top-Level Document Submission Information
       const { targetDocument } = this._getDocumentSubmissionInformation(event);
 
       return await this._processSingleInputChange(event, targetDocument);
+    }
+
+    _onCurrentUserUpdated(event: any, prop: string): Promise<any> {
+      let value = event.target.value;
+      return game.user.update({ [prop]: value });
     }
 
     async _processSingleInputChange(

@@ -1045,6 +1045,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return await this._onMemberChanged(event, Number(index), name);
     }
 
+    // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
     const isCombatUpdate = name?.startsWith('combatantSettings:');
 
     const { memberUuid, placeholderId } =
@@ -1056,23 +1057,21 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     if (isCombatUpdate && !!name && combatantId) {
       const prop = name.split('combatantSettings:').at(-1);
-      if (prop) {
-        return await this._onCombatantChanged(event, combatantId, prop);
-      }
-
-      return;
+      return prop
+        ? await this._onCombatantChanged(event, combatantId, prop)
+        : undefined;
     }
 
     const isPlaceholderUpdate = name?.startsWith('placeholder:');
 
     if (isPlaceholderUpdate && !!name && placeholderId) {
       const prop = name.split('placeholder:').at(-1);
-      if (prop) {
-        return await this._onPlaceholderChanged(event, placeholderId, prop);
-      }
-
-      return;
+      return prop
+        ? await this._onPlaceholderChanged(event, placeholderId, prop)
+        : undefined;
     }
+
+    
 
     return await super._onChangeForm(formConfig, event);
   }
