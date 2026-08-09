@@ -45,6 +45,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
     > = {
       actions: {
+        award: Tidy5eMultiActorSheetQuadroneBase.#award,
         placeMembers: Tidy5eMultiActorSheetQuadroneBase.#onPlaceMembers,
         removeMember: Tidy5eMultiActorSheetQuadroneBase.#onRemoveMember,
       },
@@ -625,6 +626,14 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    static async #award(
+      this: Tidy5eMultiActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      this.award();
+    }
+
     /**
      * Handle placing group members.
      * @this {MultiActorSheet}
@@ -634,7 +643,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       _event: Event,
       _target: HTMLElement,
     ): Promise<void> {
-      this.actor.system.placeMembers();
+      this.document.system.placeMembers();
     }
 
     static async #onRemoveMember(

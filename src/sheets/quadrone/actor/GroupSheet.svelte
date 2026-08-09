@@ -8,7 +8,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import GroupSubtitle from './group-parts/GroupSubtitle.svelte';
-  
+
   let context = $derived(getGroupSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
@@ -95,26 +95,18 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
-          <button
-            type="button"
-            class="button short-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Short.Label"
-            aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.actor.shortRest()}
-          >
-            <i class="fas fa-utensils"></i>
-            {localize('DND5E.REST.Short.Label')}
-          </button>
-          <button
-            type="button"
-            class="button long-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
-            aria-label={localize('DND5E.REST.Long.Label')}
-            onclick={() => context.actor.longRest()}
-          >
-            <i class="fas fa-campground"></i>
-            {localize('DND5E.REST.Long.Label')}
-          </button>
+          {#each Object.entries(context.config.restTypes) as [key, rest]}
+            <button
+              type="button"
+              class="button button-gold flexshrink"
+              data-action="rest"
+              data-type={key}
+              disabled={!context.editable}
+            >
+              <i class={rest.icon}></i>
+              {rest.label}
+            </button>
+          {/each}
         </div>
       {/if}
     </div>

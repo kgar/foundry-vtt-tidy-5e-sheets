@@ -88,13 +88,11 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       addNewLairPlaceholder:
         Tidy5eEncounterSheetQuadrone.#addNewLairPlaceholder,
       addNewPlaceholder: Tidy5eEncounterSheetQuadrone.#addNewPlaceholder,
-      award: Tidy5eEncounterSheetQuadrone.#award,
       browseAddNpc: Tidy5eEncounterSheetQuadrone.#browseAddNpc,
       editPlaceholderImage: Tidy5eEncounterSheetQuadrone.#editPlaceholderImage,
       prerollInitiative: Tidy5eEncounterSheetQuadrone.#prerollInitiative,
       prerollAllInitiatives:
         Tidy5eEncounterSheetQuadrone.#prerollAllInitiatives,
-      placeMembers: Tidy5eEncounterSheetQuadrone.#placeMembers,
       removeMember: Tidy5eEncounterSheetQuadrone.#removeMember,
       rollQuantities: Tidy5eEncounterSheetQuadrone.#rollQuantities,
       showPlaceholderArtwork:
@@ -925,14 +923,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     }
   }
 
-  static async #award(
-    this: Tidy5eEncounterSheetQuadrone,
-    event: Event,
-    target: HTMLElement,
-  ) {
-    this.award();
-  }
-
   static async #prerollInitiative(
     this: Tidy5eEncounterSheetQuadrone,
     event: Event,
@@ -966,14 +956,6 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     target: HTMLElement,
   ) {
     this.prerollAllInitiatives(event);
-  }
-
-  static async #placeMembers(
-    this: Tidy5eEncounterSheetQuadrone,
-    event: Event,
-    target: HTMLElement,
-  ) {
-    this.document.system.placeMembers();
   }
 
   static async #removeMember(

@@ -1,12 +1,26 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] Review Group sheet for data-action / data-name / name opportunities.
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] Extract and share: TidyTableRowUseButton / Convert to sheet action
-- [ ] Encounter Sheet cleanup - "Sheet Actions" section - alphabetize by sheet action private method, and add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
+- [ ] Sheet cleanup - "Sheet Actions" section - alphabetize/group by sheet action handler, add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
+  - [ ] PC
+  - [ ] NPC
+  - [ ] Vehicle
+  - [ ] Group
+  - [ ] Encounter
+  - [ ] Item
+  - [ ] Container
+- [ ] Sheet cleanup - "Sheet Actions" - provide a handling method for all sheet actions, rather than handling directly in DEFAULT_OPTIONS.actions.
+  - [ ] PC
+  - [ ] NPC
+  - [ ] Vehicle
+  - [ ] Group
+  - [ ] Encounter
+  - [ ] Item
+  - [ ] Container
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
 - [ ] refactor: the data-name prefix system could use some kind of utility to reduce all the lines of code. And some OO design with the sheets to help make it easier to scale in the future.
 - [ ] refactor / organize - src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
