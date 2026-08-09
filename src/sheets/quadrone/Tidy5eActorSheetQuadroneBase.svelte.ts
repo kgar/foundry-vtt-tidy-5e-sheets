@@ -38,6 +38,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   Folder,
+  InspirationSource,
   LocationToSearchTextMap,
   MessageBus,
   SpellcastingClassContext,
@@ -59,7 +60,7 @@ import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
-import { warn } from 'src/utils/logging';
+import { error, warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -67,6 +68,7 @@ import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
+import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -203,7 +205,10 @@ export function getTidy5eActorSheetQuadroneBase<
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
           this.openSheetSettings(TidySheetSettingsTabIds.theme);
         },
+        increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
+        decreaseInspiration: Tidy5eActorSheetQuadroneBase.#decreaseInspiration,
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
+        toggleInspiration: Tidy5eActorSheetQuadroneBase.#toggleInspiration,
       },
       dragDrop: [
         {
@@ -2030,6 +2035,23 @@ export function getTidy5eActorSheetQuadroneBase<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    static async #decreaseInspiration(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { uuid } =
+        target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+      const actor = uuid ? await fromUuid(uuid) : this.document;
+      const inspirationSource =
+        await CONFIG.TIDY5E.utils.actorInspiration.tryGetInspirationSource(
+          actor,
+        );
+      return await inspirationSource?.change(-1);
+    }
+
+    /* -------------------------------------------- */
+
     static async #decreaseSlots(
       this: Tidy5eActorSheetQuadroneBase,
       event: Event,
@@ -2158,6 +2180,23 @@ export function getTidy5eActorSheetQuadroneBase<
       return await item.use(config, {
         options: { sheet: item.parent?.sheet ?? item.container?.sheet },
       });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #increaseInspiration(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { uuid } =
+        target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+      const actor = uuid ? await fromUuid(uuid) : this.document;
+      const inspirationSource =
+        await CONFIG.TIDY5E.utils.actorInspiration.tryGetInspirationSource(
+          actor,
+        );
+      return await inspirationSource?.change(1);
     }
 
     /* -------------------------------------------- */
@@ -2389,6 +2428,27 @@ export function getTidy5eActorSheetQuadroneBase<
      * @abstract
      */
     _showConfiguration(event: Event, target: HTMLElement): boolean | void {}
+
+    /* -------------------------------------------- */
+
+    static async #toggleInspiration(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { uuid } =
+        target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+
+      const actor = uuid ? await fromUuid(uuid) : this.document;
+
+      const prop = 'system.attributes.inspiration';
+
+      const inspired = FoundryAdapter.getProperty<boolean>(actor, prop);
+
+      actor.update({
+        [prop]: !inspired,
+      });
+    }
 
     /* -------------------------------------------- */
     /* SheetTabCacheable

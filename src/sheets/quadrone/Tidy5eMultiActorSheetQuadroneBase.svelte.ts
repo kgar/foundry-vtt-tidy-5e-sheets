@@ -655,16 +655,16 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     _onDragStart(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     ): void {
-      const memberId = event.currentTarget
-        .closest('[data-tidy-draggable][data-member-id]')
-        ?.getAttribute('data-member-id');
+      const uuid = event.currentTarget
+        .closest('[data-tidy-draggable][data-uuid]')
+        ?.getAttribute('data-uuid');
 
-      if (!memberId) {
+      if (!uuid) {
         super._onDragStart(event);
         return;
       }
 
-      const actor = this.#findMemberActor(memberId);
+      const actor = this.#findMemberActor(uuid);
 
       if (!actor) {
         return;
@@ -705,16 +705,16 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       }
 
       const dropTarget = event.target?.closest<HTMLElement>(
-        '[data-tidy-draggable][data-member-id]',
+        '[data-tidy-draggable][data-uuid]',
       );
-      const targetMemberId = dropTarget?.getAttribute('data-member-id');
+      const targetMemberUuid = dropTarget?.getAttribute('data-uuid');
 
-      const targetMemberActor = this.#findMemberActor(targetMemberId);
+      const targetMemberActor = this.#findMemberActor(targetMemberUuid);
 
       if (
         !dropTarget ||
         !targetMemberActor ||
-        targetMemberId === sourceActor.id
+        targetMemberUuid === sourceActor.uuid
       ) {
         return false;
       }
@@ -735,9 +735,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       return await this._onSortMember(sourceActor, targetMemberActor);
     }
 
-    #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
+    #findMemberActor(uuid: string | null | undefined): Actor5e | undefined {
       return this.actor.system.members.find(
-        (m: MultiActor5eMember) => m.actor.id === actorId,
+        (m: MultiActor5eMember) => m.actor.uuid === uuid,
       )?.actor;
     }
 

@@ -312,7 +312,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
           : undefined,
         inspirationSource: actor.system.isCharacter
-          ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
+          ? await CONFIG.TIDY5E.utils.actorInspiration.tryGetInspirationSource(
+              actor,
+            )
           : undefined,
         portrait: await this._preparePortrait(actor),
         gold: FoundryAdapter.formatNumber(

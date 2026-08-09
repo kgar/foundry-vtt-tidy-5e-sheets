@@ -8,10 +8,10 @@ import type { BankedInspirationConfiguration } from 'src/types/types';
  */
 export class ActorInspirationApi {
   /**
-   * Enable banked inspiration for all actors. Inspiration value and max 
-   * can be determined arbitrarily, and change requests from the sheet 
+   * Enable banked inspiration for all actors. Inspiration value and max
+   * can be determined arbitrarily, and change requests from the sheet
    * should be handled in the `change` callback.
-   * 
+   *
    * @param config the configuration to use when managing banked actor inspiration
    */
   configureBankedInspiration(config: BankedInspirationConfiguration) {

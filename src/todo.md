@@ -1,11 +1,11 @@
 ## The Accretion Disk of To Do's
 
 
-- [ ] src\sheets\quadrone\actor\character-parts\InspirationBadge.svelte - move all eventing to the character sheet for handling inspo toggling, increaseInspiration/decreaseInspiration, etc.
+- [ ] refactor - _getDocumentSubmissionInformation - accept target HTMLElement instead of event
 - [ ] src\sheets\quadrone\item\columns\MemberActionsColumnHeader.svelte - convert to use data action
+- [ ] Review Group sheet for data-action / data-name / name opportunities.
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
-- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] Extract and share: TidyTableRowUseButton / Convert to sheet action
 - [ ] Encounter Sheet cleanup - "Sheet Actions" section - alphabetize by sheet action private method, and add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
@@ -70,6 +70,7 @@
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
+- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 
 ## hightouch To Do
 
