@@ -116,6 +116,7 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
+      showConfiguration: Tidy5eContainerSheetQuadrone.#showConfiguration,
       showIcon: Tidy5eContainerSheetQuadrone.#showIcon,
     },
     dragDrop: [
@@ -436,6 +437,19 @@ export class Tidy5eContainerSheetQuadrone
 
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  static async #showConfiguration(
+    this: Tidy5eContainerSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    switch (target.dataset.config) {
+      case 'source':
+        return FoundryAdapter.renderSourceConfig(this.item, 'system.source');
+    }
+  }
+
   /* -------------------------------------------- */
 
   // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
