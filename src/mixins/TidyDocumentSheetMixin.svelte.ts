@@ -47,6 +47,7 @@ import type { Item5e } from 'src/types/item.types';
 import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { isUserInteractable } from 'src/utils/element';
+import { delay } from 'src/utils/asynchrony';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -92,6 +93,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
         editImage: TidyDocumentSheet.#editImage,
+        emphasize: TidyDocumentSheet.#emphasize,
         increase: TidyDocumentSheet.#increase,
         decrease: TidyDocumentSheet.#decrease,
         recharge: TidyDocumentSheet.#recharge,
@@ -1208,6 +1210,31 @@ export function getTidyExtensibleDocumentSheetMixin<
       });
       await fp.browse();
     }
+
+    /* -------------------------------------------- */
+
+    static async #emphasize(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+      await this.emphasize(emphasizeTabId, emphasizeSelector);
+    }
+
+    async emphasize(tabId: string | undefined, selector: string | undefined) {
+      if (tabId) {
+        this.selectTab(tabId);
+      }
+
+      if (selector) {
+        await delay(1);
+        this.element.ownerDocument.querySelector(selector)?.focus();
+      }
+    }
+
+    /* -------------------------------------------- */
 
     /* -------------------------------------------- */
 

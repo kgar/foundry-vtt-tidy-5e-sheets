@@ -1,7 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Can showIcon go to the doc sheet mixin level?
-- [ ] Can emphasize go to the doc sheet mixin level?
 - [ ] Scan over actions on all the sheets and determine which can be pulled back and where.
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
@@ -67,6 +65,7 @@
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
+- [ ] Somehow make Container Sheet a subclass of Item Sheet. It's been a long time coming. 
 
 ## hightouch To Do
 

@@ -165,7 +165,6 @@ export function getTidy5eActorSheetQuadroneBase<
         addOccupant: Tidy5eActorSheetQuadroneBase.#addOccupant,
         decreaseInspiration: Tidy5eActorSheetQuadroneBase.#decreaseInspiration,
         decreaseSlots: Tidy5eActorSheetQuadroneBase.#decreaseSlots,
-        emphasize: Tidy5eActorSheetQuadroneBase.#emphasize,
         findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
         increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
@@ -2097,18 +2096,6 @@ export function getTidy5eActorSheetQuadroneBase<
       return this.document.update({
         [prop]: existingValue + amount,
       });
-    }
-
-    /* -------------------------------------------- */
-
-    static async #emphasize(
-      this: Tidy5eActorSheetQuadroneBase,
-      event: Event,
-      target: HTMLElement,
-    ) {
-      const { emphasizeTabId, emphasizeSelector } = target.dataset;
-
-      await this.emphasize(emphasizeTabId, emphasizeSelector);
     }
 
     /* -------------------------------------------- */

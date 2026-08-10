@@ -116,7 +116,6 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
-      emphasize: Tidy5eContainerSheetQuadrone.#emphasize,
       showIcon: Tidy5eContainerSheetQuadrone.#showIcon,
     },
     dragDrop: [
@@ -437,18 +436,6 @@ export class Tidy5eContainerSheetQuadrone
 
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
-  /* -------------------------------------------- */
-
-  static async #emphasize(
-    this: Tidy5eContainerSheetQuadrone,
-    event: Event,
-    target: HTMLElement,
-  ) {
-    const { emphasizeTabId, emphasizeSelector } = target.dataset;
-
-    await this.emphasize(emphasizeTabId, emphasizeSelector);
-  }
-
   /* -------------------------------------------- */
 
   // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere

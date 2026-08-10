@@ -109,7 +109,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
-      emphasize: Tidy5eItemSheetQuadrone.#emphasize,
       // TODO: game.release.generation >= 14, do we still need to do this?
       [ImportSheetControl.actionName]: async function (
         this: Tidy5eItemSheetQuadrone,
@@ -1114,29 +1113,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
-  /* -------------------------------------------- */
-
-  static async #emphasize(
-    this: Tidy5eItemSheetQuadrone,
-    event: Event,
-    target: HTMLElement,
-  ) {
-    const { emphasizeTabId, emphasizeSelector } = target.dataset;
-
-    await this.emphasize(emphasizeTabId, emphasizeSelector);
-  }
-
-  async emphasize(tabId: string | undefined, selector: string | undefined) {
-    if (tabId) {
-      this.selectTab(tabId);
-    }
-
-    if (selector) {
-      await delay(1);
-      this.element.ownerDocument.querySelector(selector)?.focus();
-    }
-  }
-
   /* -------------------------------------------- */
 
   static async #showConfiguration(
