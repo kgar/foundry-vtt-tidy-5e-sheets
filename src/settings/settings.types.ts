@@ -26,6 +26,7 @@ export type SheetTabConfigEntry = {
 
 export type SheetTabsConfiguration = {
   tabs: Record<string, SheetTabConfigEntry>;
+  skillsTraitsCombined?: boolean;
 };
 
 export type SheetTabsConfigurationLegacyV1 = {

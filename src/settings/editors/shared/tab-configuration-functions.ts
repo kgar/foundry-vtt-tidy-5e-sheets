@@ -22,6 +22,7 @@ import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
  */
 export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
   tabs: TabConfig[];
+  skillsTraitsCombined?: TabConfigContextEntry['skillsTraitsCombined'];
 } {
   const visibilityLevels: Record<string, number | null> = {};
 
@@ -33,6 +34,7 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
 
   return {
     tabs: entry.tabs.map((tab) => ({ ...tab })),
+    skillsTraitsCombined: entry.skillsTraitsCombined,
   };
 }
 

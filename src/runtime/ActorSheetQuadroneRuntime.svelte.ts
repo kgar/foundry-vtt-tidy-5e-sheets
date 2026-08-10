@@ -19,6 +19,12 @@ import {
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import { CONSTANTS } from 'src/constants';
 import { checkCondition } from 'src/utils/iteration';
+import {
+  getCharacterSidebarDefaultTabIds,
+  getSkillsTraitsCombined,
+  isCharacterSidebarSkillsTraitsTab,
+  isCharacterSidebarTabValid,
+} from 'src/settings/character-sidebar-tab-configuration';
 
 type GetTabConfigFn = (actor: any) => SheetTabsConfiguration | null | undefined;
 
@@ -59,7 +65,17 @@ export class ActorSheetQuadroneRuntime<
   async getTabs(context: TSheetContext): Promise<Tab[]> {
     let tabIds = this._getVisibleTabIds(context);
 
-    const selectedTabs = getSelectedTabIds(this._getTabConfig(context.actor));
+    let selectedTabs = getSelectedTabIds(this._getTabConfig(context.actor));
+
+    if (
+      this._docTypeKeyOverride ===
+      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
+    ) {
+      selectedTabs = this._resolveCharacterSidebarSelectedTabIds(
+        context,
+        selectedTabs,
+      );
+    }
 
     if (selectedTabs?.length) {
       tabIds = tabIds
@@ -144,6 +160,43 @@ export class ActorSheetQuadroneRuntime<
 
   getDefaultTabIds(): string[] {
     return [...this._defaultTabIds];
+  }
+
+  _resolveCharacterSidebarSelectedTabIds(
+    context: TSheetContext,
+    selectedTabs: string[],
+  ): string[] {
+    const skillsTraitsCombined = getSkillsTraitsCombined(
+      this._getTabConfig(context.actor),
+    );
+    const layoutDefaults = getCharacterSidebarDefaultTabIds(skillsTraitsCombined);
+
+    if (!selectedTabs.length) {
+      return layoutDefaults;
+    }
+
+    const validSelected = selectedTabs.filter((tabId) =>
+      isCharacterSidebarTabValid(tabId, skillsTraitsCombined),
+    );
+
+    const hasSkillsTraitsTab = validSelected.some((tabId) =>
+      isCharacterSidebarSkillsTraitsTab(tabId),
+    );
+
+    if (hasSkillsTraitsTab) {
+      return validSelected;
+    }
+
+    const nonSkillsTraitsTabs = validSelected.filter(
+      (tabId) => !isCharacterSidebarSkillsTraitsTab(tabId),
+    );
+
+    return [
+      ...nonSkillsTraitsTabs,
+      ...layoutDefaults.filter((tabId) =>
+        isCharacterSidebarSkillsTraitsTab(tabId),
+      ),
+    ];
   }
 
   registerContent(registeredContent: RegisteredContent<TSheetContext>) {

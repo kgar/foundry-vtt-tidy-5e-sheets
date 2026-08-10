@@ -20,6 +20,8 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import { error } from 'src/utils/logging';
 import { isNil } from 'src/utils/data';
 import { SettingsProvider } from '../settings.svelte';
+import { getCharacterSidebarTabContext } from '../character-sidebar-tab-configuration';
+import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 
 export type SheetTabsConfigurationContext = {
   entry: TabConfigContextEntry;
@@ -97,6 +99,16 @@ export function getSheetTabsConfigurationSettingsEditor(
   }
 
   function getConfigFromRuntime(doc: any, setting: SheetTabsConfiguration) {
+    if (
+      docTypeKeyOverride === CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
+    ) {
+      return getCharacterSidebarTabContext(
+        CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+        doc.type,
+        setting,
+      );
+    }
+
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
@@ -294,11 +306,20 @@ export function getSheetTabsConfigurationSettingsEditor(
         curr.tabs.every((t, i) => {
           const d = curr.defaultTabs[i];
           return d && d.id === t.id && d.show === t.show;
-        });
+        }) &&
+        (curr.skillsTraitsCombined == null ||
+          curr.skillsTraitsCombined === curr.defaultSkillsTraitsCombined);
+
+      const hasSkillsTraitsCombinedOverride =
+        curr.skillsTraitsCombined != null &&
+        curr.skillsTraitsCombined !== curr.defaultSkillsTraitsCombined;
 
       await setTabConfig(document, {
         // Full per-tab arrangement (preserves hidden-tab order).
-        tabs: matchesDefault ? {} : buildTabConfigMap(curr.tabs),
+        tabs: matchesDefault && !hasSkillsTraitsCombinedOverride ? {} : buildTabConfigMap(curr.tabs),
+        ...(hasSkillsTraitsCombinedOverride
+          ? { skillsTraitsCombined: curr.skillsTraitsCombined }
+          : {}),
       });
 
       await applySidebarExpanded(curr);

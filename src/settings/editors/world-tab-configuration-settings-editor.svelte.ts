@@ -10,6 +10,7 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
+import { getCharacterSidebarTabContext } from 'src/settings/character-sidebar-tab-configuration';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
@@ -67,11 +68,10 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       ),
     );
 
-    const characterSidebarContext = getActorTabContext(
-      CharacterSheetQuadroneSidebarRuntime,
+    const characterSidebarContext = getCharacterSidebarTabContext(
+      CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
       CONSTANTS.SHEET_TYPE_CHARACTER,
       actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
-      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
     );
 
     characterSidebarContext.title = FoundryAdapter.localize(
@@ -123,6 +123,17 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
   }
 
   function getDefaultEntry(entry: TabConfigContextEntry) {
+    if (
+      entry.docTypeKeyOverride ===
+      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
+    ) {
+      return getCharacterSidebarTabContext(
+        CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+        entry.documentType,
+        null,
+      );
+    }
+
     return {
       ...entry,
       tabs: entry.defaultTabs.map((t) => ({ ...t })),
@@ -146,11 +157,18 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         (l) => l.visibilityLevel != null,
       );
 
-      if (!matchesDefault || hasVisibilityOverride) {
+      const hasSkillsTraitsCombinedOverride =
+        curr.skillsTraitsCombined != null &&
+        curr.skillsTraitsCombined !== curr.defaultSkillsTraitsCombined;
+
+      if (!matchesDefault || hasVisibilityOverride || hasSkillsTraitsCombinedOverride) {
         const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
 
         docName[docTypeKey] = {
           tabs: matchesDefault ? {} : buildTabConfigMap(curr.tabs),
+          ...(hasSkillsTraitsCombinedOverride
+            ? { skillsTraitsCombined: curr.skillsTraitsCombined }
+            : {}),
         };
       }
 
@@ -182,6 +200,18 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       );
 
       if (!entry) {
+        return;
+      }
+
+      if (
+        docTypeKeyOverride === CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
+      ) {
+        const rebuilt = getCharacterSidebarTabContext(
+          CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+          entry.documentType,
+          null,
+        );
+        Object.assign(entry, rebuilt);
         return;
       }
 
@@ -243,6 +273,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         ) ?? entry;
 
       entry.tabs = initialEntry.tabs;
+      entry.skillsTraitsCombined = initialEntry.skillsTraitsCombined;
     },
 
     get value() {

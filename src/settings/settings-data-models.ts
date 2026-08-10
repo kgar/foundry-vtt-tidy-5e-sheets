@@ -39,6 +39,11 @@ export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
       }),
       { initial: {} },
     ),
+    skillsTraitsCombined: new foundry.data.fields.BooleanField({
+      required: false,
+      nullable: true,
+      initial: undefined,
+    }),
   },
   { initial: {} },
   { name: 'Tab Configuration' },

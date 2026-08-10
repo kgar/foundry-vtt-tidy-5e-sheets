@@ -18,7 +18,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import { getActorTabContext } from 'src/settings/editors/shared/tab-configuration-functions';
+import { getCharacterSidebarTabContext } from 'src/settings/character-sidebar-tab-configuration';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { error } from 'src/utils/logging';
 import TidySheetSettings from './TidySheetSettings.svelte';
@@ -224,11 +224,10 @@ export class TidySheetSettingsQuadroneApplication
             getTabConfig: TidyFlags.sidebarTabConfiguration.get,
             setTabConfig: TidyFlags.sidebarTabConfiguration.set,
             getTabContext: (doc, setting) =>
-              getActorTabContext(
-                CharacterSheetQuadroneSidebarRuntime,
-                doc.documentName,
+              getCharacterSidebarTabContext(
+                CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+                doc.type,
                 setting,
-                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
               ),
           },
           title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {

@@ -39,9 +39,12 @@ export const SettingsShims = {
     >,
     documentName: string,
   ): SheetTabsConfiguration {
-    // If has the new tabs prop, return only that prop.
+    // If has the new tabs prop, return the current-shape props.
     if (config.tabs) {
-      return { tabs: config.tabs };
+      return {
+        tabs: config.tabs,
+        skillsTraitsCombined: config.skillsTraitsCombined,
+      };
     }
 
     const defaultVisibility =

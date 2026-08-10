@@ -7,6 +7,7 @@
   import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
   import type { WorldSheetConfigurationSettingsEditor } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
   import TabConfigurationSortableListbox from '../tab-configuration/parts/TabConfigurationSortableListbox.svelte';
+  import CharacterSidebarTabConfigurationPanel from '../tab-configuration/CharacterSidebarTabConfigurationPanel.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -71,7 +72,7 @@
         title: 'TIDY5E.Character.Sidebar.Title',
         content: {
           type: 'svelte',
-          component: TabConfigurationSortableListbox,
+          component: CharacterSidebarTabConfigurationPanel,
           getProps: () => ({ tabConfigEntry: entry }),
         },
       });

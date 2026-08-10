@@ -79,7 +79,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     this.currentTabId = hasClass
       ? CONSTANTS.TAB_ACTOR_ACTIONS
       : CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
-    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
+    this.currentSidebarTabId = CONSTANTS.TAB_FAVORITES;
   }
 
   static DEFAULT_OPTIONS: Partial<
