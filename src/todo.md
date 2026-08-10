@@ -1,6 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Can showSettings go to the doc sheet mixin level?
 - [ ] Can themeSettings go to the doc sheet mixin level?
 - [ ] Can showIcon go to the doc sheet mixin level?
 - [ ] Can emphasize go to the doc sheet mixin level?

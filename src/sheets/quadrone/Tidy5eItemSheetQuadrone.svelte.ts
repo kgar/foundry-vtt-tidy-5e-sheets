@@ -116,7 +116,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      sheetSettings: Tidy5eItemSheetQuadrone.#sheetSettings,
       showIcon: Tidy5eItemSheetQuadrone.#showIcon,
       themeSettings: Tidy5eItemSheetQuadrone.#themeSettings,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
@@ -1137,12 +1136,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       await delay(1);
       this.element.ownerDocument.querySelector(selector)?.focus();
     }
-  }
-
-  /* -------------------------------------------- */
-
-  static async #sheetSettings(this: Tidy5eItemSheetQuadrone) {
-    this.openSheetSettings();
   }
 
   /* -------------------------------------------- */

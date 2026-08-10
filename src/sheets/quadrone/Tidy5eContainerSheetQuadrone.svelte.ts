@@ -117,7 +117,6 @@ export class Tidy5eContainerSheetQuadrone
     },
     actions: {
       emphasize: Tidy5eContainerSheetQuadrone.#emphasize,
-      sheetSettings: Tidy5eContainerSheetQuadrone.#sheetSettings,
       showIcon: Tidy5eContainerSheetQuadrone.#showIcon,
     },
     dragDrop: [
@@ -448,12 +447,6 @@ export class Tidy5eContainerSheetQuadrone
     const { emphasizeTabId, emphasizeSelector } = target.dataset;
 
     await this.emphasize(emphasizeTabId, emphasizeSelector);
-  }
-
-  /* -------------------------------------------- */
-
-  static async #sheetSettings(this: Tidy5eContainerSheetQuadrone) {
-    this.openSheetSettings();
   }
 
   /* -------------------------------------------- */

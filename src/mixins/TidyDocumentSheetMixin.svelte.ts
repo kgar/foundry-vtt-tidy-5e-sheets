@@ -95,6 +95,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         increase: TidyDocumentSheet.#increase,
         decrease: TidyDocumentSheet.#decrease,
         recharge: TidyDocumentSheet.#recharge,
+        sheetSettings: TidyDocumentSheet.#sheetSettings,
         showContextMenu: TidyDocumentSheet.#showContextMenu,
         showDocument: TidyDocumentSheet.#showDocument,
         toggle: TidyDocumentSheet.#toggle,
@@ -1289,6 +1290,12 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       return entry.uses?.rollRecharge({ apply: true, event });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #sheetSettings(this: TidyDocumentSheet) {
+      this.openSheetSettings();
     }
 
     /* -------------------------------------------- */

@@ -174,7 +174,6 @@ export function getTidy5eActorSheetQuadroneBase<
         restoreTransformation:
           Tidy5eActorSheetQuadroneBase.#restoreTransformation,
         roll: Tidy5eActorSheetQuadroneBase.#roll,
-        sheetSettings: Tidy5eActorSheetQuadroneBase.#sheetSettings,
         showArtwork: Tidy5eActorSheetQuadroneBase.#showArtwork,
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
         themeSettings: Tidy5eActorSheetQuadroneBase.#themeSettings,
@@ -2378,12 +2377,6 @@ export function getTidy5eActorSheetQuadroneBase<
      * @protected
      */
     _roll(event: Event, target: HTMLElement): boolean | void {}
-
-    /* -------------------------------------------- */
-
-    static async #sheetSettings(this: Tidy5eActorSheetQuadroneBase) {
-      this.openSheetSettings();
-    }
 
     /* -------------------------------------------- */
 
