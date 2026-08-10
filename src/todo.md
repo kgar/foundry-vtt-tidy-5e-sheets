@@ -1,6 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Implement universal middleClickOnEdit feature that leverages the doc submission info feature from data-name; purge middle click wirings in phases
 - [ ] Sheet cleanup - "Sheet Actions" section - alphabetize/group by sheet action handler, add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
   - [ ] PC
   - [ ] NPC

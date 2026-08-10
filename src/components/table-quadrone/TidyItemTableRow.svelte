@@ -132,11 +132,6 @@
     ['data-tidy-item-type']: item?.type ?? 'unknown',
   }}
   rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
-  ondblclick={(event) =>
-    event.target instanceof HTMLElement &&
-    !isUserInteractable(event.target) &&
-    item &&
-    FoundryAdapter.editOnMouseEvent(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
 >

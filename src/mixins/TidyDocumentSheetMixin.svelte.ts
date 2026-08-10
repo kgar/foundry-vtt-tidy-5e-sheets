@@ -46,6 +46,7 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
+import { isUserInteractable } from 'src/utils/element';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -982,14 +983,22 @@ export function getTidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
 
     _onPointerDown(event: PointerEvent, target: HTMLElement) {
-      this._editOnMiddleClick(event, target);
-    }
-
-    _editOnMiddleClick(event: PointerEvent, target: HTMLElement) {
       if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
         return;
       }
 
+      this._openAnything(event, target, CONSTANTS.SHEET_MODE_EDIT);
+    }
+
+    _onDblClick(event: PointerEvent, target: HTMLElement) {
+      if (isUserInteractable(target)) {
+        return;
+      }
+
+      this._openAnything(event, target, CONSTANTS.SHEET_MODE_PLAY);
+    }
+
+    _openAnything(event: PointerEvent, target: HTMLElement, mode?: number) {
       // Standard Case
 
       const { targetDocument } = this._getDocumentSubmissionInformation(target);
@@ -998,7 +1007,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         event.stopPropagation();
         event.preventDefault();
         return this._renderChild(targetDocument.sheet, {
-          mode: CONSTANTS.SHEET_MODE_EDIT,
+          mode,
         });
       }
 
@@ -1050,7 +1059,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         return fromUuid(uuid).then((doc: any) => {
           if (doc !== this.document) {
             return this._renderChild(doc.sheet, {
-              mode: CONSTANTS.SHEET_MODE_EDIT,
+              mode,
             });
           }
         });

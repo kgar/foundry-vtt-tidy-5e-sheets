@@ -45,11 +45,6 @@
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
   }}
   {hidden}
-  ondblclick={(event) =>
-    event.target instanceof HTMLElement &&
-    !isUserInteractable(event.target) &&
-    ctx.activity &&
-    FoundryAdapter.editOnMouseEvent(event, ctx.activity)}
   {...attributes}
 >
   {@render children?.()}

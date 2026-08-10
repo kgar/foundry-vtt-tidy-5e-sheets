@@ -76,11 +76,6 @@
     ['data-parent-id']: effectContext?.parentId ?? effectContext?.parent?.id,
   }}
   {hidden}
-  ondblclick={(event) =>
-    event.target instanceof HTMLElement &&
-    !isUserInteractable(event.target) &&
-    effectContext.effect &&
-    FoundryAdapter.editOnMouseEvent(event, effectContext.effect)}
   {...attributes}
 >
   {@render children?.({ toggleSummary, expanded: expanded })}

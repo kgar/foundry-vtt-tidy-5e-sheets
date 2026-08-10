@@ -375,6 +375,14 @@ export function getSvelteApplicationMixin<
           signal: frameListenerController.signal,
         },
       );
+      
+      this.element.addEventListener(
+        'dblclick',
+        this.#onDblClick.bind(this),
+        {
+          signal: frameListenerController.signal,
+        },
+      );
 
       this.themeSettingsSubscription =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
@@ -501,6 +509,12 @@ export function getSvelteApplicationMixin<
         );
     }
 
+    #onDblClick(event: MouseEvent) {
+      this._onDblClick(event, event.target as HTMLElement);
+    }
+
+    _onDblClick(event: MouseEvent, target: HTMLElement) {}
+    
     #onPointerDown(event: PointerEvent) {
       this._onPointerDown(event, event.target as HTMLElement);
     }

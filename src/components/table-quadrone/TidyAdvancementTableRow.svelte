@@ -41,11 +41,6 @@
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ADVANCEMENT_TABLE_ROW,
   }}
   {hidden}
-  ondblclick={(event) =>
-    event.target instanceof HTMLElement &&
-    !isUserInteractable(event.target) &&
-    doc &&
-    FoundryAdapter.editOnMouseEvent(event, doc)}
   {...attributes}
 >
   {@render children?.()}
