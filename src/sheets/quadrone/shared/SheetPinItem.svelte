@@ -166,7 +166,6 @@
   data-item-id={ctx.document.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-pin-id={ctx.id}
-  onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
 >
   <div class="pin-document-image">
     <!-- svelte-ignore a11y_missing_attribute -->

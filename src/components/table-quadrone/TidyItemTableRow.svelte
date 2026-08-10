@@ -137,7 +137,6 @@
     !isUserInteractable(event.target) &&
     item &&
     FoundryAdapter.editOnMouseEvent(event, item)}
-  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
 >

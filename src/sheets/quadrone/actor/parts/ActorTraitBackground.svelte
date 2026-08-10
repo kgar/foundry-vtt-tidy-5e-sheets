@@ -49,8 +49,6 @@
           class="list-values trait-item"
           data-action="showDocument"
           data-uuid={backgroundItem?.uuid}
-          onmousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event, backgroundItem)}
         >
           <!-- svelte-ignore a11y_missing_attribute -->
           <span class="item-image-link">

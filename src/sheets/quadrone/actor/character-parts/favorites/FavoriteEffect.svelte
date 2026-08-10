@@ -58,8 +58,6 @@
   data-tidy-draggable
   data-favorite-id={favorite.id}
   data-tooltip={tooltip}
-  onmousedown={(event) =>
-    FoundryAdapter.editOnMiddleClick(event, favorite.effect)}
   data-tidy-sheet-part="favorite-entry"
 >
   <button

@@ -10,6 +10,7 @@ import type {
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import type {
+  ActiveEffect5e,
   Actor5e,
   CustomContent,
   DocumentSheetV2Context,
@@ -547,16 +548,37 @@ export function getTidyExtensibleDocumentSheetMixin<
       item: Item5e;
       activityId: string;
       activity: Activity5e;
+      effectId: string;
+      effect: ActiveEffect5e;
       targetDocument: Actor5e | Item5e | Activity5e;
     }> {
       const { itemId } =
         target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
       const sheetDocument = this.document;
-      const item = sheetDocument?.items?.get(itemId);
+      const sheetDocumentIsRelatedItem =
+        sheetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+        (sheetDocument.id === itemId || !itemId);
+      const item = sheetDocumentIsRelatedItem
+        ? sheetDocument
+        : sheetDocument?.items?.get(itemId);
+
       const { activityId } =
         target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
       const activity = item?.system.activities?.get(activityId);
-      const targetDocument = activity ?? item ?? sheetDocument;
+
+      const { effectId } =
+        target.closest<HTMLElement>('[data-effect-id]')?.dataset ?? {};
+      const { parentId } =
+        target.closest<HTMLElement>('[data-parent-id]')?.dataset ?? {};
+      const effect = effectId
+        ? FoundryAdapter.getEffect({
+            document: this.document,
+            effectId,
+            parentId,
+          })
+        : undefined;
+
+      const targetDocument = effect ?? activity ?? item ?? sheetDocument;
 
       return {
         itemId,
@@ -564,6 +586,8 @@ export function getTidyExtensibleDocumentSheetMixin<
         activityId,
         activity,
         targetDocument,
+        effectId,
+        effect,
       };
     }
 
@@ -955,6 +979,86 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
+    /* -------------------------------------------- */
+
+    _onPointerDown(event: PointerEvent, target: HTMLElement) {
+      this._editOnMiddleClick(event, target);
+    }
+
+    _editOnMiddleClick(event: PointerEvent, target: HTMLElement) {
+      if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
+        return;
+      }
+
+      // Standard Case
+
+      const { targetDocument } = this._getDocumentSubmissionInformation(target);
+
+      if (targetDocument && targetDocument !== this.document) {
+        event.stopPropagation();
+        event.preventDefault();
+        return this._renderChild(targetDocument.sheet, {
+          mode: CONSTANTS.SHEET_MODE_EDIT,
+        });
+      }
+
+      // Special Case - Slot
+
+      const isActor =
+        this.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
+
+      if (!!target.closest('[data-slots]') && isActor) {
+        event.stopPropagation();
+        event.preventDefault();
+        return FoundryAdapter.openSpellSlotsConfig(this.document);
+      }
+
+      // Special Case - Skill / Tool
+
+      const { trait } =
+        target.closest<HTMLElement>('[data-trait]')?.dataset ?? {};
+      const { key } = target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
+
+      if (trait && key && isActor) {
+        event.stopPropagation();
+        event.preventDefault();
+        FoundryAdapter.renderSkillToolConfig(
+          this.document,
+          trait as 'skills' | 'tool',
+          key,
+        );
+      }
+
+      // Special Case - Item Advancement
+
+      const { id } = target.closest<HTMLElement>('[data-id]')?.dataset ?? {};
+
+      if (this.document.documentName === CONSTANTS.DOCUMENT_NAME_ITEM && id) {
+        event.stopPropagation();
+        event.preventDefault();
+        return this._renderChild(this.document.advancement?.byId[id]?.sheet);
+      }
+
+      // Direct UUID reference
+
+      const { uuid } =
+        target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+
+      if (uuid) {
+        event.stopPropagation();
+        event.preventDefault();
+        return fromUuid(uuid).then((doc: any) => {
+          if (doc !== this.document) {
+            return this._renderChild(doc.sheet, {
+              mode: CONSTANTS.SHEET_MODE_EDIT,
+            });
+          }
+        });
+      }
+    }
+
+    /* -------------------------------------------- */
+    /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
     static async #editImage(

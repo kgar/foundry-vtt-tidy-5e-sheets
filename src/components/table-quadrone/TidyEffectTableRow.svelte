@@ -81,8 +81,6 @@
     !isUserInteractable(event.target) &&
     effectContext.effect &&
     FoundryAdapter.editOnMouseEvent(event, effectContext.effect)}
-  onmousedown={(event) =>
-    FoundryAdapter.editOnMiddleClick(event, effectContext.effect)}
   {...attributes}
 >
   {@render children?.({ toggleSummary, expanded: expanded })}

@@ -167,8 +167,6 @@
                     onMouseEnterFacility(ev, chosen.facility)}
                   onmouseleave={(ev) =>
                     onMouseLeaveFacility(ev, chosen.facility)}
-                  onmousedown={(ev) =>
-                    FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   data-action={context.editable ? 'useFacility' : undefined}
                   {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"
@@ -356,8 +354,6 @@
                     onMouseEnterFacility(ev, chosen.facility)}
                   onmouseleave={(ev) =>
                     onMouseLeaveFacility(ev, chosen.facility)}
-                  onmousedown={(ev) =>
-                    FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   data-action={context.editable ? 'useFacility' : undefined}
                   {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"

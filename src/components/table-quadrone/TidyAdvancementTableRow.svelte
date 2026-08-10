@@ -46,7 +46,6 @@
     !isUserInteractable(event.target) &&
     doc &&
     FoundryAdapter.editOnMouseEvent(event, doc)}
-  onmousedown={(event) => doc && FoundryAdapter.editOnMiddleClick(event, doc)}
   {...attributes}
 >
   {@render children?.()}

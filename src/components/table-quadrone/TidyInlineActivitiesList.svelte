@@ -83,8 +83,6 @@
           'data-tidy-always-draggable': '',
         }}
         rowClass="activity"
-        onmousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
       >
         <a
           class={['tidy-table-row-use-button', { disabled: !context.editable }]}

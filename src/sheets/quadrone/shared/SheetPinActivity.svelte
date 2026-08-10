@@ -81,7 +81,6 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-configurable="true"
   data-pin-id={ctx.id}
-  onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
 >
   <div class="pin-document-image">
     <a

@@ -368,6 +368,14 @@ export function getSvelteApplicationMixin<
         { signal: frameListenerController.signal },
       );
 
+      this.element.addEventListener(
+        'pointerdown',
+        this.#onPointerDown.bind(this),
+        {
+          signal: frameListenerController.signal,
+        },
+      );
+
       this.themeSettingsSubscription =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
           this.themeConfigOptions(),
@@ -492,6 +500,12 @@ export function getSvelteApplicationMixin<
           ProseMirror.defaultSchema,
         );
     }
+
+    #onPointerDown(event: PointerEvent) {
+      this._onPointerDown(event, event.target as HTMLElement);
+    }
+
+    _onPointerDown(event: PointerEvent, target: HTMLElement) {}
 
     /* -------------------------------------------- */
     /*  Detached Windows                            */
