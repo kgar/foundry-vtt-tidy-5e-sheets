@@ -176,7 +176,6 @@ export function getTidy5eActorSheetQuadroneBase<
         roll: Tidy5eActorSheetQuadroneBase.#roll,
         showArtwork: Tidy5eActorSheetQuadroneBase.#showArtwork,
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
-        themeSettings: Tidy5eActorSheetQuadroneBase.#themeSettings,
         toggleInspiration: Tidy5eActorSheetQuadroneBase.#toggleInspiration,
         useFacility: Tidy5eActorSheetQuadroneBase.#useFacility,
       },
@@ -2499,12 +2498,6 @@ export function getTidy5eActorSheetQuadroneBase<
      * @abstract
      */
     _showConfiguration(event: Event, target: HTMLElement): boolean | void {}
-
-    /* -------------------------------------------- */
-
-    static async #themeSettings(this: Tidy5eActorSheetQuadroneBase) {
-      this.openSheetSettings(TidySheetSettingsTabIds.theme);
-    }
 
     /* -------------------------------------------- */
 

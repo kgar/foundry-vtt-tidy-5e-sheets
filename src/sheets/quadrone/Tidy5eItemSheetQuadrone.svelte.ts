@@ -117,7 +117,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
       showIcon: Tidy5eItemSheetQuadrone.#showIcon,
-      themeSettings: Tidy5eItemSheetQuadrone.#themeSettings,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
     dragDrop: [
@@ -1181,12 +1180,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         window: { title },
       }),
     );
-  }
-
-  /* -------------------------------------------- */
-
-  static async #themeSettings(this: Tidy5eItemSheetQuadrone) {
-    return this.openSheetSettings(TidySheetSettingsTabIds.theme);
   }
 
   /* -------------------------------------------- */
