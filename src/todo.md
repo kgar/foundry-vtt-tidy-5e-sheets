@@ -1,6 +1,7 @@
 ## The Accretion Disk of To Do's
 
-- [ ] src\sheets\quadrone\actor\tabs\CharacterBastionTab.svelte - extract data-action content
+- [ ] Bastion tab - implement data-action="addOccupant" on actor base
+- [ ] Implement universal middleClickOnEdit feature that leverages the doc submission info feature from data-name; purge middle click wirings in phases
 - [ ] Sheet cleanup - "Sheet Actions" section - alphabetize/group by sheet action handler, add divider comment guidelines between sheet action handlers, grouping their related functions with the handler in question
   - [ ] PC
   - [ ] NPC

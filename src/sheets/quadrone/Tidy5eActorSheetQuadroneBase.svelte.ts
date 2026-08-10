@@ -205,6 +205,7 @@ export function getTidy5eActorSheetQuadroneBase<
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
           this.openSheetSettings(TidySheetSettingsTabIds.theme);
         },
+        useFacility: Tidy5eActorSheetQuadroneBase.#useFacility,
         increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
         decreaseInspiration: Tidy5eActorSheetQuadroneBase.#decreaseInspiration,
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
@@ -2143,8 +2144,18 @@ export function getTidy5eActorSheetQuadroneBase<
         ];
       }
 
-      if (type === 'facility' && facilityType) {
-        const otherType = facilityType === 'basic' ? 'special' : 'basic';
+      if (type === CONSTANTS.ITEM_TYPE_FACILITY && facilityType) {
+        if (
+          !TidyHooks.tidy5eSheetsAddFacilityClicked(event, this.actor, type)
+        ) {
+          return;
+        }
+
+        const otherType =
+          facilityType === CONSTANTS.FACILITY_TYPE_BASIC
+            ? CONSTANTS.FACILITY_TYPE_SPECIAL
+            : CONSTANTS.FACILITY_TYPE_BASIC;
+
         filters.locked.additional = {
           type: { [facilityType]: 1, [otherType]: -1 },
           level: { max: this.actor.system.details.level },
@@ -2447,6 +2458,30 @@ export function getTidy5eActorSheetQuadroneBase<
 
       actor.update({
         [prop]: !inspired,
+      });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #useFacility(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { facilityId } =
+        target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
+
+      const facility = this.actor.items.get(facilityId);
+
+      if (facility?.system.disabled) {
+        return;
+      }
+
+      facility?.use({
+        legacy: false,
+        chooseActivity: true,
+        event,
+        options: { sheet: this },
       });
     }
 

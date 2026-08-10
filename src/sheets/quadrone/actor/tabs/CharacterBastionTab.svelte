@@ -1,6 +1,5 @@
 <script lang="ts">
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -14,8 +13,8 @@
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { EventHelper } from 'src/utils/events';
   import FacilityRosterOccupantQuadrone from '../character-parts/bastion/FacilityRosterOccupantQuadrone.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -61,56 +60,7 @@
     return basicSvgFilePathRegex.test(iconPath?.trim());
   }
 
-  async function addFacility(ev: Event, type: string) {
-    if (!TidyHooks.tidy5eSheetsAddFacilityClicked(ev, context.actor, type)) {
-      return;
-    }
-
-    const otherType =
-      type === CONSTANTS.FACILITY_TYPE_BASIC
-        ? CONSTANTS.FACILITY_TYPE_SPECIAL
-        : CONSTANTS.FACILITY_TYPE_BASIC;
-
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
-      {
-        filters: {
-          locked: {
-            types: new Set(['facility']),
-            additional: {
-              type: { [type]: 1, [otherType]: -1 },
-              level: { max: context.actor.system.details.level },
-            },
-          },
-        },
-      },
-      context.sheet._detachOptions(),
-    );
-
-    if (result) {
-      context.actor.sheet._onDropItemCreate(await fromUuid(result), ev, 'copy');
-    }
-  }
-
-  function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
-    const facility = context.actor.items.get(chosen.id);
-    return facility?.use(
-      {
-        legacy: false,
-        chooseActivity: true,
-        event,
-        options: { sheet: context.sheet },
-      },
-      {},
-    );
-  }
-
   let localize = FoundryAdapter.localize;
-
-  function onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      (event.currentTarget as HTMLElement).click();
-    }
-  }
 
   let editing = $state(false);
 
@@ -139,13 +89,13 @@
   {:else}
     {#if context.unlocked}
       <section class="name">
-        <TextInputQuadrone
-          document={context.actor}
+        <input
+          type="text"
+          data-name="system.bastion.name"
           class="font-title-medium h2"
-          field="system.bastion.name"
           value={context.system.bastion.name}
-          selectOnFocus={true}
           placeholder={localize('DND5E.Bastion.Label')}
+          {@attach InputAttachments.selectOnFocus}
         />
       </section>
     {:else if !isNil(context.system.bastion.name, '')}
@@ -219,8 +169,8 @@
                     onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                  onclick={(ev) => context.editable && useFacility(ev, chosen)}
-                  onkeydown={onKeydown}
+                  data-action={context.editable ? 'useFacility' : undefined}
+                  {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"
                   data-keyboard-focus
                   tabindex="0"
@@ -245,7 +195,7 @@
                   class="facility-menu highlight-on-hover"
                   data-action="showContextMenu"
                   data-target-selector="[data-item-id]"
-                  onkeydown={onKeydown}
+                  {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"
                   data-keyboard-focus
                   tabindex="0"
@@ -330,10 +280,10 @@
               <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="button button-tertiary"
-                onclick={(ev) =>
-                  context.editable &&
-                  addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
-                onkeydown={onKeydown}
+                data-action="findItem"
+                data-item-type={CONSTANTS.ITEM_TYPE_FACILITY}
+                data-facility-type={CONSTANTS.FACILITY_TYPE_SPECIAL}
+                {@attach InputAttachments.triggerClickOnKeydown}
                 role="button"
                 data-keyboard-focus
                 tabindex="0"
@@ -402,8 +352,8 @@
                     onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
-                  onclick={(ev) => context.editable && useFacility(ev, chosen)}
-                  onkeydown={onKeydown}
+                  data-action={context.editable ? 'useFacility' : undefined}
+                  {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"
                   data-keyboard-focus
                   tabindex="0"
@@ -426,7 +376,7 @@
                   class="facility-menu highlight-on-hover"
                   data-action="showContextMenu"
                   data-target-selector="[data-item-id]"
-                  onkeydown={onKeydown}
+                  {@attach InputAttachments.triggerClickOnKeydown}
                   role="button"
                   data-keyboard-focus
                   tabindex="0"
@@ -443,10 +393,10 @@
               <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class="button button-tertiary"
-                onclick={(ev) =>
-                  context.editable &&
-                  addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
-                onkeydown={onKeydown}
+                {@attach InputAttachments.triggerClickOnKeydown}
+                data-action="findItem"
+                data-item-type={CONSTANTS.ITEM_TYPE_FACILITY}
+                data-facility-type={CONSTANTS.FACILITY_TYPE_BASIC}
                 role="button"
                 data-keyboard-focus
                 tabindex="0"
