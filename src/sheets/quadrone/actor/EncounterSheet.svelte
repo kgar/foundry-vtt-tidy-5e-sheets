@@ -40,9 +40,9 @@
             data-tidy-sheet-part="name-header-row"
           >
             {#if context.unlocked}
-              <TextInputQuadrone
-                field="name"
-                document={context.actor}
+              <input
+                type="text"
+                data-name="name"
                 value={context.actor.name}
                 class="actor-name flex1 h1"
                 data-tidy-sheet-part="actor-name"

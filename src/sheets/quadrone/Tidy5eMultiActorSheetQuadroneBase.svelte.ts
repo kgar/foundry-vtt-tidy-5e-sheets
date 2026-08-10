@@ -46,8 +46,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     > = {
       actions: {
         award: Tidy5eMultiActorSheetQuadroneBase.#award,
-        placeMembers: Tidy5eMultiActorSheetQuadroneBase.#onPlaceMembers,
-        removeMember: Tidy5eMultiActorSheetQuadroneBase.#onRemoveMember,
+        placeMembers: Tidy5eMultiActorSheetQuadroneBase.#placeMembers,
+        removeMember: Tidy5eMultiActorSheetQuadroneBase.#removeMember,
       },
     };
 
@@ -634,11 +634,25 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       this.award();
     }
 
+    async award() {
+      this._renderChild(
+        new dnd5e.applications.Award({
+          award: {
+            currency: { ...this.actor.system.currency },
+            savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+            xp: await this.actor.system.getXPValue(),
+          },
+        }),
+      );
+    }
+
+    /* -------------------------------------------- */
+
     /**
      * Handle placing group members.
      * @this {MultiActorSheet}
      */
-    static async #onPlaceMembers(
+    static async #placeMembers(
       this: Tidy5eMultiActorSheetQuadroneBase,
       _event: Event,
       _target: HTMLElement,
@@ -646,7 +660,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       this.document.system.placeMembers();
     }
 
-    static async #onRemoveMember(
+    /* -------------------------------------------- */
+
+    static async #removeMember(
       this: Tidy5eMultiActorSheetQuadroneBase,
       _event: Event,
       target: HTMLElement,

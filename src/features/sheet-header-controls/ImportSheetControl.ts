@@ -1,7 +1,7 @@
 import type { CustomHeaderControlsEntry } from 'src/api/api.types';
 
 export class ImportSheetControl {
-  static actionName = 'importFromCompendium';
+  static actionName = 'importFromCompendium' as const;
 
   static getSheetControl(): CustomHeaderControlsEntry {
     return {

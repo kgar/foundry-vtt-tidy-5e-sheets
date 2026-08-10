@@ -90,11 +90,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       height: 810,
     },
     actions: {
-      openSidebarTabConfiguration: async function (
-        this: Tidy5eCharacterSheetQuadrone,
-      ) {
-        this.openSheetSettings(TidySheetSettingsTabIds.sidebarTabConfig);
-      },
+      openSidebarTabConfiguration:
+        Tidy5eCharacterSheetQuadrone.#openSidebarTabConfiguration,
     },
   };
 
@@ -1255,6 +1252,18 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       : [];
 
     return renderedTabParts;
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  static async #openSidebarTabConfiguration(
+    this: Tidy5eCharacterSheetQuadrone,
+    _event: Event,
+    _target: HTMLElement,
+  ) {
+    this.openSheetSettings(TidySheetSettingsTabIds.sidebarTabConfig);
   }
 
   /* -------------------------------------------- */

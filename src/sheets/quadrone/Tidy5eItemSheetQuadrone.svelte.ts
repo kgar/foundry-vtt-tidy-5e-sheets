@@ -109,40 +109,16 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
-      emphasize: async function (
-        this: Tidy5eItemSheetQuadrone,
-        _event,
-        target,
-      ) {
-        const { emphasizeTabId, emphasizeSelector } = target.dataset;
-
-        await this.emphasize(emphasizeTabId, emphasizeSelector);
-      },
+      emphasize: Tidy5eItemSheetQuadrone.#emphasize,
+      // TODO: game.release.generation >= 14, do we still need to do this?
       [ImportSheetControl.actionName]: async function (
         this: Tidy5eItemSheetQuadrone,
       ) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this.openSheetSettings();
-      },
-      showIcon: async function (this: Tidy5eItemSheetQuadrone) {
-        const title =
-          this.item.system.identified === false
-            ? this.item.system.unidentified.name
-            : this.item.name;
-
-        this._renderChild(
-          new foundry.applications.apps.ImagePopout({
-            src: this.item.img,
-            uuid: this.item.uuid,
-            window: { title },
-          }),
-        );
-      },
-      themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        return this.openSheetSettings(TidySheetSettingsTabIds.theme);
-      },
+      sheetSettings: Tidy5eItemSheetQuadrone.#sheetSettings,
+      showIcon: Tidy5eItemSheetQuadrone.#showIcon,
+      themeSettings: Tidy5eItemSheetQuadrone.#themeSettings,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
     dragDrop: [
@@ -190,17 +166,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   selectTab(tabId: string) {
     this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
-  }
-
-  async emphasize(tabId: string | undefined, selector: string | undefined) {
-    if (tabId) {
-      this.selectTab(tabId);
-    }
-
-    if (selector) {
-      await delay(1);
-      this.element.ownerDocument.querySelector(selector)?.focus();
-    }
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -1153,6 +1118,35 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
+  static async #emphasize(
+    this: Tidy5eItemSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+    await this.emphasize(emphasizeTabId, emphasizeSelector);
+  }
+
+  async emphasize(tabId: string | undefined, selector: string | undefined) {
+    if (tabId) {
+      this.selectTab(tabId);
+    }
+
+    if (selector) {
+      await delay(1);
+      this.element.ownerDocument.querySelector(selector)?.focus();
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  static async #sheetSettings(this: Tidy5eItemSheetQuadrone) {
+    this.openSheetSettings();
+  }
+
+  /* -------------------------------------------- */
+
   static async #showConfiguration(
     this: Tidy5eItemSheetQuadrone,
     _event: Event,
@@ -1177,6 +1171,29 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           }),
         );
     }
+  }
+
+  /* -------------------------------------------- */
+
+  static async #showIcon(this: Tidy5eItemSheetQuadrone) {
+    const title =
+      this.item.system.identified === false
+        ? this.item.system.unidentified.name
+        : this.item.name;
+
+    this._renderChild(
+      new foundry.applications.apps.ImagePopout({
+        src: this.item.img,
+        uuid: this.item.uuid,
+        window: { title },
+      }),
+    );
+  }
+
+  /* -------------------------------------------- */
+
+  static async #themeSettings(this: Tidy5eItemSheetQuadrone) {
+    return this.openSheetSettings(TidySheetSettingsTabIds.theme);
   }
 
   /* -------------------------------------------- */

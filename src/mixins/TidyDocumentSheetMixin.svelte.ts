@@ -87,7 +87,6 @@ export function getTidyExtensibleDocumentSheetMixin<
       },
       actions: {
         'activity-use': TidyDocumentSheet.#useActivity,
-        //changeMode: PrimarySheet5e.#changeMode,
         configureTab: TidyDocumentSheet.#configureTab,
         currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
@@ -1070,6 +1069,96 @@ export function getTidyExtensibleDocumentSheetMixin<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    /**
+     * Handle configuring a tab on a sheet.
+     * @param this {TidyDocumentSheet}
+     * @param _event {Event}
+     * @param target The clicked element, with a data-tab-id attribute containing the tab ID
+     * @returns Nothing, loads the tab configuration application
+     */
+    static async #configureTab(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      this.openSheetSettings(target.dataset.tabId);
+    }
+
+    openSheetSettings(tabId?: string) {
+      const settings = new TidySheetSettingsQuadroneApplication({
+        document: this.document,
+        initialTabId: tabId,
+      });
+
+      return this._renderChild(settings);
+    }
+
+    /* -------------------------------------------- */
+
+    static async #currency(
+      this: TidyDocumentSheet,
+      _event: Event,
+      _target: HTMLElement,
+    ) {
+      return new dnd5e.applications.CurrencyManager({
+        document: this.document,
+      }).render({ force: true });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #decrease(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._decrease(event, target)) === false) {
+        return;
+      }
+
+      this._onAdjustProperty(event, target, -1);
+    }
+
+    protected async _decrease(
+      event: Event,
+      target: HTMLElement,
+    ): Promise<any> {}
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle removing an document.
+     * @this {PrimarySheet5e}
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     */
+    static async #deleteDocument(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._deleteDocument(event, target)) === false) {
+        return;
+      }
+      const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+      const doc = await fromUuid(uuid);
+      doc?.deleteDialog({ sheet: this });
+    }
+
+    /**
+     * Handle removing an document.
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     * @returns {any}               Return `false` to prevent default behavior.
+     */
+    async _deleteDocument(event: Event, target: HTMLElement): Promise<any> {}
+
+    /* -------------------------------------------- */
+
     static async #editImage(
       this: TidyDocumentSheet,
       _event: Event,
@@ -1119,6 +1208,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       await fp.browse();
     }
 
+    /* -------------------------------------------- */
+
     static async #increase(
       this: TidyDocumentSheet,
       event: Event,
@@ -1166,128 +1257,41 @@ export function getTidyExtensibleDocumentSheetMixin<
       return await this._updateNumericProperty(targetDocument, prop, value);
     }
 
-    static async #decrease(
+    /* -------------------------------------------- */
+
+    static async #recharge(
       this: TidyDocumentSheet,
       event: Event,
       target: HTMLElement,
     ) {
-      if ((await this._decrease(event, target)) === false) {
-        return;
-      }
+      const { item, activity } = this._getDocumentSubmissionInformation(target);
 
-      this._onAdjustProperty(event, target, -1);
+      this._onRollRecharge(activity ?? item, { event });
     }
 
-    protected async _decrease(
-      event: Event,
-      target: HTMLElement,
-    ): Promise<any> {}
-
-    /**
-     * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
-     * @param args The tab where this Add operation is occurring, and other optional parameters.
-     */
-    async _addDocument(_args: {
-      tabId: string;
-      customSection?: string;
-      creationItemTypes?: string[];
-      data?: Record<string, any>;
-    }): Promise<any> {}
-
-    static async #currency(
-      this: TidyDocumentSheet,
-      _event: Event,
-      _target: HTMLElement,
+    _onRollRecharge(
+      entry: Item5e | Activity5e,
+      { event }: Partial<{ event: Event }> = {},
     ) {
-      return new dnd5e.applications.CurrencyManager({
-        document: this.document,
-      }).render({ force: true });
-    }
+      const isItem = entry instanceof dnd5e.documents.Item5e;
+      const autoSucceed = event && 'shiftKey' in event && event.shiftKey;
 
-    /**
-     * Handle configuring a tab on a sheet.
-     * @param this {TidyDocumentSheet}
-     * @param _event {Event}
-     * @param target The clicked element, with a data-tab-id attribute containing the tab ID
-     * @returns Nothing, loads the tab configuration application
-     */
-    static async #configureTab(
-      this: TidyDocumentSheet,
-      _event: Event,
-      target: HTMLElement,
-    ) {
-      if (!this.isEditable) {
-        return;
+      if (autoSucceed && isItem) {
+        return entry.update({ ['system.uses.spent']: 0 });
       }
 
-      this.openSheetSettings(target.dataset.tabId);
-    }
-
-    static async #togglePip(
-      this: TidyDocumentSheet,
-      _event: Event,
-      target: HTMLElement,
-    ) {
-      if (!this.isEditable) {
-        return;
+      if (autoSucceed) {
+        return entry.item.updateActivity(entry.id, { ['uses.spent']: 0 });
       }
 
-      const n = Number(target.closest<HTMLElement>('[data-n]')?.dataset.n);
-      const prop =
-        target.dataset.prop ??
-        target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
-
-      if (!Number.isNumeric(n) || !prop) {
-        return;
+      if (isItem) {
+        return entry.system.uses?.rollRecharge({ apply: true, event });
       }
 
-      let value = foundry.utils.getProperty(this.actor, prop);
-
-      value =
-        value === n && prop.endsWith('.spent')
-          ? // `spent` needs special inverse treatment
-            value + 1
-          : value === n
-            ? // popping off the top pip
-              value - 1
-            : value > n
-              ? // expending all pips beyond and including the clicked pip
-                // note: this is how Tidy has historically done this,
-                // whereas the default sheets will keep the clicked
-                // pip unexpended.
-                n - 1
-              : // increase value to match the clicked empty pip
-                n;
-
-      this.submit({ updateData: { [prop]: value } });
+      return entry.uses?.rollRecharge({ apply: true, event });
     }
 
-    /**
-     * Handle removing an document.
-     * @this {PrimarySheet5e}
-     * @param {Event} event         Triggering click event.
-     * @param {HTMLElement} target  Button that was clicked.
-     */
-    static async #deleteDocument(
-      this: TidyDocumentSheet,
-      event: Event,
-      target: HTMLElement,
-    ) {
-      if ((await this._deleteDocument(event, target)) === false) {
-        return;
-      }
-      const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
-      const doc = await fromUuid(uuid);
-      doc?.deleteDialog({ sheet: this });
-    }
-
-    /**
-     * Handle removing an document.
-     * @param {Event} event         Triggering click event.
-     * @param {HTMLElement} target  Button that was clicked.
-     * @returns {any}               Return `false` to prevent default behavior.
-     */
-    async _deleteDocument(event: Event, target: HTMLElement): Promise<any> {}
+    /* -------------------------------------------- */
 
     /**
      * Handle triggering a context menu. [data-target-selector] on the sheet action node
@@ -1333,6 +1337,8 @@ export function getTidyExtensibleDocumentSheetMixin<
         }),
       );
     }
+
+    /* -------------------------------------------- */
 
     /**
      * Handle opening a document sheet.
@@ -1384,46 +1390,6 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
     }
 
-    static async #useItem(
-      this: TidyDocumentSheet,
-      event: Event,
-      target: HTMLElement,
-    ) {
-      if (target.ariaDisabled === 'true' || !this.isEditable) {
-        return;
-      }
-
-      const { item } = this._getDocumentSubmissionInformation(target);
-
-      if (!item) {
-        return;
-      }
-
-      this.tryUseItem(item, event);
-    }
-
-    async tryUseItem(item: Item5e, event: Event) {
-      item.use({ event }, { options: { sheet: this } });
-    }
-
-    static async #useActivity(
-      this: TidyDocumentSheet,
-      event: Event,
-      target: HTMLElement,
-    ) {
-      if (target.ariaDisabled === 'true' || !this.isEditable) {
-        return;
-      }
-
-      const { activity } = this._getDocumentSubmissionInformation(target);
-
-      if (!activity) {
-        return;
-      }
-
-      await activity.use({ event, options: { sheet: this } });
-    }
-
     /* -------------------------------------------- */
 
     static async #toggle(
@@ -1456,45 +1422,135 @@ export function getTidyExtensibleDocumentSheetMixin<
       // todo etc.
     }
 
-    openSheetSettings(tabId?: string) {
-      const settings = new TidySheetSettingsQuadroneApplication({
-        document: this.document,
-        initialTabId: tabId,
-      });
+    /* -------------------------------------------- */
 
-      return this._renderChild(settings);
+    static async #togglePip(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const n = Number(target.closest<HTMLElement>('[data-n]')?.dataset.n);
+      const prop =
+        target.dataset.prop ??
+        target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
+
+      if (!Number.isNumeric(n) || !prop) {
+        return;
+      }
+
+      let value = foundry.utils.getProperty(this.actor, prop);
+
+      value =
+        value === n && prop.endsWith('.spent')
+          ? // `spent` needs special inverse treatment
+            value + 1
+          : value === n
+            ? // popping off the top pip
+              value - 1
+            : value > n
+              ? // expending all pips beyond and including the clicked pip
+                // note: this is how Tidy has historically done this,
+                // whereas the default sheets will keep the clicked
+                // pip unexpended.
+                n - 1
+              : // increase value to match the clicked empty pip
+                n;
+
+      this.submit({ updateData: { [prop]: value } });
     }
 
-    static async #recharge(
+    /* -------------------------------------------- */
+
+    static async #transferCurrency(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      const currencyKeys = Object.keys(CONFIG.DND5E.currencies);
+      const { itemId } =
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+
+      const actor = this.actor;
+
+      if (!actor) {
+        warn(`No actor found for container ${itemId}.`);
+        return;
+      }
+
+      const container = actor.items.get(itemId);
+
+      if (!container) {
+        warn(`Container ${itemId} not found on this actor.`);
+        return;
+      }
+
+      // Build update objects for both documents
+      const containerUpdate: Record<string, number> = {};
+      const actorUpdate: Record<string, number> = {};
+
+      for (const key of currencyKeys) {
+        const containerValue = container.system.currency[key] ?? 0;
+        const actorValue = actor.system.currency[key] ?? 0;
+
+        if (containerValue > 0) {
+          containerUpdate[`system.currency.${key}`] = 0;
+          actorUpdate[`system.currency.${key}`] = actorValue + containerValue;
+        }
+      }
+
+      // Update both documents
+      await Promise.all([
+        container.update(containerUpdate),
+        actor.update(actorUpdate),
+      ]);
+    }
+
+    /* -------------------------------------------- */
+
+    static async #useActivity(
       this: TidyDocumentSheet,
       event: Event,
       target: HTMLElement,
     ) {
-      const { item, activity } = this._getDocumentSubmissionInformation(target);
+      if (target.ariaDisabled === 'true' || !this.isEditable) {
+        return;
+      }
 
-      this._onRollRecharge(activity ?? item, { event });
+      const { activity } = this._getDocumentSubmissionInformation(target);
+
+      if (!activity) {
+        return;
+      }
+
+      await activity.use({ event, options: { sheet: this } });
     }
 
-    _onRollRecharge(
-      entry: Item5e | Activity5e,
-      { event }: Partial<{ event: Event }> = {},
+    /* -------------------------------------------- */
+
+    static async #useItem(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
     ) {
-      const isItem = entry instanceof dnd5e.documents.Item5e;
-      const autoSucceed = event && 'shiftKey' in event && event.shiftKey;
-
-      if (autoSucceed && isItem) {
-        return entry.update({ ['system.uses.spent']: 0 });
+      if (target.ariaDisabled === 'true' || !this.isEditable) {
+        return;
       }
 
-      if (autoSucceed) {
-        return entry.item.updateActivity(entry.id, { ['uses.spent']: 0 });
+      const { item } = this._getDocumentSubmissionInformation(target);
+
+      if (!item) {
+        return;
       }
 
-      if (isItem) {
-        return entry.system.uses?.rollRecharge({ apply: true, event });
-      }
+      this.tryUseItem(item, event);
+    }
 
-      return entry.uses?.rollRecharge({ apply: true, event });
+    async tryUseItem(item: Item5e, event: Event) {
+      item.use({ event }, { options: { sheet: this } });
     }
 
     /* -------------------------------------------- */
@@ -1554,49 +1610,16 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     /* -------------------------------------------- */
 
-    static async #transferCurrency(
-      this: TidyDocumentSheet,
-      _event: Event,
-      target: HTMLElement,
-    ) {
-      const currencyKeys = Object.keys(CONFIG.DND5E.currencies);
-      const { itemId } =
-        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
-
-      const actor = this.actor;
-
-      if (!actor) {
-        warn(`No actor found for container ${itemId}.`);
-        return;
-      }
-
-      const container = actor.items.get(itemId);
-
-      if (!container) {
-        warn(`Container ${itemId} not found on this actor.`);
-        return;
-      }
-
-      // Build update objects for both documents
-      const containerUpdate: Record<string, number> = {};
-      const actorUpdate: Record<string, number> = {};
-
-      for (const key of currencyKeys) {
-        const containerValue = container.system.currency[key] ?? 0;
-        const actorValue = actor.system.currency[key] ?? 0;
-
-        if (containerValue > 0) {
-          containerUpdate[`system.currency.${key}`] = 0;
-          actorUpdate[`system.currency.${key}`] = actorValue + containerValue;
-        }
-      }
-
-      // Update both documents
-      await Promise.all([
-        container.update(containerUpdate),
-        actor.update(actorUpdate),
-      ]);
-    }
+    /**
+     * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
+     * @param args The tab where this Add operation is occurring, and other optional parameters.
+     */
+    async _addDocument(_args: {
+      tabId: string;
+      customSection?: string;
+      creationItemTypes?: string[];
+      data?: Record<string, any>;
+    }): Promise<any> {}
 
     /* -------------------------------------------- */
     /*  Drag and Drop                               */

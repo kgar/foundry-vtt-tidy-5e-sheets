@@ -163,53 +163,23 @@ export function getTidy5eActorSheetQuadroneBase<
       },
       actions: {
         addOccupant: Tidy5eActorSheetQuadroneBase.#addOccupant,
-        emphasize: async function (
-          this: Tidy5eActorSheetQuadroneBase,
-          _event,
-          target,
-        ) {
-          const { emphasizeTabId, emphasizeSelector } = target.dataset;
-
-          await this.emphasize(emphasizeTabId, emphasizeSelector);
-        },
-        decreaseSlots: Tidy5eActorSheetQuadroneBase.#decreaseSlots,
-        increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
-        findItem: Tidy5eActorSheetQuadroneBase.#findItem,
-        restoreTransformation: async function (
-          this: Tidy5eActorSheetQuadroneBase,
-        ) {
-          this.actor.revertOriginalForm();
-        },
-        sheetSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          this.openSheetSettings();
-        },
-        rest: async function (
-          this: Tidy5eActorSheetQuadroneBase,
-          _event,
-          target,
-        ) {
-          this.actor.initiateRest({ type: target.dataset.type });
-        },
-        roll: Tidy5eActorSheetQuadroneBase.#roll,
-        showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
-          const { src } = await this._preparePortrait(this.actor);
-
-          this._renderChild(
-            new foundry.applications.apps.ImagePopout({
-              src,
-              uuid: this.actor.uuid,
-              window: { title: this.actor.name },
-            }),
-          );
-        },
-        themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          this.openSheetSettings(TidySheetSettingsTabIds.theme);
-        },
-        useFacility: Tidy5eActorSheetQuadroneBase.#useFacility,
-        increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
         decreaseInspiration: Tidy5eActorSheetQuadroneBase.#decreaseInspiration,
+        decreaseSlots: Tidy5eActorSheetQuadroneBase.#decreaseSlots,
+        emphasize: Tidy5eActorSheetQuadroneBase.#emphasize,
+        findItem: Tidy5eActorSheetQuadroneBase.#findItem,
+        increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
+        increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
+        // TODO: game.release.generation >= 14, is this still needed?
+        rest: Tidy5eActorSheetQuadroneBase.#rest,
+        restoreTransformation:
+          Tidy5eActorSheetQuadroneBase.#restoreTransformation,
+        roll: Tidy5eActorSheetQuadroneBase.#roll,
+        sheetSettings: Tidy5eActorSheetQuadroneBase.#sheetSettings,
+        showArtwork: Tidy5eActorSheetQuadroneBase.#showArtwork,
         showConfiguration: Tidy5eActorSheetQuadroneBase.#showConfiguration,
+        themeSettings: Tidy5eActorSheetQuadroneBase.#themeSettings,
         toggleInspiration: Tidy5eActorSheetQuadroneBase.#toggleInspiration,
+        useFacility: Tidy5eActorSheetQuadroneBase.#useFacility,
       },
       dragDrop: [
         {
@@ -2133,6 +2103,18 @@ export function getTidy5eActorSheetQuadroneBase<
 
     /* -------------------------------------------- */
 
+    static async #emphasize(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { emphasizeTabId, emphasizeSelector } = target.dataset;
+
+      await this.emphasize(emphasizeTabId, emphasizeSelector);
+    }
+
+    /* -------------------------------------------- */
+
     /**
      * Handle finding an available item of a given type.
      */
@@ -2154,8 +2136,6 @@ export function getTidy5eActorSheetQuadroneBase<
         classIdentifier,
       });
     }
-
-    /* -------------------------------------------- */
 
     /**
      * Handle finding an available item of a given type.
@@ -2275,6 +2255,22 @@ export function getTidy5eActorSheetQuadroneBase<
 
     /* -------------------------------------------- */
 
+    static async #rest(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      this.actor.initiateRest({ type: target.dataset.type });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #restoreTransformation(this: Tidy5eActorSheetQuadroneBase) {
+      this.actor.revertOriginalForm();
+    }
+
+    /* -------------------------------------------- */
+
     /**
      * Handle known rolls.
      * @param this the sheet instance
@@ -2383,6 +2379,28 @@ export function getTidy5eActorSheetQuadroneBase<
      */
     _roll(event: Event, target: HTMLElement): boolean | void {}
 
+    /* -------------------------------------------- */
+
+    static async #sheetSettings(this: Tidy5eActorSheetQuadroneBase) {
+      this.openSheetSettings();
+    }
+
+    /* -------------------------------------------- */
+
+    static async #showArtwork(this: Tidy5eActorSheetQuadroneBase) {
+      const { src } = await this._preparePortrait(this.actor);
+
+      this._renderChild(
+        new foundry.applications.apps.ImagePopout({
+          src,
+          uuid: this.actor.uuid,
+          window: { title: this.actor.name },
+        }),
+      );
+    }
+
+    /* -------------------------------------------- */
+
     static async #showConfiguration(
       this: Tidy5eActorSheetQuadroneBase,
       event: Event,
@@ -2488,6 +2506,12 @@ export function getTidy5eActorSheetQuadroneBase<
      * @abstract
      */
     _showConfiguration(event: Event, target: HTMLElement): boolean | void {}
+
+    /* -------------------------------------------- */
+
+    static async #themeSettings(this: Tidy5eActorSheetQuadroneBase) {
+      this.openSheetSettings(TidySheetSettingsTabIds.theme);
+    }
 
     /* -------------------------------------------- */
 

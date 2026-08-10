@@ -76,22 +76,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     },
     actions: {
       adjustCrew: Tidy5eVehicleSheetQuadrone.#adjustCrew,
-      browseActors: function (
-        this: Tidy5eVehicleSheetQuadrone,
-        _event: MouseEvent,
-        target: HTMLElement,
-      ) {
-        const area =
-          target.closest('[data-area]')?.getAttribute('data-area') ??
-          CONSTANTS.SECTION_TYPE_CREW;
-
-        return this.browseAddActor(area);
-      },
-      removeBrokenLinks: Tidy5eVehicleSheetQuadrone.#onRemoveBrokenLinks,
-      removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
-      removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
-      removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
-      unassignCrew: Tidy5eVehicleSheetQuadrone.#onUnassignCrew,
+      browseActors: Tidy5eVehicleSheetQuadrone.#browseActors,
+      removeBrokenLinks: Tidy5eVehicleSheetQuadrone.#removeBrokenLinks,
+      removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#removeDraftAnimal,
+      removePassengers: Tidy5eVehicleSheetQuadrone.#removePassengers,
+      removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#removeUnassignedCrew,
+      unassignCrew: Tidy5eVehicleSheetQuadrone.#unassignCrew,
     },
   };
 
@@ -1180,7 +1170,23 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onRemoveBrokenLinks(
+  /* -------------------------------------------- */
+
+  static async #browseActors(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const area =
+      target.closest('[data-area]')?.getAttribute('data-area') ??
+      CONSTANTS.SECTION_TYPE_CREW;
+
+    return this.browseAddActor(area);
+  }
+
+  /* -------------------------------------------- */
+
+  static async #removeBrokenLinks(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1189,7 +1195,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     return this.removeBrokenLinks(area);
   }
 
-  static async #onRemoveDraftAnimal(
+  /* -------------------------------------------- */
+
+  static async #removeDraftAnimal(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1200,7 +1208,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onRemovePassengers(
+  /* -------------------------------------------- */
+
+  static async #removePassengers(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1211,7 +1221,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onRemoveUnassignedCrew(
+  /* -------------------------------------------- */
+
+  static async #removeUnassignedCrew(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1222,7 +1234,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onUnassignCrew(
+  /* -------------------------------------------- */
+
+  static async #unassignCrew(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
