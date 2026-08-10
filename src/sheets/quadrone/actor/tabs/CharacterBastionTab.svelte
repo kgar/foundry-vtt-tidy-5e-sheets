@@ -205,7 +205,11 @@
               </div>
 
               {#if chosen.hirelings.length}
-                <div class="facility-occupants" data-prop="system.hirelings">
+                <div
+                  class="facility-occupants"
+                  data-prop="system.hirelings"
+                  data-facility-type="hireling"
+                >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
                   </div>
@@ -218,7 +222,6 @@
                         iconClass="far fa-user"
                         facilityId={chosen.id}
                         facilityName={chosen.name}
-                        prop="system.hirelings"
                         {uuid}
                       ></FacilityOccupantQuadrone>
                     {/each}
@@ -226,7 +229,11 @@
                 </div>
               {/if}
               {#if chosen.defenders.length}
-                <div class="facility-occupants" data-prop="system.defenders">
+                <div
+                  class="facility-occupants"
+                  data-prop="system.defenders"
+                  data-facility-type="defender"
+                >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
                   </div>
@@ -239,7 +246,6 @@
                         iconClass="far fa-shield"
                         facilityId={chosen.id}
                         facilityName={chosen.name}
-                        prop="system.defenders"
                         {uuid}
                       ></FacilityOccupantQuadrone>
                     {/each}
@@ -250,6 +256,7 @@
                 <div
                   class="facility-occupants"
                   data-prop="system.trade.creatures"
+                  data-facility-type="creature"
                   {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
@@ -264,7 +271,6 @@
                         iconClass="far fa-horse-head"
                         facilityId={chosen.id}
                         facilityName={chosen.name}
-                        prop="system.trade.creatures"
                         {uuid}
                       ></FacilityOccupantQuadrone>
                     {/each}
@@ -417,7 +423,11 @@
     <!-- Defender Roster -->
 
     {#if hasDefenders}
-      <section class="roster defenders">
+      <section
+        class="roster defenders"
+        data-prop="system.defenders"
+        data-facility-type="defender"
+      >
         <div class="bastion-header">
           <h3 class="font-title-small">
             <i class="fa-solid fa-shield"></i>
@@ -433,7 +443,6 @@
                   occupant={actor}
                   type="defender"
                   {index}
-                  prop="system.defenders"
                   facilityId={chosen.id}
                   facilityName={chosen.name}
                   {uuid}
@@ -446,7 +455,11 @@
     {/if}
 
     {#if hasHirelings}
-      <section class="roster hirelings">
+      <section
+        class="roster hirelings"
+        data-prop="system.hirelings"
+        data-facility-type="hireling"
+      >
         <div class="bastion-header">
           <h3 class="font-title-small">
             <i class="fa-solid fa-users"></i>
@@ -463,7 +476,6 @@
                   occupant={actor}
                   type="hireling"
                   {index}
-                  prop="system.hirelings"
                   facilityId={chosen.id}
                   facilityName={chosen.name}
                   {uuid}
@@ -476,11 +488,19 @@
     {/if}
 
     {#if hasCreatures}
-      <section class="roster creatures">
-        <h3>
-          <i class="fa-solid fa-horse-head"></i>
-          {localize('TIDY5E.Facilities.Creatures.Label')}
-        </h3>
+      <section
+        class="roster creatures"
+        data-prop="system.trade.creatures"
+        data-facility-type="creature"
+      >
+        <div class="bastion-header">
+          <h3 class="font-title-small">
+            <i class="fa-solid fa-horse-head"></i>
+            {localize('TIDY5E.Facilities.Creatures.Label')}
+          </h3>
+          <tidy-gold-header-underline></tidy-gold-header-underline>
+        </div>
+
         <ul class="roster-list unlist">
           {#each context.facilities.special.chosen as chosen}
             {#each chosen.creatures as { actor, uuid }, index}
@@ -489,7 +509,6 @@
                   occupant={actor}
                   type="creature"
                   {index}
-                  prop="system.trade.creatures"
                   facilityId={chosen.id}
                   facilityName={chosen.name}
                   {uuid}

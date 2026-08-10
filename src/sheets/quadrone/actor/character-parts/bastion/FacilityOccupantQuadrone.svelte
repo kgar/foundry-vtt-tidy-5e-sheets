@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { TidyHooks } from 'src/foundry/TidyHooks';
   import { CONSTANTS } from 'src/constants';
   import type { Actor5e } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -15,7 +14,6 @@
     iconClass: string;
     facilityId: string;
     facilityName: string;
-    prop: string;
   }
 
   let {
@@ -25,44 +23,10 @@
     iconClass,
     facilityId,
     facilityName,
-    prop,
     uuid,
   }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
-
-  async function onSlotClick(ev: Event) {
-    if (
-      !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
-        ev,
-        context.actor.items.get(facilityId),
-        type,
-        prop,
-      )
-    ) {
-      return;
-    }
-
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
-      {
-        filters: {
-          locked: {
-            documentClass: 'Actor',
-            types: new Set(['character', 'npc', 'vehicle', 'group']),
-          },
-        },
-      },
-      context.sheet._detachOptions(),
-    );
-
-    if (result) {
-      context.actor.sheet._onDropActorAddToFacility(
-        context.actor.items.get(facilityId),
-        prop,
-        result,
-      );
-    }
-  }
 
   let hoveredFacilityOccupant = getContext<Ref<string>>(
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
@@ -87,22 +51,32 @@
 
 {#if uuid}
   {const imageTypeClassName = $derived(occupant?.token ? 'token' : 'portrait')}
-  {const imageSrc =
-    $derived(imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img)}
-  {const name = $derived(occupant ? occupant.name : localize('TIDY5E.BrokenLink'))}
+  {const imageSrc = $derived(
+    imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img,
+  )}
+  {const name = $derived(
+    occupant ? occupant.name : localize('TIDY5E.BrokenLink'),
+  )}
 
   <li
-    class:highlight={hoveredFacilityOccupant.value ===
-      `${facilityId}-${index}-${uuid}`}
-    class:unlocked={context.unlocked}
-    class="slot member-slot {type} {imageTypeClassName} occupant-with-menu"
+    class={[
+      'slot',
+      'member-slot',
+      type,
+      imageTypeClassName,
+      'occupant-with-menu',
+      {
+        highlight:
+          hoveredFacilityOccupant.value === `${facilityId}-${index}-${uuid}`,
+        unlocked: context.unlocked,
+      },
+    ]}
     data-actor-uuid={uuid}
     data-tidy-draggable
     data-tooltip={name}
-    data-facility-id={facilityId}
     data-facility-name={facilityName}
-    data-prop={prop}
     data-index={index}
+    data-action="addOccupant"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
     onmouseenter={() =>
       (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
@@ -123,7 +97,7 @@
 {:else}
   <li class="slot member-slot {type} empty" data-index={index}>
     <a
-      onclick={(ev) => context.editable && onSlotClick(ev)}
+      data-action="addOccupant"
       class="button button-tertiary button-icon-only"
     >
       <i class={iconClass}></i>

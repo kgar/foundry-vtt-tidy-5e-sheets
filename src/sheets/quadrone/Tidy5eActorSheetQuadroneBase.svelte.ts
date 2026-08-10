@@ -68,7 +68,6 @@ import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
-import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -163,6 +162,7 @@ export function getTidy5eActorSheetQuadroneBase<
         frame: true,
       },
       actions: {
+        addOccupant: Tidy5eActorSheetQuadroneBase.#addOccupant,
         emphasize: async function (
           this: Tidy5eActorSheetQuadroneBase,
           _event,
@@ -2034,6 +2034,55 @@ export function getTidy5eActorSheetQuadroneBase<
 
     /* -------------------------------------------- */
     /*  Sheet Actions                               */
+    /* -------------------------------------------- */
+
+    static async #addOccupant(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const facilityType = target.closest<HTMLElement>('[data-facility-type]')
+        ?.dataset.facilityType;
+      const facilityId =
+        target.closest<HTMLElement>('[data-facility-id]')?.dataset.facilityId;
+      const prop = target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
+
+      if (!facilityType || !facilityId || !prop) {
+        return;
+      }
+
+      if (
+        !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
+          event,
+          this.actor.items.get(facilityId),
+          facilityType,
+          prop,
+        )
+      ) {
+        return;
+      }
+
+      const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+        {
+          filters: {
+            locked: {
+              documentClass: 'Actor',
+              types: new Set(['character', 'npc', 'vehicle', 'group']),
+            },
+          },
+        },
+        this._detachOptions(),
+      );
+
+      if (result) {
+        this.actor.sheet._onDropActorAddToFacility(
+          this.actor.items.get(facilityId),
+          prop,
+          result,
+        );
+      }
+    }
+
     /* -------------------------------------------- */
 
     static async #decreaseInspiration(
