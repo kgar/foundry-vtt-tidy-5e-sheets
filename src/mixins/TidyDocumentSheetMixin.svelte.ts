@@ -189,16 +189,23 @@ export function getTidyExtensibleDocumentSheetMixin<
           return;
         }
 
-        // TODO: when a save fails, this returns `undefined`. An input with a bogus delta value can be stuck with the inaccurate value until the sheet is closed and reopened. Figure out how to make the input be restored to its intended value cleanly.
         const result = await super._onChangeForm(formConfig, event);
-        if (result === undefined) {
-          // TODO: if undefined, use `target` to fetch the real value and force-correct the input with bad data
+        if (result === undefined && event.target.name) {
+          this._revertFormChangeToDocumentValue(event, event.target.name);
         }
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
         );
       }
+    }
+
+    private _revertFormChangeToDocumentValue(event: any, prop: string) {
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event.target,
+      );
+      event.target.value =
+        FoundryAdapter.getProperty(targetDocument, prop) ?? '';
     }
 
     /**
@@ -463,9 +470,11 @@ export function getTidyExtensibleDocumentSheetMixin<
     ) {
       event.stopImmediatePropagation();
 
-      const field = event.target.getAttribute('data-name')!;
+      const prop = event.target.getAttribute('data-name')!;
 
-      let valueToSave: string | number = event.target.value;
+      const valueToSave: string | number = event.target.value;
+
+      let result: unknown = undefined;
 
       if (
         event.target.matches(
@@ -476,10 +485,14 @@ export function getTidyExtensibleDocumentSheetMixin<
           ? Number(valueToSave)
           : valueToSave;
 
-        return await this._updateNumericProperty(doc, field, valueAsNumber);
+        result = await this._updateNumericProperty(doc, prop, valueAsNumber);
+      } else {
+        result = await doc.update({ [prop]: valueToSave });
       }
 
-      return await doc.update({ [field]: valueToSave });
+      if (result === undefined) {
+        this._revertFormChangeToDocumentValue(event, prop);
+      }
     }
 
     async _updateNumericProperty(

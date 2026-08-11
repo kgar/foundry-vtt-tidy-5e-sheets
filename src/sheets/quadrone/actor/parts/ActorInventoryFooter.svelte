@@ -116,7 +116,7 @@
           type="text"
           id="{context.document.id}-system.currency.{currency.key}"
           class="currency-item uninput currency-{currency.key}"
-          name="system.currency.{currency.key}"
+          data-name="system.currency.{currency.key}"
           inputmode="numeric"
           data-dtype="Number"
           {@attach InputAttachments.selectOnFocus}
