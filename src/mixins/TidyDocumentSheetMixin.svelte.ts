@@ -89,6 +89,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       actions: {
         'activity-use': TidyDocumentSheet.#useActivity,
         configureTab: TidyDocumentSheet.#configureTab,
+        copyInnerText: TidyDocumentSheet.#copyInnerText,
+        copyValue: TidyDocumentSheet.#copyValue,
         currency: TidyDocumentSheet.#currency,
         deleteDocument: TidyDocumentSheet.#deleteDocument,
         editDocument: TidyDocumentSheet.#showDocument,
@@ -1111,6 +1113,33 @@ export function getTidyExtensibleDocumentSheetMixin<
       });
 
       return this._renderChild(settings);
+    }
+
+    /* -------------------------------------------- */
+
+    static async #copyInnerText(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      this._copyValue(target.innerText);
+    }
+
+    _copyValue(value: string | undefined) {
+      game.clipboard.copyPlainText(value);
+      ui.notifications.info(game.i18n.format('DND5E.Copied', { value }), {
+        console: false,
+      });
+    }
+
+    /* -------------------------------------------- */
+
+    static async #copyValue(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      this._copyValue(target.dataset.value);
     }
 
     /* -------------------------------------------- */

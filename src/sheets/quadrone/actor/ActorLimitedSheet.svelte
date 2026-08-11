@@ -44,7 +44,11 @@
 
 <header class="sheet-header limited-sheet flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <h1 class="actor-name flex1">{context.actor.name}</h1>
+    <h1 class="actor-name flex1">
+      <a data-action="copyInnerText" class="cursor highlight-on-hover">
+        {context.actor.name}
+      </a>
+    </h1>
     <div class="actor-vitals-container">
       <ActorPortrait />
     </div>

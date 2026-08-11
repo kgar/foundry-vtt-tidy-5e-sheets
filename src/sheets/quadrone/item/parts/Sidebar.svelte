@@ -15,7 +15,7 @@
   import { ItemContext } from 'src/features/item/ItemContext';
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import { settings } from 'src/settings/settings.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -183,9 +183,12 @@
     if (!isNil(proficiencyPill)) {
       result.push(proficiencyPill);
     }
-    
+
     if (!isNil(context.system.mastery)) {
-      result.push(CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ?? context.system.mastery);
+      result.push(
+        CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ??
+          context.system.mastery,
+      );
     }
 
     let props =
@@ -261,7 +264,7 @@
       {const effectiveHpValue = $derived(context.system.hp.value ?? 0)}
       {const effectiveHpMax = $derived(context.system.hp.max ?? 0)}
       {const pct = $derived(
-        effectiveHpMax > 0 ? (effectiveHpValue / effectiveHpMax) * 100 : 0
+        effectiveHpMax > 0 ? (effectiveHpValue / effectiveHpMax) * 100 : 0,
       )}
       <li>
         <span
@@ -302,7 +305,7 @@
       </li>
     {/if}
     {#if 'equipped' in context.system && context.editable}
-      {const checkedIconClass = 
+      {const checkedIconClass =
         'fas fa-hand-fist equip-icon fa-fw color-text-default'}
       {const uncheckedIconClass = 'far fa-hand fa-fw'}
       {const equipped = $derived(context.system.equipped)}
@@ -363,7 +366,9 @@
       </li>
     {/if}
     {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
-      {const spellIconClasses = $derived(FoundryAdapter.getSpellIcon(context.item))}
+      {const spellIconClasses = $derived(
+        FoundryAdapter.getSpellIcon(context.item),
+      )}
       <li>
         <PillSwitch
           checked={context.system.prepared ==
@@ -401,8 +406,9 @@
         <h4>{localize('DND5E.ACTIVITY.SECTIONS.Activation')}</h4>
         <ul class="pills stacked">
           {#each sidebarActivations as activation}
-            {const activationText =
-              $derived(activation?.toString().replace(/NaN/g, '—') ?? '')}
+            {const activationText = $derived(
+              activation?.toString().replace(/NaN/g, '—') ?? '',
+            )}
             <li class="pill activation-pill">
               {activationText
                 ? activationText.charAt(0).toUpperCase() +
@@ -443,28 +449,9 @@
                 role="button"
                 tabindex="0"
                 class="pill interactive centered wrapped copy-to-clipboard"
-                onclick={() => {
-                  game.clipboard.copyPlainText(scaleValue.toCopy);
-                  ui.notifications.info(
-                    game.i18n.format('DND5E.Copied', {
-                      value: scaleValue.toCopy,
-                    }),
-                    { console: false },
-                  );
-                }}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-                    game.clipboard.copyPlainText(scaleValue.toCopy);
-                    ui.notifications.info(
-                      game.i18n.format('DND5E.Copied', {
-                        value: scaleValue.toCopy,
-                      }),
-                      { console: false },
-                    );
-                  }
-                }}
+                data-action="copyValue"
+                data-value={scaleValue.toCopy}
+                {@attach InputAttachments.triggerClickOnKeydown}
               >
                 {#if !context.item.actor}
                   {scaleValue.title}
@@ -514,12 +501,14 @@
 
   {#if showCustomSections}
     {const sectionLabel = $derived(SheetSections.getSectionLabel(context.item))}
-    {const actionSectionLabel = $derived(SheetSections.getActionSectionLabel(
-      context.item,
-    ))}
-    {const sectionType = $derived(context.item.parent?.system.isCharacter
-      ? 'Sheet'
-      : 'TIDY5E.Section.Label')}
+    {const actionSectionLabel = $derived(
+      SheetSections.getActionSectionLabel(context.item),
+    )}
+    {const sectionType = $derived(
+      context.item.parent?.system.isCharacter
+        ? 'Sheet'
+        : 'TIDY5E.Section.Label',
+    )}
     <div>
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">
