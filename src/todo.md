@@ -1,5 +1,6 @@
 ## The Accretion Disk of To Do's
 
+- [ ] Prepared Spells footer button filter: Open preparation formula dialog rather than doing a filter (open sheet, call emphasize 🧠)
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
 - [ ] refactor / organize - src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
 - [ ] DOM Density - review `.list-content > .list-values > etc.` and determine if it can be thinned out with CSS
@@ -24,7 +25,6 @@
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. <https://discord.com/channels/@me/1243307347682529423/1397418208813650091>
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
-- [ ] Prepared Spells footer button filter: Open preparation formula dialog rather than doing a filter
 - [ ] // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
