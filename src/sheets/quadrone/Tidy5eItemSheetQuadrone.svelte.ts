@@ -1,6 +1,5 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type {
@@ -109,12 +108,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
-      // TODO: game.release.generation >= 14, do we still need to do this?
-      [ImportSheetControl.actionName]: async function (
-        this: Tidy5eItemSheetQuadrone,
-      ) {
-        await ImportSheetControl.importFromCompendium(this, this.document);
-      },
       showIcon: Tidy5eItemSheetQuadrone.#showIcon,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
