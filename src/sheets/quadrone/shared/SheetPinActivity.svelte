@@ -36,28 +36,6 @@
   });
 
   let context = $derived(getActorSheetQuadroneContext());
-
-  const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-
-  function getType() {
-    if (isSpell) {
-      const spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
-
-      if (
-        spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE &&
-        spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
-      ) {
-        return 'spell-slots';
-      }
-      return 'none';
-    }
-    if (ctx.document.uses.max) {
-      return 'limited-uses';
-    }
-    return 'none';
-  }
-
-  let pinType = $derived(getType());
 </script>
 
 {#snippet pinName()}
@@ -148,7 +126,7 @@
         {/if}
       </div>
       <div class="pin-context {ctx.resource}">
-        {#if pinType === 'limited-uses'}
+        {#if ctx.presentation === 'limited-uses'}
           <span class="inline-uses">
             <input
               type="text"
@@ -161,7 +139,7 @@
             <span class="divider">/</span>
             <span class="uses-max">{maxText}</span>
           </span>
-        {:else if pinType === 'none'}
+        {:else if ctx.presentation === 'none'}
           <span class="subtitle font-default-medium color-text-lighter"
             >{ctx.document.parent.parent.name}</span
           >

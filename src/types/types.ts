@@ -444,10 +444,12 @@ export type AttributePinContext =
 export type SheetPinItemContext = {
   document: Item5e;
   linkedUses?: LinkedUses;
+  presentation: string;
 } & SheetItemPinFlagData;
 
 export type SheetPinActivityContext = {
   document: Activity5e;
+  presentation: string;
 } & SheetActivityPinFlagData;
 
 export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
