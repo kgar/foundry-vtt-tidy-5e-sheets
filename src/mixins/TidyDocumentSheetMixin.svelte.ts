@@ -115,6 +115,69 @@ export function getTidyExtensibleDocumentSheetMixin<
       },
     };
 
+    /**
+     * A map from value prop to an object of max prop and spent prop.
+     * These values represent Limited Uses data structures that require
+     * special handling when saving changes to a field which is presenting
+     * the value to the user but needing the spent prop to be updated on
+     * change.
+     */
+    readonly valueMaxSpentMap = new Map<
+      string,
+      { maxProp: string; spentProp: string }
+    >([
+      ['uses.value', { maxProp: 'uses.max', spentProp: 'uses.spent' }],
+      [
+        'system.uses.value',
+        { maxProp: 'system.uses.max', spentProp: 'system.uses.spent' },
+      ],
+      [
+        'system.resources.legact.value',
+        {
+          maxProp: 'system.resources.legact.max',
+          spentProp: 'system.resources.legact.spent',
+        },
+      ],
+      [
+        'system.resources.legres.value',
+        {
+          maxProp: 'system.resources.legres.max',
+          spentProp: 'system.resources.legres.spent',
+        },
+      ],
+    ]);
+
+    _tryGetValueSpentUpdate(
+      doc: any,
+      value: number | string,
+      valueProp: string,
+    ) {
+      value = Number(value);
+
+      if (Number.isNaN(value)) {
+        return;
+      }
+
+      const valueMaxSpentInfo = this.valueMaxSpentMap.get(valueProp);
+
+      if (!valueMaxSpentInfo) {
+        return;
+      }
+
+      const max = FoundryAdapter.getProperty<number>(
+        doc,
+        valueMaxSpentInfo.maxProp,
+      );
+
+      if (!max) {
+        return;
+      }
+
+      return {
+        [valueMaxSpentInfo.spentProp]: max - value,
+      };
+    }
+
     get sheetMode() {
       return this._fixedMode ?? this._mode;
     }
@@ -499,25 +562,25 @@ export function getTidyExtensibleDocumentSheetMixin<
       prop: string,
       value: number | string,
     ) {
-      // Special case handling for Item uses.
-      if (
-        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
-        prop === 'system.uses.value'
-      ) {
-        return await targetDocument.update({
-          'system.uses.spent': targetDocument.system.uses.max - (value as any),
-        });
-      } else if (
-        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
-        prop === 'uses.value'
-      ) {
-        return await targetDocument.item.updateActivity(targetDocument.id, {
-          'uses.spent': targetDocument.uses.max - (value as any),
-        });
+      const valueSpentUpdate = this._tryGetValueSpentUpdate(
+        targetDocument,
+        value,
+        prop,
+      );
+
+      if (!valueSpentUpdate) {
+        // Standard case: save the intended value.
+        return await targetDocument.update({ [prop]: value });
       }
 
-      // Standard case: save the intended value.
-      return await targetDocument.update({ [prop]: value });
+      if (targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY) {
+        return await targetDocument.item.updateActivity(
+          targetDocument.id,
+          valueSpentUpdate,
+        );
+      }
+
+      return targetDocument.update(valueSpentUpdate);
     }
 
     getItem(id?: string) {
