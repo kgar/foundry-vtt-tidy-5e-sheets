@@ -872,12 +872,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    // TODO: for combat identifiers, share a function for this.
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
-
-    const identifier = placeholderId ?? memberUuid;
+    const { identifier } = this._getCombatantIdentifiers(target);
 
     if (identifier) {
       this.toggleCombatantInclusion(identifier);
@@ -893,6 +888,20 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     });
   }
 
+  _getCombatantIdentifiers(target: HTMLElement) {
+    const { placeholderId, memberUuid } =
+      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
+        ?.dataset ?? {};
+
+    const identifier = placeholderId ?? memberUuid;
+
+    return {
+      placeholderId,
+      memberUuid,
+      identifier,
+    };
+  }
+
   /* -------------------------------------------- */
 
   static async #toggleCombatantVisibility(
@@ -900,12 +909,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    // TODO: for combat identifiers, share a function for this.
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
-
-    const identifier = placeholderId ?? memberUuid;
+    const { identifier } = this._getCombatantIdentifiers(target);
 
     if (identifier) {
       this.toggleCombatantVisibility(identifier);
@@ -963,9 +967,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
+    const { placeholderId, memberUuid } = this._getCombatantIdentifiers(target);
 
     if (placeholderId) {
       return await this.deletePlaceholder(placeholderId);
