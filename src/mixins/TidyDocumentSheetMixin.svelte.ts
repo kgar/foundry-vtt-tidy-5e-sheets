@@ -1249,8 +1249,6 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     /* -------------------------------------------- */
 
-    /* -------------------------------------------- */
-
     static async #increase(
       this: TidyDocumentSheet,
       event: Event,
