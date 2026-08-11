@@ -599,17 +599,17 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       .closest('[data-combatant-type]')
       ?.getAttribute('data-combatant-type');
 
-    if (type === 'member') {
-      const uuid =
-        target
-          .closest('[data-member-uuid]')
-          ?.getAttribute('data-member-uuid') ?? '';
+    const { memberUuid, placeholderId } = this._getCombatantIdentifiers(target);
 
+    if (type === 'member' && memberUuid) {
       const actorMember = this.actor.system.members.find(
-        (m: any) => m.uuid === uuid,
+        (m: any) => m.uuid === memberUuid,
       );
 
-      const combatantSettings = CombatantSettings.getEntry(this.actor, uuid);
+      const combatantSettings = CombatantSettings.getEntry(
+        this.actor,
+        memberUuid,
+      );
 
       if (actorMember && !combatantSettings.include) {
         return;
@@ -626,14 +626,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           hidden: !combatantSettings.visible,
         },
       ]);
-    } else if (type === 'placeholder') {
-      const placeholders = TidyFlags.placeholders.get(this.actor);
-      const placeholderId =
-        target
-          .closest('[data-placeholder-id]')
-          ?.getAttribute('data-placeholder-id') ?? '';
-
-      const placeholder = placeholders[placeholderId];
+    } else if (type === 'placeholder' && placeholderId) {
+      const placeholder = TidyFlags.placeholders.get(this.actor)[placeholderId];
 
       const combatantSettings = CombatantSettings.getEntry(
         this.actor,
@@ -727,8 +721,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     _event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId } =
-      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+    const { placeholderId } = this._getCombatantIdentifiers(target);
 
     if (!placeholderId) {
       return;
@@ -810,9 +803,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    const uuid =
-      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
-    const member = await fromUuid(uuid);
+    const { memberUuid } = this._getCombatantIdentifiers(target);
+    const member = await fromUuid(memberUuid);
     return await this.prerollInitiative(event, member);
   }
 
@@ -842,8 +834,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     _event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId } =
-      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+    const { placeholderId } = this._getCombatantIdentifiers(target);
 
     if (!placeholderId) {
       return;
@@ -1009,10 +1000,9 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
     const isCombatUpdate = name?.startsWith('combatantSettings:');
 
-    const { memberUuid, placeholderId } =
-      event.target.closest<HTMLElement>(
-        '[data-member-uuid], [data-placeholder-id]',
-      )?.dataset ?? {};
+    const { memberUuid, placeholderId } = this._getCombatantIdentifiers(
+      event.target,
+    );
 
     const combatantId = memberUuid ?? placeholderId;
 
