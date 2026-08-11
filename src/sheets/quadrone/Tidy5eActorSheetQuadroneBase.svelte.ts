@@ -168,7 +168,6 @@ export function getTidy5eActorSheetQuadroneBase<
         findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
         increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
-        // TODO: game.release.generation >= 14, is this still needed?
         rest: Tidy5eActorSheetQuadroneBase.#rest,
         restoreTransformation:
           Tidy5eActorSheetQuadroneBase.#restoreTransformation,
