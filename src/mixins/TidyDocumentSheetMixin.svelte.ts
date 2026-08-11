@@ -257,7 +257,14 @@ export function getTidyExtensibleDocumentSheetMixin<
         }
 
         const result = await super._onChangeForm(formConfig, event);
-        if (result === undefined && event.target.name) {
+
+        const shouldRevertInput =
+          event.target.name &&
+          (result === undefined ||
+            foundry.utils.getProperty(result, event.target.name) !==
+              event.target.value);
+
+        if (shouldRevertInput) {
           this._revertFormChangeToDocumentValue(event, event.target.name);
         }
       } catch (e: any) {
@@ -552,8 +559,12 @@ export function getTidyExtensibleDocumentSheetMixin<
         result = await doc.update({ [prop]: valueToSave });
       }
 
-      if (result === undefined) {
+      if (
+        result === undefined ||
+        foundry.utils.getProperty(result, prop) !== event.target.value
+      ) {
         this._revertFormChangeToDocumentValue(event, prop);
+        return;
       }
     }
 
