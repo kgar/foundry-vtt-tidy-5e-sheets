@@ -40,8 +40,9 @@
     untrack(() => {
       const type = context.actor.type;
       const tabId = selectedTabId;
-      const stored = UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
-        ?.sidebarExpanded;
+      const stored =
+        UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
+          ?.sidebarExpanded;
       if (stored !== expanded) {
         UserSheetPreferencesService.setDocumentTypeTabPreference(
           type,
@@ -72,7 +73,14 @@
                 class="actor-name flex1 h2"
               />
             {:else}
-              <h1 class="actor-name flex1">{context.actor.name}</h1>
+              <h1 class="actor-name flex1">
+                <a
+                  data-action="copyInnerText"
+                  class="cursor highlight-on-hover"
+                >
+                  {context.actor.name}
+                </a>
+              </h1>
             {/if}
             <!-- <div
               class={['sheet-header-actions', 'flexrow']}
@@ -113,7 +121,9 @@
               data-type="initiative"
               data-has-roll-modes
             >
-              <span class="ability-abbr">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-abbr"
+                >{localize('DND5E.InitiativeAbbr')}</span
+              >
               <span class="ability-label-container initiative-bonus">
                 <span class="modifier color-text-lightest">
                   {ini.sign}

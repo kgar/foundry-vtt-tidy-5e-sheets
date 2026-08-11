@@ -25,6 +25,8 @@
   />
 {:else}
   <div class="document-name" data-tooltip={context.item.name}>
-    {context.item.name}
+    <a data-action="copyInnerText" class="cursor highlight-on-hover">
+      {context.item.name}
+    </a>
   </div>
 {/if}

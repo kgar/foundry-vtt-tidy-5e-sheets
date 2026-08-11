@@ -50,7 +50,9 @@
             data-tidy-sheet-part="actor-name"
             data-tooltip={context.actor.name}
           >
-            {context.actor.name}
+            <a data-action="copyInnerText" class="cursor highlight-on-hover">
+              {context.actor.name}
+            </a>
           </h1>
         {/if}
       </div>

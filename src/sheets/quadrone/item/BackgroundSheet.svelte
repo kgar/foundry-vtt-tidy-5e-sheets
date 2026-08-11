@@ -7,6 +7,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -26,15 +27,12 @@
       <ul class="pills stacked">
         <li>
           <a
+            role="button"
+            tabindex="0"
             class="pill interactive centered wrapped copy-to-clipboard"
-            onclick={() => {
-              const value = context.item.system.identifier;
-              game.clipboard.copyPlainText(value);
-              ui.notifications.info(
-                game.i18n.format('DND5E.Copied', { value }),
-                { console: false },
-              );
-            }}
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
+            {@attach InputAttachments.triggerClickOnKeydown}
           >
             <span class="centered text-normal">
               {localize('DND5E.Identifier')}

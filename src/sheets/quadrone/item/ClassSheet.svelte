@@ -76,14 +76,8 @@
         <li>
           <a
             class="pill interactive centered wrapped copy-to-clipboard"
-            onclick={() => {
-              const value = context.item.system.identifier;
-              game.clipboard.copyPlainText(value);
-              ui.notifications.info(
-                game.i18n.format('DND5E.Copied', { value }),
-                { console: false },
-              );
-            }}
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
           >
             <span class="text-normal">
               {localize('DND5E.Identifier')}
