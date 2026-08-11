@@ -44,3 +44,21 @@ export function applyNumberInputConstraints(
 
   return Math.clamp(value, min, max);
 }
+
+export function getSpecializedUpdateInformation(
+  datasetName: string | null | undefined,
+) {
+  const delimiterIndex = datasetName?.indexOf(':') ?? -1;
+
+  if (delimiterIndex < 0) {
+    return {
+      prop: datasetName,
+      prefix: undefined,
+    };
+  }
+
+  return {
+    prop: datasetName?.substring(delimiterIndex + 1),
+    operationType: datasetName?.substring(0, delimiterIndex),
+  };
+}

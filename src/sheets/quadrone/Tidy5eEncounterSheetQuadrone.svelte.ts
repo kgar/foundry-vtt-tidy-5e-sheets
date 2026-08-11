@@ -29,7 +29,10 @@ import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQ
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
-import { applyNumberInputConstraints } from 'src/utils/form';
+import {
+  applyNumberInputConstraints,
+  getSpecializedUpdateInformation,
+} from 'src/utils/form';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -942,7 +945,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const originalValue =
       FoundryAdapter.getProperty<number>(member, property) ?? 0;
 
-    const newValue = applyNumberInputConstraints(originalValue, input);
+    const newValue = applyNumberInputConstraints(originalValue + amount, input);
 
     foundry.utils.setProperty(member, property, newValue);
 
@@ -997,8 +1000,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return await this._onMemberChanged(event, Number(index), name);
     }
 
-    // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
-    const isCombatUpdate = name?.startsWith('combatantSettings:');
+    const { operationType, prop } = getSpecializedUpdateInformation(name);
 
     const { memberUuid, placeholderId } = this._getCombatantIdentifiers(
       event.target,
@@ -1006,17 +1008,13 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     const combatantId = memberUuid ?? placeholderId;
 
-    if (isCombatUpdate && !!name && combatantId) {
-      const prop = name.split('combatantSettings:').at(-1);
+    if (operationType == 'combatantSettings' && !!prop && combatantId) {
       return prop
         ? await this._onCombatantChanged(event, combatantId, prop)
         : undefined;
     }
 
-    const isPlaceholderUpdate = name?.startsWith('placeholder:');
-
-    if (isPlaceholderUpdate && !!name && placeholderId) {
-      const prop = name.split('placeholder:').at(-1);
+    if (operationType === 'placeholder' && !!prop && placeholderId) {
       return prop
         ? await this._onPlaceholderChanged(event, placeholderId, prop)
         : undefined;

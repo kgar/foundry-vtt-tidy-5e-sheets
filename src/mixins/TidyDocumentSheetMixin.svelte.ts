@@ -48,7 +48,10 @@ import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { isUserInteractable } from 'src/utils/element';
 import { delay } from 'src/utils/asynchrony';
-import { applyNumberInputConstraints } from 'src/utils/form';
+import {
+  applyNumberInputConstraints,
+  getSpecializedUpdateInformation,
+} from 'src/utils/form';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -446,11 +449,10 @@ export function getTidyExtensibleDocumentSheetMixin<
     ) {
       const { name } = event.target.dataset;
 
-      // Current User updates
-      const isCurrentUserUpdate = name?.startsWith('currentUser:');
+      const { operationType, prop } = getSpecializedUpdateInformation(name);
 
-      if (isCurrentUserUpdate && !!name) {
-        const prop = name.split('currentUser:').at(-1);
+      // Current User updates
+      if (operationType === 'currentUser' && !!prop) {
         return prop ? await this._onCurrentUserUpdated(event, prop) : undefined;
       }
 
