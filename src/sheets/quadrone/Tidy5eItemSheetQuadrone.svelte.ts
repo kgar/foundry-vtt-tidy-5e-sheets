@@ -124,6 +124,19 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     submitOnClose: true,
   };
 
+  async _renderFrame(options: TidyDocumentSheetRenderOptions) {
+    const element = (await super._renderFrame(options)) as HTMLElement;
+
+    // Ensures there is no flicker when the sheet first opens, 
+    // assuming the item name is currently visible.
+    // This works with the visibilityObserver in ItemNameHeaderOrchestrator.
+    element
+      .querySelector<HTMLElement>('.window-header')
+      ?.classList.add('item-name-visible');
+
+    return element;
+  }
+
   _updateFrame(options: TidyDocumentSheetRenderOptions = {}) {
     super._updateFrame(options);
 
