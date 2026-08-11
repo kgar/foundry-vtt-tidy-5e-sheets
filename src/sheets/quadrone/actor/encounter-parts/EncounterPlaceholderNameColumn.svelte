@@ -3,9 +3,7 @@
   import type { PortraitShape } from 'src/theme/theme-quadrone.types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import { Tidy5eEncounterSheetQuadrone } from '../../Tidy5eEncounterSheetQuadrone.svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
-    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = {
     placeholder: EncounterPlaceholderQuadroneContext;
@@ -19,56 +17,24 @@
     context.portrait.shape,
   );
 
-  async function onPortraitClicked() {
-    if (context.unlocked) {
-      const fp = new foundry.applications.apps.FilePicker.implementation({
-        current: placeholder.img,
-        type: 'image',
-        redirectToRoot:
-          Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON
-            ? [Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON]
-            : [],
-        callback: (path: string) => {
-          placeholder.img = path;
-          TidyFlags.placeholders.insertOrUpdateEntry(
-            context.actor,
-            placeholder,
-          );
-        },
-        position: {
-          top: context.sheet.position.top + 40,
-          left: context.sheet.position.left + 10,
-        },
-      });
-
-      fp.browse();
-      return;
-    }
-
-    context.sheet._renderChild(new foundry.applications.apps.ImagePopout({
-      src: placeholder.img,
-      title: placeholder.name,
-    }));
-  }
-
   const localize = FoundryAdapter.localize;
-  
+
   // TODO: Support video portraits even when not dealing with an actor.
 </script>
 
 <div class="tidy-table-cell actor-image-container">
-  <div
+  <a
     role="button"
     data-keyboard-focus
     tabindex={0}
     class={['actor-image', placeholderPortraitShape]}
     style="position: relative;"
-    onclick={() => onPortraitClicked()}
-    onkeydown={(e) =>
-      e.key === 'Enter' || e.key === ' ' ? onPortraitClicked() : null}
+    data-action={context.unlocked
+      ? 'editPlaceholderImage'
+      : 'showPlaceholderArtwork'}
   >
     <img src={placeholder.img} alt={placeholder.name} />
-  </div>
+  </a>
 </div>
 <div class="tidy-table-cell text-cell primary item-label flexcol">
   <div class="actor-name">
@@ -76,28 +42,22 @@
       <input
         class="placeholder-name"
         type="text"
-        onchange={(ev) =>
-          context.sheet.updatePlaceholderField(
-            placeholder,
-            'name',
-            ev.currentTarget.value,
-          )}
+        data-name="placeholder:name"
         value={placeholder.name}
         {@attach InputAttachments.selectOnFocus}
-        placeholder={localize('TIDY5E.Encounter.PlaceholderNameField.PlaceholderText')}
+        placeholder={localize(
+          'TIDY5E.Encounter.PlaceholderNameField.PlaceholderText',
+        )}
       />
       <input
         class="placeholder-note"
         type="text"
-        onchange={(ev) =>
-          context.sheet.updatePlaceholderField(
-            placeholder,
-            'note',
-            ev.currentTarget.value,
-          )}
+        data-name="placeholder:note"
         value={placeholder.note}
         {@attach InputAttachments.selectOnFocus}
-        placeholder={localize('TIDY5E.Encounter.PlaceholderNotesField.PlaceholderText')}
+        placeholder={localize(
+          'TIDY5E.Encounter.PlaceholderNotesField.PlaceholderText',
+        )}
       />
     {:else}
       <h4 class="font-label-medium">

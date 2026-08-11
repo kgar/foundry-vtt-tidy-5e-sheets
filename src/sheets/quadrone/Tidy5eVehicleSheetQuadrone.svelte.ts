@@ -75,22 +75,13 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       height: 810,
     },
     actions: {
-      browseActors: function (
-        this: Tidy5eVehicleSheetQuadrone,
-        _event: MouseEvent,
-        target: HTMLElement,
-      ) {
-        const area =
-          target.closest('[data-area]')?.getAttribute('data-area') ??
-          CONSTANTS.SECTION_TYPE_CREW;
-
-        return this.browseAddActor(area);
-      },
-      removeBrokenLinks: Tidy5eVehicleSheetQuadrone.#onRemoveBrokenLinks,
-      removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#onRemoveDraftAnimal,
-      removePassengers: Tidy5eVehicleSheetQuadrone.#onRemovePassengers,
-      removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#onRemoveUnassignedCrew,
-      unassignCrew: Tidy5eVehicleSheetQuadrone.#onUnassignCrew,
+      adjustCrew: Tidy5eVehicleSheetQuadrone.#adjustCrew,
+      browseActors: Tidy5eVehicleSheetQuadrone.#browseActors,
+      removeBrokenLinks: Tidy5eVehicleSheetQuadrone.#removeBrokenLinks,
+      removeDraftAnimal: Tidy5eVehicleSheetQuadrone.#removeDraftAnimal,
+      removePassengers: Tidy5eVehicleSheetQuadrone.#removePassengers,
+      removeUnassignedCrew: Tidy5eVehicleSheetQuadrone.#removeUnassignedCrew,
+      unassignCrew: Tidy5eVehicleSheetQuadrone.#unassignCrew,
     },
   };
 
@@ -1165,7 +1156,37 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
-  static async #onRemoveBrokenLinks(
+  static async #adjustCrew(
+    this: Tidy5eVehicleSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const area = target.closest<HTMLElement>('[data-area]')?.dataset.area;
+    const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+    const delta = target.dataset.delta;
+
+    if (area && uuid && delta) {
+      return this.applyDeltaToCrew(area, uuid, delta);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  static async #browseActors(
+    this: Tidy5eVehicleSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const area =
+      target.closest('[data-area]')?.getAttribute('data-area') ??
+      CONSTANTS.SECTION_TYPE_CREW;
+
+    return this.browseAddActor(area);
+  }
+
+  /* -------------------------------------------- */
+
+  static async #removeBrokenLinks(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1174,7 +1195,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     return this.removeBrokenLinks(area);
   }
 
-  static async #onRemoveDraftAnimal(
+  /* -------------------------------------------- */
+
+  static async #removeDraftAnimal(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1185,7 +1208,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onRemovePassengers(
+  /* -------------------------------------------- */
+
+  static async #removePassengers(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1196,7 +1221,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onRemoveUnassignedCrew(
+  /* -------------------------------------------- */
+
+  static async #removeUnassignedCrew(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1207,7 +1234,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     }
   }
 
-  static async #onUnassignCrew(
+  /* -------------------------------------------- */
+
+  static async #unassignCrew(
     this: Tidy5eVehicleSheetQuadrone,
     _event: Event,
     target: HTMLElement,
@@ -1220,6 +1249,55 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     if (memberUuid && itemUuid) {
       return this._unassignCrew(memberUuid, itemUuid);
     }
+  }
+
+  /* -------------------------------------------- */
+  /*  Life-Cycle Handlers                         */
+  /* -------------------------------------------- */
+
+  async _onChangeForm(
+    formConfig: unknown,
+    event: Event & { target: HTMLElement },
+  ) {
+    const input = event.target;
+    const { area } = input.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+    const { uuid } = input.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+    const name = input.dataset.name;
+
+    // Crew Quantity
+    const isCrewQuantityUpdate = name?.startsWith('crewQuantity:');
+
+    if (area && uuid && isCrewQuantityUpdate) {
+      return await this._onCrewQuantityUpdated(input, area, uuid);
+    }
+
+    // Standard handling
+    return super._onChangeInputDelta(event);
+  }
+
+  private async _onCrewQuantityUpdated(
+    input: EventTarget & HTMLElement,
+    area: string,
+    uuid: string,
+  ) {
+    let value = input instanceof HTMLInputElement ? input.value : undefined;
+
+    const context = await this._prepareContext({ tidy: { soft: true } });
+
+    const existingQuantity =
+      area === CONSTANTS.SECTION_TYPE_PASSENGERS
+        ? context.passengers.members.find((m) => m.actor.uuid === uuid)
+            ?.quantity
+        : area === CONSTANTS.SECTION_TYPE_CREW
+          ? context.crew.unassigned.members.find((m) => m.actor.uuid === uuid)
+              ?.quantity
+          : undefined;
+
+    value = dnd5e.utils.parseDelta(value, existingQuantity);
+
+    return !Number.isNaN(value)
+      ? this.actor.system.adjustCrew(area, uuid, value)
+      : undefined;
   }
 
   /* -------------------------------------------- */

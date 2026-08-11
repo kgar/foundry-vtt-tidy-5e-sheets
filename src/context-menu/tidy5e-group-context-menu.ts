@@ -6,23 +6,44 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getGroupMemberContextOptionsQuadrone } from './tidy5e-group-context-menu-quadrone';
 
 export function configureGroupContextMenu(element: HTMLElement, app: any) {
-  const memberId = element.getAttribute('data-member-id');
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  if (isQuadroneSheet) {
+    const { uuid } = element.dataset;
+    const actor = app.document.system.members.find(
+      (m: Group5eMember) => m.actor.uuid === uuid,
+    )?.actor;
+
+    if (actor) {
+      ui.context.menuItems = getGroupMemberContextOptionsQuadrone(
+        app.document,
+        actor,
+      );
+    }
+
+    TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
+      app.document,
+      actor,
+      ui.context.menuItems,
+    );
+
+    return;
+  }
+
+  // tick tock - game.release.generation <= 14
+  const { memberId } = element.dataset;
   const actor = app.document.system.members.find(
-    (m: Group5eMember) => m.actor.id === memberId
+    (m: Group5eMember) => m.actor.id === memberId,
   )?.actor;
 
   if (!actor) return;
 
-  const isQuadroneSheet = element.closest('.quadrone');
-
-  ui.context.menuItems = isQuadroneSheet
-    ? getGroupMemberContextOptionsQuadrone(app.document, actor)
-    : getGroupMemberContextOptions(app.document, actor);
+  ui.context.menuItems = getGroupMemberContextOptions(app.document, actor);
 
   TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
     app.document,
     actor,
-    ui.context.menuItems
+    ui.context.menuItems,
   );
 }
 
@@ -34,7 +55,7 @@ export function configureGroupContextMenu(element: HTMLElement, app: any) {
  */
 function getGroupMemberContextOptions(
   group: Actor5e,
-  actor: Actor5e
+  actor: Actor5e,
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {

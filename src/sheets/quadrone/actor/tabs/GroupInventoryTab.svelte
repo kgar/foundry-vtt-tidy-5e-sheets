@@ -75,8 +75,6 @@
       data-keyboard-focus
       data-action="showDocument"
       data-uuid={member.actor.uuid}
-      onmousedown={(event) =>
-        FoundryAdapter.editOnMiddleClick(event, member.actor)}
       tabindex={0}
       onmouseenter={() => (hoveredMember = member.actor.uuid)}
       onmouseleave={() => (hoveredMember = null)}

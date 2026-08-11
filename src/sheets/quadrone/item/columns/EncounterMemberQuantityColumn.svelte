@@ -7,9 +7,7 @@
   } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
-    import type { EncounterMemberContext } from 'src/types/group.types';
 
   let {
     rowDocument,
@@ -25,6 +23,14 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
+
+  // When the quantity column is in the combat table,
+  // it needs to put member index directly on the
+  // quantity tracker, since non-member updates are done
+  // on this tab, such as initiative.
+  let index = $derived(
+    rowContext.type === 'member' ? rowContext.index : undefined,
+  );
 </script>
 
 {#if rowContext.type === 'member'}
@@ -36,13 +42,9 @@
       data-tooltip="DND5E.Quantity"
       min="0"
       value={quantity}
-      onchange={async (ev) => {
-        const input = ev.currentTarget;
-        await context.sheet.updateMemberQuantity(
-          rowDocument.uuid,
-          ev.currentTarget.value,
-        );
-        input.value = quantity;
+      property="quantity.value"
+      containerAttributes={{
+        'data-index': index,
       }}
     />
   {:else}

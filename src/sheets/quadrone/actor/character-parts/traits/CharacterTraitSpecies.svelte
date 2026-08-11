@@ -48,8 +48,6 @@
         class="list-values trait-item"
         data-action="showDocument"
         data-uuid={speciesItem?.uuid}
-        onmousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, speciesItem)}
         onkeydown={(e) =>
           (e.key === 'Enter' || e.key === ' ') &&
           openSheet(CONSTANTS.SHEET_MODE_PLAY)}

@@ -10,7 +10,25 @@ const selectOnFocus: Attachment<HTMLInputElement> = (element) => {
         ev.currentTarget.select();
       }
     },
-    { signal: controller.signal }
+    { signal: controller.signal },
+  );
+  return () => {
+    controller.abort();
+  };
+};
+
+const triggerClickOnKeydown: Attachment<HTMLElement> = (element) => {
+  const controller = new AbortController();
+
+  element.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        (event.currentTarget as HTMLElement).click();
+      }
+    },
+    { signal: controller.signal },
   );
   return () => {
     controller.abort();
@@ -19,4 +37,5 @@ const selectOnFocus: Attachment<HTMLInputElement> = (element) => {
 
 export const InputAttachments = {
   selectOnFocus,
+  triggerClickOnKeydown,
 };

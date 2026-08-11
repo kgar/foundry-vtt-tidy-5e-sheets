@@ -1,74 +1,55 @@
 <script lang="ts">
-  import type { HTMLInputAttributes } from 'svelte/elements';
-  import { processInputChangeDeltaFromValues } from 'src/utils/form';
+  import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Props = {
-    onIncrement?: (
-      event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    ) => void;
-    onDecrement?: (
-      event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    ) => void;
+    property: string;
+    containerAttributes?: HTMLAttributes<HTMLElement>;
+    increaseAction?: string;
+    increaseAttributes?: HTMLAttributes<HTMLAnchorElement>;
+    decreaseAction?: string;
+    decreaseAttributes?: HTMLAttributes<HTMLAnchorElement>;
   } & HTMLInputAttributes;
 
-  let { onIncrement, onDecrement, ...attributes }: Props = $props();
-
-  let input: HTMLInputElement;
-
-  let min = $derived(attributes.min ? +attributes.min : -Infinity);
-
-  function adjust(delta: string) {
-    const newValue = processInputChangeDeltaFromValues(delta, input.value);
-
-    if (newValue !== undefined) {
-      input.value = newValue.toString();
-      const changeEvent = new Event('change', { bubbles: true });
-      input.dispatchEvent(changeEvent);
-    }
-  }
-
-  function decrement(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-  ) {
-    if (attributes.value - 1 < min || attributes.disabled) {
-      return;
-    }
-
-    adjust('-1');
-
-    onDecrement?.(event);
-  }
-
-  function increment(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-  ) {
-    if (attributes.disabled) {
-      return;
-    }
-
-    adjust('+1');
-
-    onIncrement?.(event);
-  }
+  let {
+    property,
+    containerAttributes,
+    decreaseAction,
+    decreaseAttributes,
+    increaseAction,
+    increaseAttributes,
+    ...attributes
+  }: Props = $props();
 </script>
 
 <article
   class={['tidy-inline-quantity-tracker', { disabled: attributes.disabled }]}
+  {...containerAttributes}
 >
-  <a class="command decrementer" onclick={decrement}>
+  <a
+    class="command decrementer"
+    data-action={decreaseAction ?? 'decrease'}
+    data-property={property}
+    {...decreaseAttributes}
+  >
     <i class="fa-solid fa-minus"></i>
   </a>
   <span class="quantity-tracker-input-wrapper">
     <input
-      bind:this={input}
       type="text"
+      inputmode="numeric"
       class="quantity-tracker-input"
       {@attach InputAttachments.selectOnFocus}
+      data-name={property}
       {...attributes}
     />
   </span>
-  <a class="command incrementer" onclick={increment}>
+  <a
+    class="command incrementer"
+    data-action={increaseAction ?? 'increase'}
+    data-property={property}
+    {...increaseAttributes}
+  >
     <i class="fa-solid fa-plus"></i>
   </a>
 </article>

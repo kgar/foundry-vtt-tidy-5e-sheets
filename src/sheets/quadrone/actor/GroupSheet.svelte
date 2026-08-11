@@ -4,11 +4,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SvelteSet } from 'svelte/reactivity';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import GroupSubtitle from './group-parts/GroupSubtitle.svelte';
-  
+
   let context = $derived(getGroupSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
@@ -16,18 +14,6 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let extraTabs = new SvelteSet<string>();
-
-  let currentPortraitShape = $derived(context.portrait.shape);
-
-  const availableShapes = ThemeQuadrone.getActorPortraitShapes();
-
-  function cycleShape() {
-    const currentIndex = availableShapes.indexOf(currentPortraitShape);
-    const nextIndex = (currentIndex + 1) % availableShapes.length;
-    let newShape = availableShapes[nextIndex];
-
-    ThemeQuadrone.updatePortraitShape(context.actor, newShape);
-  }
 
   let awardAriaLabel = $derived(
     localize(
@@ -50,9 +36,9 @@
         data-tidy-sheet-part="name-header-row"
       >
         {#if context.unlocked}
-          <TextInputQuadrone
-            field="name"
-            document={context.actor}
+          <input
+            type="text"
+            data-name="name"
             value={context.actor.name}
             class="actor-name flex1 h1"
             data-tidy-sheet-part="actor-name"
@@ -80,7 +66,7 @@
             class="button long-rest button-gold flexshrink"
             data-tooltip="DND5E.Group.PlaceMembers"
             aria-label={localize('DND5E.Group.PlaceMembers')}
-            onclick={() => context.actor.system.placeMembers()}
+            data-action="placeMembers"
           >
             <i class="fas fa-street-view"></i>
             {localize('DND5E.Group.PlaceMembers')}
@@ -90,31 +76,23 @@
             type="button"
             class="button long-rest button-gold flexshrink"
             data-tooltip
-            onclick={() => context.sheet.award()}
+            data-action="award"
           >
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
-          <button
-            type="button"
-            class="button short-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Short.Label"
-            aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.actor.shortRest()}
-          >
-            <i class="fas fa-utensils"></i>
-            {localize('DND5E.REST.Short.Label')}
-          </button>
-          <button
-            type="button"
-            class="button long-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
-            aria-label={localize('DND5E.REST.Long.Label')}
-            onclick={() => context.actor.longRest()}
-          >
-            <i class="fas fa-campground"></i>
-            {localize('DND5E.REST.Long.Label')}
-          </button>
+          {#each Object.entries(context.config.restTypes) as [key, rest]}
+            <button
+              type="button"
+              class="button button-gold flexshrink"
+              data-action="rest"
+              data-type={key}
+              disabled={!context.editable}
+            >
+              <i class={rest.icon}></i>
+              {rest.label}
+            </button>
+          {/each}
         </div>
       {/if}
     </div>

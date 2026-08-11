@@ -43,7 +43,6 @@ import { formatAsModifier } from 'src/utils/formatting';
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { Activities } from 'src/features/activities/activities';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
-import { ImportSheetControl } from '../../features/sheet-header-controls/ImportSheetControl';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -120,9 +119,6 @@ export class Tidy5eEncounterSheetClassic extends getTidy5eActorSheetBaseMixin(
       },
     ],
     actions: {
-      [ImportSheetControl.actionName]: async function (this: any) {
-        await ImportSheetControl.importFromCompendium(this, this.document);
-      },
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showPortraitArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.showTokenArtwork.action,
       ...this.ACTOR_ACTIONS_AND_CONTROLS.openTabSelection.action,

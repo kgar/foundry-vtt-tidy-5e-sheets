@@ -80,6 +80,7 @@
           ['data-method']: section.method,
           ['data-level']: section.dataset['system.level'],
           ['data-slots']: true,
+          ['data-slot']: section.slot,
         }
       : {},
   );

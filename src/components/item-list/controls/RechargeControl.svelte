@@ -1,45 +1,42 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { UsesField } from 'src/types/item.types';
   import type { ActorSheetContextV1 } from 'src/types/types';
+  import { getUsesRechargeDiceRange } from 'src/utils/formula';
 
   interface Props {
     document: any;
-    uses: any; // TODO: Give it types
-    field: string;
+    uses: UsesField;
   }
 
-  let { document, uses, field }: Props = $props();
+  const { document, uses }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let rechargeLabel = $derived(
+  const rechargeLabel = $derived(
     localize('TIDY5E.RollRecharge.Hint', {
       rechargeLabel: document.labels?.recharge ?? '',
     }),
   );
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  const context = $derived(getSheetContext<ActorSheetContextV1>());
 
-  let recovery = $derived(uses?.recovery[0]);
+  const disabled = $derived(!context.owner);
 
-  let disabled = $derived(!context.owner);
-
-  function onRechargeClicked(ev: MouseEvent) {
-    ev.shiftKey
-      ? document.update({ [field]: 0 })
-      : uses.rollRecharge({ apply: true, event: ev });
-  }
+  const { rechargeRange, diceIconClass } = $derived(
+    getUsesRechargeDiceRange(uses),
+  );
 </script>
 
 <a
-  class="item-list-button"
-  class:disabled
-  title={rechargeLabel}
-  onclick={(ev) => !disabled && onRechargeClicked(ev)}
-  tabindex="0"
+  class={['item-list-button', { disabled }]}
+  data-tooltip=""
+  aria-label={rechargeLabel}
+  data-action={(document.item ?? document).isOwner ? 'recharge' : undefined}
 >
-  <i class="fas fa-dice-six"></i>
-  {recovery?.formula}{#if recovery?.value !== 6}+{/if}
+  <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
+  <span class="recharge-range-text text-data">
+    {rechargeRange}
+  </span>
 </a>

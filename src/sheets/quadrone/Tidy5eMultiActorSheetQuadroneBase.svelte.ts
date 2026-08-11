@@ -45,8 +45,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
     > = {
       actions: {
-        placeMembers: Tidy5eMultiActorSheetQuadroneBase.#onPlaceMembers,
-        removeMember: Tidy5eMultiActorSheetQuadroneBase.#onRemoveMember,
+        award: Tidy5eMultiActorSheetQuadroneBase.#award,
+        placeMembers: Tidy5eMultiActorSheetQuadroneBase.#placeMembers,
+        removeMember: Tidy5eMultiActorSheetQuadroneBase.#removeMember,
       },
     };
 
@@ -625,19 +626,33 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    static async #award(
+      this: Tidy5eMultiActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      this.award();
+    }
+
+    async award() {}
+
+    /* -------------------------------------------- */
+
     /**
      * Handle placing group members.
      * @this {MultiActorSheet}
      */
-    static async #onPlaceMembers(
+    static async #placeMembers(
       this: Tidy5eMultiActorSheetQuadroneBase,
       _event: Event,
       _target: HTMLElement,
     ): Promise<void> {
-      this.actor.system.placeMembers();
+      this.document.system.placeMembers();
     }
 
-    static async #onRemoveMember(
+    /* -------------------------------------------- */
+
+    static async #removeMember(
       this: Tidy5eMultiActorSheetQuadroneBase,
       _event: Event,
       target: HTMLElement,
@@ -655,16 +670,16 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     _onDragStart(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     ): void {
-      const memberId = event.currentTarget
-        .closest('[data-tidy-draggable][data-member-id]')
-        ?.getAttribute('data-member-id');
+      const uuid = event.currentTarget
+        .closest('[data-tidy-draggable][data-uuid]')
+        ?.getAttribute('data-uuid');
 
-      if (!memberId) {
+      if (!uuid) {
         super._onDragStart(event);
         return;
       }
 
-      const actor = this.#findMemberActor(memberId);
+      const actor = this.#findMemberActor(uuid);
 
       if (!actor) {
         return;
@@ -705,16 +720,16 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       }
 
       const dropTarget = event.target?.closest<HTMLElement>(
-        '[data-tidy-draggable][data-member-id]',
+        '[data-tidy-draggable][data-uuid]',
       );
-      const targetMemberId = dropTarget?.getAttribute('data-member-id');
+      const targetMemberUuid = dropTarget?.getAttribute('data-uuid');
 
-      const targetMemberActor = this.#findMemberActor(targetMemberId);
+      const targetMemberActor = this.#findMemberActor(targetMemberUuid);
 
       if (
         !dropTarget ||
         !targetMemberActor ||
-        targetMemberId === sourceActor.id
+        targetMemberUuid === sourceActor.uuid
       ) {
         return false;
       }
@@ -735,9 +750,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       return await this._onSortMember(sourceActor, targetMemberActor);
     }
 
-    #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
+    #findMemberActor(uuid: string | null | undefined): Actor5e | undefined {
       return this.actor.system.members.find(
-        (m: MultiActor5eMember) => m.actor.id === actorId,
+        (m: MultiActor5eMember) => m.actor.uuid === uuid,
       )?.actor;
     }
 

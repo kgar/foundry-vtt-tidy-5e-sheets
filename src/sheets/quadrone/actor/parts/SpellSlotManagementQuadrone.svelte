@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { SpellbookSection } from 'src/types/types';
   import SpellSlotTracker from './SpellSlotTracker.svelte';
-  import SpellPips from 'src/components/pips/SpellPips.svelte';
+  import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
 
   interface Props {
     mode: string;
@@ -15,5 +15,9 @@
 {#if mode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX}
   <SpellSlotTracker {section} />
 {:else if mode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS}
-  <SpellPips {section} />
+  <SpellPipsQuadrone
+    max={section.slots}
+    prop="system.spells.{section.slot}.value"
+    uses={section.uses}
+  />
 {/if}

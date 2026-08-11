@@ -41,7 +41,6 @@
   //  for this tab.
   let sidebarExpanded = $derived(sidebarExpandedPreference);
 
-  
   const swapAbilityScoreAndBonusEnabled = $derived(
     settings.value.swapAbilityScoreAndBonus,
   );
@@ -52,8 +51,9 @@
     untrack(() => {
       const type = context.actor.type;
       const tabId = selectedTabId;
-      const stored = UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
-        ?.sidebarExpanded;
+      const stored =
+        UserSheetPreferencesService.getByType(type)?.tabs?.[tabId]
+          ?.sidebarExpanded;
       if (stored !== expanded) {
         UserSheetPreferencesService.setDocumentTypeTabPreference(
           type,
@@ -155,7 +155,7 @@
                 {#each Object.entries(context.config.restTypes) as [key, rest]}
                   <button
                     type="button"
-                    class="button button-icon-only short-rest button-gold"
+                    class="button button-icon-only button-gold"
                     data-tooltip=""
                     aria-label={localize(rest.label)}
                     data-action="rest"
@@ -230,13 +230,13 @@
           </div>
           <div class="ability-labels flexcol">
             {#if swapAbilityScoreAndBonusEnabled}
-            <span class="label font-label-medium color-text-gold"
-              >{localize('DND5E.Modifier')}</span
-            >
+              <span class="label font-label-medium color-text-gold"
+                >{localize('DND5E.Modifier')}</span
+              >
             {:else}
-            <span class="label font-label-medium color-text-gold"
-              >{localize('DND5E.AbilityScoreShort')}</span
-            >
+              <span class="label font-label-medium color-text-gold"
+                >{localize('DND5E.AbilityScoreShort')}</span
+              >
             {/if}
             <span class="divider"></span>
             <span class="label font-label-medium color-text-gold"
@@ -256,7 +256,10 @@
           />
         {/each}
         <div class="ability initiative flexcol">
-          <div class="initiative-score-container" data-tooltip="DND5E.Initiative">
+          <div
+            class="initiative-score-container"
+            data-tooltip="DND5E.Initiative"
+          >
             <button
               type="button"
               class="ability-roll-button button-borderless"
@@ -265,9 +268,12 @@
               disabled={!context.owner}
               data-has-roll-modes
             >
-              <span class="ability-abbr color-text-gold">{localize('DND5E.InitiativeAbbr')}</span>
+              <span class="ability-abbr color-text-gold"
+                >{localize('DND5E.InitiativeAbbr')}</span
+              >
               <span class="ability-label-container initiative-bonus">
-                <span class="modifier color-text-lightest">{ini.sign}</span><span class="bonus color-text-default">{ini.value}</span>
+                <span class="modifier color-text-lightest">{ini.sign}</span
+                ><span class="bonus color-text-default">{ini.value}</span>
               </span>
             </button>
             {#if context.unlocked}
@@ -304,9 +310,11 @@
                     {save.mod}
                   </span>
                 {:else}
-                  {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
-                    ability: context.saves.concentration.label,
-                  }))}
+                  {const tooltip = $derived(
+                    localize('DND5E.AbilityConfigure', {
+                      ability: context.saves.concentration.label,
+                    }),
+                  )}
                   <div class="config-container">
                     <button
                       aria-label={tooltip}

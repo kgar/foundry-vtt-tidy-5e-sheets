@@ -10,13 +10,12 @@
     occupant: Actor5e | undefined;
     type: string;
     index: number;
-    prop: string;
     facilityId: string;
     facilityName: string;
     uuid: string;
   }
 
-  let { occupant, type, index, prop, facilityId, facilityName, uuid }: Props =
+  let { occupant, type, index, facilityId, facilityName, uuid }: Props =
     $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -45,10 +44,17 @@
 </script>
 
 <li
-  class="roster-member {type} occupant-with-menu"
-  class:highlight={hoveredFacilityOccupant.value ===
-    `${facilityId}-${index}-${uuid}`}
-  class:unlocked={context.unlocked}
+  class={[
+    'roster-member',
+    type,
+    'occupant-with-menu',
+    {
+      highlight:
+        hoveredFacilityOccupant.value === `${facilityId}-${index}-${uuid}`,
+      unlocked: context.unlocked,
+
+    },
+  ]}
   data-actor-uuid={uuid}
   data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
     actorName: name,
@@ -56,7 +62,6 @@
   })}
   data-facility-id={facilityId}
   data-facility-name={facilityName}
-  data-prop={prop}
   data-index={index}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
   onmouseenter={() =>

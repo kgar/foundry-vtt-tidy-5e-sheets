@@ -41,7 +41,7 @@ import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
-import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
+import { delay } from 'src/utils/asynchrony';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -116,23 +116,8 @@ export class Tidy5eContainerSheetQuadrone
       height: 580,
     },
     actions: {
-      sheetSettings: async function (this: Tidy5eContainerSheetQuadrone) {
-        this.openSheetSettings();
-      },
-      // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
-      showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
-        const title =
-          this.item.system.identified === false
-            ? this.item.system.unidentified.name
-            : this.item.name;
-        this._renderChild(
-          new foundry.applications.apps.ImagePopout({
-            src: this.item.img,
-            uuid: this.item.uuid,
-            window: { title },
-          }),
-        );
-      },
+      showConfiguration: Tidy5eContainerSheetQuadrone.#showConfiguration,
+      showIcon: Tidy5eContainerSheetQuadrone.#showIcon,
     },
     dragDrop: [
       {
@@ -148,8 +133,18 @@ export class Tidy5eContainerSheetQuadrone
   };
 
   selectTab(tabId: string) {
-    this.onTabSelected(tabId);
-    this.render();
+    this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
+  }
+
+  async emphasize(tabId: string | undefined, selector: string | undefined) {
+    if (tabId) {
+      this.selectTab(tabId);
+    }
+
+    if (selector) {
+      await delay(1);
+      this.element.ownerDocument.querySelector(selector)?.focus();
+    }
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -438,6 +433,38 @@ export class Tidy5eContainerSheetQuadrone
     delete game.user.apps[this.id];
 
     return await super.close(options);
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  static async #showConfiguration(
+    this: Tidy5eContainerSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    switch (target.dataset.config) {
+      case 'source':
+        return FoundryAdapter.renderSourceConfig(this.item, 'system.source');
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
+  static async #showIcon(this: Tidy5eContainerSheetQuadrone) {
+    const title =
+      this.item.system.identified === false
+        ? this.item.system.unidentified.name
+        : this.item.name;
+    this._renderChild(
+      new foundry.applications.apps.ImagePopout({
+        src: this.item.img,
+        uuid: this.item.uuid,
+        window: { title },
+      }),
+    );
   }
 
   /* -------------------------------------------- */

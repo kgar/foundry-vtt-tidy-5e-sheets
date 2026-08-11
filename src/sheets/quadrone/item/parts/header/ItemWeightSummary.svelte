@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -12,9 +13,16 @@
     CONFIG.DND5E.weightUnits[context.system.weight.units]?.abbreviation ??
       context.system.weight.units,
   );
+
+  let appId = $derived(context.document.id);
 </script>
 
-<div class="item-weight">
+<div
+  class="item-weight pointer"
+  data-action="emphasize"
+  data-emphasize-tab-id={CONSTANTS.TAB_ITEM_DETAILS}
+  data-emphasize-selector="[id='{appId}-weight-value']"
+>
   <i class="fas fa-weight-hanging item-weight-icon text-label-icon"></i>
   <span class="item-weight-value text-data">
     {weight}
@@ -24,4 +32,4 @@
       {unit}
     </span>
   {/if}
-</div>
+  </div>

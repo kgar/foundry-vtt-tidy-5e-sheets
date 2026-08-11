@@ -1,17 +1,15 @@
 ## The Accretion Disk of To Do's
 
-- [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
-- [ ] Encounter Member tab - Could use an empty state button that pulls compendium NPCs
-- [ ] Encounter Combat tab - Could use an empty state button that pulls compendium NPCs
-- [ ] Convert Sheet Pin eventing to sheet actions
-- [ ] Review how to open the door to custom sheet actions, and ensure Tidy supports that.
-- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
-- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
-- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
-- [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
-- [ ] review system sheets for forms handling. Are they using forms? Is there any way to prevent unwanted changes to an actor during submission?
-- [ ] Extract and share: TidyTableRowUseButton / Convert to sheet action
+- [ ] // TODO: for combat identifiers, share a function for this.
+- [ ] // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared? (can we reuse the parseDelta code, even without a delta?)
+- [ ] // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
+- [ ] // TODO: I've used this multiple times now. Where can I share it?
+- [ ] // TODO: I've done this same update twice. Can we consolidate to one function?
+- [ ] // TODO: Send this down in the pin context data.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
+- [ ] refactor: the data-name prefix system could use some kind of utility to reduce all the lines of code. And some OO design with the sheets to help make it easier to scale in the future.
+- [ ] refactor / organize - src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
+- [ ] DOM Density - review `.list-content > .list-values > etc.` and determine if it can be thinned out with CSS
 - [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
   - [ ] Sortable with the others? Or fixed to the top?
@@ -69,9 +67,13 @@
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
+- [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
+- [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
+- [ ] Somehow make Container Sheet a subclass of Item Sheet. It's been a long time coming. 
 
 ## hightouch To Do
 
+- [ ] (hightouch, let's discuss) Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Facility Details - Harvest UI at bottom needs some better layout applied to it. "Greenhouse" is an example of a facility with Harvest capabilities built in.
 - [ ] (confirming with hightouch; might remove) Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.

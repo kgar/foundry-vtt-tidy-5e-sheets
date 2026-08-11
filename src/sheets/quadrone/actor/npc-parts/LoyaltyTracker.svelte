@@ -15,7 +15,6 @@
 
 {#if context.showLoyaltyTracker && (context.unlocked || loyaltyValue !== null)}
   <NpcScoreTrackerCard
-    actor={context.actor}
     label={localize('DND5E.Loyalty')}
     value={loyaltyValue}
     valuePath="system.attributes.loyalty.value"
