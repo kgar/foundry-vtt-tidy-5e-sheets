@@ -634,17 +634,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       this.award();
     }
 
-    async award() {
-      this._renderChild(
-        new dnd5e.applications.Award({
-          award: {
-            currency: { ...this.actor.system.currency },
-            savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
-            xp: await this.actor.system.getXPValue(),
-          },
-        }),
-      );
-    }
+    async award() {}
 
     /* -------------------------------------------- */
 

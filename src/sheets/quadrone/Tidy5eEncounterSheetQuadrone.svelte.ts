@@ -679,6 +679,20 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
   /* -------------------------------------------- */
 
+  async award() {
+    this._renderChild(
+      new dnd5e.applications.Award({
+        award: {
+          currency: { ...this.actor.system.currency },
+          savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+          xp: await this.actor.system.getXPValue(),
+        },
+      }),
+    );
+  }
+
+  /* -------------------------------------------- */
+
   static async #browseAddNpc(
     this: Tidy5eEncounterSheetQuadrone,
     _event: Event,
