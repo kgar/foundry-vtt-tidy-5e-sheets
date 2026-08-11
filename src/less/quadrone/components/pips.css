@@ -46,7 +46,7 @@
     display: none;
   }
 
-  &.theme-light .pips.spell-pips {
+  &.theme-light.theme-basic .pips.spell-pips {
     --pip-color: var(--t5e-theme-color-default);
     --pip-border-color: var(--t5e-theme-color-default);
     --pip-hover-color: var(--t5e-theme-color-highlight);
