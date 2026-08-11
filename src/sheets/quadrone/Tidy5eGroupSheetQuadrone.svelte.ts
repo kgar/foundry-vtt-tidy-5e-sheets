@@ -493,7 +493,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     this.actor.update({ 'system.attributes.travel.pace': paces[next] });
   }
 
-  award() {
+  async award() {
     this._renderChild(
       new dnd5e.applications.Award({
         award: {
