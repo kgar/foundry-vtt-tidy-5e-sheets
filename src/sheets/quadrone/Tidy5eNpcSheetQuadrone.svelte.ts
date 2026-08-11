@@ -803,60 +803,36 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
   /*  Form Handling                               */
   /* -------------------------------------------- */
 
-  // TODO: I've done this same update twice. Can we consolidate to one function?
   override async _updateNumericProperty(
     targetDocument: any,
     prop: string,
     value: number | string,
   ): Promise<any> {
+    return (
+      this._handleSpecialInputs(value, prop) ??
+      super._updateNumericProperty(targetDocument, prop, value)
+    );
+  }
+
+  _handleSpecialInputs(value: string | number, prop: string) {
+    value = Number(value);
+
+    if (Number.isNaN(value)) {
+      return;
+    }
+
     if (prop === 'system.resources.legact.value') {
-      return await this.document.update({
+      return this.document.update({
         'system.resources.legact.spent':
-          this.document.system.resources.legact.max - (value as any),
+          this.document.system.resources.legact.max - value,
       });
     }
 
     if (prop === 'system.resources.legres.value') {
-      return await this.document.update({
+      return this.document.update({
         'system.resources.legres.spent':
-          this.document.system.resources.legres.max - (value as any),
+          this.document.system.resources.legres.max - value,
       });
-    }
-
-    return super._updateNumericProperty(targetDocument, prop, value);
-  }
-
-  override async _onChangeFormReadyToSave(
-    event: any,
-  ): Promise<false | undefined> {
-    const target = event.target as HTMLElement;
-
-    if (!(target instanceof HTMLInputElement)) {
-      return;
-    }
-
-    const valueAsNumber = Number(target.value);
-
-    if (!isNaN(valueAsNumber)) {
-      return;
-    }
-
-    if (target.name === 'system.resource.legact.value') {
-      await this.document.update({
-        'system.resource.legact.spent':
-          this.document.system.resource.legact.max - valueAsNumber,
-      });
-
-      return false;
-    }
-
-    if (target.name === 'system.resource.legres.value') {
-      await this.document.update({
-        'system.resource.legres.spent':
-          this.document.system.resource.legres.max - valueAsNumber,
-      });
-
-      return false;
     }
   }
 }
