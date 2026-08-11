@@ -29,7 +29,7 @@ import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQ
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
-import { processInputChangeDeltaFromValues } from 'src/utils/form';
+import { applyNumberInputConstraints } from 'src/utils/form';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -944,18 +944,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared?
     const input = target.parentElement?.querySelector('input');
-    const min = input?.min ? Number(input.min) : -Infinity;
-    const max = input?.max ? Number(input.max) : Infinity;
-
     const members = this.actor.system.toObject().members;
     const member = members[index];
 
     const originalValue =
       FoundryAdapter.getProperty<number>(member, property) ?? 0;
 
-    let newValue = Math.clamp(originalValue + amount, min, max);
+    const newValue = applyNumberInputConstraints(originalValue, input);
 
     foundry.utils.setProperty(member, property, newValue);
 

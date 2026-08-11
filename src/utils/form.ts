@@ -3,7 +3,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 export function processInputChangeDelta(
   value: string,
   entity: unknown,
-  field: string
+  field: string,
 ) {
   if (['+', '-'].includes(value[0])) {
     const delta = parseFloat(value);
@@ -16,7 +16,7 @@ export function processInputChangeDelta(
 
 export function processInputChangeDeltaFromValues(
   newValue: string,
-  originalValue: unknown
+  originalValue: unknown,
 ) {
   if (['+', '-'].includes(newValue[0])) {
     const delta = parseFloat(newValue);
@@ -25,4 +25,22 @@ export function processInputChangeDeltaFromValues(
     return Number(newValue.slice(1));
   }
   return Number(newValue);
+}
+
+export function applyNumberInputConstraints(
+  value: number,
+  input: HTMLElement | null | undefined,
+) {
+  if (!input) {
+    return value;
+  }
+
+  const min = Number.isNumeric(input.dataset.min)
+    ? Number(input.dataset.min)
+    : -Infinity;
+  const max = Number.isNumeric(input.dataset.max)
+    ? Number(input.dataset.max)
+    : Infinity;
+
+  return Math.clamp(value, min, max);
 }

@@ -1,6 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared? (can we reuse the parseDelta code, even without a delta?)
 - [ ] // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
 - [ ] // TODO: I've used this multiple times now. Where can I share it?
 - [ ] // TODO: I've done this same update twice. Can we consolidate to one function?

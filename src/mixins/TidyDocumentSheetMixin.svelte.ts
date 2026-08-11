@@ -48,6 +48,7 @@ import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { isUserInteractable } from 'src/utils/element';
 import { delay } from 'src/utils/asynchrony';
+import { applyNumberInputConstraints } from 'src/utils/form';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -1308,15 +1309,10 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       value += amount;
 
-      const input = target.parentElement?.querySelector('input');
-      const min = Number.isNumeric(input?.dataset.min)
-        ? Number(input?.dataset.min)
-        : -Infinity;
-      const max = Number.isNumeric(input?.dataset.max)
-        ? Number(input?.dataset.max)
-        : Infinity;
-
-      value = Math.clamp(value, min, max);
+      value = applyNumberInputConstraints(
+        value,
+        target.parentElement?.querySelector<HTMLElement>('input'),
+      );
 
       if (isNaN(value)) {
         return;
