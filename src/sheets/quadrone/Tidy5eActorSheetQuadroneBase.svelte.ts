@@ -2101,7 +2101,7 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     /**
-     * Handle finding an available item of a given type.
+     * Handle finding an available item of a given type and drop/creating it to this sheet.
      */
     static async #findItem(
       this: Tidy5eActorSheetQuadroneBase,
