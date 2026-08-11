@@ -62,3 +62,29 @@ export function getSpecializedUpdateInformation(
     operationType: datasetName?.substring(0, delimiterIndex),
   };
 }
+
+const NUMERIC_INPUT_SELECTOR =
+  '[data-dtype="Number"], [inputmode="numeric"], [type="number"]';
+
+/**
+ * A target element is opted into form change handling (name or data-name)
+ * and has indicated that it is numeric, whether by type or by
+ * metadata.
+ *
+ * @returns `true` if the input should be parsed and adjusted for delta changes; else `false`
+ */
+export function shouldParseInputDelta(target: HTMLElement) {
+  return target.matches(
+    `input:is([name], [data-name]):is(${NUMERIC_INPUT_SELECTOR})`,
+  );
+}
+
+/**
+ * A target element has indicated that it is numeric, whether by type or by
+ * metadata.
+ * 
+ * @returns `true` if the input is considered numeric in nature; else `false`
+ */
+export function isNumericInput(target: HTMLElement) {
+  return target.matches(NUMERIC_INPUT_SELECTOR);
+}

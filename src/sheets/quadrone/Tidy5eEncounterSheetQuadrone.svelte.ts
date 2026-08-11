@@ -32,6 +32,7 @@ import { isNil } from 'src/utils/data';
 import {
   applyNumberInputConstraints,
   getSpecializedUpdateInformation,
+  shouldParseInputDelta,
 } from 'src/utils/form';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -1026,12 +1027,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   async _onMemberChanged(event: any, index: number, name: string) {
     const members = this.actor.system.toObject().members;
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, members[index]);
     }
 
@@ -1049,12 +1045,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, placeholder);
     }
 
@@ -1077,12 +1068,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, combatant);
     }
 

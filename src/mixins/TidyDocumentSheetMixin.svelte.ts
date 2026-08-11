@@ -51,6 +51,8 @@ import { delay } from 'src/utils/asynchrony';
 import {
   applyNumberInputConstraints,
   getSpecializedUpdateInformation,
+  isNumericInput,
+  shouldParseInputDelta,
 } from 'src/utils/form';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
@@ -174,11 +176,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       );
 
       // Process delta changes
-      if (
-        event.target.matches(
-          `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-        )
-      ) {
+      if (shouldParseInputDelta(event.target)) {
         dnd5e.utils.parseInputDelta(event.target, targetDocument);
       }
 
@@ -481,11 +479,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       let result: unknown = undefined;
 
-      if (
-        event.target.matches(
-          '[type="number"], [data-dype="Number"], [inputmode="numeric"]',
-        )
-      ) {
+      if (isNumericInput(event.target)) {
         const valueAsNumber = Number.isNumeric(valueToSave)
           ? Number(valueToSave)
           : valueToSave;
