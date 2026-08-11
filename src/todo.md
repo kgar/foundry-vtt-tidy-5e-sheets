@@ -1,5 +1,10 @@
 ## The Accretion Disk of To Do's
 
+- [ ] // TODO: for combat identifiers, share a function for this.
+- [ ] // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared? (can we reuse the parseDelta code, even without a delta?)
+- [ ] // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
+- [ ] // TODO: I've used this multiple times now. Where can I share it?
+- [ ] // TODO: I've done this same update twice. Can we consolidate to one function?
 - [ ] // TODO: Send this down in the pin context data.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
 - [ ] refactor: the data-name prefix system could use some kind of utility to reduce all the lines of code. And some OO design with the sheets to help make it easier to scale in the future.
