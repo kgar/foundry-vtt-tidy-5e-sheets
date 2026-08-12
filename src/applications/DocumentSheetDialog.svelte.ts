@@ -31,7 +31,7 @@ export function DocumentSheetDialog<
       submitOnClose: true,
     };
 
-    async _onChangeForm(formConfig: unknown, event: any) {
+    _onChangeForm(formConfig: unknown, event: any) {
       if (event.type !== 'change') {
         return;
       }

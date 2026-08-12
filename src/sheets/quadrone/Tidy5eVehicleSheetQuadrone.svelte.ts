@@ -1255,10 +1255,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
 
-  async _onChangeForm(
-    formConfig: unknown,
-    event: Event & { target: HTMLElement },
-  ) {
+  _onChangeForm(formConfig: unknown, event: Event & { target: HTMLElement }) {
     const input = event.target;
     const { area } = input.closest<HTMLElement>('[data-area]')?.dataset ?? {};
     const { uuid } = input.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
@@ -1268,7 +1265,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const isCrewQuantityUpdate = name?.startsWith('crewQuantity:');
 
     if (area && uuid && isCrewQuantityUpdate) {
-      return await this._onCrewQuantityUpdated(input, area, uuid);
+      return this._onCrewQuantityUpdated(input, area, uuid);
     }
 
     // Standard handling

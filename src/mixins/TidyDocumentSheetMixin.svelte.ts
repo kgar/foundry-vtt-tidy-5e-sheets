@@ -205,7 +205,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     #focusedInputSelector: string | undefined = '';
 
-    async _onChangeForm(formConfig: unknown, event: any) {
+    _onChangeForm(formConfig: unknown, event: any) {
       if (
         FoundryAdapter.isElementInstanceOf(
           event.target,
@@ -245,24 +245,32 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       try {
         if (event.target.matches('[data-name]')) {
-          return await this._onSingleInputChange(event);
+          return this._onSingleInputChange(event);
         }
 
-        const result = await super._onChangeForm(formConfig, event);
+        const result = super._onChangeForm(formConfig, event);
 
-        const shouldRevertInput =
-          event.target.name &&
-          (result === undefined ||
-            foundry.utils.getProperty(result, event.target.name) !==
-              event.target.value);
-
-        if (shouldRevertInput) {
-          this._revertFormChangeToDocumentValue(event, event.target.name);
-        }
+        this._revertIfNotMatchingDocumentValue(result, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
         );
+      }
+    }
+
+    async _revertIfNotMatchingDocumentValue(
+      maybePromise: Promise<any>,
+      event: any,
+    ) {
+      const resolved = await maybePromise;
+      const shouldRevertInput =
+        event.target.name &&
+        (resolved === undefined ||
+          foundry.utils.getProperty(resolved, event.target.name) !==
+            event.target.value);
+
+      if (shouldRevertInput) {
+        this._revertFormChangeToDocumentValue(event, event.target.name);
       }
     }
 
