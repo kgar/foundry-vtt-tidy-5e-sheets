@@ -38,6 +38,22 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
   };
 }
 
+/**
+ * Returns `skillsTraitsCombined` only if it's overriding the default,
+ * otherwise `undefined`.
+ */
+export function getSkillsTraitsCombinedOverride(
+  entry: Pick<
+    TabConfigContextEntry,
+    'skillsTraitsCombined' | 'defaultSkillsTraitsCombined'
+  >,
+): boolean | undefined {
+  return entry.skillsTraitsCombined != null &&
+    entry.skillsTraitsCombined !== entry.defaultSkillsTraitsCombined
+    ? entry.skillsTraitsCombined
+    : undefined;
+}
+
 export function getItemTabContext(
   type: string,
   settings: SheetTabsConfiguration | undefined | null,

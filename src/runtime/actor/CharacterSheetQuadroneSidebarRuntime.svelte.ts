@@ -58,7 +58,6 @@ export const CharacterSheetQuadroneSidebarRuntime =
           component: SidebarTabSkillsTraits,
           getProps: () => ({ showSkills: true, showTraits: false }),
         },
-        iconClass: 'fa-solid fa-hammer',
         layout: 'quadrone',
         enabled: (context) =>
           isSidebarTabEnabled(context, CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS),
@@ -71,7 +70,6 @@ export const CharacterSheetQuadroneSidebarRuntime =
           component: SidebarTabSkillsTraits,
           getProps: () => ({ showSkills: false, showTraits: true }),
         },
-        iconClass: 'fa-solid fa-user-tag',
         layout: 'quadrone',
         enabled: (context) =>
           isSidebarTabEnabled(context, CONSTANTS.TAB_TRAITS),

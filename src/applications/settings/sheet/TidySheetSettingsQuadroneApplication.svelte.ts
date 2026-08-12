@@ -228,6 +228,7 @@ export class TidySheetSettingsQuadroneApplication
                 CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
                 doc.type,
                 setting,
+                { useWorldAsDefault: true },
               ),
           },
           title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {

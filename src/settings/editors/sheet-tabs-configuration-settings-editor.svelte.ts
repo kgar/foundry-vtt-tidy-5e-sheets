@@ -15,6 +15,7 @@ import {
   buildTabConfigMap,
   getActorTabContext,
   getItemTabContext,
+  getSkillsTraitsCombinedOverride,
 } from 'src/settings/editors/shared/tab-configuration-functions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { error } from 'src/utils/logging';
@@ -106,6 +107,7 @@ export function getSheetTabsConfigurationSettingsEditor(
         CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
         doc.type,
         setting,
+        { useWorldAsDefault: true },
       );
     }
 
@@ -306,19 +308,18 @@ export function getSheetTabsConfigurationSettingsEditor(
         curr.tabs.every((t, i) => {
           const d = curr.defaultTabs[i];
           return d && d.id === t.id && d.show === t.show;
-        }) &&
-        (curr.skillsTraitsCombined == null ||
-          curr.skillsTraitsCombined === curr.defaultSkillsTraitsCombined);
+        });
 
-      const hasSkillsTraitsCombinedOverride =
-        curr.skillsTraitsCombined != null &&
-        curr.skillsTraitsCombined !== curr.defaultSkillsTraitsCombined;
+      const skillsTraitsCombinedOverride = getSkillsTraitsCombinedOverride(curr);
 
       await setTabConfig(document, {
         // Full per-tab arrangement (preserves hidden-tab order).
-        tabs: matchesDefault && !hasSkillsTraitsCombinedOverride ? {} : buildTabConfigMap(curr.tabs),
-        ...(hasSkillsTraitsCombinedOverride
-          ? { skillsTraitsCombined: curr.skillsTraitsCombined }
+        tabs:
+          matchesDefault && skillsTraitsCombinedOverride === undefined
+            ? {}
+            : buildTabConfigMap(curr.tabs),
+        ...(skillsTraitsCombinedOverride !== undefined
+          ? { skillsTraitsCombined: skillsTraitsCombinedOverride }
           : {}),
       });
 

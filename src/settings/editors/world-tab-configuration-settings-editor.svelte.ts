@@ -1,9 +1,8 @@
 import {
   buildTabConfigMap,
   getActorTabContext,
-  getInitialTabConfigContextEntry,
   getItemTabContext,
-  mapTabConfigContextEntryToSnapshot,
+  getSkillsTraitsCombinedOverride,
 } from 'src/settings/editors/shared/tab-configuration-functions';
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
@@ -157,17 +156,19 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         (l) => l.visibilityLevel != null,
       );
 
-      const hasSkillsTraitsCombinedOverride =
-        curr.skillsTraitsCombined != null &&
-        curr.skillsTraitsCombined !== curr.defaultSkillsTraitsCombined;
+      const skillsTraitsCombinedOverride = getSkillsTraitsCombinedOverride(curr);
 
-      if (!matchesDefault || hasVisibilityOverride || hasSkillsTraitsCombinedOverride) {
+      if (
+        !matchesDefault ||
+        hasVisibilityOverride ||
+        skillsTraitsCombinedOverride !== undefined
+      ) {
         const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
 
         docName[docTypeKey] = {
           tabs: matchesDefault ? {} : buildTabConfigMap(curr.tabs),
-          ...(hasSkillsTraitsCombinedOverride
-            ? { skillsTraitsCombined: curr.skillsTraitsCombined }
+          ...(skillsTraitsCombinedOverride !== undefined
+            ? { skillsTraitsCombined: skillsTraitsCombinedOverride }
             : {}),
         };
       }

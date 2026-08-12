@@ -83,6 +83,7 @@ export function getCharacterSidebarTabContext(
   allRegisteredTabs: RegisteredTab<CharacterSheetQuadroneContext>[],
   type: string,
   settings: SheetTabsConfiguration | undefined | null,
+  options?: { useWorldAsDefault?: boolean },
 ): TabConfigContextEntry {
   const skillsTraitsCombined = getSkillsTraitsCombined(settings);
   const migratedSettings = migrateLegacySidebarTabConfiguration(
@@ -103,7 +104,9 @@ export function getCharacterSidebarTabContext(
   );
 
   entry.skillsTraitsCombined = skillsTraitsCombined;
-  entry.defaultSkillsTraitsCombined = getDefaultSkillsTraitsCombined();
+  entry.defaultSkillsTraitsCombined = options?.useWorldAsDefault
+    ? getSkillsTraitsCombined(null)
+    : getDefaultSkillsTraitsCombined();
 
   return entry;
 }
@@ -224,5 +227,4 @@ export function rebuildCharacterSidebarTabConfigEntry(
   entry.defaultTabs = rebuilt.defaultTabs;
   entry.allTabs = rebuilt.allTabs;
   entry.skillsTraitsCombined = skillsTraitsCombined;
-  entry.defaultSkillsTraitsCombined = rebuilt.defaultSkillsTraitsCombined;
 }
