@@ -244,16 +244,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       try {
-        const proceedWithDefaultFormHandling =
-          await this._onChangeFormReadyToSave(event);
-
-        if (proceedWithDefaultFormHandling === false) {
-          return;
-        }
-
         if (event.target.matches('[data-name]')) {
-          await this._onSingleInputChange(event);
-          return;
+          return await this._onSingleInputChange(event);
         }
 
         const result = await super._onChangeForm(formConfig, event);
