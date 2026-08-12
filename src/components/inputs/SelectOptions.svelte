@@ -7,6 +7,7 @@
     valueProp?: string | null;
     labelProp?: string | null;
     blank?: string | null;
+    blankValue?: string | null;
   }
 
   let {
@@ -14,6 +15,7 @@
     valueProp = null,
     labelProp = null,
     blank = null,
+    blankValue = '',
   }: Props = $props();
 
   let entries = $derived(Object.entries<any>(data));
@@ -54,7 +56,7 @@
 </script>
 
 {#if blank !== null}
-  <option value="">{localize(blank)}</option>
+  <option value={blankValue}>{localize(blank)}</option>
 {/if}
 
 {#each groups as [groupKey, groupValue] (groupKey)}

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -145,12 +146,11 @@
         aria-label={localize('DND5E.Prepared')}
         data-tooltip=""
         class="pill pill-medium interactive hide-collapsed"
-        onclick={() => onPreparedClicked()}
-        onkeydown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            onPreparedClicked();
-          }
-        }}
+        data-action="emphasize"
+        
+        data-emphasize-tab-id={CONSTANTS.TAB_ITEM_DETAILS}
+        data-emphasize-selector="[data-name='']"
+        {@attach InputAttachments.triggerClickOnKeydown}
       >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Prepared')}</span

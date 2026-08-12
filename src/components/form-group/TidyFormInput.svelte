@@ -22,6 +22,7 @@
   import { buildDataset, isNil } from 'src/utils/data';
   import StringTags from '../inputs/StringTags.svelte';
   import DocumentTag from '../inputs/DocumentTag.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Choices<T = any> = T[] | object | Function;
 
@@ -52,197 +53,6 @@
     tooltip,
     valueAttr,
   }: Props = $props();
-
-  function getInputComponent(
-    field: DataField,
-    config: FormInputConfig,
-    document: any,
-    disableOverriddenInputs: boolean | undefined,
-  ) {
-    // TODO: Hook here, allow supplying an HTML input and props (if only Svelte could work this way...)
-
-    const effectiveFieldPath = config.name ?? field.fieldPath;
-
-    const disabledViaEffect =
-      disableOverriddenInputs &&
-      ActiveEffectsHelper.isActiveEffectAppliedToField(
-        document,
-        effectiveFieldPath,
-      );
-
-    const disabled = disabledViaEffect || config.disabled;
-
-    const attributes: Record<string, string> = {};
-
-    if (config.dataset) {
-      Object.assign(attributes, buildDataset(config.dataset));
-    }
-
-    if (config.aria) {
-      for (const [k, v] of Object.entries(config.aria)) {
-        attributes[`aria-${k}`] = v;
-      }
-    }
-
-    const effectiveTooltip = disabledViaEffect
-      ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
-      : tooltip;
-
-    if (effectiveTooltip) {
-      attributes['data-tooltip'] = effectiveTooltip;
-    }
-
-    if (field instanceof foundry.data.fields.DocumentUUIDField) {
-      let options: FormInputConfig & DocumentUUIDFieldOptions = config;
-
-      return componentWithProps(DocumentTag, {
-        document,
-        field: effectiveFieldPath,
-        id: options.id,
-        disabled,
-        value: options.value,
-        type: options.type ?? field.options.type,
-      });
-    }
-
-    if (
-      field instanceof foundry.data.fields.SetField &&
-      field.element instanceof foundry.data.fields.StringField
-    ) {
-      return {
-        ...componentWithProps(StringTags, {
-          document,
-          field: effectiveFieldPath,
-          id: config.id,
-          disabled,
-          value: config.value,
-          placeholder: config.placeholder,
-        }),
-      };
-    }
-
-    if (
-      field instanceof foundry.data.fields.StringField &&
-      (choices ?? field.choices)
-    ) {
-      return {
-        ...componentWithProps(SelectQuadrone, {
-          document: document,
-          field: effectiveFieldPath,
-          id: config.id,
-          value: config.value,
-          disabled,
-          name: config.name,
-          class: config.classes,
-          blankValue: field.nullable ? null : '',
-          ...attributes,
-        }),
-        childrenArgs: [],
-      };
-    }
-
-    if (
-      field instanceof foundry.data.fields.StringField &&
-      !(choices ?? field.choices)
-    ) {
-      const props: ComponentProps<typeof TextInputQuadrone> = {
-        document: document,
-        field: effectiveFieldPath,
-        id: config.id,
-        value: config.value,
-        selectOnFocus: true,
-        disabled,
-        name: config.name,
-        class: config.classes,
-        placeholder: config.placeholder,
-        ...attributes,
-      };
-
-      if (field.constructor.name === 'FormulaField') {
-        props['data-formula-editor'] = '';
-      }
-
-      return componentWithProps(TextInputQuadrone, props);
-    }
-
-    if (
-      field instanceof foundry.data.fields.NumberField &&
-      (choices ?? field.choices)
-    ) {
-      return componentWithProps(SelectQuadrone, {
-        document: document,
-        field: effectiveFieldPath,
-        id: config.id,
-        value: config.value,
-        disabled,
-        class: config.classes,
-        name: config.name,
-        blankValue: field.nullable ? null : '',
-        ...attributes,
-      });
-    }
-
-    if (
-      field instanceof foundry.data.fields.NumberField &&
-      !(choices ?? field.choices)
-    ) {
-      let numberConfig = config as FormInputConfig & NumberFieldOptions;
-
-      if (field.integer) {
-        numberConfig.step ??= 1;
-      }
-
-      if (field.positive && Number.isFinite(numberConfig.step)) {
-        numberConfig.min ??=
-          numberConfig.step !== 'any' ? numberConfig.step : 1;
-      }
-
-      return componentWithProps(NumberInputQuadrone, {
-        document: document,
-        field: effectiveFieldPath,
-        id: numberConfig.id,
-        selectOnFocus: true,
-        value: numberConfig.value,
-        disabled,
-        placeholder: numberConfig.placeholder,
-        min: numberConfig.min ?? field.min,
-        max: numberConfig.max ?? field.max,
-        step: numberConfig.step ?? field.step,
-        class: config.classes,
-        name: config.name,
-        ...attributes,
-      });
-    }
-
-    if (field instanceof foundry.data.fields.BooleanField) {
-      return componentWithProps(CheckboxQuadrone, {
-        document: document,
-        field: effectiveFieldPath,
-        id: config.id,
-        checked: !!config.value,
-        disabled,
-        disabledChecked: disabledValue,
-        class: config.classes,
-        name: config.name,
-        ...attributes,
-      });
-    }
-
-    debug('FoundryFormInput returned - Missing TidyFormInput for data field', {
-      label: field.label,
-      fieldPath: field.fieldPath,
-      field,
-    });
-
-    return componentWithProps(FoundryFormInput, {
-      field: field,
-      options: config,
-    });
-  }
-
-  let tidyInput: ComponentWithProps<any> = $derived(
-    getInputComponent(field, config, document, disableOverriddenInputs),
-  );
 
   function enumerateChoices(
     choices: string[] | object[] | object | Function | null | undefined,
@@ -287,29 +97,6 @@
     return [];
   }
 
-  // There has to be a better way.
-  let stringChoices = $derived.by(() => {
-    if (
-      'choices' in field &&
-      field instanceof foundry.data.fields.StringField
-    ) {
-      return choices ?? field.choices;
-    }
-
-    return null;
-  });
-
-  let numberChoices = $derived.by(() => {
-    if (
-      'choices' in field &&
-      field instanceof foundry.data.fields.NumberField
-    ) {
-      return choices ?? field.choices;
-    }
-
-    return null;
-  });
-
   function getBlankValue() {
     const usesBlank =
       !isNil(blankLabel) ||
@@ -320,38 +107,165 @@
           : false);
     return usesBlank ? (blankLabel ?? '') : null;
   }
+
+  const effectiveFieldPath = $derived(config.name ?? field.fieldPath);
+  const disabledViaEffect = $derived(
+    disableOverriddenInputs &&
+      ActiveEffectsHelper.isActiveEffectAppliedToField(
+        document,
+        effectiveFieldPath,
+      ),
+  );
+  const disabled = $derived(disabledViaEffect || config.disabled);
+
+  const attributes = $derived.by(() => {
+    const attributes: Record<string, string> = {};
+
+    if (config.dataset) {
+      Object.assign(attributes, buildDataset(config.dataset));
+    }
+
+    if (config.aria) {
+      for (const [k, v] of Object.entries(config.aria)) {
+        attributes[`aria-${k}`] = v;
+      }
+    }
+
+    const effectiveTooltip = disabledViaEffect
+      ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
+      : tooltip;
+
+    if (effectiveTooltip) {
+      attributes['data-tooltip'] = effectiveTooltip;
+    }
+
+    return attributes;
+  });
 </script>
 
 {#if condition}
-  <tidyInput.component {...tidyInput.props}>
-    {#if stringChoices}
-      {@render StringChoices(stringChoices)}
-    {:else if numberChoices}
-      {@render NumberChoices(numberChoices)}
-    {/if}
-  </tidyInput.component>
-{/if}
+  {#if field instanceof foundry.data.fields.DocumentUUIDField}
+    {const options: FormInputConfig & DocumentUUIDFieldOptions = config}
+    <DocumentTag
+      {document}
+      field={effectiveFieldPath}
+      id={options.id}
+      {disabled}
+      value={options.value}
+      type={options.type ?? field.options.type}
+    />
+  {:else if field instanceof foundry.data.fields.SetField && field.element instanceof foundry.data.fields.StringField}
+    <StringTags
+      {document}
+      field={effectiveFieldPath}
+      id={config.id}
+      {disabled}
+      value={config.value}
+      placeholder={config.placeholder}
+    />
+  {:else if field instanceof foundry.data.fields.StringField && (choices ?? field.choices)}
+    {let stringChoices = $derived.by(() => {
+      if (
+        'choices' in field &&
+        field instanceof foundry.data.fields.StringField
+      ) {
+        return choices ?? field.choices;
+      }
 
-{#snippet StringChoices(stringChoices: Choices<string>)}
-  {const options = $derived(enumerateChoices(stringChoices))}
-  {const blankLabel = $derived(getBlankValue())}
-  <SelectOptions
-    blank={blankLabel}
-    labelProp="label"
-    valueProp="value"
-    data={options}
-  />
-{/snippet}
+      return null;
+    })}
+    {const options = $derived(enumerateChoices(stringChoices))}
+    {const blankLabel = $derived(getBlankValue())}
+    <select
+      data-name={config.name ?? effectiveFieldPath}
+      id={config.id}
+      value={config.value}
+      {disabled}
+      class={config.classes}
+      {...attributes}
+    >
+      <SelectOptions
+        blank={blankLabel}
+        labelProp="label"
+        valueProp="value"
+        data={options}
+        blankValue={field.nullable ? null : ''}
+      />
+    </select>
+  {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices)}
+    <input
+      type="text"
+      data-name={config.name ?? effectiveFieldPath}
+      {@attach InputAttachments.selectOnFocus}
+      value={config.value}
+      {disabled}
+      placeholder={config.placeholder}
+      class={config.classes}
+      data-formula-editor={field.constructor.name === 'FormulaField'
+        ? ''
+        : undefined}
+      {...attributes}
+    />
+  {:else if field instanceof foundry.data.fields.NumberField && (choices ?? field.choices)}
+    {let numberChoices = $derived.by(() => {
+      if (
+        'choices' in field &&
+        field instanceof foundry.data.fields.NumberField
+      ) {
+        return choices ?? field.choices;
+      }
 
-{#snippet NumberChoices(numberChoices: Choices<number>)}
-  {#if numberChoices}
+      return null;
+    })}
     {const options = $derived(enumerateChoices(numberChoices))}
     {const blankLabel = $derived(getBlankValue())}
-    <SelectOptions
-      blank={blankLabel}
-      labelProp="label"
-      valueProp="value"
-      data={options}
+    <select
+      data-name={config.name ?? effectiveFieldPath}
+      id={config.id}
+      value={config.value}
+      {disabled}
+      class={config.classes}
+      {...attributes}
+    >
+      <SelectOptions
+        blank={blankLabel}
+        labelProp="label"
+        valueProp="value"
+        data={options}
+        blankValue={field.nullable ? null : ''}
+      />
+    </select>
+  {:else if field instanceof foundry.data.fields.NumberField && !(choices ?? field.choices)}
+    {const numberConfig = config as FormInputConfig & NumberFieldOptions}
+    {const min = $derived(
+      (numberConfig.min ?? numberConfig.step !== 'any') ? numberConfig.step : 1,
+    )}
+    <input
+      type="number"
+      data-name={numberConfig.name ?? effectiveFieldPath}
+      {@attach InputAttachments.selectOnFocus}
+      value={numberConfig.value}
+      {disabled}
+      placeholder={numberConfig.placeholder}
+      min={min ?? field.min}
+      max={numberConfig.max ?? field.max}
+      step={numberConfig.step ?? field.step}
+      class={numberConfig.classes}
+      {...attributes}
     />
+  {:else if field instanceof foundry.data.fields.BooleanField}
+    {let value = $derived(!!config.value)}
+    {let checked = $derived(disabled ? (disabledValue ?? value) : value)}
+    <input
+      type="checkbox"
+      data-name={config.name ?? effectiveFieldPath}
+      id={config.id}
+      {checked}
+      {disabled}
+      class={config.classes}
+      {...attributes}
+    />
+  {:else}
+    <FoundryFormInput {field} options={config} />
   {/if}
-{/snippet}
+{/if}

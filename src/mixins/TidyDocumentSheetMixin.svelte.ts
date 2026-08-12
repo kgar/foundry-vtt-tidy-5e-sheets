@@ -1331,14 +1331,27 @@ export function getTidyExtensibleDocumentSheetMixin<
       event: Event,
       target: HTMLElement,
     ) {
-      const { emphasizeTabId, emphasizeSelector } = target.dataset;
+      const { emphasizeTabId, emphasizeSelector, emphasizeUuid } =
+        target.dataset;
 
-      await this.emphasize(emphasizeTabId, emphasizeSelector);
+      let sheet = this;
+
+      if (emphasizeUuid) {
+        const doc = await fromUuid(emphasizeUuid);
+        await doc.sheet.render({ force: true });
+        sheet = doc.sheet;
+      }
+
+      await sheet.emphasize(emphasizeTabId, emphasizeSelector, sheet);
     }
 
-    async emphasize(tabId: string | undefined, selector: string | undefined) {
+    async emphasize(
+      tabId: string | undefined,
+      selector: string | undefined,
+      sheet: any = this,
+    ) {
       if (tabId) {
-        this.selectTab(tabId);
+        sheet.selectTab(tabId);
       }
 
       if (selector) {
