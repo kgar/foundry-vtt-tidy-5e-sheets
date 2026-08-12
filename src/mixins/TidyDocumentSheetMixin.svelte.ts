@@ -274,16 +274,6 @@ export function getTidyExtensibleDocumentSheetMixin<
         FoundryAdapter.getProperty(targetDocument, prop) ?? '';
     }
 
-    /**
-     * Optional override for sheet to perform document-specific changes.
-     * Return `false` to prevent the default form change save behavior.
-     */
-    protected async _onChangeFormReadyToSave(
-      _event: any,
-    ): Promise<false | undefined> {
-      return undefined;
-    }
-
     /** @override */
     async _onRevealSecret(event: any) {
       if (super._onRevealSecret(event)) {
