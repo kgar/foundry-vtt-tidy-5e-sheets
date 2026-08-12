@@ -25,7 +25,10 @@
     });
   });
 
-  let windowHeader = $derived(context.sheet.window.header);
+  // If this HTML content is somehow swapped out, we have bigger problems.
+  // Therefore, ignore reactivity notices about it.
+  let windowHeader = untrack(() => context.sheet.window.header);
+  let windowContent = untrack(() => context.sheet.windowContent);
 
   let { itemNameEl }: Props = $props();
 </script>
@@ -38,17 +41,15 @@
 -->
 
 <div
-  {@attach windowHeader
+  {@attach visibilityObserver({
+    root: windowContent,
+    trackWhenOffScreen: true,
+    offScreenClass: 'scroll-marker-off-screen',
+    toAffect: [windowHeader],
+  })}
+  {@attach itemNameEl
     ? visibilityObserver({
-        root: context.sheet.windowContent,
-        trackWhenOffScreen: true,
-        offScreenClass: 'scroll-marker-off-screen',
-        toAffect: [windowHeader],
-      })
-    : null}
-  {@attach itemNameEl && windowHeader
-    ? visibilityObserver({
-        root: context.sheet.windowContent,
+        root: windowContent,
         trackWhenOnScreen: true,
         onScreenClass: 'item-name-visible',
         toObserve: [itemNameEl],

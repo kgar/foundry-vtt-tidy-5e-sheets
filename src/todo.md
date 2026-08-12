@@ -1,13 +1,7 @@
 ## The Accretion Disk of To Do's
 
-- [ ] // TODO: for combat identifiers, share a function for this.
-- [ ] // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared? (can we reuse the parseDelta code, even without a delta?)
-- [ ] // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
-- [ ] // TODO: I've used this multiple times now. Where can I share it?
-- [ ] // TODO: I've done this same update twice. Can we consolidate to one function?
-- [ ] // TODO: Send this down in the pin context data.
+- [ ] Prepared Spells footer button filter: Open preparation formula dialog rather than doing a filter (open sheet, call emphasize 🧠)
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
-- [ ] refactor: the data-name prefix system could use some kind of utility to reduce all the lines of code. And some OO design with the sheets to help make it easier to scale in the future.
 - [ ] refactor / organize - src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
 - [ ] DOM Density - review `.list-content > .list-values > etc.` and determine if it can be thinned out with CSS
 - [ ] Our chosen d20 icon is way different in FA 7. Is this what we want? Do we want to change it up or sub in our very own SVG to insulate the design from 3rd party changes?
@@ -31,7 +25,6 @@
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. <https://discord.com/channels/@me/1243307347682529423/1397418208813650091>
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
-- [ ] Prepared Spells footer button filter: Open preparation formula dialog rather than doing a filter
 - [ ] // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.

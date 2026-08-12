@@ -11,6 +11,7 @@
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -57,8 +58,6 @@
       };
     });
 
-  const isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-  const spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
   const spellSlotTrackerMode = $derived(
     'spellSlotTrackerMode' in context &&
       context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
@@ -71,63 +70,19 @@
 
   const localize = FoundryAdapter.localize;
 
-  function getType() {
-    if (ctx.document.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      return 'container';
-    }
-
-    // Check for limited uses with recharge first (applies to any item type including spells)
-    if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
-      return 'limited-uses-recharging';
-    }
-    if (ctx.resource === 'limited-uses' && ctx.document.hasRecharge) {
-      return 'limited-uses-recharged';
-    }
-
-    // Then handle spell-specific slot tracking
-    if (isSpell) {
-      const spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
-
-      if (
-        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE ||
-        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
-      ) {
-        // If innate/at-will has limited uses, show them
-        if (ctx.document.hasLimitedUses === true) {
-          return 'limited-uses';
-        }
-        return 'none';
-      }
-      if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
-        return 'spell-slots-pact';
-      }
-      return 'spell-slots';
-    }
-
-    // Handle other item types
-    if (ctx.resource === 'quantity') {
-      return 'quantity';
-    }
-    if (ctx.document.hasLimitedUses === true) {
-      return 'limited-uses';
-    }
-    return 'none';
-  }
-
-  // TODO: Send this down in the pin context data.
-  const pinType = $derived(getType());
-
   let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
 
-  function getRollIcon() {
-    let rollIcon = 'fa';
-    let itemType = getType();
-    if (itemType === 'container') {
-      rollIcon += ' fa-box-open';
-    } else if (isSpell) {
-      rollIcon += ' ' + spellMethodIcon;
-    } else rollIcon += ' fa-dice-d20';
-    return rollIcon;
+  function getRollIcon(): ClassValue {
+    let classValue: ClassValue[] = ['fa'];
+
+    if (ctx.presentation === 'container') {
+      classValue.push('fa-box-open');
+    } else if (ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      classValue.push(FoundryAdapter.getSpellIcon(ctx.document));
+    } else {
+      classValue.push('fa-dice-d20');
+    }
+    return classValue;
   }
 </script>
 
@@ -174,16 +129,19 @@
       tabindex="0"
       class={[
         'tidy-table-row-use-button',
-        { disabled: !context.editable && pinType !== 'container' },
+        { disabled: !context.editable && ctx.presentation !== 'container' },
       ]}
-      data-action={pinType === 'container' ? 'showDocument' : 'use'}
-      data-uuid={pinType === 'container' ? ctx.document.uuid : undefined}
-      data-has-roll-modes={pinType === 'container' ? undefined : true}
+      data-action={ctx.presentation === 'container' ? 'showDocument' : 'use'}
+      data-uuid={ctx.presentation === 'container'
+        ? ctx.document.uuid
+        : undefined}
+      data-has-roll-modes={ctx.presentation === 'container' ? undefined : true}
       aria-label={ctx.document.name}
     >
       <img class="item-image" alt={ctx.document.name} src={ctx.document.img} />
       <span class="roll-prompt">
-        <i class={[getRollIcon()]}></i>
+        {const rollIconClass = $derived(getRollIcon())}
+        <i class={rollIconClass}></i>
       </span>
     </a>
   </div>
@@ -238,7 +196,7 @@
         {/if}
       </div>
 
-      {#if pinType === 'container'}
+      {#if ctx.presentation === 'container'}
         {const capacity = $derived(
           context.itemContext[ctx.document.id].containerCapacity,
         )}
@@ -263,7 +221,7 @@
             />
           </div>
         {/if}
-      {:else if pinType !== 'none'}
+      {:else if ctx.presentation !== 'none'}
         <!-- TODO:
         * Hide if 0 max charges.
         * Hide if innate/atwill spell slot.
@@ -271,9 +229,9 @@
         * Switch spell slots to pips if active?
         -->
         <div class="pin-counter {ctx.resource}">
-          {#if pinType === 'limited-uses-recharging'}
+          {#if ctx.presentation === 'limited-uses-recharging'}
             <RechargeControl document={ctx.document} {uses} />
-          {:else if pinType === 'limited-uses-recharged'}
+          {:else if ctx.presentation === 'limited-uses-recharged'}
             <span class="inline-uses color-text-default charged-text">
               <input
                 type="text"
@@ -287,19 +245,19 @@
               <span class="uses-max">{maxText}</span>
               <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
             </span>
-          {:else if pinType === 'spell-slots'}
+          {:else if ctx.presentation === 'spell-slots'}
             {@render spellSlots(
               spellcastingSection,
               `spell${ctx.document.system.level}`,
               'spell-slots',
             )}
-          {:else if pinType === 'spell-slots-pact'}
+          {:else if ctx.presentation === 'spell-slots-pact'}
             {@render spellSlots(
               ctx.document.parent.system.spells['pact'],
               'pact',
               'spell-slots-pact',
             )}
-          {:else if pinType === 'limited-uses'}
+          {:else if ctx.presentation === 'limited-uses'}
             <span class="inline-uses color-text-default">
               <input
                 type="text"
@@ -312,7 +270,7 @@
               <span class="divider color-text-gold-emphasis">/</span>
               <span class="uses-max">{maxText}</span>
             </span>
-          {:else if pinType === 'quantity'}
+          {:else if ctx.presentation === 'quantity'}
             <input
               type="text"
               class={['uninput uses-value centered', { diminished: value < 1 }]}

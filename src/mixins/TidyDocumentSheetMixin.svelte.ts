@@ -48,6 +48,12 @@ import { TidySheetSettingsQuadroneApplication } from 'src/applications/settings/
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { isUserInteractable } from 'src/utils/element';
 import { delay } from 'src/utils/asynchrony';
+import {
+  applyNumberInputConstraints,
+  getSpecializedUpdateInformation,
+  isNumericInput,
+  shouldParseInputDelta,
+} from 'src/utils/form';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -108,6 +114,69 @@ export function getTidyExtensibleDocumentSheetMixin<
         use: TidyDocumentSheet.#useItem,
       },
     };
+
+    /**
+     * A map from value prop to an object of max prop and spent prop.
+     * These values represent Limited Uses data structures that require
+     * special handling when saving changes to a field which is presenting
+     * the value to the user but needing the spent prop to be updated on
+     * change.
+     */
+    readonly valueMaxSpentMap = new Map<
+      string,
+      { maxProp: string; spentProp: string }
+    >([
+      ['uses.value', { maxProp: 'uses.max', spentProp: 'uses.spent' }],
+      [
+        'system.uses.value',
+        { maxProp: 'system.uses.max', spentProp: 'system.uses.spent' },
+      ],
+      [
+        'system.resources.legact.value',
+        {
+          maxProp: 'system.resources.legact.max',
+          spentProp: 'system.resources.legact.spent',
+        },
+      ],
+      [
+        'system.resources.legres.value',
+        {
+          maxProp: 'system.resources.legres.max',
+          spentProp: 'system.resources.legres.spent',
+        },
+      ],
+    ]);
+
+    _tryGetValueSpentUpdate(
+      doc: any,
+      value: number | string,
+      valueProp: string,
+    ) {
+      value = Number(value);
+
+      if (Number.isNaN(value)) {
+        return;
+      }
+
+      const valueMaxSpentInfo = this.valueMaxSpentMap.get(valueProp);
+
+      if (!valueMaxSpentInfo) {
+        return;
+      }
+
+      const max = FoundryAdapter.getProperty<number>(
+        doc,
+        valueMaxSpentInfo.maxProp,
+      );
+
+      if (!max) {
+        return;
+      }
+
+      return {
+        [valueMaxSpentInfo.spentProp]: max - value,
+      };
+    }
 
     get sheetMode() {
       return this._fixedMode ?? this._mode;
@@ -170,11 +239,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       );
 
       // Process delta changes
-      if (
-        event.target.matches(
-          `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-        )
-      ) {
+      if (shouldParseInputDelta(event.target)) {
         dnd5e.utils.parseInputDelta(event.target, targetDocument);
       }
 
@@ -192,7 +257,14 @@ export function getTidyExtensibleDocumentSheetMixin<
         }
 
         const result = await super._onChangeForm(formConfig, event);
-        if (result === undefined && event.target.name) {
+
+        const shouldRevertInput =
+          event.target.name &&
+          (result === undefined ||
+            foundry.utils.getProperty(result, event.target.name) !==
+              event.target.value);
+
+        if (shouldRevertInput) {
           this._revertFormChangeToDocumentValue(event, event.target.name);
         }
       } catch (e: any) {
@@ -445,11 +517,10 @@ export function getTidyExtensibleDocumentSheetMixin<
     ) {
       const { name } = event.target.dataset;
 
-      // Current User updates
-      const isCurrentUserUpdate = name?.startsWith('currentUser:');
+      const { operationType, prop } = getSpecializedUpdateInformation(name);
 
-      if (isCurrentUserUpdate && !!name) {
-        const prop = name.split('currentUser:').at(-1);
+      // Current User updates
+      if (operationType === 'currentUser' && !!prop) {
         return prop ? await this._onCurrentUserUpdated(event, prop) : undefined;
       }
 
@@ -478,11 +549,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       let result: unknown = undefined;
 
-      if (
-        event.target.matches(
-          '[type="number"], [data-dype="Number"], [inputmode="numeric"]',
-        )
-      ) {
+      if (isNumericInput(event.target)) {
         const valueAsNumber = Number.isNumeric(valueToSave)
           ? Number(valueToSave)
           : valueToSave;
@@ -492,8 +559,12 @@ export function getTidyExtensibleDocumentSheetMixin<
         result = await doc.update({ [prop]: valueToSave });
       }
 
-      if (result === undefined) {
+      if (
+        result === undefined ||
+        foundry.utils.getProperty(result, prop) !== event.target.value
+      ) {
         this._revertFormChangeToDocumentValue(event, prop);
+        return;
       }
     }
 
@@ -502,25 +573,25 @@ export function getTidyExtensibleDocumentSheetMixin<
       prop: string,
       value: number | string,
     ) {
-      // Special case handling for Item uses.
-      if (
-        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
-        prop === 'system.uses.value'
-      ) {
-        return await targetDocument.update({
-          'system.uses.spent': targetDocument.system.uses.max - (value as any),
-        });
-      } else if (
-        targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
-        prop === 'uses.value'
-      ) {
-        return await targetDocument.item.updateActivity(targetDocument.id, {
-          'uses.spent': targetDocument.uses.max - (value as any),
-        });
+      const valueSpentUpdate = this._tryGetValueSpentUpdate(
+        targetDocument,
+        value,
+        prop,
+      );
+
+      if (!valueSpentUpdate) {
+        // Standard case: save the intended value.
+        return await targetDocument.update({ [prop]: value });
       }
 
-      // Standard case: save the intended value.
-      return await targetDocument.update({ [prop]: value });
+      if (targetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY) {
+        return await targetDocument.item.updateActivity(
+          targetDocument.id,
+          valueSpentUpdate,
+        );
+      }
+
+      return targetDocument.update(valueSpentUpdate);
     }
 
     getItem(id?: string) {
@@ -1308,15 +1379,10 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       value += amount;
 
-      const input = target.parentElement?.querySelector('input');
-      const min = Number.isNumeric(input?.dataset.min)
-        ? Number(input?.dataset.min)
-        : -Infinity;
-      const max = Number.isNumeric(input?.dataset.max)
-        ? Number(input?.dataset.max)
-        : Infinity;
-
-      value = Math.clamp(value, min, max);
+      value = applyNumberInputConstraints(
+        value,
+        target.parentElement?.querySelector<HTMLElement>('input'),
+      );
 
       if (isNaN(value)) {
         return;

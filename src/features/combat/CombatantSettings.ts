@@ -46,11 +46,11 @@ export class CombatantSettings {
   }
 
   private static _revertIdentifier(identifier: string): string {
-    return identifier.replaceAll('-', '.');
+    return identifier.replaceAll('|', '.');
   }
 
   private static _prepareIdentifier(identifier: string): string {
-    return identifier.replaceAll('.', '-');
+    return identifier.replaceAll('.', '|');
   }
 
   static async insertOrUpdate(

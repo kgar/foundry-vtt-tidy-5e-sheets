@@ -29,7 +29,11 @@ import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQ
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
-import { processInputChangeDeltaFromValues } from 'src/utils/form';
+import {
+  applyNumberInputConstraints,
+  getSpecializedUpdateInformation,
+  shouldParseInputDelta,
+} from 'src/utils/form';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -599,17 +603,17 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       .closest('[data-combatant-type]')
       ?.getAttribute('data-combatant-type');
 
-    if (type === 'member') {
-      const uuid =
-        target
-          .closest('[data-member-uuid]')
-          ?.getAttribute('data-member-uuid') ?? '';
+    const { memberUuid, placeholderId } = this._getCombatantIdentifiers(target);
 
+    if (type === 'member' && memberUuid) {
       const actorMember = this.actor.system.members.find(
-        (m: any) => m.uuid === uuid,
+        (m: any) => m.uuid === memberUuid,
       );
 
-      const combatantSettings = CombatantSettings.getEntry(this.actor, uuid);
+      const combatantSettings = CombatantSettings.getEntry(
+        this.actor,
+        memberUuid,
+      );
 
       if (actorMember && !combatantSettings.include) {
         return;
@@ -626,14 +630,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           hidden: !combatantSettings.visible,
         },
       ]);
-    } else if (type === 'placeholder') {
-      const placeholders = TidyFlags.placeholders.get(this.actor);
-      const placeholderId =
-        target
-          .closest('[data-placeholder-id]')
-          ?.getAttribute('data-placeholder-id') ?? '';
-
-      const placeholder = placeholders[placeholderId];
+    } else if (type === 'placeholder' && placeholderId) {
+      const placeholder = TidyFlags.placeholders.get(this.actor)[placeholderId];
 
       const combatantSettings = CombatantSettings.getEntry(
         this.actor,
@@ -727,8 +725,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     _event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId } =
-      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+    const { placeholderId } = this._getCombatantIdentifiers(target);
 
     if (!placeholderId) {
       return;
@@ -810,9 +807,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    const uuid =
-      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
-    const member = await fromUuid(uuid);
+    const { memberUuid } = this._getCombatantIdentifiers(target);
+    const member = await fromUuid(memberUuid);
     return await this.prerollInitiative(event, member);
   }
 
@@ -842,8 +838,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     _event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId } =
-      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+    const { placeholderId } = this._getCombatantIdentifiers(target);
 
     if (!placeholderId) {
       return;
@@ -872,12 +867,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    // TODO: for combat identifiers, share a function for this.
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
-
-    const identifier = placeholderId ?? memberUuid;
+    const { identifier } = this._getCombatantIdentifiers(target);
 
     if (identifier) {
       this.toggleCombatantInclusion(identifier);
@@ -893,6 +883,20 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     });
   }
 
+  _getCombatantIdentifiers(target: HTMLElement) {
+    const { placeholderId, memberUuid } =
+      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
+        ?.dataset ?? {};
+
+    const identifier = placeholderId ?? memberUuid;
+
+    return {
+      placeholderId,
+      memberUuid,
+      identifier,
+    };
+  }
+
   /* -------------------------------------------- */
 
   static async #toggleCombatantVisibility(
@@ -900,12 +904,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    // TODO: for combat identifiers, share a function for this.
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
-
-    const identifier = placeholderId ?? memberUuid;
+    const { identifier } = this._getCombatantIdentifiers(target);
 
     if (identifier) {
       this.toggleCombatantVisibility(identifier);
@@ -940,18 +939,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared?
     const input = target.parentElement?.querySelector('input');
-    const min = input?.min ? Number(input.min) : -Infinity;
-    const max = input?.max ? Number(input.max) : Infinity;
-
     const members = this.actor.system.toObject().members;
     const member = members[index];
 
     const originalValue =
       FoundryAdapter.getProperty<number>(member, property) ?? 0;
 
-    let newValue = Math.clamp(originalValue + amount, min, max);
+    const newValue = applyNumberInputConstraints(originalValue + amount, input);
 
     foundry.utils.setProperty(member, property, newValue);
 
@@ -963,9 +958,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     event: Event,
     target: HTMLElement,
   ) {
-    const { placeholderId, memberUuid } =
-      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
-        ?.dataset ?? {};
+    const { placeholderId, memberUuid } = this._getCombatantIdentifiers(target);
 
     if (placeholderId) {
       return await this.deletePlaceholder(placeholderId);
@@ -1008,27 +1001,21 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return await this._onMemberChanged(event, Number(index), name);
     }
 
-    // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
-    const isCombatUpdate = name?.startsWith('combatantSettings:');
+    const { operationType, prop } = getSpecializedUpdateInformation(name);
 
-    const { memberUuid, placeholderId } =
-      event.target.closest<HTMLElement>(
-        '[data-member-uuid], [data-placeholder-id]',
-      )?.dataset ?? {};
+    const { memberUuid, placeholderId } = this._getCombatantIdentifiers(
+      event.target,
+    );
 
     const combatantId = memberUuid ?? placeholderId;
 
-    if (isCombatUpdate && !!name && combatantId) {
-      const prop = name.split('combatantSettings:').at(-1);
+    if (operationType == 'combatantSettings' && !!prop && combatantId) {
       return prop
         ? await this._onCombatantChanged(event, combatantId, prop)
         : undefined;
     }
 
-    const isPlaceholderUpdate = name?.startsWith('placeholder:');
-
-    if (isPlaceholderUpdate && !!name && placeholderId) {
-      const prop = name.split('placeholder:').at(-1);
+    if (operationType === 'placeholder' && !!prop && placeholderId) {
       return prop
         ? await this._onPlaceholderChanged(event, placeholderId, prop)
         : undefined;
@@ -1040,12 +1027,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   async _onMemberChanged(event: any, index: number, name: string) {
     const members = this.actor.system.toObject().members;
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, members[index]);
     }
 
@@ -1063,12 +1045,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, placeholder);
     }
 
@@ -1091,12 +1068,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       return;
     }
 
-    if (
-      // TODO: I've used this multiple times now. Where can I share it?
-      event.target.matches(
-        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
-      )
-    ) {
+    if (shouldParseInputDelta(event.target)) {
       dnd5e.utils.parseInputDelta(event.target, combatant);
     }
 

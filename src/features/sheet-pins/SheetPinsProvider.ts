@@ -1,7 +1,10 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import { error } from 'src/utils/logging';
-import type { SheetItemPinFlagData, AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
+import type {
+  SheetItemPinFlagData,
+  AnySheetPinFlagData,
+} from 'src/foundry/TidyFlags.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CONSTANTS } from 'src/constants';
 import type {
@@ -11,6 +14,7 @@ import type {
 } from 'src/types/types';
 import { Activities } from '../activities/activities';
 import { legacyGetAppropriateSheetPins } from './legacy-sheet-pins-functions';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
  * The controller/manager for all things related to Sheet Pins.
@@ -45,11 +49,13 @@ export class SheetPinsProvider {
             ...pin,
             linkedUses: Activities.getLinkedUses(document),
             document,
+            presentation: this.determineItemPresentation(pin, document),
           });
         } else if (pin.type === 'activity') {
           pins.push({
             ...pin,
             document,
+            presentation: this.determineActivityPresentation(document),
           });
         }
       }
@@ -58,6 +64,71 @@ export class SheetPinsProvider {
     }
 
     return result;
+  }
+
+  /**
+   * Evaluates the sheet pin flag data and the related document,
+   * determining how the UI should present the pin.
+   * Each presentation key affects various factors about the
+   * sheet pin, from blocks of HTML to class composition, and so on.
+   */
+  static determineActivityPresentation(document: Activity5e) {
+    if (document.uses.max) {
+      return 'limited-uses';
+    }
+    return 'none';
+  }
+
+  /**
+   * Evaluates the sheet pin flag data and the related document,
+   * determining how the UI should present the pin.
+   * Each presentation key affects various factors about the
+   * sheet pin, from blocks of HTML to class composition, and so on.
+   */
+  static determineItemPresentation(
+    flagData: SheetItemPinFlagData,
+    document: Item5e,
+  ) {
+    if (document.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      return 'container';
+    }
+
+    // Check for limited uses with recharge first (applies to any item type including spells)
+    if (flagData.resource === 'limited-uses' && document.isOnCooldown) {
+      return 'limited-uses-recharging';
+    }
+    if (flagData.resource === 'limited-uses' && document.hasRecharge) {
+      return 'limited-uses-recharged';
+    }
+
+    // Then handle spell-specific slot tracking
+    if (document.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const spellMethod = FoundryAdapter.getSpellMethodConfig(document);
+
+      if (
+        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE ||
+        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+      ) {
+        // If innate/at-will has limited uses, show them
+        if (document.hasLimitedUses === true) {
+          return 'limited-uses';
+        }
+        return 'none';
+      }
+      if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
+        return 'spell-slots-pact';
+      }
+      return 'spell-slots';
+    }
+
+    // Handle other item types
+    if (flagData.resource === 'quantity') {
+      return 'quantity';
+    }
+    if (document.hasLimitedUses === true) {
+      return 'limited-uses';
+    }
+    return 'none';
   }
 
   /**
@@ -101,7 +172,11 @@ export class SheetPinsProvider {
    * @param type the type of document to be pinned, e.g., "item" or "activity"
    * @returns the result of updating the parent document's flags
    */
-  static async pin(targetDocument: any, tabId: string, type: AnySheetPinFlagData['type']) {
+  static async pin(
+    targetDocument: any,
+    tabId: string,
+    type: AnySheetPinFlagData['type'],
+  ) {
     if (!targetDocument.actor || this.isPinned(targetDocument, tabId)) {
       return;
     }
@@ -289,7 +364,8 @@ export class SheetPinsProvider {
     });
 
     const pins = [...pinFlags].reduce(
-      (map: Map<string, AnySheetPinFlagData>, f: AnySheetPinFlagData) => map.set(f.id, { ...f }),
+      (map: Map<string, AnySheetPinFlagData>, f: AnySheetPinFlagData) =>
+        map.set(f.id, { ...f }),
       new Map<string, AnySheetPinFlagData>(),
     );
 
@@ -349,7 +425,10 @@ function getSheetPinsForTab(sheetDocument: Actor5e | Item5e, tabId: string) {
   );
 }
 
-async function preparePinsForForSaving(targetDocument: any, pins: AnySheetPinFlagData[]) {
+async function preparePinsForForSaving(
+  targetDocument: any,
+  pins: AnySheetPinFlagData[],
+) {
   let pinsToSave = [];
 
   for (let pin of pins) {

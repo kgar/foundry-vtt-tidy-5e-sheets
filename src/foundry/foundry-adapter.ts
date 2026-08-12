@@ -1406,6 +1406,7 @@ export const FoundryAdapter = {
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num) as string;
   },
+  // TODO: game.releases.generation <= 14
   handleDocumentUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
