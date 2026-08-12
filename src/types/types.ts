@@ -1321,7 +1321,8 @@ export type NpcSpellcastingContext = {
 } & SpellcastingContextBase;
 
 export type SpellcastingClassContext = {
-  type: 'class';
+  type: 'class' | 'subclass';
+  uuid: string;
   classIdentifier: string;
   primary: boolean;
   prepared: {

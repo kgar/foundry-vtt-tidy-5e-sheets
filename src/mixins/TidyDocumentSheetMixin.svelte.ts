@@ -1321,14 +1321,20 @@ export function getTidyExtensibleDocumentSheetMixin<
       event: Event,
       target: HTMLElement,
     ) {
-      const { emphasizeTabId, emphasizeSelector, emphasizeUuid } =
-        target.dataset;
+      const {
+        emphasizeTabId,
+        emphasizeSelector,
+        emphasizeUuid,
+        emphasizeMode,
+      } = target.dataset;
 
       let sheet = this;
 
       if (emphasizeUuid) {
         const doc = await fromUuid(emphasizeUuid);
-        await doc.sheet.render({ force: true });
+        await this._renderChild(doc.sheet, {
+          mode: Number(emphasizeMode ?? CONSTANTS.SHEET_MODE_EDIT),
+        });
         sheet = doc.sheet;
       }
 

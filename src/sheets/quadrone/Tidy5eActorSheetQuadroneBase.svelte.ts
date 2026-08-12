@@ -512,14 +512,19 @@ export function getTidy5eActorSheetQuadroneBase<
         const sc = item.spellcasting;
         const ability = this.actor.system.abilities[sc.ability];
         const mod = ability?.mod ?? 0;
-        const name =
+
+        const spellcastingSourceDocument =
           item.system.spellcasting.progression === sc.progression
-            ? item.name
-            : item.subclass?.name;
+            ? item
+            : item.subclass;
+
+        const name = spellcastingSourceDocument?.name;
+        const uuid = spellcastingSourceDocument?.uuid;
 
         const abilityConfig = CONFIG.DND5E.abilities[sc.ability];
         spellcasting.push({
-          type: 'class',
+          type: item?.type ?? 'class',
+          uuid,
           name,
           classIdentifier: item.system.identifier,
           ability: {
