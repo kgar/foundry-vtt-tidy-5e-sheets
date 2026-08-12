@@ -244,16 +244,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
 
       try {
-        const proceedWithDefaultFormHandling =
-          await this._onChangeFormReadyToSave(event);
-
-        if (proceedWithDefaultFormHandling === false) {
-          return;
-        }
-
         if (event.target.matches('[data-name]')) {
-          await this._onSingleInputChange(event);
-          return;
+          return await this._onSingleInputChange(event);
         }
 
         const result = await super._onChangeForm(formConfig, event);
@@ -280,16 +272,6 @@ export function getTidyExtensibleDocumentSheetMixin<
       );
       event.target.value =
         FoundryAdapter.getProperty(targetDocument, prop) ?? '';
-    }
-
-    /**
-     * Optional override for sheet to perform document-specific changes.
-     * Return `false` to prevent the default form change save behavior.
-     */
-    protected async _onChangeFormReadyToSave(
-      _event: any,
-    ): Promise<false | undefined> {
-      return undefined;
     }
 
     /** @override */
