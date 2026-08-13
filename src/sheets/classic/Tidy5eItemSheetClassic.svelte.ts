@@ -36,7 +36,6 @@ export class Tidy5eItemSheetClassic extends getTidyExtensibleDocumentSheetMixin(
     ItemSheetClassicContext
   >(foundry.applications.sheets.ItemSheetV2),
 ) {
-  currentTabId: string | undefined = undefined;
   sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {

@@ -987,10 +987,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     return element;
   }
 
-  async _onChangeForm(
-    formConfig: unknown,
-    event: Event & { target: HTMLElement },
-  ) {
+  _onChangeForm(formConfig: unknown, event: Event & { target: HTMLElement }) {
     // data-name => the prop path for a single-property update
     const { name } = event.target.dataset;
     // data-index => a member update
@@ -998,7 +995,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       event.target.closest<HTMLElement>('[data-index]')?.dataset.index;
 
     if (Number.isNumeric(index) && !!name) {
-      return await this._onMemberChanged(event, Number(index), name);
+      return this._onMemberChanged(event, Number(index), name);
     }
 
     const { operationType, prop } = getSpecializedUpdateInformation(name);
@@ -1011,17 +1008,17 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     if (operationType == 'combatantSettings' && !!prop && combatantId) {
       return prop
-        ? await this._onCombatantChanged(event, combatantId, prop)
+        ? this._onCombatantChanged(event, combatantId, prop)
         : undefined;
     }
 
     if (operationType === 'placeholder' && !!prop && placeholderId) {
       return prop
-        ? await this._onPlaceholderChanged(event, placeholderId, prop)
+        ? this._onPlaceholderChanged(event, placeholderId, prop)
         : undefined;
     }
 
-    return await super._onChangeForm(formConfig, event);
+    return super._onChangeForm(formConfig, event);
   }
 
   async _onMemberChanged(event: any, index: number, name: string) {

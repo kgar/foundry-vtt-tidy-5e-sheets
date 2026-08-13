@@ -41,7 +41,6 @@ export class Tidy5eContainerSheetClassic extends getTidyExtensibleDocumentSheetM
     ContainerSheetClassicContext
   >(foundry.applications.sheets.ItemSheetV2),
 ) {
-  currentTabId: string | undefined = undefined;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();

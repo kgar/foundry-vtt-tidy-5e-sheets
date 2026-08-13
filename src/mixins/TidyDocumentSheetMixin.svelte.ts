@@ -80,6 +80,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
     _sectionForMenu?: TidySectionBase;
+    currentTabId: string = '';
 
     constructor(options: TConstructorArgs) {
       super(options);
@@ -205,7 +206,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     #focusedInputSelector: string | undefined = '';
 
-    async _onChangeForm(formConfig: unknown, event: any) {
+    _onChangeForm(formConfig: unknown, event: any) {
       if (
         FoundryAdapter.isElementInstanceOf(
           event.target,
@@ -245,24 +246,32 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       try {
         if (event.target.matches('[data-name]')) {
-          return await this._onSingleInputChange(event);
+          return this._onSingleInputChange(event);
         }
 
-        const result = await super._onChangeForm(formConfig, event);
+        const result = super._onChangeForm(formConfig, event);
 
-        const shouldRevertInput =
-          event.target.name &&
-          (result === undefined ||
-            foundry.utils.getProperty(result, event.target.name) !==
-              event.target.value);
-
-        if (shouldRevertInput) {
-          this._revertFormChangeToDocumentValue(event, event.target.name);
-        }
+        this._revertIfNotMatchingDocumentValue(result, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
         );
+      }
+    }
+
+    async _revertIfNotMatchingDocumentValue(
+      maybePromise: Promise<any>,
+      event: any,
+    ) {
+      const resolved = await maybePromise;
+      const shouldRevertInput =
+        event.target.name &&
+        (resolved === undefined ||
+          foundry.utils.getProperty(resolved, event.target.name) !==
+            event.target.value);
+
+      if (shouldRevertInput) {
+        this._revertFormChangeToDocumentValue(event, event.target.name);
       }
     }
 
@@ -297,6 +306,10 @@ export function getTidyExtensibleDocumentSheetMixin<
       const modified = event.target.toggleRevealed(content);
 
       doc.update({ [target]: modified });
+    }
+
+    selectTab(tabId: string) {
+      this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
     }
 
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {
@@ -376,6 +389,21 @@ export function getTidyExtensibleDocumentSheetMixin<
         unlocked: sheetModeConfig.unlocked,
         config: CONFIG.DND5E,
       } as DocumentSheetV2Context;
+    }
+
+    /* -------------------------------------------- */
+    /*  Rendering                                   */
+    /* -------------------------------------------- */
+
+    async render(
+      options: boolean | ApplicationRenderOptions = {},
+      _options: ApplicationRenderOptions = {},
+    ) {
+      if (typeof options === 'object' && options.tidy?.tab) {
+        this.currentTabId = options.tidy.tab;
+      }
+
+      return await super.render(options, _options);
     }
 
     async _renderHTML(
@@ -1313,9 +1341,27 @@ export function getTidyExtensibleDocumentSheetMixin<
       event: Event,
       target: HTMLElement,
     ) {
-      const { emphasizeTabId, emphasizeSelector } = target.dataset;
+      const {
+        emphasizeTabId,
+        emphasizeSelector,
+        emphasizeUuid,
+        emphasizeMode,
+      } = target.dataset;
 
-      await this.emphasize(emphasizeTabId, emphasizeSelector);
+      let sheet = this;
+
+      if (emphasizeUuid) {
+        const doc = await fromUuid(emphasizeUuid);
+        await this._renderChild(doc.sheet, {
+          mode: Number(emphasizeMode ?? CONSTANTS.SHEET_MODE_EDIT),
+          tidy: {
+            tab: emphasizeTabId,
+          },
+        });
+        sheet = doc.sheet;
+      }
+
+      await sheet.emphasize?.(emphasizeTabId, emphasizeSelector);
     }
 
     async emphasize(tabId: string | undefined, selector: string | undefined) {
@@ -1325,7 +1371,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       if (selector) {
         await delay(1);
-        this.element.ownerDocument.querySelector(selector)?.focus();
+        this.element.querySelector(selector)?.focus();
       }
     }
 

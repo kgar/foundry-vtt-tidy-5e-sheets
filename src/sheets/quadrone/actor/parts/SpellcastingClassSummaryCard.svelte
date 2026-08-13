@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -61,18 +62,18 @@
   >
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
-      <a 
-        role="button" 
-        tabindex="0" 
+      <a
+        role="button"
+        tabindex="0"
         aria-label={info.name}
-        class="name font-title-small" 
+        class="name font-title-small"
         onclick={onNameClick}
         onkeydown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             onNameClick?.();
           }
-        }}
-        >{info.name}</a>
+        }}>{info.name}</a
+      >
 
       {#if info.primary}
         <i
@@ -145,12 +146,12 @@
         aria-label={localize('DND5E.Prepared')}
         data-tooltip=""
         class="pill pill-medium interactive hide-collapsed"
-        onclick={() => onPreparedClicked()}
-        onkeydown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            onPreparedClicked();
-          }
-        }}
+        data-action="emphasize"
+        data-emphasize-uuid={info.uuid}
+        data-emphasize-mode={CONSTANTS.SHEET_MODE_EDIT}
+        data-emphasize-tab-id={CONSTANTS.TAB_ITEM_DETAILS}
+        data-emphasize-selector="[data-name='system.spellcasting.preparation.formula']"
+        {@attach InputAttachments.triggerClickOnKeydown}
       >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Prepared')}</span
@@ -179,18 +180,18 @@
   >
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
-      <a 
-        role="button" 
-        tabindex="0" 
-        class="name font-title-small" 
+      <a
+        role="button"
+        tabindex="0"
+        class="name font-title-small"
         onclick={onNameClick}
         onkeydown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             onNameClick?.();
           }
         }}
-        aria-label={info.name}
-        >{info.name}</a>
+        aria-label={info.name}>{info.name}</a
+      >
 
       {#if info.primary}
         <i
@@ -260,7 +261,11 @@
         class="prepared pill pill-medium interactive hide-collapsed"
         data-tooltip={localize('DND5E.Prepared')}
         aria-label={localize('DND5E.Prepared')}
-        onclick={() => onPreparedClicked()}
+        data-action="emphasize"
+        data-emphasize-uuid={info.uuid}
+        data-emphasize-mode={CONSTANTS.SHEET_MODE_EDIT}
+        data-emphasize-tab-id={CONSTANTS.TAB_ITEM_DETAILS}
+        data-emphasize-selector="[data-name='system.spellcasting.preparation.formula']"
       >
         <i class="fa-solid fa-book"></i>
         <span class="value preparations">
