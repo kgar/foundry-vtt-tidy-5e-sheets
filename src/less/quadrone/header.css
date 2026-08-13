@@ -723,7 +723,7 @@
       }
 
       &.dead {
-        &:not(.transparent) {
+        &:not(.transparent, .token) {
           background-color: var(--t5e-component-card-dark-darker);
 
           .dead-overlay {
@@ -753,7 +753,8 @@
           z-index: -1;
         }
 
-        &.transparent {
+        &.transparent,
+        &.token {
           img {
             filter: grayscale(1);
             opacity: 0.75;
@@ -772,7 +773,7 @@
       }
 
       &.death-saves-open {
-        &:not(.transparent) {
+        &:not(.transparent, .token) {
           background-color: var(--t5e-component-card-dark-darker);
 
           &::after {
@@ -1661,8 +1662,12 @@
           height: var(--font-size-15);
           align-content: center;
 
-          .concentration-roll-button > * {
-            flex-wrap: nowrap;
+          .concentration-roll-button {
+            min-width: unset;
+
+            > * {
+              flex-wrap: nowrap;
+            }
           }
         }
       }
