@@ -1,6 +1,5 @@
 ## The Accretion Disk of To Do's
 
-- [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 - [ ] (this should be resolved now) Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
