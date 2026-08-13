@@ -169,7 +169,7 @@
     <select
       id={config.id}
       data-name={config.name ?? effectiveFieldPath}
-      value={config.value}
+      value={config.value?.toString()}
       {disabled}
       class={config.classes}
       {...attributes}
@@ -212,8 +212,9 @@
     {const blankLabel = $derived(getBlankValue())}
     <select
       id={config.id}
+      data-dtype="Number"
       data-name={config.name ?? effectiveFieldPath}
-      value={config.value}
+      value={config.value?.toString()}
       {disabled}
       class={config.classes}
       {...attributes}

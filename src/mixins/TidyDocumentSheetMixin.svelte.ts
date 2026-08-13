@@ -597,7 +597,8 @@ export function getTidyExtensibleDocumentSheetMixin<
       );
 
       if (
-        foundry.utils.getProperty(targetDocument, prop) !== event.target.value
+        foundry.utils.getProperty(targetDocument, prop)?.toString() !==
+        event.target.value?.toString()
       ) {
         this._revertFormChangeToDocumentValue(targetDocument, event, prop);
       }
