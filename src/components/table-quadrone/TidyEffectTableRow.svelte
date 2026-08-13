@@ -47,22 +47,6 @@
     expanded = !expanded;
     onEffectToggled?.(effectContext.effect.id, expanded, location);
   }
-
-  let summaryData = $state<EffectSummaryData | undefined>();
-
-  $effect(() => {
-    (async () => {
-      if (effectContext.effect && expanded) {
-        summaryData = {
-          description: {
-            value: await FoundryAdapter.enrichHtml(
-              effectContext.effect.description ?? '',
-            ),
-          },
-        };
-      }
-    })();
-  });
 </script>
 
 <TidyTableRow
@@ -82,10 +66,21 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded} deferRendering>
-      <TidyEffectSummary
-        activeEffect={effectContext.effect}
-        summaryData={summaryData ?? emptySummaryData}
-      />
+      {const summaryDataPromise = $derived.by(async () => {
+        return {
+          description: {
+            value: await FoundryAdapter.enrichHtml(
+              effectContext.effect.description ?? '',
+            ),
+          },
+        };
+      })}
+      {#await summaryDataPromise then summaryData}
+        <TidyEffectSummary
+          activeEffect={effectContext.effect}
+          summaryData={summaryData ?? emptySummaryData}
+        />
+      {/await}
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

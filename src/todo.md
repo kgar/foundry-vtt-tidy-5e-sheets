@@ -1,7 +1,6 @@
 ## The Accretion Disk of To Do's
 
-- [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
-- [ ] (this should be resolved now) Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
+- [ ] Create DocumentTags - Support multiple tags
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
   - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
