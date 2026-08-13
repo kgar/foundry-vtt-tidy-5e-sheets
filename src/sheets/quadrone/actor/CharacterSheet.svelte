@@ -291,7 +291,6 @@
               </button>
             {/if}
           </div>
-          <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
           {#if context.saves.concentration}
             {const save = $derived(context.saves.concentration)}
             <div class="concentration flexcol">
@@ -391,7 +390,6 @@
                     {hpTempMax}
                   </span>
                 </div>
-                <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
               {/if}
             </button>
             <TextInputQuadrone
@@ -653,7 +651,15 @@
                 {:else if context.editable}
                   <button
                     type="button"
-                    class="button button-borderless button-icon-only button-death-saves"
+                    class={[
+                      'button',
+                      'button-borderless',
+                      'button-icon-only',
+                      'button-death-saves',
+                      {
+                        dead: context.system.attributes.death.failure >= 3,
+                      },
+                    ]}
                     aria-label={localize(
                       context.showDeathSaves
                         ? 'DND5E.DeathSaveHide'
