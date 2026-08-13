@@ -8,7 +8,10 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import {
+    getItemSectionSearchState,
+    getSearchResultsContext,
+  } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -94,12 +97,17 @@
     ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
+
+  const sectionSearchState = $derived(
+    getItemSectionSearchState(entries, searchResults),
+  );
 </script>
 
 <TidyTable
   key={section.key}
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
+  expandedOverride={sectionSearchState.expandedOverride}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
@@ -110,7 +118,7 @@
         <h3>
           {localize(section.label)}
         </h3>
-        <span class="table-header-count">{entries.length}</span>
+        <span class="table-header-count">{sectionSearchState.visibleItemCount}</span>
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells

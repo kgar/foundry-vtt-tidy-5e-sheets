@@ -15,7 +15,9 @@
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import {
     createSearchResultsState,
+    getMemberSectionSearchState,
     setSearchResultsContext,
+    shouldShowMemberSection,
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -69,6 +71,7 @@
     searchCriteria;
 
     untrack(() => {
+      searchResults.criteria = searchCriteria;
       searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
         criteria: searchCriteria,
         itemContext: context.itemContext,
@@ -373,7 +376,10 @@
           sheetDocument={context.document}
         />
       {:else if section.type === 'draft'}
-        {#if section.show}
+        {const sectionSearchState = $derived(
+          getMemberSectionSearchState(section.members, searchResults),
+        )}
+        {#if section.show && shouldShowMemberSection(sectionSearchState)}
           {const rowActionInfo = $derived(
             RowActionRuntimeBase.getRowActionWidthInfo(
               section.members,
@@ -391,6 +397,7 @@
           <TidyTable
             key={section.key}
             data-custom-section={section.custom ? true : null}
+            expandedOverride={sectionSearchState.expandedOverride}
           >
             {#snippet header(expanded)}
               <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
@@ -399,7 +406,7 @@
                     {localize(section.label)}
                   </h3>
                   <span class="table-header-count"
-                    >{section.members.length}</span
+                    >{sectionSearchState.visibleItemCount}</span
                   >
                 </TidyTableHeaderCell>
 
@@ -445,9 +452,9 @@
                 {/if}
               {:else}
                 {#each section.members as member}
-                  {#if !searchResults.uuids || searchResults.uuids.has(member.actor.uuid)}
-                    <TidyTableRow
-                      rowContainerAttributes={{
+                  <TidyTableRow
+                    hidden={!searchResults.show(member.actor.uuid)}
+                    rowContainerAttributes={{
                         ['data-context-menu']:
                           CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
                         ['data-uuid']: member.actor.uuid,
@@ -509,7 +516,6 @@
                         />
                       {/snippet}
                     </TidyTableRow>
-                  {/if}
                 {/each}
               {/if}
             {/snippet}

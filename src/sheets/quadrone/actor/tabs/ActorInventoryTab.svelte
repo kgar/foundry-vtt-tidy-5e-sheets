@@ -4,8 +4,8 @@
   import {
     createSearchResultsState,
     setSearchResultsContext,
+    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -49,8 +49,7 @@
   );
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    syncItemTabSearch(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: inventory,
       tabId: tabId,

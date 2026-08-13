@@ -6,9 +6,12 @@
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import {
     createSearchResultsState,
+    getItemSectionSearchState,
     setSearchResultsContext,
+    shouldShowItemSection,
+    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SpellTable from '../../shared/SpellTable.svelte';
@@ -35,8 +38,7 @@
   let sections = $derived(context.sheetTabSections);
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    syncItemTabSearch(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: sections,
       tabId: tabId,
@@ -101,14 +103,11 @@
       {#each sections as section}
         {#if 'type' in section}
           {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-            {const hasViewableItems = $derived(
-              ItemVisibility.hasViewableItems(
-                section.items,
-                searchResults.uuids,
-              ),
+            {const sectionSearchState = $derived(
+              getItemSectionSearchState(section.items, searchResults),
             )}
 
-            {#if section.show && hasViewableItems}
+            {#if section.show && shouldShowItemSection(sectionSearchState, { hasSlots: !!section.slots })}
               <SpellTable
                 {section}
                 sheetDocument={context.document}
@@ -117,13 +116,10 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
-            {const hasViewableItems = $derived(
-              ItemVisibility.hasViewableItems(
-                section.items,
-                searchResults.uuids,
-              ),
+            {const sectionSearchState = $derived(
+              getItemSectionSearchState(section.items, searchResults),
             )}
-            {#if section.show && hasViewableItems}
+            {#if section.show && shouldShowItemSection(sectionSearchState)}
               <InventoryTable
                 containingDocument={context.document}
                 editable={context.editable}
@@ -138,13 +134,10 @@
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-            {const hasViewableItems = $derived(
-              ItemVisibility.hasViewableItems(
-                section.items,
-                searchResults.uuids,
-              ),
+            {const sectionSearchState = $derived(
+              getItemSectionSearchState(section.items, searchResults),
             )}
-            {#if section.show && hasViewableItems}
+            {#if section.show && shouldShowItemSection(sectionSearchState)}
               <FeatureTable
                 {section}
                 {itemToggleMap}

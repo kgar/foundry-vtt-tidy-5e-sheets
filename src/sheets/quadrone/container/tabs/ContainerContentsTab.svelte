@@ -5,10 +5,10 @@
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
   import InventoryTables from 'src/sheets/quadrone/shared/InventoryTables.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
     createSearchResultsState,
     setSearchResultsContext,
+    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { Container } from 'src/features/containers/Container';
@@ -34,8 +34,7 @@
   setSearchResultsContext(searchResults);
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    syncItemTabSearch(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: configuredContents,
       tabId: tabId,

@@ -13,6 +13,7 @@
   interface Props extends HTMLAttributes<HTMLElement> {
     key: string;
     toggleable?: boolean;
+    expandedOverride?: boolean;
     dataset?: Record<string, string>;
     header?: Snippet<[boolean]>;
     body?: Snippet;
@@ -21,6 +22,7 @@
   let {
     key,
     toggleable = true,
+    expandedOverride,
     header,
     body,
     dataset,
@@ -58,7 +60,8 @@
   }
 
   let expanded = $derived(
-    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
+    expandedOverride ??
+      (!toggleable || sectionExpansionTracker.isExpanded(key, tabId, location)),
   );
 </script>
 

@@ -12,8 +12,11 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { createSearchResultsState } from 'src/features/search/search.svelte';
-  import { isNil } from 'src/utils/data';
+  import {
+    createSearchResultsState,
+    getMemberSectionSearchState,
+    shouldShowMemberSection,
+  } from 'src/features/search/search.svelte';
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
@@ -56,15 +59,17 @@
   );
 
   $effect(() => {
-    searchResults.uuids = !isNil(searchCriteria)
-      ? new Set(
-          context.system.members
-            .filter((m: Actor5e) =>
-              m.actor.name.toLowerCase().includes(searchCriteria),
-            )
-            .map((m: Actor5e) => m.actor.uuid),
-        )
-      : undefined;
+    searchResults.criteria = searchCriteria;
+    searchResults.uuids =
+      searchCriteria.trim() !== ''
+        ? new Set(
+            context.system.members
+              .filter((m: Actor5e) =>
+                m.actor.name.toLowerCase().includes(searchCriteria.toLowerCase()),
+              )
+              .map((m: Actor5e) => m.actor.uuid),
+          )
+        : undefined;
   });
 </script>
 
@@ -83,13 +88,10 @@
     <SheetPins />
 
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(
-        !searchResults.uuids ||
-          section.members.some((m) => searchResults.uuids?.has(m.actor.uuid)),
+      {const sectionSearchState = $derived(
+        getMemberSectionSearchState(section.members, searchResults),
       )}
-      {#if section.show && hasViewableItems}
-        {const visibleItemCount = $derived(section.members.length)}
-
+      {#if section.show && shouldShowMemberSection(sectionSearchState)}
         {const rowActionInfo = $derived(
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
@@ -105,13 +107,19 @@
           ),
         )}
 
-        <TidyTable key={section.key} data-custom-section={section.custom}>
+        <TidyTable
+          key={section.key}
+          data-custom-section={section.custom}
+          expandedOverride={sectionSearchState.expandedOverride}
+        >
           {#snippet header()}
             <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}
-                  <span class="table-header-count">{visibleItemCount}</span>
+                  <span class="table-header-count"
+                    >{sectionSearchState.visibleItemCount}</span
+                  >
                 </h3>
               </TidyTableHeaderCell>
 
@@ -136,9 +144,7 @@
                 class={[
                   'tidy-table-row group-member',
                   {
-                    hidden:
-                      searchResults.uuids &&
-                      !searchResults.show(member.actor.uuid),
+                    hidden: !searchResults.show(member.actor.uuid),
                   },
                 ]}
                 style:--t5e-theme-color-default={member.accentColor}

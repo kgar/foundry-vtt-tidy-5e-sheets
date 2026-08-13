@@ -8,9 +8,11 @@
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import {
     createSearchResultsState,
+    getItemSectionSearchState,
     setSearchResultsContext,
+    shouldShowItemSection,
+    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { PowersSection } from './McdmClassBundle';
@@ -48,8 +50,7 @@
   setSearchResultsContext(searchResults);
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    syncItemTabSearch(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections,
       tabId,
@@ -62,6 +63,10 @@
 <div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#each sections as section}
     {#if section.show}
+      {const sectionSearchState = $derived(
+        getItemSectionSearchState(section.items, searchResults),
+      )}
+      {#if shouldShowItemSection(sectionSearchState, { unlocked: context.unlocked })}
       {const rowActionInfo = $derived(
         RowActionRuntimeBase.getRowActionWidthInfo(
           section.items,
@@ -81,6 +86,7 @@
         key={section.key}
         data-custom-section={false}
         dataset={section.dataset}
+        expandedOverride={sectionSearchState.expandedOverride}
       >
         {#snippet header(expanded)}
           <TidyTableHeaderRow class={['theme-dark']}>
@@ -88,7 +94,9 @@
               <h3>
                 {localize(section.label)}
               </h3>
-              <span class="table-header-count">{section.items.length}</span>
+              <span class="table-header-count"
+                >{sectionSearchState.visibleItemCount}</span
+              >
             </TidyTableHeaderCell>
 
             <TidyTableCustomHeaderCells
@@ -193,6 +201,7 @@
           {/each}
         {/snippet}
       </TidyTable>
+      {/if}
     {/if}
   {/each}
 </div>

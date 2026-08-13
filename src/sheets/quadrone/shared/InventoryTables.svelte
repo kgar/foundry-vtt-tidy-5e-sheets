@@ -11,9 +11,12 @@
   import { CONSTANTS } from 'src/constants';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
-  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import {
+    getItemSectionSearchState,
+    getSearchResultsContext,
+    shouldShowItemSection,
+  } from 'src/features/search/search.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import InventoryTable from './InventoryTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
@@ -93,13 +96,10 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(
-        ItemVisibility.hasViewableItems(
-          section.items,
-          searchResults.uuids,
-        )
+      {const sectionSearchState = $derived(
+        getItemSectionSearchState(section.items, searchResults),
       )}
-      {#if section.show && hasViewableItems}
+      {#if section.show && shouldShowItemSection(sectionSearchState)}
         <InventoryTable
           {containingDocument}
           {editable}
