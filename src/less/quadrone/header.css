@@ -723,7 +723,7 @@
       }
 
       &.dead {
-        &:not(.transparent) {
+        &:not(.transparent, .token) {
           background-color: var(--t5e-component-card-dark-darker);
 
           .dead-overlay {
@@ -753,7 +753,8 @@
           z-index: -1;
         }
 
-        &.transparent {
+        &.transparent,
+        &.token {
           img {
             filter: grayscale(1);
             opacity: 0.75;
@@ -772,7 +773,7 @@
       }
 
       &.death-saves-open {
-        &:not(.transparent) {
+        &:not(.transparent, .token) {
           background-color: var(--t5e-component-card-dark-darker);
 
           &::after {
@@ -1206,6 +1207,23 @@
       .death-saves {
         .button-death-saves i {
           color: var(--t5e-vitals-button-icon-color);
+        }
+
+        .button-death-saves.dead {
+          background-color: var(--t5e-color-palette-red-27);
+
+          i {
+            color: var(--t5e-color-palette-red-100);
+            text-shadow: none;
+          }
+
+          &:hover {
+            background-color: var(--t5e-color-palette-red-60);
+
+            i {
+              color: var(--t5e-color-palette-white);
+            }
+          }
         }
 
         &.dying {
@@ -1661,8 +1679,12 @@
           height: var(--font-size-15);
           align-content: center;
 
-          .concentration-roll-button > * {
-            flex-wrap: nowrap;
+          .concentration-roll-button {
+            min-width: unset;
+
+            > * {
+              flex-wrap: nowrap;
+            }
           }
         }
       }

@@ -128,7 +128,11 @@
                 >
               </span>
             </div>
-            <ActorEncumbranceBar actor={member.actor} />
+            <ActorEncumbranceBar
+              actor={member.actor}
+              encumbrance={member.actor.system.attributes.encumbrance}
+              hasBreakpoints={false}
+            />
           {:else if member.actor.system.isVehicle}
             <div class="separated-list">
               <span class="actor-cargo separated-list">
