@@ -69,7 +69,10 @@
         ]?.abbreviation}
       </span>
     </div>
-    <ActorEncumbranceBar actor={context.actor} />
+    <ActorEncumbranceBar
+      actor={context.actor}
+      encumbrance={context.encumbrance}
+    />
   </div>
 
   <SheetPins />
