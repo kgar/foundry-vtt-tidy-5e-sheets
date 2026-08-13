@@ -34,7 +34,7 @@
 
 {#if !isNil(text, '')}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {!isNil(inferredActivation?.value)
+    {@html !isNil(inferredActivation?.value)
       ? inferredActivation?.value + '&nbsp;'
       : ''}
     {localize(text).trim()}
