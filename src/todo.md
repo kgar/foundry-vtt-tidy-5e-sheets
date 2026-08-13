@@ -1,5 +1,6 @@
 ## The Accretion Disk of To Do's
 
+- [ ] NPC Statblock - drag/drop to custom section is not working. It removes the custom section altogether. Doesn't happen on an inventory tab, for example.
 - [ ] Create DocumentTags - Support multiple tags
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
