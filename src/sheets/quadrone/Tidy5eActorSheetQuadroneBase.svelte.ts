@@ -234,21 +234,6 @@ export function getTidy5eActorSheetQuadroneBase<
       ];
     }
 
-    selectTab(tabId: string) {
-      this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
-    }
-
-    async emphasize(tabId: string | undefined, selector: string | undefined) {
-      if (tabId) {
-        this.selectTab(tabId);
-      }
-
-      if (selector) {
-        await delay(1);
-        this.element.ownerDocument.querySelector(selector)?.focus();
-      }
-    }
-
     /* -------------------------------------------- */
     /*  Context Data Preparation                    */
     /* -------------------------------------------- */

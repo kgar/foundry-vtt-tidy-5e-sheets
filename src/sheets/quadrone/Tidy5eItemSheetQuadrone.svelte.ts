@@ -64,7 +64,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     ItemSheetQuadroneContext
   >(foundry.applications.sheets.ItemSheetV2),
 ) {
-  currentTabId: string = '';
   sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: DocumentSheetApplicationConfiguration | undefined) {
@@ -165,10 +164,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       settingsOverride ??
       ThemeQuadrone.getSheetThemeSettings({ doc: this.document });
     this._applySheetThemeClasses(themeSettings);
-  }
-
-  selectTab(tabId: string) {
-    this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {

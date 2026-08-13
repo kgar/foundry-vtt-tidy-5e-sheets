@@ -93,6 +93,11 @@ export interface ApplicationRenderOptions {
      * custom content management.
      */
     soft?: boolean;
+    /**
+     * A tab ID that specifies what the current tab should be 
+     * when opening the sheet.
+     */
+    tab?: string;
   };
 }
 

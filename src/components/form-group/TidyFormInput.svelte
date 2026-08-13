@@ -5,20 +5,10 @@
     type FormInputConfig,
     type NumberFieldOptions,
   } from 'foundry.data.fields';
-  import {
-    componentWithProps,
-    type ComponentWithProps,
-  } from 'src/utils/component';
-  import SelectQuadrone from '../inputs/SelectQuadrone.svelte';
   import SelectOptions from '../inputs/SelectOptions.svelte';
   import FoundryFormInput from './FoundryFormInput.svelte';
-  import TextInputQuadrone from '../inputs/TextInputQuadrone.svelte';
-  import NumberInputQuadrone from '../inputs/NumberInputQuadrone.svelte';
-  import CheckboxQuadrone from '../inputs/CheckboxQuadrone.svelte';
-  import { debug } from 'src/utils/logging';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ComponentProps } from 'svelte';
   import { buildDataset, isNil } from 'src/utils/data';
   import StringTags from '../inputs/StringTags.svelte';
   import DocumentTag from '../inputs/DocumentTag.svelte';
@@ -177,8 +167,8 @@
     {const options = $derived(enumerateChoices(stringChoices))}
     {const blankLabel = $derived(getBlankValue())}
     <select
-      data-name={config.name ?? effectiveFieldPath}
       id={config.id}
+      data-name={config.name ?? effectiveFieldPath}
       value={config.value}
       {disabled}
       class={config.classes}
@@ -195,9 +185,10 @@
   {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices)}
     <input
       type="text"
+      id={config.id}
       data-name={config.name ?? effectiveFieldPath}
-      {@attach InputAttachments.selectOnFocus}
       value={config.value}
+      {@attach InputAttachments.selectOnFocus}
       {disabled}
       placeholder={config.placeholder}
       class={config.classes}
@@ -220,8 +211,8 @@
     {const options = $derived(enumerateChoices(numberChoices))}
     {const blankLabel = $derived(getBlankValue())}
     <select
-      data-name={config.name ?? effectiveFieldPath}
       id={config.id}
+      data-name={config.name ?? effectiveFieldPath}
       value={config.value}
       {disabled}
       class={config.classes}
@@ -242,9 +233,10 @@
     )}
     <input
       type="number"
+      id={config.id}
       data-name={numberConfig.name ?? effectiveFieldPath}
-      {@attach InputAttachments.selectOnFocus}
       value={numberConfig.value}
+      {@attach InputAttachments.selectOnFocus}
       {disabled}
       placeholder={numberConfig.placeholder}
       min={min ?? field.min}

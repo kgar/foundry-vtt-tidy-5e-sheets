@@ -80,6 +80,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
     _sectionForMenu?: TidySectionBase;
+    currentTabId: string = '';
 
     constructor(options: TConstructorArgs) {
       super(options);
@@ -307,6 +308,10 @@ export function getTidyExtensibleDocumentSheetMixin<
       doc.update({ [target]: modified });
     }
 
+    selectTab(tabId: string) {
+      this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
+    }
+
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {
       if (
         !position ||
@@ -384,6 +389,21 @@ export function getTidyExtensibleDocumentSheetMixin<
         unlocked: sheetModeConfig.unlocked,
         config: CONFIG.DND5E,
       } as DocumentSheetV2Context;
+    }
+
+    /* -------------------------------------------- */
+    /*  Rendering                                   */
+    /* -------------------------------------------- */
+
+    async render(
+      options: boolean | ApplicationRenderOptions = {},
+      _options: ApplicationRenderOptions = {},
+    ) {
+      if (typeof options === 'object' && options.tidy?.tab) {
+        this.currentTabId = options.tidy.tab;
+      }
+
+      return await super.render(options, _options);
     }
 
     async _renderHTML(
@@ -1334,25 +1354,24 @@ export function getTidyExtensibleDocumentSheetMixin<
         const doc = await fromUuid(emphasizeUuid);
         await this._renderChild(doc.sheet, {
           mode: Number(emphasizeMode ?? CONSTANTS.SHEET_MODE_EDIT),
+          tidy: {
+            tab: emphasizeTabId,
+          },
         });
         sheet = doc.sheet;
       }
 
-      await sheet.emphasize(emphasizeTabId, emphasizeSelector, sheet);
+      await sheet.emphasize?.(emphasizeTabId, emphasizeSelector);
     }
 
-    async emphasize(
-      tabId: string | undefined,
-      selector: string | undefined,
-      sheet: any = this,
-    ) {
+    async emphasize(tabId: string | undefined, selector: string | undefined) {
       if (tabId) {
-        sheet.selectTab(tabId);
+        this.selectTab(tabId);
       }
 
       if (selector) {
         await delay(1);
-        this.element.ownerDocument.querySelector(selector)?.focus();
+        this.element.querySelector(selector)?.focus();
       }
     }
 
