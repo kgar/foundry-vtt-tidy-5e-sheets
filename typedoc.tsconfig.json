@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "src/*": ["./src/*"]
+    },
+    "inlineSources": true,
+    "module": "ES2022",
+    "target": "ES2024",
+    "allowJs": true,
+    "noImplicitAny": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "isolatedModules": true,
+    "types": ["svelte", "node"],
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "lib": ["DOM", "ESNext"]
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.svelte", "./typedoc/**/*.ts"]
+}
