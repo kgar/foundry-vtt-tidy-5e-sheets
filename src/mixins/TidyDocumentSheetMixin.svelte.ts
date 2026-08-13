@@ -263,24 +263,49 @@ export function getTidyExtensibleDocumentSheetMixin<
       maybePromise: Promise<any>,
       event: any,
     ) {
-      const resolved = await maybePromise;
-      const shouldRevertInput =
-        event.target.name &&
-        (resolved === undefined ||
-          foundry.utils.getProperty(resolved, event.target.name) !==
-            event.target.value);
+      await maybePromise;
 
-      if (shouldRevertInput) {
-        this._revertFormChangeToDocumentValue(event, event.target.name);
-      }
-    }
-
-    private _revertFormChangeToDocumentValue(event: any, prop: string) {
       const { targetDocument } = this._getDocumentSubmissionInformation(
         event.target,
       );
-      event.target.value =
-        FoundryAdapter.getProperty(targetDocument, prop) ?? '';
+
+      const shouldRevertInput =
+        event.target.name &&
+        foundry.utils.getProperty(targetDocument, event.target.name) !==
+          event.target.value;
+
+      if (shouldRevertInput) {
+        this._revertFormChangeToDocumentValue(
+          targetDocument,
+          event,
+          event.target.name,
+        );
+      }
+    }
+
+    private _revertFormChangeToDocumentValue(
+      targetDocument: any,
+      event: any,
+      prop: string,
+    ) {
+      const value = FoundryAdapter.getProperty(targetDocument, prop) ?? '';
+
+      // <prose-mirror> and similar Foundry elements will eagerly push change events
+      // in any instance where the element value is set,
+      // causing an infinite loop when trying to correct value drift due to a failed update.
+      // Instead of setting their values conventionally, so it with `_setValue`.
+      if (
+        '_setValue' in event.target &&
+        typeof event.target._setValue === 'function'
+      ) {
+        event.target._setValue(value);
+        event.target.dispatchEvent(
+          new Event('input', { bubbles: true, cancelable: true }),
+        );
+        // intentionally skip the form change event
+      } else {
+        event.target.value = value;
+      }
     }
 
     /** @override */
@@ -557,24 +582,24 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       const valueToSave: string | number = event.target.value;
 
-      let result: unknown = undefined;
-
       if (isNumericInput(event.target)) {
         const valueAsNumber = Number.isNumeric(valueToSave)
           ? Number(valueToSave)
           : valueToSave;
 
-        result = await this._updateNumericProperty(doc, prop, valueAsNumber);
+        await this._updateNumericProperty(doc, prop, valueAsNumber);
       } else {
-        result = await doc.update({ [prop]: valueToSave });
+        await doc.update({ [prop]: valueToSave });
       }
 
+      const { targetDocument } = this._getDocumentSubmissionInformation(
+        event.target,
+      );
+
       if (
-        result === undefined ||
-        foundry.utils.getProperty(result, prop) !== event.target.value
+        foundry.utils.getProperty(targetDocument, prop) !== event.target.value
       ) {
-        this._revertFormChangeToDocumentValue(event, prop);
-        return;
+        this._revertFormChangeToDocumentValue(targetDocument, event, prop);
       }
     }
 

@@ -1,5 +1,12 @@
 ## The Accretion Disk of To Do's
 
+- [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
+- [ ] (this should be resolved now) Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
+- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
+- [ ] Ensure all item sheets enforce this Unidentified UI feature:
+  - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
+- [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Add section base prop `hideIfEmpty` to manage hiding tables when there are no entries. This will prevent scenarios like trying to change the `show` field based on temporary reasons to hide a table (e.g., Vehicle Spells when there are no spells), which would propagate into the section config and then permanently hide the section until reverted. `hideIfEmpty` should be a simple boolean that represents whether we generally hide a particular section when it's empty, as opposed to the actual plan for the row. Ideally, we should separate the visibility setting from the final boolean of whether the section should be shown. `visible` could be the setting prop, while `show` continues to be the final calculation. Eh... JSDoc should help with delineating their purposes, because this is necessarily nuanced to support all the functionality.
 - [ ] refactor / organize - src\sheets\quadrone\item\columns\RowActionsColumn.svelte - this is not behaving like the standard column components. It actually contains a table cell component along with the content, whereas the others contain just the cell content. Need to organize them somehow.
 - [ ] DOM Density - review `.list-content > .list-values > etc.` and determine if it can be thinned out with CSS
@@ -15,8 +22,6 @@
   - [ ] Prep Bastions context
 - [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
-- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
-- [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
 - [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: <https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437>
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
@@ -27,41 +32,28 @@
 - [ ] // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
-- [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
-- [ ] (this should be resolved now) Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
-- [ ] Ensure all item sheets enforce this Unidentified UI feature:
-  - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
   - [ ] Propagate this to all action bars
 - [ ] (lowest priority: the system should probably work this out first) Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
-- [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | <https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255>
 - [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
 - [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
 - [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
-- [ ] **Theme Settings**: Add support for Item Sidebar Width?
-- [x] Swap left and right areas in tab selection (left = selected, right = hidden)
+- [ ] **Theme Settings**: Add support for Item Sidebar Width? Plus, allow drag to resize for sheet flag theme setting changes.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
 - [ ] Magical Tattoos: provide first-class favorite card. Expand system to accommodate custom favorite card renderers so that it can be registered thus.
 - [ ] (Take your time on this one, maybe after the overhaul is complete) Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
-  - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
-- [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: <https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904>
-- [ ] DocumentTag upgrade - show rich preview of found document
-- [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
-- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
-- [ ] If possible, forward the parent sheet's theme to all dialogs/applications they open
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
-- [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
-- [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] // TODO: Eliminate `any` for ItemRowActionPropsData; will likely have to permute into types to match the domains; seems like a lot of work ahead, so make this a dedicated PR
 - [ ] Somehow make Container Sheet a subclass of Item Sheet. It's been a long time coming. 
+  - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 
 ## hightouch To Do
 
