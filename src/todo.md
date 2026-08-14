@@ -1,6 +1,8 @@
 ## The Accretion Disk of To Do's
 
-- [ ] NPC Statblock - drag/drop to custom section is not working. It removes the custom section altogether. Doesn't happen on an inventory tab, for example.
+- [ ] Vehicle Statblock - when dropping a custom section feature onto the empty feature table, it doesn't transfer. Can I do anything reasonable about that?
+  - It's probably because the section transfer is part of sorting, and if it is dropped on the empty table's header, there's no sorting to occur. This raises the question, should it be doing section transfer during sort, or should it be a separate process, to follow dropCreate or sort?
+- [ ] Custom sections require 2 things: `section.custom` and `dataset[TidyFlags.section.prop]` (or actionSection equivalent). Is there a good way to streamline this? Having to remember it each time is a little awkward and prone to be forgotten.
 - [ ] Create DocumentTags - Support multiple tags
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:

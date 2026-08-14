@@ -132,7 +132,10 @@
           ),
         )}
 
-        <TidyTable key={section.key}>
+        <TidyTable
+          key={section.key}
+          data-custom-section={section.custom ? true : null}
+        >
           {#snippet header()}
             <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
               <TidyTableHeaderCell primary={true}>

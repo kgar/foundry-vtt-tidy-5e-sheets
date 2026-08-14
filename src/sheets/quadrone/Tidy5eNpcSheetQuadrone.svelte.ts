@@ -413,6 +413,12 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         dataset: dataset,
         canCreate: true,
         columns,
+        custom: !isNil(customSectionName)
+          ? {
+              section: customSectionName,
+              creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+            }
+          : undefined,
       };
     };
 
