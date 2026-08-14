@@ -559,7 +559,11 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       },
     };
 
-    const createFeatureSection = (key: string, label: string) => {
+    const createFeatureSection = (
+      key: string,
+      label: string,
+      isCustom?: boolean,
+    ) => {
       const section: FeatureSection = {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         items: [],
@@ -579,6 +583,12 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
           owner: context.owner,
           unlocked: context.unlocked,
         }),
+        custom: isCustom
+          ? {
+              section: key,
+              creationItemTypes: [],
+            }
+          : undefined,
       };
 
       return section;
@@ -726,6 +736,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         const section = (features[customSectionName] ??= createFeatureSection(
           customSectionName,
           customSectionName,
+          true,
         ));
 
         section.items.push(item);
@@ -768,6 +779,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
         const newSharedSection = createFeatureSection(
           section.key,
           section.label,
+          !isNil(section.custom?.section),
         );
         sectionsMap[section.key] = newSharedSection;
         newSharedSection.items.push(...mappedItems, ...incomingItems);

@@ -203,7 +203,11 @@
                 section.columns,
               ),
         )}
-        <TidyTable key={section.key} data-area={section.type}>
+        <TidyTable
+          key={section.key}
+          data-area={section.type}
+          data-custom-section={section.custom ? true : null}
+        >
           {#snippet header(expanded)}
             <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
               <TidyTableHeaderCell primary={true} class="header-label-cell">

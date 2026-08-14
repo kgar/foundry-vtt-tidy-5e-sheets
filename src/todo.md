@@ -1,5 +1,12 @@
 ## The Accretion Disk of To Do's
 
+- [ ] Revise/Centralize/Streamline Section Transfer On Drop. It should not rely on sorting. Sorting and drop creation should both invoke a doc-sheet-mix base class function where an update operation is to be done. Based on the data provided, the section transfer portion should be managed as a follow up append to the update data, only when the drop is not a drop-create scenario. 
+  - Goal: Drop any sortable/drop-creatable onto a section table and have section transfer work without the requirement of having a sort operation done.
+  - Secondary Goal: generalize the create vs. sort process so that no code duplication is required for handling the common task of section transfer after a non-creation entity drop.
+  - Scenario: Vehicle Statblock - when dropping a custom section feature onto the empty feature table, it doesn't transfer. Section transfer is part of sorting for item drops to actors and for item drops to containers, and if it is dropped on the empty table's header, there's no sorting to occur. This raises the question, should it be doing section transfer during sort, or should it be a separate process, to follow dropCreate or sort?
+  - Search for usages of `FoundryAdapter.getSectionUpdateForDropTarget`
+  - `Tidy5eMultiActorSheetQuadroneBase._onDropActor` duplicates this effort
+- [ ] Custom sections require 2 things: `section.custom` and `dataset[TidyFlags.section.prop]` (or actionSection equivalent). Is there a good way to streamline this? Having to remember it each time is a little awkward and prone to be forgotten.
 - [ ] Create DocumentTags - Support multiple tags
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
