@@ -4,9 +4,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeterQuadrone from './FacilityOrderProgressMeterQuadrone.svelte';
-  import {
-    getCharacterSheetQuadroneContext,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chosen: ChosenFacilityContext;
@@ -34,15 +32,15 @@
     </div>
     <div class="craft-and-meter theme-dark">
       {#if chosen.craft}
-        {const itemAttributes = $derived(context.editable ? {
-          'data-action': 'editDocument',
-          'data-uuid': chosen.craft.uuid
-        } : {})}
-        <a
-          {...itemAttributes}
-          data-info-card={'item'}
-          data-info-card-entity-uuid={chosen.craft.uuid}
-        >
+        {const itemAttributes = $derived(
+          context.editable
+            ? {
+                'data-action': 'editDocument',
+                'data-uuid': chosen.craft.uuid,
+              }
+            : {},
+        )}
+        <a {...itemAttributes}>
           <img
             class="crafting-item"
             data-uuid={chosen.craft.uuid}

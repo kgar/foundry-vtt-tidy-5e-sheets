@@ -35,7 +35,7 @@
   <button
     type="button"
     class="button button-primary button-preroll-initiative"
-    onclick={(ev) => context.sheet.prerollAllInitiatives(ev)}
+    data-action="prerollAllInitiatives"
     data-has-roll-modes
   >
     <i class="fas fa-dice-d20"></i>
@@ -44,7 +44,7 @@
   <button
     type="button"
     class="button button-add-all-placeholders"
-    onclick={(ev) => context.sheet.addAllAsPlaceholders()}
+    data-action="addAllAsPlaceholders"
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
@@ -53,7 +53,7 @@
   <button
     type="button"
     class="button button-add-placeholder"
-    onclick={(ev) => context.sheet.addNewPlaceholder()}
+    data-action="addNewPlaceholder"
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
@@ -61,13 +61,7 @@
   <button
     type="button"
     class="button button-add-lair"
-    onclick={(ev) =>
-      context.sheet.addNewPlaceholder(
-        {
-          name: localize('DND5E.LAIR.Action.Label'),
-        },
-        { initiative: 20 },
-      )}
+    data-action="addNewLairPlaceholder"
   >
     <i class="fas fa-eye-evil"></i>
     {localize('DND5E.LAIR.Action.Label')}
@@ -75,15 +69,8 @@
   <button
     type="button"
     class="button button-add-init-20"
-    onclick={(ev) =>
-      context.sheet.addNewPlaceholder(
-        {
-          name: localize('TIDY5E.Encounter.InitiativeCount.Label', {
-            count: 20,
-          }),
-        },
-        { initiative: 20 },
-      )}
+    data-action="addNewPlaceholder"
+    data-initiative="20"
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 20 })}
@@ -91,15 +78,8 @@
   <button
     type="button"
     class="button button-add-init-15"
-    onclick={(ev) =>
-      context.sheet.addNewPlaceholder(
-        {
-          name: localize('TIDY5E.Encounter.InitiativeCount.Label', {
-            count: 15,
-          }),
-        },
-        { initiative: 15 },
-      )}
+    data-action="addNewPlaceholder"
+    data-initiative="15"
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 15 })}
@@ -107,15 +87,8 @@
   <button
     type="button"
     class="button button-add-init-10"
-    onclick={(ev) =>
-      context.sheet.addNewPlaceholder(
-        {
-          name: localize('TIDY5E.Encounter.InitiativeCount.Label', {
-            count: 10,
-          }),
-        },
-        { initiative: 10 },
-      )}
+    data-action="addNewPlaceholder"
+    data-initiative="10"
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 10 })}
@@ -124,6 +97,22 @@
 
 <div class="tab-right-column">
   <section class="tab-content" {@attach observeResize(onResize)}>
+    {const hasCombatants = $derived(
+      context.combat.some((section) => section.combatants.length),
+    )}
+    {#if !hasCombatants && context.editable}
+      <div class="inventory-empty empty-state-container">
+        <button
+          type="button"
+          class="button button-tertiary"
+          onclick={() => context.sheet._browseAddNpc()}
+        >
+          <i class="fas fa-plus"></i>
+          {localize('TIDY5E.Encounter.AddMember.Label')}
+        </button>
+      </div>
+    {/if}
+
     {#each context.combat as section (section.key)}
       {#if section.show && section.combatants.length}
         {const visibleItemCount = $derived(section.combatants.length)}
@@ -153,11 +142,7 @@
                 </h3>
               </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {context}
-                {hiddenColumns}
-                {section}
-              />
+              <TidyTableCustomHeaderCells {context} {hiddenColumns} {section} />
 
               <TidyTableHeaderCell
                 class="header-cell-actions"

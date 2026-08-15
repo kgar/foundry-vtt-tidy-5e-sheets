@@ -38,16 +38,9 @@
   data-item-id={favorite.id}
   data-tidy-draggable
   data-favorite-id={favorite.id}
-  data-key={favorite.id}
+  data-trait={trait}
+  data-key={favorite.key}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
-  onmousedown={(event) =>
-    FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.renderSkillToolConfig(
-        context.actor,
-        trait,
-        favorite.key ?? '',
-      ),
-    )}
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton

@@ -118,7 +118,7 @@
     </div>
     <div class="attribute-counter {ctx.resource}">
       {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
-        <RechargeControl document={ctx.document} field={spentProp} {uses} />
+        <RechargeControl document={ctx.document} {uses} />
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
         <span class="charged-text">
           {#if value > 1}

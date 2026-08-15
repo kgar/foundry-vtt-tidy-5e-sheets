@@ -32,6 +32,7 @@ import type {
   VehicleDraftAnimalColumnSpec,
   VehiclePassengerColumnSpec,
 } from './columns.types';
+import type { Actor5e, InspirationSource } from './types';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -272,6 +273,11 @@ export type ColumnOf<D extends ColumnRegistryDomain> =
   CONFIG['TIDY5E']['features']['columns'][D][keyof CONFIG['TIDY5E']['features']['columns'][D]];
 
 export type TidyPublicUtils = {
+  actorInspiration: {
+    tryGetInspirationSource: (
+      actor: Actor5e,
+    ) => Promise<InspirationSource | undefined>;
+  };
   getTabIdFromElement: (
     element: HTMLElement | null | undefined,
   ) => string | null;

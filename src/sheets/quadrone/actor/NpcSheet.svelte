@@ -114,7 +114,12 @@
                 data-tidy-sheet-part="actor-name"
                 data-tooltip={context.actor.name}
               >
-                {context.actor.name}
+                <a
+                  data-action="copyInnerText"
+                  class="cursor highlight-on-hover"
+                >
+                  {context.actor.name}
+                </a>
               </h1>
             {/if}
             <div
@@ -125,7 +130,7 @@
                 {#each Object.entries(context.config.restTypes) as [key, rest]}
                   <button
                     type="button"
-                    class="button button-icon-only short-rest button-gold"
+                    class="button button-icon-only button-gold"
                     data-tooltip=""
                     aria-label={localize(rest.label)}
                     data-action="rest"

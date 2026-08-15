@@ -1,6 +1,5 @@
 import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type {
@@ -53,6 +52,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
+import { delay } from 'src/utils/asynchrony';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -108,29 +108,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
-      [ImportSheetControl.actionName]: async function (this: any) {
-        await ImportSheetControl.importFromCompendium(this, this.document);
-      },
-      sheetSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        this.openSheetSettings();
-      },
-      showIcon: async function (this: Tidy5eItemSheetQuadrone) {
-        const title =
-          this.item.system.identified === false
-            ? this.item.system.unidentified.name
-            : this.item.name;
-
-        this._renderChild(
-          new foundry.applications.apps.ImagePopout({
-            src: this.item.img,
-            uuid: this.item.uuid,
-            window: { title },
-          }),
-        );
-      },
-      themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
-        return this.openSheetSettings(TidySheetSettingsTabIds.theme);
-      },
+      showIcon: Tidy5eItemSheetQuadrone.#showIcon,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
     dragDrop: [
@@ -177,8 +155,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   }
 
   selectTab(tabId: string) {
-    this.onTabSelected(tabId);
-    this.render();
+    this.element.querySelector(`[data-tab-id="${tabId}"]`)?.click();
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -1155,6 +1132,23 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           }),
         );
     }
+  }
+
+  /* -------------------------------------------- */
+
+  static async #showIcon(this: Tidy5eItemSheetQuadrone) {
+    const title =
+      this.item.system.identified === false
+        ? this.item.system.unidentified.name
+        : this.item.name;
+
+    this._renderChild(
+      new foundry.applications.apps.ImagePopout({
+        src: this.item.img,
+        uuid: this.item.uuid,
+        window: { title },
+      }),
+    );
   }
 
   /* -------------------------------------------- */

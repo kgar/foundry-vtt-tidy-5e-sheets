@@ -81,6 +81,27 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       width: 740,
       height: 810,
     },
+    actions: {
+      addAllAsPlaceholders: Tidy5eEncounterSheetQuadrone.#addAllAsPlaceholders,
+      addNewLairPlaceholder:
+        Tidy5eEncounterSheetQuadrone.#addNewLairPlaceholder,
+      addNewPlaceholder: Tidy5eEncounterSheetQuadrone.#addNewPlaceholder,
+      addToCombatAsPlaceholder:
+        Tidy5eEncounterSheetQuadrone.#addToCombatAsPlaceholder,
+      browseAddNpc: Tidy5eEncounterSheetQuadrone.#browseAddNpc,
+      editPlaceholderImage: Tidy5eEncounterSheetQuadrone.#editPlaceholderImage,
+      prerollAllInitiatives:
+        Tidy5eEncounterSheetQuadrone.#prerollAllInitiatives,
+      prerollInitiative: Tidy5eEncounterSheetQuadrone.#prerollInitiative,
+      removeMember: Tidy5eEncounterSheetQuadrone.#removeMember,
+      rollQuantities: Tidy5eEncounterSheetQuadrone.#rollQuantities,
+      showPlaceholderArtwork:
+        Tidy5eEncounterSheetQuadrone.#showPlaceholderArtwork,
+      toggleCombatantInclusion:
+        Tidy5eEncounterSheetQuadrone.#toggleCombatantInclusion,
+      toggleCombatantVisibility:
+        Tidy5eEncounterSheetQuadrone.#toggleCombatantVisibility,
+    },
   };
 
   static _lockedSkillAllowlist = new Set<string>(['ins', 'per']);
@@ -233,7 +254,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const speeds = new Map<string, MeasurableGroupTrait<number>>();
 
     const memberContexts = await Promise.all(
-      members.map(async ({ actor, quantity }) => {
+      members.map(async ({ actor, quantity }, index) => {
         const combatantSettings = CombatantSettings.getEntry(
           this.actor,
           actor.uuid,
@@ -265,6 +286,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
+          index,
           name: actor.name,
           portrait: await this._preparePortrait(actor),
           initiative: combatantSettings.initiative,
@@ -434,158 +456,12 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
-  updateMemberQuantity(uuid: string, newValue: string) {
-    return this.updateMember(uuid, (member) => {
-      const currentQuantity = member.quantity.value;
-      const newQuantity =
-        typeof newValue === 'number'
-          ? newValue
-          : processInputChangeDeltaFromValues(newValue, currentQuantity);
-
-      if (newQuantity !== undefined) {
-        foundry.utils.setProperty(member, 'quantity.value', newQuantity);
-      }
-    });
-  }
-
-  updateMemberFormula(uuid: string, newValue: string | number) {
-    return this.updateMember(uuid, (member) => {
-      foundry.utils.setProperty(member, 'quantity.formula', newValue);
-    });
-  }
-
-  updatePlaceholderField<K extends keyof EncounterPlaceholder>(
-    placeholder: EncounterPlaceholderQuadroneContext,
-    key: K,
-    value: EncounterPlaceholder[K],
+  static async #addAllAsPlaceholders(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    _target: HTMLElement,
   ) {
-    const data: EncounterPlaceholder = {
-      id: placeholder.id,
-      img: placeholder.img,
-      name: placeholder.name,
-      note: placeholder.note,
-    };
-
-    data[key] = value;
-
-    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, data);
-  }
-
-  async getPrerolledInitiative(ev: Event, actor: Actor5e) {
-    const keys = FoundryAdapter.getRollModeState(ev);
-    const roll = actor.getInitiativeRoll({ ...keys, event: ev });
-    await roll.evaluate();
-    return roll.total;
-  }
-
-  async prerollInitiative(ev: Event, actor: Actor5e) {
-    const total = await this.getPrerolledInitiative(ev, actor);
-
-    CombatantSettings.insertOrUpdate(this.actor, {
-      identifier: actor.uuid,
-      initiative: total,
-    });
-  }
-
-  async prerollAllInitiatives(ev: Event) {
-    const members = await this.getMembers();
-
-    const initiatives = (
-      await Promise.all(
-        members.map(async ({ actor }) => {
-          const total = await this.getPrerolledInitiative(ev, actor);
-          return [actor.uuid, total];
-        }),
-      )
-    ).reduce<Record<string, Partial<EncounterCombatantSettings>>>(
-      (prev, [uuid, initiative]) => {
-        prev[uuid] = {
-          identifier: uuid,
-          initiative: initiative,
-        };
-        return prev;
-      },
-      {},
-    );
-
-    CombatantSettings.bulkInsertOrUpdate(this.actor, initiatives);
-  }
-
-  updateMember(
-    uuid: string,
-    memberUpdateCallback: (member: any) => void,
-  ): Promise<any> | undefined {
-    const members: any[] = this.actor.system.toObject().members;
-
-    const member = members.find((m: any) => m.uuid === uuid);
-
-    if (!member) {
-      return;
-    }
-
-    memberUpdateCallback(member);
-
-    return this.actor.update({ 'system.members': members });
-  }
-
-  async award() {
-    this._renderChild(
-      new dnd5e.applications.Award({
-        award: {
-          currency: { ...this.actor.system.currency },
-          savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
-          xp: await this.actor.system.getXPValue(),
-        },
-      }),
-    );
-  }
-
-  async _browseAddNpc() {
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
-      {
-        filters: {
-          locked: {
-            documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
-            types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
-          },
-        },
-      },
-      this._detachOptions(),
-    );
-
-    if (result) {
-      const actor = await fromUuid(result);
-      this.actor.system.addMember(actor);
-    }
-  }
-
-  async addNewPlaceholder(
-    data?: Partial<EncounterPlaceholder>,
-    combatantSettings?: Partial<EncounterCombatantSettings>,
-  ): Promise<void> {
-    data ??= {};
-    const newPlaceholder = FoundryAdapter.mergeObject(
-      {
-        id: foundry.utils.randomID(),
-        img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-        name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
-      },
-      data,
-    );
-
-    const result = await TidyFlags.placeholders.insertOrUpdateEntry(
-      this.actor,
-      newPlaceholder,
-    );
-
-    if (combatantSettings) {
-      await CombatantSettings.insertOrUpdate(this.actor, {
-        identifier: newPlaceholder.id,
-        ...combatantSettings,
-      });
-    }
-
-    return result;
+    this.addAllAsPlaceholders();
   }
 
   async addAllAsPlaceholders(): Promise<void> {
@@ -636,18 +512,96 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     ]);
   }
 
-  deletePlaceholder(placeholderId: string): Promise<void> {
-    return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
+  /* -------------------------------------------- */
+
+  static async #addNewLairPlaceholder(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    this.addNewPlaceholder(
+      {
+        name: FoundryAdapter.localize('DND5E.LAIR.Action.Label'),
+      },
+      { initiative: 20 },
+    );
   }
 
-  async onAddPlaceholder(ev: Event & { currentTarget: HTMLElement }) {
-    const type = ev.currentTarget
+  /* -------------------------------------------- */
+
+  static async #addNewPlaceholder(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    let { initiative } = target.dataset;
+
+    if (Number.isNumeric(initiative) && initiative !== undefined) {
+      const initiativeNumber = Number(initiative);
+
+      this.addNewPlaceholder(
+        {
+          name: FoundryAdapter.localize(
+            'TIDY5E.Encounter.InitiativeCount.Label',
+            {
+              count: initiativeNumber,
+            },
+          ),
+        },
+        { initiative: initiativeNumber },
+      );
+    } else {
+      this.addNewPlaceholder();
+    }
+  }
+
+  async addNewPlaceholder(
+    data?: Partial<EncounterPlaceholder>,
+    combatantSettings?: Partial<EncounterCombatantSettings>,
+  ): Promise<void> {
+    data ??= {};
+    const newPlaceholder = FoundryAdapter.mergeObject(
+      {
+        id: foundry.utils.randomID(),
+        img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
+        name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+      },
+      data,
+    );
+
+    const result = await TidyFlags.placeholders.insertOrUpdateEntry(
+      this.actor,
+      newPlaceholder,
+    );
+
+    if (combatantSettings) {
+      await CombatantSettings.insertOrUpdate(this.actor, {
+        identifier: newPlaceholder.id,
+        ...combatantSettings,
+      });
+    }
+
+    return result;
+  }
+
+  /* -------------------------------------------- */
+
+  static async #addToCombatAsPlaceholder(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    this.onAddPlaceholder(target);
+  }
+
+  async onAddPlaceholder(target: HTMLElement) {
+    const type = target
       .closest('[data-combatant-type]')
       ?.getAttribute('data-combatant-type');
 
     if (type === 'member') {
       const uuid =
-        ev.currentTarget
+        target
           .closest('[data-member-uuid]')
           ?.getAttribute('data-member-uuid') ?? '';
 
@@ -675,7 +629,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     } else if (type === 'placeholder') {
       const placeholders = TidyFlags.placeholders.get(this.actor);
       const placeholderId =
-        ev.currentTarget
+        target
           .closest('[data-placeholder-id]')
           ?.getAttribute('data-placeholder-id') ?? '';
 
@@ -723,13 +677,211 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     return game.combat.createEmbeddedDocuments('Combatant', combatants);
   }
 
-  toggleCombatantVisibility(identifier: string) {
-    const settings = CombatantSettings.getEntry(this.actor, identifier);
+  /* -------------------------------------------- */
 
-    return CombatantSettings.insertOrUpdate(this.actor, {
-      identifier,
-      visible: !settings.visible,
+  async award() {
+    this._renderChild(
+      new dnd5e.applications.Award({
+        award: {
+          currency: { ...this.actor.system.currency },
+          savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+          xp: await this.actor.system.getXPValue(),
+        },
+      }),
+    );
+  }
+
+  /* -------------------------------------------- */
+
+  static async #browseAddNpc(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    this._browseAddNpc();
+  }
+
+  async _browseAddNpc() {
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
+            types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
+          },
+        },
+      },
+      this._detachOptions(),
+    );
+
+    if (result) {
+      const actor = await fromUuid(result);
+      this.actor.system.addMember(actor);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  static async #editPlaceholderImage(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const { placeholderId } =
+      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+
+    if (!placeholderId) {
+      return;
+    }
+
+    const placeholder = TidyFlags.placeholders.get(this.document)?.[
+      placeholderId
+    ];
+
+    if (!placeholder) {
+      return;
+    }
+
+    const fp = new foundry.applications.apps.FilePicker.implementation({
+      current: placeholder.img,
+      type: 'image',
+      redirectToRoot:
+        Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON
+          ? [Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON]
+          : [],
+      callback: (path: string) => {
+        placeholder.img = path;
+        TidyFlags.placeholders.insertOrUpdateEntry(this.document, placeholder);
+      },
+      position: {
+        top: this.position.top + 40,
+        left: this.position.left + 10,
+      },
     });
+
+    fp.browse();
+  }
+
+  /* -------------------------------------------- */
+
+  static async #prerollAllInitiatives(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    this.prerollAllInitiatives(event);
+  }
+
+  async prerollAllInitiatives(ev: Event) {
+    const members = await this.getMembers();
+
+    const initiatives = (
+      await Promise.all(
+        members.map(async ({ actor }) => {
+          const total = await this.getPrerolledInitiative(ev, actor);
+          return [actor.uuid, total];
+        }),
+      )
+    ).reduce<Record<string, Partial<EncounterCombatantSettings>>>(
+      (prev, [uuid, initiative]) => {
+        prev[uuid] = {
+          identifier: uuid,
+          initiative: initiative,
+        };
+        return prev;
+      },
+      {},
+    );
+
+    CombatantSettings.bulkInsertOrUpdate(this.actor, initiatives);
+  }
+
+  async getPrerolledInitiative(ev: Event, actor: Actor5e) {
+    const keys = FoundryAdapter.getRollModeState(ev);
+    const roll = actor.getInitiativeRoll({ ...keys, event: ev });
+    await roll.evaluate();
+    return roll.total;
+  }
+
+  /* -------------------------------------------- */
+
+  static async #prerollInitiative(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const uuid =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
+    const member = await fromUuid(uuid);
+    return await this.prerollInitiative(event, member);
+  }
+
+  async prerollInitiative(ev: Event, actor: Actor5e) {
+    const total = await this.getPrerolledInitiative(ev, actor);
+
+    CombatantSettings.insertOrUpdate(this.actor, {
+      identifier: actor.uuid,
+      initiative: total,
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  static async #rollQuantities(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    this.document.system.rollQuantities();
+  }
+
+  /* -------------------------------------------- */
+
+  static async #showPlaceholderArtwork(
+    this: Tidy5eEncounterSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    const { placeholderId } =
+      target.closest<HTMLElement>('[data-placeholder-id]')?.dataset ?? {};
+
+    if (!placeholderId) {
+      return;
+    }
+
+    const placeholder = TidyFlags.placeholders.get(this.document)?.[
+      placeholderId
+    ];
+
+    if (!placeholder) {
+      return;
+    }
+
+    this._renderChild(
+      new foundry.applications.apps.ImagePopout({
+        src: placeholder.img,
+        title: placeholder.name,
+      }),
+    );
+  }
+
+  /* -------------------------------------------- */
+
+  static async #toggleCombatantInclusion(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    // TODO: for combat identifiers, share a function for this.
+    const { placeholderId, memberUuid } =
+      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
+        ?.dataset ?? {};
+
+    const identifier = placeholderId ?? memberUuid;
+
+    if (identifier) {
+      this.toggleCombatantInclusion(identifier);
+    }
   }
 
   toggleCombatantInclusion(identifier: string) {
@@ -742,6 +894,95 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   }
 
   /* -------------------------------------------- */
+
+  static async #toggleCombatantVisibility(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    // TODO: for combat identifiers, share a function for this.
+    const { placeholderId, memberUuid } =
+      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
+        ?.dataset ?? {};
+
+    const identifier = placeholderId ?? memberUuid;
+
+    if (identifier) {
+      this.toggleCombatantVisibility(identifier);
+    }
+  }
+
+  toggleCombatantVisibility(identifier: string) {
+    const settings = CombatantSettings.getEntry(this.actor, identifier);
+
+    return CombatantSettings.insertOrUpdate(this.actor, {
+      identifier,
+      visible: !settings.visible,
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  override async _onAdjustProperty(
+    event: Event,
+    target: HTMLElement,
+    amount: number,
+  ): Promise<any> {
+    const index = target.closest<HTMLElement>('[data-index]')?.dataset.index;
+
+    if (index === undefined) {
+      return super._onAdjustProperty(event, target, amount);
+    }
+
+    const property = target.dataset.property;
+
+    if (!property) {
+      return;
+    }
+
+    // TODO: This min/max clamping appears in multiple places in the code. Where can it go to be shared?
+    const input = target.parentElement?.querySelector('input');
+    const min = input?.min ? Number(input.min) : -Infinity;
+    const max = input?.max ? Number(input.max) : Infinity;
+
+    const members = this.actor.system.toObject().members;
+    const member = members[index];
+
+    const originalValue =
+      FoundryAdapter.getProperty<number>(member, property) ?? 0;
+
+    let newValue = Math.clamp(originalValue + amount, min, max);
+
+    foundry.utils.setProperty(member, property, newValue);
+
+    this.actor.update({ 'system.members': members });
+  }
+
+  static async #removeMember(
+    this: Tidy5eEncounterSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const { placeholderId, memberUuid } =
+      target.closest<HTMLElement>('[data-placeholder-id], [data-member-uuid]')
+        ?.dataset ?? {};
+
+    if (placeholderId) {
+      return await this.deletePlaceholder(placeholderId);
+    }
+
+    const member = await fromUuid(memberUuid);
+
+    if (member) {
+      return await this.document.system.removeMember(member);
+    }
+  }
+
+  deletePlaceholder(placeholderId: string): Promise<void> {
+    return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
+  }
+
+  /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
 
@@ -751,5 +992,120 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
+  }
+
+  async _onChangeForm(
+    formConfig: unknown,
+    event: Event & { target: HTMLElement },
+  ) {
+    // data-name => the prop path for a single-property update
+    const { name } = event.target.dataset;
+    // data-index => a member update
+    const index =
+      event.target.closest<HTMLElement>('[data-index]')?.dataset.index;
+
+    if (Number.isNumeric(index) && !!name) {
+      return await this._onMemberChanged(event, Number(index), name);
+    }
+
+    // TODO: Make utility function for this type of operation: detecting specialization prefix, shaving off prefix, running a callback, returning a boolean, all async I guess
+    const isCombatUpdate = name?.startsWith('combatantSettings:');
+
+    const { memberUuid, placeholderId } =
+      event.target.closest<HTMLElement>(
+        '[data-member-uuid], [data-placeholder-id]',
+      )?.dataset ?? {};
+
+    const combatantId = memberUuid ?? placeholderId;
+
+    if (isCombatUpdate && !!name && combatantId) {
+      const prop = name.split('combatantSettings:').at(-1);
+      return prop
+        ? await this._onCombatantChanged(event, combatantId, prop)
+        : undefined;
+    }
+
+    const isPlaceholderUpdate = name?.startsWith('placeholder:');
+
+    if (isPlaceholderUpdate && !!name && placeholderId) {
+      const prop = name.split('placeholder:').at(-1);
+      return prop
+        ? await this._onPlaceholderChanged(event, placeholderId, prop)
+        : undefined;
+    }
+
+    return await super._onChangeForm(formConfig, event);
+  }
+
+  async _onMemberChanged(event: any, index: number, name: string) {
+    const members = this.actor.system.toObject().members;
+
+    if (
+      // TODO: I've used this multiple times now. Where can I share it?
+      event.target.matches(
+        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+      )
+    ) {
+      dnd5e.utils.parseInputDelta(event.target, members[index]);
+    }
+
+    foundry.utils.setProperty(members[index], name, event.target.value);
+
+    this.actor.update({ 'system.members': members });
+  }
+
+  _onPlaceholderChanged(event: any, placeholderId: string, prop: string) {
+    const placeholder = TidyFlags.placeholders.get(this.document)?.[
+      placeholderId
+    ];
+
+    if (!placeholder) {
+      return;
+    }
+
+    if (
+      // TODO: I've used this multiple times now. Where can I share it?
+      event.target.matches(
+        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+      )
+    ) {
+      dnd5e.utils.parseInputDelta(event.target, placeholder);
+    }
+
+    const value = Number.isNumeric(event.target.value)
+      ? Number(event.target.value)
+      : event.target.value;
+
+    foundry.utils.setProperty(placeholder, prop, value);
+
+    return TidyFlags.placeholders.insertOrUpdateEntry(
+      this.document,
+      placeholder,
+    );
+  }
+
+  _onCombatantChanged(event: any, combatantId: string, prop: string) {
+    const combatant = CombatantSettings.getEntry(this.document, combatantId);
+
+    if (!combatant) {
+      return;
+    }
+
+    if (
+      // TODO: I've used this multiple times now. Where can I share it?
+      event.target.matches(
+        `input:is([name], [data-name]):is([data-dtype="Number"], [inputmode="numeric"], [type="number"])`,
+      )
+    ) {
+      dnd5e.utils.parseInputDelta(event.target, combatant);
+    }
+
+    const value = Number.isNumeric(event.target.value)
+      ? Number(event.target.value)
+      : event.target.value;
+
+    foundry.utils.setProperty(combatant, prop, value);
+
+    return CombatantSettings.insertOrUpdate(this.document, combatant);
   }
 }

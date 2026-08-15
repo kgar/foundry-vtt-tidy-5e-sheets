@@ -12,6 +12,7 @@
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type { ClassValue } from 'svelte/elements';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   interface Props {
     class?: ClassValue;
@@ -111,16 +112,17 @@
     {#each context.currencies as currency (currency.key)}
       <label class="input-group">
         <i class="currency {currency.key}" aria-label={currency.key}></i>
-        <TextInputQuadrone
-          document={context.document}
-          field="system.currency.{currency.key}"
+        <input
+          type="text"
           id="{context.document.id}-system.currency.{currency.key}"
-          value={currency.value}
-          enableDeltaChanges={true}
-          selectOnFocus={true}
-          disabled={!context.editable}
           class="currency-item uninput currency-{currency.key}"
+          data-name="system.currency.{currency.key}"
+          inputmode="numeric"
+          data-dtype="Number"
+          {@attach InputAttachments.selectOnFocus}
           placeholder="0"
+          value={currency.value}
+          disabled={!context.editable}
         />
         <span class="denomination {currency.key}" data-denom={currency.key}>
           {currency.abbr}

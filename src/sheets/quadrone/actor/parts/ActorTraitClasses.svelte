@@ -168,8 +168,6 @@
           class="list-values trait-class trait-item"
           data-action="showDocument"
           data-uuid={cls?.item.uuid}
-          onmousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event, cls?.item)}
         >
           {#if cls}
             <!-- svelte-ignore a11y_missing_attribute -->
@@ -296,8 +294,6 @@
         class="list-values trait-item"
         data-action="showDocument"
         data-uuid={subclass.uuid}
-        onmousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, subclass)}
       >
         {#if !orphaned}
           <i

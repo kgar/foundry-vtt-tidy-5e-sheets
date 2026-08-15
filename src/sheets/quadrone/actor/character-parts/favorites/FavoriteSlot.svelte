@@ -34,10 +34,6 @@
   data-key={favorite.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
   data-slots
-  onmousedown={(event) =>
-    FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.openSpellSlotsConfig(context.actor),
-    )}
   data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton

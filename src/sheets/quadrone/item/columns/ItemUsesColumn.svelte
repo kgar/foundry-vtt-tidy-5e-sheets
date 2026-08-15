@@ -40,7 +40,8 @@
   {#if item.hasRecharge && item.isOnCooldown}
     <a
       class={['item-list-button', { disabled: !item.isOwner }]}
-      data-tooltip={rechargeLabel}
+      data-tooltip=""
+      aria-label={rechargeLabel}
       onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
@@ -58,10 +59,10 @@
   {:else}
     <input
       type="text"
+      inputmode="numeric"
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
-      onchange={(event) =>
-        FoundryAdapter.handleDocumentUsesChanged(event, item)}
+      data-name="system.uses.value"
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />

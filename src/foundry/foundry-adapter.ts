@@ -27,9 +27,9 @@ import type { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumen
 import type { CurrencyItemConfig } from './config.types';
 
 const quadroneSheetRegex = /Tidy.*Quadrone/;
-export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
-  ReturnType<typeof getTidyExtensibleDocumentSheetMixin>
->;
+export type DocumentSheetConstructor = new (
+  ...args: any[]
+) => InstanceType<ReturnType<typeof getTidyExtensibleDocumentSheetMixin>>;
 export type TidySheetClassMetadata = {
   documentClass: any;
   documentName: string;
@@ -52,7 +52,7 @@ export const FoundryAdapter = {
   },
   async setTidySetting(
     key: keyof CurrentSettings,
-    value: unknown
+    value: unknown,
   ): Promise<void> {
     await game.settings.set(CONSTANTS.MODULE_ID, key, value);
   },
@@ -71,13 +71,13 @@ export const FoundryAdapter = {
   getSystemSetting<T = string>(settingName: string): T {
     return FoundryAdapter.getGameSetting(
       CONSTANTS.DND5E_SYSTEM_ID,
-      settingName
+      settingName,
     );
   },
   async setGameSetting(
     namespace: string,
     key: string,
-    value: unknown
+    value: unknown,
   ): Promise<void> {
     await game.settings.set(namespace, key, value);
   },
@@ -110,17 +110,21 @@ export const FoundryAdapter = {
       !TidyHooks.tidy5eSheetsPreCreateActiveEffect(
         parent,
         effectData,
-        game.user.id
+        game.user.id,
       )
     ) {
       return;
     }
 
     if (parent.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return ActiveEffect.implementation.createDialog(effectData, {
-        parent: parent,
-        renderSheet: true,
-      }, { sheet: parent?.sheet });
+      return ActiveEffect.implementation.createDialog(
+        effectData,
+        {
+          parent: parent,
+          renderSheet: true,
+        },
+        { sheet: parent?.sheet },
+      );
     }
 
     return ActiveEffect.implementation.create(effectData, {
@@ -137,7 +141,7 @@ export const FoundryAdapter = {
   },
   getPreparedLabel(item: Item5e) {
     return Object.values(CONFIG.DND5E.spellPreparationStates).find(
-      (s) => s.value === item.system.prepared
+      (s) => s.value === item.system.prepared,
     )?.label;
   },
   /**
@@ -150,7 +154,7 @@ export const FoundryAdapter = {
   createEditorHtml(
     content: string,
     targetDataField: string,
-    editable: boolean
+    editable: boolean,
   ) {
     return foundry.applications.handlebars.editor(content, {
       hash: {
@@ -198,7 +202,7 @@ export const FoundryAdapter = {
 
         return map;
       },
-      new Map<string, ClassSummary>()
+      new Map<string, ClassSummary>(),
     );
   },
   getActorCharacterSummaryEntries(actorContext: any): string[] {
@@ -225,6 +229,7 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
+  // game.release.generation < 14
   doActionOnMiddleClick(event: MouseEvent, action: () => any) {
     if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
       return;
@@ -241,17 +246,18 @@ export const FoundryAdapter = {
     }
     return document.testUserPermission(
       game.user,
-      CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+      CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
     );
   },
+  // game.release.generation < 14
   editOnMiddleClick(
     event: MouseEvent,
     entityWithSheet: {
       sheet: { render: (force: boolean) => void; isEditable: boolean };
-    }
+    },
   ) {
     return FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.editOnMouseEvent(event, entityWithSheet)
+      FoundryAdapter.editOnMouseEvent(event, entityWithSheet),
     );
   },
   editOnMouseEvent(event: MouseEvent, doc: any) {
@@ -264,9 +270,9 @@ export const FoundryAdapter = {
 
     const options = { mode: CONSTANTS.SHEET_MODE_EDIT };
 
-    const renderChild =  
+    const renderChild =
       // items
-      doc.parent?.sheet?._renderChild ?? 
+      doc.parent?.sheet?._renderChild ??
       // activities, effects
       doc.parent?.parent?.sheet?._renderChild;
 
@@ -305,12 +311,12 @@ export const FoundryAdapter = {
       {
         name: FoundryAdapter.localize('DND5E.ItemNew', {
           type: FoundryAdapter.localize(
-            CONFIG.Item.typeLabels[type as keyof typeof CONFIG.Item.typeLabels]
+            CONFIG.Item.typeLabels[type as keyof typeof CONFIG.Item.typeLabels],
           ),
         }),
         type,
       },
-      foundry.utils.expandObject({ ...data })
+      foundry.utils.expandObject({ ...data }),
     );
 
     if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, itemData, game.user.id)) {
@@ -322,7 +328,7 @@ export const FoundryAdapter = {
   async onLevelChange(
     event: Event & { currentTarget: EventTarget & HTMLSelectElement },
     item: any,
-    actor: Actor5e
+    actor: Actor5e,
   ) {
     event.preventDefault();
     const target = event.currentTarget;
@@ -344,16 +350,18 @@ export const FoundryAdapter = {
         dnd5e.applications.advancement.AdvancementManager.forLevelChange(
           actor,
           item.id,
-          delta
+          delta,
         );
       if (manager.steps.length) {
         if (delta > 0) return actor.sheet._renderChild(manager);
         try {
           const shouldRemoveAdvancements =
             await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
-              item, { sheet: actor.sheet }
+              item,
+              { sheet: actor.sheet },
             );
-          if (shouldRemoveAdvancements) return actor.sheet._renderChild(manager);
+          if (shouldRemoveAdvancements)
+            return actor.sheet._renderChild(manager);
         } catch (err) {
           return;
         }
@@ -370,7 +378,7 @@ export const FoundryAdapter = {
     >((prev, curr) => {
       const config =
         CONFIG.DND5E.itemProperties[
-        curr as keyof typeof CONFIG.DND5E.itemProperties
+          curr as keyof typeof CONFIG.DND5E.itemProperties
         ];
       if (config.abbreviation) {
         prev[config.abbreviation] = config.label;
@@ -455,13 +463,13 @@ export const FoundryAdapter = {
     return classes.join(' ');
   },
   getSpellAttackModAndTooltip(
-    context: CharacterSheetContext | NpcSheetContext
+    context: CharacterSheetContext | NpcSheetContext,
   ) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
       actor.getRollData(),
-      { missing: 0, warn: false }
+      { missing: 0, warn: false },
     );
 
     let prof = actor.system.attributes.prof ?? 0;
@@ -485,7 +493,7 @@ export const FoundryAdapter = {
     key: string,
     currentValue: number | undefined,
     systemFieldName: string,
-    reverse: boolean = false
+    reverse: boolean = false,
   ): Promise<any | undefined> {
     // TODO: Check for active effects and prevent if applicable.
 
@@ -511,7 +519,7 @@ export const FoundryAdapter = {
   },
   getSpellImageUrl(
     context: CharacterSheetContext | NpcSheetContext,
-    spell: any
+    spell: any,
   ): string | undefined {
     if (!settings.value.useSpellClassFilterIcons) {
       return spell.img;
@@ -532,7 +540,7 @@ export const FoundryAdapter = {
     return new Set(
       actors
         .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
-        .map((actor) => actor.uuid)
+        .map((actor) => actor.uuid),
     );
   },
   searchActor(searchCriteria: string, actor: Actor5e) {
@@ -545,7 +553,7 @@ export const FoundryAdapter = {
     return new Set(
       items
         .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
-        .map((item) => item.uuid)
+        .map((item) => item.uuid),
     );
   },
   searchItem(item: any, searchCriteria: string): boolean {
@@ -561,41 +569,43 @@ export const FoundryAdapter = {
   },
   searchEffects(
     searchCriteria: string,
-    effects: ActiveEffect5e[]
+    effects: ActiveEffect5e[],
   ): Set<string> {
     return new Set(
       effects
         .filter(
           (effect: any) =>
             searchCriteria.trim() === '' ||
-            effect.name.toLowerCase().includes(searchCriteria.toLowerCase())
+            effect.name.toLowerCase().includes(searchCriteria.toLowerCase()),
         )
-        .map((effect) => effect.id)
+        .map((effect) => effect.id),
     );
   },
   searchActivities(
     searchCriteria: string,
-    activities: Activity5e[]
+    activities: Activity5e[],
   ): Set<string> {
     return new Set(
       activities
         .filter(
           (activities: any) =>
             searchCriteria.trim() === '' ||
-            activities.name.toLowerCase().includes(searchCriteria.toLowerCase())
+            activities.name
+              .toLowerCase()
+              .includes(searchCriteria.toLowerCase()),
         )
-        .map((activities) => activities.uuid)
+        .map((activities) => activities.uuid),
     );
   },
   getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
     return items.filter(
       (x: ActionItem) =>
         searchCriteria.trim() === '' ||
-        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
+        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
     );
   },
   parseAdditionalClassesDropDownItems(
-    spellClassFilterAdditionalClassesText: string
+    spellClassFilterAdditionalClassesText: string,
   ) {
     return spellClassFilterAdditionalClassesText
       .split(',')
@@ -616,8 +626,9 @@ export const FoundryAdapter = {
   },
   getWeightUnit() {
     return FoundryAdapter.localize(
-      `DND5E.UNITS.WEIGHT.${game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
-      }.Abbreviation`
+      `DND5E.UNITS.WEIGHT.${
+        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
+      }.Abbreviation`,
     );
   },
   isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
@@ -778,7 +789,7 @@ export const FoundryAdapter = {
   roll(
     formula: string,
     rollData?: unknown,
-    rollFnOptions: any = {}
+    rollFnOptions: any = {},
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
   },
@@ -790,9 +801,9 @@ export const FoundryAdapter = {
     const keyPath =
       documentToUpdate.type === CONSTANTS.ITEM_TYPE_RACE
         ? // A species document
-        'type'
+          'type'
         : // An actor without a species
-        'details.type';
+          'details.type';
 
     const options: Record<string, any> = {
       document: documentToUpdate,
@@ -817,7 +828,7 @@ export const FoundryAdapter = {
         case 'Die':
         case 'BasicDie': {
           averageString += Math.floor(
-            (term[i].faces * term[i].number + term[i].number) / 2
+            (term[i].faces * term[i].number + term[i].number) / 2,
           );
           break;
         }
@@ -851,7 +862,7 @@ export const FoundryAdapter = {
     return dnd5e.documents.advancement.Advancement.createDialog(
       {},
       { parent: item },
-      { sheet: item.sheet }
+      { sheet: item.sheet },
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
@@ -863,7 +874,7 @@ export const FoundryAdapter = {
       dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
         item.actor,
         item.id,
-        Number(advancementLevel)
+        Number(advancementLevel),
       );
 
     if (manager.steps.length) {
@@ -900,9 +911,11 @@ export const FoundryAdapter = {
     );
   },
   renderInitiativeConfig(document: any) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.InitiativeConfig({
-      document,
-    }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.InitiativeConfig({
+        document,
+      }),
+    );
   },
   renderAbilityConfig(document: any, key: any) {
     return document.sheet._renderChild(
@@ -925,16 +938,22 @@ export const FoundryAdapter = {
     );
   },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
-    return document.sheet._renderChild(new dnd5e.applications.shared.MovementSensesConfig({
-      document,
-      type,
-    }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.shared.MovementSensesConfig({
+        document,
+        type,
+      }),
+    );
   },
   renderHitPointsConfig(document: any) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.HitPointsConfig({ document }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.HitPointsConfig({ document }),
+    );
   },
   renderHitDiceConfig(document: any) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.HitDiceConfig({ document }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.HitDiceConfig({ document }),
+    );
   },
   renderToolsConfig(document: any) {
     return document.sheet._renderChild(
@@ -944,12 +963,16 @@ export const FoundryAdapter = {
       }),
     );
   },
-  renderTraitsConfig(document: any, trait: string, config?: Record<string, any>) {
+  renderTraitsConfig(
+    document: any,
+    trait: string,
+    config?: Record<string, any>,
+  ) {
     return document.sheet._renderChild(
       new dnd5e.applications.actor.TraitsConfig({
         document,
         trait,
-        ...config
+        ...config,
       }),
     );
   },
@@ -962,11 +985,13 @@ export const FoundryAdapter = {
     );
   },
   renderSkillToolConfig(document: any, trait: 'skills' | 'tool', key: string) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.SkillToolConfig({
-      document,
-      trait,
-      key,
-    }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.SkillToolConfig({
+        document,
+        trait,
+        key,
+      }),
+    );
   },
   renderSkillsConfig(document: any) {
     return document.sheet._renderChild(
@@ -976,12 +1001,14 @@ export const FoundryAdapter = {
     );
   },
   renderSourceConfig(document: any, keyPath: string) {
-    return document.sheet._renderChild(new dnd5e.applications.shared.SourceConfig(
-      { document: document },
-      {
-        keyPath,
-      }
-    ));
+    return document.sheet._renderChild(
+      new dnd5e.applications.shared.SourceConfig(
+        { document: document },
+        {
+          keyPath,
+        },
+      ),
+    );
   },
   getActivationTypeLabel(activationType: string) {
     return activationType === 'other'
@@ -1009,7 +1036,7 @@ export const FoundryAdapter = {
    */
   onTabSelecting(
     app: { currentTabId: string; element: HTMLElement },
-    newTabId: string
+    newTabId: string,
   ) {
     if (!app.element) {
       return false;
@@ -1044,7 +1071,7 @@ export const FoundryAdapter = {
       error(
         'An error occurred while mapping abilities as dropdown items',
         false,
-        e
+        e,
       );
       debug('Dropdown mapping error troubleshooting info', { abilities });
       return [];
@@ -1066,14 +1093,14 @@ export const FoundryAdapter = {
       error(
         'An error occurred while getting the identified name of this item for the GM',
         false,
-        e
+        e,
       );
       return '';
     }
   },
   async toggleCondition(document: Actor5e, condition: any) {
     const existing = document.effects.get(
-      dnd5e.utils.staticID(`dnd5e${condition.id}`)
+      dnd5e.utils.staticID(`dnd5e${condition.id}`),
     );
 
     if (existing) {
@@ -1081,7 +1108,7 @@ export const FoundryAdapter = {
     }
 
     const effect = await ActiveEffect.implementation.fromStatusEffect(
-      condition.id
+      condition.id,
     );
 
     return ActiveEffect.implementation.create(effect, {
@@ -1097,11 +1124,12 @@ export const FoundryAdapter = {
     document: any;
     effectId: string;
     parentId?: string;
-  }) {
+  }): ActiveEffect5e | undefined {
     let effect = document.effects?.get(effectId);
     if (effect) {
       return effect;
     }
+
     const parentDocument = document.items.get(parentId);
     effect = parentDocument?.effects?.get(effectId);
     return (
@@ -1122,8 +1150,7 @@ export const FoundryAdapter = {
     return (
       (document.system.isCharacter &&
         settings.value.useClassicControlsForCharacter) ||
-      (document.system.isNPC &&
-        settings.value.useClassicControlsForNpc) ||
+      (document.system.isNPC && settings.value.useClassicControlsForNpc) ||
       (document.system.isVehicle &&
         settings.value.useClassicControlsForVehicle) ||
       // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
@@ -1148,13 +1175,13 @@ export const FoundryAdapter = {
   getAttunementContext(item: Item5e): AttunementContext | undefined {
     return FoundryAdapter.isAttunementApplicable(item) && !item.system.attuned
       ? {
-        ...FoundryAdapter.attunementContextApplicable,
-        title:
-          CONFIG.DND5E.attunementTypes[
-          item.system
-            .attunement as keyof typeof CONFIG.DND5E.attunementTypes
-          ],
-      }
+          ...FoundryAdapter.attunementContextApplicable,
+          title:
+            CONFIG.DND5E.attunementTypes[
+              item.system
+                .attunement as keyof typeof CONFIG.DND5E.attunementTypes
+            ],
+        }
       : !!item.system.attunement && item.system.attuned
         ? FoundryAdapter.attunementContextAttune
         : undefined;
@@ -1171,7 +1198,7 @@ export const FoundryAdapter = {
   },
   async markAllItemsAsUnidentifiedForContainer(
     container: any,
-    items: Item5e[]
+    items: Item5e[],
   ) {
     const updates = items.map((i) => ({
       _id: i.id,
@@ -1191,17 +1218,24 @@ export const FoundryAdapter = {
     );
   },
   openSpellSlotsConfig(document: any) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.SpellSlotsConfig({ document }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.SpellSlotsConfig({ document }),
+    );
   },
-  openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm' | (string & {})) {
+  openDamagesConfig(
+    document: Actor5e,
+    trait: 'dr' | 'di' | 'dv' | 'dm' | (string & {}),
+  ) {
     return document.sheet._renderChild(
       new dnd5e.applications.actor.DamagesConfig({ document, trait }),
     );
   },
   openConcentrationConfig(document: any) {
-    return document.sheet._renderChild(new dnd5e.applications.actor.ConcentrationConfig({
-      document: document,
-    }));
+    return document.sheet._renderChild(
+      new dnd5e.applications.actor.ConcentrationConfig({
+        document: document,
+      }),
+    );
   },
   openStartingEquipmentConfig(item: Item5e) {
     item.sheet._renderChild(
@@ -1222,7 +1256,7 @@ export const FoundryAdapter = {
   onDropStackConsumablesForActor(
     actor: Actor5e,
     itemData: any,
-    { container = null }: { container?: any | null } = {}
+    { container = null }: { container?: any | null } = {},
   ): Promise<Item5e> | null {
     // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
     const droppedSourceId =
@@ -1236,7 +1270,7 @@ export const FoundryAdapter = {
       .get(droppedSourceId, { legacy: false })
       ?.filter(
         (i: Item5e) =>
-          i.system.container === container && i.name === itemData.name
+          i.system.container === container && i.name === itemData.name,
       )
       ?.first();
 
@@ -1257,7 +1291,7 @@ export const FoundryAdapter = {
     event: Event,
     itemData: any,
     allowSectionTransfer: boolean = true,
-    sortKeyOverride?: string
+    sortKeyOverride?: string,
   ): any {
     const eventTarget = event.target as HTMLElement | null;
 
@@ -1282,7 +1316,7 @@ export const FoundryAdapter = {
       if (el instanceof HTMLElement) {
         const siblingId = el.dataset.itemId;
         if (siblingId && siblingId !== source.id) {
-          // performIntegerSort does object reference comparison rather 
+          // performIntegerSort does object reference comparison rather
           // than by an ID, so the same reference must be used.
           siblings.push(
             target._id === siblingId
@@ -1294,16 +1328,28 @@ export const FoundryAdapter = {
     }
 
     if (!isNil(sortKeyOverride)) {
-      source[sortKeyOverride] = FoundryAdapter.getProperty(source, sortKeyOverride);
-      target[sortKeyOverride] = FoundryAdapter.getProperty(target, sortKeyOverride);
-      siblings.forEach(sibling => sibling[sortKeyOverride] = FoundryAdapter.getProperty(sibling, sortKeyOverride));
+      source[sortKeyOverride] = FoundryAdapter.getProperty(
+        source,
+        sortKeyOverride,
+      );
+      target[sortKeyOverride] = FoundryAdapter.getProperty(
+        target,
+        sortKeyOverride,
+      );
+      siblings.forEach(
+        (sibling) =>
+          (sibling[sortKeyOverride] = FoundryAdapter.getProperty(
+            sibling,
+            sortKeyOverride,
+          )),
+      );
     }
 
     // Perform the sort
     const sortUpdates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
-      sortKey: sortKeyOverride
+      sortKey: sortKeyOverride,
     });
 
     const updateData = sortUpdates.map((u: any) => {
@@ -1331,7 +1377,7 @@ export const FoundryAdapter = {
 
     const sourceSection = foundry.utils.getProperty(
       itemData,
-      TidyFlags[sectionProp].prop
+      TidyFlags[sectionProp].prop,
     );
 
     const targetSection = eventTarget
@@ -1367,7 +1413,7 @@ export const FoundryAdapter = {
     documentWithUses: any,
     valueProp: string = 'system.uses.value',
     spentProp: string = 'system.uses.spent',
-    maxProp: string = 'system.uses.max'
+    maxProp: string = 'system.uses.max',
   ) {
     event.preventDefault();
     event.stopPropagation();
@@ -1375,7 +1421,7 @@ export const FoundryAdapter = {
     const value = processInputChangeDelta(
       event.currentTarget.value,
       documentWithUses,
-      valueProp
+      valueProp,
     );
 
     const max =
@@ -1390,12 +1436,12 @@ export const FoundryAdapter = {
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
-    activity: Activity5e
+    activity: Activity5e,
   ) {
     const value = processInputChangeDelta(
       event.currentTarget.value,
       activity,
-      'uses.value'
+      'uses.value',
     );
 
     const uses = clamp(0, value, activity.uses.max);
@@ -1408,7 +1454,9 @@ export const FoundryAdapter = {
     const groupMap: Record<string, typeof entries> = {};
     for (let [key, value] of entries) {
       let groupMapKey =
-        typeof value === 'object' && 'group' in value ? value.group ?? '' : '';
+        typeof value === 'object' && 'group' in value
+          ? (value.group ?? '')
+          : '';
       (groupMap[groupMapKey] ??= []).push([key, value]);
     }
     return Object.entries<any>(groupMap);
@@ -1459,7 +1507,7 @@ export const FoundryAdapter = {
         label,
       }));
     for (const [key, { label }] of Object.entries(
-      CONFIG.DND5E.communicationTypes
+      CONFIG.DND5E.communicationTypes,
     )) {
       const data = actor.system.traits?.languages?.communication?.[key];
       if (!data?.value) continue;
@@ -1474,8 +1522,8 @@ export const FoundryAdapter = {
     traits.languages.sort((a: LanguageTraitContext, b: LanguageTraitContext) =>
       (a.label ?? a.value ?? '').localeCompare(
         b.label ?? b.value ?? '',
-        game.i18n.lang
-      )
+        game.i18n.lang,
+      ),
     );
   },
   isLockedInCompendium(doc: any) {
@@ -1485,7 +1533,7 @@ export const FoundryAdapter = {
   getMovementInfo(movement: any): Record<string, MovementInfo> {
     const units =
       CONFIG.DND5E.movementUnits[
-      movement.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+        movement.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
       ];
     return Object.entries(CONFIG.DND5E.movementTypes).reduce<
       Record<string, MovementInfo>
@@ -1504,15 +1552,18 @@ export const FoundryAdapter = {
   getSensesInfo(senses: any): Record<string, SenseInfo> {
     const units =
       CONFIG.DND5E.movementUnits[
-      senses.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+        senses.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
       ];
     return Object.entries(CONFIG.DND5E.senses).reduce<
       Record<string, SenseInfo>
-    >((obj, [k, label]) => {
-      const value = senses[k];
-      if (value) obj[k] = { label, value, unit: units.abbreviation };
-      return obj;
-    }, {} satisfies Record<string, SenseInfo>);
+    >(
+      (obj, [k, label]) => {
+        const value = senses[k];
+        if (value) obj[k] = { label, value, unit: units.abbreviation };
+        return obj;
+      },
+      {} satisfies Record<string, SenseInfo>,
+    );
   },
   getActivationText(type: string) {
     return {
@@ -1567,16 +1618,17 @@ export const FoundryAdapter = {
           CONFIG.DND5E.spellPreparationStates.prepared.value
           ? 'fa-solid prepared'
           : item.system.prepared ===
-            CONFIG.DND5E.spellPreparationStates.always.value
+              CONFIG.DND5E.spellPreparationStates.always.value
             ? 'fa-solid always'
-            : 'fa-regular unprepared'
+            : 'fa-regular unprepared',
       );
     } else {
       classes.push('cannot-prepare', 'fa-solid');
     }
 
-    if (item.system.prepared ===
-      CONFIG.DND5E.spellPreparationStates.always.value) {
+    if (
+      item.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
+    ) {
       classes.push('fa-book-bookmark');
     } else {
       switch (method) {
@@ -1623,7 +1675,7 @@ export const FoundryAdapter = {
     const setting = game.settings.get('core', 'sheetClasses');
 
     for (const { name, documentName, hasTypeData } of Object.values<any>(
-      foundry.documents
+      foundry.documents,
     )) {
       // documentName -> e.g., "Actor", "Item", ...
       if (!hasTypeData) {
@@ -1635,7 +1687,7 @@ export const FoundryAdapter = {
       }
 
       const subTypes = game.documentTypes[documentName].filter(
-        (t: string) => t !== CONST.BASE_DOCUMENT_TYPE
+        (t: string) => t !== CONST.BASE_DOCUMENT_TYPE,
       );
 
       if (!subTypes.length) {
@@ -1647,7 +1699,7 @@ export const FoundryAdapter = {
           documentSheetConfig.getSheetClassesForSubType(documentName, subType);
 
         const className = Object.keys(defaultClasses).find((c: string) =>
-          quadroneSheetRegex.test(c)
+          quadroneSheetRegex.test(c),
         );
 
         if (!className) {
@@ -1673,7 +1725,7 @@ export const FoundryAdapter = {
           sheetClassIdentifier: sheetClassDetails?.id,
           typeLabel: FoundryAdapter.localize(
             // @ts-ignore
-            CONFIG[documentName].typeLabels?.[subType]
+            CONFIG[documentName].typeLabels?.[subType],
           ),
         });
       }

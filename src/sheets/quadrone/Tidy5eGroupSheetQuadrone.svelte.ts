@@ -26,7 +26,6 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import type { GroupMemberContext } from 'src/types/group.types';
-import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
@@ -312,7 +311,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
           : undefined,
         inspirationSource: actor.system.isCharacter
-          ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
+          ? await CONFIG.TIDY5E.utils.actorInspiration.tryGetInspirationSource(
+              actor,
+            )
           : undefined,
         portrait: await this._preparePortrait(actor),
         gold: FoundryAdapter.formatNumber(
@@ -492,7 +493,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     this.actor.update({ 'system.attributes.travel.pace': paces[next] });
   }
 
-  award() {
+  async award() {
     this._renderChild(
       new dnd5e.applications.Award({
         award: {

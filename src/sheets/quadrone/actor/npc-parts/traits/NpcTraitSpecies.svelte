@@ -41,8 +41,6 @@
         class="list-values trait-item"
         data-action="showDocument"
         data-uuid={speciesItem?.uuid}
-        onmousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, speciesItem)}
       >
         <!-- svelte-ignore a11y_missing_attribute -->
         <span

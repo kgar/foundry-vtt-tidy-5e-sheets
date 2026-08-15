@@ -1,14 +1,10 @@
 <script lang="ts">
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { isNil } from 'src/utils/data';
-  import { clamp } from 'src/utils/numbers';
 
   interface Props {
-    actor: any;
     label: string;
     min?: number;
-    spentPath?: string;
     value: number;
     valuePath?: string;
     valueTooltip?: string;
@@ -21,7 +17,6 @@
   }
 
   let {
-    actor,
     label,
     min = 0,
     value = 0,
@@ -33,25 +28,89 @@
     unlocked = true,
     showFiligree = true,
     icon = 'dragon',
-    spentPath,
   }: Props = $props();
-
-  function change(path: string, delta: number) {
-    let newValue = value + delta;
-
-    if (spentPath && !isNil(max)) {
-      const spent = max - clamp(0, newValue, max);
-
-      // change reality to accommodate `spent`
-      newValue = spent;
-      path = spentPath;
-    }
-
-    return actor.update({
-      [path]: newValue,
-    });
-  }
 </script>
+
+{#snippet tracker()}
+  {#if valuePath}
+    <button
+      type="button"
+      class="button button-icon-only button-borderless flexshrink decrementer"
+      disabled={value <= min}
+      data-action="decrease"
+      data-property={valuePath}
+    >
+      <i class="fa-solid fa-hexagon-minus"></i>
+    </button>
+  {/if}
+  <span
+    class={[
+      'uses',
+      'flexrow',
+      {
+        flex1: unlocked && !showFiligree,
+        flexshrink: !unlocked && !showFiligree,
+      },
+    ]}
+  >
+    {#if valuePath}
+      <input
+        type="text"
+        inputmode="numeric"
+        placeholder="0"
+        data-min="0"
+        class={['value', { uninput: !unlocked }]}
+        data-tooltip=""
+        aria-label={valueTooltip}
+        data-name={valuePath}
+        {value}
+        {@attach InputAttachments.selectOnFocus}
+      />
+    {:else}
+      <span
+        data-tooltip={valueTooltip}
+        class={[
+          'value',
+          'color-text-default',
+          {
+            ['font-label-large']: !showFiligree,
+          },
+        ]}>{value}</span
+      >
+    {/if}
+    <span class="separator color-text-lightest flexshrink">/</span>
+    {#if maxPath && unlocked}
+      <input
+        type="text"
+        inputmode="numeric"
+        placeholder="0"
+        data-min="0"
+        class={{ uninput: !unlocked }}
+        data-tooltip=""
+        aria-label={maxTooltip}
+        data-name={maxPath}
+        value={max}
+        {@attach InputAttachments.selectOnFocus}
+      />
+    {:else}
+      <span
+        data-tooltip={maxTooltip}
+        class="max color-text-default font-label-large">{max}</span
+      >
+    {/if}
+  </span>
+  {#if valuePath}
+    <button
+      type="button"
+      class="button button-icon-only button-borderless flexshrink decrementer"
+      disabled={!isNil(max) && value >= max}
+      data-action="increase"
+      data-property={valuePath}
+    >
+      <i class="fa-solid fa-hexagon-plus"></i>
+    </button>
+  {/if}
+{/snippet}
 
 {#if showFiligree}
   <div class="npc-score-tracker card">
@@ -61,73 +120,7 @@
       </h3>
     </div>
     <div class="card-content flexrow">
-      {#if valuePath}
-        <button
-          type="button"
-          class="button button-icon-only button-borderless flexshrink decrementer"
-          disabled={value <= min}
-          onclick={() => change(valuePath, -1)}
-        >
-          <i class="fa-solid fa-hexagon-minus"></i>
-        </button>
-      {/if}
-      <span class="uses flexrow">
-        {#if valuePath}
-          <NumberInputQuadrone
-            document={actor}
-            field={valuePath}
-            {value}
-            placeholder="0"
-            min="0"
-            step="1"
-            class={['value', { uninput: !unlocked }]}
-            data-tooltip={valueTooltip}
-            onchange={(ev) => {
-              if (spentPath) {
-                return FoundryAdapter.handleDocumentUsesChanged(
-                  ev,
-                  actor,
-                  valuePath,
-                  spentPath,
-                  maxPath,
-                );
-              }
-            }}
-          />
-        {:else}
-          <span data-tooltip={valueTooltip} class="value color-text-default"
-            >{value}</span
-          >
-        {/if}
-        <span class="separator color-text-lightest flexshrink">/</span>
-        {#if maxPath && unlocked}
-          <NumberInputQuadrone
-            document={actor}
-            field={maxPath}
-            value={max}
-            placeholder="0"
-            min="0"
-            step="1"
-            class={{ uninput: unlocked }}
-            data-tooltip={maxTooltip}
-          />
-        {:else}
-          <span
-            data-tooltip={maxTooltip}
-            class="max color-text-default font-label-large">{max}</span
-          >
-        {/if}
-      </span>
-      {#if valuePath}
-        <button
-          type="button"
-          class="button button-icon-only button-borderless flexshrink decrementer"
-          disabled={!isNil(max) && value >= max}
-          onclick={() => change(valuePath, 1)}
-        >
-          <i class="fa-solid fa-hexagon-plus"></i>
-        </button>
-      {/if}
+      {@render tracker()}
     </div>
   </div>
 {:else}
@@ -137,62 +130,7 @@
       {label}
     </h4>
     <div class="flexrow">
-      {#if valuePath}
-        <button
-          type="button"
-          class="button button-icon-only button-borderless flexshrink"
-          disabled={value <= min}
-          onclick={() => change(valuePath, -1)}
-        >
-          <i class="fa-solid fa-hexagon-minus"></i>
-        </button>
-      {/if}
-      <span class="uses flexrow {unlocked ? 'flex1' : 'flexshrink'}">
-        {#if valuePath}
-          <NumberInputQuadrone
-            document={actor}
-            field={valuePath}
-            {value}
-            placeholder="0"
-            min="0"
-            step="1"
-            class="value {unlocked ? '' : 'uninput'}"
-            data-tooltip={valueTooltip}
-          />
-        {:else}
-          <span
-            data-tooltip={valueTooltip}
-            class="value color-text-default font-label-large">{value}</span
-          >
-        {/if}
-        <span class="separator color-text-lightest flexshrink">/</span>
-        {#if maxPath && unlocked}
-          <NumberInputQuadrone
-            document={actor}
-            field={maxPath}
-            value={max}
-            placeholder="0"
-            min="0"
-            step="1"
-            data-tooltip={maxTooltip}
-          />
-        {:else}
-          <span
-            data-tooltip={maxTooltip}
-            class="max color-text-default font-label-large">{max}</span
-          >
-        {/if}
-      </span>
-      {#if valuePath}
-        <button
-          type="button"
-          class="button button-icon-only button-borderless flexshrink"
-          disabled={!isNil(max) && value >= max}
-          onclick={() => change(valuePath, 1)}
-        >
-          <i class="fa-solid fa-hexagon-plus"></i>
-        </button>
-      {/if}
+      {@render tracker()}
     </div>
   </div>
 {/if}

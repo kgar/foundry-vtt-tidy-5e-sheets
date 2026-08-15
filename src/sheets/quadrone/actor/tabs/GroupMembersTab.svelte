@@ -145,7 +145,7 @@
                 style:--t5e-theme-color-highlight={member.highlightColor}
                 style:--t5e-member-color-hover={member.highlightColor}
                 data-tidy-draggable
-                data-member-id={member.actor.id}
+                data-uuid={member.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
               >
                 <GroupMemberNameCell {member} />

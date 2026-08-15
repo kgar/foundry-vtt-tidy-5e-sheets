@@ -10,7 +10,9 @@ const inputTagNames = new Set([
   'HIDDEN',
   'A',
 ]);
+
 const inputTabNamesSelector = Array.from(inputTagNames)
+  .concat('[data-action]')
   .map((i) => i.toLowerCase())
   .join(', ');
 

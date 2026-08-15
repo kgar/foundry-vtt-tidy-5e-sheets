@@ -1,3 +1,5 @@
+// game.release.generation >= 14 - remove these utils and directly use the available Map API
+
 /** 
  * Gets an entry from a map. If the entry doesn't exist, the value is inserted and then returned. 
  * This helper is temporary and is meant to be replaced by Map.prototype.getOrInsert. @see https://github.com/tc39/proposal-upsert

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -8,6 +7,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import SpellcastingSidebarPills from './parts/SpellcastingSidebarPills.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -28,16 +28,9 @@
         <li>
           <a
             class="pill interactive centered wrapped copy-to-clipboard"
-            onclick={() => {
-              const value = context.item.system.identifier;
-              game.clipboard.copyPlainText(value);
-              ui.notifications.info(
-                game.i18n.format('DND5E.Copied', { value }),
-                {
-                  console: false,
-                },
-              );
-            }}
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
+            {@attach InputAttachments.triggerClickOnKeydown}
           >
             <span class="text-normal">
               {localize('DND5E.Identifier')}
@@ -50,16 +43,9 @@
         <li>
           <a
             class="pill interactive centered wrapped copy-to-clipboard"
-            onclick={() => {
-              const value = context.item.system.identifier;
-              game.clipboard.copyPlainText(value);
-              ui.notifications.info(
-                game.i18n.format('DND5E.Copied', { value }),
-                {
-                  console: false,
-                },
-              );
-            }}
+            data-action="copyValue"
+            data-value={context.item.system.classIdentifier}
+            {@attach InputAttachments.triggerClickOnKeydown}
           >
             <span class="text-normal">
               {localize('DND5E.ClassIdentifier')}
