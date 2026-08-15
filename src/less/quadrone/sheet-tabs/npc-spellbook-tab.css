@@ -26,6 +26,16 @@
       }
     }
 
+    .spellcasting-ability,
+    .attack,
+    .save {
+      vertical-align: middle;
+
+      span {
+        line-height: var(--t5e-lineheight-longform);
+      }
+    }
+
     .level {
       input[type="number"] {
         height: 1.5rem;
