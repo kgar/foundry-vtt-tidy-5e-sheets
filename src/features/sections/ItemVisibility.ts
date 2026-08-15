@@ -17,14 +17,6 @@ export class ItemVisibility {
     );
   }
 
-  static hasViewableItems(items: Item5e[], uuids?: Set<string>): boolean {
-    if (!uuids) {
-      return items.length > 0;
-    }
-
-    return items.some((curr) => uuids.has(curr.uuid));
-  }
-
   static getItemsToShowAtDepth(args: {
     tabId: string;
     criteria: string;

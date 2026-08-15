@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { setContext, type Snippet } from 'svelte';
+  import { setContext, untrack, type Snippet } from 'svelte';
   import {
     ExpansionTracker,
     type ExpansionTrackerToggleProvider,
@@ -59,9 +59,36 @@
     );
   }
 
+  let expandedBeforeOverride: boolean | undefined = undefined;
+  $effect(() => {
+    const override = expandedOverride;
+
+    untrack(() => {
+      if (!toggleable) {
+        return;
+      }
+
+      if (override !== undefined) {
+        expandedBeforeOverride ??= sectionExpansionTracker.isExpanded(
+          key,
+          tabId,
+          location,
+        );
+        sectionExpansionTracker.register(key, tabId, location, override);
+      } else if (expandedBeforeOverride !== undefined) {
+        sectionExpansionTracker.register(
+          key,
+          tabId,
+          location,
+          expandedBeforeOverride,
+        );
+        expandedBeforeOverride = undefined;
+      }
+    });
+  });
+
   let expanded = $derived(
-    expandedOverride ??
-      (!toggleable || sectionExpansionTracker.isExpanded(key, tabId, location)),
+    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
   );
 </script>
 
