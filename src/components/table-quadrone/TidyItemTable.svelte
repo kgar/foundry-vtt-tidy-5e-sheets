@@ -30,6 +30,7 @@
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     section: TSection;
@@ -211,7 +212,7 @@
                     {@render subtitle(entry, ctx)}
                   {:else if ctx.subtitle}
                     <TidyTableSubtitle>
-                      {@html ctx.subtitle}
+                      <SafeHtml html={ctx.subtitle} />
                     </TidyTableSubtitle>
                   {/if}
                 </span>

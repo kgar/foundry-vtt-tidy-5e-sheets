@@ -16,6 +16,7 @@
   import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   type Props = {
     containingDocument: any;
@@ -90,9 +91,9 @@
 >
   {#snippet subtitle(_item, ctx)}
     {#if root && ctx.containerName}
-      <span class="cell-context">{@html ctx.containerName}</span>
+      <span class="cell-context"><SafeHtml html={ctx.containerName} /></span>
     {:else if ctx.subtitle}
-      <span class="cell-context">{@html ctx.subtitle}</span>
+      <span class="cell-context"><SafeHtml html={ctx.subtitle} /></span>
     {/if}
   {/snippet}
 

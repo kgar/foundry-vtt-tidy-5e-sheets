@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -24,7 +25,9 @@
   }
 </script>
 
-<div class="tab-content vehicle-tab-content vehicle-description-content flexcol">
+<div
+  class="tab-content vehicle-tab-content vehicle-description-content flexcol"
+>
   {#if editing}
     {#key contentToEdit}
       <article class="flexible-editor-container singleton">
@@ -70,7 +73,7 @@
           data-target="system.details.biography.value"
           class="user-select-text"
         >
-          {@html context.enriched.biography}
+          <SafeHtml html={context.enriched.biography} />
         </div>
       </div>
     {/key}

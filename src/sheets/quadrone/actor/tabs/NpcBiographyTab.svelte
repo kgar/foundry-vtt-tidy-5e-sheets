@@ -8,6 +8,7 @@
   import { getContext } from 'svelte';
   import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { CONSTANTS } from 'src/constants';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -116,8 +117,9 @@
       field: 'system.details.flaw',
     },
   ]);
-  let hasPersonalityEntries = $derived(personalityEntries.some(entry => entry.enriched !== ''))
-
+  let hasPersonalityEntries = $derived(
+    personalityEntries.some((entry) => entry.enriched !== ''),
+  );
 
   let editing = $state(false);
   let contentToEdit: string = $state('');
@@ -194,7 +196,8 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span
+            >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -232,7 +235,9 @@
     field: string,
   )}
     {#if enriched !== '' || context.unlocked}
-      {const expanded = $derived(expansionTracker.isExpanded(field, tabId, location))}
+      {const expanded = $derived(
+        expansionTracker.isExpanded(field, tabId, location),
+      )}
       <article class="biography-editor-container collapsible-editor">
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
@@ -266,7 +271,7 @@
           {#key enriched}
             <div class="editor">
               <div data-target={field} class="user-select-text">
-                {@html enriched}
+                <SafeHtml html={enriched} />
               </div>
             </div>
           {/key}

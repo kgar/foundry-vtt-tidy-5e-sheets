@@ -13,6 +13,7 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
   import { getActorSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     section: FeatureSection;
@@ -68,7 +69,7 @@
 >
   {#snippet subtitle(item, ctx)}
     {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}
-      <span class="cell-context">{@html ctx.actionSubtitle}</span>
+      <span class="cell-context"><SafeHtml html={ctx.actionSubtitle} /></span>
     {/if}
   {/snippet}
 </TidyItemTable>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import type { ItemDescription } from 'src/types/item.types';
 
@@ -23,7 +24,7 @@
   {:else}
     <div class="editor">
       <div data-target={itemDescription.field} class="user-select-text">
-        {@html itemDescription.enriched}
+        <SafeHtml html={itemDescription.enriched} />
       </div>
     </div>
   {/if}

@@ -9,6 +9,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     entry: CoarseReactivityProvider<DocumentJournalEntry | undefined>;
@@ -47,39 +48,39 @@
 </script>
 
 <div class="dialog-content-container flexcol">
-{#if entry.data}
-  {#if mode === 'edit'}
-    <TextInputQuadrone
-      document={app.document}
-      field="{baseField}.title"
-      value={title}
-      class="journal-page-title-input h2"
-      placeholder={localize('JOURNAL.EntryTitle')}
-    />
+  {#if entry.data}
+    {#if mode === 'edit'}
+      <TextInputQuadrone
+        document={app.document}
+        field="{baseField}.title"
+        value={title}
+        class="journal-page-title-input h2"
+        placeholder={localize('JOURNAL.EntryTitle')}
+      />
 
-    {#await enrichedPromise then enriched}
-      <div class="flexible-editor-container flex1">
-        <SheetEditorV2
-          documentUuid={app.document.uuid}
-          content={value}
-          editorOptions={{ toggled: false }}
-          field="{baseField}.value"
-          {enriched}
-        />
-      </div>
-    {/await}
-  {:else}
-    <h2 class="journal-page-title">
-      {entry.data?.title}
-    </h2>
-
-    {#await enrichedPromise then enriched}
-      <div class="editor">
-        <div data-target="{baseField}.value" class="user-select-text">
-          {@html enriched}
+      {#await enrichedPromise then enriched}
+        <div class="flexible-editor-container flex1">
+          <SheetEditorV2
+            documentUuid={app.document.uuid}
+            content={value}
+            editorOptions={{ toggled: false }}
+            field="{baseField}.value"
+            {enriched}
+          />
         </div>
-      </div>
-    {/await}
+      {/await}
+    {:else}
+      <h2 class="journal-page-title">
+        {entry.data?.title}
+      </h2>
+
+      {#await enrichedPromise then enriched}
+        <div class="editor">
+          <div data-target="{baseField}.value" class="user-select-text">
+            <SafeHtml html={enriched} />
+          </div>
+        </div>
+      {/await}
+    {/if}
   {/if}
-{/if}
 </div>

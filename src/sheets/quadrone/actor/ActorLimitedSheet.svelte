@@ -11,6 +11,7 @@
     VehicleSheetQuadroneContext,
   } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context =
     $derived(
@@ -61,7 +62,7 @@
         {localize('DND5E.Description')}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
-      {@html description}
+      <SafeHtml html={description} />
     </div>
   {/if}
   {#if biography}
@@ -70,7 +71,7 @@
         {localize('DND5E.Biography')}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
-      {@html biography}
+      <SafeHtml html={biography} />
     </div>
   {/if}
   {#if context.type === CONSTANTS.SHEET_TYPE_NPC && context.enriched.appearance}
@@ -79,7 +80,7 @@
         {localize('DND5E.Appearance')}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
-      {@html context.enriched.appearance}
+      <SafeHtml html={context.enriched.appearance} />
     </div>
   {/if}
 </div>

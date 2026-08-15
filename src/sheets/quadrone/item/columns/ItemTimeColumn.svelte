@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
   import { isNil } from 'src/utils/data';
@@ -48,7 +49,7 @@
 {:else if !isNil(abbrOrLabel.label, '')}
   {const fullLabel = $derived(getFullLabel().trim())}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
-    {@html fullLabel.trim()}
+    <SafeHtml html={fullLabel.trim()} />
   </span>
 {:else}
   <span class="color-text-disabled">—</span>

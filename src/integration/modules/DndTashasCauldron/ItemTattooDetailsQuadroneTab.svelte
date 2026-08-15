@@ -9,6 +9,7 @@
   import FieldUses from 'src/sheets/quadrone/item/parts/FieldUses.svelte';
   import QuantityWeightPriceFormGroups from 'src/sheets/quadrone/item/parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -73,7 +74,7 @@
       {:else}
         <label class="reference">
           {#await attuneHtmlPromise then attune}
-            {@html attune}
+            <SafeHtml html={attune} />
           {/await}
         </label>
       {/if}
@@ -97,7 +98,7 @@
       {#if context.system.isSpellwrought}
         <label class="reference">
           {#await spellwroughtHtmlPromise then spellwrought}
-            {@html spellwrought}
+            <SafeHtml html={spellwrought} />
           {/await}
         </label>
       {:else}

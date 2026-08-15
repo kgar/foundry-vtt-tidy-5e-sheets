@@ -11,6 +11,7 @@
   import ItemName from '../item/parts/header/ItemName.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   const context = $derived(getContainerSheetQuadroneContext());
 
@@ -53,7 +54,7 @@
       <div class="pills stacked">
         <li class="pill">
           <span>
-            {@html holdsMarkup}
+            <SafeHtml html={holdsMarkup} />
           </span>
         </li>
       </div>

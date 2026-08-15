@@ -7,6 +7,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -225,7 +226,9 @@
   field: string,
 )}
   {#if enriched !== '' || context.unlocked}
-    {const expanded = $derived(expansionTracker.isExpanded(field, tabId, location))}
+    {const expanded = $derived(
+      expansionTracker.isExpanded(field, tabId, location),
+    )}
     <article class="biography-editor-container collapsible-editor">
       <div class="biography-editor-title">
         <h3 class="font-title-small flexrow">
@@ -256,7 +259,7 @@
       <ExpandableContainer {expanded}>
         <div class={['editor']}>
           <div data-target={field} class="user-select-text">
-            {@html enriched}
+            <SafeHtml html={enriched} />
           </div>
         </div>
       </ExpandableContainer>

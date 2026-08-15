@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { DataField, FormInputConfig } from 'foundry.data.fields';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   type Props = {
     field: DataField;
@@ -18,5 +19,5 @@
 </script>
 
 {#each inputs as input}
-  {@html input.outerHTML}
+  <SafeHtml html={input.outerHTML} />
 {/each}

@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts" generics="TFavorite extends FavoriteContextEntry">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { FavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
@@ -89,7 +90,7 @@
         ]}
         bind:this={theSubtitle}
       >
-        {@html subtitle}
+        <SafeHtml html={subtitle} />
       </span>
     </div>
   </div>

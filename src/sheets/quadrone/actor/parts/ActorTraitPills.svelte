@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ListItemsTooltip from 'src/tooltips/ListItemsTooltip.svelte';
   import {
@@ -119,7 +120,7 @@
     {/each}
   {/if}
   {#if value.content}
-    {@html value.content}
+    <SafeHtml html={value.content} />
   {/if}
   <span class="label font-label-medium">
     {value.label}

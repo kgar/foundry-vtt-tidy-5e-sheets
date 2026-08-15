@@ -7,6 +7,7 @@
   import { CONSTANTS } from 'src/constants';
   import { log } from 'src/utils/logging';
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -61,7 +62,7 @@
         />
       </a>
       <p class="banner-text font-body-large">
-        {@html localize('TIDY5E.WorldSettings.Defaults.intro')}
+        <SafeHtml html={localize('TIDY5E.WorldSettings.Defaults.intro')} />
       </p>
     </div>
   </FiligreeCard>
@@ -113,8 +114,7 @@
     <h3>Join the Discord Server</h3>
     <p class="settings-description">
       {@html localize('TIDY5E.Settings.About.DiscordParagraph', {
-        urlStart:
-          '<a href="https://discord.gg/kdqbcWJrYU" target="_blank">',
+        urlStart: '<a href="https://discord.gg/kdqbcWJrYU" target="_blank">',
         urlEnd: '</a>',
       })}
     </p>
@@ -141,11 +141,12 @@
           '<a href="https://www.buymeacoffee.com/kgar" target="_blank">',
         urlEnd: '</a>',
       })}
-    </p>  
+    </p>
     <ul class="settings-description-list">
       <li>
         {@html localize('TIDY5E.Settings.About.BuyMeACoffeeLink', {
-          urlStart: '<a href="https://www.buymeacoffee.com/kgar" target="_blank">',
+          urlStart:
+            '<a href="https://www.buymeacoffee.com/kgar" target="_blank">',
           urlEnd: '</a>',
         })}
       </li>

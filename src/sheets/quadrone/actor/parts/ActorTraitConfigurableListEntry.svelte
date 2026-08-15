@@ -8,6 +8,7 @@
     HTMLAttributes,
     HTMLButtonAttributes,
   } from 'svelte/elements';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   type OnConfigFn = (
     ev: MouseEvent & {
@@ -83,18 +84,20 @@
       {/if}
     </div>
   </div>
-  {@html contentHtml}
+  <SafeHtml html={contentHtml} />
 {/if}
 
 {#snippet configButton(
   configFn?: OnConfigFn,
   attributes?: HTMLButtonAttributes,
 )}
-  {const onclick = $derived(configFn
-    ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
-        configFn(ev)
-    : undefined)}
-    
+  {const onclick = $derived(
+    configFn
+      ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
+          configFn(ev)
+      : undefined,
+  )}
+
   {#if onclick || attributes}
     <button
       aria-label={configurationLabel}

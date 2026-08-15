@@ -17,6 +17,7 @@
   import RowActionsColumn from '../columns/RowActionsColumn.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let localize = FoundryAdapter.localize;
 
@@ -112,14 +113,14 @@
                 <div class="item-name">
                   <div class="cell-text">
                     <div class="cell-name">
-                      {@html advancement.title}
+                      <SafeHtml html={advancement.title} />
                       {#each advancement.tags as tag}
                         <i class={tag.iconClass} title={localize(tag.label)}
                         ></i>
                       {/each}
                     </div>
                     <div class="advancement-cell-context">
-                      {@html advancement.summary}
+                      <SafeHtml html={advancement.summary} />
                     </div>
                   </div>
                 </div>

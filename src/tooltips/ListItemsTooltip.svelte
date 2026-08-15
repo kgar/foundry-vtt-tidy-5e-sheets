@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getThemeV2 } from 'src/theme/theme';
   import { Tooltip } from './Tooltip';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     sheetDocument: any;
@@ -25,7 +26,7 @@
     <ul class="unlist">
       {#each entries as entry}
         <li>
-          {@html entry}
+          <SafeHtml html={entry} />
         </li>
       {/each}
     </ul>

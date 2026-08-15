@@ -5,6 +5,7 @@
   import type { ItemDescription } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { untrack } from 'svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -28,35 +29,6 @@
   }: Props = $props();
 
   let hasContent = $derived(!isNil(itemDescription.content, ''));
-
-  function fred(
-    enriched: string,
-    attributes: Record<string, any>,
-  ): HTMLElement {
-    const element = window.document.createElement('div');
-    element.innerHTML = enriched;
-
-    for (const [key, value] of Object.entries(attributes)) {
-      element.setAttribute(key, value);
-    }
-
-    return element;
-  }
-
-  let editorEl = $state<HTMLElement>();
-
-  $effect(() => {
-    if (!editorEl) {
-      return;
-    }
-
-    const contentEl = fred(itemDescription.enriched, {
-      'data-target': itemDescription.field,
-      class: 'user-select-text',
-    });
-
-    editorEl.replaceChildren(contentEl);
-  });
 </script>
 
 <section class={['collapsible-editor', hasContent ? undefined : 'no-content']}>
@@ -108,10 +80,10 @@
   <!-- Body -->
   <ExpandableContainer {expanded}>
     {#key itemDescription.enriched}
-      <div bind:this={editorEl} class="editor">
-        <!-- <div data-target={itemDescription.field} class="user-select-text">
-          {@html html}
-        </div> -->
+      <div class="editor">
+        <div class="user-select-text" data-target={itemDescription.field}>
+          <SafeHtml html={itemDescription.enriched} />
+        </div>
       </div>
     {/key}
   </ExpandableContainer>

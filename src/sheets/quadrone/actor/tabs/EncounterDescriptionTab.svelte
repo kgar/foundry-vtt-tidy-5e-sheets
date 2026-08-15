@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -71,7 +72,7 @@
             data-target="system.description.summary"
             class="user-select-text"
           >
-            {@html context.enriched.description.summary}
+            <SafeHtml html={context.enriched.description.summary} />
           </div>
         </div>
       {/key}
@@ -100,7 +101,7 @@
       {#key context.enriched.description.full}
         <div class="editor">
           <div data-target="system.description.full" class="user-select-text">
-            {@html context.enriched.description.full}
+            <SafeHtml html={context.enriched.description.full} />
           </div>
         </div>
       {/key}

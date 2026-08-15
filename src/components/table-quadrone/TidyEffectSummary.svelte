@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffect5e, EffectSummaryData } from 'src/types/types';
@@ -35,7 +36,7 @@
   class="editor-rendered-content"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
-  {@html summaryData.description.value}
+  <SafeHtml html={summaryData.description.value} />
 
   {#if activeEffect.changes.length}
     <table class="effect-summary-changes-table">

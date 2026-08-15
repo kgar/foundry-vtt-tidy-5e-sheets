@@ -18,6 +18,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { buildNpcStatblockSections } from '../../../../settings/tab-options/NpcStatblockTabOptions';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -67,7 +68,7 @@
 
   {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">
-      {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+      <SafeHtml html={localize('TIDY5E.SheetLock.Empty.Hint')} />
     </div>
   {/if}
 

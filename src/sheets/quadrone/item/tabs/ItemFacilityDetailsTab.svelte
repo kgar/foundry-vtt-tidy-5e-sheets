@@ -4,6 +4,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
   import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -237,7 +238,7 @@
           {#if context.craft}
             <div class="details flexrow">
               <img src={context.craft.img} alt={context.craft.name} />
-              {@html context.craft.contentLink}
+              <SafeHtml html={context.craft.contentLink} />
               <div class="list-controls flexrow flexshrink">
                 <button
                   type="button"

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
   import { Enrichers } from 'src/features/enrichers/Enrichers';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
@@ -12,6 +13,6 @@
 
 {#if linked}
   {#await FoundryAdapter.enrichHtml(Enrichers.reference(linked.uuid, linked.name)) then enriched}
-    {@html enriched}
+    <SafeHtml html={enriched} />
   {/await}
 {/if}

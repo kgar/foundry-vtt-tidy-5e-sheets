@@ -4,6 +4,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { EffectFavoriteContextEntry } from 'src/types/types';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     favorite: EffectFavoriteContextEntry;
@@ -84,7 +85,7 @@
           class="subtitle flexrow color-text-lighter font-default-medium"
           bind:this={theSubtitle}
         >
-          {@html subtitle}
+          <SafeHtml html={subtitle} />
         </span>
       </div>
     </div>

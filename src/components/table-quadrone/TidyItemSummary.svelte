@@ -13,6 +13,7 @@
   import PropertyTag from '../properties/PropertyTag.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Snippet } from 'svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     chatData: ItemChatData;
@@ -86,7 +87,10 @@
       </div>
     {/if}
     <div data-target="system.description.value" data-uuid={item.uuid}>
-      {@html chatData.description}
+      <!-- {#key chatData.description} -->
+       <div>Hallo</div>
+        <SafeHtml html={chatData.description} />
+      <!-- {/key} -->
     </div>
     {#if !identified}
       <span class="color-text-lightest">
@@ -94,7 +98,7 @@
       </span>
     {/if}
   </div>
-  
+
   <TidyInlineEffectsList {item} />
 
   <div

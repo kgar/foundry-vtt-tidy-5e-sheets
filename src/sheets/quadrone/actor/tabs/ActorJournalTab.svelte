@@ -12,6 +12,7 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import { watch } from 'src/utils/reactivity.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -158,10 +159,9 @@
     </div>
     <div class={['journal-entry-viewer']}>
       {#if selected}
-        {const title = $derived(coalesce(
-          selected.title,
-          getFallbackTitle(selectedIndex),
-        ))}
+        {const title = $derived(
+          coalesce(selected.title, getFallbackTitle(selectedIndex)),
+        )}
 
         <div class="title-container">
           <h2 class="title flexrow">
@@ -184,7 +184,7 @@
                 : ''}
               class="user-select-text"
             >
-              {@html enriched}
+              <SafeHtml html={enriched} />
             </div>
           </div>
         {/await}

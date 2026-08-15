@@ -15,6 +15,7 @@
   import type { Item5e } from 'src/types/item.types';
   import FacilityRosterOccupantQuadrone from '../character-parts/bastion/FacilityRosterOccupantQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -184,7 +185,7 @@
                   <div class="title-and-subtitle">
                     <span class="title"> {chosen.name} </span>
                     <span class="subtitle">
-                      {@html chosen.subtitle}
+                      <SafeHtml html={chosen.subtitle} />
                     </span>
                   </div>
                 </a>
@@ -369,7 +370,7 @@
                   <div class="title-and-subtitle">
                     <span class="title">{chosen.name}</span>
                     <span class="subtitle">
-                      {@html chosen.subtitle}
+                      <SafeHtml html={chosen.subtitle} />
                     </span>
                   </div>
                 </a>
@@ -541,7 +542,7 @@
             data-target="system.bastion.description"
             class="user-select-text"
           >
-            {@html context.enriched.bastion}
+            <SafeHtml html={context.enriched.bastion} />
           </div>
         </div>
       {/if}

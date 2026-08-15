@@ -5,6 +5,7 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import PropertyTag from '../properties/PropertyTag.svelte';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     activeEffect: ActiveEffect5e;
@@ -24,7 +25,7 @@
   class="item-summary"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
-  {@html summaryData.description.value}
+  <SafeHtml html={summaryData.description.value} />
   <HorizontalLineSeparator />
   {#if activeEffect.changes.length}
     <table class="effect-summary-changes-table">

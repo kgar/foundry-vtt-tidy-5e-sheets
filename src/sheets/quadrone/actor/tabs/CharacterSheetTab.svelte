@@ -18,6 +18,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { tick } from 'svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -95,7 +96,7 @@
   >
     {#if !hasAtLeastOneItem}
       <div class="empty-state-container empty-state-description">
-        {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+        <SafeHtml html={localize('TIDY5E.SheetLock.Empty.Hint')} />
       </div>
     {:else}
       {#each sections as section}

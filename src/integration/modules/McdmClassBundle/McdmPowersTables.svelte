@@ -22,6 +22,7 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import { CustomItemColumnRuntime } from 'src/runtime/table-columns/CustomItemColumnRuntime';
+  import SafeHtml from 'src/attachments/SafeHtml.svelte';
 
   interface Props {
     sections: PowersSection[];
@@ -159,7 +160,9 @@
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
                       {#if ctx.subtitle}
-                        <span class="cell-context">{@html ctx.subtitle}</span>
+                        <span class="cell-context"
+                          ><SafeHtml html={ctx.subtitle} /></span
+                        >
                       {/if}
                     </span>
                     <span class="row-detail-expand-indicator">
