@@ -106,7 +106,22 @@ export class ActorSheetQuadroneRuntime<
       tabsToPrepare,
     );
 
-    return renderableTabs.filter((t) => checkCondition(t, context.document));
+    renderableTabs = renderableTabs.filter((t) =>
+      checkCondition(t, context.document),
+    );
+
+    if (
+      this._docTypeKeyOverride ===
+        CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR &&
+      renderableTabs.length >= 3
+    ) {
+      renderableTabs = renderableTabs.map((tab) => ({
+        ...tab,
+        iconClass: undefined,
+      }));
+    }
+
+    return renderableTabs;
   }
 
   _getVisibleTabIds(context: TSheetContext) {
