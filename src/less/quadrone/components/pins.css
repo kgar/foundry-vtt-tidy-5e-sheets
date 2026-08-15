@@ -16,6 +16,13 @@
     position: relative;
     overflow: hidden;
     transition: box-shadow var(--t5e-transition-default);
+    min-width: 0;
+
+    .button.truncate {
+      --button-padding-inline-start: 0.5rem;
+      --button-padding-inline-end: 0.5rem;
+      display: block;
+    }
   }
 
   .sheet-pin:hover {
@@ -40,26 +47,36 @@
     flex: 1;
     gap: 0.125rem;
     justify-content: center;
-    margin-right: 0.5rem;
-    padding: 0.25rem 0;
+    margin-block-end: 0.5rem;
+    padding-block: 0.25rem;
+    padding-inline: 0;
+    width: 100%;
+    min-width: 0;
   }
 
   .sheet-pin .pin-details {
     padding: 0;
-    margin: 0 0 0.125rem 0;
+    margin-block: 0 0.125rem;
+    margin-inline: 0;
     gap: 0;
   }
 
   &.sheet-mode-play .sheet-pin .pin-details {
-    margin-right: 0.5rem;
+    margin-block-end: 0.5rem;
   }
 
   &.sheet-mode-edit .sheet-pin .pin-details {
-    margin-left: 0.25rem;
+    margin-block-start: 0.25rem;
+  }
+
+  .sheet-pin .pin-name-container {
+    min-width: 0;
+    width: 100%;
   }
 
   .sheet-pin .pin-name {
     line-height: 1.25rem;
+    min-width: 0;
   }
 
   .sheet-pin .pin-details > div {
@@ -76,8 +93,7 @@
   }
 
   &.sheet-mode-edit .sheet-pin .pin-details:has(.save-name-button) {
-    margin-left: 0.25rem;
-    margin-right: 0.5rem;
+    margin-block: 0.25rem 0.5rem;
 
     .pin-name-container {
       gap: 0.25rem;
