@@ -17,9 +17,7 @@ export function getDefaultSkillsTraitsCombined(): boolean {
   return true;
 }
 
-function getWorldSidebarTabConfiguration():
-  | SheetTabsConfiguration
-  | undefined {
+function getWorldSidebarTabConfiguration(): SheetTabsConfiguration | undefined {
   return settings.value.tabConfiguration?.[CONSTANTS.DOCUMENT_NAME_ACTOR]?.[
     CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
   ];
@@ -42,7 +40,9 @@ export function getSkillsTraitsCombined(
 
 export function isCharacterSidebarSkillsTraitsTab(tabId: string): boolean {
   return (
-    tabId === COMBINED_TAB_ID || tabId === SKILLS_TAB_ID || tabId === TRAITS_TAB_ID
+    tabId === COMBINED_TAB_ID ||
+    tabId === SKILLS_TAB_ID ||
+    tabId === TRAITS_TAB_ID
   );
 }
 
@@ -111,6 +111,11 @@ export function getCharacterSidebarTabContext(
   return entry;
 }
 
+/**
+ * Maps a saved config keyed by the old `TAB_TRAITS` tab ID onto whichever
+ * tab ID is currently valid for the effective layout, so pre-existing
+ * player configurations survive the split.
+ */
 function migrateLegacySidebarTabConfiguration(
   settings: SheetTabsConfiguration | undefined | null,
   skillsTraitsCombined: boolean,
@@ -148,6 +153,11 @@ function migrateLegacySidebarTabConfiguration(
   return { ...settings, tabs };
 }
 
+/**
+ * When the layout is toggled, carries over each affected tab's order,
+ * visibility, and show state onto its counterpart(s) in the new layout,
+ * so switching layouts doesn't reset the user's existing arrangement.
+ */
 function migrateSkillsTraitsTabConfig(
   savedTabs: Record<string, SheetTabsConfiguration['tabs'][string]>,
   previousCombined: boolean,
@@ -218,10 +228,14 @@ export function rebuildCharacterSidebarTabConfigEntry(
     oldTabsById,
   );
 
-  const rebuilt = getCharacterSidebarTabContext(allRegisteredTabs, entry.documentType, {
-    tabs: savedTabs,
-    skillsTraitsCombined,
-  });
+  const rebuilt = getCharacterSidebarTabContext(
+    allRegisteredTabs,
+    entry.documentType,
+    {
+      tabs: savedTabs,
+      skillsTraitsCombined,
+    },
+  );
 
   entry.tabs = rebuilt.tabs;
   entry.defaultTabs = rebuilt.defaultTabs;

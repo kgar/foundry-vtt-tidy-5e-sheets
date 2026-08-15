@@ -310,7 +310,8 @@ export function getSheetTabsConfigurationSettingsEditor(
           return d && d.id === t.id && d.show === t.show;
         });
 
-      const skillsTraitsCombinedOverride = getSkillsTraitsCombinedOverride(curr);
+      const skillsTraitsCombinedOverride =
+        getSkillsTraitsCombinedOverride(curr);
 
       await setTabConfig(document, {
         // Full per-tab arrangement (preserves hidden-tab order).

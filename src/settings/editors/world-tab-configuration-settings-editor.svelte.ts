@@ -156,7 +156,8 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
         (l) => l.visibilityLevel != null,
       );
 
-      const skillsTraitsCombinedOverride = getSkillsTraitsCombinedOverride(curr);
+      const skillsTraitsCombinedOverride =
+        getSkillsTraitsCombinedOverride(curr);
 
       if (
         !matchesDefault ||

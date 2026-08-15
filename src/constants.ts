@@ -174,7 +174,6 @@ export const CONSTANTS = {
   TAB_CHARACTER_JOURNAL: 'journal',
   TAB_CHARACTER_SIDEBAR_SKILLS: 'sidebar-skills',
   TAB_CHARACTER_SIDEBAR_SKILLS_TRAITS: 'sidebar-skills-traits',
-  TAB_CHARACTER_SIDEBAR_FAVORITES: 'sidebar-favorites',
   TAB_CONTAINER_CONTENTS: 'contents',
   TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_DESCRIPTION: 'description',

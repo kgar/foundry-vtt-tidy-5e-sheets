@@ -12,7 +12,9 @@
   let { tabConfigEntry }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-  let skillsTraitsCombined = $derived(tabConfigEntry.skillsTraitsCombined ?? true);
+  let skillsTraitsCombined = $derived(
+    tabConfigEntry.skillsTraitsCombined ?? true,
+  );
 
   function onSkillsTraitsCombinedChange(combined: boolean) {
     if (combined === skillsTraitsCombined) {
@@ -28,31 +30,34 @@
 </script>
 
 <fieldset class="skills-traits-layout-options">
-  <p class="settings-description">
-    {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.hint')}
-  </p>
   <div class="form-group">
-  <label for="skills-traits-combined">{localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.label')}</label>  
-  <div class="form-fields vertical">
-    <label class="radio">
-      <input
-        type="radio"
-        name="skills-traits-combined"
-        checked={skillsTraitsCombined}
-        onchange={() => onSkillsTraitsCombinedChange(true)}
-      />
-      {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.combined')}
+    <label for="skills-traits-combined">
+      {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.label')}
     </label>
-    <label class="radio">
-      <input
-        type="radio"
-        name="skills-traits-combined"
-        checked={!skillsTraitsCombined}
-        onchange={() => onSkillsTraitsCombinedChange(false)}
-      />
-      {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.separate')}
-    </label>
-  </div></div>
+    <div class="form-fields vertical">
+      <label class="radio">
+        <input
+          type="radio"
+          name="skills-traits-combined"
+          checked={skillsTraitsCombined}
+          onchange={() => onSkillsTraitsCombinedChange(true)}
+        />
+        {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.combined')}
+      </label>
+      <label class="radio">
+        <input
+          type="radio"
+          name="skills-traits-combined"
+          checked={!skillsTraitsCombined}
+          onchange={() => onSkillsTraitsCombinedChange(false)}
+        />
+        {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.separate')}
+      </label>
+    </div>
+    <p class="hint">
+      {localize('TIDY5E.Character.Sidebar.SkillsTraitsLayout.hint')}
+    </p>
+  </div>
 </fieldset>
 
 <TabConfigurationSortableListbox {tabConfigEntry} />

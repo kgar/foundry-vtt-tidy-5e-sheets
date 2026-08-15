@@ -169,7 +169,8 @@ export class ActorSheetQuadroneRuntime<
     const skillsTraitsCombined = getSkillsTraitsCombined(
       this._getTabConfig(context.actor),
     );
-    const layoutDefaults = getCharacterSidebarDefaultTabIds(skillsTraitsCombined);
+    const layoutDefaults =
+      getCharacterSidebarDefaultTabIds(skillsTraitsCombined);
 
     if (!selectedTabs.length) {
       return layoutDefaults;
