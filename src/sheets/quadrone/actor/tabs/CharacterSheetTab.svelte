@@ -9,7 +9,6 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SpellTable from '../../shared/SpellTable.svelte';

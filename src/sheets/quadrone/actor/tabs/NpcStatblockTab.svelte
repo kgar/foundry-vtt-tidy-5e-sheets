@@ -9,7 +9,6 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
-  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
