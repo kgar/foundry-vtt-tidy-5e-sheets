@@ -303,6 +303,8 @@ export function getTidyExtensibleDocumentSheetMixin<
           new Event('input', { bubbles: true, cancelable: true }),
         );
         // intentionally skip the form change event
+      } else if (event.target.type === 'checkbox') {
+        event.target.checked = !!value;
       } else {
         event.target.value = value;
       }
@@ -588,6 +590,8 @@ export function getTidyExtensibleDocumentSheetMixin<
           : valueToSave;
 
         await this._updateNumericProperty(doc, prop, valueAsNumber);
+      } else if (event.target.type === 'checkbox') {
+        await doc.update({ [prop]: event.target.checked });
       } else {
         await doc.update({ [prop]: valueToSave });
       }
