@@ -12,7 +12,10 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { createSearchResultsState } from 'src/features/search/search.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
@@ -45,6 +48,7 @@
   let searchCriteria = $state('');
 
   const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   let sections: GroupMemberSection[] = $derived(
     SheetSections.configureGroupMembers(
