@@ -8,8 +8,8 @@
   import {
     createSearchResultsState,
     setSearchResultsContext,
-    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { Container } from 'src/features/containers/Container';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
@@ -34,7 +34,7 @@
   setSearchResultsContext(searchResults);
 
   $effect(() => {
-    syncItemTabSearch(searchResults, searchCriteria, {
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: configuredContents,
       tabId: tabId,

@@ -13,8 +13,8 @@
   import {
     createSearchResultsState,
     setSearchResultsContext,
-    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -41,7 +41,7 @@
   );
 
   $effect(() => {
-    syncItemTabSearch(searchResults, searchCriteria, {
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: cargo,
       tabId: tabId,

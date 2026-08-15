@@ -12,11 +12,8 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import {
-    createSearchResultsState,
-    getMemberSectionSearchState,
-    shouldShowMemberSection,
-  } from 'src/features/search/search.svelte';
+  import { createSearchResultsState } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
@@ -59,13 +56,15 @@
   );
 
   $effect(() => {
+    const criteria = searchCriteria.trim().toLowerCase();
+
     searchResults.criteria = searchCriteria;
     searchResults.uuids =
-      searchCriteria.trim() !== ''
+      criteria !== ''
         ? new Set(
             context.system.members
               .filter((m: Actor5e) =>
-                m.actor.name.toLowerCase().includes(searchCriteria.toLowerCase()),
+                m.actor.name.toLowerCase().includes(criteria),
               )
               .map((m: Actor5e) => m.actor.uuid),
           )
@@ -89,9 +88,16 @@
 
     {#each sections as section (section.key)}
       {const sectionSearchState = $derived(
-        getMemberSectionSearchState(section.members, searchResults),
+        SectionVisibility.getMemberSectionSearchState(
+          section.members,
+          searchResults,
+        ),
       )}
-      {#if section.show && shouldShowMemberSection(sectionSearchState)}
+      {const showSection = $derived(
+        section.show &&
+          SectionVisibility.shouldShowMemberSection(sectionSearchState),
+      )}
+      {#if showSection}
         {const rowActionInfo = $derived(
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,

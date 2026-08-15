@@ -15,11 +15,10 @@
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import {
     createSearchResultsState,
-    getMemberSectionSearchState,
     setSearchResultsContext,
-    shouldShowMemberSection,
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
@@ -377,9 +376,16 @@
         />
       {:else if section.type === 'draft'}
         {const sectionSearchState = $derived(
-          getMemberSectionSearchState(section.members, searchResults),
+          SectionVisibility.getMemberSectionSearchState(
+            section.members,
+            searchResults,
+          ),
         )}
-        {#if section.show && shouldShowMemberSection(sectionSearchState)}
+        {const showSection = $derived(
+          section.show &&
+            SectionVisibility.shouldShowMemberSection(sectionSearchState),
+        )}
+        {#if showSection}
           {const rowActionInfo = $derived(
             RowActionRuntimeBase.getRowActionWidthInfo(
               section.members,
@@ -455,67 +461,66 @@
                   <TidyTableRow
                     hidden={!searchResults.show(member.actor.uuid)}
                     rowContainerAttributes={{
-                        ['data-context-menu']:
-                          CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-                        ['data-uuid']: member.actor.uuid,
-                      }}
-                    >
-                      {#snippet children()}
-                        <div class="highlight"></div>
+                      ['data-context-menu']:
+                        CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                      ['data-uuid']: member.actor.uuid,
+                    }}
+                  >
+                    {#snippet children()}
+                      <div class="highlight"></div>
+                      <a
+                        class={[
+                          'tidy-table-row-use-button',
+                          { disabled: !context.editable },
+                        ]}
+                      >
+                        <img
+                          class="item-image"
+                          alt={member.actor.name}
+                          src={member.actor.img}
+                        />
+                        <span class="roll-prompt">
+                          <i class="fa fa-dice-d20"></i>
+                        </span>
+                      </a>
+
+                      <TidyTableCell
+                        primary={true}
+                        class="item-label text-cell"
+                      >
                         <a
-                          class={[
-                            'tidy-table-row-use-button',
-                            { disabled: !context.editable },
-                          ]}
+                          class="item-name"
+                          role="button"
+                          data-keyboard-focus
+                          tabindex="0"
+                          data-action="showDocument"
+                          data-uuid={member.actor.uuid}
                         >
-                          <img
-                            class="item-image"
-                            alt={member.actor.name}
-                            src={member.actor.img}
-                          />
-                          <span class="roll-prompt">
-                            <i class="fa fa-dice-d20"></i>
+                          <span class="cell-text">
+                            <span class="cell-name">{member.actor.name}</span>
+                            <span class="cell-context">{member.subtitle}</span>
                           </span>
                         </a>
+                      </TidyTableCell>
 
-                        <TidyTableCell
-                          primary={true}
-                          class="item-label text-cell"
-                        >
-                          <a
-                            class="item-name"
-                            role="button"
-                            data-keyboard-focus
-                            tabindex="0"
-                            data-action="showDocument"
-                            data-uuid={member.actor.uuid}
-                          >
-                            <span class="cell-text">
-                              <span class="cell-name">{member.actor.name}</span>
-                              <span class="cell-context">{member.subtitle}</span
-                              >
-                            </span>
-                          </a>
-                        </TidyTableCell>
+                      <TidyTableCustomCells
+                        {context}
+                        ctx={member}
+                        entry={member.actor}
+                        {hiddenColumns}
+                        {section}
+                      />
 
-                        <TidyTableCustomCells
-                          {context}
-                          ctx={member}
-                          entry={member.actor}
-                          {hiddenColumns}
-                          {section}
-                        />
-
-                        <RowActionsColumn
-                          columnWidth="{rowActionInfo.widthRems}rem"
-                          rowActions={member.rowActions}
-                          data={{
-                            actor: member.actor,
-                            ctx: member,
-                          }}
-                        />
-                      {/snippet}
-                    </TidyTableRow>
+                      <RowActionsColumn
+                        columnWidth="{rowActionInfo.widthRems}rem"
+                        rowActions={member.rowActions}
+                        data={{
+                          actor: member.actor,
+                          ctx: member,
+                        }}
+                      />
+                    {/snippet}
+                  </TidyTableRow>
                 {/each}
               {/if}
             {/snippet}

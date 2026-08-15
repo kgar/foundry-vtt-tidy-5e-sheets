@@ -13,8 +13,8 @@
   import {
     createSearchResultsState,
     setSearchResultsContext,
-    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
 
@@ -41,7 +41,7 @@
   );
 
   $effect(() => {
-    syncItemTabSearch(searchResults, searchCriteria, {
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: spellbook,
       tabId: tabId,

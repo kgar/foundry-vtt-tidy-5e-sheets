@@ -7,8 +7,9 @@
   import {
     createSearchResultsState,
     setSearchResultsContext,
-    syncItemTabSearch,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
@@ -45,7 +46,7 @@
   );
 
   $effect(() => {
-    syncItemTabSearch(searchResults, searchCriteria, {
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: sections,
       tabId: tabId,

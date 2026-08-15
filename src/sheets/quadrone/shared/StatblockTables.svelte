@@ -1,11 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import {
-    getItemSectionSearchState,
-    getSearchResultsContext,
-    shouldShowItemSection,
-  } from 'src/features/search/search.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -78,9 +75,18 @@
   {:else}
     {#each sections as section (section.key)}
       {const sectionSearchState = $derived(
-        getItemSectionSearchState(section.items, searchResults),
+        SectionVisibility.getItemSectionSearchState(
+          section.items,
+          searchResults,
+        ),
       )}
-      {#if section.show && shouldShowItemSection(sectionSearchState, { unlocked: context.unlocked })}
+      {const showSection = $derived(
+        section.show &&
+          SectionVisibility.shouldShowItemSection(sectionSearchState, {
+            unlocked: context.unlocked,
+          }),
+      )}
+      {#if showSection}
         {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
           <FeatureTable
             {section}

@@ -8,10 +8,8 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import {
-    getItemSectionSearchState,
-    getSearchResultsContext,
-  } from 'src/features/search/search.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -99,7 +97,7 @@
   );
 
   const sectionSearchState = $derived(
-    getItemSectionSearchState(entries, searchResults),
+    SectionVisibility.getItemSectionSearchState(entries, searchResults),
   );
 </script>
 
@@ -118,7 +116,9 @@
         <h3>
           {localize(section.label)}
         </h3>
-        <span class="table-header-count">{sectionSearchState.visibleItemCount}</span>
+        <span class="table-header-count"
+          >{sectionSearchState.visibleItemCount}</span
+        >
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells
