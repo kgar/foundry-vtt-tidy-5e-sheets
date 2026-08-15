@@ -94,7 +94,8 @@
         section.show &&
           SectionVisibility.shouldShowItemSection(sectionSearchState, {
             unlocked: context.unlocked,
-            hasSlots: !!section.slots,
+            alwaysShow: section.usesSlots,
+            showWhileSearching: true,
           }),
       )}
       {#if showSection}

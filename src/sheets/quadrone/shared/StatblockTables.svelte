@@ -81,9 +81,15 @@
         ),
       )}
       {const showSection = $derived(
+        // We may want to backtrack here and not show spell sections in the future.
         section.show &&
           SectionVisibility.shouldShowItemSection(sectionSearchState, {
             unlocked: context.unlocked,
+            alwaysShow:
+              section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
+              section.usesSlots,
+            showWhileSearching:
+              section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK,
           }),
       )}
       {#if showSection}

@@ -99,6 +99,15 @@
   const sectionSearchState = $derived(
     SectionVisibility.getItemSectionSearchState(entries, searchResults),
   );
+
+  // A spell section with nothing to show presents as unavailable rather than
+  // disappearing: slot-bearing ones always, the rest while searching. Sections
+  // visible only because the sheet is unlocked stay interactive for managing.
+  const unavailable = $derived(
+    section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
+      sectionSearchState.visibleItemCount === 0 &&
+      (section.usesSlots || sectionSearchState.isSearching),
+  );
 </script>
 
 <TidyTable
@@ -106,6 +115,7 @@
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
   expandedOverride={sectionSearchState.expandedOverride}
+  {unavailable}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow

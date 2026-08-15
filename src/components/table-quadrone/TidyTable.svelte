@@ -14,6 +14,7 @@
     key: string;
     toggleable?: boolean;
     expandedOverride?: boolean;
+    unavailable?: boolean;
     dataset?: Record<string, string>;
     header?: Snippet<[boolean]>;
     body?: Snippet;
@@ -23,6 +24,7 @@
     key,
     toggleable = true,
     expandedOverride,
+    unavailable = false,
     header,
     body,
     dataset,
@@ -48,7 +50,13 @@
       () => {
         return {
           expanded,
-          toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
+          toggle: () => {
+            if (unavailable) {
+              return;
+            }
+
+            sectionExpansionTracker.toggle(key, tabId, location);
+          },
         };
       },
     );
@@ -88,12 +96,14 @@
   });
 
   let expanded = $derived(
-    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
+    unavailable
+      ? false
+      : !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
   );
 </script>
 
 <section
-  class="tidy-table {cssClass ?? ''}"
+  class={['tidy-table', cssClass, { unavailable }]}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
   {...attributes}

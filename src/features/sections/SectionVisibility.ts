@@ -13,8 +13,12 @@ export type SectionSearchState = {
 };
 
 export type SectionVisibilityOptions = {
+  /** Show if unlocked. */
   unlocked?: boolean;
-  hasSlots?: boolean;
+  /** Show the section always (e.g. has spell slots) */
+  alwaysShow?: boolean;
+  /** Show while searching (e.g. cantrips, innate) */
+  showWhileSearching?: boolean;
 };
 
 export class SectionVisibility {
@@ -49,9 +53,18 @@ export class SectionVisibility {
       return true;
     }
 
-    return (
-      !searchState.isSearching && (!!options.unlocked || !!options.hasSlots)
-    );
+    if (options.alwaysShow) {
+      return true;
+    }
+
+    // A search means the user asked to see only what matched, unless the
+    // section is one which holds its place to keep the layout readable.
+    if (searchState.isSearching) {
+      return !!options.showWhileSearching;
+    }
+
+    // An empty section is still worth showing while the user is managing.
+    return !!options.unlocked;
   }
 
   static shouldShowMemberSection(searchState: SectionSearchState): boolean {
