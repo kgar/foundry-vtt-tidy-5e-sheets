@@ -27,7 +27,7 @@
 
   let proseMirrorContainerEl = $state<HTMLElement | undefined>();
 
-  let actualEditorOptions: EditorOptions = $derived(
+  const actualEditorOptions: EditorOptions = $derived(
     foundry.utils.mergeObject(
       {
         name: field,

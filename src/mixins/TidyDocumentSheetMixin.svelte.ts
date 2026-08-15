@@ -329,7 +329,9 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const content = foundry.utils.getProperty(doc, target);
+      const rawDocumentData = doc.toObject();
+
+      const content = foundry.utils.getProperty(rawDocumentData, target);
       const modified = event.target.toggleRevealed(content);
 
       doc.update({ [target]: modified });
