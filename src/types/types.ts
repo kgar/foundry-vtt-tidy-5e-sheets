@@ -481,7 +481,7 @@ export type FacilityDefenderContext = {
   name: string;
   uuid: string;
   /** Defender's facility ID. */
-  facilityId: string;
+  facility: string;
 };
 
 export type CharacterSheetContext = {

@@ -1361,7 +1361,7 @@ export class Tidy5eCharacterSheet
             const { img, name, uuid } = actor;
             return { img, name, uuid, facility: facility.id };
           })
-          .filter((_) => _),
+          .filter((d) => !!d),
       );
 
       if (chosenFacilityContext.isSpecial) {
