@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import * as Bastion from 'src/features/facility/Bastion';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -2150,21 +2151,14 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (type === CONSTANTS.ITEM_TYPE_FACILITY && facilityType) {
-        if (
-          !TidyHooks.tidy5eSheetsAddFacilityClicked(event, this.actor, type)
-        ) {
-          return;
-        }
-
-        const otherType =
-          facilityType === CONSTANTS.FACILITY_TYPE_BASIC
-            ? CONSTANTS.FACILITY_TYPE_SPECIAL
-            : CONSTANTS.FACILITY_TYPE_BASIC;
-
-        filters.locked.additional = {
-          type: { [facilityType]: 1, [otherType]: -1 },
-          level: { max: this.actor.system.details.level },
-        };
+        return await Bastion.addFacility({
+          actor: this.actor,
+          facilityType,
+          event,
+          detachOptions: this._detachOptions(),
+          onSelected: (itemData, ev) =>
+            this._onDropItemCreate(itemData, ev, 'copy'),
+        });
       }
 
       let result = await dnd5e.applications.CompendiumBrowser.selectOne(
@@ -2508,17 +2502,11 @@ export function getTidy5eActorSheetQuadroneBase<
       const { facilityId } =
         target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
 
-      const facility = this.actor.items.get(facilityId);
-
-      if (facility?.system.disabled) {
-        return;
-      }
-
-      facility?.use({
-        legacy: false,
-        chooseActivity: true,
+      Bastion.useFacility({
+        actor: this.actor,
+        facilityId,
         event,
-        options: { sheet: this },
+        sheet: this,
       });
     }
 

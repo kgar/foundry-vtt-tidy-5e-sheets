@@ -1,6 +1,7 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
+import * as Bastion from 'src/features/facility/Bastion';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
@@ -100,13 +101,11 @@ export const CharacterSheetQuadroneRuntime =
         },
         enabled: (context) => {
           const { enabled } = systemSettings.value.bastionConfiguration;
-          const { basic, special } = CONFIG.DND5E.facilities.advancement;
-          const threshold = Math.min(
-            ...Object.keys(basic).map(Number),
-            ...Object.keys(special).map(Number)
-          );
 
-          return context.actor.system.details.level >= threshold && enabled;
+          return (
+            context.actor.system.details.level >=
+              Bastion.getUnlockThresholdLevel() && enabled
+          );
         },
         id: CONSTANTS.TAB_CHARACTER_BASTION,
         layout: 'quadrone',
