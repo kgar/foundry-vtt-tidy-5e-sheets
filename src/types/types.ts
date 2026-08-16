@@ -1499,6 +1499,26 @@ export type GroupMembersQuadroneContext = {
   skilled: GroupMemberQuadroneContext[];
 };
 
+export type GroupBastionsQuadroneContext = {
+  orders: CharacterOrdersContext[];
+  bastions: CharacterFacilitiesContext[];
+};
+
+export type CharacterOrdersContext = {
+  facilityId: string;
+  facilityName: string;
+  character: Actor5e;
+  progress: {
+    value: number;
+    max: number;
+    order: string;
+    pct: number;
+  };
+  craft: Item5e | null;
+  facility: Item5e;
+};
+
+
 export type Emphasizable = {
   identifiers: Set<string>;
 };
@@ -1619,6 +1639,7 @@ export type GroupSheetQuadroneContext = {
     };
   };
   memberContext: GroupMembersQuadroneContext;
+  bastionsContext: GroupBastionsQuadroneContext;
   members: GroupMemberSection[];
   skills: GroupSkill[];
   travel: {
