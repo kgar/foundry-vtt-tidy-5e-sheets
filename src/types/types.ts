@@ -1502,23 +1502,44 @@ export type GroupMembersQuadroneContext = {
   skilled: GroupMemberQuadroneContext[];
 };
 
-export type GroupBastionsQuadroneContext = {
-  orders: CharacterOrdersContext[];
-  bastions: FacilitiesContext[];
+/** Group sheet bastion context for a single PC */
+export type GroupMemberBastionQuadroneContext = {
+  member: GroupMemberQuadroneContext;
+  bastionName: string;
+  level: number;
+  facilities: FacilitiesContext;
+  /** All hirelings across facilities */
+  hirelings: FacilityOccupancyContext;
+  defenders: FacilityOccupancyContext;
 };
 
-export type CharacterOrdersContext = {
-  facilityId: string;
+export type FacilityOccupancyContext = {
+  /** Filled slots */
+  occupants: number;
+  /** Total slots */
+  max: number;
+};
+
+/** An in-progress facility order, flattened across every party member. */
+export type BastionOrderQuadroneContext = {
+  facility: Item5e;
+  member: GroupMemberQuadroneContext;
+  /** Get icon for key with `getTidyFacilityIcon`. */
+  key: string;
+  label: string;
   facilityName: string;
-  character: Actor5e;
   progress: {
     value: number;
     max: number;
-    order: string;
     pct: number;
   };
   craft: Item5e | null;
-  facility: Item5e;
+  cost: number | null;
+};
+
+export type GroupBastionsQuadroneContext = {
+  members: GroupMemberBastionQuadroneContext[];
+  orders: BastionOrderQuadroneContext[];
 };
 
 
@@ -1642,8 +1663,7 @@ export type GroupSheetQuadroneContext = {
     };
   };
   memberContext: GroupMembersQuadroneContext;
-  // TODO: Populated by Tidy5eGroupSheetQuadrone once the Group Bastions tab is built out.
-  bastionsContext?: GroupBastionsQuadroneContext;
+  bastionsContext: GroupBastionsQuadroneContext;
   members: GroupMemberSection[];
   skills: GroupSkill[];
   travel: {
