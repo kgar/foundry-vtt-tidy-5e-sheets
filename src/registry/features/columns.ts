@@ -1,5 +1,12 @@
 import HtmlColumn from 'src/sheets/quadrone/item/columns/HtmlColumn.svelte';
 import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
+import BastionCostColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionCostColumn.svelte';
+import BastionFacilityNameColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionFacilityNameColumn.svelte';
+import BastionMemberColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionMemberColumn.svelte';
+import BastionOccupantCountColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionOccupantCountColumn.svelte';
+import BastionOrderColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionOrderColumn.svelte';
+import BastionProgressColumn from 'src/sheets/quadrone/actor/group-parts/bastions/columns/BastionProgressColumn.svelte';
+import { calculateOccupancy } from 'src/features/facility/Bastion';
 import type {
   ActivityColumnSpec,
   BastionFacilityColumnSpec,
@@ -59,166 +66,6 @@ import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleD
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
-    bastionFacility: {
-      order: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize('DND5E.FACILITY.FIELDS.order.label'),
-          }),
-        },
-        cell: {
-          component: BastionOrderColumn,
-          props: (args) => ({
-            orderKey: 
-            label:
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionFacilityColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionOrderColumn
-      >,
-      progress: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'DND5E.FACILITY.Progress',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionProgressColumn,
-          props: (args) => ({ 
-            progress:  
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionFacilityColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionProgressColumn
-      >,
-      hirelings: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'DND5E.FACILITY.FIELDS.hirelings.max.label',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionOccupantCountColumn,
-          props: (args) => ({
-            occupancy: 
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionFacilityColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionOccupantCountColumn
-      >,
-      defenders: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'DND5E.FACILITY.FIELDS.defenders.max.label',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionOccupantCountColumn,
-          props: (args) => ({
-            occupancy: 
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionFacilityColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionOccupantCountColumn
-      >,
-    },
-    bastionOrder: {
-      facility: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'TYPES.Item.facility',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionFacilityNameColumn,
-          props: (args) => ({
-            name: 
-            uuid: 
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionOrderColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionFacilityNameColumn
-      >,
-      player: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize('TYPES.Actor.character'),
-          }),
-        },
-        cell: {
-          component: BastionMemberColumn,
-          props: (args) => ({ 
-            member:  
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionOrderColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionMemberColumn
-      >,
-      progress: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'TIDY5E.Bastion.Group.Column.ProgressDays',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionProgressColumn,
-          props: (args) => ({ 
-            progress:  
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionOrderColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionProgressColumn
-      >,
-      cost: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize('DND5E.Cost'),
-          }),
-        },
-        cell: {
-          component: BastionCostColumn,
-          props: (args) => ({ 
-            cost:  
-          }),
-        },
-        widthRems: 5,
-      } satisfies BastionOrderColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionCostColumn
-      >,
-    },
     activity: {
       uses: {
         header: {
@@ -277,6 +124,163 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       } satisfies ActivityColumnSpec<
         typeof HtmlColumn,
         typeof ActivityDamageFormulasColumn
+      >,
+    },
+
+    bastionFacility: {
+      order: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.FACILITY.FIELDS.order.label'),
+          }),
+        },
+        cell: {
+          component: BastionOrderColumn,
+          props: (args) => ({
+            orderKey: args.rowContext.progress.order,
+            label:
+              CONFIG.DND5E.facilities.orders[args.rowContext.progress.order]
+                ?.label ?? args.rowContext.progress.order,
+          }),
+        },
+        widthRems: 7,
+      } satisfies BastionFacilityColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionOrderColumn
+      >,
+      progress: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'DND5E.FACILITY.Progress',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionProgressColumn,
+          props: (args) => ({ 
+            progress: args.rowContext.progress 
+          }),
+        },
+        widthRems: 10,
+      } satisfies BastionFacilityColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionProgressColumn
+      >,
+      hirelings: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'DND5E.FACILITY.FIELDS.hirelings.max.label',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionOccupantCountColumn,
+          props: (args) => ({
+            occupancy: calculateOccupancy([args.rowContext], 'hirelings'),
+          }),
+        },
+        widthRems: 5,
+      } satisfies BastionFacilityColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionOccupantCountColumn
+      >,
+      defenders: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'DND5E.FACILITY.FIELDS.defenders.max.label',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionOccupantCountColumn,
+          props: (args) => ({
+            occupancy: calculateOccupancy([args.rowContext], 'defenders'),
+          }),
+        },
+        widthRems: 5,
+      } satisfies BastionFacilityColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionOccupantCountColumn
+      >,
+    },
+    bastionOrder: {
+      facility: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'TYPES.Item.facility',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionFacilityNameColumn,
+          props: (args) => ({
+            name: args.rowContext.facilityName,
+            uuid: args.rowDocument.uuid,
+          }),
+        },
+        widthRems: 8,
+      } satisfies BastionOrderColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionFacilityNameColumn
+      >,
+      player: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('TYPES.Actor.character'),
+          }),
+        },
+        cell: {
+          component: BastionMemberColumn,
+          props: (args) => ({ member: args.rowContext.member }),
+        },
+        widthRems: 10,
+      } satisfies BastionOrderColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionMemberColumn
+      >,
+      progress: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'TIDY5E.Facilities.Progress.Label',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionProgressColumn,
+          props: (args) => ({ progress: args.rowContext.progress }),
+        },
+        widthRems: 10,
+      } satisfies BastionOrderColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionProgressColumn
+      >,
+      cost: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize('DND5E.Cost'),
+          }),
+        },
+        cell: {
+          component: BastionCostColumn,
+          props: (args) => ({ cost: args.rowContext.cost }),
+        },
+        widthRems: 6,
+      } satisfies BastionOrderColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionCostColumn
       >,
     },
     containerContents: {

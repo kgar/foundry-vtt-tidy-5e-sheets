@@ -1069,7 +1069,8 @@
     "Creatures.Label": "Creatures",
     "RosterMember.Label": "{actorName} - {facilityName}",
     "ContextMenuActionRemove": "Remove from {facilityName}",
-    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "Progress.Label": "Progress (Days)"
   },
   "TIDY5E.LocalizationTestKey": "Localization Test Key",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
