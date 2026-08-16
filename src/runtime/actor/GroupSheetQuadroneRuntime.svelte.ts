@@ -1,13 +1,15 @@
 import type { GroupSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import GroupMembersTab from 'src/sheets/quadrone/actor/tabs/GroupMembersTab.svelte';
+import * as Bastion from 'src/features/facility/Bastion';
 import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
 import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
 import { buildGroupMembersTabOptions } from 'src/settings/tab-options/GroupMemberTabOptions';
 import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
-import { settings, systemSettings } from 'src/settings/settings.svelte';
+import { systemSettings } from 'src/settings/settings.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 
 
@@ -42,9 +44,13 @@ export const GroupSheetQuadroneRuntime =
           component: GroupBastionsTab,
           type: 'svelte',
         },
-        enabled: (_context) => {
-          return !!settings.value?.truesight
-            && !!systemSettings.value.bastionConfiguration.enabled;
+        enabled: (context) => {
+          if (!systemSettings.value.bastionConfiguration.enabled) return false;
+          const pcs = context.bastionsContext.members;
+          if (!pcs.length) return false;
+          if (FoundryAdapter.userIsGm()) return true;
+          const threshold = Bastion.getUnlockThresholdLevel();
+          return pcs.some((m) => m.level >= threshold);
         },
         id: CONSTANTS.TAB_GROUP_BASTIONS,
         layout: 'quadrone',
