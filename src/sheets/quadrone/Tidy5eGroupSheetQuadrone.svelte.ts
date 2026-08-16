@@ -43,6 +43,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
 import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
+import { BastionFacilityColumnRuntime } from 'src/runtime/table-columns/BastionFacilityColumnRuntime';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -124,6 +125,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const context: GroupSheetQuadroneContext = {
       bastionsContext: await this._prepareBastionsContext(
         memberDependentContext.memberContext,
+        actorContext,
       ),
       enriched: {
         description: {
@@ -169,12 +171,13 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
   /**
    * Prepare group bastions. One entry per PC member. Orders are shared context for the group.
-   * 
-   * GMs can prep facilities before players get access via their level, but players 
+   *
+   * GMs can prep facilities before players get access via their level, but players
    * won't see it until one of them reaches the level where bastions unlock.
    */
   async _prepareBastionsContext(
     memberContext: GroupMembersQuadroneContext,
+    actorContext: ActorSheetQuadroneContext,
   ): Promise<GroupBastionsQuadroneContext> {
     const members: GroupMemberBastionQuadroneContext[] = [];
     const orders: BastionOrderQuadroneContext[] = [];
@@ -183,6 +186,17 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     if (!systemSettings.value.bastionConfiguration.enabled) {
       return { members, orders };
     }
+
+    // Facilities are identical, so get all actors at once.
+    const facilityColumns =
+      BastionFacilityColumnRuntime.getColumnSpecifications({
+        sheetDocument: this.document,
+        tabId: CONSTANTS.TAB_GROUP_BASTIONS,
+        sectionKey: CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT,
+        editable: actorContext.editable,
+        owner: actorContext.owner,
+        unlocked: actorContext.unlocked,
+      });
 
     for (const member of memberContext.character) {
       // Check observers
@@ -205,6 +219,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
           facilities.special.builtFacilities,
           'defenders',
         ),
+        columns: facilityColumns,
       });
 
       const memberFacilities = [
