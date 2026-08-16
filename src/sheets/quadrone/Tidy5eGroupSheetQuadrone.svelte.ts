@@ -44,6 +44,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/GroupMemberRowActionRuntime.svelte';
 import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
 import { BastionFacilityColumnRuntime } from 'src/runtime/table-columns/BastionFacilityColumnRuntime';
+import { BastionOrderColumnRuntime } from 'src/runtime/table-columns/BastionOrderColumnRuntime';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -182,21 +183,26 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const members: GroupMemberBastionQuadroneContext[] = [];
     const orders: BastionOrderQuadroneContext[] = [];
 
+    const columnOptions = {
+      sheetDocument: this.document,
+      tabId: CONSTANTS.TAB_GROUP_BASTIONS,
+      sectionKey: CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT,
+      editable: actorContext.editable,
+      owner: actorContext.owner,
+      unlocked: actorContext.unlocked,
+    };
+
+    const orderColumns =
+      BastionOrderColumnRuntime.getColumnSpecifications(columnOptions);
+
     // Skip if bastions are off.
     if (!systemSettings.value.bastionConfiguration.enabled) {
-      return { members, orders };
+      return { members, orders, orderColumns };
     }
 
     // Facilities are identical, so get all actors at once.
     const facilityColumns =
-      BastionFacilityColumnRuntime.getColumnSpecifications({
-        sheetDocument: this.document,
-        tabId: CONSTANTS.TAB_GROUP_BASTIONS,
-        sectionKey: CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT,
-        editable: actorContext.editable,
-        owner: actorContext.owner,
-        unlocked: actorContext.unlocked,
-      });
+      BastionFacilityColumnRuntime.getColumnSpecifications(columnOptions);
 
     for (const member of memberContext.character) {
       // Check observers
@@ -254,7 +260,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     // Sort by progress
     orders.sort((a, b) => b.progress.pct - a.progress.pct);
 
-    return { members, orders };
+    return { members, orders, orderColumns };
   }
 
   async _prepareMemberDependentContext(
