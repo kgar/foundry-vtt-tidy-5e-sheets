@@ -1,8 +1,12 @@
 import { CONSTANTS } from 'src/constants';
+import * as Bastion from 'src/features/facility/Bastion';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
+  BastionOrderQuadroneContext,
   GroupAbility,
+  GroupBastionsQuadroneContext,
+  GroupMemberBastionQuadroneContext,
   GroupMemberQuadroneContext,
   GroupMemberSection,
   GroupMembersQuadroneContext,
@@ -31,7 +35,7 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -114,7 +118,13 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       relativeTo: this.actor,
     };
 
+    const memberDependentContext =
+      await this._prepareMemberDependentContext(actorContext);
+
     const context: GroupSheetQuadroneContext = {
+      bastionsContext: await this._prepareBastionsContext(
+        memberDependentContext.memberContext,
+      ),
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -143,7 +153,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         },
       },
       type: 'group',
-      ...(await this._prepareMemberDependentContext(actorContext)),
+      ...memberDependentContext,
       ...actorContext,
     };
 
@@ -155,6 +165,81 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
 
     return context;
+  }
+
+  /**
+   * Prepare group bastions. One entry per PC member. Orders are shared context for the group.
+   * 
+   * GMs can prep facilities before players get access via their level, but players 
+   * won't see it until one of them reaches the level where bastions unlock.
+   */
+  async _prepareBastionsContext(
+    memberContext: GroupMembersQuadroneContext,
+  ): Promise<GroupBastionsQuadroneContext> {
+    const members: GroupMemberBastionQuadroneContext[] = [];
+    const orders: BastionOrderQuadroneContext[] = [];
+
+    // Skip if bastions are off.
+    if (!systemSettings.value.bastionConfiguration.enabled) {
+      return { members, orders };
+    }
+
+    for (const member of memberContext.character) {
+      // Check observers
+      if (!member.canObserve) {
+        continue;
+      }
+
+      const { facilities } = await Bastion.prepareFacilities(member.actor);
+
+      members.push({
+        member,
+        name: member.actor.system.bastion?.name ?? '',
+        level: member.actor.system.details.level,
+        facilities,
+        hirelings: Bastion.calculateOccupancy(
+          facilities.special.builtFacilities,
+          'hirelings',
+        ),
+        defenders: Bastion.calculateOccupancy(
+          facilities.special.builtFacilities,
+          'defenders',
+        ),
+      });
+
+      const memberFacilities = [
+        ...facilities.basic.builtFacilities,
+        ...facilities.special.builtFacilities,
+      ];
+
+      for (const facility of memberFacilities) {
+        if (!facility.progress.max) {
+          continue;
+        }
+
+        orders.push({
+          facility: facility.facility,
+          name: facility.name,
+          member,
+          key: facility.progress.order,
+          label:
+            CONFIG.DND5E.facilities.orders[facility.progress.order]?.label ??
+            facility.progress.order,
+          progress: {
+            value: facility.progress.value,
+            max: facility.progress.max,
+            pct: facility.progress.pct,
+          },
+          craft: facility.craft,
+          cost: Bastion.getOrderCost(facility),
+        });
+      }
+    }
+
+    // Sort by progress
+    orders.sort((a, b) => b.progress.pct - a.progress.pct);
+
+    return { members, orders };
   }
 
   async _prepareMemberDependentContext(
@@ -336,7 +421,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       section.members.push(groupMemberContext);
       memberContext.all.set(actor.uuid, groupMemberContext);
       if (actor.system.isCharacter) {
-        memberContext.character.push(actor);
+        memberContext.character.push(groupMemberContext);
       }
 
       const prepareCreatureInformation =

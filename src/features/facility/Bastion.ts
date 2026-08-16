@@ -8,6 +8,7 @@ import type {
   ChosenFacilityContext,
   FacilitiesContext,
   FacilityDefenderContext,
+  FacilityOccupancyContext,
   FacilityOccupantContext,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -125,8 +126,8 @@ export async function prepareFacilities(
   }
 
   const facilities: FacilitiesContext = {
-    basic: { chosen: basic, available: [], value: 0, max: 0 },
-    special: { chosen: special, available: [], value: 0, max: 0 },
+    basic: { builtFacilities: basic, available: [], count: 0, max: 0 },
+    special: { builtFacilities: special, available: [], count: 0, max: 0 },
   };
 
   [CONSTANTS.FACILITY_TYPE_BASIC, CONSTANTS.FACILITY_TYPE_SPECIAL].forEach(
@@ -139,11 +140,11 @@ export async function prepareFacilities(
           .find(([level]) => {
             return level <= actor.system.details.level;
           }) ?? [];
-      group.value = group.chosen.filter(
+      group.count = group.builtFacilities.filter(
         ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free,
       ).length;
       group.max = available ?? 0;
-      available = (available ?? 0) - group.value;
+      available = (available ?? 0) - group.count;
       group.available = Array.fromRange(Math.max(0, available)).map(() => {
         return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
       });
@@ -156,10 +157,10 @@ export async function prepareFacilities(
     });
   }
 
-  facilities.basic.chosen = facilities.basic.chosen.sort(
+  facilities.basic.builtFacilities = facilities.basic.builtFacilities.sort(
     (a, b) => a.facility.sort - b.facility.sort,
   );
-  facilities.special.chosen = facilities.special.chosen.sort(
+  facilities.special.builtFacilities = facilities.special.builtFacilities.sort(
     (a, b) => a.facility.sort - b.facility.sort,
   );
 
@@ -168,6 +169,56 @@ export async function prepareFacilities(
     facilities,
     byId,
   };
+}
+
+/**
+ * Total of a type of occupant. Has uuid even if the parent actor is deleted.
+ */
+export function calculateOccupancy(
+  facilities: ChosenFacilityContext[],
+  slot: 'hirelings' | 'defenders' | 'creatures',
+): FacilityOccupancyContext {
+  return facilities.reduce(
+    (totals, facility) => {
+      const facilityOccupants = facility[slot];
+      totals.max += facilityOccupants.length;
+      totals.occupants += facilityOccupants.filter((facility) => !!facility.uuid).length;
+      return totals;
+    },
+    { occupants: 0, max: 0 },
+  );
+}
+
+/**
+ * Try to get gold cost for a facility order. This isn't saved, so we have
+ * to get it from  types if it's around.
+ * TODO: Get this from the order dialog and save it as a Tidy flag
+ */
+export function getOrderCost(
+  chosen: ChosenFacilityContext,
+): number | null {
+  const order = chosen.progress.order;
+  const system = chosen.facility.system;
+
+  if (order === 'build') {
+    return CONFIG.DND5E.facilities.sizes[system.building.size]?.value ?? null;
+  }
+
+  if (order === 'craft' || order === 'harvest') {
+    const price = chosen.craft?.system?.price?.value;
+
+    if (typeof price !== 'number') {
+      return null;
+    }
+
+    // harvest has a quantity, craft is always 1.
+    const quantity =
+      order === 'harvest' ? (system.craft?.quantity ?? 1) : 1;
+
+    return price * quantity;
+  }
+
+  return null;
 }
 
 /**

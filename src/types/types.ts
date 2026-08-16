@@ -460,9 +460,9 @@ export type TabSheetPinsContext = {
 
 export type FacilityGroupContext = {
   available: AvailableBastionActionContext[];
-  chosen: ChosenFacilityContext[];
+  builtFacilities: ChosenFacilityContext[];
   max: number;
-  value: number;
+  count: number;
 };
 
 export type FacilitiesContext = {
@@ -1505,7 +1505,7 @@ export type GroupMembersQuadroneContext = {
 /** Group sheet bastion context for a single PC */
 export type GroupMemberBastionQuadroneContext = {
   member: GroupMemberQuadroneContext;
-  bastionName: string;
+  name: string;
   level: number;
   facilities: FacilitiesContext;
   /** All hirelings across facilities */
@@ -1527,7 +1527,7 @@ export type BastionOrderQuadroneContext = {
   /** Get icon for key with `getTidyFacilityIcon`. */
   key: string;
   label: string;
-  facilityName: string;
+  name: string;
   progress: {
     value: number;
     max: number;

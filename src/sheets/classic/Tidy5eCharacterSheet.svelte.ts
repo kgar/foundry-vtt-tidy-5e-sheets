@@ -711,8 +711,8 @@ export class Tidy5eCharacterSheet
       defenders: [],
       epicBoonsEarned: undefined,
       facilities: {
-        basic: { chosen: [], available: [], value: 0, max: 0 },
-        special: { chosen: [], available: [], value: 0, max: 0 },
+        basic: { builtFacilities: [], available: [], count: 0, max: 0 },
+        special: { builtFacilities: [], available: [], count: 0, max: 0 },
       },
       favorites: [],
       features: [],
@@ -1376,8 +1376,8 @@ export class Tidy5eCharacterSheet
 
     context.defenders = allDefenders;
     context.facilities = {
-      basic: { chosen: basic, available: [], value: 0, max: 0 },
-      special: { chosen: special, available: [], value: 0, max: 0 },
+      basic: { builtFacilities: basic, available: [], count: 0, max: 0 },
+      special: { builtFacilities: special, available: [], count: 0, max: 0 },
     };
     [CONSTANTS.FACILITY_TYPE_BASIC, CONSTANTS.FACILITY_TYPE_SPECIAL].forEach(
       (type) => {
@@ -1389,11 +1389,11 @@ export class Tidy5eCharacterSheet
             .find(([level]) => {
               return level <= this.actor.system.details.level;
             }) ?? [];
-        facilities.value = facilities.chosen.filter(
+        facilities.count = facilities.builtFacilities.filter(
           ({ free }) => type === CONSTANTS.FACILITY_TYPE_BASIC || !free,
         ).length;
         facilities.max = available ?? 0;
-        available = (available ?? 0) - facilities.value;
+        available = (available ?? 0) - facilities.count;
         facilities.available = Array.fromRange(Math.max(0, available)).map(
           () => {
             return { label: `DND5E.FACILITY.AvailableFacility.${type}.free` };
