@@ -14,6 +14,30 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
         },
       },
     },
+    bastionFacility: {
+      [CONSTANTS.SHEET_TYPE_GROUP]: {
+        [CONSTANTS.TAB_GROUP_BASTIONS]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            order: { order: 100, priority: 400 },
+            progress: { order: 200, priority: 500 },
+            hirelings: { order: 300, priority: 200 },
+            defenders: { order: 400, priority: 300 },
+          },
+        },
+      },
+    },
+    bastionOrder: {
+      [CONSTANTS.SHEET_TYPE_GROUP]: {
+        [CONSTANTS.TAB_GROUP_BASTIONS]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            facility: { order: 100, priority: 300 },
+            player: { order: 200, priority: 400 },
+            progress: { order: 300, priority: 500 },
+            cost: { order: 400, priority: 100 },
+          },
+        },
+      },
+    },
     containerContents: {
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
