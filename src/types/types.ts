@@ -59,6 +59,7 @@ import type {
 } from './row-actions.types';
 import type {
   ActivityColumnSpec,
+  BastionFacilityColumnSpec,
   ConfiguredColumnSpecification,
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
@@ -1511,6 +1512,10 @@ export type GroupMemberBastionQuadroneContext = {
   /** All hirelings across facilities */
   hirelings: FacilityOccupancyContext;
   defenders: FacilityOccupancyContext;
+  /** Columns facility rows. */
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<BastionFacilityColumnSpec>
+  >;
 };
 
 export type FacilityOccupancyContext = {
@@ -1541,7 +1546,6 @@ export type GroupBastionsQuadroneContext = {
   members: GroupMemberBastionQuadroneContext[];
   orders: BastionOrderQuadroneContext[];
 };
-
 
 export type Emphasizable = {
   identifiers: Set<string>;
