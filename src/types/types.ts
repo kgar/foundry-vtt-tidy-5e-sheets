@@ -458,28 +458,31 @@ export type TabSheetPinsContext = {
   [tabId: string]: SheetPinContext[];
 };
 
-export type CharacterFacilitiesContext = {
-  basic: {
-    available: AvailableBastionActionContext[];
-    chosen: ChosenFacilityContext[];
-    max: number;
-    value: number;
-  };
-  special: {
-    available: AvailableBastionActionContext[];
-    chosen: ChosenFacilityContext[];
-    max: number;
-    value: number;
-  };
-} & Record<
-  string,
-  {
-    available: AvailableBastionActionContext[];
-    chosen: ChosenFacilityContext[];
-    max: number;
-    value: number;
-  }
->;
+export type FacilityGroupContext = {
+  available: AvailableBastionActionContext[];
+  chosen: ChosenFacilityContext[];
+  max: number;
+  value: number;
+};
+
+export type FacilitiesContext = {
+  basic: FacilityGroupContext;
+  special: FacilityGroupContext;
+} & Record<string, FacilityGroupContext>;
+
+/**
+ * @deprecated Use {@link FacilitiesContext} for any actors.
+ */
+export type CharacterFacilitiesContext = FacilitiesContext;
+
+/** A defender occupant, flattened across facilities for roster display. */
+export type FacilityDefenderContext = {
+  img: string;
+  name: string;
+  uuid: string;
+  /** Defender's facility ID. */
+  facilityId: string;
+};
 
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
@@ -493,10 +496,10 @@ export type CharacterSheetContext = {
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
-  defenders: Actor5e[];
+  defenders: FacilityDefenderContext[];
   effects: Record<string, EffectCategory<ActiveEffectContext>>;
   epicBoonsEarned: string | undefined;
-  facilities: CharacterFacilitiesContext;
+  facilities: FacilitiesContext;
   favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
@@ -1375,7 +1378,7 @@ export type CharacterSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
-  defenders: Actor5e[];
+  defenders: FacilityDefenderContext[];
   effects: ActiveEffectSection[];
   enriched: {
     appearance: string;
@@ -1387,7 +1390,7 @@ export type CharacterSheetQuadroneContext = {
     trait: string;
   };
   epicBoonsEarned: string | undefined;
-  facilities: CharacterFacilitiesContext;
+  facilities: FacilitiesContext;
   favorites: FavoriteContextEntry[];
   features: FeatureSection[];
   inspirationSource?: InspirationSource;
@@ -1501,7 +1504,7 @@ export type GroupMembersQuadroneContext = {
 
 export type GroupBastionsQuadroneContext = {
   orders: CharacterOrdersContext[];
-  bastions: CharacterFacilitiesContext[];
+  bastions: FacilitiesContext[];
 };
 
 export type CharacterOrdersContext = {
@@ -1639,7 +1642,8 @@ export type GroupSheetQuadroneContext = {
     };
   };
   memberContext: GroupMembersQuadroneContext;
-  bastionsContext: GroupBastionsQuadroneContext;
+  // TODO: Populated by Tidy5eGroupSheetQuadrone once the Group Bastions tab is built out.
+  bastionsContext?: GroupBastionsQuadroneContext;
   members: GroupMemberSection[];
   skills: GroupSkill[];
   travel: {
