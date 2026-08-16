@@ -209,8 +209,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       },
       epicBoonsEarned: undefined,
       facilities: {
-        basic: { chosen: [], available: [], value: 0, max: 0 },
-        special: { chosen: [], available: [], value: 0, max: 0 },
+        basic: { builtFacilities: [], available: [], count: 0, max: 0 },
+        special: { builtFacilities: [], available: [], count: 0, max: 0 },
       },
       favorites: await this._prepareFavorites(),
       features: [],
