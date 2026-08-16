@@ -237,11 +237,10 @@ export async function addFacility(args: {
   actor: Actor5e;
   facilityType: string;
   event: Event;
-  /** Compendium browser application options, usually from `sheet._detachOptions()`. */
+  /** For compendium browser detach, following 5e system (is this needed?) */
   detachOptions?: unknown;
   /**
-   * When true, offer facilities above the actor's level. Lets a GM stock a bastion
-   * ahead of the level at which its facilities would normally unlock.
+   * Allow higher level factilities for GM use.
    */
   ignoreLevelRestriction?: boolean;
   /** Creates the chosen item on the target actor. */
