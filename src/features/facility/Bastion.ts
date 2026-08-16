@@ -194,3 +194,104 @@ export function prepareFacilityOccupants(
     }),
   );
 }
+
+/** Deleting an occupant from a facility. */
+export function deleteOccupant(
+  facility: Item5e,
+  prop: string,
+  index: number,
+): Promise<Item5e> {
+  let { value } = foundry.utils.getProperty(facility, prop);
+  value = value.filter((_: any, i: number) => i !== index);
+  return facility.update({ [`${prop}.value`]: value });
+}
+
+/** Use a facility, prompting for an activity/order. */
+export function useFacility(args: {
+  actor: Actor5e;
+  facilityId: string | undefined;
+  event: Event;
+  /** The sheet to refresh after use */
+  sheet: unknown;
+}) {
+  const { actor, facilityId, event, sheet } = args;
+
+  const facility = actor.items.get(facilityId);
+
+  if (facility?.system.disabled) {
+    return;
+  }
+
+  return facility?.use({
+    legacy: false,
+    chooseActivity: true,
+    event,
+    options: { sheet },
+  });
+}
+
+/**
+ * Browse for a facility of the given type and add it to the target actor.
+ */
+export async function addFacility(args: {
+  actor: Actor5e;
+  facilityType: string;
+  event: Event;
+  /** Compendium browser application options, usually from `sheet._detachOptions()`. */
+  detachOptions?: unknown;
+  /**
+   * When true, offer facilities above the actor's level. Lets a GM stock a bastion
+   * ahead of the level at which its facilities would normally unlock.
+   */
+  ignoreLevelRestriction?: boolean;
+  /** Creates the chosen item on the target actor. */
+  onSelected: (itemData: unknown, event: Event) => unknown;
+}) {
+  const {
+    actor,
+    facilityType,
+    event,
+    detachOptions,
+    ignoreLevelRestriction = false,
+    onSelected,
+  } = args;
+
+  if (
+    !TidyHooks.tidy5eSheetsAddFacilityClicked(
+      event,
+      actor,
+      CONSTANTS.ITEM_TYPE_FACILITY,
+    )
+  ) {
+    return;
+  }
+
+  const otherType =
+    facilityType === CONSTANTS.FACILITY_TYPE_BASIC
+      ? CONSTANTS.FACILITY_TYPE_SPECIAL
+      : CONSTANTS.FACILITY_TYPE_BASIC;
+
+  const filters: Record<string, any> = {
+    locked: {
+      types: new Set([CONSTANTS.ITEM_TYPE_FACILITY]),
+      additional: {
+        type: { [facilityType]: 1, [otherType]: -1 },
+        ...(ignoreLevelRestriction
+          ? {}
+          : { level: { max: actor.system.details.level } }),
+      },
+    },
+  };
+
+  const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+    { filters },
+    detachOptions,
+  );
+
+  if (result) {
+    onSelected(
+      game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+      event,
+    );
+  }
+}
