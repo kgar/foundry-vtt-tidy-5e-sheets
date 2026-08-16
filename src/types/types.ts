@@ -1527,7 +1527,7 @@ export type BastionOrderQuadroneContext = {
   /** Get icon for key with `getTidyFacilityIcon`. */
   key: string;
   label: string;
-  name: string;
+  facilityName: string;
   progress: {
     value: number;
     max: number;

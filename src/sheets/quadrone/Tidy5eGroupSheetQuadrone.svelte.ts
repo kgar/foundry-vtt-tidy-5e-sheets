@@ -219,7 +219,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
         orders.push({
           facility: facility.facility,
-          name: facility.name,
+          facilityName: facility.name,
           member,
           key: facility.progress.order,
           label:
