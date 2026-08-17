@@ -1339,7 +1339,7 @@
     gap: var(--t5e-size-1x);
     flex-wrap: wrap;
     margin-block: var(--t5e-size-1x) var(--t5e-size-1x);
-    margin-inline: var(--t5e-size-2x) var(--t5e-size-1x);
+    margin-inline: 0 var(--t5e-size-1x);
     padding-block: 0;
     padding-inline: 0;
   }
