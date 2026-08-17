@@ -15,8 +15,8 @@
     transition: all var(--t5e-transition-default);
     box-shadow: var(--t5e-drop-shadow-field);
     background: var(--t5e-component-field-background);
-    border-radius: 0.125rem;
-    border: 0.0625rem solid var(--t5e-component-field-border);
+    border-radius: var(--t5e-size-halfx);
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
     outline: 0 solid var(--t5e-theme-color-default);
 
     &:hover,
@@ -61,7 +61,7 @@
     display: flex;
     font-size: var(--font-size-default, 0.8666666667rem);
     font-weight: var(--font-weight-default, 400);
-    padding-block-end: 0.0625rem;
+    padding-block-end: var(--t5e-size-1);
 
     &:is(textarea) {
       resize: none;
@@ -80,7 +80,7 @@
   }
 
   input.uninput:hover {
-    border: 0.0625rem solid var(--t5e-component-field-border-hover);
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border-hover);
   }
 
   .input-group {
@@ -152,6 +152,39 @@
 
     i {
       font-size: var(--icon-size);
+    }
+  }
+
+  formula-input {
+    height: var(--t5e-field-size-default);
+
+    input[type='text'] {
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+
+      &:is(:hover, :focus-within, :active) {
+        z-index: 1;
+      }
+    }
+
+    button.icon {
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+      border-start-end-radius: var(--t5e-size-halfx);
+      border-end-end-radius: var(--t5e-size-halfx);
+      margin-inline-start: -0.0625rem;
+      width: var(--t5e-field-size-default);
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+
+      &::before {
+        transform: translateX(var(--t5e-size-1));
+      }
+
+      &:is(:hover, :focus-within, :active) {
+        background: var(--t5e-component-field-background-hover);
+        border-color: var(--t5e-component-field-border-hover);
+        box-shadow: var(--t5e-drop-shadow-field-hover);
+      }
     }
   }
 
