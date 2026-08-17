@@ -1,7 +1,13 @@
 import { CONSTANTS } from 'src/constants';
 import * as Bastion from 'src/features/facility/Bastion';
+import {
+  FacilityOccupantSlotPropsMap,
+  FacilityOccupantSlotTypesMap,
+} from 'src/features/facility/facility';
+import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
+  FacilityOccupantSlot,
   ActorSheetQuadroneContext,
   BastionOrderQuadroneContext,
   GroupAbility,
@@ -72,6 +78,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       height: 810,
     },
     actions: {
+      addMemberFacilityOccupant:
+        Tidy5eGroupSheetQuadrone.#addMemberFacilityOccupant,
+      adjustMemberFacilityProgress:
+        Tidy5eGroupSheetQuadrone.#adjustMemberFacilityProgress,
       takeBastionTurn: Tidy5eGroupSheetQuadrone.#takeBastionTurn,
       useMemberFacility: Tidy5eGroupSheetQuadrone.#useMemberFacility,
     },
@@ -254,6 +264,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             value: facility.progress.value,
             max: facility.progress.max,
             pct: facility.progress.pct,
+            order: facility.progress.order,
           },
           craft: facility.craft,
           cost: Bastion.getOrderCost(facility),
@@ -661,6 +672,216 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       sheet: this,
     });
   }
+
+  /**
+   * Nudge a member facility's order along by a day, for GMs correcting the
+   * record. Serves the facilities table and the orders table, which tag their
+   * facility differently.
+   */
+  static async #adjustMemberFacilityProgress(
+    this: Tidy5eGroupSheetQuadrone,
+    _event: Event,
+    target: HTMLElement,
+  ) {
+    if (!FoundryAdapter.userIsGm()) {
+      return;
+    }
+
+    const memberUuid =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
+
+    const member = memberUuid ? fromUuidSync(memberUuid) : undefined;
+
+    // Facility rows carry `data-facility-id`; order rows identify the same
+    // document with the generic `data-item-id`.
+    const facilityId =
+      target.closest<HTMLElement>('[data-facility-id]')?.dataset.facilityId ??
+      target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+
+    const facility = facilityId ? member?.items.get(facilityId) : undefined;
+
+    if (
+      !facility ||
+      !facility.isOwner ||
+      FoundryAdapter.isLockedInCompendium(facility)
+    ) {
+      return;
+    }
+
+    const toAdjust = Number(target.dataset.value);
+    const { value, max } = facility.system.progress;
+
+    if (Number.isNaN(toAdjust) || !max) {
+      return;
+    }
+
+    const next = Math.clamp(value + toAdjust, 0, max);
+
+    if (next === value) {
+      return;
+    }
+
+    return await facility.update({ 'system.progress.value': next });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Fill an open occupant slot on a member's facility.
+   *
+   * Facility rows identify their facility directly. The member header row shows
+   * an occupancy total across every special facility, so it has no single
+   * target and prompts for one instead.
+   */
+  static async #addMemberFacilityOccupant(
+    this: Tidy5eGroupSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const memberUuid =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset.memberUuid;
+
+    const member = memberUuid ? fromUuidSync(memberUuid) : undefined;
+
+    const slot = target.dataset.occupantSlot as
+      | FacilityOccupantSlot
+      | undefined;
+
+    if (!member || !slot) {
+      return;
+    }
+
+    const facilityId =
+      target.closest<HTMLElement>('[data-facility-id]')?.dataset.facilityId;
+
+    const facility = facilityId
+      ? member.items.get(facilityId)
+      : await this.#promptForFacilityWithOpenSlot(member, slot);
+
+    if (
+      !facility ||
+      !facility.isOwner ||
+      FoundryAdapter.isLockedInCompendium(facility)
+    ) {
+      return;
+    }
+
+    const prop = FacilityOccupantSlotPropsMap[slot];
+
+    if (
+      !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
+        event,
+        facility,
+        FacilityOccupantSlotTypesMap[slot],
+        prop,
+      )
+    ) {
+      return;
+    }
+
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            documentClass: 'Actor',
+            types: new Set(['character', 'npc', 'vehicle', 'group']),
+          },
+        },
+      },
+      this._detachOptions(),
+    );
+
+    if (result) {
+      await Bastion.addFacilityOccupant(facility, prop, result);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Ask which of a member's facilities should receive the occupant. Resolves
+   * without prompting when there is only one candidate.
+   */
+  async #promptForFacilityWithOpenSlot(
+    member: Actor5e,
+    slot: FacilityOccupantSlot,
+  ): Promise<Item5e | undefined> {
+    const candidates = Bastion.getFacilitiesWithOpenSlot(member, slot);
+
+    if (candidates.length <= 1) {
+      return candidates[0];
+    }
+
+    // Built through the DOM so facility names are escaped for us.
+    const select = document.createElement('select');
+    select.name = 'facilityId';
+    for (const facility of candidates) {
+      const option = document.createElement('option');
+      option.value = facility.id;
+      option.textContent = facility.name;
+      select.appendChild(option);
+    }
+
+    const { promise, resolve } = Promise.withResolvers<string | undefined>();
+
+    const dialog = new foundry.applications.api.DialogV2({
+      content: `<div class="form-group">${select.outerHTML}</div>`,
+      window: {
+        icon: 'fa-solid fa-house-turret',
+        title: FoundryAdapter.localize(
+          'TIDY5E.Bastion.Group.ChooseFacility.Title',
+        ),
+      },
+      buttons: [
+        {
+          action: 'choose',
+          icon: 'fa-solid fa-check',
+          label: FoundryAdapter.localize('Confirm'),
+          default: true,
+          callback: (_event: Event, button: HTMLButtonElement) =>
+            new foundry.applications.ux.FormDataExtended(button.form).object
+              .facilityId as string | undefined,
+        },
+      ],
+      submit: (result: string | undefined) => resolve(result),
+    });
+
+    dialog.addEventListener('close', () => resolve(undefined), { once: true });
+
+    this._renderChild(dialog);
+
+    const chosenId = await promise;
+
+    return chosenId ? member.items.get(chosenId) : undefined;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Bastion member rows deep link to the member's own bastion tab, so a GM can
+   * jump from the party overview straight to the facilities they were reading.
+   */
+  async _showDocument(_event: Event, target: HTMLElement) {
+    if (!target.closest('.bastion-member')) {
+      return;
+    }
+
+    const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+    const actor = uuid ? await fromUuid(uuid) : undefined;
+
+    if (!actor || !Bastion.characterHasBastionTab(actor)) {
+      return;
+    }
+
+    this._openDocumentSheet(actor, {
+      mode: CONSTANTS.SHEET_MODE_PLAY,
+      tidy: { tab: CONSTANTS.TAB_CHARACTER_BASTION },
+    });
+
+    return false;
+  }
+
+  /* -------------------------------------------- */
 
   /**
    * Browse for a facility and create it on the member. GM only, so it ignores

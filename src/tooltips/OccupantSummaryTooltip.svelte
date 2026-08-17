@@ -19,6 +19,11 @@
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     uuids: string[],
     tooltipTitle: string,
+    /**
+     * Element the tooltip should hang off of. Defaults to the hovered element,
+     * which for nested markup is the innermost child under the pointer.
+     */
+    anchor?: HTMLElement | null,
   ) {
     if (!uuids.length) {
       return;
@@ -35,7 +40,7 @@
     await tick();
 
     Tooltip.show(
-      (event?.target as HTMLElement | null) ?? event.currentTarget,
+      anchor ?? (event?.target as HTMLElement | null) ?? event.currentTarget,
       tooltip.outerHTML,
       getThemeV2(sheetDocument),
     );

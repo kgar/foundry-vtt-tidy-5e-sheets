@@ -14,6 +14,7 @@ import type {
 } from 'src/types/types';
 import { systemSettings } from 'src/settings/settings.svelte';
 import { isNil } from 'src/utils/data';
+import { FacilityOccupantSlotPropsMap } from './facility';
 
 /**
  * Context of all facilities and defenders for an actor.
@@ -35,6 +36,19 @@ export function getUnlockThresholdLevel(): number {
   return Math.min(
     ...Object.keys(basic).map(Number),
     ...Object.keys(special).map(Number),
+  );
+}
+
+/**
+ * Whether a character is far enough along to have a bastion tab on their sheet.
+ * Shared by the sheet tab's `enabled` check and by anything that wants to deep
+ * link to that tab.
+ */
+export function characterHasBastionTab(actor: Actor5e): boolean {
+  const { enabled } = systemSettings.value.bastionConfiguration;
+
+  return (
+    enabled && actor?.system?.details?.level >= getUnlockThresholdLevel()
   );
 }
 
@@ -276,6 +290,45 @@ export function prepareFacilityOccupants(
       };
     }),
   );
+}
+
+/**
+ * Add an occupant to one of a facility's slots, respecting its capacity.
+ * Mirrors the character sheet's `_onDropActorAddToFacility`, which can't be
+ * reused from the group sheet because the facility belongs to a member actor.
+ */
+export function addFacilityOccupant(
+  facility: Item5e,
+  prop: string,
+  actorUuid: string,
+): Promise<Item5e> | undefined {
+  const { max, value } = foundry.utils.getProperty(facility, prop);
+
+  if (value.length + 1 > max) {
+    return;
+  }
+
+  return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
+}
+
+/**
+ * A member's special facilities that still have room in the given slot.
+ */
+export function getFacilitiesWithOpenSlot(
+  actor: Actor5e,
+  slot: FacilityOccupantSlot,
+): Item5e[] {
+  const prop = FacilityOccupantSlotPropsMap[slot];
+
+  return Object.values<any>(actor.itemTypes.facility).filter((facility) => {
+    if (facility.system.type.value !== CONSTANTS.FACILITY_TYPE_SPECIAL) {
+      return false;
+    }
+
+    const { max, value } = foundry.utils.getProperty(facility, prop) ?? {};
+
+    return max > 0 && value.length < max;
+  });
 }
 
 /** Deleting an occupant from a facility. */

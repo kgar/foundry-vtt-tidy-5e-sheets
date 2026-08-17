@@ -42,28 +42,27 @@
   data-member-uuid={actor.uuid}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_MEMBER}
 >
-  <div class="tidy-table-cell actor-image-container">
+  <TidyTableCell primary={true} class="text-cell item-label flexrow">
     <ActorTableImage member={member.member} />
-  </div>
+    <div class="actor-name-container flexcol">
+      <div
+        class="actor-name"
+        role="button"
+        data-keyboard-focus
+        tabindex={0}
+        data-action="showDocument"
+        data-uuid={actor.uuid}
+      >
+        <h4 class="font-label-medium">{actor.name}</h4>
 
-  <TidyTableCell primary={true} class="text-cell item-label flexcol">
-    <div
-      class="actor-name"
-      role="button"
-      data-keyboard-focus
-      tabindex={0}
-      data-action="showDocument"
-      data-uuid={actor.uuid}
-    >
-      <h4 class="font-label-medium">{actor.name}</h4>
-
-      <div class="separated-list">
-        {#each subtitleParts as part, index}
-          <span class="font-label-medium color-text-gold-emphasis">{part}</span>
-          {#if index < subtitleParts.length - 1}
-            <div class="divider-dot"></div>
-          {/if}
-        {/each}
+        <div class="separated-list">
+          {#each subtitleParts as part, index}
+            <span class="font-default-medium color-text-gold-emphasis">{part}</span>
+            {#if index < subtitleParts.length - 1}
+              <div class="divider-dot"></div>
+            {/if}
+          {/each}
+        </div>
       </div>
     </div>
   </TidyTableCell>

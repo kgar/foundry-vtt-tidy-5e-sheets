@@ -1543,6 +1543,7 @@ export type BastionOrderQuadroneContext = {
     value: number;
     max: number;
     pct: number;
+    order: string;
   };
   craft: Item5e | null;
   cost: number | null;

@@ -3,6 +3,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
+import { isNil } from 'src/utils/data';
 
 /**
  * Resolve the member actor and, when the row has one, the facility item it owns.
@@ -80,6 +81,13 @@ export function configureGroupBastionFacilityContextMenu(
 
   ui.context.menuItems = [
     {
+      name: 'TIDY5E.ContextMenuActionView',
+      icon: '<i class="fas fa-eye fa-fw"></i>',
+      group: 'common',
+      callback: () =>
+        app._renderChild(facility.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
+    },
+    {
       name: 'TIDY5E.ContextMenuActionEdit',
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
       condition: canModify,
@@ -94,6 +102,18 @@ export function configureGroupBastionFacilityContextMenu(
       group: 'common',
       callback: (_target, event) =>
         app.useMemberFacility(member, facility.id, event),
+    },
+    {
+      // Cancels the order outright. Deliberately skips the system's order
+      // evaluation, so no gold or crafted items are awarded.
+      name: 'TIDY5E.Bastion.Group.DeleteOrder.Label',
+      icon: '<i class="fa-solid fa-ban fa-fw"></i>',
+      condition: () => canModify() && !isNil(facility.system.progress?.order, ''),
+      group: 'common',
+      callback: () =>
+        facility.update({
+          'system.progress': { value: 0, max: null, order: '' },
+        }),
     },
     {
       // TODO: Tidy-only functionality here, not via the system.

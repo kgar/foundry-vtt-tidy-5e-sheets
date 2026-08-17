@@ -1075,6 +1075,8 @@
   "TIDY5E.Bastion.Group": {
     "RollEvent.Label": "Roll Bastion Event",
     "KillDefenders.Label": "Kill Defenders",
+    "DeleteOrder.Label": "Delete Order",
+    "ChooseFacility.Title": "Choose a Facility",
     "Orders.EmptyStateHint": "No party member has an order in progress.",
     "Facilities.EmptyStateHint": "This character has not built any facilities yet.",
     "EmptyStateHint": "No group members with bastions. Add player characters to track their bastions here."

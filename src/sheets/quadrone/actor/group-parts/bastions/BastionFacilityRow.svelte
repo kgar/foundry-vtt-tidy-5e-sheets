@@ -48,6 +48,8 @@
       : CONSTANTS.FACILITY_TYPE_BASIC,
     { disabled: chosen.disabled, building: chosen.building.built === false },
   ]}
+  style:--t5e-theme-color-default={member.member.accentColor}
+  style:--t5e-theme-color-highlight={member.member.highlightColor}
   data-item-id={chosen.id}
   data-facility-id={chosen.id}
   data-member-uuid={memberUuid}
@@ -77,7 +79,7 @@
     }}
   >
     <h4 class="font-label-medium facility-name">{chosen.name}</h4>
-    <span class="subtitle font-label-medium color-text-lighter">
+    <span class="subtitle font-default-medium color-text-lighter">
       {@html chosen.subtitle}
     </span>
   </TidyTableCell>
