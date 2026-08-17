@@ -182,10 +182,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: BastionOccupantCountColumn,
           props: (args) => ({
             occupancy: calculateOccupancy([args.rowContext], 'hirelings'),
-            sheetDocument: args.sheetDocument,
-            tooltipTitle: FoundryAdapter.localize(
-              'TIDY5E.Facilities.Hirelings.Label',
-            ),
           }),
         },
         widthRems: 5,
@@ -206,10 +202,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: BastionOccupantCountColumn,
           props: (args) => ({
             occupancy: calculateOccupancy([args.rowContext], 'defenders'),
-            sheetDocument: args.sheetDocument,
-            tooltipTitle: FoundryAdapter.localize(
-              'TIDY5E.Facilities.Defenders.Label',
-            ),
           }),
         },
         widthRems: 5,

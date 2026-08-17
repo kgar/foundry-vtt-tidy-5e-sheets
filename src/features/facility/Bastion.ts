@@ -10,6 +10,7 @@ import type {
   FacilityDefenderContext,
   FacilityOccupancyContext,
   FacilityOccupantContext,
+  FacilityOccupantSlot,
 } from 'src/types/types';
 import { systemSettings } from 'src/settings/settings.svelte';
 import { isNil } from 'src/utils/data';
@@ -177,21 +178,20 @@ export async function prepareFacilities(
  */
 export function calculateOccupancy(
   facilities: ChosenFacilityContext[],
-  slot: 'hirelings' | 'defenders' | 'creatures',
+  slot: FacilityOccupantSlot,
 ): FacilityOccupancyContext {
-  return facilities.reduce(
+  return facilities.reduce<FacilityOccupancyContext>(
     (totals, facility) => {
       const facilityOccupants = facility[slot];
       totals.max += facilityOccupants.length;
       for (const occupant of facilityOccupants) {
         if (occupant.uuid) {
-          totals.value++;
           totals.occupants.push(occupant.uuid);
         }
       }
       return totals;
     },
-    { value: 0, max: 0, occupants: [] as string[] },
+    { slot, max: 0, occupants: [] },
   );
 }
 

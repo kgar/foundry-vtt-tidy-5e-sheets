@@ -30,9 +30,9 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
       [CONSTANTS.SHEET_TYPE_GROUP]: {
         [CONSTANTS.TAB_GROUP_BASTIONS]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
-            progress: { order: 300, priority: 500 },
-            facility: { order: 100, priority: 300 },
-            player: { order: 200, priority: 400 },
+            progress: { order: 100, priority: 500 },
+            facility: { order: 200, priority: 300 },
+            player: { order: 300, priority: 400 },
             // cost: { order: 400, priority: 100 },
           },
         },

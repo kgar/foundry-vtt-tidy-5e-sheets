@@ -512,6 +512,7 @@ export const CONSTANTS = {
     LOCATION: 'location',
     MEMBER_IDS_TO_SHOW: 'memberIdsToShow',
     MESSAGE_BUS: 'messageBus',
+    OCCUPANT_SUMMARY_TOOLTIP: 'occupantSummaryTooltip',
     ON_FILTER_CLEAR_ALL: 'onFilterClearAll',
     ON_FILTER: 'onFilter',
     ON_ITEM_TABLE_TOGGLE: 'onItemTableToggle',

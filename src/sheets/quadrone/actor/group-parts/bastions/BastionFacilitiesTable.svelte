@@ -11,6 +11,8 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import BastionFacilityRow from './BastionFacilityRow.svelte';
   import BastionMemberRow from './BastionMemberRow.svelte';
+  import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
+  import { setContext } from 'svelte';
 
   interface Props {
     sectionsInlineWidth: number;
@@ -26,6 +28,13 @@
   );
 
   const localize = FoundryAdapter.localize;
+
+  // One tooltip for the whole table; every occupancy cell borrows it.
+  let occupantSummaryTooltip = $state<OccupantSummaryTooltip | undefined>();
+  setContext(
+    CONSTANTS.SVELTE_CONTEXT.OCCUPANT_SUMMARY_TOOLTIP,
+    () => occupantSummaryTooltip,
+  );
 
   let members = $derived(context.bastionsContext.members);
 
@@ -63,6 +72,11 @@
     members.reduce((count, member) => count + getFacilities(member).length, 0),
   );
 </script>
+
+<OccupantSummaryTooltip
+  bind:this={occupantSummaryTooltip}
+  sheetDocument={context.document}
+/>
 
 <TidyTable key={section.key} class="bastion-facilities">
   {#snippet header()}

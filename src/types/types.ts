@@ -1519,12 +1519,15 @@ export type GroupMemberBastionQuadroneContext = {
   >;
 };
 
+/** The kind of occupant a facility slot holds. */
+export type FacilityOccupantSlot = 'hirelings' | 'defenders' | 'creatures';
+
 export type FacilityOccupancyContext = {
-  /** Filled slots */
-  value: number;
+  /** Which kind of occupant is counted. Drives the tooltip label. */
+  slot: FacilityOccupantSlot;
   /** Total slots */
   max: number;
-  /** Occupant actor UUIDs for tooltips */
+  /** Occupant actor UUIDs of filled slots. `length` for occupant count. */
   occupants: string[];
 };
 
