@@ -193,15 +193,17 @@
       />
     </select>
   {:else if game.release.generation >= 14 && field instanceof foundry.data.fields.StringField && !(choices ?? field.choices) && field.constructor.name === 'FormulaField'}
-    <formula-input
-      context="default"
-      id={config.id}
-      {disabled}
-      placeholder={config.placeholder}
-      class={config.classes}
-      {...submissionAttributes}
-      {...attributes}>{config.value}</formula-input
-    >
+    {#key config.value}
+      <formula-input
+        context="default"
+        id={config.id}
+        {disabled}
+        placeholder={config.placeholder}
+        class={config.classes}
+        {...submissionAttributes}
+        {...attributes}>{config.value}</formula-input
+      >
+    {/key}
   {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices)}
     <input
       type="text"
@@ -279,6 +281,8 @@
       {...attributes}
     />
   {:else}
-    <FoundryFormInput {field} options={config} />
+    {#key config.value}
+      <FoundryFormInput {field} options={config} />
+    {/key}
   {/if}
 {/if}
