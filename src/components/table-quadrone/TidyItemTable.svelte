@@ -115,7 +115,7 @@
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
   expandedOverride={sectionSearchState.expandedOverride}
-  {unavailable}
+  class={{ unavailable }}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
