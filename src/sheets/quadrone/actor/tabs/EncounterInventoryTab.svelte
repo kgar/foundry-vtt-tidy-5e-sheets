@@ -6,7 +6,7 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -38,8 +38,7 @@
   );
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: inventory,
       tabId: tabId,

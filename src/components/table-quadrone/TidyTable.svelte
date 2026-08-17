@@ -13,6 +13,7 @@
   interface Props extends HTMLAttributes<HTMLElement> {
     key: string;
     toggleable?: boolean;
+    expandedOverride?: boolean;
     dataset?: Record<string, string>;
     header?: Snippet<[boolean]>;
     body?: Snippet;
@@ -21,6 +22,7 @@
   let {
     key,
     toggleable = true,
+    expandedOverride,
     header,
     body,
     dataset,
@@ -46,7 +48,13 @@
       () => {
         return {
           expanded,
-          toggle: () => sectionExpansionTracker.toggle(key, tabId, location),
+          toggle: () => {
+            if (expandedOverride !== undefined) {
+              return;
+            }
+
+            sectionExpansionTracker.toggle(key, tabId, location);
+          },
         };
       },
     );
@@ -58,12 +66,14 @@
   }
 
   let expanded = $derived(
-    !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
+    expandedOverride !== undefined
+      ? expandedOverride
+      : !toggleable || sectionExpansionTracker.isExpanded(key, tabId, location),
   );
 </script>
 
 <section
-  class="tidy-table {cssClass ?? ''}"
+  class={['tidy-table', cssClass]}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
   {...attributes}

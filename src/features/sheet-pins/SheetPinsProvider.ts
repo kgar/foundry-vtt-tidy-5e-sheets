@@ -409,6 +409,33 @@ export class SheetPinsProvider {
       []
     );
   }
+
+  /**
+   * Filter sheet pins using tab search. Supports renamed pins and activity
+   * parent items.
+   * @param pins pins within a tab
+   * @param criteria search text entered
+   * @returns pins matching search results
+   */
+  static filterSheetPinsFromSearch(
+    pins: SheetPinContext[],
+    criteria: string,
+  ): SheetPinContext[] {
+    const trimmed = criteria.trim().toLowerCase();
+
+    if (trimmed === '') {
+      return pins;
+    }
+
+    return pins.filter(
+      (pin) =>
+        pin.alias?.toLowerCase().includes(trimmed) ||
+        (pin.type === 'item'
+          ? FoundryAdapter.searchItem(pin.document, criteria)
+          : pin.document.name.toLowerCase().includes(trimmed) ||
+            FoundryAdapter.searchItem(pin.document.item, criteria)),
+    );
+  }
 }
 
 function getSheetPinsForTab(sheetDocument: Actor5e | Item5e, tabId: string) {

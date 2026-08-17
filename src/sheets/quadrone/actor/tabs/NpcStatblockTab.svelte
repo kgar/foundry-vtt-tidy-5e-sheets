@@ -8,9 +8,9 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import StatblockTables from '../../shared/StatblockTables.svelte';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
@@ -45,8 +45,7 @@
   );
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: sections,
       tabId: tabId,

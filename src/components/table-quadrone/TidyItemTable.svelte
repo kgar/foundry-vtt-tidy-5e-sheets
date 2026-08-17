@@ -9,6 +9,7 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -94,12 +95,27 @@
     ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
+
+  const sectionSearchState = $derived(
+    SectionVisibility.getItemSectionSearchState(entries, searchResults),
+  );
+
+  // A spell section with nothing to show presents as unavailable rather than
+  // disappearing: slot-bearing ones always, the rest while searching. Sections
+  // visible only because the sheet is unlocked stay interactive for managing.
+  const unavailable = $derived(
+    section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
+      sectionSearchState.visibleItemCount === 0 &&
+      (section.usesSlots || sectionSearchState.isSearching),
+  );
 </script>
 
 <TidyTable
   key={section.key}
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
+  expandedOverride={sectionSearchState.expandedOverride}
+  class={{ unavailable }}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
@@ -110,7 +126,9 @@
         <h3>
           {localize(section.label)}
         </h3>
-        <span class="table-header-count">{entries.length}</span>
+        <span class="table-header-count"
+          >{sectionSearchState.visibleItemCount}</span
+        >
         {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells

@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
@@ -83,11 +83,19 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(ItemVisibility.hasViewableItems(
-        section.items,
-        searchResults.uuids,
-      ))}
-      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+      {const sectionSearchState = $derived(
+        SectionVisibility.getItemSectionSearchState(
+          section.items,
+          searchResults,
+        ),
+      )}
+      {const showSection = $derived(
+        section.show &&
+          SectionVisibility.shouldShowItemSection(sectionSearchState, {
+            unlocked: context.unlocked,
+          }),
+      )}
+      {#if showSection}
         <FeatureTable
           {itemToggleMap}
           {section}

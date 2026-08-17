@@ -12,8 +12,11 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { createSearchResultsState } from 'src/features/search/search.svelte';
-  import { isNil } from 'src/utils/data';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
@@ -45,6 +48,7 @@
   let searchCriteria = $state('');
 
   const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
 
   let sections: GroupMemberSection[] = $derived(
     SheetSections.configureGroupMembers(
@@ -56,15 +60,19 @@
   );
 
   $effect(() => {
-    searchResults.uuids = !isNil(searchCriteria)
-      ? new Set(
-          context.system.members
-            .filter((m: Actor5e) =>
-              m.actor.name.toLowerCase().includes(searchCriteria),
-            )
-            .map((m: Actor5e) => m.actor.uuid),
-        )
-      : undefined;
+    const criteria = searchCriteria.trim().toLowerCase();
+
+    searchResults.criteria = searchCriteria;
+    searchResults.uuids =
+      criteria !== ''
+        ? new Set(
+            context.system.members
+              .filter((m: Actor5e) =>
+                m.actor.name.toLowerCase().includes(criteria),
+              )
+              .map((m: Actor5e) => m.actor.uuid),
+          )
+        : undefined;
   });
 </script>
 
@@ -83,13 +91,17 @@
     <SheetPins />
 
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(
-        !searchResults.uuids ||
-          section.members.some((m) => searchResults.uuids?.has(m.actor.uuid)),
+      {const sectionSearchState = $derived(
+        SectionVisibility.getMemberSectionSearchState(
+          section.members,
+          searchResults,
+        ),
       )}
-      {#if section.show && hasViewableItems}
-        {const visibleItemCount = $derived(section.members.length)}
-
+      {const showSection = $derived(
+        section.show &&
+          SectionVisibility.shouldShowMemberSection(sectionSearchState),
+      )}
+      {#if showSection}
         {const rowActionInfo = $derived(
           RowActionRuntimeBase.getRowActionWidthInfo(
             section.members,
@@ -105,13 +117,19 @@
           ),
         )}
 
-        <TidyTable key={section.key} data-custom-section={section.custom}>
+        <TidyTable
+          key={section.key}
+          data-custom-section={section.custom}
+          expandedOverride={sectionSearchState.expandedOverride}
+        >
           {#snippet header()}
             <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}
-                  <span class="table-header-count">{visibleItemCount}</span>
+                  <span class="table-header-count"
+                    >{sectionSearchState.visibleItemCount}</span
+                  >
                 </h3>
               </TidyTableHeaderCell>
 
@@ -136,9 +154,7 @@
                 class={[
                   'tidy-table-row group-member',
                   {
-                    hidden:
-                      searchResults.uuids &&
-                      !searchResults.show(member.actor.uuid),
+                    hidden: !searchResults.show(member.actor.uuid),
                   },
                 ]}
                 style:--t5e-theme-color-default={member.accentColor}

@@ -13,8 +13,8 @@
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SpellTable from './SpellTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
@@ -84,13 +84,21 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(
-        ItemVisibility.hasViewableItems(
+      {const sectionSearchState = $derived(
+        SectionVisibility.getItemSectionSearchState(
           section.items,
-          searchResults.uuids,
-        )
+          searchResults,
+        ),
       )}
-      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === '') || !!section.slots)}
+      {const showSection = $derived(
+        section.show &&
+          SectionVisibility.shouldShowItemSection(sectionSearchState, {
+            unlocked: context.unlocked,
+            alwaysShow: section.usesSlots,
+            showWhileSearching: true,
+          }),
+      )}
+      {#if showSection}
         <SpellTable
           {section}
           {itemToggleMap}

@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -13,7 +14,6 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import SpellTable from './SpellTable.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import FeatureTable from './FeatureTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
 
@@ -74,13 +74,25 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {const hasViewableItems = $derived(
-        ItemVisibility.hasViewableItems(
+      {const sectionSearchState = $derived(
+        SectionVisibility.getItemSectionSearchState(
           section.items,
-          searchResults.uuids,
-        )
+          searchResults,
+        ),
       )}
-      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+      {const showSection = $derived(
+        // We may want to backtrack here and not show spell sections in the future.
+        section.show &&
+          SectionVisibility.shouldShowItemSection(sectionSearchState, {
+            unlocked: context.unlocked,
+            alwaysShow:
+              section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
+              section.usesSlots,
+            showWhileSearching:
+              section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK,
+          }),
+      )}
+      {#if showSection}
         {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
           <FeatureTable
             {section}

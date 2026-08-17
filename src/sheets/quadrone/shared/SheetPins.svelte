@@ -7,10 +7,13 @@
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  const searchResults = getSearchResultsContext();
 
   const sheetPins = $derived(
     SheetPinsProvider.getSheetPinContextsToDisplay(
@@ -19,11 +22,18 @@
       tabId,
     ),
   );
+
+  const visiblePins = $derived(
+    SheetPinsProvider.filterSheetPinsFromSearch(
+      sheetPins,
+      searchResults.criteria,
+    ),
+  );
 </script>
 
-{#if sheetPins.length}
+{#if visiblePins.length}
   <div class="sheet-pins" data-tidy-sheet-part="sheet-pins">
-    {#each sheetPins as ctx (ctx.id)}
+    {#each visiblePins as ctx (ctx.id)}
       <svelte:boundary
         onerror={(e) =>
           error('An error occurred while rendering a sheet pin', false, e)}

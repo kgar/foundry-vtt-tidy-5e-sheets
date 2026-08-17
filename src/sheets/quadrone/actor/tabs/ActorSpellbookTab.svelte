@@ -10,11 +10,11 @@
   import { getContext } from 'svelte';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
 
@@ -41,8 +41,7 @@
   );
 
   $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
+    SectionVisibility.syncItemTabSearchResults(searchResults, searchCriteria, {
       itemContext: context.itemContext,
       sections: spellbook,
       tabId: tabId,
