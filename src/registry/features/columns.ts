@@ -182,6 +182,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: BastionOccupantCountColumn,
           props: (args) => ({
             occupancy: calculateOccupancy([args.rowContext], 'hirelings'),
+            sheetDocument: args.sheetDocument,
+            tooltipTitle: FoundryAdapter.localize(
+              'TIDY5E.Facilities.Hirelings.Label',
+            ),
           }),
         },
         widthRems: 5,
@@ -202,6 +206,10 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: BastionOccupantCountColumn,
           props: (args) => ({
             occupancy: calculateOccupancy([args.rowContext], 'defenders'),
+            sheetDocument: args.sheetDocument,
+            tooltipTitle: FoundryAdapter.localize(
+              'TIDY5E.Facilities.Defenders.Label',
+            ),
           }),
         },
         widthRems: 5,
@@ -211,6 +219,24 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       >,
     },
     bastionOrder: {
+      progress: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({
+            html: FoundryAdapter.localize(
+              'TIDY5E.Facilities.Progress.Label',
+            ),
+          }),
+        },
+        cell: {
+          component: BastionProgressColumn,
+          props: (args) => ({ progress: args.rowContext.progress }),
+        },
+        widthRems: 10,
+      } satisfies BastionOrderColumnSpec<
+        typeof HtmlColumn,
+        typeof BastionProgressColumn
+      >,
       facility: {
         header: {
           component: HtmlColumn,
@@ -247,24 +273,6 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       } satisfies BastionOrderColumnSpec<
         typeof HtmlColumn,
         typeof BastionMemberColumn
-      >,
-      progress: {
-        header: {
-          component: HtmlColumn,
-          props: () => ({
-            html: FoundryAdapter.localize(
-              'TIDY5E.Facilities.Progress.Label',
-            ),
-          }),
-        },
-        cell: {
-          component: BastionProgressColumn,
-          props: (args) => ({ progress: args.rowContext.progress }),
-        },
-        widthRems: 10,
-      } satisfies BastionOrderColumnSpec<
-        typeof HtmlColumn,
-        typeof BastionProgressColumn
       >,
       cost: {
         header: {

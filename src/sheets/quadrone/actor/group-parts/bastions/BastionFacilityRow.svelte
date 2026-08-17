@@ -54,35 +54,29 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_FACILITY}
 >
   <!-- TODO: Swap to tidy table roll button -->
-   <ItemRollButton 
-      image={img} 
-      name={chosen.name} 
-      onclick={(ev: MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const document = game.documents.get(chosen.id);
-        if (document) {
-          document.render(true);
-        }
-      }} 
-    />
-  <!-- <div class="tidy-table-cell facility-image-container">
-    <img class="facility-image" src={img} alt={chosen.name} />
-  </div> -->
+  <ItemRollButton
+    image={img}
+    name={chosen.name}
+    onclick={(ev: MouseEvent) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      context.sheet.useMemberFacility(member.member.actor, chosen.id, ev);
+    }}
+  />
 
-  <TidyTableCell primary={true} class="text-cell item-label flexcol">
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      class="facility-name"
-      role="button"
-      data-keyboard-focus
-      tabindex={0}
-      data-action={context.editable ? 'useMemberFacility' : undefined}
-      data-member-uuid={memberUuid}
-      data-facility-id={chosen.id}
-    >
-      <h4 class="font-label-medium">{chosen.name}</h4>
-    </a>
+  <!-- The whole cell opens the facility, not just the name. -->
+  <TidyTableCell
+    primary={true}
+    class="text-cell item-label flexcol"
+    attributes={{
+      role: 'button',
+      tabindex: 0,
+      ['data-keyboard-focus']: '',
+      ['data-action']: 'showDocument',
+      ['data-uuid']: chosen.facility.uuid,
+    }}
+  >
+    <h4 class="font-label-medium facility-name">{chosen.name}</h4>
     <span class="subtitle font-label-medium color-text-lighter">
       {@html chosen.subtitle}
     </span>

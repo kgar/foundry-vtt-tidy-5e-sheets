@@ -183,10 +183,15 @@ export function calculateOccupancy(
     (totals, facility) => {
       const facilityOccupants = facility[slot];
       totals.max += facilityOccupants.length;
-      totals.occupants += facilityOccupants.filter((facility) => !!facility.uuid).length;
+      for (const occupant of facilityOccupants) {
+        if (occupant.uuid) {
+          totals.value++;
+          totals.occupants.push(occupant.uuid);
+        }
+      }
       return totals;
     },
-    { occupants: 0, max: 0 },
+    { value: 0, max: 0, occupants: [] as string[] },
   );
 }
 

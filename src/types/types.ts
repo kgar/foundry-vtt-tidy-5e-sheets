@@ -1521,9 +1521,11 @@ export type GroupMemberBastionQuadroneContext = {
 
 export type FacilityOccupancyContext = {
   /** Filled slots */
-  occupants: number;
+  value: number;
   /** Total slots */
   max: number;
+  /** Occupant actor UUIDs for tooltips */
+  occupants: string[];
 };
 
 /** An in-progress facility order, flattened across every party member. */
