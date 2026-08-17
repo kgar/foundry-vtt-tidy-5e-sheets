@@ -28,6 +28,7 @@
     tooltip?: string;
     labelAttr?: string;
     valueAttr?: string;
+    submissionMode?: 'full' | 'single' | 'none';
   };
 
   let {
@@ -42,6 +43,7 @@
     labelAttr,
     tooltip,
     valueAttr,
+    submissionMode = 'single',
   }: Props = $props();
 
   function enumerateChoices(
@@ -99,6 +101,14 @@
   }
 
   const effectiveFieldPath = $derived(config.name ?? field.fieldPath);
+  const submissionAttributes = $derived(
+    submissionMode !== 'none'
+      ? {
+          [submissionMode === 'full' ? 'name' : 'data-name']:
+            effectiveFieldPath,
+        }
+      : {},
+  );
   const disabledViaEffect = $derived(
     disableOverriddenInputs &&
       ActiveEffectsHelper.isActiveEffectAppliedToField(
@@ -168,10 +178,10 @@
     {const blankLabel = $derived(getBlankValue())}
     <select
       id={config.id}
-      data-name={config.name ?? effectiveFieldPath}
       value={config.value?.toString()}
       {disabled}
       class={config.classes}
+      {...submissionAttributes}
       {...attributes}
     >
       <SelectOptions
@@ -186,7 +196,6 @@
     <input
       type="text"
       id={config.id}
-      data-name={config.name ?? effectiveFieldPath}
       value={config.value}
       {@attach InputAttachments.selectOnFocus}
       {disabled}
@@ -195,6 +204,7 @@
       data-formula-editor={field.constructor.name === 'FormulaField'
         ? ''
         : undefined}
+      {...submissionAttributes}
       {...attributes}
     />
   {:else if field instanceof foundry.data.fields.NumberField && (choices ?? field.choices)}
@@ -213,10 +223,10 @@
     <select
       id={config.id}
       data-dtype="Number"
-      data-name={config.name ?? effectiveFieldPath}
       value={config.value?.toString()}
       {disabled}
       class={config.classes}
+      {...submissionAttributes}
       {...attributes}
     >
       <SelectOptions
@@ -235,7 +245,6 @@
     <input
       type="number"
       id={config.id}
-      data-name={numberConfig.name ?? effectiveFieldPath}
       value={numberConfig.value}
       {@attach InputAttachments.selectOnFocus}
       {disabled}
@@ -244,6 +253,7 @@
       max={numberConfig.max ?? field.max}
       step={numberConfig.step ?? field.step}
       class={numberConfig.classes}
+      {...submissionAttributes}
       {...attributes}
     />
   {:else if field instanceof foundry.data.fields.BooleanField}
@@ -251,11 +261,11 @@
     {let checked = $derived(disabled ? (disabledValue ?? value) : value)}
     <input
       type="checkbox"
-      data-name={config.name ?? effectiveFieldPath}
       id={config.id}
       {checked}
       {disabled}
       class={config.classes}
+      {...submissionAttributes}
       {...attributes}
     />
   {:else}

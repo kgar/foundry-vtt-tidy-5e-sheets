@@ -108,6 +108,7 @@
             }}
             choices={context.recoveryPeriods}
             groupClasses="label-top"
+            submissionMode="full"
           />
 
           <!-- Type -->
@@ -127,6 +128,7 @@
               }}
               choices={context.recoveryTypes}
               groupClasses="label-top"
+              submissionMode="full"
             />
           {/if}
 
@@ -148,6 +150,7 @@
               }}
               choices={recovery.formulaOptions}
               groupClasses="label-top"
+              submissionMode="full"
             />
           {/if}
 
