@@ -196,10 +196,10 @@
     <formula-input
       context="default"
       id={config.id}
-      data-name={config.name ?? effectiveFieldPath}
       {disabled}
       placeholder={config.placeholder}
       class={config.classes}
+      {...submissionAttributes}
       {...attributes}>{config.value}</formula-input
     >
   {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices)}
