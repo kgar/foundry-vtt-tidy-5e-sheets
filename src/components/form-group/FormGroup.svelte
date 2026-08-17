@@ -24,6 +24,13 @@
     localize?: boolean;
     stacked?: boolean;
     units?: string;
+    /**
+     * Denotes whether to use the `name` attribute ('full') to opt the input into full form submission,
+     * the `data-name` attribute ('single') to opt the input into single-input submission,
+     * or to apply no submission-related attribute ('none').
+     * @default 'single'
+     */
+    submissionMode?: 'full' | 'single' | 'none';
     onChange?: (value: any) => Promise<void> | void;
   };
 
@@ -51,6 +58,7 @@
     tooltip,
     units,
     valueAttr,
+    submissionMode = 'single',
     onChange,
   }: Props = $props();
 
@@ -173,6 +181,7 @@
       {tooltip}
       {labelAttr}
       {valueAttr}
+      {submissionMode}
       {condition}
     />
   {/if}
