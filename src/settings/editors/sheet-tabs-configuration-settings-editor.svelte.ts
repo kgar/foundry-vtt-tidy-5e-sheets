@@ -1,5 +1,8 @@
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
@@ -210,7 +213,11 @@ export function getSheetTabsConfigurationSettingsEditor(
   }
 
   function getConfig(): SheetTabsConfigurationContext {
-    let setting = getTabConfig(document) ?? getWorldConfigOrDefault();
+    let setting = getTabConfig(document) ?? { tabs: {} };
+
+    if (!Object.keys(setting.tabs).length) {
+      setting = getWorldConfigOrDefault();
+    }
 
     const context = getTabContext(document, setting);
 
@@ -234,7 +241,7 @@ export function getSheetTabsConfigurationSettingsEditor(
     return (
       SettingsProvider.settings.tabConfiguration.get()?.[
         document.documentName
-      ]?.[document.type] ?? { tabs: {} }
+      ]?.[docTypeKeyOverride ?? document.type] ?? { tabs: {} }
     );
   }
 

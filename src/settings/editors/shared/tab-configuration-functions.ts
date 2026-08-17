@@ -42,7 +42,15 @@ export function getItemTabContext(
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
-  let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
+  let defaultTabIds = new Set(ItemSheetQuadroneRuntime.getDefaultTabIds(type));
+  let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(
+    type,
+  ).map((tab) => ({
+    defaultIncluded: defaultTabIds.has(tab.id),
+    id: tab.id,
+    title: tab.title,
+    iconClass: tab.iconClass,
+  }));
 
   return buildTabConfigContextEntry(
     documentName,
@@ -59,7 +67,15 @@ export function getActorTabContext(
   docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
-  const allRegisteredTabs = runtime.getAllRegisteredTabs();
+  const defaultTabIds = new Set(runtime.getDefaultTabIds());
+  const allRegisteredTabs: RegisteredDefaultTabInfo[] = runtime
+    .getAllRegisteredTabs()
+    .map((tab) => ({
+      defaultIncluded: defaultTabIds.has(tab.id),
+      id: tab.id,
+      title: tab.title,
+      iconClass: tab.iconClass,
+    }));
 
   return buildTabConfigContextEntry(
     documentName,
@@ -70,14 +86,18 @@ export function getActorTabContext(
   );
 }
 
-export function buildTabConfigContextEntry(
+// TODO: Move somewhere better
+type RegisteredDefaultTabInfo = {
+  id: string;
+  title: CustomTabTitle;
+  iconClass?: string;
+  defaultIncluded: boolean;
+};
+
+function buildTabConfigContextEntry(
   documentName: string,
   type: string,
-  allRegisteredTabs: {
-    id: string;
-    title: CustomTabTitle;
-    iconClass?: string;
-  }[],
+  allRegisteredTabs: RegisteredDefaultTabInfo[],
   settings: SheetTabsConfiguration | undefined | null,
   docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
@@ -100,9 +120,25 @@ export function buildTabConfigContextEntry(
     {},
   );
 
-  const defaultTabs = buildTabConfigEntries(registry, {}, documentName);
-
   const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
+
+  const defaultSetup: Record<string, SheetTabConfigEntry> = allRegisteredTabs
+    .map<SheetTabConfigEntry>((tab, index) => ({
+      key: tab.id,
+      order: index,
+      show: !!tab.defaultIncluded,
+      visibilityLevel: defaultVisibility,
+    }))
+    .reduce<Record<string, SheetTabConfigEntry>>((prev, curr) => {
+      prev[curr.key] = curr;
+      return prev;
+    }, {});
+
+  const defaultTabs = buildTabConfigEntries(
+    registry,
+    defaultSetup,
+    documentName,
+  );
 
   // Effective ordered tabs. Prefer the new per-tab config that with order and
   // player visibility, otherwise get from the old model (visible in order with a
@@ -143,7 +179,11 @@ export function buildTabConfigContextEntry(
       }
     }
   } else {
-    tabs = buildTabConfigEntries(registry, settings?.tabs ?? {}, documentName);
+    tabs = buildTabConfigEntries(
+      registry,
+      defaultSetup,
+      documentName,
+    );
   }
 
   const allTabs = Object.values(registry).reduce<Record<string, TabInfo>>(
