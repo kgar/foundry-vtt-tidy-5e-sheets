@@ -71,6 +71,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       width: 740,
       height: 810,
     },
+    actions: {
+      takeBastionTurn: Tidy5eGroupSheetQuadrone.#takeBastionTurn,
+      useMemberFacility: Tidy5eGroupSheetQuadrone.#useMemberFacility,
+    },
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -587,6 +591,104 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   /* -------------------------------------------- */
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
+
+  static async #takeBastionTurn(this: Tidy5eGroupSheetQuadrone) {
+    await this.takeBastionTurn();
+  }
+
+  /**
+   * Advance a bastion turn for characters in this group only. Not the whole world.
+   *
+   * Mirrors `dnd5e.bastion.confirmAdvance()`, which can't be reused here because
+   * it's world-level.
+   */
+  async takeBastionTurn() {
+    if (!FoundryAdapter.userIsGm()) {
+      return;
+    }
+
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      content: FoundryAdapter.localize('DND5E.Bastion.Confirm'),
+      rejectClose: false,
+      window: {
+        icon: 'fa-solid fa-chess-rook',
+        title: 'DND5E.Bastion.Action.BastionTurn',
+      },
+    });
+
+    if (!proceed) {
+      return;
+    }
+
+    const members = this.actor.system.members
+      .map(({ actor }: { actor: Actor5e }) => actor)
+      .filter((actor: Actor5e) => !!actor);
+
+    return await Bastion.advanceBastions(members);
+  }
+
+  static async #useMemberFacility(
+    this: Tidy5eGroupSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const { facilityId, memberUuid } =
+      target.closest<HTMLElement>('[data-member-uuid]')?.dataset ?? {};
+
+    const member = memberUuid ? fromUuidSync(memberUuid) : undefined;
+
+    if (!member) {
+      return;
+    }
+
+    await this.useMemberFacility(member, facilityId, event);
+  }
+
+  /** Issue an order to a facility owned by a group member. */
+  async useMemberFacility(
+    member: Actor5e,
+    facilityId: string | undefined,
+    event: Event,
+  ) {
+    if (!this.isEditable) {
+      return;
+    }
+
+    return await Bastion.useFacility({
+      actor: member,
+      facilityId,
+      event,
+      sheet: this,
+    });
+  }
+
+  /**
+   * Browse for a facility and create it on the member. GM only, so it ignores
+   * level restrictions.
+   */
+  async addMemberFacility(
+    member: Actor5e,
+    facilityType: string,
+    event: Event,
+  ) {
+    if (!this.isEditable) {
+      return;
+    }
+
+    return await Bastion.addFacility({
+      actor: member,
+      facilityType,
+      event,
+      detachOptions: this._detachOptions(),
+      ignoreLevelRestriction: true,
+      onSelected: (itemData) =>
+        dnd5e.documents.Item5e.createDocuments([itemData], {
+          pack: member.pack,
+          parent: member,
+          keepId: true,
+        }),
+    });
+  }
 
   changePace(increment: number) {
     if (Number.isNaN(increment)) return;

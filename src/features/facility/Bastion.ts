@@ -11,6 +11,7 @@ import type {
   FacilityOccupancyContext,
   FacilityOccupantContext,
 } from 'src/types/types';
+import { systemSettings } from 'src/settings/settings.svelte';
 import { isNil } from 'src/utils/data';
 
 /**
@@ -187,6 +188,32 @@ export function calculateOccupancy(
     },
     { occupants: 0, max: 0 },
   );
+}
+
+/**
+ * Advance a bastion turn for the provided actors only. This calls the
+ * advancement per actor-only to let us limit it to the group.
+ */
+export async function advanceBastions(
+  actors: Actor5e[],
+  options?: { duration?: number },
+): Promise<Actor5e[]> {
+  const duration =
+    options?.duration ?? systemSettings.value.bastionConfiguration.duration;
+
+  const advanced: Actor5e[] = [];
+
+  for (const actor of actors) {
+    if (!actor.system.isCharacter || !actor.itemTypes.facility.length) {
+      continue;
+    }
+
+    await dnd5e.bastion.advanceAllFacilities(actor, { duration });
+
+    advanced.push(actor);
+  }
+
+  return advanced;
 }
 
 /**

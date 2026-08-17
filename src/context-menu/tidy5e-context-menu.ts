@@ -3,6 +3,10 @@ import { warn } from 'src/utils/logging';
 import { configureItemContextMenu } from './tidy5e-item-context-menu';
 import { configureActiveEffectsContextMenu } from './tidy5e-active-effect-context-menu';
 import { configureGroupContextMenu } from './tidy5e-group-context-menu';
+import {
+  configureGroupBastionFacilityContextMenu,
+  configureGroupBastionMemberContextMenu,
+} from './tidy5e-group-bastion-context-menu';
 import { configureFacilityContextMenu } from './tidy5e-facility-context-menu';
 import { configureActivitiesContextMenu } from './tidy5e-activities-context-menu';
 import FloatingContextMenu from './FloatingContextMenu';
@@ -61,6 +65,12 @@ function onDocumentContextOpened(this: any, element: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER:
       configureVehicleMemberContextMenu(element, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_FACILITY:
+      configureGroupBastionFacilityContextMenu(element, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_MEMBER:
+      configureGroupBastionMemberContextMenu(element, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER:
       configureGroupContextMenu(element, app);

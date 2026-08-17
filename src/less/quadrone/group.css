@@ -472,6 +472,8 @@
 
   .tidy-tab.bastions {
     .tidy-table-row {
+      padding-inline-start: 0;
+
       .tidy-table-cell {
         display: flex;
 
@@ -503,7 +505,6 @@
     .bastion-member {
       display: flex;
       flex-direction: row;
-      gap: var(--t5e-size-1x);
 
       .actor-image {}
     }
