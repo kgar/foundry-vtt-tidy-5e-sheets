@@ -123,6 +123,8 @@ export const CONSTANTS = {
   CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER: 'encounter-member',
   CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER: 'encounter-placeholder',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
+  CONTEXT_MENU_TYPE_GROUP_BASTION_FACILITY: 'group-bastion-facility',
+  CONTEXT_MENU_TYPE_GROUP_BASTION_MEMBER: 'group-bastion-member',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
   CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL: 'group-skill-roll',
   CONTEXT_MENU_TYPE_VEHICLE_MEMBER: 'vehicle-member',

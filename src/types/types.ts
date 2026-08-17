@@ -60,6 +60,7 @@ import type {
 import type {
   ActivityColumnSpec,
   BastionFacilityColumnSpec,
+  BastionOrderColumnSpec,
   ConfiguredColumnSpecification,
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
@@ -1545,6 +1546,10 @@ export type BastionOrderQuadroneContext = {
 export type GroupBastionsQuadroneContext = {
   members: GroupMemberBastionQuadroneContext[];
   orders: BastionOrderQuadroneContext[];
+  /** Columns for the party-wide order rows. */
+  orderColumns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<BastionOrderColumnSpec>
+  >;
 };
 
 export type Emphasizable = {

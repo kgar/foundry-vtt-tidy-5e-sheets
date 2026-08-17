@@ -7,6 +7,7 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+  import ItemRollButton from 'src/sheets/quadrone/shared/ItemRollButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getTidyFacilityIcon } from 'src/features/facility/facility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -86,6 +87,20 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_FACILITY}
       >
         <TidyTableCell primary={true} class="text-cell item-label">
+          {#if order.craft}
+            <ItemRollButton 
+              image={order.craft.img}
+              name={order.craft.name}
+              onclick={(ev: MouseEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                const document = game.documents.get(order.craft.uuid);
+                if (document) {
+                  document.render(true);
+                }
+              }} 
+            />
+          {/if}
           <span class="bastion-order-name truncate">
             {#if icon?.type === 'fa-icon-class'}
               <i class={icon.className}></i>
@@ -95,19 +110,6 @@
             <!-- Order labels already localized by the system -->
             <span class="truncate">{order.label}</span>
           </span>
-
-          {#if order.craft}
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <!-- TODO: Swap to tidy table roll button? -->
-            <a
-              class="bastion-order-craft"
-              data-action="editDocument"
-              data-uuid={order.craft.uuid}
-              data-tooltip={order.craft.name}
-            >
-              <img src={order.craft.img} alt={order.craft.name} />
-            </a>
-          {/if}
         </TidyTableCell>
 
         <!-- TODO: Extract group member portrait into a component out of GroupMemberNameColumn-->

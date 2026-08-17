@@ -7,8 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
-
-  let localize = FoundryAdapter.localize;
+  import ActorTableImage from 'src/sheets/quadrone/shared/ActorTableImage.svelte';
 
   type Props = {
     member:
@@ -17,14 +16,6 @@
 
   let { member }: Props = $props();
 
-  let actorIsDead = $derived(
-    member.actor.system.attributes?.hp?.value === 0 &&
-      member.actor.system.attributes?.hp?.max > 0 &&
-      (member.actor.system.attributes.death === undefined ||
-        (member.actor.system.attributes.death.failure >= 3 &&
-          member.actor.system.attributes.death.success < 3)),
-  );
-
   let emphasizedActorRef = getContext<
     Ref<
       | EncounterMemberQuadroneContext
@@ -32,46 +23,11 @@
       | undefined
     >
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
+
 </script>
 
 <div class="tidy-table-cell actor-image-container">
-  <div
-    role="button"
-    data-keyboard-focus
-    tabindex={0}
-    class={[
-      'actor-image',
-      { dead: actorIsDead },
-      member.portrait.shape,
-      { video: member.portrait.isVideo },
-    ]}
-    style="position: relative;"
-    data-action="showDocument"
-    data-uuid={member.actor.uuid}
-    onmouseenter={() => (emphasizedActorRef.value = member)}
-    onmouseleave={() => (emphasizedActorRef.value = undefined)}
-  >
-    {#if member.portrait.isVideo}
-      <video
-        src={member.portrait.src}
-        autoplay
-        muted
-        playsinline
-        disablepictureinpicture
-        loop
-        class={{ dead: actorIsDead }}
-      ></video>
-    {:else}
-      <img
-        src={member.portrait.src}
-        alt={member.actor.name}
-        class={{ dead: actorIsDead }}
-      />
-    {/if}
-    {#if actorIsDead}
-      <div class="dead-overlay"></div>
-    {/if}
-  </div>
+  <ActorTableImage {member} />
 </div>
 <div class="tidy-table-cell text-cell primary item-label flexcol">
   <div

@@ -31,7 +31,7 @@
     {#if hasMembers}
       <BastionOrdersTable {sectionsInlineWidth} />
 
-      <!-- <BastionFacilitiesTable {sectionsInlineWidth} /> -->
+      <BastionFacilitiesTable {sectionsInlineWidth} />
     {:else}
       <div class="empty-state-container empty-state-description">
         {localize('TIDY5E.Bastion.Group.EmptyStateHint')}

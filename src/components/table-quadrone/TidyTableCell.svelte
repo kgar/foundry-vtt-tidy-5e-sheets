@@ -27,7 +27,7 @@
 </script>
 
 <div
-  class={['tidy-table-cell', hideUnderClass, cssClass]}
+  class={['tidy-table-cell', hideUnderClass, cssClass,]}
   class:primary
   {title}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}

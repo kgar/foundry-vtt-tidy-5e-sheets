@@ -625,6 +625,10 @@
       flex-direction: row;
       align-items: stretch;
 
+      &.flexcol {
+        flex-direction: column;
+      }
+
       .item-name {
         flex: 1;
         min-width: 0;
