@@ -1142,6 +1142,7 @@ export type ActorTraitContext<TValue = unknown> = {
 
 export type ActorItemQuadroneContext = {
   activities?: ActivityItemContext[];
+  canIdentify?: boolean; // TODO: Move physical item props to some Physical Item context subtype
   containerName?: string;
   containerCapacity?: ContainerCapacityContext;
   containerContents?: ContainerContents;

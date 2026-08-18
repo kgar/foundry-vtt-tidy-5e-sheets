@@ -350,7 +350,7 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if 'identified' in context.system && context.unlocked}
+    {#if 'identified' in context.system && context.unlocked && context.canIdentify}
       <li>
         <PillSwitch
           checked={context.system.identified}

@@ -63,18 +63,9 @@ export class UserSettingsFormApplication extends getSvelteApplicationMixin<
 
     return {
       settings: {
-        actionListIncludeConsumables:
-          currentSettings.actionListIncludeConsumables,
-        actionListIncludeMinuteLongSpellsAsActions:
-          currentSettings.actionListIncludeMinuteLongSpellsAsActions,
-        actionListIncludeSpellsWithActiveEffects:
-          currentSettings.actionListIncludeSpellsWithActiveEffects,
-        actionListLimitActionsToCantrips:
-          currentSettings.actionListLimitActionsToCantrips,
         alwaysShowNpcSkills: currentSettings.alwaysShowNpcSkills,
         animateInspiration: currentSettings.animateInspiration,
         hideIfZero: currentSettings.hideIfZero,
-        inlineActivitiesPosition: currentSettings.inlineActivitiesPosition,
         moveCharacterTraitsToRightOfSkills:
           currentSettings.moveCharacterTraitsToRightOfSkills,
         moveNpcTraitsToRightOfSkills:

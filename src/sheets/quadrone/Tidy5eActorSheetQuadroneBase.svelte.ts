@@ -360,6 +360,8 @@ export function getTidy5eActorSheetQuadroneBase<
     ) {
       const ctx = (context.itemContext[item.id] ??= {});
 
+      ctx.canIdentify = FoundryAdapter.canIdentify(this.document);
+
       ctx.containerName = this.actor.items.get(item.system.container)?.name;
 
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {

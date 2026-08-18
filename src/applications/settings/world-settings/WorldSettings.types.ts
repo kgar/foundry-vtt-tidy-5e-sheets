@@ -4,7 +4,6 @@ import type { CurrentSettings } from 'src/settings/settings.svelte';
 export type WorldSettingsContext = {
   settings: {
     hideDeathSavesFromPlayers: CurrentSettings['hideDeathSavesFromPlayers'];
-    defaultDeathSaveRoll: CurrentSettings['defaultDeathSaveRoll'];
     useCharacterEncumbranceBar: CurrentSettings['useCharacterEncumbranceBar'];
     useNpcEncumbranceBar: CurrentSettings['useNpcEncumbranceBar'];
     useVehicleEncumbranceBar: CurrentSettings['useVehicleEncumbranceBar'];
@@ -31,8 +30,6 @@ export type WorldSettingsContext = {
     showNpcActorLinkMarker: CurrentSettings['showNpcActorLinkMarker'];
     initialCharacterSheetTab: CurrentSettings['initialCharacterSheetTab'];
     initialVehicleSheetTab: CurrentSettings['initialVehicleSheetTab'];
-    itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
-    includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
     useTidySpellSchoolIcons: CurrentSettings['useTidySpellSchoolIcons'];
     globalCustomSections: CurrentSettings['globalCustomSections'];
   };

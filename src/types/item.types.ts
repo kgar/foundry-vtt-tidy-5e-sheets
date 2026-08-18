@@ -176,6 +176,7 @@ export type ItemSheetQuadroneContext = {
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;
+  canIdentify: boolean;
   canPrepare?: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
@@ -232,7 +233,6 @@ export type ItemSheetQuadroneContext = {
     };
   };
   limited: boolean;
-  lockItemQuantity: boolean;
   modernRules: boolean;
   options: any;
   name: ItemNameContext;
@@ -375,6 +375,7 @@ export type CurrencyContext = {
 
 export type ContainerSheetQuadroneContext = {
   capacity: ContainerCapacityContext;
+  canIdentify: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   containerContents: ContainerContents;
@@ -401,8 +402,6 @@ export type ContainerSheetQuadroneContext = {
   items: Item5e[];
   itemType: string;
   labels: Record<string, any>;
-  lockItemQuantity: boolean;
-  lockMoneyChanges: boolean;
   modernRules: boolean;
   name: ItemNameContext;
   owner: boolean;

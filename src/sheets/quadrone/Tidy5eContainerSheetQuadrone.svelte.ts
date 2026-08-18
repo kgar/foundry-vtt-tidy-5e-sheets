@@ -275,6 +275,7 @@ export class Tidy5eContainerSheetQuadrone
     const owner = this.item.isOwner;
 
     const context: ContainerSheetQuadroneContext = {
+      canIdentify: FoundryAdapter.canIdentify(this.document),
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
@@ -304,8 +305,6 @@ export class Tidy5eContainerSheetQuadrone
       items: Array.from(await this.item.system.contents),
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       labels: this.document.labels,
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
       name: {
         value: this.item.name,

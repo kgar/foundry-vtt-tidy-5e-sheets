@@ -1093,15 +1093,21 @@ export function createSettings() {
           name: 'TIDY5E.Settings.DefaultDeathSaveRoll.name',
           hint: 'TIDY5E.Settings.DefaultDeathSaveRoll.hint',
           scope: 'world',
-          config: false,
-          default: CONST.DICE_ROLL_MODES.PUBLIC,
+          config: true,
+          default:
+            game.release.generation < 14
+              ? CONST.DICE_ROLL_MODES.PUBLIC
+              : 'public',
           type: String,
-          choices: {
-            [CONST.DICE_ROLL_MODES.PUBLIC]: 'CHAT.RollPublic',
-            [CONST.DICE_ROLL_MODES.PRIVATE]: 'CHAT.RollPrivate',
-            [CONST.DICE_ROLL_MODES.BLIND]: 'CHAT.RollBlind',
-            [CONST.DICE_ROLL_MODES.SELF]: 'CHAT.RollSelf',
-          },
+          choices:
+            game.release.generation < 14
+              ? {
+                  [CONST.DICE_ROLL_MODES.PUBLIC]: 'CHAT.RollPublic',
+                  [CONST.DICE_ROLL_MODES.PRIVATE]: 'CHAT.RollPrivate',
+                  [CONST.DICE_ROLL_MODES.BLIND]: 'CHAT.RollBlind',
+                  [CONST.DICE_ROLL_MODES.SELF]: 'CHAT.RollSelf',
+                }
+              : CONFIG.ChatMessage.modes,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('defaultDeathSaveRoll');
@@ -1381,7 +1387,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.name',
           hint: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.hint',
           scope: 'client',
-          config: false,
+          config: true,
           default: false,
           type: Boolean,
         },
@@ -1397,7 +1403,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.name',
           hint: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.hint',
           scope: 'client',
-          config: false,
+          config: true,
           default: true,
           type: Boolean,
         },
@@ -1413,7 +1419,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.name',
           hint: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.hint',
           scope: 'client',
-          config: false,
+          config: true,
           default: true,
           type: Boolean,
         },
@@ -1429,7 +1435,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ActionListIncludeConsumables.name',
           hint: 'TIDY5E.Settings.ActionListIncludeConsumables.hint',
           scope: 'client',
-          config: false,
+          config: true,
           default: true,
           type: Boolean,
         },
@@ -1481,7 +1487,7 @@ export function createSettings() {
           scope: 'world',
           type: String,
           default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS,
-          config: false,
+          config: true,
           choices: {
             [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
               'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmAndOwners',
@@ -1503,7 +1509,7 @@ export function createSettings() {
           scope: 'world',
           type: Boolean,
           default: false,
-          config: false,
+          config: true,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
@@ -1976,7 +1982,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.InlineActivitiesPosition.name',
           hint: 'TIDY5E.Settings.InlineActivitiesPosition.hint',
           scope: 'client',
-          config: false,
+          config: true,
           default: CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP,
           type: String,
           choices: {

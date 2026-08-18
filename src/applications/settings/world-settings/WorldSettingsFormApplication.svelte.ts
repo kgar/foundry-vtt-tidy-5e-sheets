@@ -60,7 +60,6 @@ export class WorldSettingsFormApplication extends getSvelteApplicationMixin<
     return {
       settings: {
         hideDeathSavesFromPlayers: currentSettings.hideDeathSavesFromPlayers,
-        defaultDeathSaveRoll: currentSettings.defaultDeathSaveRoll,
         useCharacterEncumbranceBar: currentSettings.useCharacterEncumbranceBar,
         useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
         useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,
@@ -87,10 +86,6 @@ export class WorldSettingsFormApplication extends getSvelteApplicationMixin<
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
         initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
-        itemIdentificationPermission:
-          currentSettings.itemIdentificationPermission,
-        includeFlagsInSpellScrollCreation:
-          currentSettings.includeFlagsInSpellScrollCreation,
         useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
         globalCustomSections: currentSettings.globalCustomSections,
       },

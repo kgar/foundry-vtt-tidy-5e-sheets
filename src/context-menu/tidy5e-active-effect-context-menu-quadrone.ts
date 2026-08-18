@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
-import { settings } from 'src/settings/settings.svelte';
 import { warn } from 'src/utils/logging';
 
 export function getActiveEffectContextOptionsQuadrone(
@@ -14,14 +13,7 @@ export function getActiveEffectContextOptionsQuadrone(
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
-    return [];
-  }
-
-  if (
-    actor.system.isCharacter &&
-    !FoundryAdapter.allowCharacterEffectsManagement(actor)
-  ) {
+  if (!effectParent?.isOwner) {
     return [];
   }
 

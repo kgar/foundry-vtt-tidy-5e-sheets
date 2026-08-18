@@ -342,6 +342,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),
+      canIdentify: FoundryAdapter.canIdentify(this.document),
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label }),
       ),
@@ -377,7 +378,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       labels: this.document.labels,
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       limited: this.document.limited,
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
       name: {
