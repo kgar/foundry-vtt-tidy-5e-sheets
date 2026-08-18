@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import * as Bastion from 'src/features/facility/Bastion';
+import { BastionMaintainOrderDialog } from 'src/features/facility/BastionMaintainOrderDialog';
 import {
   FacilityOccupantSlotPropsMap,
   FacilityOccupantSlotTypesMap,
@@ -635,17 +636,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
     const members = this.actor.system.members
       .map(({ actor }: { actor: Actor5e }) => actor)
-      .filter((actor: Actor5e) => !!actor && actor.itemTypes.facility?.length);
+      .filter((actor: Actor5e) => !!actor);
 
-    const maintainOptions: Bastion.BastionMaintainOrderOption[] = members.map(
-      (actor: Actor5e) => ({
-        actor,
-        bastionName: actor.system.bastion?.name?.trim() ?? '',
-      }),
-    );
-
-    const maintainUuids = await Bastion.promptMaintainOrderSelection(
-      maintainOptions,
+    const maintainUuids = await BastionMaintainOrderDialog.prompt(
+      members.filter((actor: Actor5e) => actor.itemTypes.facility?.length),
       (dialog) => this._renderChild(dialog),
     );
 
@@ -653,11 +647,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       return;
     }
 
-    const allMembers = this.actor.system.members
-      .map(({ actor }: { actor: Actor5e }) => actor)
-      .filter((actor: Actor5e) => !!actor);
-
-    return await Bastion.advanceBastions(allMembers, { maintainUuids });
+    return await Bastion.advanceBastions(members, { maintainUuids });
   }
 
   async issueMemberMaintainOrder(member: Actor5e) {

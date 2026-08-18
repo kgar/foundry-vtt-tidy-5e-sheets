@@ -15,89 +15,9 @@ import type {
 import { systemSettings } from 'src/settings/settings.svelte';
 import { isNil } from 'src/utils/data';
 import { FacilityOccupantSlotPropsMap } from './facility';
-import {
-  promptMaintainOrderSelection,
-  type BastionMaintainOrderOption,
-} from './BastionMaintainOrderDialog';
 
-const BASTION_EVENTS_TABLE_PACK = 'dnd-dungeon-masters-guide.tables';
-const BASTION_EVENTS_TABLE_ID = 'dmgBastionEvents';
-
-export function facilityHasActiveOrder(facility: Item5e): boolean {
-  return !!facility.system.progress?.max;
-}
-
-export function getBastionDisplayName(actor: Actor5e): string {
-  return actor.system.bastion?.name?.trim() || actor.name;
-}
-
-/**
- * Resolve the DMG Bastion Events roll table when the module is present.
- */
-export async function getBastionEventsTable() {
-  if (!game.modules.get('dnd-dungeon-masters-guide')?.active) {
-    return null;
-  }
-
-  const pack = game.packs.get(BASTION_EVENTS_TABLE_PACK);
-  if (!pack) {
-    return null;
-  }
-
-  await pack.getIndex();
-
-  if (pack.index.has(BASTION_EVENTS_TABLE_ID)) {
-    return pack.getDocument(BASTION_EVENTS_TABLE_ID);
-  }
-
-  for (const indexEntry of pack.index.values()) {
-    if ((indexEntry as { name?: string }).name === 'Bastion Events') {
-      return pack.getDocument((indexEntry as { _id: string })._id);
-    }
-  }
-
-  return null;
-}
-
-/**
- * Roll on the Bastion Events table, or fall back to a labeled d100 in chat.
- */
-export async function rollBastionEvent(actor?: Actor5e): Promise<void> {
-  const table = await getBastionEventsTable();
-  const speaker = actor
-    ? ChatMessage.getSpeaker({ actor })
-    : ChatMessage.getSpeaker();
-
-  if (table) {
-    await table.draw({ displayChat: true });
-    return;
-  }
-
-  const roll = await new Roll('1d100').evaluate();
-  await roll.toMessage({
-    speaker,
-    flavor: FoundryAdapter.localize('TIDY5E.Bastion.Group.RollEvent.Label'),
-  });
-}
-
-/**
- * Issue Maintain for a character: chat announcement, then a bastion event roll.
- */
-export async function issueMaintainOrder(actor: Actor5e): Promise<void> {
-  const bastionName = getBastionDisplayName(actor);
-
-  await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor }),
-    content: FoundryAdapter.localize(
-      'TIDY5E.Bastion.Group.MaintainOrder.Chat',
-      { bastionName },
-    ),
-  });
-
-  await rollBastionEvent(actor);
-}
-
-export { promptMaintainOrderSelection, type BastionMaintainOrderOption };
+const BASTION_EVENTS_TABLE_UUID =
+  'Compendium.dnd-dungeon-masters-guide.tables.RollTable.dmgBastionEvents';
 
 /**
  * Context of all facilities and defenders for an actor.
@@ -290,6 +210,48 @@ export function calculateOccupancy(
     },
     { slot, max: 0, occupants: [] },
   );
+}
+
+/** Bastion name, or the character name when none is set. */
+export function getBastionDisplayName(actor: Actor5e): string {
+  return actor.system.bastion?.name?.trim() || actor.name;
+}
+
+/**
+ * Roll on the DMG Bastion Events table, or fall back to a labeled d100 in chat.
+ */
+export async function rollBastionEvent(actor?: Actor5e): Promise<void> {
+  const table = await fromUuid(BASTION_EVENTS_TABLE_UUID);
+  const speaker = ChatMessage.getSpeaker(actor ? { actor } : {});
+
+  if (table) {
+    await table.draw({
+      displayChat: true,
+      messageOptions: { speaker },
+    });
+    return;
+  }
+
+  const roll = await new Roll('1d100').evaluate();
+  await roll.toMessage({
+    speaker,
+    flavor: FoundryAdapter.localize('TIDY5E.Bastion.Group.RollEvent.Label'),
+  });
+}
+
+/**
+ * Issue Maintain for a character: chat announcement, then a bastion event roll.
+ */
+export async function issueMaintainOrder(actor: Actor5e): Promise<void> {
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    content: FoundryAdapter.localize(
+      'TIDY5E.Bastion.Group.MaintainOrder.Chat',
+      { bastionName: getBastionDisplayName(actor) },
+    ),
+  });
+
+  await rollBastionEvent(actor);
 }
 
 /**
