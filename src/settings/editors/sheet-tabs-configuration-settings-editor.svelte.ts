@@ -300,7 +300,7 @@ export function getSheetTabsConfigurationSettingsEditor(
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((t, i) => {
           const d = curr.defaultTabs[i];
-          return d && d.id === t.id && d.show === t.show;
+          return foundry.utils.equals(d, t);
         });
 
       await setTabConfig(document, {
