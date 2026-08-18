@@ -121,6 +121,11 @@ export function getSheetTabsConfigurationSettingsEditor(
     const context = getTabContext(document, getWorldConfigOrDefault());
 
     if (context) {
+      // TODO: Fold this into the existing design instead of patching it after the fact.
+      context.defaultTabs =
+        getTabContext(document, getWorldConfigOrDefault())?.tabs ??
+        context.defaultTabs;
+
       seedSidebarExpanded(context, { useDefaults: true });
     }
 
@@ -230,6 +235,11 @@ export function getSheetTabsConfigurationSettingsEditor(
       );
     }
 
+    // TODO: Fold this into the existing design instead of patching it after the fact.
+    context.defaultTabs =
+      getTabContext(document, getWorldConfigOrDefault())?.tabs ??
+      context.defaultTabs;
+
     // Set sidebar-expanded state from saved config and capture the initial
     seedSidebarExpanded(context, { useDefaults: false });
 
@@ -299,7 +309,7 @@ export function getSheetTabsConfigurationSettingsEditor(
       let matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((t, i) => {
-          const d = curr.defaultTabs[i];
+          const d = curr.defaultTabs.find((tab) => tab.id === t.id);
           return foundry.utils.equals(d, t);
         });
 

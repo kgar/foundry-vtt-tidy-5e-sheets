@@ -135,12 +135,12 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       let docName = (prev[curr.documentName] ??= {});
 
       // When the tab array exactly matches the default, exclude
-      // that sheet type from settings, which represents taking 
+      // that sheet type from settings, which represents taking
       // the default tabs.
       const matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((t, i) => {
-          const d = curr.defaultTabs[i];
+          const d = curr.defaultTabs.find((tab) => tab.id === t.id);
           return foundry.utils.equals(d, t);
         });
 
