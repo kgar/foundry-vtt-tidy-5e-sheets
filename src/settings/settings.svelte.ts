@@ -1107,18 +1107,7 @@ export function createSettings() {
                   [CONST.DICE_ROLL_MODES.BLIND]: 'CHAT.RollBlind',
                   [CONST.DICE_ROLL_MODES.SELF]: 'CHAT.RollSelf',
                 }
-              : Object.entries(CONFIG.ChatMessage.modes)
-                  .toSorted((a, b) =>
-                    (
-                      game.i18n.localize(a[1].label) ?? a[1].label
-                    ).localeCompare(
-                      game.i18n.localize(b[1].label) ?? b[1].label,
-                    ),
-                  )
-                  .reduce<Record<string, string>>((prev, curr) => {
-                    prev[curr[0]] = curr[1].label;
-                    return prev;
-                  }, {}),
+              : CONFIG.ChatMessage.modes,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('defaultDeathSaveRoll');
