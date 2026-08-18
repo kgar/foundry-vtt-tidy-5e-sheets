@@ -319,6 +319,7 @@ export type CONFIG = {
   ChatMessage: {
     template: string;
     sidebarIcon: string;
+    modes: Record<string, { icon: string; label: string }>;
     dataModels: {};
     typeLabels: {
       base: string;
@@ -2590,19 +2591,21 @@ export type CONFIG = {
       concentration: string;
     };
     difficultTerrainTypes: {
-      [k in
-        | 'all'
-        | 'ice'
-        | 'magical'
-        | 'nonmagical'
-        | 'plants'
-        | 'rocks'
-        | 'liquid'
-        | 'mud'
-        | 'sand'
-        | 'slope'
-        | 'snow'
-        | 'web']: { label: string };
+      [
+        k in
+          | 'all'
+          | 'ice'
+          | 'magical'
+          | 'nonmagical'
+          | 'plants'
+          | 'rocks'
+          | 'liquid'
+          | 'mud'
+          | 'sand'
+          | 'slope'
+          | 'snow'
+          | 'web'
+      ]: { label: string };
     } & Record<string, { label: string }>;
     skills: {
       acr: Skill;
@@ -2927,23 +2930,25 @@ export type CONFIG = {
       crew: string;
     };
     activityActivationTypes: {
-      [k in
-        | 'action'
-        | 'bonus'
-        | 'reaction'
-        | 'minute'
-        | 'hour'
-        | 'day'
-        | 'longRest'
-        | 'shortRest'
-        | 'encounter'
-        | 'turnStart'
-        | 'turnEnd'
-        | 'legendary'
-        | 'mythic'
-        | 'lair'
-        | 'crew'
-        | 'special']: ActivityActivationTypeConfig;
+      [
+        k in
+          | 'action'
+          | 'bonus'
+          | 'reaction'
+          | 'minute'
+          | 'hour'
+          | 'day'
+          | 'longRest'
+          | 'shortRest'
+          | 'encounter'
+          | 'turnStart'
+          | 'turnEnd'
+          | 'legendary'
+          | 'mythic'
+          | 'lair'
+          | 'crew'
+          | 'special'
+      ]: ActivityActivationTypeConfig;
     } & Record<string, ActivityActivationTypeConfig>;
     abilityConsumptionTypes: {
       ammo: string;
@@ -3636,13 +3641,9 @@ export type CONFIG = {
       }
     >;
     movementTypes: {
-      [k in
-        | 'walk'
-        | 'burrow'
-        | 'climb'
-        | 'fly'
-        | 'swim'
-        | 'jump']: MovementTypeConfig;
+      [
+        k in 'walk' | 'burrow' | 'climb' | 'fly' | 'swim' | 'jump'
+      ]: MovementTypeConfig;
     } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
@@ -5494,8 +5495,7 @@ type SpellcastingLevelMapTable = Record<
 >;
 type SpellcastingLevelArraysTable = number[][];
 type SpellcastingConfigEntryTable =
-  | SpellcastingLevelMapTable
-  | SpellcastingLevelArraysTable;
+  SpellcastingLevelMapTable | SpellcastingLevelArraysTable;
 
 export type SpellcastingConfigEntry = {
   label: string;

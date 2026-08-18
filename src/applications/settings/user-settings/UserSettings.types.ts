@@ -2,14 +2,9 @@ import type { CurrentSettings } from 'src/settings/settings.svelte';
 
 export type UserSettingsContext = {
   settings: {
-    actionListIncludeConsumables: CurrentSettings['actionListIncludeConsumables'];
-    actionListIncludeMinuteLongSpellsAsActions: CurrentSettings['actionListIncludeMinuteLongSpellsAsActions'];
-    actionListIncludeSpellsWithActiveEffects: CurrentSettings['actionListIncludeSpellsWithActiveEffects'];
-    actionListLimitActionsToCantrips: CurrentSettings['actionListLimitActionsToCantrips'];
     alwaysShowNpcSkills: CurrentSettings['alwaysShowNpcSkills'];
     animateInspiration: CurrentSettings['animateInspiration'];
     hideIfZero: CurrentSettings['hideIfZero'];
-    inlineActivitiesPosition: CurrentSettings['inlineActivitiesPosition'];
     moveCharacterTraitsToRightOfSkills: CurrentSettings['moveCharacterTraitsToRightOfSkills'];
     moveNpcTraitsToRightOfSkills: CurrentSettings['moveNpcTraitsToRightOfSkills'];
     showClassList: CurrentSettings['showClassList'];

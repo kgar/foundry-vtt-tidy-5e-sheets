@@ -19,14 +19,6 @@
   id="hideDeathSavesFromPlayers"
 />
 
-<SelectSetting
-  options={SettingsProvider.settings.defaultDeathSaveRoll.options.choices}
-  bind:value={context.settings.defaultDeathSaveRoll}
-  name={'TIDY5E.Settings.DefaultDeathSaveRoll.name'}
-  hint={'TIDY5E.Settings.DefaultDeathSaveRoll.hint'}
-  id="defaultDeathSaveRoll"
-/>
-
 <CheckboxSetting
   bind:value={context.settings.showExpandedLimitedView}
   name={'TIDY5E.Settings.ShowExpandedLimitedView.name'}

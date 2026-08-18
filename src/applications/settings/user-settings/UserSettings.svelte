@@ -5,7 +5,6 @@
   import PlayerSettingsTab from './tabs/PlayerSettingsTab.svelte';
   import NpcSettingsTab from './tabs/NpcSettingsTab.svelte';
   import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
-  import ActionsListSettingsTab from './tabs/ActionsListSettingsTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
@@ -13,7 +12,6 @@
     UserSettingsContext,
     UserSettingsFunctions,
   } from './UserSettings.types';
-  import ActivitiesSettingsTab from './tabs/ActivitiesSettingsTabs.svelte';
 
   let context = getContext<UserSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -52,24 +50,6 @@
         },
       },
     ];
-
-    result.push({
-      id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
-      title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
-      content: {
-        component: ActionsListSettingsTab,
-        type: 'svelte',
-      },
-    });
-
-    result.push({
-      id: CONSTANTS.TAB_USER_SETTINGS_ACTIVITIES,
-      title: 'TIDY5E.UserSettings.TabActivities.tabLabel',
-      content: {
-        component: ActivitiesSettingsTab,
-        type: 'svelte',
-      },
-    });
 
     return result;
   });
