@@ -302,15 +302,14 @@ export function getSheetTabsConfigurationSettingsEditor(
     async save() {
       let curr = this.value.entry;
 
-      let selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
+      const defaultMap = new Map(curr.defaultTabs.map((tab) => [tab.id, tab]));
 
       // When the current congfiguration exactly matches the default,
       // empty out the settings so that we use defaults.
       let matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
-        curr.tabs.every((t, i) => {
-          const d = curr.defaultTabs.find((tab) => tab.id === t.id);
-          return foundry.utils.equals(d, t);
+        curr.tabs.every((tab) => {
+          return foundry.utils.equals(defaultMap.get(tab.id), tab);
         });
 
       await setTabConfig(document, {
