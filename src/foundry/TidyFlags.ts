@@ -1502,6 +1502,7 @@ export class TidyFlags {
         doc,
         TidyFlags.sidebarTabConfiguration.key,
         toSave,
+        true,
       );
     },
     /** Clears sidebar tab configuration. */

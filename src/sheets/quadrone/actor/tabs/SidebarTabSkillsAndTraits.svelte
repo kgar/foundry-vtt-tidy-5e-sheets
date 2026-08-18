@@ -1,4 +1,6 @@
 <script lang="ts">
+  import SkillsCard from '../parts/skills/SkillsCard.svelte';
+  import ToolsCard from '../parts/ToolsCard.svelte';
   import { CONSTANTS } from 'src/constants';
   import CharacterTraitPills from '../character-parts/traits/CharacterTraitPills.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
@@ -10,9 +12,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
+<SkillsCard showFiligree={false} tooltipDirection="RIGHT" />
+
+<ToolsCard showFiligree={false} tooltipDirection="RIGHT" />
+
 <div class="list traits">
   <CharacterTraitPills configButtonLocation="label">
     {#snippet preCustomTraits()}
+      <!-- Special Traits -->
       <ActorTraitConfigurableListEntry
         configButtonLocation="label"
         label={localize('DND5E.SpecialTraits')}

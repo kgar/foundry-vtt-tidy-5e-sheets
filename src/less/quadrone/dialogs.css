@@ -531,6 +531,10 @@
       }
     }
 
+    .skills-traits-layout-options {
+      margin-block-end: var(--t5e-size-4x);
+    }
+
     .spell-name-button {
       height: auto;
       padding-block: 0.25rem;

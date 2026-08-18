@@ -1106,6 +1106,7 @@
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
   "TIDY5E.Character.Sidebar.Title": "Configure Sidebar",
+  "TIDY5E.Character.Sidebar.SkillsAndTraits": "Skills & Traits",
   "TIDY5E.Encounter": {
     "CombatantsSection.Title": "Combatants",
     "Combat.IncludeInCombat.Tooltip": "Include in combat activities",

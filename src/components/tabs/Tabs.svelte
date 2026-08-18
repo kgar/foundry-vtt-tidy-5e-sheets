@@ -24,6 +24,7 @@
     tabEnd?: Snippet;
     sheet?: any;
     tabContext?: Record<string, any>;
+    showIcons?: boolean;
   }
 
   let {
@@ -37,6 +38,7 @@
     tabEnd,
     sheet,
     tabContext = {},
+    showIcons = true,
   }: Props = $props();
 
   const onTabSelectedContextFn = getContext<OnTabSelectedFn>(
@@ -145,7 +147,7 @@
             ['no-border-on-last-tab']: !tabEnd && i === tabs.length - 1,
           },
           tabCssClass,
-          tab.iconClass ? 'icon-start' : undefined,
+          showIcons && tab.iconClass ? 'icon-start' : undefined,
         ]}
         data-tab-id={tab.id}
         role="tab"
@@ -155,7 +157,7 @@
         {tabindex}
         {title}
       >
-        {#if tab.iconClass}
+        {#if showIcons && tab.iconClass}
           <i class={['tab-icon', tab.iconClass]}></i>
         {/if}
 

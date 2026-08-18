@@ -239,7 +239,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<Record<string, boolean>>(
-            'notifications'
+            'notifications',
           );
         },
       },
@@ -255,7 +255,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<number>(
-            'migrationsConfirmationTally'
+            'migrationsConfirmationTally',
           );
         },
       },
@@ -287,13 +287,13 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              CharacterSheetClassicRuntime.getAllRegisteredTabs()
+              CharacterSheetClassicRuntime.getAllRegisteredTabs(),
             ),
           default: CONSTANTS.TAB_ACTOR_ACTIONS,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'initialCharacterSheetTab'
+            'initialCharacterSheetTab',
           );
         },
       },
@@ -319,7 +319,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string[]>(
-            'defaultCharacterSheetTabs'
+            'defaultCharacterSheetTabs',
           );
         },
       },
@@ -336,18 +336,18 @@ export function createSettings() {
               { initial: {} },
               {
                 name: 'Document Type to Header Control Configuration Object',
-              }
+              },
             ),
             { initial: {} },
             {
               name: 'Document Names to Document Type Header Control Configuration Object',
-            }
+            },
           ),
           default: {},
         },
         get() {
           return FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
-            'headerControlConfiguration'
+            'headerControlConfiguration',
           );
         },
       },
@@ -364,17 +364,20 @@ export function createSettings() {
               { initial: {} },
               {
                 name: 'Document Type to Tab Configuration Object',
-              }
+              },
             ),
             { initial: {} },
-            { name: 'Document Names to Document Type Tab Configuration Object' }
+            {
+              name: 'Document Names to Document Type Tab Configuration Object',
+            },
           ),
           default: {},
         },
         get() {
-          const setting = FoundryAdapter.getTidySetting<Partial<TabConfiguration>>(
-            'tabConfiguration'
-          );
+          const setting =
+            FoundryAdapter.getTidySetting<Partial<TabConfiguration>>(
+              'tabConfiguration',
+            );
 
           return SettingsShims.tabConfiguration(setting);
         },
@@ -392,7 +395,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useClassicControlsForCharacter'
+            'useClassicControlsForCharacter',
           );
         },
       },
@@ -470,7 +473,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useAccessibleKeyboardSupport'
+            'useAccessibleKeyboardSupport',
           );
         },
       },
@@ -487,7 +490,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useDefaultSheetAttributeTabbing'
+            'useDefaultSheetAttributeTabbing',
           );
         },
       },
@@ -504,7 +507,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useDefaultSheetHpTabbing'
+            'useDefaultSheetHpTabbing',
           );
         },
       },
@@ -597,7 +600,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'showInspirationOnHover'
+            'showInspirationOnHover',
           );
         },
       },
@@ -614,7 +617,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'showExhaustionOnHover'
+            'showExhaustionOnHover',
           );
         },
       },
@@ -661,7 +664,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'toggleEmptyCharacterSkills'
+            'toggleEmptyCharacterSkills',
           );
         },
       },
@@ -678,7 +681,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'moveCharacterTraitsToRightOfSkills'
+            'moveCharacterTraitsToRightOfSkills',
           );
         },
       },
@@ -708,7 +711,7 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              NpcSheetClassicRuntime.getAllRegisteredTabs()
+              NpcSheetClassicRuntime.getAllRegisteredTabs(),
             ),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
@@ -750,7 +753,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useClassicControlsForNpc'
+            'useClassicControlsForNpc',
           );
         },
       },
@@ -767,7 +770,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'moveNpcTraitsToRightOfSkills'
+            'moveNpcTraitsToRightOfSkills',
           );
         },
       },
@@ -842,13 +845,13 @@ export function createSettings() {
           type: String,
           choices: () =>
             TabManager.getTabsAsConfigOptions(
-              VehicleSheetClassicRuntime.getAllRegisteredTabs()
+              VehicleSheetClassicRuntime.getAllRegisteredTabs(),
             ),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'initialVehicleSheetTab'
+            'initialVehicleSheetTab',
           );
         },
       },
@@ -870,7 +873,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string[]>(
-            'defaultVehicleSheetTabs'
+            'defaultVehicleSheetTabs',
           );
         },
       },
@@ -887,7 +890,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useClassicControlsForVehicle'
+            'useClassicControlsForVehicle',
           );
         },
       },
@@ -952,7 +955,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string[]>(
-            'defaultGroupSheetTabs'
+            'defaultGroupSheetTabs',
           );
         },
       },
@@ -968,7 +971,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useGroupSheetMemberSecurity'
+            'useGroupSheetMemberSecurity',
           );
         },
       },
@@ -988,7 +991,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string[]>(
-            'defaultEncounterSheetTabs'
+            'defaultEncounterSheetTabs',
           );
         },
       },
@@ -1005,7 +1008,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'showExpandedLimitedView'
+            'showExpandedLimitedView',
           );
         },
       },
@@ -1032,7 +1035,7 @@ export function createSettings() {
         },
         get(): string {
           return FoundryAdapter.getTidySetting<string>(
-            'useCircularPortraitStyle'
+            'useCircularPortraitStyle',
           );
         },
       },
@@ -1063,7 +1066,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'limitEffectsManagementToGm'
+            'limitEffectsManagementToGm',
           );
         },
       },
@@ -1080,7 +1083,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'hideDeathSavesFromPlayers'
+            'hideDeathSavesFromPlayers',
           );
         },
       },
@@ -1117,7 +1120,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useCharacterEncumbranceBar'
+            'useCharacterEncumbranceBar',
           );
         },
       },
@@ -1149,7 +1152,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useVehicleEncumbranceBar'
+            'useVehicleEncumbranceBar',
           );
         },
       },
@@ -1181,7 +1184,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useCharacterInspiration'
+            'useCharacterInspiration',
           );
         },
       },
@@ -1233,7 +1236,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<'default' | 'unlinked' | 'both'>(
-            'showNpcActorLinkMarker'
+            'showNpcActorLinkMarker',
           );
         },
       },
@@ -1250,7 +1253,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'showActiveEffectsMarker'
+            'showActiveEffectsMarker',
           );
         },
       },
@@ -1336,7 +1339,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'allowCantripsToBePrepared'
+            'allowCantripsToBePrepared',
           );
         },
       },
@@ -1353,7 +1356,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useSpellClassFilterIcons'
+            'useSpellClassFilterIcons',
           );
         },
       },
@@ -1384,7 +1387,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'actionListLimitActionsToCantrips'
+            'actionListLimitActionsToCantrips',
           );
         },
       },
@@ -1400,7 +1403,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'actionListIncludeMinuteLongSpellsAsActions'
+            'actionListIncludeMinuteLongSpellsAsActions',
           );
         },
       },
@@ -1416,7 +1419,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'actionListIncludeSpellsWithActiveEffects'
+            'actionListIncludeSpellsWithActiveEffects',
           );
         },
       },
@@ -1432,7 +1435,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'actionListIncludeConsumables'
+            'actionListIncludeConsumables',
           );
         },
       },
@@ -1449,7 +1452,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<ExhaustionConfig>(
-            'exhaustionConfig'
+            'exhaustionConfig',
           );
         },
       },
@@ -1466,7 +1469,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<ExhaustionConfig>(
-            'vehicleExhaustionConfig'
+            'vehicleExhaustionConfig',
           );
         },
       },
@@ -1488,7 +1491,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'itemIdentificationPermission'
+            'itemIdentificationPermission',
           );
         },
       },
@@ -1504,7 +1507,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'includeFlagsInSpellScrollCreation'
+            'includeFlagsInSpellScrollCreation',
           );
         },
       },
@@ -1526,7 +1529,7 @@ export function createSettings() {
         get() {
           return (
             FoundryAdapter.getTidySetting<ThemeSettingsV3>(
-              'worldThemeSettings'
+              'worldThemeSettings',
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
           );
         },
@@ -1556,7 +1559,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerPrimaryAccent'
+            'colorPickerPrimaryAccent',
           );
         },
         representsCssVariable: '--t5e-primary-accent-color',
@@ -1597,7 +1600,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerEquippedOutline'
+            'colorPickerEquippedOutline',
           );
         },
         representsCssVariable: '--t5e-equipped-item-grid-tile-outline-color',
@@ -1612,7 +1615,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerEquippedAccent'
+            'colorPickerEquippedAccent',
           );
         },
         representsCssVariable: '--t5e-equipped-item-grid-tile-accent-color',
@@ -1641,7 +1644,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerPreparedOutline'
+            'colorPickerPreparedOutline',
           );
         },
         representsCssVariable: '--t5e-prepared-item-grid-tile-outline-color',
@@ -1656,7 +1659,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerPreparedAccent'
+            'colorPickerPreparedAccent',
           );
         },
         representsCssVariable: '--t5e-prepared-item-grid-tile-accent-color',
@@ -1685,7 +1688,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerPactOutline'
+            'colorPickerPactOutline',
           );
         },
         representsCssVariable: '--t5e-pact-outline-color',
@@ -1727,7 +1730,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerAtWillOutline'
+            'colorPickerAtWillOutline',
           );
         },
         representsCssVariable: '--t5e-atwill-outline-color',
@@ -1742,7 +1745,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerAtWillAccent'
+            'colorPickerAtWillAccent',
           );
         },
         representsCssVariable: '--t5e-atwill-accent-color',
@@ -1771,7 +1774,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerRitualOnlyOutline'
+            'colorPickerRitualOnlyOutline',
           );
         },
         representsCssVariable: '--t5e-ritual-only-outline-color',
@@ -1786,7 +1789,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerRitualOnlyAccent'
+            'colorPickerRitualOnlyAccent',
           );
         },
         representsCssVariable: '--t5e-ritual-only-accent-color',
@@ -1815,7 +1818,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerInnateOutline'
+            'colorPickerInnateOutline',
           );
         },
         representsCssVariable: '--t5e-innate-outline',
@@ -1830,7 +1833,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerInnateAccent'
+            'colorPickerInnateAccent',
           );
         },
         representsCssVariable: '--t5e-innate-accent',
@@ -1846,7 +1849,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerAlwaysPrepared'
+            'colorPickerAlwaysPrepared',
           );
         },
         representsCssVariable: '--t5e-alwaysprepared-background',
@@ -1861,7 +1864,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerAlwaysPreparedOutline'
+            'colorPickerAlwaysPreparedOutline',
           );
         },
         representsCssVariable: '--t5e-alwaysprepared-outline-color',
@@ -1876,7 +1879,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerAlwaysPreparedAccent'
+            'colorPickerAlwaysPreparedAccent',
           );
         },
         representsCssVariable: '--t5e-alwaysprepared-accent-color',
@@ -1891,7 +1894,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerScrollbarThumb'
+            'colorPickerScrollbarThumb',
           );
         },
         representsCssVariable: '--t5e-scrollbar-thumb-color',
@@ -1906,7 +1909,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerScrollbarTrack'
+            'colorPickerScrollbarTrack',
           );
         },
         representsCssVariable: '--t5e-scrollbar-track-color',
@@ -1921,7 +1924,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'colorPickerMagicAccent'
+            'colorPickerMagicAccent',
           );
         },
         representsCssVariable: '--t5e-magic-accent-color',
@@ -1940,7 +1943,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'useTidySpellSchoolIcons'
+            'useTidySpellSchoolIcons',
           );
         },
       },
@@ -1985,7 +1988,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
-            'inlineActivitiesPosition'
+            'inlineActivitiesPosition',
           );
         },
       },
@@ -2002,7 +2005,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enableBankedInspiration'
+            'enableBankedInspiration',
           );
         },
       },
@@ -2017,7 +2020,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'bankedInspirationGmOnly'
+            'bankedInspirationGmOnly',
           );
         },
       },
@@ -2032,7 +2035,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'swapAbilityScoreAndBonus'
+            'swapAbilityScoreAndBonus',
           );
         },
       },
@@ -2074,7 +2077,7 @@ export function createSettings() {
           >('characterSheetTabOrganization');
         },
       },
-      
+
       characterSheetTabAutomaticallyIncludeUsableItems: {
         options: {
           name: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.name',
@@ -2097,11 +2100,13 @@ export function createSettings() {
           scope: 'user',
           config: true,
           default: true,
-          type: Boolean
+          type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipCondition');
-        }
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipCondition',
+          );
+        },
       },
       referenceTooltipCreatureType: {
         options: {
@@ -2109,11 +2114,13 @@ export function createSettings() {
           scope: 'user',
           config: true,
           default: true,
-          type: Boolean
+          type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipCreatureType');
-        }
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipCreatureType',
+          );
+        },
       },
       referenceTooltipSkill: {
         options: {
@@ -2121,11 +2128,13 @@ export function createSettings() {
           scope: 'user',
           config: true,
           default: true,
-          type: Boolean
+          type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipSkill');
-        }
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipSkill',
+          );
+        },
       },
       referenceTooltipTool: {
         options: {
@@ -2133,11 +2142,11 @@ export function createSettings() {
           scope: 'user',
           config: true,
           default: true,
-          type: Boolean
+          type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('referenceTooltipTool');
-        }
+        },
       },
       referenceTooltipMastery: {
         options: {
@@ -2145,11 +2154,13 @@ export function createSettings() {
           scope: 'user',
           config: true,
           default: true,
-          type: Boolean
+          type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('referenceTooltipMastery');
-        }
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipMastery',
+          );
+        },
       },
 
       // Development and Troubleshooting
@@ -2218,26 +2229,26 @@ export function createSettings() {
 
 function refreshFoundryCoreSettings() {
   _foundryCoreSettings.fontSizePx = parseFloat(
-    document.documentElement.style.fontSize
+    document.documentElement.style.fontSize,
   );
   _foundryCoreSettings.performanceMode = game.settings.get(
     'core',
-    'performanceMode'
+    'performanceMode',
   );
 }
 
 function refreshSystemSettings() {
   _systemSettings.currencyWeight = FoundryAdapter.getSystemSetting(
-    CONSTANTS.SYSTEM_SETTING_CURRENCY_WEIGHT
+    CONSTANTS.SYSTEM_SETTING_CURRENCY_WEIGHT,
   );
   _systemSettings.bastionConfiguration = FoundryAdapter.getSystemSetting(
-    CONSTANTS.SYSTEM_SETTING_BASTION_CONFIGURATION
+    CONSTANTS.SYSTEM_SETTING_BASTION_CONFIGURATION,
   );
   _systemSettings.levelingMode = FoundryAdapter.getSystemSetting(
-    CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+    CONSTANTS.SYSTEM_SETTING_LEVELING_MODE,
   );
   _systemSettings.defaultSkills = FoundryAdapter.getSystemSetting(
-    CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS
+    CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS,
   );
 }
 
@@ -2272,7 +2283,7 @@ export function initSettings() {
   const registerSetting = (
     key: string,
     setting: Tidy5eSetting,
-    overrides: Record<string, unknown> = {}
+    overrides: Record<string, unknown> = {},
   ) => {
     const options = {
       ...setting.options,
@@ -2295,7 +2306,7 @@ export function initSettings() {
 
   for (let setting of Object.entries(SettingsProvider.settings).filter(
     (x: [string, Tidy5eSetting]) =>
-      !x[1].debugOnly && !initRegisteredKeys.has(x[0])
+      !x[1].debugOnly && !initRegisteredKeys.has(x[0]),
   )) {
     const options = {
       ...setting[1].options,
@@ -2314,7 +2325,7 @@ export function initSettings() {
   const debug = SettingsProvider.settings.debug.get();
 
   for (let setting of Object.entries(SettingsProvider.settings).filter(
-    (x: [string, Tidy5eSetting]) => x[1].debugOnly
+    (x: [string, Tidy5eSetting]) => x[1].debugOnly,
   )) {
     const options = {
       ...setting[1].options,

@@ -58,7 +58,6 @@ import {
   type SheetTabOptionsSettingsEditor,
   type SectionOptionGroup,
 } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
-import type { TidySectionBase } from 'src/types/types';
 import { WorldSettingsQuadroneApplication } from '../world/TidyWorldSettingsQuadroneApplication.svelte';
 
 type SheetSettingsRuntimeAdapter = {
@@ -223,13 +222,15 @@ export class TidySheetSettingsQuadroneApplication
           customTabConfigProvider: {
             getTabConfig: TidyFlags.sidebarTabConfiguration.get,
             setTabConfig: TidyFlags.sidebarTabConfiguration.set,
-            getTabContext: (doc, setting) =>
-              getActorTabContext(
-                CharacterSheetQuadroneSidebarRuntime,
-                doc.documentName,
-                setting,
-                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-              ),
+            getTabContext: (doc, setting, defaultSetting) =>
+              getActorTabContext({
+                runtime: CharacterSheetQuadroneSidebarRuntime,
+                type: doc.documentName,
+                settings: setting,
+                docTypeKeyOverride:
+                  CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+                defaultSettings: defaultSetting,
+              }),
           },
           title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
             documentName: FoundryAdapter.localize(

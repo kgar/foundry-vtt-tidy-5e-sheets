@@ -1,5 +1,8 @@
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
@@ -33,6 +36,7 @@ type SetTabConfigFn = (
 type GetTabContextFn = (
   doc: any,
   setting: SheetTabsConfiguration,
+  defaultSetting?: SheetTabsConfiguration,
 ) => TabConfigContextEntry | undefined;
 
 export type SheetTabsConfigurationSettingsEditor =
@@ -100,22 +104,31 @@ export function getSheetTabsConfigurationSettingsEditor(
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
-        return getActorTabContext(
+        return getActorTabContext({
           runtime,
-          doc.type,
-          setting,
+          type: doc.type,
+          settings: setting,
+          defaultSettings: getWorldConfigOrDefault(),
           docTypeKeyOverride,
-        );
+        });
       }
     }
 
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return getItemTabContext(doc.type, setting);
+      return getItemTabContext({
+        type: doc.type,
+        settings: setting,
+        defaultSettings: getWorldConfigOrDefault(),
+      });
     }
   }
 
   function getDefaultTabContext() {
-    const context = getTabContext(document, getWorldConfigOrDefault());
+    const context = getTabContext(
+      document,
+      getWorldConfigOrDefault(),
+      getWorldConfigOrDefault(),
+    );
 
     if (context) {
       seedSidebarExpanded(context, { useDefaults: true });
@@ -210,9 +223,13 @@ export function getSheetTabsConfigurationSettingsEditor(
   }
 
   function getConfig(): SheetTabsConfigurationContext {
-    let setting = getTabConfig(document) ?? getWorldConfigOrDefault();
+    let setting = getTabConfig(document) ?? { tabs: {} };
 
-    const context = getTabContext(document, setting);
+    if (!Object.keys(setting.tabs).length) {
+      setting = getWorldConfigOrDefault();
+    }
+
+    const context = getTabContext(document, setting, getWorldConfigOrDefault());
 
     if (!context) {
       error(
@@ -234,7 +251,7 @@ export function getSheetTabsConfigurationSettingsEditor(
     return (
       SettingsProvider.settings.tabConfiguration.get()?.[
         document.documentName
-      ]?.[document.type] ?? { tabs: {} }
+      ]?.[docTypeKeyOverride ?? document.type] ?? { tabs: {} }
     );
   }
 
@@ -285,15 +302,14 @@ export function getSheetTabsConfigurationSettingsEditor(
     async save() {
       let curr = this.value.entry;
 
-      let selectedIds = curr.tabs.filter((t) => t.show).map((t) => t.id);
+      const defaultMap = new Map(curr.defaultTabs.map((tab) => [tab.id, tab]));
 
       // When the current congfiguration exactly matches the default,
       // empty out the settings so that we use defaults.
       let matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
-        curr.tabs.every((t, i) => {
-          const d = curr.defaultTabs[i];
-          return d && d.id === t.id && d.show === t.show;
+        curr.tabs.every((tab) => {
+          return foundry.utils.equals(defaultMap.get(tab.id), tab);
         });
 
       await setTabConfig(document, {

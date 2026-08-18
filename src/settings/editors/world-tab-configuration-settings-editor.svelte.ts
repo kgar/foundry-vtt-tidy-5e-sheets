@@ -1,9 +1,7 @@
 import {
   buildTabConfigMap,
   getActorTabContext,
-  getInitialTabConfigContextEntry,
   getItemTabContext,
-  mapTabConfigContextEntryToSnapshot,
 } from 'src/settings/editors/shared/tab-configuration-functions';
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
@@ -17,7 +15,10 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 
 export type WorldTabConfigurationSettingsEditor = SettingsEditor<
   TabConfigContextEntry[]
@@ -60,19 +61,20 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     let actorConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ACTOR];
 
     config.push(
-      getActorTabContext(
-        CharacterSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_CHARACTER,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER],
-      ),
+      getActorTabContext({
+        runtime: CharacterSheetQuadroneRuntime,
+        type: CONSTANTS.SHEET_TYPE_CHARACTER,
+        settings: actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER],
+      }),
     );
 
-    const characterSidebarContext = getActorTabContext(
-      CharacterSheetQuadroneSidebarRuntime,
-      CONSTANTS.SHEET_TYPE_CHARACTER,
-      actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
-      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-    );
+    const characterSidebarContext = getActorTabContext({
+      runtime: CharacterSheetQuadroneSidebarRuntime,
+      type: CONSTANTS.SHEET_TYPE_CHARACTER,
+      settings:
+        actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
+      docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+    });
 
     characterSidebarContext.title = FoundryAdapter.localize(
       'TIDY5E.Character.Sidebar.Title',
@@ -81,42 +83,42 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     config.push(characterSidebarContext);
 
     config.push(
-      getActorTabContext(
-        NpcSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_NPC,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC],
-      ),
+      getActorTabContext({
+        runtime: NpcSheetQuadroneRuntime,
+        type: CONSTANTS.SHEET_TYPE_NPC,
+        settings: actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC],
+      }),
     );
 
     config.push(
-      getActorTabContext(
-        GroupSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_GROUP,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP],
-      ),
+      getActorTabContext({
+        runtime: GroupSheetQuadroneRuntime,
+        type: CONSTANTS.SHEET_TYPE_GROUP,
+        settings: actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP],
+      }),
     );
 
     config.push(
-      getActorTabContext(
-        EncounterSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_ENCOUNTER,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER],
-      ),
+      getActorTabContext({
+        runtime: EncounterSheetQuadroneRuntime,
+        type: CONSTANTS.SHEET_TYPE_ENCOUNTER,
+        settings: actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER],
+      }),
     );
 
     config.push(
-      getActorTabContext(
-        VehicleSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_VEHICLE,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
-      ),
+      getActorTabContext({
+        runtime: VehicleSheetQuadroneRuntime,
+        type: CONSTANTS.SHEET_TYPE_VEHICLE,
+        settings: actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
+      }),
     );
 
     let itemConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ITEM];
 
     let allItemTypes = ItemSheetQuadroneRuntime.getSheetTypes();
     for (let type of allItemTypes) {
-      config.push(getItemTabContext(type, itemConfigs?.[type]));
+      config.push(getItemTabContext({ type, settings: itemConfigs?.[type] }));
     }
 
     return config;
@@ -133,13 +135,15 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     let toSave = current.reduce<TabConfiguration>((prev, curr) => {
       let docName = (prev[curr.documentName] ??= {});
 
-      // When the tab array exactly matches the default (order + show), exclude
-      // that sheet type from settings, which represents taking the default tabs.
+      const defaultMap = new Map(curr.defaultTabs.map((tab) => [tab.id, tab]));
+
+      // When the tab array exactly matches the default, exclude
+      // that sheet type from settings, which represents taking
+      // the default tabs.
       const matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
-        curr.tabs.every((t, i) => {
-          const d = curr.defaultTabs[i];
-          return d && d.id === t.id && d.show === t.show;
+        curr.tabs.every((tab) => {
+          return foundry.utils.equals(defaultMap.get(tab.id), tab);
         });
 
       const hasVisibilityOverride = curr.tabs.some(
