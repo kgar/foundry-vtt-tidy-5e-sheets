@@ -1,9 +1,7 @@
 import {
   buildTabConfigMap,
   getActorTabContext,
-  getInitialTabConfigContextEntry,
   getItemTabContext,
-  mapTabConfigContextEntryToSnapshot,
 } from 'src/settings/editors/shared/tab-configuration-functions';
 import type { TabConfigContextEntry } from 'src/settings/editors/shared/tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
@@ -17,7 +15,10 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 
 export type WorldTabConfigurationSettingsEditor = SettingsEditor<
   TabConfigContextEntry[]
@@ -133,13 +134,14 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     let toSave = current.reduce<TabConfiguration>((prev, curr) => {
       let docName = (prev[curr.documentName] ??= {});
 
-      // When the tab array exactly matches the default (order + show), exclude
-      // that sheet type from settings, which represents taking the default tabs.
+      // When the tab array exactly matches the default, exclude
+      // that sheet type from settings, which represents taking 
+      // the default tabs.
       const matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((t, i) => {
           const d = curr.defaultTabs[i];
-          return d && d.id === t.id && d.show === t.show;
+          return foundry.utils.equals(d, t);
         });
 
       const hasVisibilityOverride = curr.tabs.some(

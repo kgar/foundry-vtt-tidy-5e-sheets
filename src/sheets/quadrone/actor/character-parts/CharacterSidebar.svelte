@@ -30,6 +30,7 @@
       tabs={context.sidebarTabs}
       cssClass="sidebar-tab-strip button-group wrap"
       tabCssClass="button button-secondary button-toggle"
+      showIcons={context.sidebarTabs.length < 3}
     ></Tabs>
     {#if context.unlocked}
       <button
