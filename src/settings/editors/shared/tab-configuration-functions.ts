@@ -36,10 +36,15 @@ export function getCanonicalTabSelection(entry: TabConfigContextEntry): {
   };
 }
 
-export function getItemTabContext(
-  type: string,
-  settings: SheetTabsConfiguration | undefined | null,
-) {
+type GetItemTabContextParams = {
+  type: string;
+  settings?: SheetTabsConfiguration | null;
+  defaultSettings?: SheetTabsConfiguration | null;
+};
+
+export function getItemTabContext(params: GetItemTabContextParams) {
+  const { type, settings, defaultSettings } = params;
+
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
   let defaultTabIds = new Set(ItemSheetQuadroneRuntime.getDefaultTabIds(type));
@@ -57,16 +62,25 @@ export function getItemTabContext(
     type,
     allRegisteredTabs,
     settings,
+    defaultSettings,
   );
 }
 
+type GetActorTabContextParams = {
+  runtime: ActorSheetQuadroneRuntime<any>;
+  type: string;
+  settings?: SheetTabsConfiguration | null;
+  defaultSettings?: SheetTabsConfiguration | null;
+  docTypeKeyOverride?: string;
+};
+
 export function getActorTabContext(
-  runtime: ActorSheetQuadroneRuntime<any>,
-  type: string,
-  settings: SheetTabsConfiguration | undefined | null,
-  docTypeKeyOverride?: string,
+  params: GetActorTabContextParams,
 ): TabConfigContextEntry {
-  let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
+  const { runtime, type, settings, docTypeKeyOverride, defaultSettings } =
+    params;
+
+  const documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const defaultTabIds = new Set(runtime.getDefaultTabIds());
   const allRegisteredTabs: RegisteredDefaultTabInfo[] = runtime
     .getAllRegisteredTabs()
@@ -82,11 +96,11 @@ export function getActorTabContext(
     type,
     allRegisteredTabs,
     settings,
+    defaultSettings,
     docTypeKeyOverride,
   );
 }
 
-// TODO: Move somewhere better
 type RegisteredDefaultTabInfo = {
   id: string;
   title: CustomTabTitle;
@@ -99,92 +113,36 @@ function buildTabConfigContextEntry(
   type: string,
   allRegisteredTabs: RegisteredDefaultTabInfo[],
   settings: SheetTabsConfiguration | undefined | null,
+  defaultSettings: SheetTabsConfiguration | undefined | null,
   docTypeKeyOverride?: string,
 ): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
     `TYPES.${documentName}.${type}`,
   );
 
-  // Registry of every currently-registered tab (title/icon lookup).
-  const registry = allRegisteredTabs.reduce<Record<string, TabInfo>>(
-    (prev, tab) => {
-      prev[tab.id] = {
-        id: tab.id,
-        title: FoundryAdapter.localize(
-          typeof tab.title === 'function' ? tab.title() : tab.title,
-        ).titleCase(),
-        iconClass: tab.iconClass,
-      };
-      return prev;
-    },
-    {},
-  );
+  const registry = allRegisteredTabs.reduce<
+    Record<string, TabInfo & { defaultIncluded: boolean }>
+  >((prev, tab) => {
+    prev[tab.id] = {
+      id: tab.id,
+      title: FoundryAdapter.localize(
+        typeof tab.title === 'function' ? tab.title() : tab.title,
+      ).titleCase(),
+      iconClass: tab.iconClass,
+      defaultIncluded: tab.defaultIncluded,
+    };
+    return prev;
+  }, {});
 
   const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
 
-  const defaultSetup: Record<string, SheetTabConfigEntry> = allRegisteredTabs
-    .map<SheetTabConfigEntry>((tab, index) => ({
-      key: tab.id,
-      order: index,
-      show: !!tab.defaultIncluded,
-      visibilityLevel: defaultVisibility,
-    }))
-    .reduce<Record<string, SheetTabConfigEntry>>((prev, curr) => {
-      prev[curr.key] = curr;
-      return prev;
-    }, {});
-
-  const defaultTabs = buildTabConfigEntries(
+  const defaultTabs = BuildTabConfigs(
+    defaultSettings,
     registry,
-    defaultSetup,
-    documentName,
+    defaultVisibility,
   );
 
-  // Effective ordered tabs. Prefer the new per-tab config that with order and
-  // player visibility, otherwise get from the old model (visible in order with a
-  // second array for hidden).
-  const savedTabs = settings?.tabs;
-  let tabs: TabConfig[];
-  if (savedTabs && Object.keys(savedTabs).length) {
-    const present = new Set<string>();
-    tabs = Object.values(savedTabs)
-      .filter((entry) => registry[entry.key])
-      .sort((a, b) => a.order - b.order)
-      .map<TabConfig>((entry) => {
-        present.add(entry.key);
-        return {
-          id: entry.key,
-          title: registry[entry.key].title,
-          iconClass: registry[entry.key].iconClass,
-          show: entry.show,
-          order: entry.order,
-          visibilityLevel: entry.visibilityLevel ?? defaultVisibility,
-        };
-      });
-
-    const afterMaxConfiguredOrder =
-      tabs.reduce<number>((prev, curr) => Math.max(prev, curr.order), 0) + 1;
-
-    // Append any newly-registered tabs not yet in the saved config
-    for (const tab of Object.values(registry)) {
-      if (!present.has(tab.id)) {
-        tabs.push({
-          id: tab.id,
-          title: tab.title,
-          iconClass: tab.iconClass,
-          show: true,
-          order: afterMaxConfiguredOrder + tabs.length,
-          visibilityLevel: defaultVisibility,
-        });
-      }
-    }
-  } else {
-    tabs = buildTabConfigEntries(
-      registry,
-      defaultSetup,
-      documentName,
-    );
-  }
+  const tabs = BuildTabConfigs(settings, registry, defaultVisibility);
 
   const allTabs = Object.values(registry).reduce<Record<string, TabInfo>>(
     (prev, tab) => {
@@ -205,6 +163,52 @@ function buildTabConfigContextEntry(
   };
 }
 
+function BuildTabConfigs(
+  settings: SheetTabsConfiguration | undefined | null,
+  registry: Record<string, TabInfo & { defaultIncluded: boolean }>,
+  defaultVisibility: number,
+) {
+  let defaultTabs: TabConfig[] = [];
+  const present = new Set<string>();
+  const savedTabs = settings?.tabs;
+  if (!!savedTabs && Object.keys(settings).length) {
+    defaultTabs = Object.values(savedTabs)
+      .filter((entry) => registry[entry.key])
+      .sort((a, b) => a.order - b.order)
+      .map((entry) => {
+        present.add(entry.key);
+        return {
+          id: entry.key,
+          order: entry.order,
+          show: entry.show,
+          title: registry[entry.key].title,
+          visibilityLevel: entry.visibilityLevel ?? defaultVisibility,
+          iconClass: registry[entry.key].iconClass,
+        };
+      });
+  }
+
+  const afterMaxDefaultConfiguredOrder =
+    defaultTabs.reduce<number>((prev, curr) => Math.max(prev, curr.order), 0) +
+    1;
+
+  // Append any newly-registered tabs not yet in the saved config
+  for (const tab of Object.values(registry)) {
+    if (!present.has(tab.id)) {
+      defaultTabs.push({
+        id: tab.id,
+        title: tab.title,
+        iconClass: tab.iconClass,
+        show: tab.defaultIncluded,
+        order: afterMaxDefaultConfiguredOrder + defaultTabs.length,
+        visibilityLevel: defaultVisibility,
+      });
+    }
+  }
+
+  return defaultTabs;
+}
+
 /**
  * Create the saved tab configuration using the current tab list,
  * with sort order and player visibility level.
@@ -221,56 +225,6 @@ export function buildTabConfigMap(
     };
     return prev;
   }, {});
-}
-
-/**
- * Combine all tabs into one list: first the selected tabs (in order, `show: true`),
- * then the rest (in any order, `show: false`).
- * TODO: Migrate off legacy selected/unselected arrays.
- */
-function buildTabConfigEntries(
-  all: Record<string, TabInfo>,
-  settings: Record<string, SheetTabConfigEntry>,
-  documentName: string,
-): TabConfig[] {
-  const configured = Object.values(settings).reduce<TabConfig[]>(
-    (tabs, tab) => {
-      const tabInfo = all[tab.key];
-
-      if (tabInfo) {
-        tabs.push({
-          ...tabInfo,
-          show: tab.show,
-          visibilityLevel: tab.visibilityLevel,
-          order: tab.order,
-        });
-      }
-
-      return tabs;
-    },
-    [],
-  );
-
-  const defaultVisibility = VisibilityLevels.getDefaultLevelValue(documentName);
-  let nextOrder =
-    configured.reduce((prev, curr) => Math.max(prev, curr.order), 0) + 1;
-
-  const additional = Object.values(all).reduce<TabConfig[]>((tabs, tab) => {
-    // Include tab info if it was not configured already
-    if (!settings[tab.id]) {
-      tabs.push({
-        ...tab,
-        show: true,
-        visibilityLevel: defaultVisibility,
-        order: nextOrder,
-      });
-      nextOrder++;
-    }
-
-    return tabs;
-  }, []);
-
-  return [...configured, ...additional].sort((a, b) => a.order - b.order);
 }
 
 /**

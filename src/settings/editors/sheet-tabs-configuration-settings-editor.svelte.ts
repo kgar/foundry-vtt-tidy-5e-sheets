@@ -36,6 +36,7 @@ type SetTabConfigFn = (
 type GetTabContextFn = (
   doc: any,
   setting: SheetTabsConfiguration,
+  defaultSetting?: SheetTabsConfiguration,
 ) => TabConfigContextEntry | undefined;
 
 export type SheetTabsConfigurationSettingsEditor =
@@ -103,29 +104,33 @@ export function getSheetTabsConfigurationSettingsEditor(
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
-        return getActorTabContext(
+        return getActorTabContext({
           runtime,
-          doc.type,
-          setting,
+          type: doc.type,
+          settings: setting,
+          defaultSettings: getWorldConfigOrDefault(),
           docTypeKeyOverride,
-        );
+        });
       }
     }
 
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return getItemTabContext(doc.type, setting);
+      return getItemTabContext({
+        type: doc.type,
+        settings: setting,
+        defaultSettings: getWorldConfigOrDefault(),
+      });
     }
   }
 
   function getDefaultTabContext() {
-    const context = getTabContext(document, getWorldConfigOrDefault());
+    const context = getTabContext(
+      document,
+      getWorldConfigOrDefault(),
+      getWorldConfigOrDefault(),
+    );
 
     if (context) {
-      // TODO: Fold this into the existing design instead of patching it after the fact.
-      context.defaultTabs =
-        getTabContext(document, getWorldConfigOrDefault())?.tabs ??
-        context.defaultTabs;
-
       seedSidebarExpanded(context, { useDefaults: true });
     }
 
@@ -224,7 +229,7 @@ export function getSheetTabsConfigurationSettingsEditor(
       setting = getWorldConfigOrDefault();
     }
 
-    const context = getTabContext(document, setting);
+    const context = getTabContext(document, setting, getWorldConfigOrDefault());
 
     if (!context) {
       error(
@@ -234,11 +239,6 @@ export function getSheetTabsConfigurationSettingsEditor(
         `Tab Configuration: Sheet type ${document.type} not supported`,
       );
     }
-
-    // TODO: Fold this into the existing design instead of patching it after the fact.
-    context.defaultTabs =
-      getTabContext(document, getWorldConfigOrDefault())?.tabs ??
-      context.defaultTabs;
 
     // Set sidebar-expanded state from saved config and capture the initial
     seedSidebarExpanded(context, { useDefaults: false });
