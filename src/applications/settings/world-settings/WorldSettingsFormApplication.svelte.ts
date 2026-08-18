@@ -87,8 +87,6 @@ export class WorldSettingsFormApplication extends getSvelteApplicationMixin<
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
         initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
-        itemIdentificationPermission:
-          currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
           currentSettings.includeFlagsInSpellScrollCreation,
         useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,

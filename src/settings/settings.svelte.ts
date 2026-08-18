@@ -1481,7 +1481,7 @@ export function createSettings() {
           scope: 'world',
           type: String,
           default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS,
-          config: false,
+          config: true,
           choices: {
             [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
               'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmAndOwners',

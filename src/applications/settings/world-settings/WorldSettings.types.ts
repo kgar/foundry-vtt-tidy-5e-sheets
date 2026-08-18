@@ -31,7 +31,6 @@ export type WorldSettingsContext = {
     showNpcActorLinkMarker: CurrentSettings['showNpcActorLinkMarker'];
     initialCharacterSheetTab: CurrentSettings['initialCharacterSheetTab'];
     initialVehicleSheetTab: CurrentSettings['initialVehicleSheetTab'];
-    itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
     includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
     useTidySpellSchoolIcons: CurrentSettings['useTidySpellSchoolIcons'];
     globalCustomSections: CurrentSettings['globalCustomSections'];

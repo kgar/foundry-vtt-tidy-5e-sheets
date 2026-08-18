@@ -275,6 +275,7 @@ export class Tidy5eContainerSheetQuadrone
     const owner = this.item.isOwner;
 
     const context: ContainerSheetQuadroneContext = {
+      canIdentify: FoundryAdapter.canIdentify(this.document),
       capacity: capacityContext,
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
