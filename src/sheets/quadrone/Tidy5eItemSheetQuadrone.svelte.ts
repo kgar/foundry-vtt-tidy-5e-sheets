@@ -378,7 +378,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       labels: this.document.labels,
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       limited: this.document.limited,
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
       name: {

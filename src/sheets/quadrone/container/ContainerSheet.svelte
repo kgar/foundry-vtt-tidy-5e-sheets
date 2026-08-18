@@ -87,7 +87,7 @@
               value={currency.value}
               enableDeltaChanges={true}
               selectOnFocus={true}
-              disabled={!context.editable || context.lockMoneyChanges}
+              disabled={!context.editable}
               class="currency-item currency-{currency.key}"
               placeholder="0"
             />

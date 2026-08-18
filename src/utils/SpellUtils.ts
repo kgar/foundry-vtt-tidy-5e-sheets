@@ -17,19 +17,12 @@ export class SpellUtils {
   static isCastableCantrip(item: Item5e) {
     return (
       SpellUtils.isCantrip(item) &&
-      (SpellUtils.isCantripPrepared(item) ||
+      (SpellUtils.isPrepared(item) ||
         SpellUtils.isAlwaysPrepared(item) ||
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
         ItemUtils.hasSufficientLimitedUses(item))
     );
-  }
-
-  /** While the Cantrip Formulas rule is enabled, this cantrip must have prepared status. If the rule is not enabled, a cantrip is always prepared.  */
-  static isCantripPrepared(item: Item5e) {
-    const prepareCantrips = settings.value.allowCantripsToBePrepared;
-
-    return !prepareCantrips || (prepareCantrips && SpellUtils.isPrepared(item));
   }
 
   /** Spell is castable in this moment. */

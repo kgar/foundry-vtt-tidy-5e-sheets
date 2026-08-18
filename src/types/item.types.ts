@@ -233,7 +233,6 @@ export type ItemSheetQuadroneContext = {
     };
   };
   limited: boolean;
-  lockItemQuantity: boolean;
   modernRules: boolean;
   options: any;
   name: ItemNameContext;
@@ -403,8 +402,6 @@ export type ContainerSheetQuadroneContext = {
   items: Item5e[];
   itemType: string;
   labels: Record<string, any>;
-  lockItemQuantity: boolean;
-  lockMoneyChanges: boolean;
   modernRules: boolean;
   name: ItemNameContext;
   owner: boolean;
