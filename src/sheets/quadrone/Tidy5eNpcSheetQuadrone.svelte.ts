@@ -90,6 +90,8 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       return this._context.data;
     }
 
+    this._concentration = this.actor.concentration;
+
     const actorContext = (await super._prepareContext(
       options,
     )) as ActorSheetQuadroneContext;
