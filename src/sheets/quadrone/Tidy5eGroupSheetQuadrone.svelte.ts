@@ -619,7 +619,9 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     }
 
     const proceed = await foundry.applications.api.DialogV2.confirm({
-      content: FoundryAdapter.localize('DND5E.Bastion.Confirm'),
+      content: FoundryAdapter.localize(
+        'TIDY5E.Bastion.Group.TakeBastionTurn.Confirm',
+      ),
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
@@ -633,9 +635,37 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
     const members = this.actor.system.members
       .map(({ actor }: { actor: Actor5e }) => actor)
+      .filter((actor: Actor5e) => !!actor && actor.itemTypes.facility?.length);
+
+    const maintainOptions: Bastion.BastionMaintainOrderOption[] = members.map(
+      (actor: Actor5e) => ({
+        actor,
+        bastionName: actor.system.bastion?.name?.trim() ?? '',
+      }),
+    );
+
+    const maintainUuids = await Bastion.promptMaintainOrderSelection(
+      maintainOptions,
+      (dialog) => this._renderChild(dialog),
+    );
+
+    if (maintainUuids === null) {
+      return;
+    }
+
+    const allMembers = this.actor.system.members
+      .map(({ actor }: { actor: Actor5e }) => actor)
       .filter((actor: Actor5e) => !!actor);
 
-    return await Bastion.advanceBastions(members);
+    return await Bastion.advanceBastions(allMembers, { maintainUuids });
+  }
+
+  async issueMemberMaintainOrder(member: Actor5e) {
+    if (!FoundryAdapter.userIsGm() || !member.itemTypes.facility?.length) {
+      return;
+    }
+
+    return await Bastion.issueMaintainOrder(member);
   }
 
   static async #useMemberFacility(

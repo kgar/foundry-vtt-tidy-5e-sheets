@@ -43,11 +43,6 @@
       </button>
     {/if}
 
-    <button type="button" class="button" disabled>
-      <i class="fa-solid fa-dice-d20"></i>
-      {localize('TIDY5E.Bastion.Group.RollEvent.Label')}
-    </button>
-
     {#if context.editable}
       <button
         type="button"

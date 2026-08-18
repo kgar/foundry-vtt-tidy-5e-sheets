@@ -1,5 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import {
+  facilityHasActiveOrder,
+} from 'src/features/facility/Bastion';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
@@ -47,6 +50,8 @@ export function configureGroupBastionMemberContextMenu(
   const canModify = () =>
     member.isOwner && !FoundryAdapter.isLockedInCompendium(member);
 
+  const hasFacilities = () => !!member.itemTypes.facility?.length;
+
   ui.context.menuItems = [
     {
       name: 'DND5E.FACILITY.AvailableFacility.basic.build',
@@ -61,6 +66,14 @@ export function configureGroupBastionMemberContextMenu(
       condition: canModify,
       callback: (_target, event) =>
         app.addMemberFacility(member, CONSTANTS.FACILITY_TYPE_SPECIAL, event),
+    },
+    {
+      name: 'TIDY5E.Bastion.Group.MaintainOrder.Label',
+      icon: '<i class="fa-solid fa-broom fa-fw"></i>',
+      condition: () =>
+        FoundryAdapter.userIsGm() && canModify() && hasFacilities(),
+      group: 'common',
+      callback: () => app.issueMemberMaintainOrder(member),
     },
   ] satisfies ContextMenuEntry[];
 }
@@ -98,7 +111,10 @@ export function configureGroupBastionFacilityContextMenu(
     {
       name: 'DND5E.FACILITY.Order.Execute',
       icon: '<i class="fa-solid fa-scroll fa-fw"></i>',
-      condition: () => canModify() && !facility.system.disabled,
+      condition: () =>
+        canModify() &&
+        !facility.system.disabled &&
+        !facilityHasActiveOrder(facility),
       group: 'common',
       callback: (_target, event) =>
         app.useMemberFacility(member, facility.id, event),

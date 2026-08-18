@@ -1073,7 +1073,14 @@
     "Progress.Label": "Progress (Days)"
   },
   "TIDY5E.Bastion.Group": {
-    "RollEvent.Label": "Roll Bastion Event",
+    "RollEvent.Label": "Bastion Event",
+    "MaintainOrder.Label": "Maintain Order",
+    "MaintainOrder.DialogTitle": "Maintain Orders",
+    "MaintainOrder.DialogHint": "Do you want to issue a Maintain Order for characters that cannot issue orders to their bastions?",
+    "MaintainOrder.DialogYes": "✅ Yes",
+    "MaintainOrder.DialogNo": "❌ No",
+    "MaintainOrder.Chat": "Issued the Maintain Order to their bastion, {bastionName}.",
+    "TakeBastionTurn.Confirm": "Advance one bastion turn for the characters in this party?",
     "KillDefenders.Label": "Kill Defenders",
     "DeleteOrder.Label": "Delete Order",
     "ChooseFacility.Title": "Choose a Facility",

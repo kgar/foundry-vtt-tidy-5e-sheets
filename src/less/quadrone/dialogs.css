@@ -570,3 +570,44 @@
     filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
   }
 }
+
+.bastion-maintain-order-dialog {
+  .bastion-maintain-order-hint {
+    margin-block: 0 var(--t5e-size-4x);
+  }
+
+  .bastion-maintain-order-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--t5e-size-2x);
+    max-height: 24rem;
+    overflow-y: auto;
+  }
+
+  .bastion-maintain-order-option-label {
+    display: flex;
+    align-items: center;
+    gap: var(--t5e-size-3x);
+    cursor: pointer;
+  }
+
+  .bastion-maintain-order-portrait {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--t5e-size-1x);
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  .bastion-maintain-order-name {
+    font-weight: var(--font-weight-label);
+  }
+
+  .bastion-maintain-order-subtitle {
+    color: var(--t5e-color-text-light);
+    font-size: var(--font-size-12);
+  }
+}
