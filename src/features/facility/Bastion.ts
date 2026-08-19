@@ -68,61 +68,7 @@ export async function prepareFacilities(
 
   // TODO: Consider batching compendium lookups. Most occupants are likely to all be from the same compendium.
   for (const facility of Object.values<any>(actor.itemTypes.facility)) {
-    const { id, img, labels, name, system } = facility;
-    const {
-      building,
-      craft,
-      defenders,
-      disabled,
-      free,
-      hirelings,
-      level,
-      order,
-      progress,
-      size,
-      trade,
-      type,
-    } = system;
-    const subtitle = [];
-
-    if (!isNil(order, '')) {
-      subtitle.push(CONFIG.DND5E.facilities.orders[order]?.label ?? order);
-    }
-
-    if (trade.stock.max) {
-      subtitle.push(`${trade.stock.value ?? 0} &sol; ${trade.stock.max}`);
-    }
-
-    subtitle.push(
-      building.built
-        ? CONFIG.DND5E.facilities.sizes[size].label
-        : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt'),
-    );
-
-    if (!isNil(level)) {
-      subtitle.push(
-        FoundryAdapter.localize('DND5E.LevelNumber', { level: level }),
-      );
-    }
-
-    const chosenFacilityContext: ChosenFacilityContext = {
-      building,
-      craft: craft.item ? await fromUuid(craft.item) : null,
-      creatures: await prepareFacilityOccupants(trade.creatures),
-      defenders: await prepareFacilityOccupants(defenders),
-      disabled,
-      executing: CONFIG.DND5E.facilities.orders[progress.order]?.icon,
-      facility: facility,
-      free,
-      hirelings: await prepareFacilityOccupants(hirelings),
-      id,
-      img: foundry.utils.getRoute(img),
-      isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
-      labels,
-      name,
-      progress,
-      subtitle: subtitle.join(' &bull; '),
-    };
+    const chosenFacilityContext: ChosenFacilityContext = await buildChosenFacilityContext(facility);
 
     allDefenders.push(
       ...chosenFacilityContext.defenders
@@ -188,6 +134,54 @@ export async function prepareFacilities(
     facilities,
     byId,
   };
+}
+
+export async function buildChosenFacilityContext(facility: any) {
+  const { id, img, labels, name, system } = facility;
+  const {
+    building, craft, defenders, disabled, free, hirelings, level, order, progress, size, trade, type,
+  } = system;
+  const subtitle = [];
+
+  if (!isNil(order, '')) {
+    subtitle.push(CONFIG.DND5E.facilities.orders[order]?.label ?? order);
+  }
+
+  if (trade.stock.max) {
+    subtitle.push(`${trade.stock.value ?? 0} &sol; ${trade.stock.max}`);
+  }
+
+  subtitle.push(
+    building.built
+      ? CONFIG.DND5E.facilities.sizes[size].label
+      : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt')
+  );
+
+  if (!isNil(level)) {
+    subtitle.push(
+      FoundryAdapter.localize('DND5E.LevelNumber', { level: level })
+    );
+  }
+
+  const chosenFacilityContext: ChosenFacilityContext = {
+    building,
+    craft: craft.item ? await fromUuid(craft.item) : null,
+    creatures: await prepareFacilityOccupants(trade.creatures),
+    defenders: await prepareFacilityOccupants(defenders),
+    disabled,
+    executing: CONFIG.DND5E.facilities.orders[progress.order]?.icon,
+    facility: facility,
+    free,
+    hirelings: await prepareFacilityOccupants(hirelings),
+    id,
+    img: foundry.utils.getRoute(img),
+    isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
+    labels,
+    name,
+    progress,
+    subtitle: subtitle.join(' &bull; '),
+  };
+  return chosenFacilityContext;
 }
 
 /**

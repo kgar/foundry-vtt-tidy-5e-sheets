@@ -1466,13 +1466,6 @@ export function getTidy5eActorSheetQuadroneBase<
         });
       }
 
-      // Dropped Documents
-      const documentClass = foundry.utils.getDocumentClass(data.type);
-      if (documentClass) {
-        const document = await documentClass.fromDropData(data);
-        return await this._onDropDocument(event, document);
-      }
-
       // Other Drops
       switch (data.type) {
         case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
@@ -1540,22 +1533,6 @@ export function getTidy5eActorSheetQuadroneBase<
       );
     }
 
-    async _onDropDocument(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      document: any,
-    ) {
-      switch (document.documentName) {
-        case CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT:
-          return await this._onDropActiveEffect(event, document);
-        case CONSTANTS.DOCUMENT_NAME_ACTOR:
-          return await this._onDropActor(event, document);
-        case CONSTANTS.DOCUMENT_NAME_ITEM:
-          return await this._onDropItem(event, document);
-        case CONSTANTS.DOCUMENT_NAME_FOLDER:
-          return await this._onDropFolder(event, document);
-      }
-    }
-
     async _onDropJournal(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: any,
@@ -1609,19 +1586,26 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     /** @override */
-    async _onDropActor(event: DragEvent, document: Actor5e) {
+    async _onDropActor(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      document: Actor5e,
+    ) {
       const canPolymorph =
         game.user.isGM ||
         (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
 
       if (
-        !canPolymorph ||
+        canPolymorph &&
         // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
-        this.currentTabId === CONSTANTS.TAB_CHARACTER_BASTION
+        this.currentTabId !== CONSTANTS.TAB_CHARACTER_BASTION
       ) {
-        return;
+        return await this._onDropPolymorph(document);
       }
 
+      return await super._onDropActor(event, document);
+    }
+
+    async _onDropPolymorph(document: Actor5e) {
       // Configure the transformation
       const settings =
         await dnd5e.applications.actor.TransformDialog.promptSettings(
@@ -2010,36 +1994,12 @@ export function getTidy5eActorSheetQuadroneBase<
         return;
       }
 
-      if (
-        !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
-          event,
-          this.actor.items.get(facilityId),
-          facilityType,
-          prop,
-        )
-      ) {
-        return;
-      }
-
-      const result = await dnd5e.applications.CompendiumBrowser.selectOne(
-        {
-          filters: {
-            locked: {
-              documentClass: 'Actor',
-              types: new Set(['character', 'npc', 'vehicle', 'group']),
-            },
-          },
-        },
-        this._detachOptions(),
+      await this.addOccupant(
+        event,
+        this.actor.items.get(facilityId),
+        facilityType,
+        prop,
       );
-
-      if (result) {
-        this.actor.sheet._onDropActorAddToFacility(
-          this.actor.items.get(facilityId),
-          prop,
-          result,
-        );
-      }
     }
 
     /* -------------------------------------------- */

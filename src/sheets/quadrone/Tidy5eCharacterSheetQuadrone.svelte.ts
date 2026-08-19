@@ -1317,44 +1317,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return await super._onDrop(event);
   }
 
-  /** @inheritDoc */
-  async _onDropActor(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    document: Actor5e,
-  ) {
-    if (!event.target.closest('.facility-occupants') || !document.uuid) {
-      return await super._onDropActor(event, document);
-    }
-
-    const { facilityId } =
-      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
-
-    const facility = this.actor.items.get(facilityId);
-
-    if (!facility) {
-      return;
-    }
-
-    const { prop } =
-      event.target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
-
-    if (!prop) {
-      return;
-    }
-
-    await this._onDropActorAddToFacility(facility, prop, document.uuid);
-  }
-
-  _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
-    const { max, value } = foundry.utils.getProperty(facility, prop);
-
-    if (value.length + 1 > max) {
-      return;
-    }
-
-    return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
-  }
-
   /**
    * Handle an owned item or effect being dropped in the favorites area.
    * @param {PointerEvent} event         The triggering event.
@@ -1578,16 +1540,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return facility.update({
       [`${prop}.value`]: value,
     });
-  }
-
-  deleteOccupant(facilityId: string, prop: string, index: number) {
-    const facility = this.actor.items.get(facilityId);
-
-    if (!facility || !prop || index === undefined) {
-      return;
-    }
-
-    Bastion.deleteOccupant(facility, prop, index);
   }
 
   getSheetTabInclusionMode() {
