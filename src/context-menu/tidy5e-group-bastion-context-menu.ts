@@ -1,4 +1,4 @@
-\import { CONSTANTS } from 'src/constants';
+import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Item5e } from 'src/types/item.types';
