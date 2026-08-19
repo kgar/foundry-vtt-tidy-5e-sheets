@@ -459,7 +459,15 @@
         "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
         "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis.",
         "SelectionTab.Title": "Sélection de l'onglet",
-        "VisibilityTab.Title": "Visibilité des onglets"
+        "VisibilityTab.Title": "Visibilité des onglets",
+        "buttonLabel": "Configurer les onglets",
+        "options.viewers": "Accès utilisateur",
+        "options.visibility": "Afficher l'onglet",
+        "showTabTooltip": "Afficher cet onglet",
+        "hideTabTooltip": "Masquer cet onglet",
+        "headers.tab": "Onglet",
+        "headers.userVisibility": "Visibilité des utilisateurs",
+        "headers.showTab": "Afficher l'onglet"
     },
     "TIDY5E.Listbox": {
         "MoveRight": "Déplacer vers la droite (Espace)",
@@ -527,7 +535,8 @@
         "name": "Paramètres du monde",
         "hint": "Ajustez les paramètres au niveau du monde pour personnaliser l'expérience de Tidy 5e Sheets. Ces paramètres sont enregistrés dans ce monde de Foundry et s'appliquent à tous les contenus pertinents de Tidy 5e Sheets.",
         "label": "Paramètres du monde",
-        "title": "Paramètres du monde (MD seulement)"
+        "title": "Paramètres du monde (MD seulement)",
+        "tabLabel": "Vue d'ensemble"
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Utiliser la tabulation par défaut du clavier pour les PV",
@@ -741,7 +750,13 @@
         "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
         "name": "Définir Tidy5e comme feuille par défaut",
         "disableAll": "A utiliser sur aucunes feuilles",
-        "enableAll": "À utiliser pour toutes les feuilles"
+        "enableAll": "À utiliser pour toutes les feuilles",
+        "RevertToSystemSheets": "Revenir aux fiches système",
+        "Sheet": "Type de document",
+        "TidySheets": "Feuilles Tidy",
+        "SystemSheets": "Feuilles système",
+        "dialogTitle": "Définir « Tidy » comme feuille par défaut",
+        "dialogMessage": "Êtes-vous sûr de vouloir définir « Tidy » comme valeur par défaut pour toutes les feuilles ?"
     },
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
@@ -763,7 +778,8 @@
         "SectionSelectorCreateNewSection": "Créer une nouvelle section",
         "SectionSelectorNewSectionName": "Nouveau nom de section",
         "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section",
-        "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}"
+        "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}",
+        "ShowSection": "Afficher la section"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
     "TIDY5E.WorldSettings.TabIcons": {
@@ -1066,5 +1082,106 @@
     "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
         "name": "Couleur d'arrière-plan de l'en-tête"
     },
-    "TIDY5E.AbbrProficiency": "Comp"
+    "TIDY5E.AbbrProficiency": "Comp",
+    "TIDY5E.ContextMenuActionViewItem": "Afficher l'élément source",
+    "TIDY5E.ContextMenuActionPickColor": "Choisissez une couleur",
+    "TIDY5E.ContextMenuActionPinToSpecificTab": "Épingler à l'onglet {tabName}",
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "label": "Configuration de l'onglet {tabName}",
+        "hint": "Définissez les onglets qui s'affichent dans la feuille {tabName}, leur ordre d'affichage et les personnes autorisées à les consulter."
+    },
+    "TIDY5E.SheetSettings": {
+        "title": "Paramètres de la feuille « Tidy »",
+        "hint": "Configurez les paramètres de la feuille.",
+        "Group": {
+            "SheetSettings": "Paramètres de la feuille",
+            "Tabs": "Onglets"
+        },
+        "Sidebar": {
+            "title": "Barre latérale",
+            "Hint": "Configurez les paramètres des onglets de la barre latérale."
+        },
+        "HeaderControls": {
+            "ShowControl": "Voir dans {location}",
+            "Preview": "Aperçu des commandes d'en-tête",
+            "MoveAllToMenu": "Tout déplacer vers le menu",
+            "MoveAllToHeader": "Tout déplacer vers l'en-tête",
+            "WorldSettingHint": "L'emplacement des éléments de contrôle d'en-tête est un paramètre global commun à toutes les feuilles {sheetName}. Les modifications effectuées ici s'appliquent à l'ensemble de ces feuilles.",
+            "OpenWorldSettings": "ouvrir les paramètres du monde"
+        },
+        "ConfigureTab": {
+            "title": "Configurer l'onglet {tabName}",
+            "hint": "Configurez les paramètres, la visibilité et les sections de l'onglet {tabName}."
+        },
+        "AssignSpellsToClasses": {
+            "hint": "Attribuez des sorts à la classe source pour mettre à jour le regroupement et les indicateurs visuels des sorts dans l'onglet « Livre de sorts »."
+        },
+        "NoTabsHint": "Aucun onglet n'est actuellement visible. Modifiez la configuration des onglets pour les activer."
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "name": "Barre latérale déployée",
+            "label": "Afficher la barre latérale"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "TidySettings": {
+            "name": "Paramètres de la feuille « Tidy »",
+            "label": "Configurer les paramètres de Tidy",
+            "hint": "Configurez les feuilles Tidy pour votre partie. Définissez les feuilles par défaut, personnalisez les thèmes et les paramètres globaux par défaut pour vos joueurs."
+        },
+        "Defaults": {
+            "name": "Définir « Tidy » comme feuille par défaut",
+            "label": "Définir « Tidy » comme feuille par défaut",
+            "hint": "Mettez à jour ici les fiches par défaut des personnages et des objets si le menu de configuration « Core → Fiches par défaut » ne fonctionne pas comme prévu."
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Commandes d'en-tête"
+        }
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "name": "Configurer les paramètres généraux du thème",
+        "tabLabel": "Paramètres du thème",
+        "hint": "Configurez les paramètres de thème par défaut pour votre univers de jeu. Ceux-ci s'appliquent à toutes les feuilles. Vous pouvez également configurer les paramètres de thème pour des feuilles spécifiques."
+    },
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "title": "Échanger un score de capacité et un modificateur",
+        "name": "Échanger un score de capacité et un modificateur",
+        "hint": "Inversez la place des caractéristiques et des modificateurs dans les en-têtes de la fiche."
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "name": "Définir « Tidy » comme feuille par défaut",
+        "tabLabel": "Feuilles par défaut",
+        "switchToTidySheets": "Passer à Tidy Sheets",
+        "revertToSystemSheets": "Revenir aux feuilles système",
+        "chooseSpecific": "Choisissez plutôt des types de feuilles spécifiques",
+        "hint": "Sélectionnez tous les types de documents pour lesquels vous souhaitez que Tidy 5e Sheets soit l'option par défaut."
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Bienvenue sur <span>Tidy 5e Sheets</span>. Définissez ici vos paramètres par défaut globaux, puis utilisez les onglets situés à gauche pour personnaliser les thèmes, les onglets des fiches de personnage et bien plus encore.",
+        "useTidyHint": "Définir les fiches Tidy 5e comme valeur par défaut pour tous les types de personnages et d'objets de ce monde.",
+        "resetHint": "Réinitialiser tous les paramètres du monde de Tidy 5e Sheets à leurs valeurs par défaut. Cette action est irréversible."
+    },
+    "TIDY5E.UseGlobalDefaults": "Utiliser les paramètres globaux par défaut",
+    "TIDY5E.UndoChanges": "Annuler les modifications",
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Supprimer {value} lien(s) rompu(s)",
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Compétences et caracteristiques",
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Paramètres fait maison",
+        "tabLabel": "Fait maison"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "name": "Tidy 5e – Masquer les fiches classiques",
+        "hint": "Cachez les feuilles Tidy Classiques au reste du monde."
+    },
+    "TIDY5E.WorldSettings.label": "Paramètres de la feuille « Tidy »",
+    "TIDY5E.WorldSettings.hint": "Configurer les paramètres généraux de Tidy Sheets.",
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "Fiches des acteurs",
+        "ItemSheets": "Fiches d'objet"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "label": "Configuration de la feuille {sheetName}",
+        "hint": "Configurez les paramètres des feuilles {sheetName}. Masquez ou affichez les éléments d'en-tête, puis choisissez les onglets à afficher sur la feuille, leur ordre d'affichage et les utilisateurs autorisés à les consulter."
+    }
 }
