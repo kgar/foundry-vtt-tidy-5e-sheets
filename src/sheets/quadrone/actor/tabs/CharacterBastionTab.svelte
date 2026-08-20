@@ -420,7 +420,7 @@
 
     {#if hasDefenders}
       <section
-        class="roster defenders"
+        class="roster facility-occupants defenders"
         data-prop="system.defenders"
         data-facility-type="defender"
       >
@@ -431,7 +431,7 @@
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
-        <ul class="roster-list unlist">
+        <ul class="unlist preview-large">
           {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.defenders as { actor, uuid }, index}
               {#if uuid}
@@ -452,7 +452,7 @@
 
     {#if hasHirelings}
       <section
-        class="roster hirelings"
+        class="roster facility-occupants hirelings"
         data-prop="system.hirelings"
         data-facility-type="hireling"
       >
@@ -464,7 +464,7 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
 
-        <ul class="roster-list unlist">
+        <ul class="unlist preview-large">
           {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.hirelings as { actor, uuid }, index}
               {#if uuid}
@@ -485,7 +485,7 @@
 
     {#if hasCreatures}
       <section
-        class="roster creatures"
+        class="roster facility-occupants creatures"
         data-prop="system.trade.creatures"
         data-facility-type="creature"
       >
@@ -497,7 +497,7 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
 
-        <ul class="roster-list unlist">
+        <ul class="unlist preview-large">
           {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.creatures as { actor, uuid }, index}
               {#if uuid}

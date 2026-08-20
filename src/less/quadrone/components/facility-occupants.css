@@ -1,0 +1,103 @@
+.tidy5e-sheet.application:where(.quadrone) {
+
+  /* Rosters */
+  .facility-occupants {
+    --occupant-preview-size: var(--t5e-field-size-default);
+    --occupant-border-radius: var(--t5e-size-1x);
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      margin-inline: var(--occupant-hightlight-width);
+      position: relative;
+      gap: var(--t5e-size-1x);
+      margin-block: var(--t5e-size-1x) var(--t5e-size-1x);
+      margin-inline: 0 var(--t5e-size-1x);
+      padding-block: 0;
+      padding-inline: 0;
+
+      &.preview-large {
+        --occupant-preview-size: 3rem;
+        gap: var(--t5e-size-2x);
+
+        .occupant-menu-icon {
+          font-size: 1.125rem;
+        }
+      }
+
+      .broken-link-icon {
+        /* TODO: increase to 0.75? */
+        font-size: calc(var(--occupant-preview-size) * var(--t5e-size-2x));
+        color: var(--t5e-warning-accent-color);
+        display: inline-flex;
+        align-self: center;
+        justify-content: center;
+      }
+
+      li {
+        border-radius: var(--occupant-border-radius);
+        width: var(--occupant-preview-size);
+        height: var(--occupant-preview-size);
+        display: flex;
+
+        /* overflow: hidden; */
+        &:not(.empty) {
+          border: var(--t5e-size-1) solid var(--t5e-color-gold);
+        }
+
+        a {
+          border-radius: var(--occupant-border-radius);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: inherit;
+          width: inherit;
+          position: relative;
+        }
+
+        img {
+          border-radius: var(--occupant-border-radius);
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+        }
+
+        &.unlocked:not(.empty):hover {
+          background-color: var(--t5e-component-field-background);
+          border-color: var(--t5e-theme-color-lighter);
+
+          img {
+            opacity: 0.32;
+          }
+
+          .occupant-menu-icon {
+            opacity: 1;
+            text-shadow: 0 0 0.5rem var(--t5e-color-icon-default);
+          }
+        }
+
+        .occupant-menu-icon {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          vertical-align: middle;
+          opacity: 0;
+          color: var(--t5e-color-icon-default);
+          text-shadow: var(--t5e-drop-shadow-card);
+          font-size: 1rem;
+        }
+      }
+
+      .highlight {
+        background: var(--t5e-component-field-background);
+        outline: 0.125rem solid var(--t5e-theme-color-highlight);
+        outline-offset: -0.0625rem;
+        box-shadow: 0 0 0.375rem var(--t5e-theme-color-highlight);
+      }
+    }
+  }
+}

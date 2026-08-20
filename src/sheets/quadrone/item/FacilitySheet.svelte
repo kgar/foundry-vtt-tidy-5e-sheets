@@ -194,7 +194,7 @@
         <h4>
           {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
         </h4>
-        <ul class="slots hirelings unlist">
+        <ul class="occupants hirelings unlist">
           {#each context.facilityContext.hirelings as { actor, uuid }, index}
             <FacilityOccupantQuadrone
               occupant={actor}
@@ -224,7 +224,7 @@
         <h4>
           {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
         </h4>
-        <ul class="slots facility-occupants defenders">
+        <ul class="occupants defenders unlist">
           {#each context.facilityContext.defenders as { actor, uuid }, index}
             <FacilityOccupantQuadrone
               occupant={actor}
@@ -254,7 +254,7 @@
         <h4>
           {localize('TIDY5E.Facilities.Creatures.Label')}
         </h4>
-        <ul class="slots creatures" data-prop="system.trade.creatures">
+        <ul class="occupants creatures unlist" data-prop="system.trade.creatures">
           {#each context.facilityContext.creatures as { actor, uuid }, index}
             <FacilityOccupantQuadrone
               occupant={actor}
