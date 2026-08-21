@@ -1,21 +1,16 @@
 .tidy5e-sheet.application:where(.quadrone) {
   .meter {
     --meter-height: 1.5rem;
-
     height: var(--meter-height);
-
     position: relative;
-
     display: flex;
     align-items: center;
     gap: 0.25rem;
     flex: 1 0 0;
     align-self: stretch;
-
     border-radius: var(--radius-card, 0.1875rem);
     border: 0.0625rem solid var(--t5e-component-field-border);
     background: var(--t5e-color-palette-grey-34);
-
     /* pill-shadow */
     box-shadow: 0 0 0.75rem 0 var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
 
@@ -49,7 +44,7 @@
         display: none;
       }
 
-      >span {
+      > span {
         display: flex;
         flex-direction: row;
         line-height: normal;
@@ -61,7 +56,6 @@
       --bar-percentage: ;
       --bar-end-border-width: 0.1875rem;
       overflow: hidden;
-
       --bar-background: linear-gradient(to right,
           var(--t5e-color-palette-blue-green-30) 0%,
           var(--t5e-color-palette-blue-green-50) 100%);
@@ -74,7 +68,6 @@
       &::before {
         background: var(--bar-background);
         border-right: var(--bar-end-border-width) solid var(--bar-border-color);
-
         content: '';
         position: absolute;
         block-size: 100%;
@@ -106,6 +99,8 @@
     }
 
     &.facility-progress {
+      --t5e-theme-color-darkest: oklch(from var(--t5e-theme-color-default) calc(l * 0.75) calc(c * 1.2) h);
+      --t5e-theme-color-lighter: oklch(from var(--t5e-theme-color-default) calc(l * 1.2) calc(c * 1.15) h);
       --bar-background: linear-gradient(to right,
           var(--t5e-theme-color-darkest) 0%,
           var(--t5e-theme-color-lighter) 100%);
@@ -167,12 +162,11 @@
     }
 
     &.meter-small {
-
       &::before {
         border: none;
         position: relative;
       }
-      
+
       &::after {
         block-size: 100%;
         background: var(--bar-adjusted-background);

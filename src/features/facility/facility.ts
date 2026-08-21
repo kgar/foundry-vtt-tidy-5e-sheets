@@ -1,3 +1,5 @@
+import type { FacilityOccupantSlot } from 'src/types/types';
+
 export function getTidyFacilityIcon(
     order: string
   ): Dnd5eIconSrc | FontAwesomeIconClass | null {
@@ -22,6 +24,36 @@ export function getTidyFacilityIcon(
     return null;
   }
   
+  /** Localization keys for each kind of facility occupant. */
+  export const FacilityOccupantSlotLabelsMap: Record<
+    FacilityOccupantSlot,
+    string
+  > = {
+    creatures: 'TIDY5E.Facilities.Creatures.Label',
+    defenders: 'TIDY5E.Facilities.Defenders.Label',
+    hirelings: 'TIDY5E.Facilities.Hirelings.Label',
+  };
+
+  /** System data path for each kind of facility occupant. */
+  export const FacilityOccupantSlotPropsMap: Record<
+    FacilityOccupantSlot,
+    string
+  > = {
+    creatures: 'system.trade.creatures',
+    defenders: 'system.defenders',
+    hirelings: 'system.hirelings',
+  };
+
+  /** System name for each kind of facility occupant. */
+  export const FacilityOccupantSlotTypesMap: Record<
+    FacilityOccupantSlot,
+    string
+  > = {
+    creatures: 'creature',
+    defenders: 'defender',
+    hirelings: 'hireling',
+  };
+
   export const TidyFacilityIconsMap: Record<string, string> = {
     build: 'fas fa-trowel-bricks',
     change: 'fas fa-rotate',

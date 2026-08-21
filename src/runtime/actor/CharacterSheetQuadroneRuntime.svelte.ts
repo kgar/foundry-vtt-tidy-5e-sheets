@@ -1,6 +1,7 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
+import * as Bastion from 'src/features/facility/Bastion';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
@@ -9,7 +10,6 @@ import CharacterAttributesTab from 'src/sheets/quadrone/actor/tabs/CharacterAttr
 import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeaturesTab.svelte';
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
-import { systemSettings } from 'src/settings/settings.svelte';
 import CharacterSheetTab from 'src/sheets/quadrone/actor/tabs/CharacterSheetTab.svelte';
 import { buildCharacterSheetTabOptions } from 'src/settings/tab-options/CharacterSheetTabOptions';
 import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
@@ -98,16 +98,7 @@ export const CharacterSheetQuadroneRuntime =
           component: CharacterBastionTab,
           type: 'svelte',
         },
-        enabled: (context) => {
-          const { enabled } = systemSettings.value.bastionConfiguration;
-          const { basic, special } = CONFIG.DND5E.facilities.advancement;
-          const threshold = Math.min(
-            ...Object.keys(basic).map(Number),
-            ...Object.keys(special).map(Number)
-          );
-
-          return context.actor.system.details.level >= threshold && enabled;
-        },
+        enabled: (context) => Bastion.characterHasBastionTab(context.actor),
         id: CONSTANTS.TAB_CHARACTER_BASTION,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-house-turret',

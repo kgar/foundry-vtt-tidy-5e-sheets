@@ -12,6 +12,10 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
     ?.dataset.facilityName;
   const prop = element.closest<HTMLElement>('[data-prop]')?.dataset.prop;
 
+  // Either an actor or an embedded item (has actor prop) can summon this menu.
+  const actor = app.document.actor ?? app.document;
+  const item = actor?.items.get(facilityId);
+
   if (!prop || !occupantUuid) {
     return;
   }
@@ -25,7 +29,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
         app._openDocumentSheet(actor);
       },
       condition: () =>
-        app.actor.isOwner && !FoundryAdapter.isLockedInCompendium(app.actor),
+        actor.isOwner && !FoundryAdapter.isLockedInCompendium(actor),
     },
     {
       name: FoundryAdapter.localize(
@@ -34,17 +38,17 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
       ),
       icon: "<i class='fas fas fa-trash t5e-warning-color fa-fw'></i>",
       callback: async () => {
-        await app.actor.sheet.deleteOccupant(facilityId, prop, Number(index));
+        await app.deleteOccupant(item, prop, Number(index));
       },
       condition: () =>
-        app.actor.isOwner && !FoundryAdapter.isLockedInCompendium(app.actor),
+        actor.isOwner && !FoundryAdapter.isLockedInCompendium(actor),
     },
   ];
 
   ui.context.menuItems = contextOptions;
   TidyHooks.dnd5eGetFacilityOccupantContextOptions(
-    app.document,
-    app.document.items.get(facilityId),
+    actor,
+    item,
     occupantUuid,
     prop,
     index !== null ? Number(index) : null,

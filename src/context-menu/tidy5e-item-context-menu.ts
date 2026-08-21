@@ -22,7 +22,7 @@ export function configureItemContextMenu(element: HTMLElement, app: any) {
   let item =
     app.document.type === CONSTANTS.ITEM_TYPE_CONTAINER
       ? app.document.system.getContainedItem(id)
-      : app.document.items.get(id);
+      : app.document.items?.get(id);
 
   // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
   if (!item || item instanceof Promise) return;

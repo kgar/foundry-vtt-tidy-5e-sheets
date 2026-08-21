@@ -5,6 +5,8 @@ import type {
   ActiveEffectContext,
   ActivityItemContext,
   Actor5e,
+  BastionOrderQuadroneContext,
+  ChosenFacilityContext,
   EncounterMemberCombatantQuadroneContext,
   EncounterMemberQuadroneContext,
   EncounterPlaceholderQuadroneContext,
@@ -192,6 +194,32 @@ export type GroupMemberColumnSpec<
   GroupSheetQuadroneContext,
   Actor5e,
   GroupMemberQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+/** Columns for group bastion orders table. Rows are facility items. */
+export type BastionOrderColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecification<
+  Actor5e,
+  GroupSheetQuadroneContext,
+  Item5e,
+  BastionOrderQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+/** Columns for group bastion facility rows within a character's bastion. */
+export type BastionFacilityColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecification<
+  Actor5e,
+  GroupSheetQuadroneContext,
+  Item5e,
+  ChosenFacilityContext,
   TColumnHeaderContent,
   TColumnCellContent
 >;

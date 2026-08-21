@@ -1069,7 +1069,22 @@
     "Creatures.Label": "Creatures",
     "RosterMember.Label": "{actorName} - {facilityName}",
     "ContextMenuActionRemove": "Remove from {facilityName}",
-    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "Progress.Label": "Progress (Days)"
+  },
+  "TIDY5E.Bastion.Group": {
+    "RollEvent.Label": "Bastion Event",
+    "MaintainOrder.Label": "Maintain Order",
+    "MaintainOrder.DialogTitle": "Maintain Orders",
+    "MaintainOrder.DialogHint": "Do you want to issue a Maintain Order for characters that cannot issue orders to their bastions?",
+    "MaintainOrder.Chat": "Issued the Maintain Order to their bastion, {bastionName}.",
+    "TakeBastionTurn.Confirm": "Advance one bastion turn for the characters in this party?",
+    "KillDefenders.Label": "Kill Defenders",
+    "DeleteOrder.Label": "Delete Order",
+    "ChooseFacility.Title": "Choose a Facility",
+    "Orders.EmptyStateHint": "No party member has an order in progress.",
+    "Facilities.EmptyStateHint": "This character has not built any facilities yet.",
+    "EmptyStateHint": "No group members with bastions. Add player characters to track their bastions here."
   },
   "TIDY5E.LocalizationTestKey": "Localization Test Key",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",

@@ -14,6 +14,7 @@ import type {
   Actor5e,
   CustomContent,
   DocumentSheetV2Context,
+  Folder,
   Tab,
   TidySectionBase,
 } from 'src/types/types';
@@ -54,6 +55,7 @@ import {
   isNumericInput,
   shouldParseInputDelta,
 } from 'src/utils/form';
+import * as Bastion from 'src/features/facility/Bastion';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -1198,6 +1200,50 @@ export function getTidyExtensibleDocumentSheetMixin<
     /*  Sheet Actions                               */
     /* -------------------------------------------- */
 
+    async addOccupant(
+      event: Event,
+      item: Item5e,
+      facilityType: string,
+      prop: string,
+    ) {
+      if (
+        !TidyHooks.tidy5eSheetsFacilityEmptyOccupantSlotClicked(
+          event,
+          item,
+          facilityType,
+          prop,
+        )
+      ) {
+        return;
+      }
+
+      const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+        {
+          filters: {
+            locked: {
+              documentClass: 'Actor',
+              types: new Set(['character', 'npc', 'vehicle', 'group']),
+            },
+          },
+        },
+        this._detachOptions(),
+      );
+
+      if (result) {
+        return await this._onDropActorAddToFacility(item, prop, result);
+      }
+    }
+
+    deleteOccupant(facility: Item5e, prop: string, index: number) {
+      if (!facility || !prop || index === undefined) {
+        return;
+      }
+
+      return Bastion.deleteOccupant(facility, prop, index);
+    }
+
+    /* -------------------------------------------- */
+
     /**
      * Handle configuring a tab on a sheet.
      * @param this {TidyDocumentSheet}
@@ -1823,6 +1869,81 @@ export function getTidyExtensibleDocumentSheetMixin<
     /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
+    async _onDrop(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    ): Promise<any> {
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+
+      // Dropped Documents
+      const documentClass = foundry.utils.getDocumentClass(data.type);
+      if (documentClass) {
+        const document = await documentClass.fromDropData(data);
+        return await this._onDropDocument(event, document);
+      }
+
+      return await super._onDrop(event);
+    }
+
+    async _onDropDocument(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      document: any,
+    ) {
+      switch (document.documentName) {
+        case CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT:
+          return await this._onDropActiveEffect(event, document);
+        case CONSTANTS.DOCUMENT_NAME_ACTOR:
+          return await this._onDropActor(event, document);
+        case CONSTANTS.DOCUMENT_NAME_ITEM:
+          return await this._onDropItem(event, document);
+        case CONSTANTS.DOCUMENT_NAME_FOLDER:
+          return await this._onDropFolder(event, document);
+      }
+    }
+
+    async _onDropActiveEffect(event: DragEvent, data: any): Promise<any> {
+      return undefined;
+    }
+
+    async _onDropActor(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      document: Actor5e,
+    ): Promise<any> {
+      if (!event.target.closest('.facility-occupants') || !document.uuid) {
+        return await super._onDropActor(event, document);
+      }
+
+      const { facilityId } =
+        event.target.closest<HTMLElement>('[data-facility-id]')?.dataset ?? {};
+
+      const facility = this.actor.items.get(facilityId);
+
+      if (facility) {
+        const { prop } =
+          event.target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
+
+        if (!prop) {
+          return;
+        }
+
+        return await this._onDropActorAddToFacility(
+          facility,
+          prop,
+          document.uuid,
+        );
+      }
+    }
+
+    async _onDropItem(event: DragEvent, data: object): Promise<any> {
+      return undefined;
+    }
+
+    async _onDropFolder(
+      event: DragEvent & { currentTarget: HTMLElement },
+      document: Folder,
+    ): Promise<any> {
+      return undefined;
+    }
+
     _allowedDropBehaviors(event: DragEvent, data?: { uuid?: string }) {
       if (!data?.uuid) {
         return new Set<DropEffectValue>(['copy', 'link']);
@@ -1863,6 +1984,20 @@ export function getTidyExtensibleDocumentSheetMixin<
         d[`${base}Type`] === t[`${base}Type`]
         ? 'move'
         : 'copy';
+    }
+
+    _onDropActorAddToFacility(
+      facility: Item5e,
+      prop: string,
+      actorUuid: string,
+    ) {
+      const { max, value } = foundry.utils.getProperty(facility, prop);
+
+      if (value.length + 1 > max) {
+        return;
+      }
+
+      return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
     }
   }
 

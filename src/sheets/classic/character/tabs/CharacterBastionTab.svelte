@@ -37,19 +37,19 @@
   );
 
   let hasDefenders = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.defenders.some((d) => !!d.uuid),
     ),
   );
 
   let hasHirelings = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.hirelings.some((d) => !!d.uuid),
     ),
   );
 
   let hasCreatures = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.creatures.some((d) => !!d.uuid),
     ),
   );
@@ -129,12 +129,12 @@
         <i class="fas fa-building-columns"></i>
         {localize('DND5E.FACILITY.Types.Special.Label.other')}
         <span class="counter">
-          <span class="value">{context.facilities.special.value}</span> /
+          <span class="value">{context.facilities.special.count}</span> /
           <span class="max">{context.facilities.special.max}</span>
         </span>
       </h3>
       <ul class="facility-list">
-        {#each context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.builtFacilities as chosen}
           {const bgImg = $derived(chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
@@ -293,7 +293,7 @@
         {localize('DND5E.FACILITY.Types.Basic.Label.other')}
       </h3>
       <ul class="facility-list">
-        {#each context.facilities.basic.chosen as chosen}
+        {#each context.facilities.basic.builtFacilities as chosen}
           {const bgImg = $derived(chosen.img.includes(
             'systems/dnd5e/icons/svg/items/facility.svg',
           )
@@ -380,7 +380,7 @@
         {localize('TIDY5E.Facilities.Defenders.Label')}
       </h3>
       <ul class="roster-list">
-        {#each context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.builtFacilities as chosen}
           {#each chosen.defenders as { actor, uuid }, index}
             {#if uuid}
               <FacilityRosterOccupant
@@ -408,7 +408,7 @@
         {localize('TIDY5E.Facilities.Hirelings.Label')}
       </h3>
       <ul class="roster-list">
-        {#each context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.builtFacilities as chosen}
           {#each chosen.hirelings as { actor, uuid }, index}
             {#if uuid}
               <FacilityRosterOccupant
@@ -436,7 +436,7 @@
         {localize('TIDY5E.Facilities.Creatures.Label')}
       </h3>
       <ul class="roster-list">
-        {#each context.facilities.special.chosen as chosen}
+        {#each context.facilities.special.builtFacilities as chosen}
           {#each chosen.creatures as { actor, uuid }, index}
             {#if uuid}
               <FacilityRosterOccupant
