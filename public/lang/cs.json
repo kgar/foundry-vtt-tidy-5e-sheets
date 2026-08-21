@@ -1155,5 +1155,6 @@
         "name": "Prohoz hodnoty vlastnosti a její opravy",
         "hint": "Prohoz hodnoty vlastnosti a její opravy v záhlaví deníku."
     },
-    "TIDY5E.Vehicle.RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů"
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů",
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Dovednosti a rysy"
 }
