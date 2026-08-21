@@ -6,6 +6,7 @@
   import type { FacilityOccupancyContext } from 'src/types/types';
   import type OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
   import { getContext } from 'svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   interface Props {
     occupancy: FacilityOccupancyContext;
@@ -52,15 +53,12 @@
     data-action={canAddOccupant ? 'addMemberFacilityOccupant' : undefined}
     onmouseover={showOccupantTooltip}
     onfocus={showOccupantTooltip}
-    onkeydown={(ev) => {
-      if (ev.key === 'Enter' || ev.key === ' ') {
-        showOccupantTooltip(ev);
-      }
-    }}
+    {@attach InputAttachments.triggerClickOnKeydown}
   >
-    <span class="value font-data-medium">{occupancy.occupants.length}</span><span
-      class="separator color-text-lightest">&sol;</span
-    ><span class="max font-label-medium color-text-lighter">{occupancy.max}</span>
+    <span class="value font-data-medium">{occupancy.occupants.length}</span
+    ><span class="separator color-text-lightest">&sol;</span><span
+      class="max font-label-medium color-text-lighter">{occupancy.max}</span
+    >
   </div>
 {:else}
   <!-- Basic facilities have no slots and will always use this. -->
