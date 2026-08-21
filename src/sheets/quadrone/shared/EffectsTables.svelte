@@ -20,6 +20,7 @@
   import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import type { EffectRowAction } from 'src/types/row-actions.types';
 
   interface Props {
     inlineWidth: number;
@@ -41,6 +42,16 @@
 
   let sections = $derived(context.effects);
 
+  function getLongestRowActionsFromNestedEffects(effect: ActiveEffectContext) {
+    let rowActions: EffectRowAction[] = [];
+    for (const ae of [effect, ...effect.riders]) {
+      rowActions =
+        rowActions.length > ae.rowActions.length ? rowActions : ae.rowActions;
+    }
+
+    return rowActions;
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -49,7 +60,7 @@
     {const rowActionInfo = $derived(
       RowActionRuntimeBase.getRowActionWidthInfo(
         section.effects,
-        (entry) => entry.rowActions,
+        (entry) => getLongestRowActionsFromNestedEffects(entry),
         context.unlocked ? section.sectionActions : [],
       ),
     )}
