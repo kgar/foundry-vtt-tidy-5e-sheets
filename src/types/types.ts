@@ -472,11 +472,6 @@ export type FacilitiesContext = {
   special: FacilityGroupContext;
 } & Record<string, FacilityGroupContext>;
 
-/**
- * @deprecated Use {@link FacilitiesContext} for any actors.
- */
-export type CharacterFacilitiesContext = FacilitiesContext;
-
 /** A defender occupant, flattened across facilities for roster display. */
 export type FacilityDefenderContext = {
   img: string;
