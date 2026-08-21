@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+
   interface Props {
     name: string;
     uuid: string;
@@ -15,22 +17,7 @@
   data-action="showDocument"
   data-uuid={uuid}
   data-tooltip={name}
-  onclick={() => {
-    const document = game.documents.get(uuid);
-    if (document) {
-      document.render(true);
-    }
-  }}
-  onkeydown={(event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      event.stopPropagation();
-      const document = game.documents.get(uuid);
-      if (document) {
-        document.render(true);
-      }
-    }
-  }}
+  {@attach InputAttachments.triggerClickOnKeydown}
 >
   {name}
 </a>
