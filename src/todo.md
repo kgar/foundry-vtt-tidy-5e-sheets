@@ -1,6 +1,8 @@
 ## The Accretion Disk of To Do's
 
 - [ ] <!-- TODO: Swap to tidy table roll button -->
+- [ ] Group Bastion tables - these are necessarily complex. Any way we can simplify so that the Facilities section actor rows don't have to be semi-hardcoded with colum headers / cells?
+- [ ] Group Bastion tables - show/hide columns based on resize observer width?
 - [ ] Review "Can Cast" filter in light of CONFIG.DND5E.spellcasting. Spells that don't prepare should probably simply be included in Can Cast, no?
 - [ ] SectionVisibility.ts and search.svelte.ts overlap in functionality, and SectionVisibility.ts takes on the burden of keeping them synchronized via syncItemTabSearchResults. Evaluate and determine if they should be combine or otherwise revised.
 - [ ] Section Search State and section visibility in general overlap a lot, but there are still bits of code outside of SectionVisibility.ts that evaluate additional show logic. Can this logic be somehow pulled back into the section data preparation and leveraged by the SectionVisibility.ts code to determine a section's visibility?
