@@ -644,7 +644,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   ) {
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {
-      member.actor.apps[this.id] = this;
+      // An actor can be added to the sheet and then removed from the world, causing member.actor to be null.
+      if (member.actor) {
+        member.actor.apps[this.id] = this;
+      }
     }
     return await super._renderHTML(context, options);
   }
@@ -652,7 +655,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   async close(options: ApplicationClosingOptions = {}) {
     delete game.user.apps[this.id];
     for (const member of this.actor.system.members) {
-      delete member.actor.apps[this.id];
+      // An actor can be added to the sheet and then removed from the world, causing member.actor to be null.
+      if (member.actor) {
+        delete member.actor.apps[this.id];
+      }
     }
     return await super.close(options);
   }
