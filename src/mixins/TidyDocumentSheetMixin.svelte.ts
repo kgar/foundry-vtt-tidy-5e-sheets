@@ -689,7 +689,9 @@ export function getTidyExtensibleDocumentSheetMixin<
         (sheetDocument.id === itemId || !itemId);
       const item = sheetDocumentIsRelatedItem
         ? sheetDocument
-        : sheetDocument?.items?.get(itemId);
+        : sheetDocument.type === CONSTANTS.ITEM_TYPE_CONTAINER
+          ? sheetDocument.system.getContainedItem(itemId)
+          : sheetDocument?.items?.get(itemId);
 
       const { activityId } =
         target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
