@@ -1153,5 +1153,6 @@
     "TIDY5E.ContextMenuActionPinToSpecificTab": "Przypnij do zakładki {tabName}",
     "TIDY5E.ContextMenuActionPickColor": "Wybierz kolor",
     "TIDY5E.ContextMenuActionViewItem": "Podgląd przedmiotu głównego",
-    "TIDY5E.Vehicle.RemoveBrokenLinks": "Usuń {value} niepoprawnych połączeń"
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "Usuń {value} niepoprawnych połączeń",
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Umiejętności i cechy"
 }
