@@ -335,7 +335,7 @@
     }
 
     hr {
-      margin-block-start: calc(var(--t5e-size-1x) + var(--t5e-size-halfx));
+      margin-block: var(--t5e-size-3x);
       background-image: linear-gradient(to right,
           transparent 5%,
           var(--t5e-color-palette-gold-62) 30%,

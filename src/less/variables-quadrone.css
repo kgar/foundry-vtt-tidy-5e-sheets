@@ -329,6 +329,9 @@
   &.theme-dark,
   .theme-dark {
     /* Text ------------ */
+    --t5e-font-family-longform: 'Signika Negative', 'Signika', Roboto, Arial, sans-serif;
+    --t5e-font-family-forms: 'Signika Negative', 'Signika', Roboto, Arial, sans-serif;
+    --t5e-font-default-longform: 300 var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-longform);
     /* All text colors inverted in dark mode. */
     /* ondefault */
     --t5e-color-text-default: var(--t5e-color-palette-grey-100);
