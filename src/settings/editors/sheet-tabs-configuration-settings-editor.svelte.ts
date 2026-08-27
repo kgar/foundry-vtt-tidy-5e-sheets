@@ -309,7 +309,7 @@ export function getSheetTabsConfigurationSettingsEditor(
       let matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((tab) => {
-          return foundry.utils.equals(defaultMap.get(tab.id), tab);
+          return FoundryAdapter.foundry13Equals(defaultMap.get(tab.id), tab);
         });
 
       await setTabConfig(document, {
