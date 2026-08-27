@@ -1185,5 +1185,6 @@
     "TIDY5E.ContextMenuActionPickColor": "Scegli Colore",
     "TIDY5E.Vehicle.RemoveBrokenLinks": "Rimuovi {value} link(s) danneggiati",
     "TIDY5E.ContextMenuActionViewItem": "Visualizza Elemento Origine",
-    "TIDY5E.ContextMenuActionPinToSpecificTab": "Fissa sulla scheda {tabName}"
+    "TIDY5E.ContextMenuActionPinToSpecificTab": "Fissa sulla scheda {tabName}",
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Abilità & Tratti"
 }
