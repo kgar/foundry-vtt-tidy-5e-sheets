@@ -180,11 +180,11 @@
 
     let result: string[] = [];
 
-    if (!isNil(proficiencyPill)) {
+    if (!isNil(proficiencyPill, '')) {
       result.push(proficiencyPill);
     }
 
-    if (!isNil(context.system.mastery)) {
+    if (!isNil(context.system.mastery, '')) {
       result.push(
         CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ??
           context.system.mastery,
