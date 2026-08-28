@@ -393,7 +393,7 @@
             "explanation": "Sélectionnez la couleur que vous souhaitez utiliser pour chaque option. La valeur \"#00000000\" équivaut à désactiver la couleur."
         },
         "hint": "Personnalisez votre feuille pour créer une expérience immersive qui complète votre jeu.",
-        "ActorHeaderBackground.title": "Arrière-plan de l'en-tête du personnage",
+        "ActorHeaderBackground.title": "Image d'en-tête de l'acteur",
         "PortraitShape": {
             "title": "{type} forme du portrait",
             "option.round": "Rond",
@@ -401,11 +401,11 @@
             "option.square": "Carré",
             "option.token": "Token"
         },
-        "SheetTheme.title": "Thème de la feuille",
+        "SheetTheme.title": "Couleur du thème de la feuille",
         "SheetTheme.hint": "Pour obtenir les meilleurs résultats, choisissez une couleur proche du centre de la palette de couleurs.",
         "SpellPreparationModeColors.title": "Couleurs du mode de préparation des sorts",
         "AccentColor.title": "Couleur de surbrillance",
-        "ItemSidebarBackground.title": "Arrière-plan de la barre latérale des éléments",
+        "ItemSidebarBackground.title": "Image de la barre latérale de l'objet",
         "RarityColors.title": "Couleurs des raretés",
         "SpellcastingMethodColors.title": "Couleurs de la méthode d'incantation",
         "UseHeaderBackground.title": "Utiliser l'arrière-plan de l'en-tête",
@@ -452,8 +452,8 @@
     "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort",
     "TIDY5E.TabConfiguration": {
         "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
-        "MenuOptionText": "Onglet de sélection",
-        "Title": "Onglet de sélection : {documentName}",
+        "MenuOptionText": "Configurer les onglets",
+        "Title": "Configurer les onglets de la feuille {documentName}",
         "AvailableHeader": "Onglets masqués",
         "SelectedHeader": "Onglets visible",
         "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
@@ -532,7 +532,7 @@
         "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement du véhicule est requis."
     },
     "TIDY5E.WorldSettings.Menu": {
-        "name": "Paramètres du monde",
+        "name": "Présentation générale",
         "hint": "Ajustez les paramètres au niveau du monde pour personnaliser l'expérience de Tidy 5e Sheets. Ces paramètres sont enregistrés dans ce monde de Foundry et s'appliquent à tous les contenus pertinents de Tidy 5e Sheets.",
         "label": "Paramètres du monde",
         "title": "Paramètres du monde (MD seulement)",
@@ -746,11 +746,11 @@
     },
     "TIDY5E.Settings.SheetPreferences": {
         "hint": "Si vous souhaitez définir les feuilles Tidy 5e par défaut pour un ou plusieurs types de documents, mais que le menu de configuration des feuilles par défaut ne fonctionne pas comme prévu, utilisez ce menu pour sélectionner vos préférences.",
-        "buttonLabel": "Définir Tidy 5e comme feuille par défaut",
+        "buttonLabel": "Feuilles par défaut",
         "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
         "name": "Définir Tidy5e comme feuille par défaut",
-        "disableAll": "A utiliser sur aucunes feuilles",
-        "enableAll": "À utiliser pour toutes les feuilles",
+        "disableAll": "Passer aux fiches système",
+        "enableAll": "Passer aux feuilles Tidy",
         "RevertToSystemSheets": "Revenir aux fiches système",
         "Sheet": "Type de document",
         "TidySheets": "Feuilles Tidy",
@@ -897,7 +897,7 @@
     "TIDY5E.Visible": "Visible",
     "TIDY5E.Hidden": "Caché",
     "TIDY5E.Options.Title": "Options",
-    "TIDY5E.ConfigureTab.Title": "Configurer {tabName}",
+    "TIDY5E.ConfigureTab.Title": "Configurer l'onglet {tabName}",
     "TIDY5E.DisplayOptions.Title": "Options d'affichage",
     "TIDY5E.AddSpecific": "Ajouter{name}",
     "TIDY5E.JournalEntry.NewTitle": "Entrée de journal {number}",
@@ -988,7 +988,7 @@
     "TIDY5E.SpellbookSections": "Sections livres de sorts",
     "TIDY5E.UserDefaultPrefix": "Paramètres par défaut de l'utilisateur :{value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Options d'affichage globale par défaut",
-    "TIDY5E.Character.Sidebar.Title": "Barre latérale du personnage joueur",
+    "TIDY5E.Character.Sidebar.Title": "Configurer la barre latérale",
     "TIDY5E.Actor.Characteristics": "Caractéristiques",
     "TIDY5E.ContextMenuActionPin": "Épingler en haut",
     "TIDY5E.ContextMenuActionUnpin": "Désépingler du haut",
@@ -997,7 +997,7 @@
         "LocationHeader": "En-tête"
     },
     "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Commandes d'en-tête",
+        "name": "Configurer les commandes d'en-tête",
         "label": "Configurer les commandes d'en-tête",
         "hint": "Nouvelle Tidy Sheets seulement : Configurez l'emplacement des commandes d'en-tête de feuille."
     },
@@ -1178,7 +1178,8 @@
     "TIDY5E.WorldSettings.hint": "Configurer les paramètres généraux de Tidy Sheets.",
     "TIDY5E.WorldSettings.Group": {
         "ActorSheets": "Fiches des acteurs",
-        "ItemSheets": "Fiches d'objet"
+        "ItemSheets": "Fiches d'objet",
+        "TidySettings": "Paramètres Tidy"
     },
     "TIDY5E.WorldSettings.SheetConfiguration": {
         "label": "Configuration de la feuille {sheetName}",
