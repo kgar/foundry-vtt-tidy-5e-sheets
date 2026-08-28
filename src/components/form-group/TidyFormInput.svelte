@@ -232,10 +232,15 @@
     })}
     {const options = $derived(enumerateChoices(numberChoices))}
     {const blankLabel = $derived(getBlankValue())}
+    {const value = $derived(
+      isNil(config.value, '')
+        ? null
+        : config.value.toString(),
+    )}
     <select
       id={config.id}
       data-dtype="Number"
-      value={config.value?.toString()}
+      {value}
       {disabled}
       class={config.classes}
       {...submissionAttributes}

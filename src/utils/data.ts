@@ -1,6 +1,9 @@
-const nilValues = [null, undefined] as const;
 export function isNil(value: any, ...or: any[]): value is null | undefined {
-  return nilValues.concat(or ?? []).includes(value);
+  if (value === null || value === undefined) {
+    return true;
+  }
+
+  return or.includes(value);
 }
 
 function camelToLowerDashCase(str: string) {
@@ -20,6 +23,6 @@ export function buildDataset(obj: Record<string, unknown> | null | undefined) {
       acc[`data-${camelToLowerDashCase(key)}`] = value;
       return acc;
     },
-    {}
+    {},
   );
 }
