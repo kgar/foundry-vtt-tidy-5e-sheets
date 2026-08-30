@@ -16,8 +16,11 @@
   } from 'src/utils/component';
   import { getTidyFacilityIcon } from 'src/features/facility/facility';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import { type Snippet } from 'svelte';
+  import { setContext, type Snippet } from 'svelte';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
+  import FacilityOccupantQuadrone from '../actor/character-parts/bastion/FacilityOccupantQuadrone.svelte';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -74,6 +77,15 @@
   let facilityIsDisabled = $derived(context.system.disabled === true);
 
   let occupantSummaryTooltip: OccupantSummaryTooltip;
+
+  let hoveredFacilityOccupant = $state<Ref<string>>({
+    value: '',
+  });
+
+  setContext<Ref<string>>(
+    CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
+    hoveredFacilityOccupant,
+  );
 </script>
 
 <OccupantSummaryTooltip
@@ -163,6 +175,96 @@
         <ul class="pills stacked">
           {#each facilitySidebarPills as pill}
             {@render pill()}
+          {/each}
+        </ul>
+      </div>
+    {/if}
+
+    <!-- Hireling Management -->
+    {#if context.document.actor && context.facilityContext?.hirelings.length}
+      <div
+        data-prop="system.hirelings"
+        data-facility-type="hireling"
+        {@attach dropzoneClass('occupant-dropzone')}
+        data-item-id={context.item.id}
+        data-facility-id={context.item.id}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+        class="facility-occupants"
+      >
+        <h4>
+          {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
+        </h4>
+        <ul class="occupants hirelings unlist">
+          {#each context.facilityContext.hirelings as { actor, uuid }, index}
+            <FacilityOccupantQuadrone
+              occupant={actor}
+              {index}
+              type="hireling"
+              iconClass="far fa-user"
+              facilityId={context.facilityContext.id}
+              facilityName={context.facilityContext.name}
+              {uuid}
+            ></FacilityOccupantQuadrone>
+          {/each}
+        </ul>
+      </div>
+    {/if}
+
+    <!-- Defender Management -->
+    {#if context.document.actor && context.facilityContext?.defenders.length}
+      <div
+        data-prop="system.defenders"
+        data-facility-type="defender"
+        {@attach dropzoneClass('occupant-dropzone')}
+        data-item-id={context.item.id}
+        data-facility-id={context.item.id}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+        class="facility-occupants"
+      >
+        <h4>
+          {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
+        </h4>
+        <ul class="occupants defenders unlist">
+          {#each context.facilityContext.defenders as { actor, uuid }, index}
+            <FacilityOccupantQuadrone
+              occupant={actor}
+              {index}
+              type="defender"
+              iconClass="far fa-shield"
+              facilityId={context.facilityContext.id}
+              facilityName={context.facilityContext.name}
+              {uuid}
+            ></FacilityOccupantQuadrone>
+          {/each}
+        </ul>
+      </div>
+    {/if}
+
+    <!-- Creature Management -->
+    {#if context.document.actor && context.facilityContext?.creatures.length}
+      <div
+        data-prop="system.creature"
+        data-facility-type="creature"
+        {@attach dropzoneClass('occupant-dropzone')}
+        data-item-id={context.item.id}
+        data-facility-id={context.item.id}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+        class="facility-occupants"
+      >
+        <h4>
+          {localize('TIDY5E.Facilities.Creatures.Label')}
+        </h4>
+        <ul class="occupants creatures unlist" data-prop="system.trade.creatures">
+          {#each context.facilityContext.creatures as { actor, uuid }, index}
+            <FacilityOccupantQuadrone
+              occupant={actor}
+              {index}
+              type="creature"
+              iconClass="far fa-horse-head"
+              facilityId={context.facilityContext.id}
+              facilityName={context.facilityContext.name}
+              {uuid}
+            ></FacilityOccupantQuadrone>
           {/each}
         </ul>
       </div>

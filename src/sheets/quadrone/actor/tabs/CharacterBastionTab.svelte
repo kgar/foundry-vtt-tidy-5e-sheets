@@ -36,19 +36,19 @@
   );
 
   let hasDefenders = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.defenders.some((d) => !!d.uuid),
     ),
   );
 
   let hasHirelings = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.hirelings.some((d) => !!d.uuid),
     ),
   );
 
   let hasCreatures = $derived(
-    context.facilities.special.chosen.some((c: ChosenFacilityContext) =>
+    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
       c.creatures.some((d) => !!d.uuid),
     ),
   );
@@ -116,10 +116,10 @@
             {localize('DND5E.FACILITY.Types.Special.Label.other')}
             <span class="counter">
               <span
-                class="value {context.facilities.special.value > 0
+                class="value {context.facilities.special.count > 0
                   ? 'color-text-default'
                   : 'color-text-lightest'} font-label-medium"
-                >{context.facilities.special.value}</span
+                >{context.facilities.special.count}</span
               >
               <span class="divider color-text-gold font-default-medium">/</span>
               <span class="max color-text-default font-label-medium"
@@ -130,7 +130,7 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
         <ul class="facility-list unlist">
-          {#each context.facilities.special.chosen as chosen}
+          {#each context.facilities.special.builtFacilities as chosen}
             {const bgImg = $derived(
               chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
                 ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
@@ -308,10 +308,10 @@
             {localize('DND5E.FACILITY.Types.Basic.Label.other')}
             <span class="counter">
               <span
-                class="value {context.facilities.basic.value > 0
+                class="value {context.facilities.basic.count > 0
                   ? 'color-text-default'
                   : 'color-text-lightest'} font-label-medium"
-                >{context.facilities.basic.value}</span
+                >{context.facilities.basic.count}</span
               >
               <span class="divider color-text-gold font-default-medium">/</span>
               <span class="max color-text-default font-label-medium"
@@ -323,7 +323,7 @@
         </div>
 
         <ul class="facility-list unlist">
-          {#each context.facilities.basic.chosen as chosen}
+          {#each context.facilities.basic.builtFacilities as chosen}
             {const bgImg = $derived(
               chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
                 ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
@@ -420,7 +420,7 @@
 
     {#if hasDefenders}
       <section
-        class="roster defenders"
+        class="roster facility-occupants defenders"
         data-prop="system.defenders"
         data-facility-type="defender"
       >
@@ -431,8 +431,8 @@
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
-        <ul class="roster-list unlist">
-          {#each context.facilities.special.chosen as chosen}
+        <ul class="unlist preview-large">
+          {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.defenders as { actor, uuid }, index}
               {#if uuid}
                 <FacilityRosterOccupantQuadrone
@@ -452,7 +452,7 @@
 
     {#if hasHirelings}
       <section
-        class="roster hirelings"
+        class="roster facility-occupants hirelings"
         data-prop="system.hirelings"
         data-facility-type="hireling"
       >
@@ -464,8 +464,8 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
 
-        <ul class="roster-list unlist">
-          {#each context.facilities.special.chosen as chosen}
+        <ul class="unlist preview-large">
+          {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.hirelings as { actor, uuid }, index}
               {#if uuid}
                 <FacilityRosterOccupantQuadrone
@@ -485,7 +485,7 @@
 
     {#if hasCreatures}
       <section
-        class="roster creatures"
+        class="roster facility-occupants creatures"
         data-prop="system.trade.creatures"
         data-facility-type="creature"
       >
@@ -497,8 +497,8 @@
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
 
-        <ul class="roster-list unlist">
-          {#each context.facilities.special.chosen as chosen}
+        <ul class="unlist preview-large">
+          {#each context.facilities.special.builtFacilities as chosen}
             {#each chosen.creatures as { actor, uuid }, index}
               {#if uuid}
                 <FacilityRosterOccupantQuadrone

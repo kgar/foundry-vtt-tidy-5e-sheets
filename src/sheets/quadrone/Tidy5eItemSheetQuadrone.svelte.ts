@@ -40,7 +40,6 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { TidySheetSettingsTabIds } from 'src/applications/settings/sheet/TidySheetSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -52,7 +51,7 @@ import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
-import { delay } from 'src/utils/asynchrony';
+import * as Bastions from 'src/features/facility/Bastion';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -107,6 +106,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       height: 600,
     },
     actions: {
+      addOccupant: Tidy5eItemSheetQuadrone.#addOccupant,
       showIcon: Tidy5eItemSheetQuadrone.#showIcon,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
@@ -126,7 +126,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = (await super._renderFrame(options)) as HTMLElement;
 
-    // Ensures there is no flicker when the sheet first opens, 
+    // Ensures there is no flicker when the sheet first opens,
     // assuming the item name is currently visible.
     // This works with the visibilityObserver in ItemNameHeaderOrchestrator.
     element
@@ -620,6 +620,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         },
         { available: [], executable: [] },
       );
+
+      context.facilityContext = await Bastions.buildChosenFacilityContext(this.item);
     }
 
     if (
@@ -1116,6 +1118,22 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
+  static async #addOccupant(
+    this: Tidy5eItemSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const facilityType = target.closest<HTMLElement>('[data-facility-type]')
+      ?.dataset.facilityType;
+    const prop = target.closest<HTMLElement>('[data-prop]')?.dataset.prop;
+
+    if (!facilityType || !prop) {
+      return;
+    }
+
+    await this.addOccupant(event, this.item, facilityType, prop);
+  }
+
   static async #showConfiguration(
     this: Tidy5eItemSheetQuadrone,
     _event: Event,
@@ -1240,6 +1258,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       case 'Item':
         return this._onDropItem(event, data);
     }
+
+    return super._onDrop(event);
   }
 
   /* -------------------------------------------- */

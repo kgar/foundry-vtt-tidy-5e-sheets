@@ -3,6 +3,7 @@ import type {
   ActiveEffectSection,
   ActivityItemContext,
   AttunementContext,
+  ChosenFacilityContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
@@ -206,6 +207,7 @@ export type ItemSheetQuadroneContext = {
     chat: string;
   };
   equipmentTypes: GroupableSelectOption[];
+  facilityContext?: ChosenFacilityContext;
   facilitySubtypes?: Record<string, string>;
   /** The data schema of document.system. */
   fields: any; // One day, maybe we can have types for all the various items. Doesn't seem within reach right now.

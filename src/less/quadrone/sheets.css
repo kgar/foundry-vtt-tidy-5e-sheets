@@ -52,11 +52,11 @@
     }
 
     &.empty-state-description {
+      display: flex;
       align-items: center;
       border: 0.0625rem dashed var(--t5e-component-field-border);
       border-radius: var(--t5e-component-card-radius);
       color: var(--t5e-color-text-lighter);
-      display: inline;
       flex: 0 1 fit-content;
       gap: 0.25rem;
       justify-content: center;

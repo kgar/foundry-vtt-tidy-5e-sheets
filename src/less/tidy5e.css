@@ -6,6 +6,7 @@
 /* Components */
 @import 'quadrone/components.css';
 @import 'quadrone/components/action-bar.css';
+@import 'quadrone/components/facility-occupants.css';
 @import 'quadrone/components/buttons.css';
 @import 'quadrone/components/collapsible-header-section.css';
 @import 'quadrone/components/configurable-source.css';
