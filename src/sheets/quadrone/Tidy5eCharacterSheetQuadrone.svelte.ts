@@ -30,10 +30,7 @@ import * as Bastion from 'src/features/facility/Bastion';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { getTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type {
-  Activity5e,
-  CharacterFavorite,
-} from 'src/foundry/dnd5e.types';
+import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -230,6 +227,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
+      sheetTabSectionMode: this.getSheetTabSectionOrganization(),
       sheetTabSections: [],
       showDeathSaves: this._showDeathSaves,
       species: species
@@ -304,18 +302,13 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   }
 
   prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
-    const sectionMode:
-      | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
-      | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
-      this.getSheetTabSectionOrganization();
-
     const sheetTabPreferences = UserSheetPreferencesService.getByType(
       this.actor.type,
     )?.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
 
     const sortMode = sheetTabPreferences?.sort ?? 'm';
 
-    if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
+    if (context.sheetTabSectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       const sheetTabSections = this.createSheetTabOriginSections(context);
       context.sheetTabSections = SheetSections.configureActionsQuadrone(
         sheetTabSections,
@@ -352,7 +345,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     }
   }
 
-  private getSheetTabSectionOrganization(): 'action' | 'origin' {
+  getSheetTabSectionOrganization(): 'action' | 'origin' {
     return (
       TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
       SettingsProvider.settings.characterSheetTabOrganization.get()
@@ -410,7 +403,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         customSectionOptions: {
           canCreate: true,
         },
-        customSectionFlag: 'actionSection',
       });
     }
 
@@ -422,7 +414,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       {
         canCreate: true,
       },
-      'actionSection',
     );
 
     // Features
@@ -434,7 +425,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         {
           canCreate: true,
         },
-        'actionSection',
       );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {

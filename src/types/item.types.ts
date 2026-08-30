@@ -171,6 +171,8 @@ export type ActivitySectionQuadrone = TidySectionBase & {
 };
 
 export type ItemSheetQuadroneContext = {
+  /** The target sheet or its parent supports an aggregate/action section (e.g., action-economy Character Sheet tab or statblock NPC tab) */
+  actionSectionEnabled: boolean;
   activities: ActivitySectionQuadrone[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementSection[];
@@ -376,6 +378,8 @@ export type CurrencyContext = {
 };
 
 export type ContainerSheetQuadroneContext = {
+  /** The target sheet or its parent supports an aggregate/action section (e.g., action-economy Character Sheet tab or statblock NPC tab) */
+  actionSectionEnabled: boolean;
   capacity: ContainerCapacityContext;
   canIdentify: boolean;
   concealDetails: boolean;

@@ -1396,6 +1396,9 @@ export type CharacterSheetQuadroneContext = {
   itemContext: Record<string, CharacterItemQuadroneContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  sheetTabSectionMode:
+    | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+    | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN;
   sheetTabSections: SheetTabSection[]; // TODO: Got a better name?
   showDeathSaves: boolean;
   sidebarTabs: Tab[];
