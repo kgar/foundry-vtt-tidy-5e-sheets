@@ -26,6 +26,23 @@ function buildMemberRow(actor: Actor5e): string {
   </li>`;
 }
 
+/** The checked members. */
+function readMaintainUuids(button: HTMLButtonElement): Set<string> {
+  const { maintainUuids } = new foundry.applications.ux.FormDataExtended(
+    button.form,
+  ).object as { maintainUuids?: string | (string | null)[] | null };
+
+  if (!maintainUuids) {
+    return new Set();
+  }
+
+  const selected = Array.isArray(maintainUuids)
+    ? maintainUuids
+    : [maintainUuids];
+
+  return new Set(selected.filter((uuid) => !!uuid) as string[]);
+}
+
 export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV2 {
   static DEFAULT_OPTIONS = {
     classes: ['bastion-maintain-order-dialog'],
@@ -39,27 +56,14 @@ export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV
         label: 'Yes',
         icon: 'fa-solid fa-check',
         default: true,
-        callback: (
-          _event: Event,
-          button: HTMLButtonElement,
-        ): Set<string> => {
-          const { maintainUuids } = new foundry.applications.ux.FormDataExtended(
-            button.form,
-          ).object as { maintainUuids?: string | string[] };
-
-          if (!maintainUuids) {
-            return new Set();
-          }
-
-          return new Set(
-            Array.isArray(maintainUuids) ? maintainUuids : [maintainUuids],
-          );
-        },
+        callback: (_event: Event, button: HTMLButtonElement): Set<string> =>
+          readMaintainUuids(button),
       },
       {
         action: 'no',
         label: 'No',
         icon: 'fa-solid fa-xmark',
+        callback: (): Set<string> => new Set<string>(),
       },
     ],
   };
