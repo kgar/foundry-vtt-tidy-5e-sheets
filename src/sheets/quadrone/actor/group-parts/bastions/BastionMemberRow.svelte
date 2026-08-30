@@ -7,6 +7,7 @@
   import { isNil } from 'src/utils/data';
   import BastionMemberHeaderCells from './BastionMemberHeaderCells.svelte';
   import ActorTableImage from 'src/sheets/quadrone/shared/ActorTableImage.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
 
   interface Props {
     member: GroupMemberBastionQuadroneContext;
@@ -17,6 +18,8 @@
   let { member, hiddenColumns, rowActionWidthRems }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  const searchResults = getSearchResultsContext();
 
   let actor = $derived(member.member.actor);
 
@@ -35,7 +38,10 @@
 </script>
 
 <div
-  class="tidy-table-row bastion-member"
+  class={[
+    'tidy-table-row bastion-member',
+    { hidden: !searchResults.show(actor.uuid) },
+  ]}
   style:--t5e-theme-color-default={member.member.accentColor}
   style:--t5e-theme-color-highlight={member.member.highlightColor}
   style:--t5e-member-color-hover={member.member.highlightColor}

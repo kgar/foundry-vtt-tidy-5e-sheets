@@ -4,6 +4,7 @@
   import ItemRollButton from 'src/sheets/quadrone/shared/ItemRollButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ChosenFacilityContext,
@@ -18,6 +19,8 @@
   }
 
   let { member, chosen, hiddenColumns, rowActionWidthRems }: Props = $props();
+
+  const searchResults = getSearchResultsContext();
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -46,7 +49,11 @@
     chosen.isSpecial
       ? CONSTANTS.FACILITY_TYPE_SPECIAL
       : CONSTANTS.FACILITY_TYPE_BASIC,
-    { disabled: chosen.disabled, building: chosen.building.built === false },
+    {
+      disabled: chosen.disabled,
+      building: chosen.building.built === false,
+      hidden: !searchResults.show(chosen.facility.uuid),
+    },
   ]}
   style:--t5e-theme-color-default={member.member.accentColor}
   style:--t5e-theme-color-highlight={member.member.highlightColor}

@@ -13,6 +13,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { BastionOrderColumnRuntime } from 'src/runtime/table-columns/BastionOrderColumnRuntime';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
@@ -31,7 +32,17 @@
 
   const localize = FoundryAdapter.localize;
 
+  const searchResults = getSearchResultsContext();
+
   let orders = $derived(context.bastionsContext.orders);
+
+  let visibleOrders = $derived(
+    orders.filter((order) => searchResults.show(order.facility.uuid)),
+  );
+
+  let showTable = $derived(
+    visibleOrders.length > 0 || !searchResults.isSearching,
+  );
 
   let section = $derived({
     key: 'orders',
@@ -55,13 +66,18 @@
   );
 </script>
 
-<TidyTable key={section.key} class="bastion-orders">
+{#if showTable}
+<TidyTable
+  key={section.key}
+  class="bastion-orders"
+  expandedOverride={searchResults.isSearching ? visibleOrders.length > 0 : undefined}
+>
   {#snippet header()}
     <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true}>
         <h3>
           {localize(section.label)}
-          <span class="table-header-count">{orders.length}</span>
+          <span class="table-header-count">{visibleOrders.length}</span>
         </h3>
       </TidyTableHeaderCell>
 
@@ -79,7 +95,10 @@
       {const icon = $derived(getTidyFacilityIcon(order.key))}
 
       <div
-        class="tidy-table-row bastion-order"
+        class={[
+          'tidy-table-row bastion-order',
+          { hidden: !searchResults.show(order.facility.uuid) },
+        ]}
         style:--t5e-theme-color-default={order.member.accentColor}
         style:--t5e-theme-color-highlight={order.member.highlightColor}
         data-item-id={order.facility.id}
@@ -140,3 +159,4 @@
     {/if}
   {/snippet}
 </TidyTable>
+{/if}

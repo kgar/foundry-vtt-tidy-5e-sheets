@@ -7,6 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { BastionFacilityColumnRuntime } from 'src/runtime/table-columns/BastionFacilityColumnRuntime';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import BastionFacilityRow from './BastionFacilityRow.svelte';
@@ -35,6 +36,8 @@
     CONSTANTS.SVELTE_CONTEXT.OCCUPANT_SUMMARY_TOOLTIP,
     () => occupantSummaryTooltip,
   );
+
+  const searchResults = getSearchResultsContext();
 
   let members = $derived(context.bastionsContext.members);
 
@@ -69,7 +72,20 @@
   }
 
   let facilityCount = $derived(
-    members.reduce((count, member) => count + getFacilities(member).length, 0),
+    members.reduce(
+      (count, member) =>
+        count +
+        getFacilities(member).filter((chosen) =>
+          searchResults.show(chosen.facility.uuid),
+        ).length,
+      0,
+    ),
+  );
+
+  let showTable = $derived(
+    members.some((member) =>
+      searchResults.show(member.member.actor.uuid),
+    ) || !searchResults.isSearching,
   );
 </script>
 
@@ -78,7 +94,12 @@
   sheetDocument={context.document}
 />
 
-<TidyTable key={section.key} class="bastion-facilities">
+{#if showTable}
+<TidyTable
+  key={section.key}
+  class="bastion-facilities"
+  expandedOverride={searchResults.isSearching ? showTable : undefined}
+>
   {#snippet header()}
     <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true}>
@@ -99,30 +120,36 @@
   {/snippet}
   {#snippet body()}
     {#each members as member (member.member.actor.uuid)}
-      <div class="tidy-table-bastion-row">
-      {const facilities = $derived(getFacilities(member))}
+      <div
+        class={[
+          'tidy-table-bastion-row',
+          { hidden: !searchResults.show(member.member.actor.uuid) },
+        ]}
+      >
+        {const facilities = $derived(getFacilities(member))}
 
-      <BastionMemberRow
-        {member}
-        {hiddenColumns}
-        rowActionWidthRems={rowActionInfo.widthRems}
-      />
-
-      {#each facilities as chosen (chosen.id)}
-        <BastionFacilityRow
+        <BastionMemberRow
           {member}
-          {chosen}
           {hiddenColumns}
           rowActionWidthRems={rowActionInfo.widthRems}
         />
-      {/each}
 
-      {#if !facilities.length}
-        <div class="empty-state-container empty-state-description">
-          {localize('TIDY5E.Bastion.Group.Facilities.EmptyStateHint')}
-        </div>
-      {/if}
+        {#each facilities as chosen (chosen.id)}
+          <BastionFacilityRow
+            {member}
+            {chosen}
+            {hiddenColumns}
+            rowActionWidthRems={rowActionInfo.widthRems}
+          />
+        {/each}
+
+        {#if !facilities.length}
+          <div class="empty-state-container empty-state-description">
+            {localize('TIDY5E.Bastion.Group.Facilities.EmptyStateHint')}
+          </div>
+        {/if}
       </div>
     {/each}
   {/snippet}
 </TidyTable>
+{/if}
