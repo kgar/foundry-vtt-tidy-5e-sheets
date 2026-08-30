@@ -741,7 +741,30 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       return;
     }
 
+    // If you hit the last day, check if the user wants to complete the order.
+    if (toAdjust > 0 && next >= max) {
+      const proceed = await Bastion.confirmCompleteOrder();
+
+      if (!proceed) {
+        return;
+      }
+
+      return await Bastion.completeOrder(facility);
+    }
+
     return await facility.update({ 'system.progress.value': next });
+  }
+
+  async completeMemberFacilityOrder(facility: Item5e) {
+    if (
+      !FoundryAdapter.userIsGm() ||
+      !facility.isOwner ||
+      FoundryAdapter.isLockedInCompendium(facility)
+    ) {
+      return;
+    }
+
+    return await Bastion.completeOrder(facility);
   }
 
   /* -------------------------------------------- */

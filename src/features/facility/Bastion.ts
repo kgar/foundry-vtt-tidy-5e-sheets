@@ -234,6 +234,52 @@ export async function rollBastionEvent(actor?: Actor5e): Promise<void> {
 }
 
 /**
+ * Finish a facility's in-progress order immediately.
+ */
+export async function completeOrder(facility: Item5e): Promise<void> {
+  const progress = facility.system.progress;
+
+  if (isNil(progress?.order, '') || !progress.max) {
+    return;
+  }
+
+  const remaining = Math.max(0, progress.max - (progress.value ?? 0));
+  const { order, gold, items } = await dnd5e.bastion.advanceTurn(facility, {
+    duration: remaining,
+  });
+
+  // Nothing happens if Maintain Order (hightouch: which I don't think is
+  // implemented in this way anyhow)
+  if (!order || order === 'maintain') {
+    return;
+  }
+
+  await ChatMessage.implementation.create({
+    speaker: ChatMessage.implementation.getSpeaker({ actor: facility.parent }),
+    system: {
+      gold: { value: gold ?? 0, claimed: false },
+      items: items ?? [],
+      orders: [{ id: facility.id, order }],
+    },
+    type: 'bastionTurn',
+  });
+}
+
+/** Confirm before completing an order from a one-click control like +. */
+export async function confirmCompleteOrder(): Promise<boolean> {
+  return !!(await foundry.applications.api.DialogV2.confirm({
+    content: FoundryAdapter.localize(
+      'TIDY5E.Bastion.Group.CompleteOrder.Confirm',
+    ),
+    rejectClose: false,
+    window: {
+      icon: 'fa-solid fa-flag-checkered',
+      title: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
+    },
+  }));
+}
+
+/**
  * Issue Maintain for a character: chat announcement, then a bastion event roll.
  */
 export async function issueMaintainOrder(actor: Actor5e): Promise<void> {

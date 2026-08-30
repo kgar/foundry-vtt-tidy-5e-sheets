@@ -113,10 +113,21 @@ export function configureGroupBastionFacilityContextMenu(
         app.useMemberFacility(member, facility.id, event),
     },
     {
+      // Runs the system's order evaluation so gold and crafted items are awarded.
+      name: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
+      icon: '<i class="fa-solid fa-clipboard-check fa-fw"></i>',
+      condition: () =>
+        FoundryAdapter.userIsGm() &&
+        canModify() &&
+        !isNil(facility.system.progress?.order, ''),
+      group: 'common',
+      callback: () => app.completeMemberFacilityOrder(facility),
+    },
+    {
       // Cancels the order, skipping the system's order evaluation, so no gold
       // or crafted items are awarded.
-      name: 'TIDY5E.Bastion.Group.DeleteOrder.Label',
-      icon: '<i class="fa-solid fa-ban fa-fw"></i>',
+      name: 'TIDY5E.Bastion.Group.CancelOrder.Label',
+      icon: '<i class="fa-solid fa-xmark fa-fw"></i>',
       condition: () => canModify() && !isNil(facility.system.progress?.order, ''),
       group: 'common',
       callback: () =>
