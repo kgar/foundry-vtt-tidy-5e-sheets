@@ -25,13 +25,14 @@
   --t5e-lineheight-small: 0.75rem;
   /* Font weights */
   --font-weight-default: 400;
+  --font-weight-alternate: 400;
   --font-weight-label: 500;
   --font-weight-bold: 700;
   --icon-weight-default: 500;
   --icon-weight-bold: 900;
   /* Fonts */
   --t5e-font-default-medium: var(--font-weight-default) var(--font-size-13)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
-  --t5e-font-default-longform: var(--font-weight-default) var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-longform);
+  --t5e-font-default-longform: var(--font-weight-alternate) var(--font-size-13)/var(--t5e-lineheight-longform) var(--t5e-font-family-longform);
   --t5e-font-default-small: var(--font-weight-default) var(--font-size-11)/var(--t5e-lineheight-small) var(--t5e-font-family-default);
   --t5e-font-label-xlarge: var(--font-weight-label) var(--font-size-28) var(--t5e-font-family-default);
   --t5e-font-label-large: var(--font-weight-label) var(--font-size-18)/var(--t5e-lineheight-default) var(--t5e-font-family-default);
@@ -336,17 +337,11 @@
     --t5e-font-family-longform: 'Signika Negative', 'Signika', Roboto, Arial, sans-serif;
     --t5e-font-family-forms: 'Signika Negative', 'Signika', Roboto, Arial, sans-serif;
     /* Font weights */
-    --font-weight-default: 300;
-    --font-weight-label: 500;
-    --font-weight-bold: 700;
-    --font-heading-weight-default: 400;
-    --font-heading-weight-semibold: 600;
-    --font-heading-weight-bold: 700;
+    --font-weight-alternate: 300;
     /* All text colors inverted in dark mode. */
     /* ondefault */
     --t5e-color-text-default: var(--t5e-color-palette-grey-100);
     --t5e-color-text-longform: rgba(233, 236, 245, 1);
-    ;
     --t5e-color-text-gold: var(--t5e-color-palette-gold-75);
     --t5e-color-text-gold-emphasis: var(--t5e-color-palette-gold-75);
     --t5e-color-text-gold-light: var(--t5e-color-palette-gold-94);

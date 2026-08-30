@@ -199,46 +199,75 @@
       }
     }
 
-    .secret {
-      background-color: rgba(0, 0, 0, 0.12);
-      padding: var(--t5e-size-2x);
-      border-radius: var(--t5e-component-card-radius);
-      border: var(--t5e-size-1) solid var(--t5e-theme-color-darker);
-      transition: all var(--t5e-transition-default);
+    secret-block,
+    .secret-block {
+      --color-secret-bg: none;
+      --color-secret-border: var(--t5e-color-palette-red-45);
+      border-width: var(--t5e-size-1) var(--t5e-size-1) var(--t5e-size-1) 0;
+      border-style: solid;
+      border-image: linear-gradient(to right, transparent 0%, var(--t5e-color-palette-red-45) 8%) 1 1 1 0;
+      background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 16%);
+      display: block;
+      margin-inline-start: -0.5rem;
+      padding-inline-start: 0.5rem;
+      padding-block: 0;
+      position: relative;
 
-      /* TODO: Use primary button style to "Reveal" and secondary for "Hide"
-      Need to inject button classes, but we're not able to yet.
-      */
-      &.revealed {
-        border-radius: 0;
-        padding: var(--t5e-size-2x) 0;
+      &:has(> .revealed) {
+        background: linear-gradient(to right, transparent 8%, var(--t5e-component-card-darker) 48%);
+        border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 72%) 1 1 1 0;
+      }
+
+      .secret {
         background: none;
-        border-width: var(--t5e-size-1) 0;
+        border: none;
+        transition: all var(--t5e-transition-default);
+
+        &:not(.revealed) > * {
+          color: var(--t5e-color-text-lighter);
+        }
+
+        > :not(.reveal, .gm-only):first-child {
+          margin-block-start: 0;
+        }
       }
 
-      &:not(.revealed) {
-        color: var(--t5e-color-text-lighter);
-      }
-
-      .reveal {
+      .reveal,
+      .gm-only {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
         padding: 0.25rem 0.5rem;
-        margin: 0;
-        border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+        margin-block: -0.03125rem 0;
+        margin-inline: 0 -0.03125rem;
+        border: var(--t5e-size-1) solid var(--t5e-color-palette-red-45);
         background: var(--t5e-component-field-background);
+        color: var(--t5e-color-text-default);
+        font: var(--t5e-font-label-medium);
+        text-transform: none;
 
         &:hover {
           background: var(--t5e-component-field-background-hover);
           border-color: var(--t5e-component-field-border-hover);
         }
-      }
 
-      > :first-child {
-        margin-block-start: 0;
+        & + * {
+          margin-inline-end: var(--t5e-size-16x);
+        }
       }
+    }
 
-      > :last-child {
-        margin-block-end: 0;
-      }
+    .secret {
+      padding-inline: 0;
+    }
+
+    secret-block {
+      margin-block-start: var(--t5e-size-3x);
+    }
+
+    .secret-block {
+      padding-block: var(--t5e-size-1x) var(--t5e-size-2x);
+      padding-inline-end: var(--t5e-size-2x);
     }
 
     blockquote {
@@ -534,7 +563,7 @@
     }
 
     .inline-wrapped-elements {
-      margin-block-start: var(--t5e-size-2x);
+      margin-block-start: var(--t5e-size-3x);
       margin-block-end: var(--t5e-size-1x);
     }
 
@@ -588,20 +617,6 @@
       .quote-lg {
         --t5e-quote-color: var(--t5e-color-gold);
         border-color: var(--t5e-quote-color);
-      }
-
-      .secret {
-        background-color: rgba(0, 0, 0, 0.5);
-
-        &.revealed {
-          background: none;
-        }
-      }
-
-      .gm-only {
-        color: var(--t5e-color-text-lightest);
-        font-weight: var(--font-weight-label);
-        font-style: italic;
       }
 
       aside.notable {

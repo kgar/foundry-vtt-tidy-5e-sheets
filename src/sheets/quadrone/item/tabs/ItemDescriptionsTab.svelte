@@ -18,6 +18,7 @@
 
   let editing = $state(false);
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+  let playerEditMode = $derived(context.sheet.isEditMode && !FoundryAdapter.userIsGm());
 </script>
 
 {#snippet unidentifiedNotice()}
@@ -40,7 +41,7 @@
   {/if}
 {/snippet}
 
-{#if !editing}
+{#if !editing && !playerEditMode}
   {@render unidentifiedNotice()}
 {/if}
 
@@ -58,6 +59,6 @@
   />
 {/if}
 
-{#if editing}
+{#if editing || playerEditMode}
   {@render unidentifiedNotice()}
 {/if}

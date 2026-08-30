@@ -457,7 +457,7 @@
     /* TODO: Cleanup this section. */
     --icon-fill: var(--t5e-color-text-gold-emphasis);
     border: none;
-    color: var(--t5e-color-default);
+    color: var(--t5e-color-text-default);
     background: var(--t5e-enricher-background);
     padding-block: var(--t5e-size-1) var(--t5e-size-halfx);
     padding-inline: 0.1875rem;

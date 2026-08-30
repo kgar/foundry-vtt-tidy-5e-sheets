@@ -41,6 +41,11 @@
 
   const unidentified = $derived(context.system.identified === false);
 
+  // Hide mechanical details from players, and from GMs in view mode, until the item is identified.
+  let concealDetails = $derived(
+    unidentified && !FoundryAdapter.isInGmEditMode(context.document),
+  );
+
   let rarityText = $derived(
     unidentified
       ? localize('DND5E.Unidentified.Title')
@@ -400,7 +405,7 @@
     {@render belowStateSwitches()}
   {/if}
 
-  {#if !context.concealDetails}
+  {#if !concealDetails}
     <!-- Activations -->
     {#if sidebarActivations.length}
       <div>

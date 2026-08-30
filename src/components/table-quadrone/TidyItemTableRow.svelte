@@ -25,7 +25,6 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ClassValue } from 'svelte/elements';
   import { isNil } from 'src/utils/data';
-  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     item: Item5e;

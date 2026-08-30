@@ -4,28 +4,35 @@
     getItemSheetContextQuadrone,
     getSheetContext,
   } from 'src/sheets/sheet-context.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let unidentified = $derived(context.system.identified === false);
+  let isPlayer = $derived(!FoundryAdapter.userIsGm());
   let value = $derived(
-    unidentified ? context.system.unidentified.name : context.name.editable,
+    unidentified && isPlayer ? context.system.unidentified.name : context.name.editable,
   );
-  let field = $derived(unidentified ? 'system.unidentified.name' : 'name');
+  let field = $derived(unidentified && isPlayer ? 'system.unidentified.name' : 'name');
 </script>
 
 <!-- Name -->
 {#if context.unlocked}
   <TextInputQuadrone
-    field="name"
+    {field}
     document={context.item}
-    value={context.name.editable}
+    {value}
     class="document-name"
     data-tooltip={context.item.name}
   />
 {:else}
   <div class="document-name" data-tooltip={context.item.name}>
-    <a data-action="copyInnerText" class="cursor highlight-on-hover">
+    <!--svelte-ignore a11y_missing_attribute-->
+    <a 
+      role="button"
+      tabindex="0"
+      data-action="copyInnerText" 
+      class="cursor highlight-on-hover">
       {context.item.name}
     </a>
   </div>
