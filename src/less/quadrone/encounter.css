@@ -108,7 +108,7 @@
           }
 
           .value {
-            font-weight: var(--t5e-font-weight-medium);
+            font-weight: var(--font-weight-label);
           }
 
           button {
@@ -147,7 +147,7 @@
         &[data-tidy-column-key="npcXp"] {
           span {
             font-size: var(--font-size-13);
-            font-weight: var(--t5e-font-weight-medium);
+            font-weight: var(--font-weight-label);
           }
         }
       }

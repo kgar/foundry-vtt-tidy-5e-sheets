@@ -202,17 +202,6 @@
 
   /* STYLE UTILITY CLASSES
   ------------------------------------------------------------ */
-  div.divider-dot {
-    width: 0.1875rem;
-    height: 0.1875rem;
-    border-radius: 100%;
-    background-color: var(--t5e-color-gold);
-    opacity: 0.72;
-    margin-block: 0;
-    margin-inline: 0.3125rem;
-    flex: initial;
-  }
-
   i.highlighted {
     color: var(--t5e-theme-color-highlight);
 

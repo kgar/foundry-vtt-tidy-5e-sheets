@@ -160,7 +160,7 @@
     }
 
     &.selected {
-      font-weight: 500;
+      font-weight: var(--font-weight-label);
 
       &::before {
         background: linear-gradient(to right,

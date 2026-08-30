@@ -2,6 +2,7 @@
 
   .editor,
   .editor-rendered-content {
+    color: var(--t5e-color-text-longform);
     font: var(--t5e-font-default-longform);
     word-wrap: anywhere;
 
@@ -9,7 +10,7 @@
     h2,
     h3,
     h4 {
-      font-weight: 400;
+      font-weight: var(--font-heading-weight-default);
       line-height: 100%;
     }
 
@@ -30,7 +31,7 @@
 
     h4 {
       font-size: var(--font-size-15);
-      font-weight: 600;
+      font-weight: var(--font-heading-weight-semibold);
       margin-block: var(--t5e-size-4x) var(--t5e-size-2x);
     }
 
@@ -42,6 +43,10 @@
     h6 {
       font-size: var(--font-size-12);
       margin-block: var(--t5e-size-3x) var(--t5e-size-2x);
+    }
+
+    strong {
+      font-weight: var(--font-weight-bold);
     }
 
     li {
@@ -164,7 +169,7 @@
           margin-inline-start: calc(var(--t5e-size-1x) * -1);
 
           &::before {
-            font-weight: 900;
+            font-weight: var(--icon-weight-bold);
             color: var(--t5e-theme-color-foreground);
           }
 

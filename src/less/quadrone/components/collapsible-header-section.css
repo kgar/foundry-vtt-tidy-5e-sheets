@@ -81,6 +81,7 @@
 
     .editor:has(.user-select-text) {
       overflow: hidden;
+      margin-block-end: var(--t5e-size-3x);
     }
 
     .title:hover {

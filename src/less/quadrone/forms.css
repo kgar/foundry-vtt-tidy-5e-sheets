@@ -42,7 +42,7 @@
       }
 
       > label.checkbox {
-        font-weight: 600;
+        font-weight: var(--font-weight-label);
 
         input[type='checkbox'] {
           margin-block-end: 0.0625rem;
@@ -80,7 +80,7 @@
 
     > label {
       font-size: var(--label-font-size-small);
-      font-weight: 600;
+      font-weight: var(--font-weight-label);
       line-height: var(--label-font-size-small);
       height: var(--label-font-size-small);
       color: var(--t5e-color-text-lightest);
@@ -91,7 +91,7 @@
       > p.hint {
         cursor: help;
         font-size: var(--label-font-size-small);
-        font-weight: 600;
+        font-weight: var(--font-weight-label);
         display: inline-block;
         margin-block: 0.1875rem 0;
         margin-inline: 0;
@@ -128,7 +128,7 @@
     > label {
       color: var(--t5e-color-text-default);
       font-size: var(--label-font-size-default);
-      font-weight: 500;
+      font-weight: var(--font-weight-label);
       line-height: var(--t5e-line-height-default);
       align-content: center;
       align-self: flex-start;

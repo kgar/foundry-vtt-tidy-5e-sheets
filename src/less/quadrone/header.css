@@ -1320,7 +1320,7 @@
 
       .hd-label {
         color: var(--t5e-color-text-gold);
-        font-weight: var(--t5e-font-weight-label);
+        font-weight: var(--font-weight-label);
       }
 
       input[type="text"] {

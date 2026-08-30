@@ -17,6 +17,7 @@
     background: var(--t5e-component-field-background);
     border-radius: var(--t5e-size-halfx);
     border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+    font-family: var(--t5e-font-family-forms);
     outline: 0 solid var(--t5e-theme-color-default);
 
     &:hover,
@@ -145,7 +146,7 @@
     }
 
     & > :not(input):not(i) {
-      font-weight: 500;
+      font-weight: var(--font-weight-label);
       font-size: 0.8125rem;
       color: var(--t5e-color-text-lightest);
     }
@@ -268,7 +269,7 @@
       i {
         font-size: 0.6875rem;
         font-style: normal;
-        font-weight: 900;
+        font-weight: var(--icon-weight-bold);
         line-height: normal;
         text-transform: uppercase;
       }
@@ -424,7 +425,7 @@
     &::after {
       content: unset;
       font-size: 0.8125rem;
-      font-weight: 900;
+      font-weight: var(--icon-weight-bold);
     }
 
     &:checked {
