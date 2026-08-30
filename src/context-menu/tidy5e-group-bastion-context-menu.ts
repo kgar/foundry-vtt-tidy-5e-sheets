@@ -124,15 +124,15 @@ export function configureGroupBastionFacilityContextMenu(
           'system.progress': { value: 0, max: null, order: '' },
         }),
     },
-    {
-      // TODO: Tidy-only functionality here, not via the system.
-      name: 'TIDY5E.Bastion.Group.KillDefenders.Label',
-      icon: '<i class="fa-solid fa-skull fa-fw"></i>',
-      classes: 'color-text-lighter',
-      condition: () => canModify() && facility.system.defenders?.max > 0,
-      group: 'common',
-      callback: () => {console.log('TODO: Kill defenders functionality');},
-    },
+    // {
+    //   // TODO: Tidy-only functionality here, not via the system.
+    //   name: 'TIDY5E.Bastion.Group.KillDefenders.Label',
+    //   icon: '<i class="fa-solid fa-skull fa-fw"></i>',
+    //   classes: 'color-text-lighter',
+    //   condition: () => canModify() && facility.system.defenders?.max > 0,
+    //   group: 'common',
+    //   callback: () => {console.log('TODO: Kill defenders functionality');},
+    // },
     {
       name: 'TIDY5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
