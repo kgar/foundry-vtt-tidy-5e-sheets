@@ -108,10 +108,7 @@
             )}
             {const showSection = $derived(
               section.show &&
-                SectionVisibility.shouldShowItemSection(sectionSearchState, {
-                  alwaysShow: section.usesSlots,
-                  showWhileSearching: true,
-                }),
+                SectionVisibility.shouldShowItemSection(sectionSearchState),
             )}
 
             {#if showSection}
