@@ -326,7 +326,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       actionSections.forEach((section) => {
         section.type = CONSTANTS.SECTION_TYPE_FEATURE;
-        section.sectionActions = SectionActions.getActionHeaderActions(
+        section.sectionActions = SectionActions.getSheetTabHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
@@ -346,9 +346,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   }
 
   getSheetTabSectionOrganization(): 'action' | 'origin' {
-    return (
-      TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
-      SettingsProvider.settings.characterSheetTabOrganization.get()
+    return SheetSections.getSheetTabSectionOrganizationForDocument(
+      this.document,
     );
   }
 
@@ -525,7 +524,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     sheetTabSections.forEach(
       (section) =>
-        (section.sectionActions = SectionActions.getActionHeaderActions(
+        (section.sectionActions = SectionActions.getSheetTabHeaderActions(
           this.document,
           context.owner,
           context.unlocked,

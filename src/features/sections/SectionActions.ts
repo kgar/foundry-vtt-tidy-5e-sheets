@@ -16,8 +16,8 @@ import type { AdvancementSection, Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
 
 class SectionActions {
-  getActionHeaderActions(
-    actor: Actor5e,
+  getSheetTabHeaderActions(
+    character: Actor5e,
     owner: boolean,
     unlocked: boolean,
     section: TidyItemSectionBase,
@@ -26,15 +26,21 @@ class SectionActions {
       return [];
     }
 
+    const sectionConfigFlag =
+      SheetSections.getSheetTabSectionOrganizationForDocument(character) ===
+      CONSTANTS.SECTION_ORGANIZATION_ACTION
+        ? TidyFlags.actionSection.prop
+        : TidyFlags.section.prop;
+
     const renameCommand = this.getActorItemSectionRenameCommand(
-      actor,
+      character,
       unlocked,
       section,
-      TidyFlags.actionSection.prop,
+      sectionConfigFlag,
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
-      document: actor,
+      document: character,
       section,
       unlocked,
     });

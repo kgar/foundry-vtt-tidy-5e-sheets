@@ -41,7 +41,7 @@ import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
-import { delay } from 'src/utils/asynchrony';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -275,6 +275,9 @@ export class Tidy5eContainerSheetQuadrone
     const owner = this.item.isOwner;
 
     const context: ContainerSheetQuadroneContext = {
+      actionSectionEnabled: SheetSections.showActionSectionConfig(
+        this.document.parent,
+      ),
       canIdentify: FoundryAdapter.canIdentify(this.document),
       capacity: capacityContext,
       concealDetails:

@@ -87,7 +87,10 @@ export class Inventory {
     defaultInventoryTypes: string[];
     /** When creating a custom section during this operation, merge in these options over the defaults.  */
     customSectionOptions?: Partial<InventorySection>;
-    /** The custom section flag to use when looking for a custom section name. */
+    /** 
+     * The custom section flag to use when looking for a custom section name. 
+     * @deprecated game.release.generation < 14
+    */
     customSectionFlag?: 'section' | 'actionSection';
   }) {
     const {
