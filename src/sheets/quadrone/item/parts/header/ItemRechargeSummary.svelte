@@ -17,15 +17,13 @@
 </script>
 
 <div class="item-recharge">
-  <span class="color-text-lighter text-data">
-    {localize('TIDY5E.RollRecharge.Label')}
-  </span>
   {#if !conceal}
+    <span class="color-text-lighter text-data">
+      {localize('TIDY5E.RollRecharge.Label')}
+    </span>
     <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
     <span class="recharge-range-text text-data">
       {rechargeRange}
     </span>
-  {:else}
-    <span class="recharge-range-text text-data"> ? </span>
   {/if}
 </div>

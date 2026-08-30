@@ -239,7 +239,7 @@ export class Tidy5eContainerSheetQuadrone
     if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: documentSheetContext.source.unidentified.description,
+        content: documentSheetContext.source.unidentified?.description ?? '',
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });

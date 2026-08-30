@@ -10,12 +10,40 @@
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ItemContext } from 'src/features/item/ItemContext';
+  import { formatAsModifier } from 'src/utils/formatting';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $derived(context.currentTabId);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let localize = FoundryAdapter.localize;
+
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+
+  // Recreate the system subtitle so we can hide bonuses that spoil magical unidentified items.
+  let subtitleSegments = $derived.by(() => {
+    let segments = [localize(CONFIG.Item.typeLabels.weapon)];
+
+    if (context.item.system.type?.label) {
+      segments.push(context.item.system.type.label);
+    }
+
+    if (context.isIdentified || gmEditMode) {
+      const toHit = formatAsModifier(ItemContext.getToHit(context.item) ?? '0');
+
+      segments.push(
+        localize('EDITOR.DND5E.Inline.AttackLong', {
+          formula: toHit,
+        }),
+      );
+    }
+
+    return segments;
+  });
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -31,7 +59,12 @@
   </div>
 
   <div class="subtitle">
-    {context.subtitle}
+    {#each subtitleSegments as segment, i (segment)}
+      {#if i > 0}
+        <div class="divider-dot"></div>
+      {/if}
+      <span class="font-label-medium color-text-gold">{segment}</span>
+    {/each}
   </div>
 
   <!-- Header Summary -->

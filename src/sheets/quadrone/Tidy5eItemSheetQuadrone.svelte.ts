@@ -273,7 +273,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: systemObject.unidentified.description,
+        content: systemObject.unidentified?.description ?? '',
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       });

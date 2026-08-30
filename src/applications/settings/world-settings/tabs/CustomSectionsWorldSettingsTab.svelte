@@ -288,7 +288,7 @@
   }
 
   .custom-section-setting-header {
-    font-weight: 500;
+    font-weight: var(--font-heading-weight-label);
   }
 
   .custom-section-sheets {

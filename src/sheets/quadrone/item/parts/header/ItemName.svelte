@@ -17,9 +17,9 @@
 <!-- Name -->
 {#if context.unlocked}
   <TextInputQuadrone
-    {field}
+    field="name"
     document={context.item}
-    {value}
+    value={context.name.editable}
     class="document-name"
     data-tooltip={context.item.name}
   />

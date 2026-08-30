@@ -18,8 +18,6 @@
   let {
     unlocked,
     sourceText,
-    document,
-    keyPath,
     buttonClass = '',
   }: Props = $props();
 

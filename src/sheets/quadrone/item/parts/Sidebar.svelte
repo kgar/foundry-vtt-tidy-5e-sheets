@@ -94,7 +94,8 @@
     unidentified && !FoundryAdapter.isInGmEditMode(context.document)
       ? 'disabled'
       : undefined,
-    !unidentified && !isNil(rarity, '') ? 'rarity' : undefined,
+    !isNil(rarity, '') ? 'rarity' : undefined,
+    unidentified ? 'unidentified' : undefined,
     !unidentified && 'rarity' in context.system
       ? coalesce(rarity?.slugify(), 'none')
       : undefined,

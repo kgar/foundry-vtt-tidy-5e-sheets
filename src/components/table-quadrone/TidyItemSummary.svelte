@@ -89,7 +89,7 @@
       {@html chatData.description}
     </div>
     {#if !identified}
-      <span class="color-text-lightest">
+      <span class="color-text-lightest unidentifed-notice">
         {localize('DND5E.Unidentified.Notice')}
       </span>
     {/if}
