@@ -16,6 +16,7 @@
     --button-icon: var(--t5e-color-icon-button);
     --button-icon-hover: var(--t5e-color-icon-default);
     --button-shadow: var(--t5e-drop-shadow-field);
+    --button-shadow-hover: var(--t5e-drop-shadow-field-hover);
     --button-focus: 0 0 0 0.125rem var(--t5e-theme-color-default);
     display: inline-flex;
     width: unset;
