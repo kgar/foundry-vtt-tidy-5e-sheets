@@ -270,6 +270,8 @@ export async function advanceBastions(
       continue;
     }
 
+    // Maintain = no one was around to follow orders. In progress orders DO NOT
+    // continue.
     if (maintainUuids.has(actor.uuid)) {
       await issueMaintainOrder(actor);
       continue;
