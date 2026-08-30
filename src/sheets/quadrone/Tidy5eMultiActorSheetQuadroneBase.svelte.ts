@@ -500,6 +500,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           ([key, skill]) => [
             key,
             {
+              abilityAbbreviation: CONFIG.DND5E.abilities[skill.ability]?.abbreviation ?? skill.ability,
               ability: skill.ability,
               high: {
                 total: -Infinity,
