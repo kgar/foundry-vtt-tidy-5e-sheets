@@ -59,9 +59,9 @@
   >
     {#each context.skills as skill}
       {#if expanded || skill.proficient}
-        {const memberSkill = $derived(skill.identifiers.get(
-          emphasizedMember?.actor.uuid ?? '',
-        ))}
+        {const memberSkill = $derived(
+          skill.identifiers.get(emphasizedMember?.actor.uuid ?? ''),
+        )}
         {const memberProficient = $derived((memberSkill?.proficient ?? 0) > 0)}
 
         <li
@@ -85,11 +85,15 @@
         >
           <button
             type="button"
-            data-action={FoundryAdapter.userIsGm() ? "showContextMenu" : undefined}
-            data-target-selector={FoundryAdapter.userIsGm() ? "[data-context-menu]" : undefined}
+            data-action={FoundryAdapter.userIsGm()
+              ? 'showContextMenu'
+              : undefined}
+            data-target-selector={FoundryAdapter.userIsGm()
+              ? '[data-context-menu]'
+              : undefined}
             class="button button-borderless skill-ability font-label-medium"
           >
-            {skill.ability}
+            {skill.abilityAbbreviation}
           </button>
           <button
             type="button"

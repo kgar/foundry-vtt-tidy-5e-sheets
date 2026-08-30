@@ -1576,6 +1576,7 @@ export type GroupMemberSkillContext = GroupSkillModContext & {
 
 export type GroupSkill = {
   name: string;
+  abilityAbbreviation: string;
   ability: string;
   key: string;
   proficient: boolean;
