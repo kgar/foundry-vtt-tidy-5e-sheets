@@ -227,7 +227,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
-      sheetTabSectionMode: this.getSheetTabSectionOrganization(),
       sheetTabSections: [],
       showDeathSaves: this._showDeathSaves,
       species: species
@@ -308,7 +307,10 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
     const sortMode = sheetTabPreferences?.sort ?? 'm';
 
-    if (context.sheetTabSectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
+    const sheetTabSectionMode =
+      SheetSections.getSheetTabSectionOrganizationForDocument(this.document);
+
+    if (sheetTabSectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       const sheetTabSections = this.createSheetTabOriginSections(context);
       context.sheetTabSections = SheetSections.configureActionsQuadrone(
         sheetTabSections,
