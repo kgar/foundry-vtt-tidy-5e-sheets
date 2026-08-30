@@ -765,7 +765,7 @@
         "SectionSelectorChooseActionSectionTooltip": "Escolha uma Seção de Ação",
         "SectionSelectorCreateNewSection": "Criar nova seção",
         "SectionSelectorNewSectionName": "Nome da nova seção",
-        "SectionSelectorSaveNewSection": "Salvar nova seção",
+        "SectionSelectorSaveNewSection": "Salvar Nova Seção",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
         "SectionSelectorChooseTabSectionTooltip": "Escolha a Seção {tabName}",
         "ShowSection": "Exibir Seção"
@@ -1011,7 +1011,7 @@
         }
     },
     "TIDY5E.SectionOrganization": "Organização da Seção",
-    "TIDY5E.AutomaticallyIncludeUsableItems": "Inclui automaticamente itens utilizáveis",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Auto-Incluir Itens Utilizáveis",
     "TIDY5E.GenericDefaultPrefix": "Padrão: {value}",
     "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
         "name": "Organização da Seção de Abas da Ficha de Personagem",
@@ -1020,7 +1020,7 @@
         "option.origin": "Agrupar por Item ou Tipo de Característica"
     },
     "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
-        "name": "Aba Ficha de Personagem: Incluir Itens Utilizáveis Automaticamente",
+        "name": "Aba Ficha de Personagem: Auto-Incluir Itens Utilizáveis",
         "hint": "Inclui automaticamente todos os itens, magias e características atualmente utilizáveis na aba da ficha."
     },
     "TIDY5E.AbilityRoll": "Rolar Teste de {ability}",
