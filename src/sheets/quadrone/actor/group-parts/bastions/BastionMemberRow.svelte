@@ -25,7 +25,6 @@
 
   let subtitleParts = $derived(
     [
-      isNil(member.name, '') ? undefined : member.name,
       `${member.facilities.special.count}/${member.facilities.special.max} ${localize(
         'DND5E.FACILITY.Types.Special.Label.other',
       )}`,
@@ -59,7 +58,7 @@
         data-action="showDocument"
         data-uuid={actor.uuid}
       >
-        <h4 class="font-label-medium">{actor.name}</h4>
+        <h4 class="font-label-medium">{actor.name} {isNil(member.name, '') ? '' : ` - ${member.name}`}</h4>
 
         <div class="separated-list">
           {#each subtitleParts as part, index}
