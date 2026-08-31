@@ -307,6 +307,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
     const context: ItemSheetQuadroneContext = {
+      actionSectionEnabled: SheetSections.showActionSectionConfig(
+        this.document.parent,
+      ),
       activities: [
         {
           key: CONSTANTS.TAB_ITEM_ACTIVITIES,
@@ -621,7 +624,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         { available: [], executable: [] },
       );
 
-      context.facilityContext = await Bastions.buildChosenFacilityContext(this.item);
+      context.facilityContext = await Bastions.buildChosenFacilityContext(
+        this.item,
+      );
     }
 
     if (

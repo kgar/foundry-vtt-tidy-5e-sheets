@@ -501,9 +501,6 @@
 
   {#if showCustomSections}
     {const sectionLabel = $derived(SheetSections.getSectionLabel(context.item))}
-    {const actionSectionLabel = $derived(
-      SheetSections.getActionSectionLabel(context.item),
-    )}
     {const sectionType = $derived(
       context.item.parent?.system.isCharacter
         ? 'Sheet'
@@ -539,30 +536,37 @@
             {section}
           </span>
         </a>
-        <!-- svelte-ignore a11y_missing_attribute -->
-        <a
-          role="button"
-          tabindex="0"
-          class="pill interactive wrapped no-row-gap centered"
-          class:disabled={!context.editable}
-          data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
-          onclick={() =>
-            context.sheet._renderChild(
-              new SectionSelectorApplication({
-                flag: TidyFlags.actionSection.prop,
-                sectionType: localize('TIDY5E.Section.ActionLabel'),
-                callingDocument: context.item,
-                document: context.item,
-              }),
-            )}
-        >
-          <span class="text-normal">
-            {actionSectionLabel}
-          </span>
-          <span class="hyphens-auto">
-            {actionSection}
-          </span>
-        </a>
+
+        {#if context.actionSectionEnabled}
+          {const actionSectionLabel = $derived(
+            SheetSections.getActionSectionLabel(context.item),
+          )}
+
+          <!-- svelte-ignore a11y_missing_attribute -->
+          <a
+            role="button"
+            tabindex="0"
+            class="pill interactive wrapped no-row-gap centered"
+            class:disabled={!context.editable}
+            data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
+            onclick={() =>
+              context.sheet._renderChild(
+                new SectionSelectorApplication({
+                  flag: TidyFlags.actionSection.prop,
+                  sectionType: localize('TIDY5E.Section.ActionLabel'),
+                  callingDocument: context.item,
+                  document: context.item,
+                }),
+              )}
+          >
+            <span class="text-normal">
+              {actionSectionLabel}
+            </span>
+            <span class="hyphens-auto">
+              {actionSection}
+            </span>
+          </a>
+        {/if}
       </div>
     </div>
   {/if}

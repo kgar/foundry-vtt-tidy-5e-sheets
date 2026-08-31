@@ -36,6 +36,8 @@ export function getItemContextOptionsQuadrone(
 
   const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
 
+  const showActionSectionConfig = SheetSections.showActionSectionConfig(item.parent);
+
   let options: ContextMenuEntry[] = [];
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
@@ -324,7 +326,8 @@ export function getItemContextOptionsQuadrone(
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
-      app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS &&
+      (app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS ||
+        !showActionSectionConfig) &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
@@ -360,6 +363,7 @@ export function getItemContextOptionsQuadrone(
     name: actionSectionContextName,
     icon: '<i class="fas fa-diagram-cells"></i>',
     condition: () =>
+      showActionSectionConfig &&
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
       app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&

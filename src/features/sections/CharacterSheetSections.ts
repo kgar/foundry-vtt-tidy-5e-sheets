@@ -210,7 +210,6 @@ export class CharacterSheetSections {
     tabId: string,
     feats: Item5e[],
     options: Partial<CharacterFeatureSection>,
-    customSectionFlag: 'section' | 'actionSection' = 'section',
   ): FeatureSection[] {
     let featuresMap: Record<string, FeatureSection> = {};
 
@@ -252,7 +251,7 @@ export class CharacterSheetSections {
 
     for (let feat of feats) {
       // custom section
-      let customSection = TidyFlags[customSectionFlag].get(feat);
+      let customSection = TidyFlags.section.get(feat);
 
       if (!isNil(customSection)) {
         // Partition/Create Custom Section and add item
