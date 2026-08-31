@@ -66,7 +66,8 @@
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
   "TIDY5E.LongRest": "Long Rest",
-  "TIDY5E.RefreshNPC": "Refresh All Items and Features",
+  "TIDY5E.RefreshNPC": "Refresh All NPC Items and Features",
+  "TIDY5E.RefreshGroupNPCs": "Refresh NPCs",
   "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
   "TIDY5E.JournalTabName": "Journal",

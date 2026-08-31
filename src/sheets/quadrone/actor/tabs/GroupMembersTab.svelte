@@ -140,6 +140,21 @@
                 columnWidth="{rowActionInfo.widthRems}rem"
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
+                {#if section.key === CONSTANTS.SHEET_TYPE_NPC && FoundryAdapter.userIsGm()}
+                  <!-- kgar: option 2, the least obvious but my top option -->
+                  <!-- svelte-ignore a11y_missing_attribute -->
+                  <a
+                    role="button"
+                    tabindex="0"
+                    class="tidy-table-button"
+                    aria-label={localize('TIDY5E.RefreshGroupNPCs')}
+                    data-tooltip={localize('TIDY5E.RefreshNPC')}
+                    data-action="refreshActor"
+                    data-type="npc"
+                  >
+                    <i class="fas fa-arrows-rotate-reverse"></i>
+                  </a>
+                {/if}
                 <SectionActionsColumnHeader
                   {section}
                   maxRowActionsCount={rowActionInfo.maxRowActionsCount}
@@ -187,6 +202,20 @@
             {/each}
           {/snippet}
         </TidyTable>
+        
+        <!-- kgar: option 3, probably the most obvious. I'd recommend this over the heade.r -->
+        {#if section.key === CONSTANTS.SHEET_TYPE_NPC}
+          <button
+          type="button"
+          class="button long-rest button-gold flexshrink"
+          data-action="refreshActor"
+          data-type="npc"
+          data-tooltip={localize('TIDY5E.RefreshNPC')}
+        >
+          <i class="fas fa-arrows-rotate-reverse"></i>
+          {localize('TIDY5E.RefreshNPC')}
+        </button>
+        {/if}
       {/if}
     {/each}
 

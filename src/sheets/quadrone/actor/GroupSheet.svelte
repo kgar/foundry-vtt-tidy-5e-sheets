@@ -83,15 +83,17 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
+          <!-- kgar: option 1. It works here, but it forces wrapping in most cases, and it doesn't apply to the whole sheet, so I don't think it fits here. -->
           {#if FoundryAdapter.userIsGm()}
             <button
               type="button"
               class="button long-rest button-gold flexshrink"
               data-action="refreshActor"
               data-type="npc"
+              data-tooltip={localize('TIDY5E.RefreshNPC')}
             >
-              <i class="fas fa-poo-storm"></i>
-              TIDY5E.RefreshAllThemNpcs
+              <i class="fas fa-arrows-rotate-reverse"></i>
+              {localize('TIDY5E.RefreshGroupNPCs')}
             </button>
           {/if}
           {#each Object.entries(context.config.restTypes) as [key, rest]}
