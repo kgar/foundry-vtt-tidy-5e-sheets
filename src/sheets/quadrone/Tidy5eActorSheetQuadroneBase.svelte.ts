@@ -169,6 +169,7 @@ export function getTidy5eActorSheetQuadroneBase<
         findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         increaseInspiration: Tidy5eActorSheetQuadroneBase.#increaseInspiration,
         increaseSlots: Tidy5eActorSheetQuadroneBase.#increaseSlots,
+        refreshActor: Tidy5eActorSheetQuadroneBase.#refreshActor,
         rest: Tidy5eActorSheetQuadroneBase.#rest,
         restoreTransformation:
           Tidy5eActorSheetQuadroneBase.#restoreTransformation,
@@ -2181,6 +2182,21 @@ export function getTidy5eActorSheetQuadroneBase<
       if (slot) {
         return await this._adjustSlots(slot, 1);
       }
+    }
+
+    /* -------------------------------------------- */
+
+    static async #refreshActor(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      return this.actor._rest({
+        type: 'long',
+        dialog: false,
+        chat: false,
+        newDay: true,
+      });
     }
 
     /* -------------------------------------------- */

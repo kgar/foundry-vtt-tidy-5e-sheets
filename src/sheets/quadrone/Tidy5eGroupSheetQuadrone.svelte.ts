@@ -83,6 +83,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         Tidy5eGroupSheetQuadrone.#addMemberFacilityOccupant,
       adjustMemberFacilityProgress:
         Tidy5eGroupSheetQuadrone.#adjustMemberFacilityProgress,
+      refreshActor: Tidy5eGroupSheetQuadrone.#refreshActor,
       takeBastionTurn: Tidy5eGroupSheetQuadrone.#takeBastionTurn,
       useMemberFacility: Tidy5eGroupSheetQuadrone.#useMemberFacility,
     },
@@ -787,8 +788,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const member = memberUuid ? fromUuidSync(memberUuid) : undefined;
 
     const slot = target.dataset.occupantSlot as
-      | FacilityOccupantSlot
-      | undefined;
+      FacilityOccupantSlot | undefined;
 
     if (!member || !slot) {
       return;
@@ -900,6 +900,34 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
   /* -------------------------------------------- */
 
+  static async #refreshActor(
+    this: Tidy5eGroupSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const actorType = target.dataset.type;
+
+    const context = await this._prepareContext({ tidy: { soft: true } });
+
+    const refreshes = context.members
+      .flatMap((m) => m.members)
+      .filter((m) => isNil(actorType, '') || m.actor.type === actorType)
+      .map((m) =>
+        m.actor._rest({
+          type: 'long',
+          dialog: false,
+          chat: false,
+          newDay: true,
+        }),
+      );
+
+    await Promise.all(refreshes);
+
+    this.render();
+  }
+
+  /* -------------------------------------------- */
+
   /**
    * Bastion member rows deep link to the member's own bastion tab, so a GM can
    * jump from the party overview straight to the facilities they were reading.
@@ -930,11 +958,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
    * Browse for a facility and create it on the member. GM only, so it ignores
    * level restrictions.
    */
-  async addMemberFacility(
-    member: Actor5e,
-    facilityType: string,
-    event: Event,
-  ) {
+  async addMemberFacility(member: Actor5e, facilityType: string, event: Event) {
     if (!this.isEditable) {
       return;
     }

@@ -83,6 +83,17 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
+          {#if FoundryAdapter.userIsGm()}
+            <button
+              type="button"
+              class="button long-rest button-gold flexshrink"
+              data-action="refreshActor"
+              data-type="npc"
+            >
+              <i class="fas fa-poo-storm"></i>
+              TIDY5E.RefreshAllThemNpcs
+            </button>
+          {/if}
           {#each Object.entries(context.config.restTypes) as [key, rest]}
             <button
               type="button"
