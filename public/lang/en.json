@@ -1075,11 +1075,10 @@
   "TIDY5E.Bastion.Group": {
     "RollEvent.Label": "Bastion Event",
     "MaintainOrder.Label": "Maintain Order",
-    "MaintainOrder.DialogTitle": "Maintain Orders",
-    "MaintainOrder.DialogHint": "Do you want to issue a Maintain Order for characters that cannot issue orders to their bastions? Orders in progress will not advance.",
+    "MaintainOrder.DialogTitle": "Characters Able to Issue Bastion Orders",
+    "MaintainOrder.DialogHint": "Bastion Orders will advance for all selected characters. Uncheck characters who aren't able to issue orders. Their bastions will receive a Maintain Order, and any facility orders in progress will not advance.",
     "MaintainOrder.Chat": "Issued the Maintain Order to their bastion, {bastionName}.",
     "TakeBastionTurn.Confirm": "Advance one bastion turn for the characters in this party?",
-    "KillDefenders.Label": "Kill Defenders",
     "CancelOrder.Label": "Cancel Order",
     "CompleteOrder.Label": "Complete Order",
     "CompleteOrder.Confirm": "Complete this order now? Remaining days will be skipped and rewards will be awarded.",

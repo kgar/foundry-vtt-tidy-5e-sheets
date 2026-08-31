@@ -16,7 +16,7 @@ function buildMemberRow(actor: Actor5e): string {
 
   return `<li class="bastion-maintain-order-option">
     <label class="bastion-maintain-order-option-label">
-      <input type="checkbox" name="maintainUuids" value="${foundry.utils.escapeHTML(actor.uuid)}" />
+      <input type="checkbox" name="bastionOrderUuids" value="${foundry.utils.escapeHTML(actor.uuid)}" checked />
       <img class="bastion-maintain-order-portrait" src="${img}" alt="" />
       <span class="bastion-maintain-order-text flexcol">
         <span class="bastion-maintain-order-name">${name}</span>
@@ -26,28 +26,27 @@ function buildMemberRow(actor: Actor5e): string {
   </li>`;
 }
 
-/** The checked members. */
-function readMaintainUuids(button: HTMLButtonElement): Set<string> {
-  const { maintainUuids } = new foundry.applications.ux.FormDataExtended(
-    button.form,
-  ).object as { maintainUuids?: string | (string | null)[] | null };
+/** Unchecked members receive Maintain Orders. Unchecked boxes are omitted from FormData. */
+function getMaintainUuids(button: HTMLButtonElement): Set<string> {
+  const actorsWithProgress = button.form?.querySelectorAll<HTMLInputElement>(
+    'input[name="bastionOrderUuids"]',
+  );
 
-  if (!maintainUuids) {
+  if (!actorsWithProgress) {
     return new Set();
   }
 
-  const selected = Array.isArray(maintainUuids)
-    ? maintainUuids
-    : [maintainUuids];
-
-  return new Set(selected.filter((uuid) => !!uuid) as string[]);
+  return new Set(
+    [...actorsWithProgress].filter((input) => !input.checked).map((input) => input.value),
+  );
 }
 
 export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV2 {
   static DEFAULT_OPTIONS = {
     classes: ['bastion-maintain-order-dialog'],
+    position: { width: 480 },
     window: {
-      icon: 'fa-solid fa-broom',
+      icon: 'fa-solid fa-calendar-clock',
       title: 'TIDY5E.Bastion.Group.MaintainOrder.DialogTitle',
     },
     buttons: [
@@ -57,7 +56,7 @@ export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV
         icon: 'fa-solid fa-check',
         default: true,
         callback: (_event: Event, button: HTMLButtonElement): Set<string> =>
-          readMaintainUuids(button),
+          getMaintainUuids(button),
       },
       {
         action: 'no',
@@ -73,8 +72,8 @@ export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV
   }
 
   /**
-   * Prompt for Maintain selections. Resolves to selected actor UUIDs, or null
-   * if cancelled.
+   * Prompt for who is present to issue orders. Resolves to unchecked actor
+   * UUIDs (Maintain), or null if cancelled.
    */
   static async prompt(
     members: Actor5e[],
