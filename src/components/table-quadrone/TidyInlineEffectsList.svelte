@@ -44,7 +44,7 @@
       getSheetContext<ActorSheetQuadroneContext | ItemSheetQuadroneContext>(),
     );
 
-  let identified = $derived(item?.identified);
+  let identified = $derived(item?.identified !== false);
 
   /**
    * The Effects tab splits effects across several sections. Inline, they are a

@@ -28,7 +28,7 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
-  let identified = $derived(item?.identified);
+  let identified = $derived(item?.identified !== false);
 
   let section = $derived({
     ...SheetSections.EMPTY,

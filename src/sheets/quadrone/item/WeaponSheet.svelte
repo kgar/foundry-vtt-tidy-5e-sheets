@@ -11,8 +11,7 @@
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ItemContext } from 'src/features/item/ItemContext';
-  import { formatAsModifier } from 'src/utils/formatting';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -23,27 +22,18 @@
   let localize = FoundryAdapter.localize;
 
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+  let identified = $derived(context.isIdentified !== false);
 
-  // Recreate the system subtitle so we can hide bonuses that spoil magical unidentified items.
-  let subtitleSegments = $derived.by(() => {
-    let segments = [localize(CONFIG.Item.typeLabels.weapon)];
+  // Hide attack bonuses on unidentified items so magical weapons aren't spoiled..
+  let unidentifiedSubtitle = $derived(
+    [localize(CONFIG.Item.typeLabels.weapon), context.item.system.type?.label]
+      .filter((label) => !isNil(label, ''))
+      .join(', '),
+  );
 
-    if (context.item.system.type?.label) {
-      segments.push(context.item.system.type.label);
-    }
-
-    if (context.isIdentified || gmEditMode) {
-      const toHit = formatAsModifier(ItemContext.getToHit(context.item) ?? '0');
-
-      segments.push(
-        localize('EDITOR.DND5E.Inline.AttackLong', {
-          formula: toHit,
-        }),
-      );
-    }
-
-    return segments;
-  });
+  let subtitle = $derived(
+    identified || gmEditMode ? context.subtitle : unidentifiedSubtitle,
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -57,15 +47,7 @@
   >
     <ItemName />
   </div>
-
-  <div class="subtitle">
-    {#each subtitleSegments as segment, i (segment)}
-      {#if i > 0}
-        <div class="divider-dot"></div>
-      {/if}
-      <span class="font-label-medium color-text-gold">{segment}</span>
-    {/each}
-  </div>
+  <div class="subtitle">{subtitle}</div>
 
   <!-- Header Summary -->
   <div class="item-header-summary">
