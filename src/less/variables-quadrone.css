@@ -255,7 +255,7 @@
   --t5e-table-header-box-shadow: inset 0 0 0 0.0625rem rgba(0, 0, 0, 0.15);
   --t5e-table-header-row-height: var(--t5e-size-6x);
   --t5e-table-row-divider: rgba(224, 216, 212, 1);
-  --t5e-table-row-background-default: var(--t5e-component-card-ondefault-default);
+  --t5e-table-row-background-default: var(--t5e-component-card-default);
   --t5e-table-row-background-expanded: var(--t5e-table-row-background-default), linear-gradient(90deg, var(--t5e-color-palette-white) 0.59%, var(--t5e-table-row-background-default) 44%);
   --t5e-table-row-border-image: linear-gradient(to right,
       rgba(143, 123, 78, 0) 0%,
