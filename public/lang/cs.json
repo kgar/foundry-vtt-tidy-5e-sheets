@@ -1156,5 +1156,23 @@
         "hint": "Prohoz hodnoty vlastnosti a její opravy v záhlaví deníku."
     },
     "TIDY5E.Vehicle.RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů",
-    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Dovednosti a rysy"
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Dovednosti a rysy",
+    "TIDY5E.Facilities": {
+        "Progress.Label": "Postup (dny)"
+    },
+    "TIDY5E.Bastion.Group": {
+        "RollEvent.Label": "Událost pevnosti",
+        "MaintainOrder.Label": "Údržba",
+        "MaintainOrder.DialogTitle": "Postavy, které mohou vydávat rozkazy pevnosti",
+        "MaintainOrder.DialogHint": "Rozkazy pevnosti se budou provádět u všech vybraných postav. Odškrtni u postav, které rozkazy nemohou vydávat. Jejich pevnosti obdrží rozkaz 'Údržba' a nebudou prováděny žádné probíhající rozkazy týkající se zařízení.",
+        "MaintainOrder.Chat": "Vydal/a rozkaz k údržbě pevnosti {bastionName}.",
+        "TakeBastionTurn.Confirm": "Odehrát tah pevnosti postav v této skupině?",
+        "CancelOrder.Label": "Zrušit rozkaz",
+        "CompleteOrder.Label": "Splnit rozkaz",
+        "CompleteOrder.Confirm": "Chceš tento rozkaz splnit hned? Zbývající dny budou přeskočeny a odměny budou uděleny.",
+        "ChooseFacility.Title": "Volba zařízení",
+        "Orders.EmptyStateHint": "Žádný ze členů skupiny nemá prováděný rozkaz.",
+        "Facilities.EmptyStateHint": "Tato postava zatím nemá postaveno žádné zařízení.",
+        "EmptyStateHint": "Nikdo ve skupině nemá pevnost. Přidej sem postavy hráčů, abys mohl/a sledovat jejich pevnosti."
+    }
 }
