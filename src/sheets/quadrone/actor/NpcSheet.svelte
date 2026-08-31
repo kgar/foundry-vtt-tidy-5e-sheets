@@ -135,7 +135,7 @@
                     aria-label="TIDY5E.RefreshNPC"
                     data-action="refreshActor"
                   >
-                    <i class="fa-solid fa-undo fa-rotate-90"></i>
+                    <i class="fa-solid fa-arrows-rotate-reverse"></i>
                   </button>
                 {/if}
                 {#each Object.entries(context.config.restTypes) as [key, rest]}
