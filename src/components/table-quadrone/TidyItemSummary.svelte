@@ -51,9 +51,18 @@
 
   let context = $derived(getSheetContext());
 
+  let isGm = $derived(FoundryAdapter.userIsGm());
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
-
   let showGmOnlyUi = $derived(!identified && gmEditMode);
+  let unidentifiedDescription = $derived(item.system.unidentified?.description);
+  let showGmUnidentifiedDescription = $derived(
+    isGm && !identified && !!unidentifiedDescription,
+  );
+  let enrichmentOptions = $derived({
+    relativeTo: item,
+    rollData: item.getRollData(),
+    secrets: item.isOwner,
+  });
 </script>
 
 {#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
@@ -78,21 +87,29 @@
   {/if}
 
   <div class={['user-select-text', { callout: showGmOnlyUi }]}>
-    {#if showGmOnlyUi}
-      <div class="gm-only color-text-lighter">
-        {localize(
-          'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
-        )}
-      </div>
-    {/if}
-    <div data-target="system.description.value" data-uuid={item.uuid}>
-      {@html chatData.description}
-    </div>
     {#if !identified}
-      <span class="color-text-lightest">
+      <span class="color-text-lightest font-default-longform unidentified-notice">
         {localize('DND5E.Unidentified.Notice')}
       </span>
     {/if}
+    {#if showGmUnidentifiedDescription}
+      <div class={['item-summary-unidentified', { callout: showGmOnlyUi }]}>
+        {#await FoundryAdapter.enrichHtml(unidentifiedDescription, enrichmentOptions) then enriched}
+            {@html enriched}
+        {/await}
+      </div>
+    {/if}
+    <div data-target="system.description.value" data-uuid={item.uuid} class={{ 'secret-block': showGmUnidentifiedDescription }}>
+      {#if showGmUnidentifiedDescription}
+        <div class="gm-only">
+          {localize(
+            'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+          )}
+        </div>
+      {/if}
+      {@html chatData.description}
+    </div>
+
   </div>
   
   <TidyInlineEffectsList {item} />

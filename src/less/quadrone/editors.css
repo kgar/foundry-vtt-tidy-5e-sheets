@@ -2,6 +2,7 @@
 
   .editor,
   .editor-rendered-content {
+    color: var(--t5e-color-text-longform);
     font: var(--t5e-font-default-longform);
     word-wrap: anywhere;
 
@@ -9,7 +10,7 @@
     h2,
     h3,
     h4 {
-      font-weight: 400;
+      font-weight: var(--font-heading-weight-default);
       line-height: 100%;
     }
 
@@ -30,7 +31,7 @@
 
     h4 {
       font-size: var(--font-size-15);
-      font-weight: 600;
+      font-weight: var(--font-heading-weight-semibold);
       margin-block: var(--t5e-size-4x) var(--t5e-size-2x);
     }
 
@@ -42,6 +43,10 @@
     h6 {
       font-size: var(--font-size-12);
       margin-block: var(--t5e-size-3x) var(--t5e-size-2x);
+    }
+
+    strong {
+      font-weight: var(--font-weight-bold);
     }
 
     li {
@@ -164,7 +169,7 @@
           margin-inline-start: calc(var(--t5e-size-1x) * -1);
 
           &::before {
-            font-weight: 900;
+            font-weight: var(--icon-weight-bold);
             color: var(--t5e-theme-color-foreground);
           }
 
@@ -194,46 +199,81 @@
       }
     }
 
-    .secret {
-      background-color: rgba(0, 0, 0, 0.12);
-      padding: var(--t5e-size-2x);
-      border-radius: var(--t5e-component-card-radius);
-      border: var(--t5e-size-1) solid var(--t5e-theme-color-darker);
-      transition: all var(--t5e-transition-default);
+    secret-block,
+    .secret-block {
+      --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(225, 218, 216) 16%);
+      --color-secret-border: var(--t5e-color-palette-red-60);
+      border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 8%) 1 1 1 0;
+      border-style: solid;
+      border-width: var(--t5e-size-1) var(--t5e-size-1) var(--t5e-size-1) 0;
+      background: var(--color-secret-bg);
+      display: block;
+      margin-inline-start: -0.5rem;
+      padding-inline-start: 0.5rem;
+      padding-block: 0;
+      position: relative;
 
-      /* TODO: Use primary button style to "Reveal" and secondary for "Hide"
-      Need to inject button classes, but we're not able to yet.
-      */
-      &.revealed {
-        border-radius: 0;
-        padding: var(--t5e-size-2x) 0;
-        background: none;
-        border-width: var(--t5e-size-1) 0;
-      }
-
-      &:not(.revealed) {
-        color: var(--t5e-color-text-lighter);
-      }
-
-      .reveal {
+      .reveal,
+      .gm-only {
+        border: var(--t5e-size-1) solid var(--color-secret-border);
+        border-radius: 0 0 0 0.125rem;
+        color: var(--t5e-color-text-default);
+        font: var(--t5e-font-label-medium);
+        height: auto;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        margin-block: -0.0625rem 0;
+        margin-inline: 0 -0.03125rem;
+        min-height: unset;
         padding: 0.25rem 0.5rem;
-        margin: 0;
-        border: var(--t5e-size-1) solid var(--t5e-component-field-border);
-        background: var(--t5e-component-field-background);
+        position: absolute;
+        text-transform: none;
 
-        &:hover {
-          background: var(--t5e-component-field-background-hover);
-          border-color: var(--t5e-component-field-border-hover);
+        & + * {
+          margin-inline-end: var(--t5e-size-16x);
         }
       }
 
-      > :first-child {
-        margin-block-start: 0;
+      .reveal {
+        background: var(--t5e-component-field-background);
+
+        &:is(:hover, :focus, :active) {
+          background: var(--t5e-component-field-background-hover);
+          border-color: var(--t5e-component-field-border-hover);
+          box-shadow: var(--button-shadow);
+        }
+      }
+    }
+
+    secret-block {
+      --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(207, 197, 193) 16%);
+      margin-block-start: var(--t5e-size-3x);
+
+      &:has(> .revealed) {
+        --color-secret-bg: linear-gradient(to right, transparent 8%, rgb(225, 218, 216) 56%);
+        --color-secret-border: var(--t5e-color-gold);
+        border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 72%) 1 1 1 0;
       }
 
-      > :last-child {
-        margin-block-end: 0;
+      .secret {
+        background: none;
+        border: none;
+        padding-inline: 0;
+        transition: all var(--t5e-transition-default);
+
+        &:not(.revealed) > *:not(.reveal) {
+          color: var(--t5e-color-text-lighter);
+        }
+
+        > :not(.reveal, .gm-only):first-child {
+          margin-block-start: 0;
+        }
       }
+    }
+
+    .secret-block {
+      padding-block: var(--t5e-size-1x) var(--t5e-size-2x);
+      padding-inline-end: var(--t5e-size-2x);
     }
 
     blockquote {
@@ -335,7 +375,7 @@
     }
 
     hr {
-      margin-block-start: calc(var(--t5e-size-1x) + var(--t5e-size-halfx));
+      margin-block: var(--t5e-size-3x);
       background-image: linear-gradient(to right,
           transparent 5%,
           var(--t5e-color-palette-gold-62) 30%,
@@ -529,7 +569,7 @@
     }
 
     .inline-wrapped-elements {
-      margin-block-start: var(--t5e-size-2x);
+      margin-block-start: var(--t5e-size-3x);
       margin-block-end: var(--t5e-size-1x);
     }
 
@@ -572,6 +612,17 @@
         /* TODO: make cool callout UI here */
       }
 
+      secret-block,
+      .secret-block {
+        --color-secret-bg: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 16%);
+        --color-secret-border: var(--t5e-color-palette-red-45);
+
+        &:has(> .revealed) {
+          --color-secret-bg: linear-gradient(to right, transparent 8%, rgba(0, 0, 0, 0.4) 48%);
+          --color-secret-border: var(--t5e-color-gold);
+        }
+      }
+
       hr {
         background-image: linear-gradient(to right,
             transparent 5%,
@@ -583,20 +634,6 @@
       .quote-lg {
         --t5e-quote-color: var(--t5e-color-gold);
         border-color: var(--t5e-quote-color);
-      }
-
-      .secret {
-        background-color: rgba(0, 0, 0, 0.5);
-
-        &.revealed {
-          background: none;
-        }
-      }
-
-      .gm-only {
-        color: var(--t5e-color-text-lightest);
-        font-weight: var(--font-weight-label);
-        font-style: italic;
       }
 
       aside.notable {

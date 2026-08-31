@@ -17,6 +17,15 @@
     url('../../modules/tidy5e-sheet/fonts/roboto-condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
+/* VF: weight axis maps CSS font-weight 300–700 */
+@font-face {
+  font-family: 'Signika Negative';
+  font-style: normal;
+  src:
+    url('../../modules/tidy5e-sheet/fonts/signika-negative/SignikaNegative-VariableFont_wght.ttf') format('truetype-variations'),
+    url('../../modules/tidy5e-sheet/fonts/signika-negative/SignikaNegative-VariableFont_wght.ttf') format('truetype');
+}
+
 .tidy5e-sheet.quadrone.application {
 
   /* TEXT COLORS

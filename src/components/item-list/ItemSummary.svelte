@@ -1,7 +1,6 @@
 <script lang="ts">
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
   import type { Item5e, ItemChatData } from 'src/types/item.types';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { Enrichers } from 'src/features/enrichers/Enrichers';
@@ -24,11 +23,23 @@
     ItemProperties.getAdditionalItemProperties(item),
   );
 
-  let concealDetails = $derived(FoundryAdapter.concealDetails(item));
+  const context = $derived(getSheetContext());
+
+  let concealDetails = $derived(FoundryAdapter.concealDetails(item) || (FoundryAdapter.userIsGm() && !FoundryAdapter.isInGmEditMode(context.document)));
+
+  let isGm = $derived(FoundryAdapter.userIsGm());
+  let identified = $derived(item.system.identified !== false);
+  let showGmUnidentifiedDescription = $derived(
+    isGm && !identified && !!item.system.unidentified?.description,
+  );
+  let enrichmentOptions = $derived({
+    relativeTo: item,
+    rollData: item.getRollData(),
+    secrets: item.isOwner,
+  });
 
   let linked = $derived<Item5e>(item?.system?.linkedActivity?.item);
 
-  const context = $derived(getSheetContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -67,6 +78,17 @@
   {/if}
 
   <div data-target="system.description.value" data-uuid={item.uuid}>
+    {#if showGmUnidentifiedDescription}
+      {#await FoundryAdapter.enrichHtml(item.system.unidentified.description, enrichmentOptions) then enriched}
+        <div
+          class="item-summary-unidentified"
+          data-target="system.unidentified.description"
+          data-uuid={item.uuid}
+        >
+          {@html enriched}
+        </div>
+      {/await}
+    {/if}
     {@html chatData.description}
   </div>
 

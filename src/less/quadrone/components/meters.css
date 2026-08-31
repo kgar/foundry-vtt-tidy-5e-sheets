@@ -27,7 +27,7 @@
       cursor: pointer;
       display: flex;
       font-size: 0.75rem;
-      font-weight: 500;
+      font-weight: var(--font-weight-label);
       gap: 0.25rem;
       inline-size: 100%;
       line-height: normal;

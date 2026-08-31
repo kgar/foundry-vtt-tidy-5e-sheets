@@ -28,6 +28,7 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+  let identified = $derived(item?.identified !== false);
 
   let section = $derived({
     ...SheetSections.EMPTY,
@@ -55,6 +56,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
+{#if identified}
 <TidyTable
   key="activities-{item.name}"
   toggleable={false}
@@ -126,3 +128,4 @@
     {/each}
   {/snippet}
 </TidyTable>
+{/if}

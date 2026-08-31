@@ -2,6 +2,7 @@
   import type { ItemDescription } from 'src/types/item.types';
   import CollapsibleEditorSection from './CollapsibleEditorSection.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     itemDescriptions: ItemDescription[];
@@ -26,7 +27,11 @@
   });
 
   function getOpenStates() {
-    return itemDescriptions.map((_, i) => i === 0);
+    if (FoundryAdapter.userIsGm()) {
+      return itemDescriptions.map(() => true);
+    } else {
+      return itemDescriptions.map((_, i) => i === 0);
+    }
   }
 
   function handleEdit(detail: {

@@ -165,7 +165,7 @@
           i {
             color: var(--dod-color-icon);
             font-size: var(--font-size-24);
-            font-weight: 700;
+            font-weight: var(--font-weight-bold);
           }
 
           .level-number {

@@ -72,7 +72,7 @@
   font-family: var(--font-family-default, var(--t5e-font-roboto-condensed));
   font-size: var(--font-size-default, 0.8125rem);
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-default);
   line-height: normal;
 
   /* Window Header */
@@ -218,7 +218,7 @@
       font-family: var(--t5e-font-roboto-condensed);
       font-size: var(--font-size-13);
       font-style: normal;
-      font-weight: 600;
+      font-weight: var(--font-heading-weight-semibold);
       line-height: var(--font-size-16);
       letter-spacing: 0.00813rem;
     }
@@ -226,27 +226,27 @@
     h1 {
       font-size: var(--font-size-46);
       line-height: var(--font-size-56);
-      font-weight: 400;
+      font-weight: var(--font-heading-weight-default);
     }
 
     h2 {
       font-size: var(--font-size-28);
       line-height: var(--font-size-32);
-      font-weight: 400;
+      font-weight: var(--font-heading-weight-default);
       letter-spacing: 0.0175rem;
     }
 
     h3 {
       font-size: var(--font-size-16);
       line-height: var(--font-size-16);
-      font-weight: 400;
+      font-weight: var(--font-heading-weight-default);
       letter-spacing: 0.00875rem;
     }
 
     h4 {
       font-size: var(--font-size-13, 0.8125rem);
       font-style: normal;
-      font-weight: 600;
+      font-weight: var(--font-heading-weight-semibold);
       line-height: var(--font-size-16);
       letter-spacing: 0.00813rem;
     }
@@ -457,7 +457,7 @@
     /* TODO: Cleanup this section. */
     --icon-fill: var(--t5e-color-text-gold-emphasis);
     border: none;
-    color: var(--t5e-color-default);
+    color: var(--t5e-color-text-default);
     background: var(--t5e-enricher-background);
     padding-block: var(--t5e-size-1) var(--t5e-size-halfx);
     padding-inline: 0.1875rem;

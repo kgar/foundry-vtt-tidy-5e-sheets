@@ -29,7 +29,7 @@
     display: flex;
     font-size: var(--font-size-12);
     font-style: normal;
-    font-weight: 500;
+    font-weight: var(--font-weight-label);
     gap: var(--t5e-size-1x);
     justify-content: center;
     line-height: normal;
@@ -89,11 +89,11 @@
 
     /* TODO: Determine if lighter text can be moved to its own scope and stylesheet and used generically */
     &.lighter {
-      font-weight: 400;
+      font-weight: var(--font-weight-default);
 
       span,
       i {
-        font-weight: 400;
+        font-weight: var(--font-weight-default);
         color: var(--t5e-color-text-lighter);
       }
 
@@ -169,7 +169,7 @@
     }
 
     &:not(:has(.toggle:checked)) i {
-      font-weight: normal;
+      font-weight: var(--font-weight-default);
     }
 
     &.disabled {
@@ -188,7 +188,7 @@
     gap: 0.125rem;
     color: var(--t5e-color-text-default);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-label);
     line-height: normal;
   }
 

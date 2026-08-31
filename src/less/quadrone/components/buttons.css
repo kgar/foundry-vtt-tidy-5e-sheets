@@ -16,6 +16,7 @@
     --button-icon: var(--t5e-color-icon-button);
     --button-icon-hover: var(--t5e-color-icon-default);
     --button-shadow: var(--t5e-drop-shadow-field);
+    --button-shadow-hover: var(--t5e-drop-shadow-field-hover);
     --button-focus: 0 0 0 0.125rem var(--t5e-theme-color-default);
     display: inline-flex;
     width: unset;
@@ -330,7 +331,7 @@
     }
 
     &.header-control {
-      font-weight: 900;
+      font-weight: var(--icon-weight-bold);
       min-width: var(--t5e-field-size-default);
     }
   }
@@ -385,7 +386,7 @@
       h4 {
         color: var(--t5e-color-text-lighter);
         font-size: 0.8125rem;
-        font-weight: 500;
+        font-weight: var(--font-heading-weight-label);
         line-height: normal;
       }
 
@@ -473,11 +474,11 @@
     font-family: var(--font-awesome);
     flex: 0 0 var(--button-size);
     width: var(--button-size);
-    font-weight: 600;
+    font-weight: var(--icon-weight-bold);
 
     &:is(.fab, .fa-brands) {
       font-family: var(--fa-style-family-brands);
-      font-weight: 400;
+      font-weight: var(--icon-weight-default);
     }
   }
 

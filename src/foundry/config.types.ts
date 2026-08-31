@@ -1813,6 +1813,13 @@ export type CONFIG = {
         weight?: number;
       }>;
     };
+    'Signika Negative': {
+      editor: boolean;
+      fonts: Array<{
+        urls: Array<string>;
+        weight?: number;
+      }>;
+    };
     Times: {
       editor: boolean;
       fonts: Array<any>;

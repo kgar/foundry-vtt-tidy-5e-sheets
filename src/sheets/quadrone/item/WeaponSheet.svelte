@@ -10,12 +10,30 @@
   import ItemWeightSummary from './parts/header/ItemWeightSummary.svelte';
   import ItemQuantitySummary from './parts/header/ItemQuantitySummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $derived(context.currentTabId);
 
   let itemNameEl: HTMLElement | undefined = $state();
+
+  let localize = FoundryAdapter.localize;
+
+  let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
+  let identified = $derived(context.isIdentified !== false);
+
+  // Hide attack bonuses on unidentified items so magical weapons aren't spoiled..
+  let unidentifiedSubtitle = $derived(
+    [localize(CONFIG.Item.typeLabels.weapon), context.item.system.type?.label]
+      .filter((label) => !isNil(label, ''))
+      .join(', '),
+  );
+
+  let subtitle = $derived(
+    identified || gmEditMode ? context.subtitle : unidentifiedSubtitle,
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -29,10 +47,7 @@
   >
     <ItemName />
   </div>
-
-  <div class="subtitle">
-    {context.subtitle}
-  </div>
+  <div class="subtitle">{subtitle}</div>
 
   <!-- Header Summary -->
   <div class="item-header-summary">
