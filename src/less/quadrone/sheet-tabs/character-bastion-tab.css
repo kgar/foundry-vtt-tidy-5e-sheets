@@ -8,7 +8,7 @@
         rgba(248, 244, 241, 0.85) 10%,
         rgba(248, 244, 241, 0.1) 160%),
       var(--underlay) 40%,
-      var(--t5e-component-card-ondefault-default);
+      var(--t5e-component-card-default);
     container-name: bastion-tab;
     container-type: inline-size;
 
@@ -68,6 +68,11 @@
     }
 
     .facility:not(.empty) {
+      --bastion-facility-background: linear-gradient(145deg,
+          rgba(248, 244, 241, 0.85) 10%,
+          rgba(248, 244, 241, 0.1) 160%),
+        var(--underlay) 40%,
+        var(--t5e-component-card-default);
       border-radius: var(--t5e-component-card-radius);
       padding: 0.75rem 0.5rem;
       background: var(--bastion-facility-background);
