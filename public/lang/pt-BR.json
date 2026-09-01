@@ -1147,5 +1147,23 @@
     "TIDY5E.ContextMenuActionPickColor": "Escolher Cor",
     "TIDY5E.Vehicle.RemoveBrokenLinks": "Remover {value} link(s) inválido(s)",
     "TIDY5E.ContextMenuActionPinToSpecificTab": "Fixar na Aba {tabName}",
-    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Perícias & Traços"
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Perícias & Traços",
+    "TIDY5E.Facilities": {
+        "Progress.Label": "Progresso (Dias)"
+    },
+    "TIDY5E.Bastion.Group": {
+        "RollEvent.Label": "Evento de Bastião",
+        "MaintainOrder.Label": "Ordem Zelar",
+        "MaintainOrder.DialogTitle": "Personagens Aptos a Emitir Ordens de Bastião",
+        "MaintainOrder.DialogHint": "As Ordens de Bastião avançarão para todos os personagens selecionados. Desmarque os personagens que não estão aptos a emitir ordens. Seus bastiões receberão uma Ordem Zelar, e quaisquer ordens de instalações em andamento não avançarão.",
+        "MaintainOrder.Chat": "Emitiu a Ordem Zelar para seu bastião, {bastionName}.",
+        "TakeBastionTurn.Confirm": "Avançar um turno de bastião para os personagens deste grupo?",
+        "CancelOrder.Label": "Cancelar Ordem",
+        "CompleteOrder.Label": "Concluir Ordem",
+        "CompleteOrder.Confirm": "Concluir esta ordem agora? Os dias restantes serão ignorados e as recompensas serão concedidas.",
+        "ChooseFacility.Title": "Escolha uma Instalação",
+        "Orders.EmptyStateHint": "Nenhum membro do grupo possui uma ordem em andamento.",
+        "Facilities.EmptyStateHint": "Este personagem ainda não construiu nenhuma instalação.",
+        "EmptyStateHint": "Não há membros do grupo com bastiões. Adicione personagens de jogador para acompanhar seus bastiões aqui."
+    }
 }
