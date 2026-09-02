@@ -1,5 +1,5 @@
 import type { EquipmentTypeGroup } from 'src/api/api.types';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 
 /**
  * APIs related to the configuration of items.
@@ -26,6 +26,6 @@ export class ItemConfigApi {
    * ```
    */
   registerCustomEquipmentTypeGroup(group: EquipmentTypeGroup) {
-    ItemSheetRuntime.registerCustomEquipmentTypeGroup(group);
+    ItemSheetQuadroneRuntime.registerCustomEquipmentTypeGroup(group);
   }
 }

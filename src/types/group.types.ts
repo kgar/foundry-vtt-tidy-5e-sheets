@@ -1,111 +1,15 @@
-import type { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic.svelte';
 import type { ContainerContents, Item5e } from './item.types';
 import type {
   ActivityItemContext,
   Actor5e,
-  ActorSheetClassicContextV2,
   ActorV2,
-  ContainerPanelItemContext,
-  CustomContent,
-  InventorySection,
   ItemSaveContext,
-  Tab,
   TidySectionBase,
-  Utilities,
 } from './types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { CONSTANTS } from 'src/constants';
-import type { Tidy5eEncounterSheetClassic } from 'src/sheets/classic/Tidy5eEncounterSheetClassic.svelte';
-
-export type GroupSheetClassicContext = {
-  config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
-  currentHP: number;
-  canObserveAll: boolean;
-  containerPanelItems: ContainerPanelItemContext[];
-  customContent: CustomContent[];
-  descriptionFullEnrichedHtml: string;
-  disableExperience: boolean;
-  document: Group5e;
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  groupLanguages: GroupLanguage[];
-  groupSkills: GroupSkill[];
-  inventory: InventorySection[];
-  isGM: boolean;
-  itemContext: Record<string, GroupItemContext>;
-  limited: boolean;
-  maxHP: number;
-  memberContext: Record<string, GroupMemberContext>;
-  memberSections: GroupMemberSection[];
-  movement: GroupMovementContext;
-  owner: boolean;
-  items: Item5e[];
-  effects: unknown[];
-  showContainerPanel: boolean;
-  showGroupMemberTabInfoPanel: boolean;
-  source: unknown;
-  summary: string;
-  system: Group5eSystem;
-  tabs: Tab[];
-  useClassicControls: boolean;
-  utilities: Utilities<GroupSheetClassicContext>;
-  xp: Group5eXp | undefined;
-} & ActorSheetClassicContextV2<Group5e>;
-
-export type Encounter5e = {
-  _id: string;
-  _stats: any;
-  effects: any[];
-  flags: any;
-  folder: any;
-  img: string;
-  items: Item5e[];
-  longRest(
-    options: Record<string, any> /* RestConfiguration */
-  ): Promise<unknown /*ResultResult*/>;
-  name: string;
-  ownership: any;
-  prototypeToken: any;
-  sheet: Tidy5eEncounterSheetClassic;
-  shortRest(
-    options: Record<string, any> /* RestConfiguration */
-  ): Promise<unknown /*ResultResult*/>;
-  sort: number;
-  system: Encounter5eSystem;
-  type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
-};
-
-export type EncounterSheetClassicContext = {
-  config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
-  canObserveAll: boolean;
-  containerPanelItems: ContainerPanelItemContext[];
-  customContent: CustomContent[];
-  descriptionFullEnrichedHtml: string;
-  disableExperience: boolean;
-  document: Encounter5e;
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  groupLanguages: GroupLanguage[];
-  groupSkills: GroupSkill[];
-  inventory: InventorySection[];
-  isGM: boolean;
-  itemContext: Record<string, GroupItemContext>;
-  limited: boolean;
-  memberContext: Record<string, EncounterMemberContext>;
-  memberSections: GroupMemberSection[];
-  owner: boolean;
-  items: Item5e[];
-  effects: unknown[];
-  showContainerPanel: boolean;
-  showGroupMemberTabInfoPanel: boolean;
-  source: unknown;
-  summary: string;
-  system: Encounter5eSystem;
-  tabs: Tab[];
-  useClassicControls: boolean;
-  utilities: Utilities<EncounterSheetClassicContext>;
-  xp: number | undefined;
-} & ActorSheetClassicContextV2<Encounter5e>;
+import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 
 export interface GroupItemContext {
   activities?: ActivityItemContext[];
@@ -148,29 +52,6 @@ export type GroupMemberSkillInfo = {
 export interface GroupMovementContext {
   primary: string;
   secondary: string;
-}
-
-export interface Group5e extends ActorV2 {
-  _id: string;
-  _stats: any;
-  effects: any[];
-  flags: any;
-  folder: any;
-  img: string;
-  items: Item5e[];
-  longRest(
-    options: Record<string, any> /* RestConfiguration */
-  ): Promise<unknown /*ResultResult*/>;
-  name: string;
-  ownership: any;
-  prototypeToken: any;
-  sheet: Tidy5eGroupSheetClassic;
-  shortRest(
-    options: Record<string, any> /* RestConfiguration */
-  ): Promise<unknown /*ResultResult*/>;
-  sort: number;
-  system: Group5eSystem;
-  type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 }
 
 export type GroupMemberSection = TidySectionBase & {
@@ -259,4 +140,50 @@ export interface GroupSkill {
   total: number;
   key: string;
   members: Actor5e[];
+}
+
+export type Encounter5e = {
+  _id: string;
+  _stats: any;
+  effects: any[];
+  flags: any;
+  folder: any;
+  img: string;
+  items: Item5e[];
+  longRest(
+    options: Record<string, any> /* RestConfiguration */,
+  ): Promise<unknown /*ResultResult*/>;
+  name: string;
+  ownership: any;
+  prototypeToken: any;
+  sheet: Tidy5eEncounterSheetQuadrone;
+  shortRest(
+    options: Record<string, any> /* RestConfiguration */,
+  ): Promise<unknown /*ResultResult*/>;
+  sort: number;
+  system: Encounter5eSystem;
+  type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
+};
+
+export interface Group5e extends ActorV2 {
+  _id: string;
+  _stats: any;
+  effects: any[];
+  flags: any;
+  folder: any;
+  img: string;
+  items: Item5e[];
+  longRest(
+    options: Record<string, any> /* RestConfiguration */,
+  ): Promise<unknown /*ResultResult*/>;
+  name: string;
+  ownership: any;
+  prototypeToken: any;
+  sheet: Tidy5eGroupSheetQuadrone;
+  shortRest(
+    options: Record<string, any> /* RestConfiguration */,
+  ): Promise<unknown /*ResultResult*/>;
+  sort: number;
+  system: Group5eSystem;
+  type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 }

@@ -3,7 +3,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { NpcSpellcastingContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
 
@@ -17,7 +17,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = $derived(getNpcSheetContext());
+  let context = $derived(getNpcSheetQuadroneContext());
 </script>
 
 {#if mode === 'expanded'}
@@ -33,17 +33,17 @@
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
       <a
-        role="button" 
-        tabindex="0" 
+        role="button"
+        tabindex="0"
         aria-label={info.name}
-        class="name font-title-small" 
+        class="name font-title-small"
         onclick={onNameClick}
         onkeydown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             onNameClick?.();
           }
-        }}
-        >{info.name}</a>
+        }}>{info.name}</a
+      >
       <i
         data-tooltip="DND5E.SpellAbility"
         class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
@@ -99,7 +99,9 @@
         </span>
       </div>
       <div
-        class="level pill pill-medium hide-collapsed {context.unlocked ? 'borderless' : ''}"
+        class="level pill pill-medium hide-collapsed {context.unlocked
+          ? 'borderless'
+          : ''}"
       >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellcasterLevel')}</span
@@ -135,8 +137,8 @@
           if (event.key === 'Enter' || event.key === ' ') {
             onNameClick?.();
           }
-        }}
-        >{info.name}</a>
+        }}>{info.name}</a
+      >
       <i
         data-tooltip="DND5E.SpellAbility"
         class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"

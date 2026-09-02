@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { UsesField } from 'src/types/item.types';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
 
   interface Props {
@@ -20,7 +20,7 @@
     }),
   );
 
-  const context = $derived(getSheetContext<ActorSheetContextV1>());
+  const context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const disabled = $derived(!context.owner);
 

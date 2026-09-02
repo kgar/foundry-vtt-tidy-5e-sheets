@@ -1,10 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
+  import LevelUpDropdown from 'src/sheets/quadrone/actor/parts/LevelUpDropdown.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { isUserInteractable } from 'src/utils/element';
-  import { EventHelper } from 'src/utils/events';
   import type {
     ActorClassEntryContext,
     CharacterSheetQuadroneContext,

@@ -12,12 +12,10 @@ import type {
   Item5e,
   ItemDescription,
   ItemFacilityOrdersContext,
-  ItemSheetContext,
   ItemSheetQuadroneContext,
   UsesRecoveryData,
 } from 'src/types/item.types';
 import { mount } from 'svelte';
-import TypeNotFoundSheet from '../classic/item/TypeNotFoundSheet.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -39,7 +37,6 @@ import {
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
@@ -52,6 +49,7 @@ import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementC
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 import * as Bastions from 'src/features/facility/Bastion';
+import { error } from 'src/utils/logging';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -178,15 +176,19 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
-    const component = sheetComponent
-      ? mount(sheetComponent, {
-          target: node,
-          context: context,
-        })
-      : mount(TypeNotFoundSheet, {
-          target: node,
-          context: context,
-        });
+    if (!sheetComponent) {
+      error(
+        `Tidy does not have a suitable sheet for item of type ${this.item.type}`,
+      );
+      throw Error(
+        `Tidy does not have a suitable sheet for item of type ${this.item.type}`,
+      );
+    }
+
+    const component = mount(sheetComponent, {
+      target: node,
+      context: context,
+    });
 
     new FloatingContextMenu(this.element, '.advancement-item', [], {
       onOpen: (target) =>
@@ -195,7 +197,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           target,
         ),
       jQuery: false,
-      layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
@@ -352,7 +353,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       currentTabId: this.currentTabId,
       customContent: [],
       customEquipmentTypeGroups:
-        ItemSheetRuntime.getCustomEquipmentTypeGroups(),
+        ItemSheetQuadroneRuntime.getCustomEquipmentTypeGroups(),
       data: this.document.toObject(false),
       defaultAbility: '',
       dimensions: target?.template?.dimensions,
@@ -465,7 +466,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           label,
           group: 'DND5E.Armor',
         })),
-        ...ItemSheetRuntime.getCustomEquipmentTypeGroups().reduce<
+        ...ItemSheetQuadroneRuntime.getCustomEquipmentTypeGroups().reduce<
           GroupableSelectOption[]
         >((prev, curr) => {
           for (let [key, typeLabel] of Object.entries(curr.types)) {
@@ -523,7 +524,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         (this.document.system.properties ?? []).map((p: string) => [p, true]),
       ),
       options: (this.document.system.validProperties ?? []).reduce(
-        (arr: ItemSheetContext['properties']['options'], k: any) => {
+        (arr: ItemSheetQuadroneContext['properties']['options'], k: any) => {
           // @ts-ignore
           const { label } = CONFIG.DND5E.itemProperties[k];
           arr.push({

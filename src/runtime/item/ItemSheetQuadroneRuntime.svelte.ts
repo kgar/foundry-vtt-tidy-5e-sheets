@@ -59,6 +59,7 @@ import type {
   ItemTabRegistrationOptions,
   TabEnabledCallbackFunctionOverrideOptions,
 } from 'src/api/api.types';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -74,6 +75,7 @@ class ItemSheetQuadroneRuntimeImpl {
     TabEnabledCallbackFunctionOverrideOptions[]
   >;
   private _tabIdsWithSubtypeConditions: SvelteSet<string>;
+  private _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] = [];
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -333,6 +335,14 @@ class ItemSheetQuadroneRuntimeImpl {
     if (options?.includeAsDefault ?? true) {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
+  }
+
+  registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
   }
 }
 

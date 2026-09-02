@@ -34,30 +34,6 @@ Hooks.on("renderActorSheetV2", (sheet, element, data) => {
 });
 ```
 
-### For Tidy 5e Classic Sheets:
-
-```js
-// Every time Tidy renders, whether a full render or a partial
-Hooks.on("tidy5e-sheet.renderActorSheet", (sheet, element, data) => {
-  // Here's some HTML
-  const levelUpButton = `
-    <button
-      type="button"
-      data-tidy-render-scheme="handlebars"
-      class="inline-transparent-button"
-    >
-      <i class="fas fa-arrow-alt-circle-up"></i>
-    </button>
-  `;
-  // pro tip: `data-tidy-render-scheme="handlebars"` causes this content to re-render on every Tidy render, full or partial
-
-  // insert the HTML
-  element
-    .querySelector('[data-tidy-sheet-part="name-container"]')
-    .insertAdjacentHTML("afterend", levelUpButton);
-});
-```
-
 ## Quick Reference
 
 - [Flags](classes/TidyFlags.html)

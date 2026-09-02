@@ -14,8 +14,6 @@ import type {
   RenderableHtml,
   OnRenderTabParams,
   SvelteTabContent,
-  ActorSheetContextV1,
-  ActorSheetClassicContextV2,
 } from 'src/types/types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { SectionOptionGroup } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
@@ -73,14 +71,11 @@ export type RegisteredTab<TContext> = {
  */
 /** @category Shared */
 export type SheetLayout =
-  | typeof CONSTANTS.SHEET_LAYOUT_ALL
-  | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
-  | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
+  typeof CONSTANTS.SHEET_LAYOUT_ALL | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 
 /** A display value which can vary with the item's current state, such as a container's expanded contents. */
 export type ItemSummaryCommandValue<T> =
-  | T
-  | ((params: RegisteredItemSummaryCommandEnabledParams) => T);
+  T | ((params: RegisteredItemSummaryCommandEnabledParams) => T);
 
 export type RegisteredItemSummaryCommand = {
   label?: ItemSummaryCommandValue<string>;
@@ -117,9 +112,10 @@ export type RegisteredPortraitMenuCommand = {
 export type RegisteredPortraitMenuCommandEnabledParams = {
   actor: Actor5e;
 };
+
 export type RegisteredPortraitMenuCommandExecuteParams = {
   actor: Actor5e;
-  context: ActorSheetContextV1 | ActorSheetClassicContextV2;
+  context: any;
 };
 
 export type RegisteredSectionCommand = {
@@ -145,8 +141,7 @@ export type RegisteredCustomActorTrait = {
   title: string;
   alwaysShow: boolean | undefined;
   openConfiguration:
-    | ((params: RegisteredTraitOpenConfigurationParams) => void)
-    | undefined;
+    ((params: RegisteredTraitOpenConfigurationParams) => void) | undefined;
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;

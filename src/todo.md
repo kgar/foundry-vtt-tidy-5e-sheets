@@ -1,3 +1,10 @@
+## dnd5e 6.0 To Dos
+
+- [ ] When deleting classic context menu content, merge up the quadrone content to take its place so you can delete the quadrone suffixed files.
+- [ ] Check on / fix src\applications\max-prepared-spells-config\MaxPreparedSpellsConfigFormApplication.svelte.ts. It had to be swapped from classic to quadrone, and it probably doesn't have the appropriate classes in place.
+- [ ] Go through the types files and find/delete unused types
+- [ ] SheetHeaderModeToggleV2 was a classic component. Does it need to be replaced or refined in any way? It now is in the quadrone shared folder.
+
 ## The Accretion Disk of To Do's
 
 - [ ] <!-- TODO: Swap to tidy table roll button -->

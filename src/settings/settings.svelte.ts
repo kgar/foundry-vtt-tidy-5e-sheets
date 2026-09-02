@@ -1,20 +1,13 @@
 import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import type { GetFunctionReturnType } from 'src/types/types';
-import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
-import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
-import { TabManager } from 'src/runtime/tab/TabManager';
-import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
   TabConfiguration,
 } from './settings.types';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -173,28 +166,6 @@ export const systemSettings = {
 export function createSettings() {
   return {
     menus: {
-      worldSettingsClassic: {
-        options: {
-          hideClassic: true,
-          name: `TIDY5E.WorldSettings.Menu.name`,
-          label: 'TIDY5E.WorldSettings.Menu.label',
-          hint: `TIDY5E.WorldSettings.Menu.hint`,
-          icon: 'fa-solid fa-globe',
-          type: WorldSettingsFormApplication,
-          restricted: true,
-        },
-      },
-      userMenu: {
-        options: {
-          hideClassic: true,
-          name: `TIDY5E.UserSettings.Menu.name`,
-          label: 'TIDY5E.UserSettings.Menu.label',
-          hint: `TIDY5E.UserSettings.Menu.hint`,
-          icon: 'fa-solid fa-user-gear',
-          type: UserSettingsFormApplication,
-          restricted: false,
-        },
-      },
       worldSettings: {
         options: {
           name: `TIDY5E.SettingsMenu.TidySettings.name`,
@@ -202,17 +173,6 @@ export function createSettings() {
           hint: `TIDY5E.SettingsMenu.TidySettings.hint`,
           icon: 'fa-solid fa-swatchbook',
           type: WorldSettingsQuadroneApplication,
-          restricted: true,
-        },
-      },
-      migrations: {
-        options: {
-          hideClassic: true,
-          name: `TIDY5E.Settings.Migrations.name`,
-          label: 'TIDY5E.Settings.Migrations.buttonLabel',
-          hint: `TIDY5E.Settings.Migrations.hint`,
-          icon: 'fa-solid fa-right-left',
-          type: BulkMigrationsApplication,
           restricted: true,
         },
       },
@@ -276,27 +236,6 @@ export function createSettings() {
       },
 
       // Player Character Settings
-
-      initialCharacterSheetTab: {
-        options: {
-          hideClassic: true,
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              CharacterSheetClassicRuntime.getAllRegisteredTabs(),
-            ),
-          default: CONSTANTS.TAB_ACTOR_ACTIONS,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'initialCharacterSheetTab',
-          );
-        },
-      },
 
       defaultCharacterSheetTabs: {
         options: {
@@ -701,25 +640,6 @@ export function createSettings() {
         },
       },
 
-      initialNpcSheetTab: {
-        options: {
-          hideClassic: true,
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              NpcSheetClassicRuntime.getAllRegisteredTabs(),
-            ),
-          default: CONSTANTS.TAB_NPC_ABILITIES,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>('initialNpcSheetTab');
-        },
-      },
-
       defaultNpcSheetTabs: {
         options: {
           name: 'TIDY5E.Settings.DefaultSheetTabs.name',
@@ -832,27 +752,6 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('showSpellbookTabNpc');
-        },
-      },
-
-      initialVehicleSheetTab: {
-        options: {
-          hideClassic: true,
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              VehicleSheetClassicRuntime.getAllRegisteredTabs(),
-            ),
-          default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'initialVehicleSheetTab',
-          );
         },
       },
 
@@ -2214,21 +2113,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('truesight');
         },
       },
-
-      hideClassic: {
-        options: {
-          name: 'TIDY5E.WorldSettings.HideClassic.name',
-          hint: 'TIDY5E.WorldSettings.HideClassic.hint',
-          scope: 'world',
-          config: true,
-          default: false,
-          type: Boolean,
-          requiresReload: true,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('hideClassic');
-        },
-      },
     } satisfies Tidy5eSettings,
   } as const;
 }
@@ -2304,10 +2188,8 @@ export function initSettings() {
   };
 
   // Register before init-time reads (used to filter menus and classic-only config).
-  registerSetting('hideClassic', SettingsProvider.settings.hideClassic);
   registerSetting('truesight', SettingsProvider.settings.truesight);
 
-  const hideClassic = SettingsProvider.settings.hideClassic.get();
   const initRegisteredKeys = new Set(['hideClassic', 'truesight']);
 
   for (let setting of Object.entries(SettingsProvider.settings).filter(
@@ -2322,9 +2204,6 @@ export function initSettings() {
         (setting[1].options as any).onChange?.(...args);
       },
     };
-    if ('hideClassic' in setting[1].options && hideClassic) {
-      options.config = false;
-    }
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
@@ -2342,9 +2221,6 @@ export function initSettings() {
         (setting[1].options as any).onChange?.(...args);
       },
     };
-    if ('hideClassic' in setting[1].options && hideClassic) {
-      options.config = false;
-    }
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
@@ -2352,9 +2228,6 @@ export function initSettings() {
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
     if ('truesight' in menu[1].options && !truesight) {
-      continue;
-    }
-    if ('hideClassic' in menu[1].options && hideClassic) {
       continue;
     }
 

@@ -363,8 +363,8 @@ export type CharacterItemContext = {
 
 export type CharacterItemQuadroneContext = {
   actionSubtitle?: string;
-  attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
+  attunement?: AttunementContext;
   chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
   favoriteId?: string;
@@ -373,11 +373,11 @@ export type CharacterItemQuadroneContext = {
   hasUses?: boolean;
   isStack?: boolean;
   needsSubclass?: boolean;
+  parent?: Item5e;
   save?: ItemSaveContext;
   toHit?: number | null;
   totalWeight?: number;
   concentration?: boolean;
-  parent?: Item5e;
   subtitle?: string;
   includeInCharacterSheetTab?: boolean;
 } & ActorItemQuadroneContext;
@@ -481,45 +481,6 @@ export type FacilityDefenderContext = {
   facility: string;
 };
 
-export type CharacterSheetContext = {
-  actorClassesToImages: Record<string, string>;
-  allowMaxHpOverride: boolean;
-  appearanceEnrichedHtml: string;
-  attributePins: AttributePinContext[];
-  bastion: {
-    description: string;
-  };
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defenders: FacilityDefenderContext[];
-  effects: Record<string, EffectCategory<ActiveEffectContext>>;
-  epicBoonsEarned: string | undefined;
-  facilities: FacilitiesContext;
-  favorites: FavoriteSection[];
-  features: CharacterFeatureSection[];
-  flawEnrichedHtml: string;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, CharacterItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  utilities: Utilities<CharacterSheetContext>;
-} & ActorSheetContextV1;
-
 /** A list of available actions that can be done on behalf of a facility type. */
 type AvailableBastionActionContext = {
   label: string;
@@ -567,26 +528,6 @@ export type NpcAbilitySection = {
   isClass?: boolean;
 } & FeatureSection;
 
-export type NpcItemContext = {
-  activities?: ActivityItemContext[];
-  attunement?: AttunementContext;
-  availableLevels?: AvailableLevel[];
-  canToggle?: boolean;
-  concentration?: boolean;
-  containerContents?: ContainerContents;
-  hasRecharge?: boolean;
-  hasUses?: boolean;
-  isStack?: boolean;
-  linkedUses?: LinkedUses;
-  needsSubclass?: boolean;
-  parent?: Item5e;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  toggleTitle?: string;
-  totalWeight?: number;
-  subtitle?: string;
-};
-
 export type NpcItemQuadroneContext = {
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
@@ -608,42 +549,6 @@ export type NpcHabitat = {
   type: string;
   subtype?: string;
 };
-
-export type NpcSheetContext = {
-  appearanceEnrichedHtml: string;
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defaultSkills: Set<string>;
-  features: NpcAbilitySection[];
-  flags: SpecialTraits;
-  flawEnrichedHtml: string;
-  hasLegendaries: boolean;
-  habitat: { label: string }[];
-  hideEmptySpellbook: boolean;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, NpcItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  showLoyalty: boolean;
-  showSpellbookTab: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  treasure: { label: string }[];
-  utilities: Utilities<NpcSheetContext>;
-} & ActorSheetContextV1;
 
 export type VehicleItemCrewAssignment = {
   // TODO: reconsider doing this?
@@ -688,18 +593,6 @@ export type VehicleMemberSection = {
   dropLabel: string;
   // etc.
 } & TidySectionBase;
-
-export type VehicleSheetContext = {
-  inventory: InventorySection[];
-  draft: VehicleMemberSection;
-  passengers: VehicleMemberSection;
-  crew: VehicleMemberSection;
-  features: FeatureSection;
-  weaponStations: InventorySection;
-  equipmentStations: InventorySection;
-  itemContext: Record<string, VehicleItemContext>;
-  utilities: Utilities<VehicleSheetContext>;
-} & ActorSheetContextV1;
 
 export type VehicleCargoSection = {
   type: typeof CONSTANTS.SECTION_TYPE_CARGO;
@@ -832,83 +725,6 @@ export type DocumentSheetV2Context = {
   unlocked: boolean;
   user: any;
 };
-
-export type ActorSheetContextV1 = {
-  abilities: any;
-  actions: ActionSectionClassic[];
-  actor: Actor5e;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  allowEffectsManagement: boolean;
-  appId: string;
-  biographyHTML: string;
-  config: typeof CONFIG.DND5E;
-  customActorTraits: RegisteredCustomActorTrait[];
-  customContent: CustomContent[];
-  disableExperience: boolean;
-  effects: Record<string, EffectCategory<ActiveEffect5e>>;
-  elements: unknown;
-  encumbrance?: EncumbranceContext;
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  flags: SpecialTraits; // TODO: Type it
-  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
-  hasSpecialSaves?: boolean;
-  /**
-   * Represents remaining health as a percentage within the range of `0` to `100`.
-   *
-   * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
-   */
-  healthPercentage: number;
-  hp: {
-    value: number;
-    max: number;
-    temp?: number;
-    tempmax?: number;
-  };
-  isCharacter: boolean;
-  isNPC: boolean;
-  isVehicle: boolean;
-  limited: boolean;
-  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
-  /** All items without a container. */
-  items: Item5e[];
-  labels: Record<string, any>;
-  lockExpChanges: boolean;
-  lockHpMaxChanges: boolean;
-  /**
-   * Item Quantity should be uneditable.
-   */
-  lockItemQuantity: boolean;
-  lockLevelSelector: boolean;
-  lockMoneyChanges: boolean;
-  lockSensitiveFields: boolean;
-  modernRules: boolean;
-  movement: {
-    primary: string;
-    special?: string;
-    secondary?: string;
-  };
-  options: unknown;
-  overrides: unknown;
-  /**
-   * The current user owns the actor.
-   */
-  owner: boolean;
-  saves: ActorSaves;
-  rollData: unknown;
-  senses: unknown;
-  skills: any;
-  showLimitedSheet: boolean;
-  system: any;
-  tabs: Tab[];
-  tools: any;
-  traits: any;
-  useActionsFeature?: boolean;
-  useClassicControls: boolean;
-  useRoundedPortraitStyle: boolean;
-  viewableWarnings: DocumentPreparationWarning[];
-  warnings: DocumentPreparationWarning[];
-} & DocumentSheetV2Context;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;
@@ -1070,20 +886,6 @@ export type ActorV2 = {
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
 } & {};
-
-// TODO: Deprecate
-export type ActorSheetClassicContextV2<TActor = ActorV2> = {
-  actor: TActor;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  customContent: CustomContent[];
-  editable: boolean;
-  healthPercentage: number;
-  modernRules: boolean;
-  lockSensitiveFields: boolean;
-  tabs: Tab[];
-  unlocked: boolean;
-  useRoundedPortraitStyle: boolean;
-};
 
 export type GroupableSelectOption = {
   value: string;
@@ -1436,7 +1238,7 @@ export type NpcSheetQuadroneContext = {
   important: boolean;
   includeSpellbookInStatblockTab: boolean;
   inventory: InventorySection[];
-  itemContext: NpcItemQuadroneContext;
+  itemContext: Record<string, NpcItemQuadroneContext>;
   orphanedSubclasses: Item5e[];
   showDeathSaves: boolean;
   showLairTracker: boolean;
