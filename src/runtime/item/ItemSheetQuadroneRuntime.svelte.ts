@@ -341,9 +341,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        (context.document.system.activities ?? []).filter((a: Activity5e) =>
-          Activities.isConfigurable(a),
-        ).length,
+        Activities.getItemSheetActivities(context.item).length,
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
@@ -352,7 +350,8 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       },
       enabled: (context: ItemSheetQuadroneContext) =>
         context.document.system.identified !== false ||
-        FoundryAdapter.isInGmEditMode(context.document),
+        FoundryAdapter.isInGmEditMode(context.document) ||
+        Activities.hasItemSheetActivities(context.item),
       types: new Set<string>([
         CONSTANTS.ITEM_TYPE_CONSUMABLE,
         CONSTANTS.ITEM_TYPE_EQUIPMENT,

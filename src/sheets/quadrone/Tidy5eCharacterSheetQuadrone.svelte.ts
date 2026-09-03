@@ -713,16 +713,19 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           const ctx: CharacterItemQuadroneContext = (context.itemContext[
             item.id
           ] ??= {});
-          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
-          // Item usage
-          ctx.hasUses = item.hasLimitedUses;
-          ctx.hasRecharge = item.hasRecharge;
+          const unidentified = item.system.identified === false;
 
           // Unidentified items
           ctx.concealDetails =
-            !game.user.isGM && item.system.identified === false;
+            !game.user.isGM && unidentified;
+
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement = FoundryAdapter.getAttunementContext(item) && !unidentified ? FoundryAdapter.getAttunementContext(item) : undefined;
+
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses && !unidentified;
+          ctx.hasRecharge = item.hasRecharge && !unidentified;
 
           // Item grouping
           const originId = FoundryAdapter.getAdvancementOriginId(item);

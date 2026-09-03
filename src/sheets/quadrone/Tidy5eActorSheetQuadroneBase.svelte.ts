@@ -832,7 +832,7 @@ export function getTidy5eActorSheetQuadroneBase<
       };
 
       return Object.entries(context.system[property] ?? {})
-        .filter(([key]) => key in CONFIG.DND5E[property])
+        .filter(([key]) => key in CONFIG.DND5E[property] || ((property === "tools") && (key in CONFIG.DND5E.vehicleTypes)))
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
