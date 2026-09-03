@@ -2,12 +2,9 @@ import type {
   ThemeColorSetting,
   Tidy5eThemeDataV1,
 } from 'src/types/theme.types';
-import { debug } from 'src/utils/logging';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import { coalesce } from 'src/utils/formatting';
-import { isNil } from 'src/utils/data';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import chroma from 'chroma-js';
 
@@ -18,7 +15,7 @@ export function getThemeV2(doc?: any) {
   if (doc) {
     theme =
       foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(
-        doc
+        doc,
       );
   }
 
@@ -36,72 +33,6 @@ export function getThemeV2(doc?: any) {
   }
 
   return coalesce(theme, CONSTANTS.THEME_ID_DEFAULT_LIGHT);
-}
-
-export function applyThemeColorsToHead(variables: Record<string, string>) {
-  try {
-    removeExistingTidyThemeStyleTag();
-
-    document.head.insertAdjacentHTML(
-      'beforeend',
-      `
-    <style id="${tidyStyleTagId}">
-      .tidy5e-sheet.classic {
-        ${Object.entries(variables)
-          .filter(([_, value]) => !isNil(value?.trim(), ''))
-          .map(([variable, value]) => `${variable}: ${value};`)
-          .join('\n')}
-      }
-    </style>
-    `
-    );
-  } catch (e) {
-    console.error(e);
-    debug('Unable to apply Tidy 5e style tag.');
-  }
-}
-
-function removeExistingTidyThemeStyleTag() {
-  let existingThemeStyle = document.getElementById(tidyStyleTagId);
-
-  if (existingThemeStyle) {
-    existingThemeStyle.remove();
-  }
-}
-
-export function getColorPickerColors() {
-  const variables: Record<string, string> = {};
-
-  const themeableColors = getThemeableColors();
-  for (let color of themeableColors) {
-    variables[color.cssVariable] = SettingsProvider.settings[color.key]
-      .get()
-      ?.toString();
-  }
-
-  return variables;
-}
-
-export function applyCurrentThemeClassic(colorPickerEnabledOverride?: boolean) {
-  let enabled = colorPickerEnabledOverride ?? settings.value.colorPickerEnabled;
-  if (enabled) {
-    const variables = getColorPickerColors();
-    applyThemeColorsToHead(variables);
-  } else {
-    removeExistingTidyThemeStyleTag();
-  }
-}
-
-export function getThemeableColors(): ThemeColorSetting[] {
-  return Object.entries(SettingsProvider.settings)
-    .filter(([, value]) => 'representsCssVariable' in value)
-    .map(([key, value]) => ({
-      key: key as any,
-      name: value.options.name,
-      hint: 'hint' in value.options ? value.options.hint : '',
-      cssVariable:
-        'representsCssVariable' in value ? value.representsCssVariable : '',
-    }));
 }
 
 type ProcessedColor = {
@@ -149,7 +80,7 @@ export function settingValueToHexaString(value: string): ProcessedColor {
 
 export function extractSettingsUpdateDeltaFromTheme(
   theme: Tidy5eThemeDataV1,
-  themeableColors: ThemeColorSetting[]
+  themeableColors: ThemeColorSetting[],
 ) {
   return Object.keys(theme.variables).reduce<Record<string, string>>(
     (prev, key) => {
@@ -160,7 +91,7 @@ export function extractSettingsUpdateDeltaFromTheme(
 
       return prev;
     },
-    {}
+    {},
   );
 }
 
