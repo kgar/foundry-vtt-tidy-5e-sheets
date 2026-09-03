@@ -565,8 +565,8 @@
             fill: var(--t5e-color-icon-default);
             color: white;
             background: var(--t5e-color-palette-gold-56);
-            width: 1.625rem;
-            height: 1.625rem;
+            width: var(--t5e-field-size-small);
+            height: var(--t5e-field-size-small);
           }
         }
 
@@ -576,9 +576,7 @@
           transition: all var(--t5e-transition-default);
         }
 
-        &:hover,
-        &:focus,
-        &:active {
+        &:is(:hover, :focus, :active) {
           text-shadow: none;
           outline: none;
 
@@ -601,6 +599,10 @@
             opacity: 1;
             text-shadow: none;
           }
+        }
+
+        &.favorite-effect:is(:hover, :focus, :active) .item-image {
+          opacity: 1;
         }
 
         .item-name-container {

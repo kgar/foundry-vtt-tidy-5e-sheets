@@ -807,6 +807,8 @@
     }
 
     > .uses-value {
+      font: var(--t5e-font-default-medium);
+      font-size: var(--font-size-13);
       text-align: right;
       flex: 1;
     }
