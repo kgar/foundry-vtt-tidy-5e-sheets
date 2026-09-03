@@ -565,8 +565,8 @@
             fill: var(--t5e-color-icon-default);
             color: white;
             background: var(--t5e-color-palette-gold-56);
-            width: var(--t5e-field-size-small);
-            height: var(--t5e-field-size-small);
+            width: var(--t5e-icon-size-7x);
+            height: var(--t5e-icon-size-7x);
           }
         }
 
