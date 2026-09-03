@@ -351,7 +351,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       enabled: (context: ItemSheetQuadroneContext) =>
         context.document.system.identified !== false ||
         FoundryAdapter.isInGmEditMode(context.document) ||
-        Activities.hasItemSheetActivities(context.item),
+        context.activities?.length > 0,
       types: new Set<string>([
         CONSTANTS.ITEM_TYPE_CONSUMABLE,
         CONSTANTS.ITEM_TYPE_EQUIPMENT,
