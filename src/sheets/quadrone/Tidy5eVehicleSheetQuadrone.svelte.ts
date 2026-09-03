@@ -30,7 +30,6 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
-import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -318,8 +317,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       ...actorContext,
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
     };
-
-    context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     await this._prepareItems(context);
 

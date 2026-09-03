@@ -1,20 +1,20 @@
-import {
-  actorUsesActionFeature,
-  isItemInActionList,
-} from 'src/features/actions/actions.svelte';
+import { isItemInActionList } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
-import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
-import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { getItemContextOptionsQuadrone } from './tidy5e-item-context-menu-quadrone';
+import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+import type {
+  ActionItemInclusionMode,
+  AggregatePinTabInfo,
+} from 'src/types/types';
+import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 
 export function configureItemContextMenu(element: HTMLElement, app: any) {
   const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
@@ -27,11 +27,7 @@ export function configureItemContextMenu(element: HTMLElement, app: any) {
   // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
   if (!item || item instanceof Promise) return;
 
-  const isQuadroneSheet = element.closest('.quadrone');
-
-  ui.context.menuItems = isQuadroneSheet
-    ? getItemContextOptionsQuadrone(app, item, element)
-    : getItemContextOptions(app, item, element);
+  ui.context.menuItems = getItemContextOptions(app, item, element);
 
   TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
 }
@@ -47,17 +43,41 @@ export function getItemContextOptions(
   item: Item5e,
   element: HTMLElement,
 ): ContextMenuEntry[] {
-  if (!settings.value.useContextMenu) {
-    return [];
-  }
-
+  const compendiumLocked = game.packs.get(item.pack)?.locked;
   const itemParent = item.actor ? item.actor : item.parent;
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
+  const isCharacter = itemParentIsActor && itemParent.system.isCharacter;
+
+  const isInFavorites = !!element.closest('.favorites');
+
+  const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
+
+  const showActionSectionConfig = SheetSections.showActionSectionConfig(
+    item.parent,
+  );
 
   let options: ContextMenuEntry[] = [];
 
-  // Toggle Attunement State
+  // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionView',
+    icon: '<i class="fas fa-eye fa-fw"></i>',
+    group: 'common',
+    callback: () =>
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
+  });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionEdit',
+    icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
+    condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
+    group: 'common',
+    callback: () =>
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
+  });
+
   if (
     !!CONFIG.DND5E.attunementTypes[
       item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
@@ -69,8 +89,9 @@ export function getItemContextOptions(
         ? 'TIDY5E.ContextMenuActionUnattune'
         : 'TIDY5E.ContextMenuActionAttune',
       icon: item.system.attuned
-        ? "<i class='fas fa-sun fa-fw' style='color: var(--t5e-warning-accent-color);'></i>"
-        : "<i class='fas fa-sun fa-fw'></i>",
+        ? "<i class='fa-regular fa-sun fa-fw'></i>"
+        : "<i class='fa-solid fa-sun fa-fw'></i>",
+      group: 'common',
       callback: () =>
         item.update({
           'system.attuned': !item.system.attuned,
@@ -80,33 +101,6 @@ export function getItemContextOptions(
     });
   }
 
-  // Toggle Charged State
-
-  options.push({
-    name: !item.isOnCooldown
-      ? 'DND5E.ContextMenuActionExpendCharge'
-      : 'DND5E.ContextMenuActionCharge',
-    icon: !item.isOnCooldown
-      ? '<i class="fa-regular fa-bolt"></i>'
-      : '<i class="fa-solid fa-bolt"></i>',
-    callback: () =>
-      item.update({
-        'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
-      }),
-    condition: () =>
-      item.hasRecharge &&
-      item.isOwner &&
-      !FoundryAdapter.isLockedInCompendium(item),
-    group: 'state',
-  });
-
-  /* 
-  // TODO: New equip icons. Right now the sheet doesn't check for quadrone.
-        ? "<i class='fas fa-hand-fist equip-icon fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
-        : "<i class='fa-regular fa-hand fa-fw'></i> ",
-  */
-
-  // Toggle Equipped State
   if ('equipped' in item.system) {
     const isEquipped = item.system.equipped;
     options.push({
@@ -114,15 +108,15 @@ export function getItemContextOptions(
         ? 'TIDY5E.ContextMenuActionUnequip'
         : 'TIDY5E.ContextMenuActionEquip',
       icon: isEquipped
-        ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
-        : "<i class='fas fa-user-alt fa-fw'></i> ",
+        ? "<i class='fa-regular fa-hand fa-fw'></i>"
+        : "<i class='fa-solid fa-hand-fist equip-icon fa-fw'></i>",
+      group: 'common',
       callback: () => item.update({ 'system.equipped': !isEquipped }),
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
   }
 
-  // Toggle Prepared State
   if (FoundryAdapter.canPrepareSpell(item) && !item.system.linkedActivity) {
     const isPrepared =
       item.system?.prepared ===
@@ -136,6 +130,7 @@ export function getItemContextOptions(
       icon: isPrepared
         ? "<i class='fas fa-book fa-fw'></i>"
         : "<i class='fas fa-book fa-fw'></i>",
+      group: 'common',
       callback: () => item.update({ 'system.prepared': newValue }),
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
@@ -143,16 +138,23 @@ export function getItemContextOptions(
   }
 
   options.push({
-    name: 'DND5E.Identify',
-    icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
-    callback: () => item.update({ 'system.identified': true }),
+    name: !item.isOnCooldown
+      ? 'DND5E.ContextMenuActionExpendCharge'
+      : 'DND5E.ContextMenuActionCharge',
+    icon: !item.isOnCooldown
+      ? '<i class="fa-regular fa-bolt"></i>'
+      : '<i class="fa-solid fa-bolt"></i>',
     condition: () =>
-      item.system.identified === false &&
-      FoundryAdapter.canIdentify(item) &&
+      item.hasRecharge &&
+      item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
+    group: 'common',
+    callback: () =>
+      item.update({
+        'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
+      }),
   });
 
-  const isCharacter = itemParentIsActor && itemParent.system.isCharacter;
   if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isItemFavorited(item);
@@ -160,146 +162,62 @@ export function getItemContextOptions(
     options.push({
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
-        ? `<i class='fas fa-bookmark fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-        : `<i class='fas fa-bookmark fa-fw inactive'></i>`,
+        ? `<i class='fa-regular fa-star fa-fw'></i>`
+        : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
+      group: 'common',
       callback: () => {
-        if (!item) {
-          warn(`tidy5e-context-menu | Item Not Found`);
-          return;
-        }
         FoundryAdapter.toggleFavoriteItem(item);
       },
       condition: () =>
-        !!itemParent &&
+        !!itemParent?.isOwner &&
         'favorites' in itemParent.system &&
         !FoundryAdapter.isLockedInCompendium(item),
     });
-
-    options.push({
-      name: 'TIDY5E.ContextMenuActionPinToAttributes',
-      icon: `<i class="fa-solid fa-thumbtack"></i>`,
-      callback: () => AttributePins.pin(item, 'item'),
-      condition: () =>
-        item.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(item) &&
-        AttributePins.isPinnable(item, 'item') &&
-        !AttributePins.isPinned(item),
-      group: 'pins',
-    });
-
-    options.push({
-      name: 'TIDY5E.ContextMenuActionUnpinFromAttributes',
-      icon: `<i class="fa-solid fa-xmark" style='color: var(--t5e-warning-accent-color)'></i>`,
-      callback: () => AttributePins.unpin(item),
-      condition: () =>
-        item.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(item) &&
-        AttributePins.isPinnable(item, 'item') &&
-        AttributePins.isPinned(item),
-      group: 'pins',
-    });
-
-    const isAttributeItemPin = !!element.closest('[data-pin-id]');
-
-    if (isAttributeItemPin) {
-      options.push({
-        name: 'TIDY5E.ContextMenuActionShowLimitedUses',
-        icon: '<i class="fa-solid fa-fw"></i>',
-        callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
-        condition: () =>
-          item.isOwner &&
-          !FoundryAdapter.isLockedInCompendium(item) &&
-          !isNil(item.system.quantity) &&
-          AttributePins.getResourceType(item) !== 'limited-uses',
-        group: 'pins',
-      });
-      options.push({
-        name: 'TIDY5E.ContextMenuActionShowQuantity',
-        icon: '<i class="fa-solid fa-fw"></i>',
-        callback: () => AttributePins.setItemResourceType(item, 'quantity'),
-        condition: () =>
-          item.isOwner &&
-          !FoundryAdapter.isLockedInCompendium(item) &&
-          !isNil(item.system.quantity) &&
-          AttributePins.getResourceType(item) !== 'quantity',
-        group: 'pins',
-      });
-    }
   }
 
   options.push({
-    name: 'TIDY5E.ContextMenuActionView',
-    icon: '<i class="fas fa-eye fa-fw"></i>',
-    callback: () =>
-      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
-  });
-
-  options.push({
-    name: 'TIDY5E.ContextMenuActionEdit',
-    icon: '<i class="fas fa-pencil-alt fa-fw"></i>',
-    callback: () =>
-      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
-    condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
-  });
-
-  options.push({
-    name: 'DND5E.ContextMenuActionDuplicate',
-    icon: "<i class='fas fa-copy fa-fw'></i>",
+    name: item.system.properties?.has('gear')
+      ? 'DND5E.Gear.Action.Remove'
+      : 'DND5E.Gear.Action.Add',
+    icon: '<i class="fa-solid fa-axe fa-fw"></i>',
     condition: () =>
-      item.canDuplicate &&
+      !!itemParent?.system.isNPC &&
       item.isOwner &&
-      !FoundryAdapter.isLockedInCompendium(item),
-
-    callback: () =>
-      item.clone(
-        {
-          name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-            name: item.name,
-          }),
-        },
-        { save: true },
-      ),
+      !compendiumLocked &&
+      !!CONFIG.Item.dataModels[item.type]?.schema.has('quantity'),
+    callback: () => {
+      const properties = item.system.toObject().properties;
+      item.update({
+        'system.properties': item.system.properties.has('gear')
+          ? properties.filter((i: string) => i !== 'gear')
+          : [...properties, 'gear'],
+      });
+    },
+    group: 'common',
   });
 
-  if (item.type === 'spell') {
-    options.push({
-      name: 'TIDY5E.ContextMenuActionDelete',
-      icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-      callback: () => item.deleteDialog({ sheet: app }),
-      condition: () =>
-        item.canDelete &&
-        item.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(item),
-    });
-    options.push({
-      name: 'DOCUMENT.DND5E.Activity',
-      icon: "<i class='fas fa-gear fa-fw'></i>",
-      callback: () => app._renderChild(item.system.linkedActivity.sheet),
-      condition: () =>
-        !item.canDelete &&
-        item.system.linkedActivity &&
-        item.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(item),
-    });
-  } else {
-    options.push({
-      name: 'DND5E.ContextMenuActionDelete',
-      icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-      callback: () => {
-        item.deleteDialog({ sheet: app });
-      },
-      condition: () =>
-        item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
-    });
-  }
+  options.push({
+    name: 'DND5E.DisplayCard',
+    icon: '<i class="fas fa-message-arrow-up-right"></i>',
+    group: 'common',
+    condition: () => item.actor,
+    callback: () => item.displayCard(),
+  });
 
   options.push({
     name: 'DND5E.Scroll.CreateScroll',
     icon: '<i class="fa-solid fa-scroll"></i>',
+    condition: () =>
+      !isInFavorites &&
+      item.type === 'spell' &&
+      !item.system.linkedActivity &&
+      itemParent?.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(itemParent),
+    group: 'action',
     callback: async () => {
       const options: Record<string, unknown> = {};
 
-      if (settings.value.includeFlagsInSpellScrollCreation) {
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
         options.flags = item.flags;
       }
 
@@ -311,47 +229,126 @@ export function getItemContextOptions(
         dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
       }
     },
-    condition: () =>
-      item.type === 'spell' &&
-      !item.system.linkedActivity &&
-      itemParent?.isOwner &&
-      !FoundryAdapter.isLockedInCompendium(itemParent),
-    group: 'action',
   });
 
-  const active = isItemInActionList(item);
+  options.push({
+    name: 'DOCUMENT.DND5E.Activity',
+    icon: "<i class='fas fa-gear fa-fw'></i>",
+    condition: () =>
+      item.type === 'spell' &&
+      !item.canDelete &&
+      item.system.linkedActivity &&
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item),
+    group: 'common',
+    callback: () => item.sheet._renderChild(item.system.linkedActivity.sheet),
+  });
 
   options.push({
-    name: active
-      ? 'TIDY5E.Actions.SetOverrideFalse'
-      : 'TIDY5E.Actions.SetOverrideTrue',
-    icon: active
-      ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
-      : '<i class="fas fa-fist-raised"></i>',
-    callback: () => {
-      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
-    },
+    name: 'DND5E.Identify',
+    icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
+    callback: () => item.update({ 'system.identified': true }),
+    condition: () =>
+      item.system.identified === false &&
+      FoundryAdapter.canIdentify(item) &&
+      !FoundryAdapter.isLockedInCompendium(item),
+  });
+
+  options.push({
+    name: 'DND5E.ContextMenuActionDuplicate',
+    icon: "<i class='fas fa-clone fa-fw'></i>",
+    condition: () =>
+      !isInFavorites &&
+      item.canDuplicate &&
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item),
+    group: 'common',
+    callback: () =>
+      item.clone(
+        {
+          name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+            name: item.name,
+          }),
+        },
+        { save: true },
+      ),
+  });
+
+  // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
+
+  const inclusionMode: ActionItemInclusionMode =
+    itemParent?.sheet.getSheetTabInclusionMode?.();
+
+  const inSheetTab = isItemInActionList(item, inclusionMode);
+  options.push({
+    name: inSheetTab
+      ? 'TIDY5E.ContextMenuActionRemoveFromSheetTab'
+      : 'TIDY5E.ContextMenuActionAddToSheetTab',
+    icon: inSheetTab
+      ? '<i class="fa-regular fa-bookmark"></i>'
+      : '<i class="fa-solid fa-bookmark"></i>',
     condition: () =>
       item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
       itemParentIsActor &&
-      actorUsesActionFeature(itemParent),
+      !!itemParent?.isOwner &&
+      isCharacter,
+    group: 'customize',
+    callback: () => {
+      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
+    },
   });
 
-  options.push({
-    name: 'TIDY5E.Actions.ResetActionDefault',
-    icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
-    callback: () => {
-      TidyFlags.actionFilterOverride.unset(item);
-    },
-    condition: () =>
-      TidyFlags.actionFilterOverride.get(item) !== undefined &&
-      itemParentIsActor &&
-      actorUsesActionFeature(itemParent),
-  });
+  if (itemParent) {
+    const inspirationSourceItem = itemParent.items.get(
+      TidyFlags.inspirationSource.get(itemParent),
+    );
+
+    const itemInspirationSourceAvailable =
+      !ActorInspirationRuntime.bankedInspirationConfig?.change &&
+      !ActorInspirationRuntime.bankedInspirationConfig?.getData;
+
+    const bankedInspirationIsEnabled =
+      SettingsProvider.settings.enableBankedInspiration.get() &&
+      (!SettingsProvider.settings.bankedInspirationGmOnly.get() ||
+        FoundryAdapter.userIsGm());
+
+    options.push({
+      name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
+      icon: '<i class="fa-solid fa-sparkles"></i>',
+      condition: () =>
+        bankedInspirationIsEnabled &&
+        item.isOwner &&
+        itemInspirationSourceAvailable &&
+        item.type === CONSTANTS.ITEM_TYPE_FEAT &&
+        item.system.uses?.max > 0 &&
+        inspirationSourceItem?.id !== item.id,
+      group: 'customize',
+      callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
+    });
+
+    options.push({
+      name: 'TIDY5E.ContextMenuActionRemoveAsInspirationSource',
+      icon: '<i class="fa-regular fa-sparkles"></i>',
+      condition: () =>
+        bankedInspirationIsEnabled &&
+        item.isOwner &&
+        itemInspirationSourceAvailable &&
+        inspirationSourceItem?.id === item.id,
+      group: 'customize',
+      callback: () => TidyFlags.inspirationSource.unset(itemParent),
+    });
+  }
 
   options.push({
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-    icon: '<i class="fas fa-diagram-cells"></i>',
+    icon: '<i class="fa fa-diagram-cells"></i>',
+    condition: () =>
+      item.isOwner &&
+      SheetSections.itemSupportsCustomSections(item.type) &&
+      (app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS ||
+        !showActionSectionConfig) &&
+      !FoundryAdapter.isLockedInCompendium(item),
+    group: 'customize',
     callback: () =>
       app._renderChild(
         new SectionSelectorApplication({
@@ -361,38 +358,154 @@ export function getItemContextOptions(
           document: item,
         }),
       ),
-    condition: () =>
-      item.isOwner &&
-      SheetSections.itemSupportsCustomSections(item.type) &&
-      app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS &&
-      !FoundryAdapter.isLockedInCompendium(item),
-    group: 'sections',
   });
 
+  let actionSectionContextName = itemParent?.system.isCharacter
+    ? FoundryAdapter.localize(
+        'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+        { tabName: FoundryAdapter.localize('Sheet') },
+      )
+    : itemParent?.system.isNPC
+      ? FoundryAdapter.localize(
+          'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+          { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
+        )
+      : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
+
+  let actionSectionConfigTitle = itemParent?.system.isCharacter
+    ? FoundryAdapter.localize('Sheet')
+    : itemParent?.system.isNPC
+      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+      : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
+
   options.push({
-    name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
+    name: actionSectionContextName,
     icon: '<i class="fas fa-diagram-cells"></i>',
-    callback: () =>
-      app._renderChild(
-        new SectionSelectorApplication({
-          flag: TidyFlags.actionSection.prop,
-          sectionType: FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
-          callingDocument: itemParent ?? item,
-          document: item,
-        }),
-      ),
     condition: () =>
+      showActionSectionConfig &&
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
       app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&
       !FoundryAdapter.isLockedInCompendium(item),
-    group: 'sections',
+    group: 'customize',
+    callback: () =>
+      app._renderChild(
+        new SectionSelectorApplication({
+          flag: TidyFlags.actionSection.prop,
+          sectionType: actionSectionConfigTitle,
+          callingDocument: itemParent ?? item,
+          document: item,
+        }),
+      ),
   });
 
   options.push({
-    name: 'DND5E.DisplayCard',
-    icon: '<i class="fas fa-message-arrow-up-right"></i>',
-    callback: () => item.displayCard(),
+    name: 'TIDY5E.ContextMenuActionPin',
+    icon: `<i class="fa-solid fa-thumbtack"></i>`,
+    callback: () => {
+      if (tabId) {
+        SheetPinsProvider.pin(item, tabId, 'item');
+      }
+    },
+    condition: () =>
+      item.isOwner &&
+      item.actor &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      SheetPinsProvider.isPinnable(item, 'item') &&
+      tabId &&
+      !SheetPinsProvider.isPinned(item, tabId),
+    group: 'customize',
+  });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionUnpin',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: () => {
+      if (tabId) {
+        SheetPinsProvider.unpin(item, tabId);
+      }
+    },
+    condition: () =>
+      item.isOwner &&
+      item.actor &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      SheetPinsProvider.isPinnable(item, 'item') &&
+      tabId &&
+      SheetPinsProvider.isPinned(item, tabId),
+    group: 'customize',
+  });
+
+  const aggregatePinTab = app.aggregatePinTab as AggregatePinTabInfo | null;
+
+  if (aggregatePinTab)
+    options.push({
+      name: FoundryAdapter.localize(
+        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
+      ),
+      icon: `<i class="fa-solid fa-thumbtack"></i>`,
+      callback: () => {
+        SheetPinsProvider.pin(item, aggregatePinTab.tabId, 'item');
+      },
+      condition: () =>
+        tabId !== aggregatePinTab.tabId &&
+        item.isOwner &&
+        item.actor &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        SheetPinsProvider.isPinnable(item, 'item') &&
+        !SheetPinsProvider.isPinned(item, aggregatePinTab.tabId),
+      group: 'customize',
+    });
+
+  const isSheetPin = !!element.closest('[data-pin-id]');
+
+  if (isSheetPin && item.system.activities) {
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowLimitedUses',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => {
+        if (tabId) {
+          SheetPinsProvider.setItemResourceType(item, tabId, 'limited-uses');
+        }
+      },
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        tabId &&
+        SheetPinsProvider.getResourceType(item, tabId) !== 'limited-uses',
+      group: 'customize',
+    });
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowQuantity',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => {
+        if (tabId) {
+          SheetPinsProvider.setItemResourceType(item, tabId, 'quantity');
+        }
+      },
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        tabId &&
+        SheetPinsProvider.getResourceType(item, tabId) !== 'quantity',
+      group: 'customize',
+    });
+  }
+
+  // Be Careful - These are the no-going-back changes
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionDelete',
+    icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
+    condition: () =>
+      !isInFavorites &&
+      item.canDelete &&
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item),
+    group: 'be-careful',
+    callback: () => item.deleteDialog({ sheet: app }),
   });
 
   return options;

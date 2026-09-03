@@ -1,5 +1,4 @@
 <script lang="ts">
-  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -12,6 +11,7 @@
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import type { ClassValue } from 'svelte/elements';
+    import RechargeControl from 'src/components/unsorted/RechargeControl.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;

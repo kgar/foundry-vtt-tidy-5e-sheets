@@ -1711,7 +1711,6 @@ export type VehicleSheetQuadroneContext = {
     };
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-  useActionsFeature?: boolean;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
 

@@ -2,10 +2,9 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import './less/tidy5e.less';
 import './less/tidy5e.css';
-import { SettingsProvider, initSettings } from './settings/settings.svelte';
+import { initSettings } from './settings/settings.svelte';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
-import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
