@@ -692,35 +692,6 @@ export const FoundryAdapter = {
       FoundryAdapter.userIsGm()
     );
   },
-  allowCharacterEffectsManagement(actor: any) {
-    return (
-      (settings.value.limitEffectsManagementToGm &&
-        FoundryAdapter.userIsGm()) ||
-      (!settings.value.limitEffectsManagementToGm && actor.isOwner)
-    );
-  },
-  shouldLockMoneyChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockMoneyChanges;
-  },
-  shouldLockExpChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockExpChanges;
-  },
-  shouldLockHpMaxChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockHpMaxChanges;
-  },
-  shouldLockLevelSelector() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockLevelSelector;
-  },
-  shouldLockItemQuantity() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockItemQuantity;
-  },
-  showLimitedSheet(actor: any): boolean {
-    const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
-    if (actor.system.isCharacter) {
-      return showLimitedSheet && !settings.value.showExpandedLimitedView;
-    }
-    return showLimitedSheet;
-  },
   flattenObject(obj: Object) {
     return foundry.utils.flattenObject(obj || {});
   },
@@ -1098,17 +1069,6 @@ export const FoundryAdapter = {
   },
   canUseItem(item: Item5e) {
     return !(!item.actor || !item.actor.isOwner || item.actor.pack);
-  },
-  useClassicControls(document: any) {
-    return (
-      (document.system.isCharacter &&
-        settings.value.useClassicControlsForCharacter) ||
-      (document.system.isNPC && settings.value.useClassicControlsForNpc) ||
-      (document.system.isVehicle &&
-        settings.value.useClassicControlsForVehicle) ||
-      // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
-      settings.value.useClassicControlsForCharacter
-    );
   },
   attunementContextApplicable: {
     icon: 'fa-sun',
