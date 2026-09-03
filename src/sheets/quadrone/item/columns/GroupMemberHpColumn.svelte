@@ -54,9 +54,9 @@
       : `--bar-percentage: ${hpPct.toFixed(0)}%;`}
   ></div>
   <div class="flexrow">
-    <span class="font-data-medium color-text-default value">{hpValue}</span>
+    <span class="font-label-medium color-text-default value">{hpValue}</span>
     <span class="font-body-medium color-text-lightest separator">/</span>
-    <span class="font-label-medium color-text-default max"
+    <span class="font-body-medium color-text-default max"
       >{effectiveMaxHp}</span
     >
   </div>
