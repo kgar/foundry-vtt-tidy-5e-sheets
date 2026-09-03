@@ -9,35 +9,6 @@ export class Activities {
     return activity.canConfigure;
   }
 
-  static toActivityArray(
-    activities:
-      | Activity5e[]
-      | Iterable<Activity5e>
-      | Record<string, Activity5e>
-      | null
-      | undefined,
-  ): Activity5e[] {
-    if (!activities) return [];
-    if (Array.isArray(activities)) return activities;
-    if (typeof (activities as Collection).values === 'function') {
-      return Array.from((activities as Collection<Activity5e>).values());
-    }
-    const contents = (activities as { contents?: Activity5e[] }).contents;
-    if (Array.isArray(contents)) return contents;
-    return Object.values(activities as Record<string, Activity5e>);
-  }
-
-  /** Activities shown on an item sheet (respects identification visibility rules). */
-  static getItemSheetActivities(item: Item5e): Activity5e[] {
-    return Activities.toActivityArray(item.system.activities).filter(
-      (activity: Activity5e) => Activities.isConfigurable(activity),
-    );
-  }
-
-  static hasItemSheetActivities(item: Item5e): boolean {
-    return Activities.getItemSheetActivities(item).length > 0;
-  }
-
   static getVisibleActivities(
     item: Item5e,
     activities: Activity5e[] | Iterable<Activity5e> | Record<string, Activity5e>,
@@ -45,7 +16,7 @@ export class Activities {
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
-      activities: Activities.toActivityArray(activities).filter(
+      activities: (item.system.activities ?? []).filter(
         (a: Activity5e) =>
           !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id) &&
           a.canUse,
@@ -57,6 +28,12 @@ export class Activities {
     }
 
     return visibleActivities.activities;
+  }
+
+  static getItemSheetActivities(item: Item5e): Activity5e[] {
+    return (item.system.activities ?? []).filter(
+      Activities.isConfigurable,
+    );
   }
 
   static activationMap: Record<string, string> = {
