@@ -306,7 +306,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
-    const itemSheetActivities = Activities.getItemSheetActivities(this.item);
+    const itemSheetActivities = Activities.getItemSheetActivities(
+      this.item,
+      documentSheetContext.unlocked,
+    );
 
     const context: ItemSheetQuadroneContext = {
       actionSectionEnabled: SheetSections.showActionSectionConfig(

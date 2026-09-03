@@ -38,6 +38,24 @@ export class Activities {
     return visibleActivities.activities;
   }
 
+  /** Activities to display on the item sheet, depending on edit vs view mode. */
+  static getItemSheetActivities(
+    item: Item5e,
+    unlocked: boolean,
+  ): Activity5e[] {
+    if (unlocked) {
+      return (item.system.activities ?? []).filter(
+        (activity: Activity5e) => Activities.isConfigurable(activity),
+      );
+    }
+
+    return Activities.getVisibleActivities(
+      item,
+      Array.from(item.system.activities ?? []),
+      true,
+    );
+  }
+
   static activationMap: Record<string, string> = {
     action: 'DND5E.ActionAbbr',
     bonus: 'DND5E.BonusActionAbbr',
