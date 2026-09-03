@@ -17,7 +17,6 @@ import type {
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
-import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
@@ -644,13 +643,6 @@ export type MessageBusMessage =
       message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
       options?: { includeInlineToggles?: boolean };
     };
-
-export type Utilities<TContext> = Record<
-  string,
-  {
-    utilityToolbarCommands?: UtilityToolbarCommandParams<TContext>[];
-  }
->;
 
 type ActorSave = {
   isConcentration: boolean;
@@ -1720,7 +1712,6 @@ export type VehicleSheetQuadroneContext = {
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
   useActionsFeature?: boolean;
-  utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
 

@@ -315,7 +315,6 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       traits: this._prepareTraits(),
       travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
-      utilities: {},
       ...actorContext,
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
     };
