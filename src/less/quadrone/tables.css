@@ -382,6 +382,10 @@
         content: none;
       }
     }
+
+    input[type="text"] {
+      font-family: var(--font-family-default);
+    }
   }
 
   /* Cell styles */
@@ -452,6 +456,7 @@
       margin-block-start: calc(var(--t5e-size-1) * -1);
       color: var(--t5e-color-text-lightest);
       font-size: var(--font-size-small);
+      font-weight: normal;
     }
 
     .advancement-cell-context {
@@ -730,14 +735,12 @@
 
   .tidy-table-row-use-button {
     --t5e-use-button-border-color: var(--t5e-color-gold);
-    align-items: center;
     align-self: center;
+    align-items: center;
     border-radius: var(--t5e-size-halfx);
     cursor: pointer;
     display: flex;
     justify-content: center;
-    margin-inline: 0 var(--t5e-size-1);
-    margin-block: var(--t5e-size-1);
     outline: var(--t5e-size-1) solid var(--t5e-use-button-border-color);
     overflow: hidden;
     position: relative;
@@ -760,14 +763,17 @@
       transition: all var(--t5e-transition-default);
     }
 
-    .roll-prompt i {
+    .roll-prompt {
+      flex: 1;
+    }
+
+    /* .roll-prompt i {
       inset-block-start: calc(50% - 1.5px);
       inset-inline-start: 50%;
       transform: translate(-50%, -50%);
       inset-inline-end: unset;
       inset-block-end: unset;
-    }
-
+    } */
     dnd5e-icon {
       --icon-size: 1.625rem;
       --icon-fill: var(--t5e-color-text-lighter);
@@ -807,6 +813,8 @@
     }
 
     > .uses-value {
+      font: var(--t5e-font-default-medium);
+      font-size: var(--font-size-13);
       text-align: right;
       flex: 1;
     }

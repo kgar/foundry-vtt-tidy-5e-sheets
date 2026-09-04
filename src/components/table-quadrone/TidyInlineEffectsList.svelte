@@ -66,7 +66,7 @@
     const riderParentNames = ActiveEffectsHelper.getRiderEffectParentNames(item);
 
     return Object.values(categories)
-      .filter((category) => !category.isEnchantment)
+      .filter((category) => !category.isEnchantment && category.type !== 'passive')
       .flatMap((category) =>
         category.effects.map((effect) => ({
           effect,

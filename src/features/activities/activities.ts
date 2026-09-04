@@ -9,6 +9,14 @@ export class Activities {
     return activity.canConfigure;
   }
 
+  /**
+   * 5e system v6.0+ separates display (`isHidden`) from usability (`canUse`).
+   */
+  static isActivityVisible(activity: Activity5e): boolean {
+    return 'isHidden' in activity ? !activity.isHidden : activity.canUse;
+  }
+
+  // TODO: Tidy this up and remove `activities` once we're off Classic. Just use `item.system.activities` instead.
   static getVisibleActivities(
     item: Item5e,
     activities: Activity5e[],
@@ -16,12 +24,9 @@ export class Activities {
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
-      activities:
-        activities?.filter(
-          (a: Activity5e) =>
-            !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id) &&
-            a.canUse,
-        ) ?? [],
+      activities: (activities ?? []).filter((activity: Activity5e) =>
+        Activities.isActivityVisible(activity),
+      ),
     };
 
     if (!forItemSheet) {
@@ -29,6 +34,24 @@ export class Activities {
     }
 
     return visibleActivities.activities;
+  }
+
+  /** Activities to display on the item sheet, depending on edit vs view mode. */
+  static getItemSheetActivities(
+    item: Item5e,
+    unlocked: boolean,
+  ): Activity5e[] {
+    if (unlocked) {
+      return (item.system.activities ?? []).filter(
+        (activity: Activity5e) => Activities.isConfigurable(activity),
+      );
+    }
+
+    return Activities.getVisibleActivities(
+      item,
+      Array.from(item.system.activities ?? []),
+      true,
+    );
   }
 
   static activationMap: Record<string, string> = {

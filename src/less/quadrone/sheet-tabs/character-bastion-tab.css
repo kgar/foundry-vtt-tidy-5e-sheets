@@ -83,7 +83,7 @@
       flex-direction: column;
       gap: var(--t5e-size-2x);
       outline: var(--t5e-outline-default);
-      outline-offset: -0.0625rem;
+      outline-offset: -0.03125rem;
       transition: box-shadow var(--t5e-transition-default);
 
       &.basic {

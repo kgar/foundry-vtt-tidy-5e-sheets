@@ -46,7 +46,7 @@
     <p>
       <a
         target="_blank"
-        href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Max-Prepared-Spells-Formulas"
+        href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/08.-Helpful-Resources#max-prepared-spells-formulas"
         >{localize('TIDY5E.MaxPreparedSpellsConfig.MoreFormulas')}</a
       >
     </p>
