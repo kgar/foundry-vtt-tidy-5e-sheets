@@ -112,6 +112,21 @@
       }
     }
   });
+
+  function handleHpInputKeyDown(
+    ev: KeyboardEvent & { currentTarget: EventTarget & HTMLElement },
+    originalValue: string | number,
+    closeOverlay = false,
+  ) {
+    if (ev.key !== 'Enter' && ev.key !== 'Escape') return;
+    ev.preventDefault();
+    if (ev.key === 'Escape') {
+      ev.stopPropagation();
+      (ev.currentTarget as HTMLInputElement).value = String(originalValue);
+    }
+    if (closeOverlay) hpOverlayCloseOnBlur = true;
+    ev.currentTarget.blur();
+  }
 </script>
 
 <header class="sheet-header flexcol">
@@ -140,6 +155,7 @@
                 data-tidy-sheet-part="actor-name"
                 data-tooltip={context.actor.name}
               >
+                <!-- svelte-ignore a11y_missing_attribute -->
                 <a data-action="copyInnerText" class="cursor highlight-on-hover">
                   {context.actor.name}
                 </a>
@@ -369,6 +385,11 @@
                 hpValueInputFocused = true;
                 hpValueInput?.selectText();
               }}
+              oncontextmenu={(ev) => {
+                ev.preventDefault();
+                hpOverlayFocusTarget = 'tempmax';
+                hpOverlayOpen = true;
+              }}
               disabled={!context.editable}
             >
               <div
@@ -403,6 +424,7 @@
               enableDeltaChanges={true}
               onfocus={() => (hpValueInputFocused = true)}
               onblur={() => (hpValueInputFocused = false)}
+              onkeydown={(ev) => handleHpInputKeyDown(ev, hpValue)}
               blurAfterChange={true}
               hidden={!hpValueInputFocused}
             />
@@ -410,12 +432,20 @@
 
           {#if !context.unlocked}
             {#if hpTemp > 0}
-              <!-- TODO: Convert to buttons -->
+              <!-- TODO: Convert to button -->
               <div
+                role="button"
+                tabindex="0"
                 class="temp-hp label pointer"
                 onclick={() => {
                   hpOverlayFocusTarget = 'temp';
                   hpOverlayOpen = true;
+                }}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                  hpOverlayFocusTarget = 'temp';
+                  hpOverlayOpen = true;
+                  }
                 }}
                 oncontextmenu={(ev) => {
                   ev.preventDefault();
@@ -495,11 +525,7 @@
                 value={hpTempMax}
                 selectOnFocus={true}
                 enableDeltaChanges={false}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    hpOverlayCloseOnBlur = true;
-                  }
-                }}
+                onkeydown={(ev) => handleHpInputKeyDown(ev, hpTempMax, true)}
                 onfocus={() => {
                   hpOverlayOpen = true;
                 }}
@@ -521,11 +547,7 @@
                 value={hpTemp}
                 selectOnFocus={true}
                 enableDeltaChanges={true}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    hpOverlayCloseOnBlur = true;
-                  }
-                }}
+                onkeydown={(ev) => handleHpInputKeyDown(ev, hpTemp, true)}
                 onfocus={() => {
                   hpOverlayOpen = true;
                 }}
