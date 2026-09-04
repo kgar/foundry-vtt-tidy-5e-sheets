@@ -1186,5 +1186,23 @@
     "TIDY5E.Vehicle.RemoveBrokenLinks": "Rimuovi {value} link(s) danneggiati",
     "TIDY5E.ContextMenuActionViewItem": "Visualizza Elemento Origine",
     "TIDY5E.ContextMenuActionPinToSpecificTab": "Fissa sulla scheda {tabName}",
-    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Abilità & Tratti"
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Abilità & Tratti",
+    "TIDY5E.Facilities": {
+        "Progress.Label": "Progresso (Giorni)"
+    },
+    "TIDY5E.Bastion.Group": {
+        "RollEvent.Label": "Evento Bastione",
+        "MaintainOrder.Label": "Mantenere Ordine",
+        "MaintainOrder.DialogTitle": "Personaggi che possono emettere Ordini di Bastione",
+        "MaintainOrder.DialogHint": "Gli Ordini dei Bastioni avanzeranno per tutti i personaggi selezionati. Deseleziona i personaggi che non sono in grado di impartire ordini. I loro Bastioni riceveranno un Mantenere Ordine, e gli ordini delle strutture attualmente in corso non avanzeranno.",
+        "MaintainOrder.Chat": "Impartito Mantenere Ordine al loro Bastione, {bastionName}.",
+        "TakeBastionTurn.Confirm": "Vuoi far avanzare di un turno i Bastioni dei personaggi di questo gruppo?",
+        "CancelOrder.Label": "Annulla Ordine",
+        "CompleteOrder.Label": "Completare Ordine",
+        "CompleteOrder.Confirm": "Completare subito questo ordine? I giorni rimanenti verranno saltati e le ricompense saranno assegnate.",
+        "ChooseFacility.Title": "Scegli una Struttura",
+        "Orders.EmptyStateHint": "Nessun membro del gruppo ha un ordine in corso.",
+        "Facilities.EmptyStateHint": "Questo personaggio non ha ancora costruito alcuna struttura.",
+        "EmptyStateHint": "Nessun membro del gruppo con Bastioni. Aggiungi i personaggi dei giocatori per tenere traccia dei loro Bastioni qui."
+    }
 }
