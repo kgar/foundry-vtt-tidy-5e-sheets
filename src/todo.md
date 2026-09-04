@@ -1,6 +1,29 @@
 ## dnd5e 6.0 To Dos
 
-- [ ] When deleting classic context menu content, merge up the quadrone content to take its place so you can delete the quadrone suffixed files.
+- [ ] Review all the issues and synthesize todos.
+- [ ] Handle this Activities change:
+
+```js
+  /**
+   * 5e system v6.0+ separates display (`isHidden`) from usability (`canUse`).
+   */
+  static isActivityVisible(activity: Activity5e): boolean {
+    return 'isHidden' in activity ? !activity.isHidden : activity.canUse;
+  }
+
+  static getVisibleActivities(
+    item: Item5e,
+    activities: Activity5e[] | Iterable<Activity5e> | Record<string, Activity5e>,
+    forItemSheet: boolean = false,
+  ): Activity5e[] {
+    // To allow the array to be completely swapped during hook calls, contain within an object.
+    const visibleActivities = {
+      activities: Activities.toActivityArray(activities).filter((a: Activity5e) =>
+        Activities.isActivityVisible(a),
+      ),
+    };
+```
+
 - [ ] Check on / fix src\applications\max-prepared-spells-config\MaxPreparedSpellsConfigFormApplication.svelte.ts. It had to be swapped from classic to quadrone, and it probably doesn't have the appropriate classes in place.
 - [ ] Go through the types files and find/delete unused types
 - [ ] SheetHeaderModeToggleV2 was a classic component. Does it need to be replaced or refined in any way? It now is in the quadrone shared folder.
