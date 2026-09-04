@@ -983,6 +983,10 @@
       border-radius: 0;
     }
 
+    input[type="text"] {
+      font-family: var(--font-family-default);
+    }
+
     .meter {
       background-color: var(--t5e-color-component-card-dark-darker);
       border: none;

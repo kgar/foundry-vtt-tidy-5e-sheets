@@ -382,6 +382,10 @@
         content: none;
       }
     }
+
+    input[type="text"] {
+      font-family: var(--font-family-default);
+    }
   }
 
   /* Cell styles */
