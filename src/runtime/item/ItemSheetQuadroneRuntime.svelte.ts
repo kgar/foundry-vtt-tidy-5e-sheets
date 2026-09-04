@@ -6,7 +6,6 @@ import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { CustomContent, Tab } from 'src/types/types';
-import { Activities } from 'src/features/activities/activities';
 import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
 import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
 import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemBackgroundDetailsTab.svelte';
@@ -51,7 +50,6 @@ import {
   getTabVisibilityLevels,
 } from 'src/settings/settings-data-models';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
 import { checkCondition } from 'src/utils/iteration';
@@ -336,15 +334,21 @@ class ItemSheetQuadroneRuntimeImpl {
   }
 }
 
+function countItemSheetActivities(
+  sections: ItemSheetQuadroneContext['activities'] | undefined,
+) {
+  return (
+    sections?.reduce((count, section) => count + section.activities.length, 0) ??
+    0
+  );
+}
+
 export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
   [
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (ctx) =>
-        Activities.getItemSheetActivities(
-          ctx.item ?? ctx.context?.item,
-          ctx.unlocked ?? ctx.context?.unlocked ?? false,
-        ).length,
+        countItemSheetActivities(ctx.context?.activities ?? ctx.activities),
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
@@ -354,10 +358,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       enabled: (context: ItemSheetQuadroneContext) =>
         context.document.system.identified !== false ||
         FoundryAdapter.isInGmEditMode(context.document) ||
-        Activities.getItemSheetActivities(
-          context.item,
-          context.unlocked,
-        ).length > 0,
+        countItemSheetActivities(context.activities) > 0,
       types: new Set<string>([
         CONSTANTS.ITEM_TYPE_CONSUMABLE,
         CONSTANTS.ITEM_TYPE_EQUIPMENT,
