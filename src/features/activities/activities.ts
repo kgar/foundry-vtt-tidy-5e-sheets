@@ -24,7 +24,7 @@ export class Activities {
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
-      activities: activities.filter((activity: Activity5e) =>
+      activities: (activities ?? []).filter((activity: Activity5e) =>
         Activities.isActivityVisible(activity),
       ),
     };
