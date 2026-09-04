@@ -6,7 +6,6 @@ import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { CustomContent, Tab } from 'src/types/types';
-import { Activities } from 'src/features/activities/activities';
 import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
 import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
 import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemBackgroundDetailsTab.svelte';
@@ -345,14 +344,23 @@ class ItemSheetQuadroneRuntimeImpl {
   }
 }
 
+function countItemSheetActivities(
+  sections: ItemSheetQuadroneContext['activities'] | undefined,
+) {
+  return (
+    sections?.reduce(
+      (count, section) => count + section.activities.length,
+      0,
+    ) ?? 0
+  );
+}
+
 export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
   [
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
-      itemCount: (context) =>
-        (context.document.system.activities ?? []).filter((a: Activity5e) =>
-          Activities.isConfigurable(a),
-        ).length,
+      itemCount: (ctx) =>
+        countItemSheetActivities(ctx.context?.activities ?? ctx.activities),
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
@@ -361,7 +369,8 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       },
       enabled: (context: ItemSheetQuadroneContext) =>
         context.document.system.identified !== false ||
-        FoundryAdapter.isInGmEditMode(context.document),
+        FoundryAdapter.isInGmEditMode(context.document) ||
+        countItemSheetActivities(context.activities) > 0,
       types: new Set<string>([
         CONSTANTS.ITEM_TYPE_CONSUMABLE,
         CONSTANTS.ITEM_TYPE_EQUIPMENT,

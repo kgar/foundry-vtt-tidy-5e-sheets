@@ -307,6 +307,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
     const target = this.item.type === 'spell' ? this.item.system.target : null;
 
+    const itemSheetActivities = Activities.getItemSheetActivities(
+      this.item,
+      documentSheetContext.unlocked,
+    );
+
     const context: ItemSheetQuadroneContext = {
       actionSectionEnabled: SheetSections.showActionSectionConfig(
         this.document.parent,
@@ -314,11 +319,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       activities: [
         {
           key: CONSTANTS.TAB_ITEM_ACTIVITIES,
-          activities: (this.document.system.activities ?? [])
-            .filter((a: any) => {
-              return Activities.isConfigurable(a);
-            })
-            ?.map((activity: Activity5e) =>
+          activities: itemSheetActivities
+            .map((activity: Activity5e) =>
               Activities.getActivityItemContext(
                 this,
                 activity,
@@ -335,7 +337,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             owner: this.document.isOwner,
             unlocked: documentSheetContext.unlocked,
           }),
-          show: true,
+          show: itemSheetActivities.length > 0,
           dataset: {},
           label: 'DND5E.ACTIVITY.Title.other',
           sectionActions: SectionActions.getItemActivityHeaderActions(

@@ -249,6 +249,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       cell: {
         component: ItemTimeColumn,
         props: (args) => ({
+          rowContext: args.rowContext,
           rowDocument: args.rowDocument,
         }),
       },

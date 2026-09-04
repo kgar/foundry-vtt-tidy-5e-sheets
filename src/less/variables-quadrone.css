@@ -338,6 +338,8 @@
     --t5e-font-family-forms: 'Signika Negative', 'Signika', Roboto, Arial, sans-serif;
     /* Font weights */
     --font-weight-alternate: 300;
+    --font-weight-default: 360;
+    --font-weight-label: 450;
     /* All text colors inverted in dark mode. */
     /* ondefault */
     --t5e-color-text-default: var(--t5e-color-palette-grey-100);

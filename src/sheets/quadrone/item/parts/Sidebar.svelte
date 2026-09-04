@@ -334,7 +334,7 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if FoundryAdapter.isAttunementApplicable(context.item)}
+    {#if FoundryAdapter.isAttunementApplicable(context.item) && !unidentified}
       {const attuned = $derived(context.system.attuned)}
       <li>
         <PillSwitch
