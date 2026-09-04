@@ -8,26 +8,20 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function configureGroupContextMenu(element: HTMLElement, app: any) {
-  const isQuadroneSheet = element.closest('.quadrone');
+  const { uuid } = element.dataset;
+  const actor = app.document.system.members.find(
+    (m: Group5eMember) => m.actor.uuid === uuid,
+  )?.actor;
 
-  if (isQuadroneSheet) {
-    const { uuid } = element.dataset;
-    const actor = app.document.system.members.find(
-      (m: Group5eMember) => m.actor.uuid === uuid,
-    )?.actor;
-
-    if (actor) {
-      ui.context.menuItems = getGroupMemberContextOptions(app.document, actor);
-    }
-
-    TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
-      app.document,
-      actor,
-      ui.context.menuItems,
-    );
-
-    return;
+  if (actor) {
+    ui.context.menuItems = getGroupMemberContextOptions(app.document, actor);
   }
+
+  TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
+    app.document,
+    actor,
+    ui.context.menuItems,
+  );
 }
 
 /**

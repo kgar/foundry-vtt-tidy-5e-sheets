@@ -14,7 +14,7 @@ import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-conte
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
-import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
+import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu';
 import { configureVehicleMemberContextMenu } from './tidy5e-vehicle-member-context-menu';
 import { configureGroupSkillRollContextMenu } from './tidy5e-group-skill-roll-context-menu';
 import { configureSkillRollContextMenu } from './tidy5e-skill-roll-context-menu';
