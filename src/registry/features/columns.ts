@@ -667,6 +667,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         cell: {
           component: ItemTimeColumn,
           props: (args) => ({
+            rowContext: args.rowContext,
             rowDocument: args.rowDocument,
           }),
         },

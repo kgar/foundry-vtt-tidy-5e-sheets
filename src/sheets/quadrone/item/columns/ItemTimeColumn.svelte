@@ -1,22 +1,29 @@
 <script lang="ts">
+  import { Activities } from 'src/features/activities/activities';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
+  import type { ActivityItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
-  import { firstOfSet } from 'src/utils/set';
 
   type Props = {
     rowDocument: Item5e;
+    rowContext?: { activities?: ActivityItemContext[] };
   };
 
-  let { rowDocument: item }: Props = $props();
+  let { rowDocument: item, rowContext }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let inferredActivation = $derived(
-    item.system.activities
-      ? firstOfSet<any>(item.system.activities)?.activation
-      : '',
-  );
+  // Prefer prepared visible activities; otherwise match system getUsageData / _prepareLabels.
+  let inferredActivation = $derived.by(() => {
+    const prepared = rowContext?.activities;
+    const activity = prepared
+      ? prepared.map((ctx) => ctx.activity).find((a) => a?.activation)
+      : item.system.activities?.find(
+          (a: any) => 'activation' in a && Activities.isActivityVisible(a),
+        );
+    return activity?.activation;
+  });
 
   let abbrOrLabel = $derived(
     FoundryAdapter.getActivationText(inferredActivation?.type),

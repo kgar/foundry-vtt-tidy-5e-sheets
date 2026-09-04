@@ -1,6 +1,7 @@
 <script lang="ts">
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { Activities } from 'src/features/activities/activities';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getActorSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -23,6 +24,16 @@
 
   let isEditing = $state(false);
 
+  let visibleActivities = $derived(
+    context.itemContext[ctx.document.id]?.activities?.map(
+      (activityCtx) => activityCtx.activity,
+    ) ??
+      Activities.getVisibleActivities(
+        ctx.document,
+        ctx.document.system.activities ?? [],
+      ),
+  );
+
   const { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
       if (ctx.linkedUses) {
@@ -39,7 +50,7 @@
         };
       }
 
-      const primaryActivity = ctx.document.system.activities?.contents[0];
+      const primaryActivity = visibleActivities[0];
       const usePrimaryActivity =
         ctx.document.system.uses.max === '' &&
         !isNil(primaryActivity?.uses?.max, '');
@@ -281,12 +292,12 @@
             />
           {/if}
         </div>
-      {:else if ctx.document.system.activities?.size > 0}
+      {:else if visibleActivities.length > 0}
         <div class="pin-counter {ctx.resource}">
           <span class="subtitle font-default-medium color-text-lighter"
-            >{ctx.document.system.activities.size}
+            >{visibleActivities.length}
             {localize(
-              ctx.document.system.activities.size === 1
+              visibleActivities.length === 1
                 ? 'DND5E.ACTIVITY.Title.one'
                 : 'DND5E.ACTIVITY.Title.other',
             )}</span
