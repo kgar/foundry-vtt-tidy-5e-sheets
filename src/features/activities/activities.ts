@@ -24,10 +24,8 @@ export class Activities {
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
-      activities: activities.filter(
-        (activity: Activity5e) =>
-          !item.getFlag('dnd5e', 'riders.activity')?.includes(activity.id) &&
-          Activities.isActivityVisible(activity),
+      activities: activities.filter((activity: Activity5e) =>
+        Activities.isActivityVisible(activity),
       ),
     };
 
