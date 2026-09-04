@@ -205,7 +205,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     _onChangeForm(formConfig: unknown, event: any) {
       if (
-        FoundryAdapter.isElementInstanceOf(
+        foundry.utils.isElementInstanceOf(
           event.target,
           foundry.applications.elements.HTMLSecretBlockElement,
         )

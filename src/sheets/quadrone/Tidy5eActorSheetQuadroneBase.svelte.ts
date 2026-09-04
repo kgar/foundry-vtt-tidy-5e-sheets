@@ -58,7 +58,6 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
-import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { error, warn } from 'src/utils/logging';
@@ -2483,8 +2482,7 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     onItemToggled(itemId: string, isVisible: boolean, location: string) {
-      const locationSet = mapGetOrInsert(
-        this.expandedItems,
+      const locationSet = this.expandedItems.getOrInsert(
         itemId,
         new Set<string>(),
       );

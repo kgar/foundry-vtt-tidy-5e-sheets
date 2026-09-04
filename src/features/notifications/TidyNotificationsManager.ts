@@ -27,17 +27,11 @@ export class TidyNotificationsManager {
       notifications.firstTimeWelcome = true;
     }
 
-    if (game.release.generation < 14 && !notifications.classicRetirementImminent) {
-      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetirementImminent');
+    if (!notifications.classicRetired) {
+      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');
       this.sendTidyChatMessageToGm(`<p>${message}</p>`);
-      notifications.classicRetirementImminent = true;
+      notifications.classicRetired = true;
     }
-    
-    // if (!notifications.classicRetired) {
-    //   const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');
-    //   this.sendTidyChatMessageToGm(`<p>${message}</p>`);
-    //   notifications.classicRetired = true;
-    // }
 
     FoundryAdapter.setTidySetting('notifications', notifications);
   }

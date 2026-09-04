@@ -210,8 +210,6 @@ declare global {
     ): HTMLElement;
   }
 
-  /* game.release.generation > 13 */
-
   declare var _del: any;
   function _replace<T>(arg: T): T;
 }

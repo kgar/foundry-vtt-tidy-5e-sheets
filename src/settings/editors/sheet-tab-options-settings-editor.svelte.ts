@@ -1,7 +1,9 @@
 import type { Actor5e } from 'src/types/types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 import type { Item5e } from 'src/types/item.types';
-import { mapGetOrInsert } from 'src/utils/map';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
   SectionConfig,
@@ -57,10 +59,7 @@ export type ButtonNavigation = {
 };
 
 export type SectionSetting =
-  | BooleanSetting
-  | RadioSetting<any>
-  | ButtonSetting
-  | ButtonNavigation;
+  BooleanSetting | RadioSetting<any> | ButtonSetting | ButtonNavigation;
 
 export type SectionOptionGroup = {
   title: string;
@@ -249,7 +248,7 @@ export function getSheetTabOptionsSettingsEditor(
           }
 
           const doc = setting.doc ?? document;
-          const toSave = mapGetOrInsert(documentsToSave, doc, {});
+          const toSave = documentsToSave.getOrInsert(doc, {});
 
           if (setting.type === 'boolean') {
             toSave[setting.prop] = setting.checked;
@@ -263,13 +262,7 @@ export function getSheetTabOptionsSettingsEditor(
         TidyFlags.sectionConfig.get(document) ?? {};
 
       if (sectionsAreDefault()) {
-        if (game.release.generation < 14) {
-          delete sectionConfig[settings.tabId];
-          // @ts-expect-error
-          sectionConfig[`-=${settings.tabId}`] = null;
-        } else {
-          sectionConfig[settings.tabId] = _del;
-        }
+        sectionConfig[settings.tabId] = _del;
       } else {
         sectionConfig[settings.tabId] = this.value.sections.reduce<
           Record<string, SectionConfig>

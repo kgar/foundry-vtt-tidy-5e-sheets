@@ -399,20 +399,9 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.DefaultDeathSaveRoll.hint',
           scope: 'world',
           config: true,
-          default:
-            game.release.generation < 14
-              ? CONST.DICE_ROLL_MODES.PUBLIC
-              : 'public',
+          default: 'public',
           type: String,
-          choices:
-            game.release.generation < 14
-              ? {
-                  [CONST.DICE_ROLL_MODES.PUBLIC]: 'CHAT.RollPublic',
-                  [CONST.DICE_ROLL_MODES.PRIVATE]: 'CHAT.RollPrivate',
-                  [CONST.DICE_ROLL_MODES.BLIND]: 'CHAT.RollBlind',
-                  [CONST.DICE_ROLL_MODES.SELF]: 'CHAT.RollSelf',
-                }
-              : CONFIG.ChatMessage.modes,
+          choices: CONFIG.ChatMessage.modes,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('defaultDeathSaveRoll');

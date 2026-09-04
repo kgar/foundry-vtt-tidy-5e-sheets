@@ -143,7 +143,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
       const matchesDefault =
         curr.tabs.length === curr.defaultTabs.length &&
         curr.tabs.every((tab) => {
-          return FoundryAdapter.foundry13Equals(defaultMap.get(tab.id), tab);
+          return foundry.utils.equals(defaultMap.get(tab.id), tab);
         });
 
       const hasVisibilityOverride = curr.tabs.some(

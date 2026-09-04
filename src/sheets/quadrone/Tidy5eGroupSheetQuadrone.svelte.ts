@@ -43,7 +43,6 @@ import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
-import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -385,8 +384,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
       let sectionKey = customSections[actor.id] ?? actor.type;
 
-      let section: GroupMemberSection = mapGetOrInsertComputed(
-        sections,
+      let section: GroupMemberSection = sections.getOrInsertComputed(
         sectionKey,
         (key) => ({
           label: FoundryAdapter.localize(key),
@@ -578,7 +576,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         trait: 'tool',
       });
 
-      const groupTool = mapGetOrInsert(tools, key, {
+      const groupTool = tools.getOrInsert(key, {
         identifiers: new Set<string>(),
         label: toolLabel,
         key: key,
@@ -590,7 +588,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
   _prepareMemberMasteries(actor: any, masteries: Map<string, GroupTrait>) {
     for (const key of actor.system.traits?.weaponProf?.mastery?.value ?? []) {
-      const groupMastery = mapGetOrInsertComputed(masteries, key, (key) => ({
+      const groupMastery = masteries.getOrInsertComputed(key, (key) => ({
         key,
         label: dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key,
         identifiers: new Set<string>(),
@@ -787,8 +785,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const member = memberUuid ? fromUuidSync(memberUuid) : undefined;
 
     const slot = target.dataset.occupantSlot as
-      | FacilityOccupantSlot
-      | undefined;
+      FacilityOccupantSlot | undefined;
 
     if (!member || !slot) {
       return;
@@ -930,11 +927,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
    * Browse for a facility and create it on the member. GM only, so it ignores
    * level restrictions.
    */
-  async addMemberFacility(
-    member: Actor5e,
-    facilityType: string,
-    event: Event,
-  ) {
+  async addMemberFacility(member: Actor5e, facilityType: string, event: Event) {
     if (!this.isEditable) {
       return;
     }

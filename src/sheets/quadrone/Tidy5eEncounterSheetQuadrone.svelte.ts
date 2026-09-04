@@ -34,7 +34,6 @@ import {
   getSpecializedUpdateInformation,
   shouldParseInputDelta,
 } from 'src/utils/form';
-import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
@@ -438,7 +437,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         : details.type.value;
 
     if (!isNil(creatureType)) {
-      mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+      creatureTypeCountMap.getOrInsertComputed(creatureType, () => ({
         type: creatureType,
         label: creatureTypeLabel ?? creatureType,
         quantity: 0,

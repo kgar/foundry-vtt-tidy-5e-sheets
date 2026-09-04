@@ -192,7 +192,7 @@
         blankValue={field.nullable ? null : ''}
       />
     </select>
-  {:else if game.release.generation >= 14 && field instanceof foundry.data.fields.StringField && !(choices ?? field.choices) && field.constructor.name === 'FormulaField'}
+  {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices) && field.constructor.name === 'FormulaField'}
     {#key config.value}
       <formula-input
         context="default"

@@ -52,7 +52,6 @@ import {
 } from 'src/settings/settings-data-models';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
-import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
 import { checkCondition } from 'src/utils/iteration';
 import type {
@@ -315,11 +314,11 @@ class ItemSheetQuadroneRuntimeImpl {
 
     // Modify the rules for whether to enable the tab.
     if (tab && options?.tabCondition?.predicate) {
-      const subtypePredicates = mapGetOrInsertComputed(
-        this._registeredSubtypeTabConditions,
-        subtype,
-        () => [],
-      );
+      const subtypePredicates =
+        this._registeredSubtypeTabConditions.getOrInsertComputed(
+          subtype,
+          () => [],
+        );
 
       if (!this._tabIdsWithSubtypeConditions.has(tabId)) {
         this._tabIdsWithSubtypeConditions.add(tabId);

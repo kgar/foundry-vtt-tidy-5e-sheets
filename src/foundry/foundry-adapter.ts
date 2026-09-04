@@ -227,16 +227,6 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
-  // game.release.generation < 14
-  doActionOnMiddleClick(event: MouseEvent, action: () => any) {
-    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
-      return;
-    }
-
-    event.preventDefault();
-
-    return action();
-  },
   documentIsEditable(document: any) {
     if (document.pack) {
       const pack = game.packs.get(document.pack);
@@ -245,17 +235,6 @@ export const FoundryAdapter = {
     return document.testUserPermission(
       game.user,
       CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
-    );
-  },
-  // game.release.generation < 14
-  editOnMiddleClick(
-    event: MouseEvent,
-    entityWithSheet: {
-      sheet: { render: (force: boolean) => void; isEditable: boolean };
-    },
-  ) {
-    return FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.editOnMouseEvent(event, entityWithSheet),
     );
   },
   editOnMouseEvent(event: MouseEvent, doc: any) {
@@ -1657,118 +1636,5 @@ export const FoundryAdapter = {
           ...CONFIG.DND5E.currencies.gp,
           key: 'gp',
         };
-  },
-  // TODO: inline when >= V14
-  isElementInstanceOf(element: HTMLElement, tagOrClass: any) {
-    if (game.release.generation < 14) {
-      if (typeof tagOrClass === 'string') {
-        return element.tagName === tagOrClass.toUpperCase();
-      }
-
-      let proto = element.constructor;
-      do {
-        if (proto.name === tagOrClass.name) return true;
-        proto = Object.getPrototypeOf(proto);
-      } while (proto);
-      return false;
-    }
-
-    return foundry.utils.isElementInstanceOf(element, tagOrClass);
-  },
-  // stopgap until Foundry 14+ ; inlined minimal code for equals() util
-  // game.release.generation <= 14
-  foundry13Equals(a: any, b: any): boolean {
-    if (foundry.utils.equals) {
-      // smoke 'em if we got 'em
-      return foundry.utils.equals(a, b);
-    }
-
-    // One day, many moons from now, dnd5e 6.0 will arrive, and we will 
-    // purge this code and simply use the Foundry helper,
-    // since Foundry 14 will be the only eligible version 💪
-    // -----------------------------------------------------------
-    // Most of the supporting code for the Foundry 14 equals() util.
-
-    const typePrototypes = [
-      [Set, 'Set'],
-      [Map, 'Map'],
-      [Promise, 'Promise'],
-      [Error, 'Error'],
-      // [Color, 'number'],
-    ];
-
-    const plainObjectPrototype = Object.getPrototypeOf({});
-
-    function iterateEntries(obj: Record<string, unknown>) {
-      if (obj == null)
-        throw new TypeError('Cannot convert undefined or null to object');
-      return Iterator.from(objectEntries(obj));
-    }
-
-    function* objectEntries(obj: Record<string, unknown>) {
-      for (const key in obj) {
-        if (Object.hasOwn(obj, key)) yield [key, obj[key]];
-      }
-    }
-
-    function getType(variable: any) {
-      // Primitive types, handled with simple typeof check
-      const typeOf = typeof variable;
-      if (typeOf !== 'object') return typeOf;
-
-      // Special cases of object
-      if (variable === null) return 'null';
-      if (isPlainObject(variable)) return 'Object'; // Plain objects, including those with a null prototype.
-      if (Array.isArray(variable)) return 'Array';
-
-      // Match prototype instances
-      for (const [cls, type] of typePrototypes) {
-        //@ts-expect-error
-        if (variable instanceof cls) return type;
-      }
-      if ('HTMLElement' in globalThis) {
-        // Detect if a value is an HTMLElement in a way that is agnostic of whichever Document it was created in.
-        if (isElementInstanceOf(variable, HTMLElement)) return 'HTMLElement';
-      }
-
-      // Unknown Object type
-      return 'Unknown';
-    }
-
-    function isElementInstanceOf(element: HTMLElement, tagOrClass: any) {
-      if (typeof tagOrClass === 'string') {
-        return element.tagName === tagOrClass.toUpperCase();
-      }
-
-      let proto = element.constructor;
-      do {
-        if (proto.name === tagOrClass.name) return true;
-        proto = Object.getPrototypeOf(proto);
-      } while (proto);
-      return false;
-    }
-
-    function isPlainObject(value: unknown) {
-      if (!value) return false;
-      const prototype = Object.getPrototypeOf(value);
-      return prototype === plainObjectPrototype || prototype === null;
-    }
-
-    // The actual equals() util from Foundry 14
-    if (a === b) return true; // Strict equality
-    const ta = getType(a);
-    const tb = getType(b);
-    if (ta !== tb) return false; // Mismatched types are not equal
-
-    // Complex objects cannot be treated as equal unless they expose an equality testing function
-    if (typeof a.equals === 'function') return a.equals(b);
-    if (ta !== 'Object') return false;
-
-    // For simple objects, test that their keys are individually equivalent
-    if (Object.keys(a).length !== Object.keys(b).length) return false;
-    return iterateEntries(a).every(([k, v0]) =>
-      //@ts-expect-error
-      FoundryAdapter.foundry13Equals(v0, b[k]),
-    );
   },
 };

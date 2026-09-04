@@ -39,7 +39,6 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
 import { SheetSections } from 'src/features/sections/SheetSections';
 
@@ -786,10 +785,6 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   _renderChild(app: any, options = {}) {
-    if (game.release.generation < 14) {
-      return app.render({ force: true, ...options });
-    }
-
     if (this.parent) {
       return this.parent.renderChild(app, options);
     }
@@ -818,8 +813,7 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
-    const locationSet = mapGetOrInsert(
-      this.expandedItems,
+    const locationSet = this.expandedItems.getOrInsert(
       itemId,
       new Set<string>(),
     );
