@@ -878,7 +878,7 @@ export function initSettings() {
     FoundryAdapter.registerTidySetting(key, options);
   };
 
-  // Register before init-time reads (used to filter menus and classic-only config).
+  // Register before init-time reads
   registerSetting('truesight', SettingsProvider.settings.truesight);
 
   const initRegisteredKeys = new Set(['hideClassic', 'truesight']);

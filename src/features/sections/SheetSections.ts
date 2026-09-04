@@ -922,7 +922,6 @@ export class SheetSections {
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 
-  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
   static configureGroupMembers(
     sections: GroupMemberSection[],
     tabId: string,
