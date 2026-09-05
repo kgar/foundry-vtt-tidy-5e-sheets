@@ -35,7 +35,7 @@
   <a
     class="tidy-table-button"
     data-action="toggle"
-    data-tooltip={'DND5E.ConcentrationBreak'}
+    data-tooltip={'DND5E.CONCENTRATION.Action.End'}
   >
     <Dnd5eIcon src={`systems/dnd5e/icons/svg/break-concentration.svg`} />
   </a>
