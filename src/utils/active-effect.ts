@@ -5,14 +5,14 @@ import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
- * Map category types from `EffectsElement.prepareCategories` to `DND5E.EffectType` 
+ * Map category types from EffectsElement.prepareCategories to DND5E.EFFECT.Status.*
  * labels for the switch pills.
  */
 const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
-  temporary: 'DND5E.EffectType.Temporary',
-  passive: 'DND5E.EffectType.Passive',
-  inactive: 'DND5E.EffectType.Inactive',
-  suppressed: 'DND5E.EffectType.Unavailable',
+  temporary: 'DND5E.EFFECT.Status.Temporary',
+  passive: 'DND5E.EFFECT.Status.Passive',
+  inactive: 'DND5E.EFFECT.Status.Inactive',
+  suppressed: 'DND5E.EFFECT.Status.Unavailable',
 };
 
 export class ActiveEffectsHelper {
@@ -33,10 +33,7 @@ export class ActiveEffectsHelper {
    */
   static getStatusEffectName(statusId: string): string | undefined {
     const statusEffects = CONFIG.statusEffects as any;
-
-    return game.release.generation < 14
-      ? statusEffects.find((s: any) => s.id === statusId)?.name
-      : statusEffects[statusId]?.name;
+    return statusEffects[statusId]?.name;
   }
 
   /**
@@ -109,17 +106,7 @@ export class ActiveEffectsHelper {
   }
 
   static findMode(change: any, fallback = '—') {
-    if (game.release.generation >= 14) {
-      const key = `EFFECT.CHANGES.TYPES.${change.type}`;
-      return change.type ? FoundryAdapter.localize(key) : fallback;
-    }
-
-    const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
-      ([_, value]) => value === change.mode,
-    );
-
-    return entry
-      ? FoundryAdapter.localize(`EFFECT.MODE_${entry[0]}`)
-      : fallback;
+    const key = `EFFECT.CHANGES.TYPES.${change.type}`;
+    return change.type ? FoundryAdapter.localize(key) : fallback;
   }
 }

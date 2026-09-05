@@ -5,7 +5,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
-  import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
+  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
@@ -167,7 +167,7 @@
         }
 
         return {
-          title: x.title,
+          title: x.name,
           value,
           toCopy: formula,
         } satisfies ScaleValuePill;
@@ -534,6 +534,19 @@
                 document: context.item,
               }),
             )}
+          onkeydown={(ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              context.sheet._renderChild(
+                new SectionSelectorApplication({
+                  flag: TidyFlags.section.prop,
+                  sectionType: localize(sectionType),
+                  callingDocument: context.item,
+                  document: context.item,
+                }),
+              );
+            }
+          }}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -564,6 +577,18 @@
                   document: context.item,
                 }),
               )}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                context.sheet._renderChild(
+                  new SectionSelectorApplication({
+                    flag: TidyFlags.actionSection.prop,
+                    sectionType: localize('TIDY5E.Section.ActionLabel'),
+                    callingDocument: context.item,
+                    document: context.item,
+                  })
+                )
+              }}}
           >
             <span class="text-normal">
               {actionSectionLabel}

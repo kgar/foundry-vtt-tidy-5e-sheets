@@ -15,18 +15,11 @@
     ActiveEffectsHelper.getActiveEffectPills(activeEffect),
   );
 
-  let locKeys =
-    game.release.generation >= 14
-      ? {
-          key: 'EFFECT.FIELDS.changes.element.key.label',
-          mode: 'EFFECT.FIELDS.changes.element.type.label',
-          value: 'EFFECT.FIELDS.changes.element.value.label',
-        }
-      : {
-          key: 'EFFECT.ChangeKey',
-          mode: 'EFFECT.ChangeMode',
-          value: 'EFFECT.ChangeValue',
-        };
+  let locKeys = {
+    key: 'EFFECT.FIELDS.changes.element.key.label',
+    mode: 'EFFECT.FIELDS.changes.element.type.label',
+    value: 'EFFECT.FIELDS.changes.element.value.label',
+  };
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -58,7 +58,6 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
-import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { error, warn } from 'src/utils/logging';
@@ -832,7 +831,11 @@ export function getTidy5eActorSheetQuadroneBase<
       };
 
       return Object.entries(context.system[property] ?? {})
-        .filter(([key]) => key in CONFIG.DND5E[property] || ((property === 'tools') && (key in CONFIG.DND5E.vehicleTypes)))
+        .filter(
+          ([key]) =>
+            key in CONFIG.DND5E[property] ||
+            (property === 'tools' && key in CONFIG.DND5E.vehicleTypes),
+        )
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
@@ -963,7 +966,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
       const senses = Object.entries(CONFIG.DND5E.senses).reduce<
         ActorSpeedSenseEntryContext[]
-      >((acc, [key, label]) => {
+      >((acc, [key, config]) => {
         const value = senseConfig.ranges[key];
 
         if (!value || value === 0) {
@@ -972,7 +975,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
         acc.push({
           key,
-          label,
+          label: config.label,
           value: Math.round(+value).toString(),
           units:
             CONFIG.DND5E.movementUnits[senseConfig.units]?.abbreviation ??
@@ -1163,7 +1166,7 @@ export function getTidy5eActorSheetQuadroneBase<
       if (args.tabId === CONSTANTS.TAB_EFFECTS) {
         return await ActiveEffect.implementation.create(
           {
-            name: game.i18n.localize('DND5E.EffectNew'),
+            name: game.i18n.localize('DND5E.EFFECT.New'),
             icon: 'icons/svg/aura.svg',
             type: datasetType,
             ...restDataSet,
@@ -1459,7 +1462,7 @@ export function getTidy5eActorSheetQuadroneBase<
         sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.getRelativeUUID(sheetPinDoc);
+        let relativeUuid = FoundryAdapter.buildRelativeUuid(sheetPinDoc);
         return await this._onDropPin(event, {
           id: relativeUuid,
           doc: sheetPinDoc,
@@ -1784,7 +1787,7 @@ export function getTidy5eActorSheetQuadroneBase<
       // Check to make sure items of this type are allowed on this actor
       if (!isSupportedItemType) {
         ui.notifications.warn(
-          game.i18n.format('DND5E.ActorWarningInvalidItem', {
+          game.i18n.format('DND5E.ACTOR.Warning.InvalidItem', {
             itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
             actorType: game.i18n.localize(
               CONFIG.Actor.typeLabels[this.actor.type],
@@ -2483,8 +2486,7 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     onItemToggled(itemId: string, isVisible: boolean, location: string) {
-      const locationSet = mapGetOrInsert(
-        this.expandedItems,
+      const locationSet = this.expandedItems.getOrInsert(
         itemId,
         new Set<string>(),
       );

@@ -7,7 +7,7 @@ export function configureVehicleMemberContextMenu(
   element: HTMLElement,
   app: Tidy5eVehicleSheetQuadrone,
 ) {
-  ui.context.menuItems = getVehicleMemberContextOptionsQuadrone(element, app);
+  ui.context.menuItems = getVehicleMemberContextOptions(element, app);
 
   TidyHooks.tidy5eSheetsGetVehicleMemberContextOptions(
     app.document,
@@ -25,7 +25,7 @@ export function configureVehicleMemberContextMenu(
  * @param actor    The actor for whom the context menu is activate.
  * @returns        Context menu options.
  */
-function getVehicleMemberContextOptionsQuadrone(
+function getVehicleMemberContextOptions(
   element: HTMLElement,
   app: Tidy5eVehicleSheetQuadrone,
 ) {

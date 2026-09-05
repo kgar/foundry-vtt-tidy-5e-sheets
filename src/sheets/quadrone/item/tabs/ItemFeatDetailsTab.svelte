@@ -128,7 +128,7 @@
 
     <!-- Max Enchantments -->
     <FormGroup
-      label="DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label"
+      label="DND5E.FEATURE.FIELDS.enchant.items.max.label"
       labelFor="{appId}-enchant-max"
       document={context.document}
       field={context.fields.enchant.fields.max}
@@ -136,12 +136,12 @@
         id: `${appId}-enchant-max`,
         value: context.source.enchant.max,
       }}
-      hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint"
+      hint="DND5E.FEATURE.FIELDS.enchant.items.max.hint"
     />
 
     <!-- Enchantment Replacement -->
     <FormGroup
-      label="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label"
+      label="DND5E.FEATURE.FIELDS.enchant.items.period.label"
       labelFor="{appId}-enchant-period"
       document={context.document}
       field={context.fields.enchant.fields.period}
@@ -149,7 +149,7 @@
         id: `${appId}-enchant-period`,
         value: context.source.enchant.period,
       }}
-      hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint"
+      hint="DND5E.FEATURE.FIELDS.enchant.items.period.hint"
       blankLabel="DND5E.ENCHANTMENT.Period.Never"
       choices={context.config.enchantmentPeriods}
     />

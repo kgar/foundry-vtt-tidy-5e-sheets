@@ -25,7 +25,7 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
         app:
           | TidyExtensibleDocumentSheetMixinInstance
           | SvelteApplicationMixinInstance,
-        node: HTMLHtmlElement
+        node: HTMLHtmlElement,
       ) => {
         if (api.isTidy5eSheet(app)) {
           const popoutDocument = node.ownerDocument;
@@ -37,14 +37,14 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
           const stylesheet = this.subscribeToThemeChanges(
             popoutWindow,
             app,
-            popoutDocument
+            popoutDocument,
           );
 
           this.shimSheetLockToggle(app, node, abortController);
 
           this.poppedOut.set(app, { stylesheet, abortController });
         }
-      }
+      },
     );
 
     const unsubscribe = (app: unknown) => {
@@ -63,7 +63,7 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
   private subscribeToThemeChanges(
     popoutWindow: Window & typeof globalThis,
     app: unknown,
-    popoutDocument: Document
+    popoutDocument: Document,
   ) {
     const copiedStylesheet = new popoutWindow.CSSStyleSheet();
 
@@ -76,20 +76,19 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
 
   private shimSheetLockToggle(
     app:
-      | TidyExtensibleDocumentSheetMixinInstance
-      | SvelteApplicationMixinInstance,
+      TidyExtensibleDocumentSheetMixinInstance | SvelteApplicationMixinInstance,
     node: HTMLHtmlElement,
-    controller: AbortController
+    controller: AbortController,
   ) {
-    if ('toggleSheetMode' in app) {
+    if ('changeMode' in app) {
       node
         .querySelector('.window-header .header-sheet-edit-mode-toggle input')
         ?.addEventListener(
           'change',
           () => {
-            app.toggleSheetMode();
+            app.changeMode();
           },
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
     }
   }

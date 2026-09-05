@@ -530,21 +530,3 @@ export class Actions {
     };
   }
 }
-
-export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = TidyFlags.selectedTabs.get(actor);
-
-  if (selectedTabIds) {
-    return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
-  }
-
-  const defaultTabIds = actor.system.isCharacter
-    ? settings.value.defaultCharacterSheetTabs
-    : actor.system.isNPC
-      ? settings.value.defaultNpcSheetTabs
-      : actor.system.isVehicle
-        ? settings.value.defaultVehicleSheetTabs
-        : [];
-
-  return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
-}

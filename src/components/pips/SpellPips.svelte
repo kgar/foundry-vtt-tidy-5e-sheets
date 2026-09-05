@@ -1,6 +1,5 @@
 <script lang="ts">
   import type {
-    ActorSheetClassicContextV2,
     ActorSheetQuadroneContext,
     SpellbookSection,
   } from 'src/types/types';
@@ -13,10 +12,7 @@
 
   let { section }: Props = $props();
 
-  let context =
-    $derived(
-      getSheetContext<ActorSheetClassicContextV2 | ActorSheetQuadroneContext>(),
-    );
+  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   function onPipClick(index: number) {
     let isEmpty = index >= (section.uses ?? 0);

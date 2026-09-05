@@ -34,7 +34,6 @@ import {
   getSpecializedUpdateInformation,
   shouldParseInputDelta,
 } from 'src/utils/form';
-import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
@@ -123,7 +122,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       ]),
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
@@ -438,7 +437,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         : details.type.value;
 
     if (!isNil(creatureType)) {
-      mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+      creatureTypeCountMap.getOrInsertComputed(creatureType, () => ({
         type: creatureType,
         label: creatureTypeLabel ?? creatureType,
         quantity: 0,
@@ -568,7 +567,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       {
         id: foundry.utils.randomID(),
         img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-        name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+        name: FoundryAdapter.localize('DND5E.ItemNew', { type: 'TIDY5E.Encounter.Placeholder' }),
       },
       data,
     );

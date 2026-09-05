@@ -23,7 +23,7 @@
   const localize = FoundryAdapter.localize;
 
   let toggleTitle = $derived(
-    localize(enabled ? 'DND5E.EffectDisable' : 'DND5E.EffectEnable'),
+    localize(enabled ? 'DND5E.EFFECT.Action.DisableEffect' : 'DND5E.EFFECT.Action.EnableEffect'),
   );
 
   let tooltip = $derived(

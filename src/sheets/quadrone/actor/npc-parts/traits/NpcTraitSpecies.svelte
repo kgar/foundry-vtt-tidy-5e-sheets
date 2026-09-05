@@ -34,7 +34,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('DND5E.DescriptionView', {
+        aria-label={localize('TIDY5E.DescriptionView', {
           description: localize('TYPES.Item.race'),
         })}
         data-keyboard-focus
@@ -44,7 +44,7 @@
       >
         <!-- svelte-ignore a11y_missing_attribute -->
         <span
-          aria-label={localize('DND5E.DescriptionView', {
+          aria-label={localize('TIDY5E.DescriptionView', {
             description: localize('TYPES.Item.race'),
           })}
           class="item-image-link"

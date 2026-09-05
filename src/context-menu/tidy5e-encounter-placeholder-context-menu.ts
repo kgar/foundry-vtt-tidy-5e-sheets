@@ -14,7 +14,7 @@ export function configureEncounterPlaceholderContextMenu(
     return;
   }
 
-  ui.context.menuItems = getEncounterPlaceholderContextOptionsQuadrone(
+  ui.context.menuItems = getEncounterPlaceholderContextOptions(
     app.document,
     placeholderId,
   );
@@ -25,7 +25,7 @@ export function configureEncounterPlaceholderContextMenu(
     ui.context.menuItems,
   );
 }
-function getEncounterPlaceholderContextOptionsQuadrone(
+function getEncounterPlaceholderContextOptions(
   encounter: Actor5e,
   placeholderId: string,
 ): ContextMenuEntry[] {

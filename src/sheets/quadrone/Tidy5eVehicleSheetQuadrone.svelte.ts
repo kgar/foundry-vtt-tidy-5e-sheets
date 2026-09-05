@@ -30,7 +30,6 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
-import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -139,7 +138,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       context: new Map<any, any>(this._getActorSvelteContext()),
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
@@ -315,12 +314,9 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       traits: this._prepareTraits(),
       travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
-      utilities: {},
       ...actorContext,
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
     };
-
-    context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     await this._prepareItems(context);
 
@@ -1028,7 +1024,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       toUpdate['system.draft.value'] = draft;
     }
 
-    // game.release.generation <= 14 // convert to batched update
+    // TODO: convert to batched update
     await Promise.all([this.document.update(toUpdate), ...itemUpdates]);
   }
 

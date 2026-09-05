@@ -76,12 +76,12 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       context: new Map<any, any>(this._getActorSvelteContext()),
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
 
-  _showDeathSaves: boolean = false;
+  _deathTrayOpen: boolean = false;
 
   async _prepareContext(
     options: ApplicationRenderOptions,
@@ -203,7 +203,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         userPreferences.includeSpellbookInNpcStatblockTab ??
         true,
       inventory: [],
-      showDeathSaves: this._showDeathSaves,
+      showDeathSaves: this._deathTrayOpen,
       senses: super._getSenses(),
       size: {
         key: this.actor.system.traits.size,
@@ -651,9 +651,9 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       return classSpellcasting;
     }
 
-    const { abilities, attributes, bonuses } = this.actor.system;
-    const msak = dnd5e.utils.simplifyBonus(bonuses.msak.attack, rollData);
-    const rsak = dnd5e.utils.simplifyBonus(bonuses.rsak.attack, rollData);
+    const { abilities, attributes, rolls } = this.actor.system;
+    const msak = dnd5e.utils.simplifyBonus(rolls.attack?.msak?.bonus, rollData);
+    const rsak = dnd5e.utils.simplifyBonus(rolls.attack?.rsak?.bonus, rollData);
     const ability = attributes.spellcasting;
     const spellAbility = abilities[ability];
     const abilityModValue = spellAbility?.mod ?? 0;
@@ -745,13 +745,18 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       'system.attributes.hp.value',
     );
 
-    if (isUpdate && hp === 0) {
-      this._showDeathSaves = context.showDeathSaves = true;
+    if (
+      isUpdate &&
+      hp === 0 &&
+      this.attributes.hp.max > 0 &&
+      (!('isAdvancement' in options) || !options.isAdvancement)
+    ) {
+      this._deathTrayOpen = context.showDeathSaves = true;
     }
   }
 
   toggleDeathSaves(force?: boolean) {
-    this._showDeathSaves = force ?? !this._showDeathSaves;
+    this._deathTrayOpen = force ?? !this._deathTrayOpen;
     this.render();
   }
 

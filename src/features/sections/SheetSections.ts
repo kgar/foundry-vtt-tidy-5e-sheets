@@ -4,10 +4,8 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSectionClassic,
   Actor5e,
-  ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
-  CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
   VehicleDraftAnimalSection,
@@ -16,7 +14,6 @@ import type {
   GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
-  NpcSheetContext,
   NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
@@ -62,8 +59,7 @@ export class SheetSections {
   }
 
   static applySpellToSection(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -88,8 +84,7 @@ export class SheetSections {
   }
 
   static createSpellbookSection(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     options: Partial<SpellbookSection>,
@@ -171,8 +166,7 @@ export class SheetSections {
 
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
@@ -256,7 +250,7 @@ export class SheetSections {
    * @protected
    */
   static _prepareSpellbookLegacy(
-    context: ActorSheetContextV1 | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     items: Item5e[],
   ) {
     const owner = context.actor.isOwner;
@@ -398,11 +392,7 @@ export class SheetSections {
   }
 
   static prepareClassItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e,
@@ -439,11 +429,7 @@ export class SheetSections {
   }
 
   static collocateSubItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     items: Item5e[],
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -651,7 +637,7 @@ export class SheetSections {
             // Sort Favorite Effects
             if (sortMode === 'm') {
               const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(effects, actor))?.sort ??
                 Number.MAX_SAFE_INTEGER;
 
               effectContexts = effectContexts.toSorted(
@@ -688,7 +674,7 @@ export class SheetSections {
             // Sort Favorites Items
             if (sortMode === 'm') {
               const getSort = (item: Item5e) =>
-                favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))?.sort ??
                 Number.MAX_SAFE_INTEGER;
 
               items = items.toSorted((a, b) => getSort(a) - getSort(b));
@@ -751,11 +737,7 @@ export class SheetSections {
       CharacterFeatureSection | FeatureSection | NpcAbilitySection,
   >(
     features: TSection[],
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>,
@@ -940,7 +922,6 @@ export class SheetSections {
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 
-  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
   static configureGroupMembers(
     sections: GroupMemberSection[],
     tabId: string,

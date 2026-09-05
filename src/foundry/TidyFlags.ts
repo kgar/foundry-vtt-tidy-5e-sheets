@@ -1253,8 +1253,10 @@ export class TidyFlags {
     /** Gets the actor's sheet pins. */
     get(actor: Actor5e): TabSheetPinFlagData {
       const data =
-        TidyFlags.tryGetFlag<TabSheetPinFlagData>(actor, TidyFlags.tabSheetPins.key) ??
-        {};
+        TidyFlags.tryGetFlag<TabSheetPinFlagData>(
+          actor,
+          TidyFlags.tabSheetPins.key,
+        ) ?? {};
 
       // Rolling updates / backwards compatibility - if legacy flag's array data is available,
       // use the default partition to denote this setup applies to any tab.
@@ -1280,14 +1282,7 @@ export class TidyFlags {
 
       data[tabId] = value;
 
-      const replace = game.release.generation >= 14;
-
-      return TidyFlags.setFlag(
-        actor,
-        TidyFlags.tabSheetPins.key,
-        data,
-        replace,
-      );
+      return TidyFlags.setFlag(actor, TidyFlags.tabSheetPins.key, data, true);
     },
   };
 
@@ -1617,7 +1612,6 @@ export class TidyFlags {
    * @param flagName The name of the flag to set.
    * @param value The value to set the flag to.
    * @param replace Assign the flag to value without inner recursion.
-   *          (game.release.generation < 14: unset the flag and then reapply it, to prevent inner recursion)
    * @returns A promise that resolves when the flag is set.
    */
   static async setFlag(
@@ -1626,13 +1620,7 @@ export class TidyFlags {
     value: unknown,
     replace: boolean = false,
   ): Promise<void> {
-    const toSave =
-      replace && game.release.generation > 13 ? _replace(value) : value;
-
-    if (replace && game.release.generation < 14) {
-      await TidyFlags.unsetFlag(flagged, flagName);
-    }
-
+    const toSave = replace ? _replace(value) : value;
     await flagged.setFlag(CONSTANTS.MODULE_ID, flagName, toSave);
   }
 

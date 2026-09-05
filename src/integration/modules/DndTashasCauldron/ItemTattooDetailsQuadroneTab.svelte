@@ -1,7 +1,4 @@
 <script lang="ts">
-  import Select from 'src/components/inputs/Select.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import ItemProperties from '../../../sheets/quadrone/item/parts/ItemProperties.svelte';

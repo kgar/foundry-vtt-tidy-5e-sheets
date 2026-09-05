@@ -160,7 +160,7 @@ export class SheetPinsProvider {
       ? getSheetPinsForTab(targetDocument.actor, tabId)
       : [];
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     return pins.some((x) => x.id === relativeUuid);
   }
@@ -181,7 +181,7 @@ export class SheetPinsProvider {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     if (
       relativeUuid.startsWith('.') &&
@@ -242,7 +242,7 @@ export class SheetPinsProvider {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     const pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
@@ -257,18 +257,6 @@ export class SheetPinsProvider {
     );
   }
 
-  /**
-   * Gets the relative UUID of a given document. For use with favorite-like settings which store a relative UUID, such as sheet pins.
-   * @param targetDocument the document whose relative UUID should be retrieved
-   * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
-   */
-  static getRelativeUUID(targetDocument: any) {
-    return (
-      targetDocument.getRelativeUUID?.(targetDocument.actor) ??
-      targetDocument.relativeUUID
-    );
-  }
-
   static async setItemResourceType(
     targetDocument: Item5e,
     tabId: string,
@@ -276,7 +264,7 @@ export class SheetPinsProvider {
   ) {
     let pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -303,7 +291,7 @@ export class SheetPinsProvider {
   ) {
     let pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -326,7 +314,7 @@ export class SheetPinsProvider {
     targetDocument: Item5e | Activity5e,
     tabId: string,
   ): string | undefined {
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = FoundryAdapter.buildRelativeUuid(targetDocument);
 
     return getSheetPinsForTab(targetDocument.actor, tabId)?.find(
       (x) => x.id === relativeUuid,

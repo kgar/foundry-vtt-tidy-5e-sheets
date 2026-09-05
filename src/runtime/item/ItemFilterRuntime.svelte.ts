@@ -481,7 +481,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.concentration,
           defaultItemFilters.ritual,
         ],
-        'DND5E.SpellPreparation.Mode': [
+        'DND5E.SpellPreparation.Method': [
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],

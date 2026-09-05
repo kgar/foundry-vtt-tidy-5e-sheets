@@ -3,12 +3,9 @@ import type {
   ActiveEffect5e,
   ActiveEffectContext,
   AttunementContext,
-  CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
   LanguageTraitContext,
-  NpcSheetContext,
-  SpellcastingInfo,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
@@ -20,7 +17,6 @@ import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
 import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
-import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -99,7 +95,7 @@ export const FoundryAdapter = {
     const isActor = parent instanceof Actor;
 
     const effectData = {
-      name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
+      name: isActor ? game.i18n.localize('DND5E.EFFECT.New') : parent.name,
       img: isActor ? 'icons/svg/aura.svg' : parent.img,
       origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
@@ -229,16 +225,6 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
-  // game.release.generation < 14
-  doActionOnMiddleClick(event: MouseEvent, action: () => any) {
-    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
-      return;
-    }
-
-    event.preventDefault();
-
-    return action();
-  },
   documentIsEditable(document: any) {
     if (document.pack) {
       const pack = game.packs.get(document.pack);
@@ -247,17 +233,6 @@ export const FoundryAdapter = {
     return document.testUserPermission(
       game.user,
       CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
-    );
-  },
-  // game.release.generation < 14
-  editOnMiddleClick(
-    event: MouseEvent,
-    entityWithSheet: {
-      sheet: { render: (force: boolean) => void; isEditable: boolean };
-    },
-  ) {
-    return FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.editOnMouseEvent(event, entityWithSheet),
     );
   },
   editOnMouseEvent(event: MouseEvent, doc: any) {
@@ -462,32 +437,6 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(
-    context: CharacterSheetContext | NpcSheetContext,
-  ) {
-    let actor = context.actor;
-    let formula = Roll.replaceFormulaData(
-      actor.system.bonuses.rsak.attack,
-      actor.getRollData(),
-      { missing: 0, warn: false },
-    );
-
-    let prof = actor.system.attributes.prof ?? 0;
-    let spellAbility = context.system.attributes.spellcasting;
-    let abilityMod =
-      (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-    let spellAttackMod = prof + abilityMod;
-    let spellAttackText =
-      spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
-
-    let spellAttackTextTooltip = `${prof} (prof.)+${abilityMod} (${spellAbility})`;
-
-    return {
-      mod: spellAttackText /* TODO: apply static bonuses; mention rolled bonuses without rolling them */,
-      bonus: formula,
-      modTooltip: spellAttackTextTooltip,
-    };
-  },
   cycleProficiency(
     actor: Actor5e,
     key: string,
@@ -516,25 +465,6 @@ export const FoundryAdapter = {
       2: 'fas fa-circle-star color-text-gold-light',
     };
     return icons[level] || icons[0];
-  },
-  getSpellImageUrl(
-    context: CharacterSheetContext | NpcSheetContext,
-    spell: any,
-  ): string | undefined {
-    if (!settings.value.useSpellClassFilterIcons) {
-      return spell.img;
-    }
-
-    const identifier = spell.system.sourceItem?.substring(
-      spell.system.sourceItem?.indexOf(':') + 1,
-    );
-
-    const classImage =
-      identifier && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[identifier]
-        : undefined;
-
-    return classImage ?? spell.img;
   },
   searchActors(searchCriteria: string, actors: Actor5e[]) {
     return new Set(
@@ -657,7 +587,7 @@ export const FoundryAdapter = {
       actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
       'favorites' in actor.system
     ) {
-      const relativeUuid = effect.getRelativeUUID(actor);
+      const relativeUuid = foundry.utils.buildRelativeUuid(effect, actor);
       return actor.system.favorites.some((f: any) => f.id === relativeUuid);
     }
   },
@@ -670,11 +600,13 @@ export const FoundryAdapter = {
 
     const favorited = FoundryAdapter.isEffectFavorited(effect, actor);
     if (favorited) {
-      await actor.system.removeFavorite(effect.getRelativeUUID(actor));
+      await actor.system.removeFavorite(
+        foundry.utils.buildRelativeUuid(effect, actor),
+      );
     } else {
       await actor.system.addFavorite({
         type: 'effect',
-        id: effect.getRelativeUUID(actor),
+        id: foundry.utils.buildRelativeUuid(effect, actor),
       });
     }
   },
@@ -682,7 +614,7 @@ export const FoundryAdapter = {
     const actor = document.actor;
 
     if (actor && 'favorites' in actor.system) {
-      const relativeUuid = document.getRelativeUUID(actor);
+      const relativeUuid = foundry.utils.buildRelativeUuid(document, actor);
       return actor.system.hasFavorite(relativeUuid);
     }
 
@@ -707,11 +639,13 @@ export const FoundryAdapter = {
     const favorited = FoundryAdapter.isItemFavorited(document);
 
     if (favorited) {
-      await actor.system.removeFavorite(document.getRelativeUUID(actor));
+      await actor.system.removeFavorite(
+        foundry.utils.buildRelativeUuid(document, actor),
+      );
     } else {
       await actor.system.addFavorite({
         type: 'item',
-        id: document.getRelativeUUID(actor),
+        id: foundry.utils.buildRelativeUuid(document, actor),
       });
     }
   },
@@ -738,35 +672,6 @@ export const FoundryAdapter = {
       document?.sheet?.sheetMode === CONSTANTS.SHEET_MODE_EDIT &&
       FoundryAdapter.userIsGm()
     );
-  },
-  allowCharacterEffectsManagement(actor: any) {
-    return (
-      (settings.value.limitEffectsManagementToGm &&
-        FoundryAdapter.userIsGm()) ||
-      (!settings.value.limitEffectsManagementToGm && actor.isOwner)
-    );
-  },
-  shouldLockMoneyChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockMoneyChanges;
-  },
-  shouldLockExpChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockExpChanges;
-  },
-  shouldLockHpMaxChanges() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockHpMaxChanges;
-  },
-  shouldLockLevelSelector() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockLevelSelector;
-  },
-  shouldLockItemQuantity() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockItemQuantity;
-  },
-  showLimitedSheet(actor: any): boolean {
-    const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
-    if (actor.system.isCharacter) {
-      return showLimitedSheet && !settings.value.showExpandedLimitedView;
-    }
-    return showLimitedSheet;
   },
   flattenObject(obj: Object) {
     return foundry.utils.flattenObject(obj || {});
@@ -1146,17 +1051,6 @@ export const FoundryAdapter = {
   canUseItem(item: Item5e) {
     return !(!item.actor || !item.actor.isOwner || item.actor.pack);
   },
-  useClassicControls(document: any) {
-    return (
-      (document.system.isCharacter &&
-        settings.value.useClassicControlsForCharacter) ||
-      (document.system.isNPC && settings.value.useClassicControlsForNpc) ||
-      (document.system.isVehicle &&
-        settings.value.useClassicControlsForVehicle) ||
-      // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
-      settings.value.useClassicControlsForCharacter
-    );
-  },
   attunementContextApplicable: {
     icon: 'fa-sun',
     cls: 'not-attuned',
@@ -1473,20 +1367,6 @@ export const FoundryAdapter = {
     const classSpellbookFilter = actor.sheet.classSpellbookFilter;
     return actor.identifiedItems.get(classSpellbookFilter)?.first();
   },
-  getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
-    const currentFilteredClass =
-      FoundryAdapter.getFilteredClassOrOriginal(actor);
-
-    return {
-      currentFilteredClass: currentFilteredClass,
-      prepared: {
-        value:
-          currentFilteredClass?.system?.spellcasting?.preparation?.value ?? 0,
-        max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
-      },
-      calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
-    };
-  },
   getSaveAbilityAbbreviation(save: any) {
     return save.ability?.size
       ? save.ability.size === 1
@@ -1558,9 +1438,10 @@ export const FoundryAdapter = {
     return Object.entries(CONFIG.DND5E.senses).reduce<
       Record<string, SenseInfo>
     >(
-      (obj, [k, label]) => {
+      (obj, [k, config]) => {
         const value = senses[k];
-        if (value) obj[k] = { label, value, unit: units.abbreviation };
+        if (value)
+          obj[k] = { label: config.label, value, unit: units.abbreviation };
         return obj;
       },
       {} satisfies Record<string, SenseInfo>,
@@ -1745,117 +1626,16 @@ export const FoundryAdapter = {
           key: 'gp',
         };
   },
-  // TODO: inline when >= V14
-  isElementInstanceOf(element: HTMLElement, tagOrClass: any) {
-    if (game.release.generation < 14) {
-      if (typeof tagOrClass === 'string') {
-        return element.tagName === tagOrClass.toUpperCase();
-      }
-
-      let proto = element.constructor;
-      do {
-        if (proto.name === tagOrClass.name) return true;
-        proto = Object.getPrototypeOf(proto);
-      } while (proto);
-      return false;
+  /**
+   * Gets the relative UUID of a given document. For use with favorite-like settings which store a relative UUID, such as sheet pins.
+   * @param targetDocument the document whose relative UUID should be retrieved
+   * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
+   */
+  buildRelativeUuid(doc: any) {
+    if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY) {
+      return `${foundry.utils.buildRelativeUuid(doc.item, doc.actor)}.Activity.${doc.id}`;
     }
 
-    return foundry.utils.isElementInstanceOf(element, tagOrClass);
-  },
-  // stopgap until Foundry 14+ ; inlined minimal code for equals() util
-  // game.release.generation <= 14
-  foundry13Equals(a: any, b: any): boolean {
-    if (foundry.utils.equals) {
-      // smoke 'em if we got 'em
-      return foundry.utils.equals(a, b);
-    }
-
-    // One day, many moons from now, dnd5e 6.0 will arrive, and we will 
-    // purge this code and simply use the Foundry helper,
-    // since Foundry 14 will be the only eligible version 💪
-    // -----------------------------------------------------------
-    // Most of the supporting code for the Foundry 14 equals() util.
-
-    const typePrototypes = [
-      [Set, 'Set'],
-      [Map, 'Map'],
-      [Promise, 'Promise'],
-      [Error, 'Error'],
-      // [Color, 'number'],
-    ];
-
-    const plainObjectPrototype = Object.getPrototypeOf({});
-
-    function iterateEntries(obj: Record<string, unknown>) {
-      if (obj == null)
-        throw new TypeError('Cannot convert undefined or null to object');
-      return Iterator.from(objectEntries(obj));
-    }
-
-    function* objectEntries(obj: Record<string, unknown>) {
-      for (const key in obj) {
-        if (Object.hasOwn(obj, key)) yield [key, obj[key]];
-      }
-    }
-
-    function getType(variable: any) {
-      // Primitive types, handled with simple typeof check
-      const typeOf = typeof variable;
-      if (typeOf !== 'object') return typeOf;
-
-      // Special cases of object
-      if (variable === null) return 'null';
-      if (isPlainObject(variable)) return 'Object'; // Plain objects, including those with a null prototype.
-      if (Array.isArray(variable)) return 'Array';
-
-      // Match prototype instances
-      for (const [cls, type] of typePrototypes) {
-        //@ts-expect-error
-        if (variable instanceof cls) return type;
-      }
-      if ('HTMLElement' in globalThis) {
-        // Detect if a value is an HTMLElement in a way that is agnostic of whichever Document it was created in.
-        if (isElementInstanceOf(variable, HTMLElement)) return 'HTMLElement';
-      }
-
-      // Unknown Object type
-      return 'Unknown';
-    }
-
-    function isElementInstanceOf(element: HTMLElement, tagOrClass: any) {
-      if (typeof tagOrClass === 'string') {
-        return element.tagName === tagOrClass.toUpperCase();
-      }
-
-      let proto = element.constructor;
-      do {
-        if (proto.name === tagOrClass.name) return true;
-        proto = Object.getPrototypeOf(proto);
-      } while (proto);
-      return false;
-    }
-
-    function isPlainObject(value: unknown) {
-      if (!value) return false;
-      const prototype = Object.getPrototypeOf(value);
-      return prototype === plainObjectPrototype || prototype === null;
-    }
-
-    // The actual equals() util from Foundry 14
-    if (a === b) return true; // Strict equality
-    const ta = getType(a);
-    const tb = getType(b);
-    if (ta !== tb) return false; // Mismatched types are not equal
-
-    // Complex objects cannot be treated as equal unless they expose an equality testing function
-    if (typeof a.equals === 'function') return a.equals(b);
-    if (ta !== 'Object') return false;
-
-    // For simple objects, test that their keys are individually equivalent
-    if (Object.keys(a).length !== Object.keys(b).length) return false;
-    return iterateEntries(a).every(([k, v0]) =>
-      //@ts-expect-error
-      FoundryAdapter.foundry13Equals(v0, b[k]),
-    );
+    return foundry.utils.buildRelativeUuid(doc, doc.actor) ?? doc.relativeUUID;
   },
 };

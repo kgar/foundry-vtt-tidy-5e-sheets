@@ -11,7 +11,6 @@ import type {
   EffectFavoriteSection,
   ActivitySection,
   CharacterSheetQuadroneContext,
-  CharacterSheetContext,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -20,129 +19,8 @@ import { isNil } from 'src/utils/data';
 import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
 
 export class CharacterSheetSections {
-  static buildClassicFeaturesSections(
-    context: CharacterSheetContext,
-    tabId: string,
-    races: any[],
-    backgrounds: any[],
-    classes: any[],
-    feats: any[],
-    options: Partial<CharacterFeatureSection>,
-  ): Record<string, CharacterFeatureSection> {
-    const customFeats = feats.filter((f) => TidyFlags.section.get(f));
-    feats = feats.filter((f) => !TidyFlags.section.get(f));
-
-    const features: Record<string, CharacterFeatureSection> = {
-      race: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: CONFIG.Item.typeLabels.race,
-        items: races,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_RACE },
-        showRequirementsColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
-        show: true,
-        sectionActions: [], // for the UI Overhaul
-        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
-        ...options,
-      },
-      background: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: CONFIG.Item.typeLabels.background,
-        items: backgrounds,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_BACKGROUND },
-        showRequirementsColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
-        show: true,
-        sectionActions: [], // for the UI Overhaul
-        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
-        ...options,
-      },
-      classes: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: `${CONFIG.Item.typeLabels.class}Pl`,
-        items: classes,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },
-        isClass: true,
-        showLevelColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
-        show: true,
-        sectionActions: [], // for the UI Overhaul
-        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
-        ...options,
-      },
-      active: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: 'DND5E.FeatureActive',
-        items: feats.filter((feat) => !!feat.system.activities?.size),
-        hasActions: true,
-        dataset: {
-          type: CONSTANTS.ITEM_TYPE_FEAT,
-        },
-        showFeatureTypeColumn: true,
-        showRequirementsColumn: true,
-        showUsagesColumn: true,
-        showUsesColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
-        show: true,
-        sectionActions: [], // for the UI Overhaul
-        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
-        ...options,
-      },
-      passive: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: 'DND5E.FeaturePassive',
-        items: feats.filter((feat) => !feat.system.activities?.size),
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
-        showFeatureTypeColumn: true,
-        showRequirementsColumn: true,
-        showUsesColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
-        show: true,
-        sectionActions: [], // for the UI Overhaul
-        columns: FeatureColumnRuntime.EMPTY_COLUMN_SPECS,
-        ...options,
-      },
-    };
-
-    customFeats.forEach((f) =>
-      CharacterSheetSections.applyCharacterFeatureToSection(
-        context,
-        tabId,
-        features,
-        f,
-        options,
-      ),
-    );
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      context,
-      tabId,
-    ).forEach((s) => {
-      features[s] ??= CharacterSheetSections.createFeatureSection(
-        context,
-        tabId,
-        s,
-        {
-          canCreate: true,
-          ...options,
-        },
-      );
-    });
-
-    return features;
-  }
-
   static applyCharacterFeatureToSection(
-    context: CharacterSheetQuadroneContext | CharacterSheetContext,
+    context: CharacterSheetQuadroneContext,
     tabId: string,
     features: Record<string, CharacterFeatureSection>,
     feat: Item5e,
@@ -167,7 +45,7 @@ export class CharacterSheetSections {
   }
 
   static createFeatureSection(
-    context: CharacterSheetQuadroneContext | CharacterSheetContext,
+    context: CharacterSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     customSectionOptions: Partial<CharacterFeatureSection>,

@@ -24,7 +24,6 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { isNil } from 'src/utils/data';
-import { mapGetOrInsertComputed } from 'src/utils/map';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { AbilityData, SkillData } from 'src/foundry/dnd5e.types';
@@ -238,8 +237,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           value: language.value !== undefined ? language.value : undefined,
         };
 
-        const groupLanguage = mapGetOrInsertComputed(
-          languages,
+        const groupLanguage = languages.getOrInsertComputed(
           language.label,
           () => ({
             identifiers: new Map<string, MeasurableGroupTrait<number>>(),
@@ -282,8 +280,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           dnd5e.utils
             .splitSemicolons(actor.system.attributes.languages.custom?.trim())
             .forEach((customLanguage: string) => {
-              const entry = mapGetOrInsertComputed(
-                languages,
+              const entry = languages.getOrInsertComputed(
                 customLanguage,
                 () => ({
                   label: customLanguage,
@@ -325,7 +322,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           value: speed,
         };
 
-        let groupSpeed = mapGetOrInsertComputed(speeds, key, () => ({
+        let groupSpeed = speeds.getOrInsertComputed(key, () => ({
           identifiers: new Map<string, MeasurableGroupTrait<number>>(),
           ...actorSpeedTrait,
         }));
@@ -372,7 +369,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
       Object.entries(actor.system.attributes.senses.ranges ?? {}).forEach(
         ([key, sense]) => {
-          const label = CONFIG.DND5E.senses[key];
+          const label = CONFIG.DND5E.senses[key]?.label;
           if (typeof sense !== 'number' || sense === 0 || !label) {
             return;
           }
@@ -384,7 +381,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             value: sense,
           };
 
-          let groupSense = mapGetOrInsertComputed(senses, key, () => ({
+          let groupSense = senses.getOrInsertComputed(key, () => ({
             identifiers: new Map<string, MeasurableGroupTrait<number>>(),
             ...actorSenseTrait,
           }));
@@ -425,7 +422,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         dnd5e.utils
           .splitSemicolons(actor.system.attributes.senses.special?.trim())
           .forEach((specialSense: string) => {
-            const entry = mapGetOrInsertComputed(senses, specialSense, () => ({
+            const entry = senses.getOrInsertComputed(specialSense, () => ({
               label: specialSense,
               identifiers: new Map<string, GroupTraitBase<number>>(),
             }));
@@ -443,8 +440,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         }
 
         dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
-          const groupSpecial = mapGetOrInsertComputed(
-            specials,
+          const groupSpecial = specials.getOrInsertComputed(
             customEntry,
             () => ({
               label: customEntry,
@@ -500,7 +496,9 @@ export function getTidy5eMultiActorSheetQuadroneBase<
           ([key, skill]) => [
             key,
             {
-              abilityAbbreviation: CONFIG.DND5E.abilities[skill.ability]?.abbreviation ?? skill.ability,
+              abilityAbbreviation:
+                CONFIG.DND5E.abilities[skill.ability]?.abbreviation ??
+                skill.ability,
               ability: skill.ability,
               high: {
                 total: -Infinity,
