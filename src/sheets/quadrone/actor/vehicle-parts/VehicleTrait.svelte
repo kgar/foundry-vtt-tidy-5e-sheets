@@ -54,7 +54,7 @@
 
       {#if unlocked && onconfig}
         <button
-          aria-label={localize('DND5E.TraitConfig', { trait: label })}
+          aria-label={localize('DND5E.TRAIT.Action.Configure', { trait: label })}
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip

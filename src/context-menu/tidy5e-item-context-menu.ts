@@ -160,6 +160,7 @@ export function getItemContextOptions(
     let isFav = FoundryAdapter.isItemFavorited(item);
 
     options.push({
+      // TODO: Could we move this to TIDY5E.AddSpecific?
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
         ? `<i class='fa-regular fa-star fa-fw'></i>`

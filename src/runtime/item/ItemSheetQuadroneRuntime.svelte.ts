@@ -386,7 +386,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
       itemCount: (context) => context.document.system.advancement?.size ?? 0,
       layout: 'quadrone',
-      title: 'DND5E.AdvancementTitle',
+      title: 'DND5E.ADVANCEMENT.Label',
       content: {
         component: ItemAdvancementQuadroneTab,
         type: 'svelte',

@@ -418,7 +418,7 @@ class SectionActions {
             sheetDocument,
           );
         },
-        label: 'DND5E.AdvancementModifyChoices',
+        label: 'DND5E.ADVANCEMENT.Action.ModifyChoices',
         iconClass: 'fa-solid fa-cog',
       });
     }
@@ -426,7 +426,7 @@ class SectionActions {
     if (!unlocked && configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_FULL) {
       result.push({
         iconClass: 'fa-solid fa-badge-check emphasis',
-        label: 'DND5E.AdvancementConfiguredComplete',
+        label: 'DND5E.ADVANCEMENT.Config.Status.Complete',
       });
     }
 
@@ -435,7 +435,7 @@ class SectionActions {
       configured === CONSTANTS.ADVANCEMENT_CONFIGURATION_PARTIAL
     ) {
       result.push({
-        label: 'DND5E.AdvancementConfiguredIncomplete',
+        label: 'DND5E.ADVANCEMENT.Config.Status.Incomplete',
         iconClass: 'fa-solid fa-exclamation-triangle warning',
       });
     }

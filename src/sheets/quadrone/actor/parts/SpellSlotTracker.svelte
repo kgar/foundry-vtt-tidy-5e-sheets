@@ -6,12 +6,14 @@
     NpcSheetQuadroneContext,
     SpellbookSection,
   } from 'src/types/types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     section: SpellbookSection;
   }
 
   let { section }: Props = $props();
+  let localize = FoundryAdapter.localize;
 
   let context =
     $derived(
@@ -36,6 +38,7 @@
     type="button"
     class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
     disabled={uses <= 0 || !context.editable}
+    aria-label={localize('DND5E.CONSUMPTION.Type.SpellSlots.PromptDecrease')}
     data-action="decreaseSlots"
     onclick={() => updateSlots(uses - 1)}
   >
@@ -70,6 +73,7 @@
     type="button"
     class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
     data-action="increaseSlots"
+    aria-label={localize('DND5E.CONSUMPTION.Type.SpellSlots.PromptIncrease')}
     onclick={() => updateSlots(uses + 1)}
     disabled={!context.editable}
   >

@@ -1166,7 +1166,7 @@ export function getTidy5eActorSheetQuadroneBase<
       if (args.tabId === CONSTANTS.TAB_EFFECTS) {
         return await ActiveEffect.implementation.create(
           {
-            name: game.i18n.localize('DND5E.EffectNew'),
+            name: game.i18n.localize('DND5E.EFFECT.New'),
             icon: 'icons/svg/aura.svg',
             type: datasetType,
             ...restDataSet,
@@ -1787,7 +1787,7 @@ export function getTidy5eActorSheetQuadroneBase<
       // Check to make sure items of this type are allowed on this actor
       if (!isSupportedItemType) {
         ui.notifications.warn(
-          game.i18n.format('DND5E.ActorWarningInvalidItem', {
+          game.i18n.format('DND5E.ACTOR.Warning.InvalidItem', {
             itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
             actorType: game.i18n.localize(
               CONFIG.Actor.typeLabels[this.actor.type],

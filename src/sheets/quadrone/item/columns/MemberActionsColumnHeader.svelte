@@ -13,9 +13,12 @@
 </script>
 
 {#if sheetContext.editable}
+  <!-- svelte-ignore a11y_missing_attribute -->
   <a
+    role="button"
+    tabindex="0"
     class="tidy-table-button"
-    aria-label={localize('TIDY5E.Encounter.AddMember.Label')}
+    aria-label={localize('TIDY5E.AddSpecific', { name: localize('DND5E.Group.Member.one') })}
     data-tooltip
     data-action="browseAddNpc"
   >

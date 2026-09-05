@@ -132,7 +132,7 @@
     }
 
     const effectiveTooltip = disabledViaEffect
-      ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
+      ? FoundryAdapter.localize('TIDY5E.ActiveEffectOverrideWarning')
       : tooltip;
 
     if (effectiveTooltip) {

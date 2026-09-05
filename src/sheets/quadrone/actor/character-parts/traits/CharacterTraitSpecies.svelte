@@ -41,7 +41,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('DND5E.DescriptionView', {
+        aria-label={localize('TIDY5E.DescriptionView', {
           description: localize('TYPES.Item.race'),
         })}
         data-keyboard-focus
@@ -128,7 +128,7 @@
       class="list-values trait-item"
       role="button"
       tabindex="0"
-      aria-label={localize('DND5E.DescriptionView', {
+      aria-label={localize('TIDY5E.DescriptionView', {
         description: localize('DND5E.CreatureType'),
       })}
       data-keyboard-focus

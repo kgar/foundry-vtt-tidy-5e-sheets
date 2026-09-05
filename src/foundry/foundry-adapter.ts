@@ -97,7 +97,7 @@ export const FoundryAdapter = {
     const isActor = parent instanceof Actor;
 
     const effectData = {
-      name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
+      name: isActor ? game.i18n.localize('DND5E.EFFECT.New') : parent.name,
       img: isActor ? 'icons/svg/aura.svg' : parent.img,
       origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,

@@ -39,7 +39,7 @@
     {#if userIsGm}
       <button type="button" class="button" data-action="takeBastionTurn">
         <i class="fa-solid fa-calendar-clock"></i>
-        {localize('DND5E.Bastion.Action.BastionTurn')}
+        {localize('DND5E.Bastion.Action.Advance')}
       </button>
     {/if}
 

@@ -108,7 +108,7 @@
         onclick={() => inlineToggleService.toggle(tabId, entry.id)}
         role="button"
         tabindex="0"
-        aria-label={localize('DND5E.ExpandCollapse')}
+        aria-label={localize('DND5E.ToggleDescription')}
         onkeydown={(ev) =>
           ev.key === 'Enter' ||
           (ev.key === ' ' && inlineToggleService.toggle(tabId, entry.id))}

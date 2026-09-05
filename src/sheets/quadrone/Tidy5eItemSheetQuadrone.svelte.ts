@@ -916,10 +916,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         items: context.items,
         label:
           level === CONSTANTS.ADVANCEMENT_LEVEL_ZERO
-            ? 'DND5E.AdvancementLevelAnyHeader'
+            ? 'DND5E.ADVANCEMENT.Level.Any'
             : level === CONSTANTS.ADVANCEMENT_LEVEL_UNCONFIGURED
-              ? 'DND5E.AdvancementLevelNoneHeader'
-              : FoundryAdapter.localize('DND5E.AdvancementLevelHeader', {
+              ? 'DND5E.ADVANCEMENT.Level.None'
+              : FoundryAdapter.localize('DND5E.ADVANCEMENT.Level.Specific', {
                   level: level,
                 }),
         sectionActions: SectionActions.getItemAdvancementHeaderActions(
@@ -954,7 +954,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_PRIMARY
     ) {
       tags.push({
-        label: 'DND5E.AdvancementClassRestrictionPrimary',
+        label: 'DND5E.ADVANCEMENT.FIELDS.classRestriction.primary',
         iconClass: 'fa-solid fa-chess-queen advancement-class-indicator',
       });
     } else if (
@@ -962,7 +962,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       CONSTANTS.ADVANCEMENT_CLASS_RESTRICTION_SECONDARY
     ) {
       tags.push({
-        label: 'DND5E.AdvancementClassRestrictionSecondary',
+        label: 'DND5E.ADVANCEMENT.FIELDS.classRestriction.secondary',
         iconClass: 'fa-solid fa-chess advancement-class-indicator',
       });
     }
@@ -1527,7 +1527,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     if (args.tabId === CONSTANTS.TAB_EFFECTS) {
       return await ActiveEffect.implementation.createDialog(
         {
-          name: game.i18n.localize('DND5E.EffectNew'),
+          name: game.i18n.localize('DND5E.EFFECT.New'),
           icon: 'icons/svg/aura.svg',
           type: datasetType,
           ...restDataSet,

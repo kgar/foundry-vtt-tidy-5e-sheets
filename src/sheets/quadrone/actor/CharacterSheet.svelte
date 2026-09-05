@@ -156,7 +156,13 @@
                 data-tooltip={context.actor.name}
               >
                 <!-- svelte-ignore a11y_missing_attribute -->
-                <a data-action="copyInnerText" class="cursor highlight-on-hover">
+                <a 
+                  data-action="copyInnerText" 
+                  class="cursor highlight-on-hover"
+                  role="button"
+                  tabindex="0"
+                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                >
                   {context.actor.name}
                 </a>
               </h1>
@@ -235,8 +241,8 @@
             <span class="ac-label font-label-medium color-text-gold">AC</span>
             {#if context.unlocked}
               <button
-                aria-label={localize('DND5E.ArmorConfig')}
-                data-tooltip="DND5E.ArmorConfig"
+                aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+                data-tooltip="DND5E.ARMORCLASS.Action.Configure"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 data-action="showConfiguration"
@@ -711,12 +717,20 @@
     </div>
   </div>
   <div class="tabs-row">
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button"
+      tabindex="0"
       class="sidebar-toggle button button-borderless"
       data-tooltip={localize(
         sidebarExpanded ? 'JOURNAL.ViewCollapse' : 'JOURNAL.ViewExpand',
       )}
       onclick={() => (sidebarExpanded = !sidebarExpanded)}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          sidebarExpanded = !sidebarExpanded;
+        }
+      }}
     >
       {#if sidebarExpanded}
         <i class="fa-solid fa-caret-left"></i>

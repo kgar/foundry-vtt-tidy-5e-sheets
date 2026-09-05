@@ -5,14 +5,14 @@ import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
- * Map category types from `EffectsElement.prepareCategories` to `DND5E.EffectType`
+ * Map category types from EffectsElement.prepareCategories to DND5E.EFFECT.Status.*
  * labels for the switch pills.
  */
 const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
-  temporary: 'DND5E.EffectType.Temporary',
-  passive: 'DND5E.EffectType.Passive',
-  inactive: 'DND5E.EffectType.Inactive',
-  suppressed: 'DND5E.EffectType.Unavailable',
+  temporary: 'DND5E.EFFECT.Status.Temporary',
+  passive: 'DND5E.EFFECT.Status.Passive',
+  inactive: 'DND5E.EFFECT.Status.Inactive',
+  suppressed: 'DND5E.EFFECT.Status.Unavailable',
 };
 
 export class ActiveEffectsHelper {

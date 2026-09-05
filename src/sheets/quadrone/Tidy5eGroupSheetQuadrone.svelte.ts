@@ -624,7 +624,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
-        title: 'DND5E.Bastion.Action.BastionTurn',
+        title: 'DND5E.Bastion.Action.Advance',
       },
     });
 

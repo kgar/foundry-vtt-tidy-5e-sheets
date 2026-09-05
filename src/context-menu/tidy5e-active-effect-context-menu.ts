@@ -75,7 +75,7 @@ export function getActiveEffectContextOptions(
       group: 'state',
     },
     {
-      name: 'DND5E.CONCENTRATION.Action.End',
+      name: 'DND5E.CONCENTRATION.Action.Break',
       icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
       condition: () => isConcentrationEffect,
       callback: () => app.document.endConcentration(effect),
@@ -88,6 +88,7 @@ export function getActiveEffectContextOptions(
       group: 'common',
     },
     {
+      // TODO: Could we move this to TIDY5E.AddSpecific?
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
         ? `<i class='fa-regular fa-star fa-fw'></i>`
