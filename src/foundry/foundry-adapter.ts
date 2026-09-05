@@ -1632,7 +1632,7 @@ export const FoundryAdapter = {
    * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
    */
   buildRelativeUuid(doc: any) {
-    if (doc.documentName === 'activity') {
+    if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY) {
       return `${foundry.utils.buildRelativeUuid(doc.item, doc.actor)}.Activity.${doc.id}`;
     }
 
