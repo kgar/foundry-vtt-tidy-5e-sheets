@@ -45,7 +45,7 @@ import {
 
 import {
   AdvancementDataField,
-  AdvancementField,
+  TypedField,
   AdvantageModeField,
   FormulaField,
   IdentifierField,
@@ -73,7 +73,7 @@ declare global {
     dataModels: {
       fields: {
         AdvancementDataField: typeof AdvancementDataField;
-        AdvancementField: typeof AdvancementField;
+        TypedField: typeof TypedField;
         AdvantageModeField: typeof AdvantageModeField;
         FormulaField: typeof FormulaField;
         IdentifierField: typeof IdentifierField;

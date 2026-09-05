@@ -72,9 +72,8 @@ declare module 'dnd5e.dataModels.fields' {
     ): number;
   }
 
-  declare class AdvancementField extends foundry.data.fields.ObjectField {
-    getModelForType(type: string): BaseAdvancement | null;
-
+  declare class TypedField extends foundry.data.fields.ObjectField {
+    static recursive: true;
     migrateSource(sourceData: object, fieldData: any);    
   }
 
@@ -94,11 +93,6 @@ declare module 'dnd5e.dataModels.fields' {
     constructor(options: DataFieldOptions = {}): ActivitiesField;
   }
   
-  declare class ActivityField extends foundry.data.fields.ObjectField {
-    getModel(value: object): Activity | null;
-
-    migrateSource(sourceData: object, fieldData: any): void;
-  }
   
   declare class ActivityCollection extends Collection {
     constructor(model: DataMOdel, entries: Activity[]): ActivityCollection;
