@@ -206,6 +206,26 @@ export function getItemContextOptions(
   });
 
   options.push({
+    name: 'DND5E.SplitStack.Title',
+    icon: 'fa-solid fa-arrows-split-up-and-left',
+    condition: () =>
+      !!dnd5e.applications.item.SplitStackDialog &&
+      item.isOwner &&
+      !compendiumLocked &&
+      (item.system.quantity ?? 0) > 1,
+    callback: () => {
+      if (item.system.quantity === 2) {
+        item.system.split();
+      } else {
+        new dnd5e.applications.item.SplitStackDialog({ document: item }).render(
+          { force: true },
+        );
+      }
+    },
+    group: 'action',
+  });
+
+  options.push({
     name: 'DND5E.Scroll.CreateScroll',
     icon: '<i class="fa-solid fa-scroll"></i>',
     condition: () =>
