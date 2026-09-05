@@ -103,7 +103,16 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return component;
   }
 
-  _showDeathSaves: boolean = false;
+  /**
+   * Denotes whether to show the death saves UI
+   * on the character sheet.
+   *
+   * **Important**: This is a system-controlled field.
+   * The character document will manage this prop when
+   * a character reaches 0 HP and other conditions are correct
+   * for showing the Death Saves UI.
+   */
+  _deathTrayOpen: boolean = false;
 
   async _prepareContext(
     options: ApplicationRenderOptions,
@@ -228,7 +237,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       },
       skills: [],
       sheetTabSections: [],
-      showDeathSaves: this._showDeathSaves,
+      showDeathSaves: this._deathTrayOpen,
       species: species
         ? {
             id: species.id,
@@ -1065,29 +1074,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return element;
   }
 
-  async _preRender(
-    context: CharacterSheetQuadroneContext,
-    options: TidyDocumentSheetRenderOptions,
-  ) {
-    await super._preRender(context, options);
-
-    // Show death tray at 0 HP
-    const renderContext = options.renderContext ?? options.action;
-    const renderData = options.renderData ?? options.data;
-    const isUpdate =
-      renderContext === 'update' || renderContext === 'updateActor';
-    const hp = foundry.utils.getProperty(
-      renderData ?? {},
-      'system.attributes.hp.value',
-    );
-
-    if (isUpdate && hp === 0) {
-      this._showDeathSaves = context.showDeathSaves = true;
-    }
-  }
-
   toggleDeathSaves(force?: boolean) {
-    this._showDeathSaves = force ?? !this._showDeathSaves;
+    this._deathTrayOpen = force ?? !this._deathTrayOpen;
     this.render();
   }
 
