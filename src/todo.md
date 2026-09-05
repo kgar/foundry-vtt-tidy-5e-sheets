@@ -1,9 +1,6 @@
 ## dnd5e 6.0 To Dos
 
 - [ ] Check these links for changes. Document things that might concern Tidy.
-
-
-
 https://github.com/foundryvtt/dnd5e/issues/6440
 https://github.com/foundryvtt/dnd5e/issues/6626
 https://github.com/foundryvtt/dnd5e/issues/6631
@@ -408,6 +405,7 @@ https://github.com/foundryvtt/dnd5e/issues/7104
 https://github.com/foundryvtt/dnd5e/issues/7012
 https://github.com/foundryvtt/dnd5e/pull/7406
 
+- [ ] NPC sheet - bonuses msak / rsak are gone. How do we proceed? Make changes and resolve todo 
 - [ ] Review all the issues and synthesize todos.
 - [ ] Handle this Activities change:
 

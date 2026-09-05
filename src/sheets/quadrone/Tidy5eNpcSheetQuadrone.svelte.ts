@@ -81,7 +81,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     return component;
   }
 
-  _showDeathSaves: boolean = false;
+  _deathTrayOpen: boolean = false;
 
   async _prepareContext(
     options: ApplicationRenderOptions,
@@ -203,7 +203,7 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
         userPreferences.includeSpellbookInNpcStatblockTab ??
         true,
       inventory: [],
-      showDeathSaves: this._showDeathSaves,
+      showDeathSaves: this._deathTrayOpen,
       senses: super._getSenses(),
       size: {
         key: this.actor.system.traits.size,
@@ -652,8 +652,11 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     }
 
     const { abilities, attributes, bonuses } = this.actor.system;
-    const msak = dnd5e.utils.simplifyBonus(bonuses.msak.attack, rollData);
-    const rsak = dnd5e.utils.simplifyBonus(bonuses.rsak.attack, rollData);
+    // TODO: bonuses.msak / bonuses.rsak no longer appear here, 
+    // even when an active effect is being applied.
+    // Find out where they went.
+    const msak = bonuses.msak ? dnd5e.utils.simplifyBonus(bonuses.msak.attack, rollData) : 0;
+    const rsak = bonuses.rsak ? dnd5e.utils.simplifyBonus(bonuses.rsak.attack, rollData) : 0;
     const ability = attributes.spellcasting;
     const spellAbility = abilities[ability];
     const abilityModValue = spellAbility?.mod ?? 0;
@@ -745,13 +748,18 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       'system.attributes.hp.value',
     );
 
-    if (isUpdate && hp === 0) {
-      this._showDeathSaves = context.showDeathSaves = true;
+    if (
+      isUpdate &&
+      hp === 0 &&
+      this.attributes.hp.max > 0 &&
+      (!('isAdvancement' in options) || !options.isAdvancement)
+    ) {
+      this._deathTrayOpen = context.showDeathSaves = true;
     }
   }
 
   toggleDeathSaves(force?: boolean) {
-    this._showDeathSaves = force ?? !this._showDeathSaves;
+    this._deathTrayOpen = force ?? !this._deathTrayOpen;
     this.render();
   }
 
