@@ -162,7 +162,7 @@ export class Tidy5eContainerSheetQuadrone
       context: context,
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
