@@ -20,7 +20,7 @@ export const CharacterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
     [
       {
-        title: 'DND5E.Effects',
+        title: 'DND5E.EFFECT.Tab',
         content: {
           component: ActorEffectsTab,
           type: 'svelte',

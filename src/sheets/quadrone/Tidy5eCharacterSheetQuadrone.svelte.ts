@@ -717,11 +717,13 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           const unidentified = item.system.identified === false;
 
           // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && unidentified;
+          ctx.concealDetails = !game.user.isGM && unidentified;
 
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item) && !unidentified ? FoundryAdapter.getAttunementContext(item) : undefined;
+          ctx.attunement =
+            FoundryAdapter.getAttunementContext(item) && !unidentified
+              ? FoundryAdapter.getAttunementContext(item)
+              : undefined;
 
           // Item usage
           ctx.hasUses = item.hasLimitedUses && !unidentified;
@@ -1383,7 +1385,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     if (!event.target.closest('.favorites') || effect.target !== this.actor) {
       return await super._onDropActiveEffect(event, effect);
     }
-    const uuid = effect.getRelativeUUID(this.actor);
+    const uuid = foundry.utils.buildRelativeUuid(effect, this.actor);
     return await this._onDropFavorite(event, { type: 'effect', id: uuid });
   }
 
@@ -1402,7 +1404,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       return await super._onDropActivity(event, document);
     }
 
-    const relativeUuid = `${document.item.getRelativeUUID(
+    const relativeUuid = `${foundry.utils.buildRelativeUuid(
+      document.item,
       this.actor,
     )}.Activity.${document.id}`;
 
@@ -1440,7 +1443,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       return await super._onDropItem(event, document);
     }
-    const uuid = document.getRelativeUUID(this.actor);
+    const uuid = foundry.utils.buildRelativeUuid(document, this.actor);
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 

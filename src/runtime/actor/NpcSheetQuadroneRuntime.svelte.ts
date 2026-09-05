@@ -48,7 +48,7 @@ export const NpcSheetQuadroneRuntime =
         tabOptionsBuilder: buildActorSpellbookTabOptions,
       },
       {
-        title: 'DND5E.Effects',
+        title: 'DND5E.EFFECT.Tab',
         content: {
           component: ActorEffectsTab,
           type: 'svelte',

@@ -589,7 +589,7 @@ export const FoundryAdapter = {
       actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
       'favorites' in actor.system
     ) {
-      const relativeUuid = effect.getRelativeUUID(actor);
+      const relativeUuid = foundry.utils.buildRelativeUuid(effect, actor);
       return actor.system.favorites.some((f: any) => f.id === relativeUuid);
     }
   },
@@ -602,11 +602,13 @@ export const FoundryAdapter = {
 
     const favorited = FoundryAdapter.isEffectFavorited(effect, actor);
     if (favorited) {
-      await actor.system.removeFavorite(effect.getRelativeUUID(actor));
+      await actor.system.removeFavorite(
+        foundry.utils.buildRelativeUuid(effect, actor),
+      );
     } else {
       await actor.system.addFavorite({
         type: 'effect',
-        id: effect.getRelativeUUID(actor),
+        id: foundry.utils.buildRelativeUuid(effect, actor),
       });
     }
   },
@@ -614,7 +616,7 @@ export const FoundryAdapter = {
     const actor = document.actor;
 
     if (actor && 'favorites' in actor.system) {
-      const relativeUuid = document.getRelativeUUID(actor);
+      const relativeUuid = foundry.utils.buildRelativeUuid(document, actor);
       return actor.system.hasFavorite(relativeUuid);
     }
 
@@ -639,11 +641,13 @@ export const FoundryAdapter = {
     const favorited = FoundryAdapter.isItemFavorited(document);
 
     if (favorited) {
-      await actor.system.removeFavorite(document.getRelativeUUID(actor));
+      await actor.system.removeFavorite(
+        foundry.utils.buildRelativeUuid(document, actor),
+      );
     } else {
       await actor.system.addFavorite({
         type: 'item',
-        id: document.getRelativeUUID(actor),
+        id: foundry.utils.buildRelativeUuid(document, actor),
       });
     }
   },
@@ -1450,9 +1454,10 @@ export const FoundryAdapter = {
     return Object.entries(CONFIG.DND5E.senses).reduce<
       Record<string, SenseInfo>
     >(
-      (obj, [k, label]) => {
+      (obj, [k, config]) => {
         const value = senses[k];
-        if (value) obj[k] = { label, value, unit: units.abbreviation };
+        if (value)
+          obj[k] = { label: config.label, value, unit: units.abbreviation };
         return obj;
       },
       {} satisfies Record<string, SenseInfo>,

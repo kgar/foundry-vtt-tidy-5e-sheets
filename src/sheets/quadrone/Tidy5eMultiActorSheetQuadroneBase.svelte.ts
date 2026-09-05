@@ -369,7 +369,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
 
       Object.entries(actor.system.attributes.senses.ranges ?? {}).forEach(
         ([key, sense]) => {
-          const label = CONFIG.DND5E.senses[key];
+          const label = CONFIG.DND5E.senses[key]?.label;
           if (typeof sense !== 'number' || sense === 0 || !label) {
             return;
           }

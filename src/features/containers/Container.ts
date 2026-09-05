@@ -75,7 +75,7 @@ export class Container {
       ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
       if (favorites) {
-        const relativeUuid = item.getRelativeUUID(container.actor);
+        const relativeUuid = foundry.utils.buildRelativeUuid(item, container.actor);
         // TODO: Determine if this looped array traversal is going to be an issue; if so, consider passing in a context object with a favorites map.
         ctx.favoriteId = item.actor.system.favorites?.find(
           (f: CharacterFavorite) => f.id === relativeUuid,

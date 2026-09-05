@@ -637,7 +637,7 @@ export class SheetSections {
             // Sort Favorite Effects
             if (sortMode === 'm') {
               const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(effects, actor))?.sort ??
                 Number.MAX_SAFE_INTEGER;
 
               effectContexts = effectContexts.toSorted(
@@ -674,7 +674,7 @@ export class SheetSections {
             // Sort Favorites Items
             if (sortMode === 'm') {
               const getSort = (item: Item5e) =>
-                favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))?.sort ??
                 Number.MAX_SAFE_INTEGER;
 
               items = items.toSorted((a, b) => getSort(a) - getSort(b));

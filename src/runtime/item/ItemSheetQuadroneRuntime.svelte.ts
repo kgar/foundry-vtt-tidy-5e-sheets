@@ -594,7 +594,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       itemCount: (context) =>
         Array.from(context.document?.effects ?? []).length,
       layout: 'quadrone',
-      title: 'DND5E.Effects',
+      title: 'DND5E.EFFECT.Tab',
       content: {
         component: ItemEffectsQuadroneTab,
         type: 'svelte',

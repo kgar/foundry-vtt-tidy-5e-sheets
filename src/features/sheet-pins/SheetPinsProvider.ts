@@ -160,7 +160,7 @@ export class SheetPinsProvider {
       ? getSheetPinsForTab(targetDocument.actor, tabId)
       : [];
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     return pins.some((x) => x.id === relativeUuid);
   }
@@ -181,7 +181,7 @@ export class SheetPinsProvider {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     if (
       relativeUuid.startsWith('.') &&
@@ -242,7 +242,7 @@ export class SheetPinsProvider {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     const pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
@@ -262,9 +262,9 @@ export class SheetPinsProvider {
    * @param targetDocument the document whose relative UUID should be retrieved
    * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
    */
-  static getRelativeUUID(targetDocument: any) {
+  static buildRelativeUuid(targetDocument: any) {
     return (
-      targetDocument.getRelativeUUID?.(targetDocument.actor) ??
+      foundry.utils.buildRelativeUuid(targetDocument, targetDocument.actor) ??
       targetDocument.relativeUUID
     );
   }
@@ -276,7 +276,7 @@ export class SheetPinsProvider {
   ) {
     let pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -303,7 +303,7 @@ export class SheetPinsProvider {
   ) {
     let pins = getSheetPinsForTab(targetDocument.actor, tabId);
 
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -326,7 +326,7 @@ export class SheetPinsProvider {
     targetDocument: Item5e | Activity5e,
     tabId: string,
   ): string | undefined {
-    const relativeUuid = this.getRelativeUUID(targetDocument);
+    const relativeUuid = this.buildRelativeUuid(targetDocument);
 
     return getSheetPinsForTab(targetDocument.actor, tabId)?.find(
       (x) => x.id === relativeUuid,

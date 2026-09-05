@@ -82,7 +82,7 @@ export function getContextMenuOptions(
   });
 
   if ('favorites' in (app.actor?.system ?? {})) {
-    const uuid = `${activity.item.getRelativeUUID(app.actor)}.Activity.${
+    const uuid = `${foundry.utils.buildRelativeUuid(activity.item, app.actor)}.Activity.${
       activity.id
     }`;
     const isFavorited = app.actor.system.hasFavorite(uuid);

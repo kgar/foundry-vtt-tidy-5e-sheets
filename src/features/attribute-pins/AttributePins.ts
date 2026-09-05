@@ -23,7 +23,7 @@ export class AttributePins {
   static isPinned(doc: any): boolean {
     const flagPins = doc.actor ? TidyFlags.attributePins.get(doc.actor) : [];
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.buildRelativeUuid(doc);
 
     return flagPins.some((x) => x.id === relativeUuid);
   }
@@ -33,7 +33,7 @@ export class AttributePins {
       return;
     }
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.buildRelativeUuid(doc);
 
     if (
       relativeUuid.startsWith('.') &&
@@ -83,7 +83,7 @@ export class AttributePins {
 
     const flagPins = TidyFlags.attributePins.get(doc.actor);
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.buildRelativeUuid(doc);
 
     let newPins = flagPins.filter((x) => x.id !== relativeUuid);
 
@@ -92,8 +92,8 @@ export class AttributePins {
     return TidyFlags.attributePins.set(doc.actor, newPins);
   }
 
-  static getRelativeUUID(doc: any) {
-    return doc.getRelativeUUID?.(doc.actor) ?? doc.relativeUUID;
+  static buildRelativeUuid(doc: any) {
+    return foundry.utils.buildRelativeUuid(doc, doc.actor) ?? doc.relativeUUID;
   }
 
   static async setItemResourceType(
@@ -102,7 +102,7 @@ export class AttributePins {
   ) {
     let pins = TidyFlags.attributePins.get(item.actor);
 
-    const relativeUuid = this.getRelativeUUID(item);
+    const relativeUuid = this.buildRelativeUuid(item);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -118,7 +118,7 @@ export class AttributePins {
   static async setAlias(doc: Item5e, alias: string) {
     let pins = TidyFlags.attributePins.get(doc.actor);
 
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.buildRelativeUuid(doc);
 
     const pinToUpdate = pins.find((x) => x.id === relativeUuid);
 
@@ -147,7 +147,7 @@ export class AttributePins {
   }
 
   static getResourceType(doc: any): string | undefined {
-    const relativeUuid = this.getRelativeUUID(doc);
+    const relativeUuid = this.buildRelativeUuid(doc);
 
     return TidyFlags.attributePins
       .get(doc.actor)

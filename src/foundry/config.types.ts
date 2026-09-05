@@ -3860,11 +3860,11 @@ export type CONFIG = {
       };
     };
     senses: {
-      blindsight: string;
-      darkvision: string;
-      tremorsense: string;
-      truesight: string;
-    } & Record<string, string>;
+      blindsight: SenseConfig;
+      darkvision: SenseConfig;
+      tremorsense: SenseConfig;
+      truesight: SenseConfig;
+    } & Record<string, SenseConfig>;
     attackClassifications: {
       weapon: {
         label: string;
@@ -5581,4 +5581,10 @@ type RequestOptions5e = {
 type WeaponMasteryConfig = {
   label: string;
   reference: string | undefined;
+};
+type SenseConfig = {
+  detectionMode?: string;
+  grantsSight?: boolean;
+  label: string;
+  visionMode?: string;
 };
