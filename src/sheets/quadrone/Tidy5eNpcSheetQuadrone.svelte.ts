@@ -651,12 +651,9 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
       return classSpellcasting;
     }
 
-    const { abilities, attributes, bonuses } = this.actor.system;
-    // TODO: bonuses.msak / bonuses.rsak no longer appear here, 
-    // even when an active effect is being applied.
-    // Find out where they went.
-    const msak = bonuses.msak ? dnd5e.utils.simplifyBonus(bonuses.msak.attack, rollData) : 0;
-    const rsak = bonuses.rsak ? dnd5e.utils.simplifyBonus(bonuses.rsak.attack, rollData) : 0;
+    const { abilities, attributes, rolls } = this.actor.system;
+    const msak = dnd5e.utils.simplifyBonus(rolls.attack?.msak?.bonus, rollData);
+    const rsak = dnd5e.utils.simplifyBonus(rolls.attack?.rsak?.bonus, rollData);
     const ability = attributes.spellcasting;
     const spellAbility = abilities[ability];
     const abilityModValue = spellAbility?.mod ?? 0;

@@ -6,7 +6,6 @@ import type {
   ClassSummary,
   DropdownListOption,
   LanguageTraitContext,
-  SpellcastingInfo,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
@@ -18,7 +17,6 @@ import { TidyHooks } from './TidyHooks';
 import { isNil } from 'src/utils/data';
 import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
-import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -1368,20 +1366,6 @@ export const FoundryAdapter = {
   getFilteredClass(actor: Actor5e): Item5e | undefined {
     const classSpellbookFilter = actor.sheet.classSpellbookFilter;
     return actor.identifiedItems.get(classSpellbookFilter)?.first();
-  },
-  getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
-    const currentFilteredClass =
-      FoundryAdapter.getFilteredClassOrOriginal(actor);
-
-    return {
-      currentFilteredClass: currentFilteredClass,
-      prepared: {
-        value:
-          currentFilteredClass?.system?.spellcasting?.preparation?.value ?? 0,
-        max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
-      },
-      calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
-    };
   },
   getSaveAbilityAbbreviation(save: any) {
     return save.ability?.size
