@@ -212,20 +212,4 @@ function registerCustomTidyRollRequests() {
       (await actor.rollAbilityCheck({ ...config, event }, {}, { data })) ?? [];
     return roll?.parent ?? null;
   };
-
-  CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_SAVE_KEY] ??= async (
-    actor,
-    request,
-    config,
-    { event } = {},
-  ) => {
-    const data = {};
-    foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
-      actorUuid: actor.uuid,
-      requestId: request.id,
-    });
-    const [roll] =
-      (await actor.rollSavingThrow({ ...config, event }, {}, { data })) ?? [];
-    return roll?.parent ?? null;
-  };
 }

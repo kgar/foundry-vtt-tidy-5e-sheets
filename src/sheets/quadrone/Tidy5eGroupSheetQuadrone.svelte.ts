@@ -1038,6 +1038,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       },
       type: 'request',
     });
+
     return false;
   }
 
@@ -1058,36 +1059,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       return;
     }
 
-    const abilityConfig = CONFIG.DND5E.abilities[config.ability];
+    await this.document.system.rollSavingThrow(config);
 
-    const abilityLabel = abilityConfig?.label ?? '';
-
-    await foundry.documents.ChatMessage.implementation.create({
-      flavor: FoundryAdapter.localize('DND5E.SavePromptTitle', {
-        ability: abilityLabel,
-      }),
-      speaker: ChatMessage.getSpeaker({
-        actor: this.actor,
-        alias: this.actor.name,
-      }),
-      system: {
-        button: {
-          icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize('DND5E.SavingThrowRoll', {
-            ability: abilityLabel,
-          }),
-        },
-        data: { ...config },
-        handler: CONSTANTS.ROLL_REQUEST_SAVE_KEY,
-        targets: this.actor.system.members.flatMap(
-          ({ actor }: { actor: Actor5e }) => {
-            if (actor.system.abilities) return { actor: actor.uuid };
-            return [];
-          },
-        ),
-      },
-      type: 'request',
-    });
     return false;
   }
 
