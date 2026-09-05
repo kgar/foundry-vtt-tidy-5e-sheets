@@ -814,8 +814,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             ({
               id: a.id,
               order: a.constructor.order,
-              title: a.title,
-              icon: a.icon,
+              name: a.name,
+              img: a.img,
               classRestriction: a.classRestriction,
               configured: false,
               tags: this._getItemAdvancementTags(a, unlocked),
@@ -852,11 +852,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             ({
               id: advancement.id,
               order: advancement.sortingValueForLevel(level),
-              title: advancement.titleForLevel(level, {
+              name: advancement.titleForLevel(level, {
                 configMode,
                 legacyDisplay,
               }),
-              icon: advancement.icon,
+              img: advancement.img,
               classRestriction: advancement.classRestriction,
               summary: await advancement.summaryForLevel(level, {
                 configMode,
@@ -866,7 +866,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
               tags: this._getItemAdvancementTags(advancement, unlocked),
               value: advancement.valueForLevel?.(level),
               classes: [
-                advancement.icon?.endsWith('.svg') ? 'svg' : '',
+                advancement.img?.endsWith('.svg') ? 'svg' : '',
               ].filterJoin(' '),
               rowActions: ItemAdvancementMemberRowActionRuntime.getRowActions({
                 app: this,

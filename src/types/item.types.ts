@@ -301,9 +301,9 @@ export type AdvancementItemContext = {
   /** An string-based ordering property. Used with a localized sort. */
   order: string;
   /** HTML: the name / label of the advancement. */
-  title: string;
+  name: string;
   /** The path to an image or SVG. */
-  icon: string;
+  img: string;
   /** HTML to include on a summary line below the advancement name. */
   summary: string;
   /** Denotes a class restriction. Unused here. */

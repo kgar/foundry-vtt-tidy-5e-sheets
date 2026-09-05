@@ -92,13 +92,11 @@ https://github.com/foundryvtt/dnd5e/pull/6474
 https://github.com/foundryvtt/dnd5e/issues/6464
 https://github.com/foundryvtt/dnd5e/issues/6405
 https://github.com/foundryvtt/dnd5e/issues/7037
-https://github.com/foundryvtt/dnd5e/issues/7041
 https://github.com/foundryvtt/dnd5e/pull/7040
 https://github.com/foundryvtt/dnd5e/pull/7044
 https://github.com/foundryvtt/dnd5e/issues/6846
 https://github.com/foundryvtt/dnd5e/pull/7046
 https://github.com/foundryvtt/dnd5e/pull/7049
-https://github.com/foundryvtt/dnd5e/pull/7042
 https://github.com/foundryvtt/dnd5e/issues/4505
 https://github.com/foundryvtt/dnd5e/pull/6891
 https://github.com/foundryvtt/dnd5e/issues/6839
@@ -356,8 +354,6 @@ https://github.com/foundryvtt/dnd5e/pull/6953
 https://github.com/foundryvtt/dnd5e/issues/6922
 https://github.com/foundryvtt/dnd5e/pull/7376
 https://github.com/foundryvtt/dnd5e/issues/7379
-https://github.com/foundryvtt/dnd5e/issues/5782
-https://github.com/foundryvtt/dnd5e/pull/7383
 https://github.com/foundryvtt/dnd5e/pull/7386
 https://github.com/foundryvtt/dnd5e/pull/7390
 https://github.com/foundryvtt/dnd5e/issues/6576

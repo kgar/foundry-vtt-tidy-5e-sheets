@@ -167,7 +167,7 @@
         }
 
         return {
-          title: x.title,
+          title: x.name,
           value,
           toCopy: formula,
         } satisfies ScaleValuePill;
@@ -534,6 +534,19 @@
                 document: context.item,
               }),
             )}
+          onkeydown={(ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              context.sheet._renderChild(
+                new SectionSelectorApplication({
+                  flag: TidyFlags.section.prop,
+                  sectionType: localize(sectionType),
+                  callingDocument: context.item,
+                  document: context.item,
+                }),
+              );
+            }
+          }}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -564,6 +577,18 @@
                   document: context.item,
                 }),
               )}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                context.sheet._renderChild(
+                  new SectionSelectorApplication({
+                    flag: TidyFlags.actionSection.prop,
+                    sectionType: localize('TIDY5E.Section.ActionLabel'),
+                    callingDocument: context.item,
+                    document: context.item,
+                  })
+                )
+              }}}
           >
             <span class="text-normal">
               {actionSectionLabel}
