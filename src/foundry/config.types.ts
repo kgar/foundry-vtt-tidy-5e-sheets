@@ -3094,10 +3094,6 @@ export type CONFIG = {
       util: string;
       other: string;
     } & Record<string, string>;
-    itemCapacityTypes: {
-      items: string;
-      weight: string;
-    };
     itemRarity: {
       common: string;
       uncommon: string;
