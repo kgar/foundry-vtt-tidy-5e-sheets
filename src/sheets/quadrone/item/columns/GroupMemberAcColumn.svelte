@@ -4,6 +4,11 @@
   let { rowDocument }: { rowDocument: Actor5e } = $props();
 </script>
 
-<span class="font-label-large color-text-default"
+<span
+  class="font-label-large color-text-default"
+  data-attribution="attributes.ac"
+  data-attribution-caption="DND5E.ArmorClass"
+  data-reference-tooltip={rowDocument.uuid}
+  data-tooltip-class="property-attribution"
   >{rowDocument.system.attributes.ac.value}</span
 >
