@@ -75,7 +75,7 @@ export function getActiveEffectContextOptions(
       group: 'state',
     },
     {
-      name: 'DND5E.ConcentrationBreak',
+      name: 'DND5E.CONCENTRATION.Action.End',
       icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
       condition: () => isConcentrationEffect,
       callback: () => app.document.endConcentration(effect),
