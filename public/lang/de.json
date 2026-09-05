@@ -11,6 +11,7 @@
     "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
     "TIDY5E.ShowItemArt": "Bild zeigen",
     "TIDY5E.AbbrInitiative": "Ini",
+    "TIDY5E.AbbrProficiency": "Üb",
     "TIDY5E.RestHint": "Rasten",
     "TIDY5E.ShortRest": "Kurze Rast",
     "TIDY5E.LongRest": "Lange Rast",
@@ -37,6 +38,7 @@
     "TIDY5E.ContextMenuActionUnprepare": "Vorbereitung entfernen",
     "TIDY5E.ContextMenuActionEdit": "Bearbeiten",
     "TIDY5E.ContextMenuActionDelete": "Löschen",
+    "TIDY5E.ContextMenuActionPickColor": "Farbe wählen",
     "TIDY5E.EmptySection": "Dieser Bereich ist leer. Entsperre den Charakterbogen zum Bearbeiten.",
     "TIDY5E.GMOnlyEdit": "Nur der Spielleiter kann diesen Bereich bearbeiten.",
     "TIDY5E.AttunementWarning": "Einstimmungs-Warnung: Du kannst dich maximal auf {number} Gegenstände einstimmen!",
@@ -298,6 +300,9 @@
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
         "name": "Primärer Akzent"
     },
+    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
+        "name": "Hintergrundfarbe der Kopfzeile"
+    },
     "TIDY5E.Settings.ColorPickerEquipped": {
         "name": "Ausgerüstet"
     },
@@ -408,7 +413,16 @@
         "RarityColors.title": "Seltenheitsfarben",
         "SheetTheme.title": "Charakterbogen-Design",
         "SheetTheme.hint": "Um optimale Ergebnisse zu erzielen, wählen Sie eine Farbe in der Mitte der Farbpalette.",
-        "SpellcastingMethodColors.title": "Farbe für Zauberwirkungsmethode"
+        "SpellcastingMethodColors.title": "Farbe für Zauberwirkungsmethode",
+        "AccentColor": {
+            "hint": "Passe die Akzentfarbe des Bogens an, einschließlich Schaltflächen, Tabellenköpfen und weiteren Bedienelementen."
+        },
+        "HeaderBackgroundColor": {
+            "hint": "Verwende für die Kopfzeile des Bogens eine andere Farbe als die Akzentfarbe.",
+            "title": "Farbe der Akteurs-Kopfzeile"
+        },
+        "UseBasicTheme.hint": "Verwende den klassischen Pergamentstil ohne gestaltete Bogen- und Tabellenköpfe.",
+        "UseBasicTheme.title": "Einfaches Thema verwenden"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Zaubergrad {number}",
     "TIDY5E.ApplyChanges": "Änderungen übernehmen",
@@ -430,6 +444,7 @@
         "ResetActionDefault": "Standardaktion zurücksetzen",
         "OverriddenSetOverrideFalse": "Aus Aktionsliste entfernen (Umschalt+Klick um Überschreibung zu löschen)"
     },
+    "TIDY5E.LegendaryAbbr": "LA",
     "TIDY5E.HitDC": "Treffer / SG",
     "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Habitat: {environment}",
@@ -445,7 +460,15 @@
         "Title": "Reiter Auswahl: {documentName}",
         "AtLeastOneRequiredErrorMessage": "Mindestens ein Reiter erforderlich.",
         "SelectionTab.Title": "Reiter-Auswahl",
-        "VisibilityTab.Title": "Reiter Sichtbarkeit"
+        "VisibilityTab.Title": "Reiter Sichtbarkeit",
+        "buttonLabel": "Reiter einrichten",
+        "headers.showTab": "Reiter anzeigen",
+        "headers.tab": "Reiter",
+        "headers.userVisibility": "Sichtbarkeit für Benutzer",
+        "hideTabTooltip": "Diesen Reiter ausblenden",
+        "options.viewers": "Benutzerzugriff",
+        "options.visibility": "Reiter anzeigen",
+        "showTabTooltip": "Diesen Reiter anzeigen"
     },
     "TIDY5E.Listbox": {
         "MoveLeft": "Nach links bewegen (Leertaste)",
@@ -454,6 +477,14 @@
         "MoveAllRight": "Alle nach rechts verschieben",
         "MoveUp": "Nach oben bewegen (Alt + Pfeiltaste nach oben)",
         "MoveDown": "Nach unten bewegen (Alt + Pfeiltaste nach unten)"
+    },
+    "TIDY5E.WorldSettings.Homebrew": {
+        "name": "Hausregel-Einstellungen",
+        "tabLabel": "Hausregeln"
+    },
+    "TIDY5E.WorldSettings.HideClassic": {
+        "hint": "Blendet die klassischen Tidy-Bögen in der Welt aus.",
+        "name": "Tidy 5e: Klassische Bögen ausblenden"
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Unterstützung für barrierefreie Tastaturen verwenden",
@@ -513,7 +544,8 @@
         "hint": "Die Einstellungen auf Weltebene anpassen, um die \"Tidy 5e Sheets\"-Erfahrung anzupassen. Diese Einstellungen werden in dieser Foundry-Welt gespeichert und gelten für alle relevanten \"Tidy 5e Sheets\"-Inhalte.",
         "label": "Welteinstellungen",
         "title": "Welteinstellungen (Nur SL)",
-        "name": "Welteinstellungen"
+        "name": "Welteinstellungen",
+        "tabLabel": "Überblick"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Aktionsliste"
@@ -648,6 +680,7 @@
         "options.GmAndOwners": "SL und Besitzer des Gegenstands"
     },
     "TIDY5E.RollRecharge.Hint": "",
+    "TIDY5E.RollRecharge.Label": "Aufladen",
     "TIDY5E.GenericErrorNotification": "Bei der Ausführung dieser Aktion ist ein Fehler aufgetreten. Weitere Informationen finden Sie in der DevTools-Konsole.",
     "TIDY5E.EmptyContainer": "Dieser Behälter ist leer.",
     "TIDY5E.WorldSettings.TabItem": {
@@ -670,6 +703,34 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "Zauber zu Klassen zuweisen",
     "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "",
     "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Bogensperre umschalten",
+    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Ist ein Tidy-Bogen das aktive Fenster, schaltet diese Tastenbelegung die Sperre des Bogens um.",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Kopfmenü umschalten",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Ist ein Tidy-Bogen das aktive Fenster, schaltet diese Tastenbelegung das Kopfmenü des Bogens um.",
+    "TIDY5E.Facilities": {
+        "ContextMenuActionRemove": "Aus {facilityName} entfernen",
+        "Creatures.Label": "Kreaturen",
+        "Defenders.Label": "Verteidiger",
+        "Hirelings.Label": "Angeheuerte",
+        "Progress.Label": "Fortschritt (Tage)",
+        "Progress.OrderAndCraftLabel": "{orderName} – {craftingItemName}",
+        "RosterMember.Label": "{actorName} – {facilityName}"
+    },
+    "TIDY5E.Bastion.Group": {
+        "CancelOrder.Label": "Auftrag abbrechen",
+        "ChooseFacility.Title": "Einrichtung wählen",
+        "CompleteOrder.Confirm": "Diesen Auftrag jetzt abschließen? Die verbleibenden Tage werden übersprungen und die Belohnungen vergeben.",
+        "CompleteOrder.Label": "Auftrag abschließen",
+        "EmptyStateHint": "Keine Gruppenmitglieder mit Bastionen. Füge Spielercharaktere hinzu, um ihre Bastionen hier zu verfolgen.",
+        "Facilities.EmptyStateHint": "Dieser Charakter hat noch keine Einrichtungen gebaut.",
+        "MaintainOrder.Chat": "hat den Auftrag Instandhaltung an die eigene Bastion erteilt: {bastionName}.",
+        "MaintainOrder.DialogHint": "Die Bastionsaufträge werden für alle ausgewählten Charaktere fortgeführt. Entferne den Haken bei Charakteren, die keine Aufträge erteilen können. Ihre Bastionen erhalten den Auftrag Instandhaltung, und laufende Einrichtungsaufträge werden nicht fortgeführt.",
+        "MaintainOrder.DialogTitle": "Charaktere, die Bastionsaufträge erteilen können",
+        "MaintainOrder.Label": "Instandhaltung",
+        "Orders.EmptyStateHint": "Kein Gruppenmitglied hat einen laufenden Auftrag.",
+        "RollEvent.Label": "Bastionsereignis",
+        "TakeBastionTurn.Confirm": "Für die Charaktere dieser Gruppe einen Bastionszug vorrücken?"
+    },
     "TIDY5E.ReminderToBackUp": "Denken Sie immer daran, Ihre Welt zu sichern.",
     "TIDY5E.Commands.HideLegendaryToolbar": "Legendäre Symbolleiste ausblenden",
     "TIDY5E.UseDefaultDialog": {
@@ -693,6 +754,8 @@
         "hint": "Verwenden Sie die von Tidy sorgfältig ausgewählten Symbole für Zauberschulen. Um die Symbole für Zauberschulen über CONFIG.DND5E oder andere Module anzupassen, deaktivieren Sie diese Option. Informationen zum Erweitern der benutzerdefinierten Symbole für Zauberschulen von Tidy finden Sie in der Tidy-API-Dokumentation."
     },
     "TIDY5E.UseDefault": "Standard verwenden",
+    "TIDY5E.UseGlobalDefaults": "Globale Vorgaben verwenden",
+    "TIDY5E.UndoChanges": "Änderungen rückgängig machen",
     "TIDY5E.Commands.ShowLegendaryToolbar": "Legendäre Symbolleiste anzeigen",
     "TIDY5E.Section": {
         "ConfigDialog": {
@@ -704,7 +767,17 @@
         "Label": "",
         "Default": "",
         "Tooltip": "",
-        "ActionTooltip": ""
+        "ActionTooltip": "",
+        "LabelPl": "Abschnitte",
+        "SectionSelectorChooseActionSectionTooltip": "Aktionsabschnitt wählen",
+        "SectionSelectorChooseSectionTooltip": "Abschnitt wählen",
+        "SectionSelectorChooseTabSectionTooltip": "Abschnitt für {tabName} wählen",
+        "SectionSelectorCreateNewSection": "Neuen Abschnitt anlegen",
+        "SectionSelectorExistingSections": "Vorhandene Abschnitte",
+        "SectionSelectorNewSectionName": "Name des neuen Abschnitts",
+        "SectionSelectorSaveNewSection": "Neuen Abschnitt speichern",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "ShowSection": "Abschnitt anzeigen"
     },
     "TIDY5E.GMOnly.Message": "Nur SL: {message}",
     "TIDY5E.WorldSettings.TabIcons": {
@@ -715,18 +788,111 @@
         "name": "Zeigt Verbrauchsmaterialien als Aktionen"
     },
     "TIDY5E.Reset": "Zurücksetzen",
+    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Waffenmeisterschaft: {mastery}",
     "TIDY5E.Utilities.ConfigureSections": "Abschnitte konfigurieren",
     "TIDY5E.Settings.SheetPreferences": {
         "buttonLabel": "„Tidy“ als Standardblatt festlegen",
         "name": "„Tidy“ als Standardblatt festlegen",
         "hint": "Wenn Sie Tidy 5e Sheets als Standard für einen oder mehrere Dokumenttypen festlegen möchten, das Standardmenü für die Konfiguration der Standardblätter jedoch nicht wie erwartet funktioniert, wählen Sie Ihre Einstellungen über dieses Menü aus.",
-        "explanation": "Wählen Sie alle Dokumenttypen aus, für die Sie Tidy 5e Sheets als Standard festlegen möchten."
+        "explanation": "Wählen Sie alle Dokumenttypen aus, für die Sie Tidy 5e Sheets als Standard festlegen möchten.",
+        "RevertToSystemSheets": "Zurück zu den Systembögen",
+        "Sheet": "Dokumentart",
+        "SystemSheets": "Systembögen",
+        "TidySheets": "Tidy-Bögen",
+        "dialogMessage": "Sollen wirklich alle Bögen standardmäßig auf Tidy gestellt werden?",
+        "dialogTitle": "Tidy als Standardbogen festlegen",
+        "disableAll": "Zu den Systembögen wechseln",
+        "enableAll": "Zu den Tidy-Bögen wechseln"
+    },
+    "TIDY5E.WorldSettings.SheetPreferences": {
+        "chooseSpecific": "Stattdessen einzelne Bogenarten wählen",
+        "hint": "Wähle alle Dokumentarten aus, für die Tidy 5e Sheets der Standard sein soll.",
+        "name": "Tidy als Standardbogen festlegen",
+        "revertToSystemSheets": "Zurück zu den Systembögen",
+        "switchToTidySheets": "Zu den Tidy-Bögen wechseln",
+        "tabLabel": "Standardbögen"
+    },
+    "TIDY5E.WorldSettings.Defaults": {
+        "intro": "Willkommen bei <span>Tidy 5e Sheets</span>. Lege hier die weltweiten Vorgaben fest und passe anschließend über die Reiter links Themen, Bogenreiter und mehr im Einzelnen an.",
+        "resetHint": "Setzt alle Welteinstellungen von Tidy 5e Sheets auf die Vorgaben zurück. Das lässt sich nicht rückgängig machen.",
+        "useTidyHint": "Macht Tidy 5e Sheets zum Standard für jede Akteurs- und Gegenstandsart in dieser Welt."
     },
     "TIDY5E.Commands.HideContainerPanel": "Behälter-Leiste ausblenden",
     "TIDY5E.Commands.ShowContainerPanel": "Behälter-Leiste anzeigen",
     "TIDY5E.ItemFilters.ClearAll": "Alle löschen",
     "TIDY5E.ItemFilters.CanCast": "Kann zaubern",
     "TIDY5E.LocalizationTestKey": "",
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Verhalten beim Auf- und Zuklappen",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Abschnitte der obersten Ebene",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Alle Abschnitte",
+    "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetisch (A–Z)",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Aufsteigend",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Alphabetisch aufsteigend sortieren",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Absteigend",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "Alphabetisch absteigend sortieren",
+    "TIDY5E.SortMenu.OptionManual": "Manuell",
+    "TIDY5E.SortMenu.OptionPriority": "Nach Priorität",
+    "TIDY5E.Activities.Cast.SourceHintText": "Aus {itemName}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Fasst{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Gesamtes Geld an den übergeordneten Akteur übertragen",
+    "TIDY5E.BrokenLink": "Defekter Verweis",
+    "TIDY5E.Visible": "Sichtbar",
+    "TIDY5E.Hidden": "Verborgen",
+    "TIDY5E.Options.Title": "Optionen",
+    "TIDY5E.ConfigureTab.Title": "Reiter {tabName} einrichten",
+    "TIDY5E.DisplayOptions.Title": "Anzeigeoptionen",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globale Standard-Anzeigeoptionen",
+    "TIDY5E.DisplayOptionsActor.Title": "Anzeigeoptionen des Akteurs",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Behälterzeile anzeigen",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Gewirkt auf {ordinal}",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Herkunft des Merkmals",
+    "TIDY5E.HitDice.Abbreviation": "TW",
+    "TIDY5E.HitDice.Current.Label": "Aktuelle Trefferwürfel",
+    "TIDY5E.HitDice.Max.Label": "Maximale Trefferwürfel",
+    "TIDY5E.CharacterTraits.Title": "Charaktermerkmale",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Standard verwenden ({value})",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Willkommen bei Tidy 5e Sheets! Stelle zunächst {sheetLinkStart}einen Bogen{sheetLinkEnd} (oder gleich {allSheetsLinkStart}alle Bögen{allSheetsLinkEnd}) auf die Tidy-Fassung um. Mehr über dieses Modul und seine Möglichkeiten steht im {wikiLinkStart}offiziellen Wiki{wikiLinkEnd}.",
+    "TIDY5E.AggregateSkill.HighMeasure": "Hoch",
+    "TIDY5E.AggregateSkill.LowMeasure": "Niedrig",
+    "TIDY5E.Difficulty": "Schwierigkeit",
+    "TIDY5E.Character.Sidebar.Title": "Seitenleiste einrichten",
+    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Fertigkeiten & Merkmale",
+    "TIDY5E.Encounter": {
+        "AddAllPlaceholders.Label": "Alle als Platzhalter hinzufügen",
+        "AddCombatants.MustHaveEncounter.Message": "Es muss eine Begegnung ausgewählt sein, um zur Begegnungsübersicht hinzuzufügen",
+        "AddMember.Label": "Mitglied hinzufügen",
+        "AddPlaceholder.Label": "Kampf-Platzhalter erstellen",
+        "AddPlaceholderToCombatTracker.Label": "Als Platzhalter zur laufenden Begegnung hinzufügen",
+        "Combat.ExcludeFromCombat.Tooltip": "Von Kampfaktivitäten ausschließen",
+        "Combat.IncludeInCombat.Tooltip": "In Kampfaktivitäten einbeziehen",
+        "CombatVisibility.Hidden.Label": "Für Spieler verborgen, wenn zur Übersicht hinzugefügt",
+        "CombatVisibility.Visible.Label": "Für Spieler sichtbar, wenn zur Übersicht hinzugefügt",
+        "CombatantsSection.Title": "Kämpfer",
+        "DeletePlaceholder.Label": "Platzhalter löschen",
+        "DifficultyTarget.Label": "Angestrebte Schwierigkeit",
+        "InitiativeCount.Label": "Initiativewert {count} hinzufügen",
+        "NewPlaceholder.Name": "Neuer Platzhalter",
+        "NewPlaceholder.SubtitlePlaceholderText": "Notiz zu diesem Platzhalter",
+        "PlaceholderNameField.PlaceholderText": "Name des Platzhalters",
+        "PlaceholderNotesField.PlaceholderText": "Notizen",
+        "PrerollInitiative": "Initiative vorab würfeln"
+    },
+    "TIDY5E.Actor.Characteristics": "Merkmale",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Hinweis</strong>: Die <strong>klassischen Bögen</strong> von Tidy 5e werden mit Foundry v14 aus dem Modul Tidy 5e Sheets entfernt.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Hinweis</strong>: Die <strong>klassischen Bögen</strong> von Tidy 5e wurden mit Foundry v14 aus dem Modul Tidy 5e Sheets entfernt.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "{value} ignorieren",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Jedes schwierige Gelände ignorieren",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "clear": "Verseuchung aufheben",
+            "none": "Keine Verseuchung und keine Symptome.",
+            "rollDeepHazeSave": "Rettungswurf gegen den Tiefen Dunst würfeln",
+            "rollMutation": "Auf Mutation würfeln",
+            "rollSave": "Rettungswurf gegen Verseuchung würfeln",
+            "rolledMutation": "{name} hat bei Verseuchungsstufe {level} auf eine Mutation gewürfelt."
+        }
+    },
+    "TIDY5E.Table.UnidentifiedPlaceholder": "?",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Flags in die Erstellung von Zauberspruchrollen einbeziehen",
         "hint": "Zaubersprüche können manchmal spezielle Daten von anderen Modulen enthalten, die nützlich sein können, um in eine Zauberrolle zu übertragen. Aktivieren, um alle markenbasierten Daten bei der Erstellung in die Schriftrolle zu kopieren."
@@ -754,6 +920,7 @@
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Begegnungsbogen",
     "TIDY5E.PreviewSheetImageHint": "Linksklick: Vorschaubild",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Einstellungen",
+    "TIDY5E.AbilityRoll": "{ability}-Probe würfeln",
     "TIDY5E.AddSpecific": "Hinzufügen {name}",
     "TIDY5E.ExhaustionLevelTooltip": "Stufe der Erschöpfung {level}",
     "TIDY5E.NoSpecialSenses": "Keine besonderen Sinne",
@@ -766,6 +933,7 @@
     "TIDY5E.JournalEntry.NewTitle": "Journal Eintrag {number}",
     "TIDY5E.SheetLock.Empty.Hint": "Beginne, indem du eine Klasse und deine ersten Gegenstände hinzufügst. Dann, verwende das Gegenstands-Menü oder Rechtsklick und wähle „Zu Bogenregistrierkarte hinzufügen“, um sie hier hinzuzufügen.",
     "TIDY5E.ContextMenuActionView": "Ansicht",
+    "TIDY5E.ContextMenuActionViewItem": "Ursprungsgegenstand anzeigen",
     "TIDY5E.ContextMenuActionPinToAttributes": "An Attribute anheften",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "von Attributen loslösen",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Begrenzte Nutzungen anzeigen",
@@ -787,14 +955,87 @@
         "LimitToSpecificSheetsLabel": "Gezeigten Abschnitt auf bestimmte Bögen beschränken",
         "LimitToSpecificTabsLabel": "Gezeigten Abschnitt auf bestimmte Reiter beschränken"
     },
+    "TIDY5E.WorldSettings.label": "Einstellungen der Tidy-Bögen",
+    "TIDY5E.WorldSettings.hint": "Globale Einstellungen für die Tidy-Bögen einrichten.",
+    "TIDY5E.WorldSettings.Group": {
+        "ActorSheets": "Akteursbögen",
+        "ItemSheets": "Gegenstandsbögen",
+        "TidySettings": "Tidy-Einstellungen"
+    },
+    "TIDY5E.WorldSettings.SheetConfiguration": {
+        "hint": "Richte die Einstellungen für Bögen vom Typ {sheetName} ein. Blende Kopfleisten-Schaltflächen aus oder ein und lege fest, welche Reiter auf dem Bogen erscheinen, in welcher Reihenfolge und für wen.",
+        "label": "Einrichtung des Bogens {sheetName}"
+    },
+    "TIDY5E.WorldSettings.TabConfiguration": {
+        "hint": "Lege fest, welche Reiter auf dem Bogen {tabName} erscheinen, in welcher Reihenfolge und für wen.",
+        "label": "Reiter-Einrichtung für {tabName}"
+    },
+    "TIDY5E.SheetSettings": {
+        "AssignSpellsToClasses": {
+            "hint": "Ordne Zauber ihrer Ursprungsklasse zu, um Gruppierung und Kennzeichnung der Zauber im Reiter Zauberbuch zu aktualisieren."
+        },
+        "ConfigureTab": {
+            "hint": "Einstellungen, Sichtbarkeit und Abschnitte für den Reiter {tabName} einrichten.",
+            "title": "Reiter {tabName} einrichten"
+        },
+        "Group": {
+            "SheetSettings": "Bogeneinstellungen",
+            "Tabs": "Reiter"
+        },
+        "HeaderControls": {
+            "MoveAllToHeader": "Alle in die Kopfleiste",
+            "MoveAllToMenu": "Alle ins Menü",
+            "OpenWorldSettings": "Welteinstellungen öffnen",
+            "Preview": "Vorschau der Kopfleisten-Schaltflächen",
+            "ShowControl": "In {location} anzeigen",
+            "WorldSettingHint": "Die Anordnung der Kopfleisten-Schaltflächen ist eine Welteinstellung und gilt für jeden Bogen vom Typ {sheetName}. Änderungen hier wirken sich auf alle aus."
+        },
+        "NoTabsHint": "Derzeit ist kein Reiter sichtbar. Passe die Reiter-Einrichtung an, um Reiter zu aktivieren.",
+        "Sidebar": {
+            "Hint": "Einstellungen für die Reiter der Seitenleiste einrichten.",
+            "title": "Seitenleiste"
+        },
+        "hint": "Einstellungen für den Bogen einrichten.",
+        "title": "Einstellungen der Tidy-Bögen"
+    },
+    "TIDY5E.TabSettings": {
+        "SidebarSettings": {
+            "label": "Seitenleiste anzeigen",
+            "name": "Seitenleiste ausgeklappt"
+        }
+    },
+    "TIDY5E.SettingsMenu": {
+        "Defaults": {
+            "hint": "Ändere hier die Standardbögen für Akteure und Gegenstände, falls das Menü Core → Standardbögen nicht wie erwartet arbeitet.",
+            "label": "Tidy als Standardbogen festlegen",
+            "name": "Tidy als Standardbogen festlegen"
+        },
+        "HeaderControlConfiguration": {
+            "buttonLabel": "Kopfleisten-Schaltflächen"
+        },
+        "TidySettings": {
+            "hint": "Richte die Tidy-Bögen für dein Spiel ein. Lege Standardbögen fest, passe Themen an und bestimme globale Vorgaben für deine Spieler.",
+            "label": "Tidy-Einstellungen einrichten",
+            "name": "Einstellungen der Tidy-Bögen"
+        }
+    },
+    "TIDY5E.WorldSettings.GlobalTheme": {
+        "hint": "Richte die Standard-Themeneinstellungen für deine Spielwelt ein. Sie gelten für alle Bögen. Du kannst Themeneinstellungen auch für einzelne Bögen festlegen.",
+        "name": "Globale Themeneinstellungen einrichten",
+        "tabLabel": "Themeneinstellungen"
+    },
     "TIDY5E.Show": "Zeigen",
     "TIDY5E.Hide": "Ausblenden",
+    "TIDY5E.SectionOrganization": "Gliederung der Abschnitte",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Verwendbare Gegenstände automatisch einbeziehen",
     "TIDY5E.LegendaryLairToolbar": "Legendäre/Hort Toolbar",
     "TIDY5E.SpellbookSections": "Zauberbuchabschnitt",
     "TIDY5E.UserDefaultPrefix": "Benutzerstandard: {value}",
+    "TIDY5E.GenericDefaultPrefix": "Standard: {value}",
     "TIDY5E.Group.PrimaryParty.Label": "Primäre Gruppe",
     "TIDY5E.CombatTabName": "Kampf",
     "TIDY5E.ContextMenuActionPin": "oben anpinnen",
+    "TIDY5E.ContextMenuActionPinToSpecificTab": "An Reiter {tabName} anheften",
     "TIDY5E.ContextMenuActionUnpin": "oben lösen",
     "TIDY5E.HeaderControlConfiguration": {
         "LocationMenu": "Menü",
@@ -829,6 +1070,11 @@
         "name": "Verwaltung von Gemeinsamen Inspirationen - Nur SL",
         "hint": "Aktiviere diese Option, um die Verwaltung von Gemeinsamen Inspirationen auf die SL zu beschränken."
     },
+    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
+        "hint": "Vertauscht Attributswert und Modifikator in den Kopfzeilen des Bogens.",
+        "name": "Attributswert und Modifikator vertauschen",
+        "title": "Attributswert und Modifikator vertauschen"
+    },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Aktivitäten"
     },
@@ -837,7 +1083,8 @@
         "hint": "Aktivieren, um Informationskarten für aktive Effekte auf allen Figuren und Gegenständen mit aktiven Effekten anzuzeigen."
     },
     "TIDY5E.Settings.InfoCardsInspectKey": {
-        "hint": "Drücken Sie diese Taste auf der Tastatur (z. B. die Taste „t“), während Sie eine Infokarte anzeigen, um sie hervorzuheben."
+        "hint": "Drücken Sie diese Taste auf der Tastatur (z. B. die Taste „t“), während Sie eine Infokarte anzeigen, um sie hervorzuheben.",
+        "name": "Taste zum Prüfen der Infokarten"
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Standard Todesrettungswurf",
@@ -853,9 +1100,23 @@
         "top": "Oben",
         "bottom": "Unten"
     },
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "hint": "Legt fest, wie die Abschnitte im Reiter des Charakterbogens standardmäßig gegliedert werden.",
+        "name": "Gliederung der Abschnitte im Charakterbogen-Reiter",
+        "option.action": "Nach Aktionsverbrauch gruppieren",
+        "option.origin": "Nach Gegenstands- oder Merkmalsart gruppieren"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "hint": "Bezieht alle derzeit verwendbaren Gegenstände, Zauber und Merkmale automatisch in den Reiter des Charakterbogens ein.",
+        "name": "Charakterbogen-Reiter: Verwendbare Gegenstände automatisch einbeziehen"
+    },
     "TIDY5E.AddCustom": "Eigene hinzufügen",
     "TIDY5E.CompendiumBrowser": "Füge {name} vom Kompendium hinzu",
     "TIDY5E.RemoveSpecific": "Entferne {name}",
+    "TIDY5E.SheetPin": {
+        "Label": "Angeheftetes",
+        "LabelPl": "Angeheftetes"
+    },
     "TIDY5E.LairAbbr": "Hort",
     "TIDY5E.SheetMode.Edit": "Wechsel zu Spiel-Modus",
     "TIDY5E.SheetMode.Play": "Wechsel zu Bearbeitungsmodus",
@@ -865,7 +1126,23 @@
     "TIDY5E.InspirationRemove": "Inspiration entfernen",
     "TIDY5E.Settings.GlobalCustomSections": {
         "name": "Globale benutzerdefinierte Abschnitte",
-        "AddSection": "Abschnitt hinzufügen"
+        "AddSection": "Abschnitt hinzufügen",
+        "hint": "Eigene Abschnitte der Welt, die sich für verschiedene Zwecke einrichten lassen. Globale eigene Abschnitte stehen immer in der Abschnittsauswahl zur Verfügung."
+    },
+    "TIDY5E.Settings.ShowTooltipCondition": {
+        "name": "System-Tooltips für Zustände anzeigen"
+    },
+    "TIDY5E.Settings.ShowTooltipCreatureType": {
+        "name": "System-Tooltips für Kreaturentypen anzeigen"
+    },
+    "TIDY5E.Settings.ShowTooltipMastery": {
+        "name": "System-Tooltips für Waffenmeisterschaft anzeigen"
+    },
+    "TIDY5E.Settings.ShowTooltipSkill": {
+        "name": "System-Tooltips für Fertigkeiten anzeigen"
+    },
+    "TIDY5E.Settings.ShowTooltipTool": {
+        "name": "System-Tooltips für Werkzeuge anzeigen"
     },
     "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Zugewiesene Crew",
     "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Nicht zugewiesene Crew",
@@ -882,9 +1159,16 @@
     "TIDY5E.Vehicle.Equipment.HP.Label": "durchschn. TP",
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Ziehen Sie die Crew hierher oder klicken Sie zum Hinzufügen. Die Crew kann dann der Fahrzeugausstattung oder den Funktionen zugewiesen werden.",
     "TIDY5E.Vehicle.Passenger.EmptyState": "Ziehen Sie Passagiere hierher oder klicken Sie, um sie hinzuzufügen.",
+    "TIDY5E.Vehicle.RemoveBrokenLinks": "{value} defekte Verweise entfernen",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Rituale in „Kann wirken“ aufnehmen",
     "TIDY5E.GMOnly.Title": "Nur SL",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Zauberplatz-Verfolgung",
     "TIDY5E.Utilities.SpellPips": "Zauberpunkte",
-    "TIDY5E.Utilities.SpellValueMax": "Zauberwert/Max"
+    "TIDY5E.Utilities.SpellValueMax": "Zauberwert/Max",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Gruppierung der Zauber aus Wirken-Aktivitäten",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Abschnitt Weitere Zauber",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Ein Abschnitt je Gegenstand",
+    "TIDY5E.Utilities.CastActivityMissingSpell": "Dieser Aktivität ist kein Zauber zugeordnet.",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zähler für Legendäres und Hort im Reiter Wertekasten anzeigen",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Abschnitte des Zauberbuchs im Reiter Wertekasten einbeziehen"
 }
