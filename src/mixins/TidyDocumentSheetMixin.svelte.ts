@@ -758,7 +758,7 @@ export function getTidyExtensibleDocumentSheetMixin<
      * Toggles the user's sheet mode relative to the current mode.
      * @protected
      */
-    async toggleSheetMode() {
+    async changeMode() {
       const newMode =
         this.sheetMode === CONSTANTS.SHEET_MODE_PLAY
           ? CONSTANTS.SHEET_MODE_EDIT
