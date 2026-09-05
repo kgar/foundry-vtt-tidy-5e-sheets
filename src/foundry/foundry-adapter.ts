@@ -1626,4 +1626,16 @@ export const FoundryAdapter = {
           key: 'gp',
         };
   },
+  /**
+   * Gets the relative UUID of a given document. For use with favorite-like settings which store a relative UUID, such as sheet pins.
+   * @param targetDocument the document whose relative UUID should be retrieved
+   * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
+   */
+  buildRelativeUuid(doc: any) {
+    if (doc.documentName === 'activity') {
+      return `${foundry.utils.buildRelativeUuid(doc.item, doc.actor)}.Activity.${doc.id}`;
+    }
+
+    return foundry.utils.buildRelativeUuid(doc, doc.actor) ?? doc.relativeUUID;
+  },
 };

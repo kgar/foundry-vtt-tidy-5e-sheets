@@ -1462,7 +1462,7 @@ export function getTidy5eActorSheetQuadroneBase<
         sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.buildRelativeUuid(sheetPinDoc);
+        let relativeUuid = FoundryAdapter.buildRelativeUuid(sheetPinDoc);
         return await this._onDropPin(event, {
           id: relativeUuid,
           doc: sheetPinDoc,
