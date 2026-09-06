@@ -1172,6 +1172,7 @@ export function getTidy5eActorSheetQuadroneBase<
         );
       }
 
+      // TODO: Later, if we want to keep the current behavior of preselecting the type: `const types = this._addDocumentItemTypes(args.tabId).filter(` and delete the if() below.
       let types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
           !CONFIG.Item.dataModels[type].metadata?.singleton ||
@@ -1186,19 +1187,13 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (types.length > 1) {
-        let dialogV1HookId: number | null = null;
 
-        if (!isNil(datasetType, '') && types.includes(datasetType)) {
-          dialogV1HookId = Hooks.once('renderDialog', (app: any) => {
-            const typeToPreselect = app.element
-              .get(0)
-              .querySelector(`[value="${datasetType}"]`);
-            typeToPreselect && (typeToPreselect.checked = true);
-          });
-        }
+        const createData = types.includes(datasetType)
+          ? { type: datasetType, ...restDataSet }
+          : { ...restDataSet };
 
-        let result = await Item.implementation.createDialog(
-          { type: datasetType, ...restDataSet },
+        return await Item.implementation.createDialog(
+          createData,
           {
             parent: this.actor,
             pack: this.actor.pack,
@@ -1206,10 +1201,6 @@ export function getTidy5eActorSheetQuadroneBase<
           },
           { sheet: this },
         );
-
-        Hooks.off('renderDialog', dialogV1HookId);
-
-        return result;
       }
 
       const type = types[0];
