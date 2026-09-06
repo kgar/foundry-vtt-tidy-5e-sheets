@@ -1174,5 +1174,6 @@
         "Orders.EmptyStateHint": "Žádný ze členů skupiny nemá prováděný rozkaz.",
         "Facilities.EmptyStateHint": "Tato postava zatím nemá postaveno žádné zařízení.",
         "EmptyStateHint": "Nikdo ve skupině nemá pevnost. Přidej sem postavy hráčů, abys mohl/a sledovat jejich pevnosti."
-    }
+    },
+    "TIDY5E.Table.UnidentifiedPlaceholder": "?"
 }
