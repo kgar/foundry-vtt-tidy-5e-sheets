@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
   import { getContainerOrItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import ItemImageBorder from './ItemImageBorder.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -8,7 +7,6 @@
   import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Snippet } from 'svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
@@ -34,32 +32,11 @@
     includeSidebarProperties = true,
   }: Props = $props();
 
-  // Rarity
-  let rarity = $derived(
-    context.unlocked ? context.source.rarity : context.system.rarity,
-  );
-
   const unidentified = $derived(context.system.identified === false);
 
   // Hide mechanical details from players, and from GMs in view mode, until the item is identified.
   let concealDetails = $derived(
     unidentified && !FoundryAdapter.isInGmEditMode(context.document),
-  );
-
-  let rarityText = $derived(
-    unidentified
-      ? localize('DND5E.Unidentified.Title')
-      : RarityColors.getRarityText(rarity).titleCase(),
-  );
-
-  let itemRarities = $derived(
-    Object.entries(context.config.itemRarity).map(([key, value]) => {
-      return {
-        key,
-        label: value,
-        rarityColorVariableName: RarityColors.getRarityColorVariableName(key),
-      };
-    }),
   );
 
   // Facility Disrepair
@@ -95,18 +72,15 @@
   );
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
-  let itemColorClasses = $derived<ClassValue>([
-    unidentified && !FoundryAdapter.isInGmEditMode(context.document)
-      ? 'disabled'
-      : undefined,
-    !isNil(rarity, '') ? 'rarity' : undefined,
-    unidentified ? 'unidentified' : undefined,
-    !unidentified && 'rarity' in context.system
-      ? coalesce(rarity?.slugify(), 'none')
-      : undefined,
-    !isNil(config?.key) ? 'spell-method' : undefined,
-    !isNil(config?.key) ? 'method-' + config.key.slugify() : undefined,
-  ]);
+  let itemColorClasses = $derived<ClassValue>({
+    disabled: unidentified && !FoundryAdapter.isInGmEditMode(context.document),
+    rarity: !!context.rarities,
+    unidentified,
+    [coalesce(context.rarities?.rarity?.slugify(), 'none')]:
+      !unidentified && context.rarities,
+    'spell-method': !isNil(config?.key),
+    ['method-' + config?.key?.slugify()]: !isNil(config?.key),
+  });
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
 
@@ -226,33 +200,14 @@
       />
       <ItemImageBorder />
     </div>
-    {#if 'rarity' in context.system}
-      <div class="item-rarity-container">
-        {#if context.unlocked && (!unidentified || FoundryAdapter.isInGmEditMode(context.document))}
-          <SelectQuadrone
-            id="rarity-{context.sheet.id}"
-            document={context.item}
-            field="system.rarity"
-            class={['item-rarity-selector', 'capitalize', itemColorClasses]}
-            value={context.source.rarity}
-            disabled={!context.editable &&
-              !FoundryAdapter.isInGmEditMode(context.document)}
-            blankValue=""
-          >
-            <option class="none" value="">{localize('DND5E.None')}</option>
-            {#each itemRarities as rarity (rarity.key)}
-              <option
-                value={rarity.key}
-                class={['rarity', rarity.key.slugify()]}
-              >
-                {rarity.label}
-              </option>
-            {/each}
-          </SelectQuadrone>
-        {:else}
-          <div class={['item-rarity-text', itemColorClasses]}>{rarityText}</div>
-        {/if}
-      </div>
+    {#if context.rarities}
+      {#if !context.unlocked}
+        <div class="item-rarity-container">
+          <div class={['rarity', 'item-rarity-text', itemColorClasses]}>
+            {context.rarities.rarityLabel}
+          </div>
+        </div>
+      {/if}
     {:else if !isNil(spellPreparationText, '')}
       <div class={['spell-method-text', itemColorClasses]}>
         {spellPreparationText}
@@ -586,9 +541,10 @@
                     sectionType: localize('TIDY5E.Section.ActionLabel'),
                     callingDocument: context.item,
                     document: context.item,
-                  })
-                )
-              }}}
+                  }),
+                );
+              }
+            }}
           >
             <span class="text-normal">
               {actionSectionLabel}

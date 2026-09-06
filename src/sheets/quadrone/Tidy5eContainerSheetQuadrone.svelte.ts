@@ -41,6 +41,7 @@ import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { RarityColors } from 'src/features/rarity-colors/RarityColors';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -319,6 +320,10 @@ export class Tidy5eContainerSheetQuadrone
         object: {},
         options: [],
       },
+      rarities: RarityColors.getRarityContext(
+        this.document,
+        documentSheetContext.source,
+      ),
       rollData: rollData,
       system: this.document.system,
       tabs: [],

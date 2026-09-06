@@ -166,7 +166,7 @@ export function getItemRarityFilters(): ItemFilter[] {
       ({
         name: key,
         predicate: (item) =>
-          !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
+          !FoundryAdapter.concealDetails(item) && item.system.rarities.has(key),
         text: text,
       }) satisfies ItemFilter,
   );

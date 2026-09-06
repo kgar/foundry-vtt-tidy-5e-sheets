@@ -4,6 +4,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import ItemRarities from '../parts/ItemRarities.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -14,6 +15,7 @@
 
 <fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
+  <ItemRarities />
 </fieldset>
 
 <fieldset disabled={!context.unlocked}>
@@ -37,10 +39,12 @@
 
   <!-- Loot Subtype -->
   {#if context.itemSubtypes}
-    {const subtypeLabel = $derived(localize('DND5E.ItemLootSubtype', {
-      category:
-        context.config.lootTypes[context.system.type.value]?.label ?? '',
-    }))}
+    {const subtypeLabel = $derived(
+      localize('DND5E.ItemLootSubtype', {
+        category:
+          context.config.lootTypes[context.system.type.value]?.label ?? '',
+      }),
+    )}
 
     <FormGroup
       label={subtypeLabel}

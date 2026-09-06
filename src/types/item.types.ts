@@ -141,6 +141,7 @@ export type ItemSheetQuadroneContext = {
   primaryAbilities?: { value: string; label: string; selected: boolean }[];
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
+  rarities: RarityContext | undefined;
   recoveryPeriods: GroupableSelectOption[];
   recoveryTypes: {
     label: string;
@@ -176,6 +177,17 @@ export type ItemSheetQuadroneContext = {
   }[];
   tabs: Tab[];
 } & DocumentSheetV2Context;
+
+export type RarityContext = {
+  /** When an item has a single selected rarity, then this field has that value. */
+  rarity: string | undefined;
+  rarityLabel: string | undefined;
+  options: {
+    label: string;
+    selected: boolean;
+    value: string;
+  }[];
+};
 
 /**
  * Data for a recovery profile for an activity's uses.
@@ -268,6 +280,7 @@ export type ContainerSheetQuadroneContext = {
   name: ItemNameContext;
   owner: boolean;
   properties: PropertyContext;
+  rarities: RarityContext | undefined;
   rollData: Record<string, any>;
   sheet: Tidy5eContainerSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;

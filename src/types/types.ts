@@ -941,6 +941,8 @@ export type ActorItemQuadroneContext = {
   containerCapacity?: ContainerCapacityContext;
   containerContents?: ContainerContents;
   linkedUses?: LinkedUses;
+  rarity?: string;
+  rarityLabel?: string;
   subtitle?: string;
   totalWeight?: number;
   rowActions?: ItemRowAction[];

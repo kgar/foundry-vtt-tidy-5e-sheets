@@ -50,6 +50,8 @@ import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowA
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 import * as Bastions from 'src/features/facility/Bastion';
 import { error } from 'src/utils/logging';
+import { firstOfSet } from 'src/utils/set';
+import { RarityColors } from 'src/features/rarity-colors/RarityColors';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -393,6 +395,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       },
       options: this.options,
       owner: this.document.isOwner,
+      rarities: RarityColors.getRarityContext(
+        this.document,
+        documentSheetContext.source,
+      ),
       scalarTarget:
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==

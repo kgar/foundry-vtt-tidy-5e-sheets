@@ -7,6 +7,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import ItemRarities from '../parts/ItemRarities.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -17,6 +18,7 @@
 
 <fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
+  <ItemRarities />
 </fieldset>
 
 <fieldset disabled={!context.unlocked}>
@@ -78,8 +80,9 @@
     labelAttr="label"
   >
     {#snippet children()}
-      {const reference =
-        $derived(CONFIG.DND5E.weaponMasteries[context.source.mastery]?.reference)}
+      {const reference = $derived(
+        CONFIG.DND5E.weaponMasteries[context.source.mastery]?.reference,
+      )}
 
       {#if reference}
         {#await foundry.applications.ux.TextEditor.enrichHTML(`@UUID[${reference}]`) then html}
