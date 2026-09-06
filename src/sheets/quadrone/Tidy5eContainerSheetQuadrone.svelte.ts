@@ -507,6 +507,12 @@ export class Tidy5eContainerSheetQuadrone
         return;
       }
 
+      // TODO: kgar, There's no drop target for an unidentified container right now.
+      // Confirm with system prompt before adding to an unidentified container.
+      if (!(await Container.canDropContents(this.item))) {
+        return;
+      }
+
       const documentClass = foundry.utils.getDocumentClass(data.type);
 
       const document = await documentClass.fromDropData(data);

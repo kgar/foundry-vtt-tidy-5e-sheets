@@ -8,6 +8,7 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
+  import { Container } from 'src/features/containers/Container';
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
@@ -21,6 +22,13 @@
   const { ctx }: Props = $props();
 
   const context = $derived(getActorSheetQuadroneContext());
+
+  // Hide the tooltip if unidentified container contents are hidden.
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(ctx.document, {
+      unlocked: context.unlocked,
+    }),
+  );
 
   let isEditing = $state(false);
 
@@ -211,7 +219,7 @@
         {const capacity = $derived(
           context.itemContext[ctx.document.id].containerCapacity,
         )}
-        {#if capacity}
+        {#if capacity && contentsVisibility !== 'hidden'}
           <ContainerCapacityTooltip
             bind:this={containerCapacityTooltip}
             container={ctx.document}
@@ -220,6 +228,7 @@
           />
 
           <div
+            role="tooltip"
             class="pin-container"
             onmouseover={(ev) => containerCapacityTooltip?.tryShow(ev)}
             onfocus={(ev) => containerCapacityTooltip?.tryShow(ev)}
