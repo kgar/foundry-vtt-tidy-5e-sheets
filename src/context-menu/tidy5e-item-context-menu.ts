@@ -384,7 +384,7 @@ export function getItemContextOptions(
   let actionSectionContextName = itemParent?.system.isCharacter
     ? FoundryAdapter.localize(
         'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-        { tabName: FoundryAdapter.localize('Sheet') },
+        { tabName: FoundryAdapter.localize('DOCUMENT.Sheet') },
       )
     : itemParent?.system.isNPC
       ? FoundryAdapter.localize(
@@ -394,7 +394,7 @@ export function getItemContextOptions(
       : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
 
   let actionSectionConfigTitle = itemParent?.system.isCharacter
-    ? FoundryAdapter.localize('Sheet')
+    ? FoundryAdapter.localize('DOCUMENT.Sheet')
     : itemParent?.system.isNPC
       ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
       : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');

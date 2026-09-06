@@ -637,8 +637,9 @@ export class SheetSections {
             // Sort Favorite Effects
             if (sortMode === 'm') {
               const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(foundry.utils.buildRelativeUuid(effects, actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
+                favoritesIdMap.get(
+                  foundry.utils.buildRelativeUuid(effects, actor),
+                )?.sort ?? Number.MAX_SAFE_INTEGER;
 
               effectContexts = effectContexts.toSorted(
                 (a, b) => getSort(a.effect) - getSort(b.effect),
@@ -674,8 +675,8 @@ export class SheetSections {
             // Sort Favorites Items
             if (sortMode === 'm') {
               const getSort = (item: Item5e) =>
-                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))
+                  ?.sort ?? Number.MAX_SAFE_INTEGER;
 
               items = items.toSorted((a, b) => getSort(a) - getSort(b));
             } else {
@@ -918,9 +919,7 @@ export class SheetSections {
 
   static getActionSectionLabel(item: Item5e) {
     return item.parent?.system.isCharacter
-      ? FoundryAdapter.localize(
-          game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
-        )
+      ? FoundryAdapter.localize('DOCUMENT.Sheet')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 

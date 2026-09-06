@@ -464,9 +464,7 @@
     {const sectionLabel = $derived(SheetSections.getSectionLabel(context.item))}
     {const sectionType = $derived(
       context.item.parent?.system.isCharacter
-        ? game.release.generation < 14
-          ? 'Sheet'
-          : 'DOCUMENT.Sheet'
+        ? 'DOCUMENT.Sheet'
         : 'TIDY5E.Section.Label',
     )}
     <div>
