@@ -6,6 +6,7 @@ import EncounterDescriptionTab from 'src/sheets/quadrone/actor/tabs/EncounterDes
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import EncounterCombatTab from 'src/sheets/quadrone/actor/tabs/EncounterCombatTab.svelte';
 import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export const EncounterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<EncounterSheetQuadroneContext>(
@@ -40,6 +41,7 @@ export const EncounterSheetQuadroneRuntime =
         },
         layout: 'quadrone',
         iconClass: 'fa-solid fa-swords',
+        enabled: () => SettingsProvider.settings.truesight.get(),
       },
       {
         id: CONSTANTS.TAB_DESCRIPTION,
@@ -57,5 +59,5 @@ export const EncounterSheetQuadroneRuntime =
       CONSTANTS.TAB_ACTOR_INVENTORY,
       CONSTANTS.TAB_ACTOR_COMBAT,
       CONSTANTS.TAB_DESCRIPTION,
-    ]
+    ],
   );
