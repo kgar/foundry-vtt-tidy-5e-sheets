@@ -22,10 +22,10 @@
   style="--bar-percentage: {crewPct}%;"
 ></div>
 <div
-  class="flexrow truncate damage-formula-container"
+  class="flexrow truncate crew-capacity"
   data-tooltip={`${crewCount} / ${crewMax}`}
 >
-  <span class="font-data-medium color-text-default">{crewCount}</span>
+  <span class="font-label-medium color-text-default">{crewCount}</span>
   <span class="font-body-medium color-text-lightest separator">/</span>
-  <span class="font-label-medium color-text-default">{crewMax}</span>
+  <span class="font-default-medium color-text-default">{crewMax}</span>
 </div>

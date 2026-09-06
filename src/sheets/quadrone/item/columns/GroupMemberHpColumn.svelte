@@ -41,7 +41,7 @@
   aria-valuemin="0"
   aria-valuemax={effectiveMaxHp}
   aria-valuetext={hpValue.toString()}
-  class="hp-column-content"
+  class="hit-points-container"
   onmouseenter={(ev) => getHpTooltip?.()?.tryShow(ev, rowDocument)}
 >
   <div
@@ -53,7 +53,7 @@
         ` --bar-adjusted-content: '';`
       : `--bar-percentage: ${hpPct.toFixed(0)}%;`}
   ></div>
-  <div class="flexrow">
+  <div class="flexrow hit-points">
     <span class="font-label-medium color-text-default value">{hpValue}</span>
     <span class="font-body-medium color-text-lightest separator">/</span>
     <span class="font-body-medium color-text-default max"

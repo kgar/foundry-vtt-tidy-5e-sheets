@@ -7,11 +7,11 @@
   } from 'src/types/types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import { CombatantSettings } from 'src/features/combat/CombatantSettings';
-  import { isNil } from 'src/utils/data';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+  let localize = FoundryAdapter.localize;
 
   let {
-    rowDocument,
     rowContext,
   }: {
     rowDocument: Actor5e | undefined;
@@ -44,6 +44,7 @@
         type="button"
         class="button button-roll button-icon-only button-borderless flexshrink"
         data-action="prerollInitiative"
+        aria-label={localize('DND5E.Initiative')}
         data-has-roll-modes
       >
         <i class="fa-solid fa-dice-d20"></i>
@@ -51,7 +52,7 @@
     {/if}
   </span>
 {:else}
-  <span class="font-label-large color-text-default"
+  <span class="value font-label-large color-text-default"
     >{rowContext.initiative}</span
   >
 {/if}

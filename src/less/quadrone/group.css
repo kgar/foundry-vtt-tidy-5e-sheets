@@ -168,7 +168,32 @@
     }
   }
 
-  .hp-column-content {
+  [data-tidy-column-key="ac"],
+  [data-tidy-column-key="speed"],
+  [data-tidy-column-key="dt"],
+  [data-tidy-column-key="cr"],
+  [data-tidy-column-key="quantity"],
+  [data-tidy-column-key="initiative"],
+  [data-tidy-column-key="xp"] {
+
+    .value,
+    .units {
+      font-size: var(--font-size-15);
+    }
+  }
+
+  .quantity,
+  .walk-speed,
+  .hit-die,
+  .crew-capacity,
+  .hit-points {
+    display: flex;
+    gap: var(--t5e-size-halfx);
+  }
+
+  [data-tidy-column-key="crew"],
+  [data-tidy-column-key="hd"],
+  [data-tidy-column-key="hp"] > .hit-points-container {
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -433,7 +458,6 @@
     }
 
     .tidy-table-cell:not(.tidy-table-actions) {
-      max-width: none;
       justify-content: center;
       align-items: center;
       border: none;

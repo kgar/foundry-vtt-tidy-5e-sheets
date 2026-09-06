@@ -5,7 +5,7 @@
 </script>
 
 <span
-  class="font-label-large color-text-default"
+  class="font-label-medium color-text-default value"
   data-attribution="attributes.ac"
   data-attribution-caption="DND5E.ArmorClass"
   data-reference-tooltip={rowDocument.uuid}

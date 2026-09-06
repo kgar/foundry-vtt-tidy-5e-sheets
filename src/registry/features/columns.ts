@@ -57,6 +57,7 @@ import GroupXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte
 import GroupMemberInspirationColumn from 'src/sheets/quadrone/item/columns/GroupMemberInspirationColumn.svelte';
 import GroupMemberHdColumn from 'src/sheets/quadrone/item/columns/GroupMemberHdColumn.svelte';
 import GroupMemberAcColumn from 'src/sheets/quadrone/item/columns/GroupMemberAcColumn.svelte';
+import GroupMemberSpeedColumn from 'src/sheets/quadrone/item/columns/GroupMemberSpeedColumn.svelte';
 import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte';
 import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/VehicleCrewMemberAssignedColumn.svelte';
 import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/VehicleMemberQuantityColumn.svelte';
@@ -803,6 +804,20 @@ export function getColumnsRegistry(): TidyColumnRegistry {
       } satisfies GroupMemberColumnSpec<
         typeof HtmlColumn,
         typeof GroupMemberHdColumn
+      >,
+      speed: {
+        header: {
+          component: HtmlColumn,
+          props: () => ({ html: FoundryAdapter.localize('DND5E.Speed') }),
+        },
+        cell: {
+          component: GroupMemberSpeedColumn,
+          props: (args) => ({ rowDocument: args.rowDocument }),
+        },
+        widthRems: 3,
+      } satisfies GroupMemberColumnSpec<
+        typeof HtmlColumn,
+        typeof GroupMemberSpeedColumn
       >,
       ac: {
         header: {

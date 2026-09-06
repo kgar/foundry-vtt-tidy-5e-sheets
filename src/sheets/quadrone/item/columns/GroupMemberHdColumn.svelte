@@ -11,7 +11,7 @@
     class="meter meter-small progress hit-die"
     style="--bar-percentage: {hdPct.toFixed(0)}%"
   ></div>
-  <div class="flexrow">
+  <div class="flexrow hit-die">
     <span class="font-label-medium color-text-default"
       >{rowDocument.system.attributes.hd.value}</span
     >
