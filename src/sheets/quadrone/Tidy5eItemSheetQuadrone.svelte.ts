@@ -51,7 +51,7 @@ import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-act
 import * as Bastions from 'src/features/facility/Bastion';
 import { error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
-import { RarityColors } from 'src/features/rarity-colors/RarityColors';
+import { Rarity } from 'src/features/rarity/Rarity';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -395,7 +395,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       },
       options: this.options,
       owner: this.document.isOwner,
-      rarities: RarityColors.getRarityContext(
+      rarities: Rarity.getRarityContext(
         this.document,
         documentSheetContext.source,
       ),

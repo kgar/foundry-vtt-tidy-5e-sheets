@@ -68,7 +68,7 @@ import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
-import { RarityColors } from 'src/features/rarity-colors/RarityColors';
+import { Rarity } from 'src/features/rarity/Rarity';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -398,7 +398,7 @@ export function getTidy5eActorSheetQuadroneBase<
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
 
       if (item.system.rarities) {
-        const { rarity, rarityLabel } = RarityColors.getRarityAndLabel(item);
+        const { rarity, rarityLabel } = Rarity.getRarityAndLabel(item);
         ctx.rarity = rarity;
         ctx.rarityLabel = rarityLabel;
       }

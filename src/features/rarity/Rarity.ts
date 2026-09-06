@@ -2,13 +2,13 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, RarityContext } from 'src/types/item.types';
 import { firstOfSet } from 'src/utils/set';
 
-export class RarityColors {
+export class Rarity {
   static getRarityText(key: string) {
     return CONFIG.DND5E.itemRarity[key] ?? '';
   }
 
   static getRarityColorVariableName(key: string) {
-    return `--t5e-color-rarity-${RarityColors.getRarityText(key).slugify()}`;
+    return `--t5e-color-rarity-${Rarity.getRarityText(key).slugify()}`;
   }
 
   // TODO: Reevaluate whether I need to use document sheet context source
@@ -45,7 +45,7 @@ export class RarityColors {
     }
 
     return {
-      ...RarityColors.getRarityAndLabel(item),
+      ...Rarity.getRarityAndLabel(item),
       options: Object.entries(CONFIG.DND5E.itemRarity).reduce(
         (arr: RarityContext['options'], [key, label]: any) => {
           arr.push({
