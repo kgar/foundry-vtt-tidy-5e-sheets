@@ -1,4 +1,5 @@
 import type { Item5e } from 'src/types/item.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from './data';
 import { warn } from './logging';
 import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
@@ -51,6 +52,21 @@ export class ItemUtils {
   }
   static getMaxUses(item: Item5e) {
     return item.system.uses?.max;
+  }
+
+  static isUnidentified(item: Item5e): boolean {
+    return item.system.identified === false;
+  }
+
+  /**
+   * Whether to hide unidentified details, GMs can see everything when 
+   * sheets are unlocked.
+   */
+  static isConcealed(item: Item5e, options: { unlocked: boolean }): boolean {
+    return (
+      ItemUtils.isUnidentified(item) &&
+      !(FoundryAdapter.userIsGm() && options.unlocked)
+    );
   }
 
   static sortItems(items: Item5e[], sortMode: string) {

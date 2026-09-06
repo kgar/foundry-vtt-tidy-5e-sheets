@@ -16,7 +16,11 @@
   } from 'src/types/types';
   import CapacityTracker from './CapacityTracker.svelte';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import {
+    getSheetContext,
+    tryGetSheetContext,
+  } from 'src/sheets/sheet-context.svelte';
+  import { Container } from 'src/features/containers/Container';
 
   interface Props {
     container: Item5e;
@@ -53,6 +57,14 @@
 
   let weightDistributionTooltip: WeightDistributionTooltip | undefined =
     $state();
+
+  // Get context so that we can check the sheet and see if container content should be shown.
+  const sheetContext = $derived(tryGetSheetContext<{ unlocked?: boolean }>());
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(container, {
+      unlocked: sheetContext?.unlocked === true,
+    }),
+  );
 </script>
 
 {#if showWeightDistributionTooltip}
@@ -64,11 +76,13 @@
   />
 {/if}
 
+{#if contentsVisibility !== 'hidden'}
 <div
   class={[
     'meter progress capacity theme-dark',
     { empty: (capacity.value ?? 0) === 0 },
     barSeverity,
+    { 'gm-secret': contentsVisibility === 'gmSecret' },
   ]}
   role="meter"
   aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
@@ -87,6 +101,7 @@
     {@render tracker()}
   {/if}
 </div>
+{/if}
 
 {#snippet tracker()}
   <CapacityTracker {capacity} {container} />

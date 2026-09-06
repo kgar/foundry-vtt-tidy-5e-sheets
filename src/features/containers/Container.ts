@@ -16,6 +16,15 @@ import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ContainerContentsRowActionRuntime } from 'src/runtime/table-row-actions/ContainerContentsRowActionRuntime.svelte';
 
+/**
+ * How container contents should be shown to the current user.
+ * 
+ * `hidden`: follows system behavior and always shows to GMs (core behavior)
+ * `gmSecret`: show to GMs behind a secret block (Tidy behavior)
+ * `concealed`: only shows to GMs in edit mode (Tidy behavior)
+ */
+export type ContainerContentsVisibility = 'visible' | 'gmSecret' | 'hidden';
+
 export class Container {
   static async getContainerContents(
     sheet: any,
@@ -192,5 +201,48 @@ export class Container {
           undefined;
 
     return context;
+  }
+
+  /**
+   * Does the container have unidentified contents that should be hidden from
+   * players due to the item setting?
+   */
+  static hasUnidentifiedContents(container: Item5e): boolean {
+    if (container.system.canViewContents === undefined) {
+      return false;
+    }
+
+    return (
+      container.system.identified === false &&
+      container.system.properties.has(
+        CONSTANTS.ITEM_PROPERTY_UNIDENTIFIED_CONTENTS,
+      )
+    );
+  }
+
+  /**
+   * Determine if the container's contents are visible to the current user.
+   * 
+   * `hidden`: follows system behavior and always shows to GMs (core behavior)
+   * `gmSecret`: show to GMs behind a secret block (Tidy behavior)
+   * `concealed`: only shows to GMs in edit mode (Tidy behavior)
+   */
+  static getContentsVisibility(
+    container: Item5e,
+    options: { unlocked: boolean },
+  ): ContainerContentsVisibility {
+    if (!Container.hasUnidentifiedContents(container)) {
+      return 'visible';
+    }
+
+    if (!FoundryAdapter.userIsGm()) {
+      return 'hidden';
+    }
+
+    return options.unlocked ? 'visible' : 'gmSecret';
+  }
+  
+  static async canDropContents(container: Item5e): Promise<boolean> {
+    return (await container.system.canDropContents?.()) ?? true;
   }
 }

@@ -293,7 +293,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         cell: {
           component: InlineCapacityBarColumn,
           props: (args) => ({
-            rowDocument: args.rowDocument,
+            container: args.rowDocument,
             containerContents: args.rowContext?.containerContents,
           }),
           classes: 'text-cell',
@@ -861,7 +861,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         cell: {
           component: InlineCapacityBarColumn,
           props: (args) => ({
-            rowDocument: args.rowDocument,
+            container: args.rowDocument,
             containerContents: args.rowContext?.containerContents,
           }),
           classes: 'text-cell',

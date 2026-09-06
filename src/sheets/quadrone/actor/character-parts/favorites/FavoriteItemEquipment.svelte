@@ -1,19 +1,16 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
   let { favorite }: Props = $props();
-
-  let context = $derived(getCharacterSheetQuadroneContext());
-
+  const unidentified = $derived(ItemUtils.isUnidentified(favorite.item));
   let subtitle = $derived(
     [
       favorite.item.system.type.label,
@@ -29,7 +26,7 @@
 </script>
 
 <div
-  class="list-entry favorite"
+  class="list-entry favorite {unidentified ? 'diminished' : ''}"
   data-favorite-type="equipment"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
