@@ -1165,5 +1165,6 @@
         "Orders.EmptyStateHint": "Nenhum membro do grupo possui uma ordem em andamento.",
         "Facilities.EmptyStateHint": "Este personagem ainda não construiu nenhuma instalação.",
         "EmptyStateHint": "Não há membros do grupo com bastiões. Adicione personagens de jogador para acompanhar seus bastiões aqui."
-    }
+    },
+    "TIDY5E.Table.UnidentifiedPlaceholder": "?"
 }
