@@ -98,6 +98,12 @@
             label: ability.name,
             members: Array.from(context.memberContext.all.values()),
           })}
+        onfocus={(ev) =>
+          tooltip?.tryShow(ev, {
+            key: ability.key,
+            label: ability.name,
+            members: Array.from(context.memberContext.all.values()),
+          })}
       >
         <button
           type="button"
