@@ -35,7 +35,10 @@
 
 {#if configurable && ctx.hasLimitedUses && !conceal}
   {#if ctx.hasRecharge && ctx.isOnCooldown}
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button" 
+      tabindex="0"
       class={['item-list-button', { disabled: !activity.item.isOwner }]}
       data-activity-id={activity.id}
       data-tooltip=""
@@ -43,7 +46,7 @@
       data-action="recharge"
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
-      <span class="recharge-range-text text-data">
+      <span class="recharge-range-text font-label-medium">
         {rechargeRange}
       </span>
     </a>
