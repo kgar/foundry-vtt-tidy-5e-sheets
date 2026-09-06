@@ -62,7 +62,10 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 ) {
   currentTabId: string;
   currentSidebarTabId: string;
-  aggregatePinTab = { tabId: CONSTANTS.TAB_ACTOR_ACTIONS, tabName: 'Sheet' };
+  aggregatePinTab = {
+    tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+    tabName: game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
+  };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -717,11 +720,13 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           const unidentified = item.system.identified === false;
 
           // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && unidentified;
+          ctx.concealDetails = !game.user.isGM && unidentified;
 
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item) && !unidentified ? FoundryAdapter.getAttunementContext(item) : undefined;
+          ctx.attunement =
+            FoundryAdapter.getAttunementContext(item) && !unidentified
+              ? FoundryAdapter.getAttunementContext(item)
+              : undefined;
 
           // Item usage
           ctx.hasUses = item.hasLimitedUses && !unidentified;

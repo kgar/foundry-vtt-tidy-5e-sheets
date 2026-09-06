@@ -36,7 +36,9 @@ export function getItemContextOptionsQuadrone(
 
   const tabId = CONFIG.TIDY5E.utils.getTabIdFromElement(element);
 
-  const showActionSectionConfig = SheetSections.showActionSectionConfig(item.parent);
+  const showActionSectionConfig = SheetSections.showActionSectionConfig(
+    item.parent,
+  );
 
   let options: ContextMenuEntry[] = [];
 
@@ -344,7 +346,11 @@ export function getItemContextOptionsQuadrone(
   let actionSectionContextName = itemParent?.system.isCharacter
     ? FoundryAdapter.localize(
         'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-        { tabName: FoundryAdapter.localize('Sheet') },
+        {
+          tabName: FoundryAdapter.localize(
+            game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
+          ),
+        },
       )
     : itemParent?.system.isNPC
       ? FoundryAdapter.localize(
@@ -354,7 +360,9 @@ export function getItemContextOptionsQuadrone(
       : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
 
   let actionSectionConfigTitle = itemParent?.system.isCharacter
-    ? FoundryAdapter.localize('Sheet')
+    ? FoundryAdapter.localize(
+        game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
+      )
     : itemParent?.system.isNPC
       ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
       : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
