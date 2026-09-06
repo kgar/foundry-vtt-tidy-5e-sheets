@@ -40,119 +40,117 @@
 {#if visibleSections.length}
   <div {@attach observeResize(onResize)}>
     {#each context.activities as section (section.key)}
-      {#if section.show}
-        {const rowActionInfo = $derived(
-          RowActionRuntimeBase.getRowActionWidthInfo(
-            section.activities,
-            (entry) => entry.rowActions,
-            context.unlocked ? section.sectionActions : [],
-          ),
-        )}
+      {const rowActionInfo = $derived(
+        RowActionRuntimeBase.getRowActionWidthInfo(
+          section.activities,
+          (entry) => entry.rowActions,
+          context.unlocked ? section.sectionActions : [],
+        ),
+      )}
 
-        {const hiddenColumns = $derived(
-          ActivityColumnRuntime.determineHiddenColumns(
-            sectionsInlineWidth - rowActionInfo.widthPx,
-            section.columns,
-            10,
-          ),
-        )}
+      {const hiddenColumns = $derived(
+        ActivityColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth - rowActionInfo.widthPx,
+          section.columns,
+          10,
+        ),
+      )}
 
-        <TidyTable key={section.key}>
-          {#snippet header(expanded)}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-              <TidyTableHeaderCell primary={true} class="header-label-cell">
-                <h3>
-                  {localize(section.label)}
-                </h3>
-              </TidyTableHeaderCell>
+      <TidyTable key={section.key}>
+        {#snippet header(expanded)}
+          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderCell primary={true} class="header-label-cell">
+              <h3>
+                {localize(section.label)}
+              </h3>
+            </TidyTableHeaderCell>
 
-              <TidyTableCustomHeaderCells
-                {hiddenColumns}
+            <TidyTableCustomHeaderCells
+              {hiddenColumns}
+              {section}
+              {context}
+              {expanded}
+            />
+
+            <TidyTableHeaderCell
+              class="header-cell-actions"
+              columnWidth="{rowActionInfo.widthRems}rem"
+              data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
+            >
+              <SectionActionsColumnHeader
                 {section}
-                {context}
-                {expanded}
+                maxRowActionsCount={rowActionInfo.maxRowActionsCount}
+                sheetDocument={context.document}
               />
-
-              <TidyTableHeaderCell
-                class="header-cell-actions"
-                columnWidth="{rowActionInfo.widthRems}rem"
-                data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-              >
-                <SectionActionsColumnHeader
-                  {section}
-                  maxRowActionsCount={rowActionInfo.maxRowActionsCount}
-                  sheetDocument={context.document}
-                />
-              </TidyTableHeaderCell>
-            </TidyTableHeaderRow>
-          {/snippet}
-          {#snippet body()}
-            {#each section.activities as ctx}
-              <TidyActivityTableRow {ctx}>
-                {#snippet children()}
-                  <!-- svelte-ignore a11y_missing_attribute -->
-                  <a
-                    role="button"
-                    tabindex="0"
-                    class={['tidy-table-row-use-button']}
-                    aria-label={ctx.activity.name}
-                    data-action="activity-use"
-                    data-has-roll-modes
-                  >
-                    <img class="item-image" alt="" src={ctx.activity.img} />
-                    <span class="roll-prompt">
-                      <i class="fa fa-dice-d20"></i>
+            </TidyTableHeaderCell>
+          </TidyTableHeaderRow>
+        {/snippet}
+        {#snippet body()}
+          {#each section.activities as ctx}
+            <TidyActivityTableRow {ctx}>
+              {#snippet children()}
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <a
+                  role="button"
+                  tabindex="0"
+                  class={['tidy-table-row-use-button']}
+                  aria-label={ctx.activity.name}
+                  data-action="activity-use"
+                  data-has-roll-modes
+                >
+                  <img class="item-image" alt="" src={ctx.activity.img} />
+                  <span class="roll-prompt">
+                    <i class="fa fa-dice-d20"></i>
+                  </span>
+                </a>
+                <TidyTableCell primary={true}>
+                  <span class="item-name">
+                    <span class="cell-text">
+                      <span class="cell-name">{ctx.activity.name}</span>
                     </span>
-                  </a>
-                  <TidyTableCell primary={true}>
-                    <span class="item-name">
-                      <span class="cell-text">
-                        <span class="cell-name">{ctx.activity.name}</span>
-                      </span>
-                      <!-- TODO: Uncomment when we have activity descriptions -->
-                      <!-- <span class="row-detail-expand-indicator">
+                    <!-- TODO: Uncomment when we have activity descriptions -->
+                    <!-- <span class="row-detail-expand-indicator">
                   <i
                     class="fa-solid fa-angle-right expand-indicator"
                     class:expanded
                   >
                   </i>
                 </span> -->
+                  </span>
+                  {#if ctx.type === CONSTANTS.ACTIVITY_TYPE_CAST && !ctx.spell?.uuid}
+                    <span
+                      data-tooltip={localize(
+                        'TIDY5E.Utilities.CastActivityMissingSpell',
+                      )}
+                      class="cast-activity-missing-spell-indicator"
+                    >
+                      <i class="fa-solid fa-link-simple-slash"></i>
+                      <!-- TODO: Update to link-broken for FA 7.2.0-->
                     </span>
-                    {#if ctx.type === CONSTANTS.ACTIVITY_TYPE_CAST && !ctx.spell?.uuid}
-                      <span
-                        data-tooltip={localize(
-                          'TIDY5E.Utilities.CastActivityMissingSpell',
-                        )}
-                        class="cast-activity-missing-spell-indicator"
-                      >
-                        <i class="fa-solid fa-link-simple-slash"></i>
-                        <!-- TODO: Update to link-broken for FA 7.2.0-->
-                      </span>
-                    {/if}
-                  </TidyTableCell>
+                  {/if}
+                </TidyTableCell>
 
-                  <TidyTableCustomCells
-                    {context}
-                    {ctx}
-                    entry={ctx.activity}
-                    {hiddenColumns}
-                    {section}
-                  />
+                <TidyTableCustomCells
+                  {context}
+                  {ctx}
+                  entry={ctx.activity}
+                  {hiddenColumns}
+                  {section}
+                />
 
-                  <RowActionsColumn
-                    columnWidth="{rowActionInfo.widthRems}rem"
-                    rowActions={ctx.rowActions}
-                    data={{
-                      activity: ctx.activity,
-                      ctx,
-                    }}
-                  />
-                {/snippet}
-              </TidyActivityTableRow>
-            {/each}
-          {/snippet}
-        </TidyTable>
-      {/if}
+                <RowActionsColumn
+                  columnWidth="{rowActionInfo.widthRems}rem"
+                  rowActions={ctx.rowActions}
+                  data={{
+                    activity: ctx.activity,
+                    ctx,
+                  }}
+                />
+              {/snippet}
+            </TidyActivityTableRow>
+          {/each}
+        {/snippet}
+      </TidyTable>
     {/each}
   </div>
 {:else}
