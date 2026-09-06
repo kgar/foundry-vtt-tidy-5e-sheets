@@ -104,7 +104,7 @@ export const CharacterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-house-turret',
       },
       {
-        title: 'Sheet',
+        title: () => game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
         content: {
           component: CharacterSheetTab,
           type: 'svelte',
@@ -125,5 +125,5 @@ export const CharacterSheetQuadroneRuntime =
       CONSTANTS.TAB_ACTOR_BIOGRAPHY,
       CONSTANTS.TAB_CHARACTER_BASTION,
       CONSTANTS.TAB_CHARACTER_JOURNAL,
-    ]
+    ],
   );
