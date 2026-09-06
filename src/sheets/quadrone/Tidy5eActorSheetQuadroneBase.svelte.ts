@@ -398,7 +398,7 @@ export function getTidy5eActorSheetQuadroneBase<
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
 
       if (item.system.rarities) {
-        const { rarity, rarityLabel } = Rarity.getRarityAndLabel(item);
+        const { rarity, rarityLabel } = Rarity.getRarityAndLabel(item.system);
         ctx.rarity = rarity;
         ctx.rarityLabel = rarityLabel;
       }
@@ -1197,7 +1197,6 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (types.length > 1) {
-
         const createData = types.includes(datasetType)
           ? { type: datasetType, ...restDataSet }
           : { ...restDataSet };

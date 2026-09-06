@@ -11,21 +11,21 @@ export class Rarity {
     return `--t5e-color-rarity-${Rarity.getRarityText(key).slugify()}`;
   }
 
-  // TODO: Reevaluate whether I need to use document sheet context source
-  // (shows effective rarities on lock, and raw rarities on unlock)
-  static getRarityAndLabel(item: Item5e): {
+  static getRarityAndLabel(source: any): {
     rarity: string | undefined;
     rarityLabel: string | undefined;
   } {
+    const count = source.rarities.size ?? source.rarities.length;
+
     const rarity =
-      item.system.rarities.size === 1
-        ? firstOfSet<string>(item.system.rarities)
+      count === 1
+        ? (source.rarities[0] ?? firstOfSet<string>(source.rarities))
         : undefined;
 
-    const rarityVaries = item.system.rarities.size > 1;
+    const rarityVaries = count > 1;
 
     const rarityLabel =
-      (rarity || rarityVaries) && item.system.identified === false
+      (rarity || rarityVaries) && source.identified === false
         ? FoundryAdapter.localize('DND5E.Unidentified.Title')
         : rarityVaries
           ? FoundryAdapter.localize('TIDY5E.Item.Rarity.Varies.Label')
@@ -36,16 +36,13 @@ export class Rarity {
     return { rarity, rarityLabel };
   }
 
-  static getRarityContext(
-    item: Item5e,
-    source: any,
-  ): RarityContext | undefined {
-    if (!item.system.rarities) {
+  static getRarityContext(source: any): RarityContext | undefined {
+    if (!source.rarities) {
       return undefined;
     }
 
     return {
-      ...Rarity.getRarityAndLabel(item),
+      ...Rarity.getRarityAndLabel(source),
       options: Object.entries(CONFIG.DND5E.itemRarity).reduce(
         (arr: RarityContext['options'], [key, label]: any) => {
           arr.push({

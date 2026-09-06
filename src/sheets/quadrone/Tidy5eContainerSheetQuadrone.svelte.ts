@@ -320,10 +320,7 @@ export class Tidy5eContainerSheetQuadrone
         object: {},
         options: [],
       },
-      rarities: Rarity.getRarityContext(
-        this.document,
-        documentSheetContext.source,
-      ),
+      rarities: Rarity.getRarityContext(documentSheetContext.source),
       rollData: rollData,
       system: this.document.system,
       tabs: [],

@@ -395,10 +395,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       },
       options: this.options,
       owner: this.document.isOwner,
-      rarities: Rarity.getRarityContext(
-        this.document,
-        documentSheetContext.source,
-      ),
+      rarities: Rarity.getRarityContext(documentSheetContext.source),
       scalarTarget:
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
