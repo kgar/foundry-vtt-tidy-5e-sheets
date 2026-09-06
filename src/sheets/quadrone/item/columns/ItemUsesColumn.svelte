@@ -25,7 +25,7 @@
     }),
   );
 
-  function onRechargeClicked(ev: MouseEvent) {
+  function onRechargeClicked(ev: MouseEvent | KeyboardEvent) {
     ev.shiftKey
       ? item.update({ ['system.uses.spent']: 0 })
       : item.system.uses?.rollRecharge({ apply: true, event: ev });
@@ -38,14 +38,23 @@
 
 {#if item.hasLimitedUses && !conceal}
   {#if item.hasRecharge && item.isOnCooldown}
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button" 
+      tabindex="0"
       class={['item-list-button', { disabled: !item.isOwner }]}
       data-tooltip=""
       aria-label={rechargeLabel}
       onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          item.isOwner && onRechargeClicked(ev);
+        }
+      }}
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
-      <span class="recharge-range-text text-data">
+      <span class="recharge-range-text font-label-medium">
         {rechargeRange}
       </span>
     </a>

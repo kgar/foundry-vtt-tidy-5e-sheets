@@ -384,7 +384,7 @@
     }
 
     input[type="text"] {
-      font-family: var(--font-family-default);
+      font-family: var(--t5e-font-family-default);
     }
   }
 
