@@ -38,7 +38,7 @@
     <input
       type="text"
       inputmode="numeric"
-      class="quantity-tracker-input"
+      class="uninput quantity-tracker-input"
       {@attach InputAttachments.selectOnFocus}
       data-name={property}
       {...attributes}

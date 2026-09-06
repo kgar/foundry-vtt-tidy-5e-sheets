@@ -6,7 +6,7 @@
   }
 
   &.theme-dark {
-    .tidy-tab.effects {
+    .tidy-tab.effects .tidy-table-toggle {
       i.enabled {
         color: var(--t5e-theme-color-highlight);
       }
