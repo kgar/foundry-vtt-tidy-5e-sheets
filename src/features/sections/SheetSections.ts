@@ -918,7 +918,9 @@ export class SheetSections {
 
   static getActionSectionLabel(item: Item5e) {
     return item.parent?.system.isCharacter
-      ? FoundryAdapter.localize('Sheet')
+      ? FoundryAdapter.localize(
+          game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
+        )
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 
