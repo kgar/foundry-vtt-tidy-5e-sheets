@@ -11,8 +11,15 @@
   import ItemName from '../item/parts/header/ItemName.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
+  import { Container } from 'src/features/containers/Container';
 
   const context = $derived(getContainerSheetQuadroneContext());
+
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(context.item, {
+      unlocked: context.unlocked,
+    }),
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -48,17 +55,20 @@
 
 <Sidebar>
   {#snippet belowStateSwitches()}
-    <div>
-      <h4>{localize('TYPES.Item.container')}</h4>
-      <div class="pills stacked">
-        <li class="pill">
-          <span>
-            {@html holdsMarkup}
-          </span>
-        </li>
+    {#if contentsVisibility === 'visible'}
+      <div>
+        <h4>{localize('TYPES.Item.container')}</h4>
+        <div class="pills stacked">
+          <li class="pill">
+            <span>
+              {@html holdsMarkup}
+            </span>
+          </li>
+        </div>
       </div>
-    </div>
+    {/if}
 
+    {#if contentsVisibility === 'visible'}
     <div>
       <h4 class="currency-header">
         <span>{localize('DND5E.Currency')}</span>
@@ -70,6 +80,7 @@
               { disabled: !context.editable },
             ]}
             data-action="currency"
+            aria-label={localize('DND5E.CurrencyManager.Title')}
             data-tooltip="DND5E.CurrencyManager.Title"
           >
             <i class="fas fa-database"></i>
@@ -102,6 +113,7 @@
         />
       </div>
     </div>
+    {/if}
   {/snippet}
 </Sidebar>
 
@@ -116,6 +128,7 @@
   <!-- Header Summary -->
   <div class="item-header-summary">
     <!-- Item Capacity -->
+    {#if contentsVisibility === 'visible'}
     <div class="item-capacity">
       <i class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
       ></i>
@@ -130,6 +143,7 @@
         {/if}
       </div>
     </div>
+    {/if}
 
     <ItemPriceSummary item={context.item} />
 

@@ -199,83 +199,6 @@
       }
     }
 
-    secret-block,
-    .secret-block {
-      --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(225, 218, 216) 16%);
-      --color-secret-border: var(--t5e-color-palette-red-60);
-      border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 8%) 1 1 1 0;
-      border-style: solid;
-      border-width: var(--t5e-size-1) var(--t5e-size-1) var(--t5e-size-1) 0;
-      background: var(--color-secret-bg);
-      display: block;
-      margin-inline-start: -0.5rem;
-      padding-inline-start: 0.5rem;
-      padding-block: 0;
-      position: relative;
-
-      .reveal,
-      .gm-only {
-        border: var(--t5e-size-1) solid var(--color-secret-border);
-        border-radius: 0 0 0 0.125rem;
-        color: var(--t5e-color-text-default);
-        font: var(--t5e-font-label-medium);
-        height: auto;
-        inset-block-start: 0;
-        inset-inline-end: 0;
-        margin-block: -0.0625rem 0;
-        margin-inline: 0 -0.03125rem;
-        min-height: unset;
-        padding: 0.25rem 0.5rem;
-        position: absolute;
-        text-transform: none;
-
-        & + * {
-          margin-inline-end: var(--t5e-size-16x);
-        }
-      }
-
-      .reveal {
-        background: var(--t5e-component-field-background);
-
-        &:is(:hover, :focus, :active) {
-          background: var(--t5e-component-field-background-hover);
-          border-color: var(--t5e-component-field-border-hover);
-          box-shadow: var(--button-shadow);
-        }
-      }
-    }
-
-    secret-block {
-      --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(207, 197, 193) 16%);
-      margin-block-start: var(--t5e-size-3x);
-
-      &:has(> .revealed) {
-        --color-secret-bg: linear-gradient(to right, transparent 8%, rgb(225, 218, 216) 56%);
-        --color-secret-border: var(--t5e-color-gold);
-        border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 72%) 1 1 1 0;
-      }
-
-      .secret {
-        background: none;
-        border: none;
-        padding-inline: 0;
-        transition: all var(--t5e-transition-default);
-
-        &:not(.revealed) > *:not(.reveal) {
-          color: var(--t5e-color-text-lighter);
-        }
-
-        > :not(.reveal, .gm-only):first-child {
-          margin-block-start: 0;
-        }
-      }
-    }
-
-    .secret-block {
-      padding-block: var(--t5e-size-1x) var(--t5e-size-2x);
-      padding-inline-end: var(--t5e-size-2x);
-    }
-
     blockquote {
       border-left: 0.1875rem solid var(--t5e-theme-color-lightest);
       padding-block: var(--t5e-size-1x);
@@ -610,17 +533,6 @@
 
       .callout {
         /* TODO: make cool callout UI here */
-      }
-
-      secret-block,
-      .secret-block {
-        --color-secret-bg: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 16%);
-        --color-secret-border: var(--t5e-color-palette-red-45);
-
-        &:has(> .revealed) {
-          --color-secret-bg: linear-gradient(to right, transparent 8%, rgba(0, 0, 0, 0.4) 48%);
-          --color-secret-border: var(--t5e-color-gold);
-        }
       }
 
       hr {

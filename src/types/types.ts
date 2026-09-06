@@ -992,6 +992,7 @@ export type ContainerCapacityContext = {
   pct: number;
   value: number;
   units: string;
+  hidden?: boolean;
 };
 
 export type RenderableClassicControl<TParams> = {
