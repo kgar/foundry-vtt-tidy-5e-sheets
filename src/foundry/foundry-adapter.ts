@@ -1559,7 +1559,7 @@ export const FoundryAdapter = {
       Record<string, SenseInfo>
     >(
       (obj, [k, label]) => {
-        const value = senses[k];
+        const value = senses.ranges?.[k];
         if (value) obj[k] = { label, value, unit: units.abbreviation };
         return obj;
       },
