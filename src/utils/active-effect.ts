@@ -9,6 +9,19 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
  * Map category types from EffectsElement.prepareCategories to DND5E.EFFECT.Status.*
  * labels for the switch pills.
  */
+/**
+ * Icons to make the effect changes clearer.
+ */
+const EFFECT_CHANGE_TYPE_ICONS: Record<string, string> = {
+  add: 'fa-circle-plus',
+  subtract: 'fa-circle-minus',
+  multiply: 'fa-circle-x',
+  downgrade: 'fa-circle-down',
+  upgrade: 'fa-circle-up',
+  override: 'fa-pen-circle',
+  custom: 'fa-code',
+};
+
 const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
   temporary: 'DND5E.EFFECT.Status.Temporary',
   passive: 'DND5E.EFFECT.Status.Passive',
@@ -137,5 +150,14 @@ export class ActiveEffectsHelper {
   static findMode(change: any, fallback = '—') {
     const key = `EFFECT.CHANGES.TYPES.${change.type}`;
     return change.type ? FoundryAdapter.localize(key) : fallback;
+  }
+
+  /**
+   * Get the icon that stands in for a change's mode, e.g. a plus sign for `add`.
+   * Neither Foundry nor the system maps change types to icons, so this mapping
+   * is Tidy's own; unrecognized types (modules can register their own) get none.
+   */
+  static findModeIcon(change: any): string | undefined {
+    return EFFECT_CHANGE_TYPE_ICONS[change.type];
   }
 }

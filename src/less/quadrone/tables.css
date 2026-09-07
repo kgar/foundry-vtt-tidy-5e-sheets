@@ -1165,6 +1165,23 @@
       td {
         padding: var(--t5e-size-1x);
       }
+
+      .effect-label {
+        gap: var(--t5e-size-halfx);
+
+        .effect-change-key {
+          font-family: monospace
+        }
+
+        code {
+          border: 1px solid var(--t5e-component-card-lighter);
+          background: var(--t5e-component-card-default);
+        }
+      }
+
+      .effect-change-mode-icon {
+        margin-inline-end: var(--t5e-size-halfx);
+      }
     }
   }
 

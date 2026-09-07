@@ -30,12 +30,12 @@
 >
   {@html summaryData.description.value}
 
-  {#if activeEffect.changes.length}
+  {#if summaryData.changes.length}
     <table class="effect-summary-changes-table">
       <colgroup>
         <col width="50%" />
-        <col width="25%" />
-        <col width="25%" />
+        <col width="20%" />
+        <col width="30%" />
       </colgroup>
       <thead>
         <tr>
@@ -51,8 +51,9 @@
         </tr>
       </thead>
       <tbody>
-        {#each activeEffect.changes as change}
+        {#each summaryData.changes as change}
           {const modeLabel = $derived(ActiveEffectsHelper.findMode(change))}
+          {const modeIcon = $derived(ActiveEffectsHelper.findModeIcon(change))}
 
           <tr>
             <td
@@ -60,10 +61,18 @@
               class="truncate"
               style="word-wrap: break-all"
             >
-              {change.key}
+            <span class="effect-label flexcol">
+              {#if change.name !== change.key}
+              <span class="effect-change-key">{change.key}</span>
+              {/if}
+              <span class="effect-change-name font-label-small color-text-gold-emphasis">{change.name}</span>
+            </span>
             </td>
             <td>
-              {modeLabel}
+              {#if modeIcon}
+                <i class="fa-solid {modeIcon} effect-change-mode-icon color-text-lightest" aria-hidden="true"></i>
+              {/if}
+              <span class="effect-change-mode-label font-label-medium">{modeLabel}</span>
             </td>
             <td title={change.value} class="break-word">
               {change.value}

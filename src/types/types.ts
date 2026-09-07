@@ -784,6 +784,20 @@ export type EffectSummaryData = {
   description: {
     value: string;
   };
+  changes: EffectChangeSummary[];
+};
+
+/**
+ * Follow the system's effect changes table in
+ * `ActiveEffect5e#getSheetChangeContext`.
+ */
+export type EffectChangeSummary = {
+  /** System key `system.attributes.ac.bonus`. */
+  key: string;
+  /** The readable label that most people actually need. */
+  name: string;
+  type: string;
+  value: string;
 };
 
 /** Support a label + tooltip for newer system descriptions. */
