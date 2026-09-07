@@ -6,13 +6,10 @@ import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
- * Map category types from EffectsElement.prepareCategories to DND5E.EFFECT.Status.*
- * labels for the switch pills.
- */
-/**
  * Icons to make the effect changes clearer.
  */
 const EFFECT_CHANGE_TYPE_ICONS: Record<string, string> = {
+  // Standard change types
   add: 'fa-circle-plus',
   subtract: 'fa-circle-minus',
   multiply: 'fa-circle-x',
@@ -20,8 +17,16 @@ const EFFECT_CHANGE_TYPE_ICONS: Record<string, string> = {
   upgrade: 'fa-circle-up',
   override: 'fa-pen-circle',
   custom: 'fa-code',
+  // Rule change types from `CONFIG.DND5E.activeEffectChangeTypes`.
+  'dnd5e.advantage': 'fa-dice-d20',
+  'dnd5e.bonus': 'fa-plus-minus',
+  'dnd5e.maximum': 'fa-arrow-up-to-line',
+  'dnd5e.minimum': 'fa-arrow-down-to-line',
 };
 
+/**
+ * Labels for effect category types.
+ */
 const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
   temporary: 'DND5E.EFFECT.Status.Temporary',
   passive: 'DND5E.EFFECT.Status.Passive',
@@ -148,8 +153,18 @@ export class ActiveEffectsHelper {
   }
 
   static findMode(change: any, fallback = '—') {
-    const key = `EFFECT.CHANGES.TYPES.${change.type}`;
-    return change.type ? FoundryAdapter.localize(key) : fallback;
+    if (!change.type) {
+      return fallback;
+    }
+
+
+    // First look for system rule change types (e.g. `dnd5e.advantage`), otherwise
+    // look for the Foundry standard change types (e.g. `add`).
+    const key =
+      ActiveEffect.CHANGE_TYPES[change.type]?.label ??
+      `EFFECT.CHANGES.TYPES.${change.type}`;
+
+    return FoundryAdapter.localize(key);
   }
 
   /**

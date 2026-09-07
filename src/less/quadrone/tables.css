@@ -1181,6 +1181,8 @@
 
       .effect-change-mode-icon {
         margin-inline-end: var(--t5e-size-halfx);
+        width: var(--font-size-13);
+        height: var(--font-size-13);
       }
     }
   }
