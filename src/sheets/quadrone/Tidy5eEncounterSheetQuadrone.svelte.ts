@@ -974,6 +974,14 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
   }
 
+  async _onDropActiveEffect(
+    ..._args: any[]
+  ): Promise</*ActiveEffect*/ unknown | boolean> {
+    // Encounter sheets don't support active effect drops, so this was
+    // moved out of MultiActor to support Group drops.
+    return false;
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */

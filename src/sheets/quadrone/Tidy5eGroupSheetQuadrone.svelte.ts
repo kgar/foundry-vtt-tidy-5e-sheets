@@ -51,6 +51,7 @@ import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/Group
 import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
 import { BastionFacilityColumnRuntime } from 'src/runtime/table-columns/BastionFacilityColumnRuntime';
 import { BastionOrderColumnRuntime } from 'src/runtime/table-columns/BastionOrderColumnRuntime';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -117,6 +118,19 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       options,
     )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
+    // Effects
+    let baseEffects =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.actor.allApplicableEffects(),
+      );
+
+    let { effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffectsForActorQuadrone(
+        actorContext,
+        this.object,
+        baseEffects,
+      );
+
     const paces: TravelPaceConfigEntry[] = Object.entries(
       CONFIG.DND5E.travelPace,
     )
@@ -142,6 +156,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         memberDependentContext.memberContext,
         actorContext,
       ),
+      effects: enhancedEffectSections,
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(

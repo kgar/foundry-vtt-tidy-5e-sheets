@@ -689,13 +689,6 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
 
-    async _onDropActiveEffect(
-      ..._args: any[]
-    ): Promise</*ActiveEffect*/ unknown | boolean> {
-      // Tidy Multi-Actor Sheets do not support active effect drops.
-      return false;
-    }
-
     async _onDropActor(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: Actor5e,

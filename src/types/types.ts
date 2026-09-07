@@ -1464,6 +1464,7 @@ type D20RollProcessConfiguration = {
 
 export type GroupSheetQuadroneContext = {
   abilities: GroupAbility[];
+  effects: ActiveEffectSection[];
   enriched: {
     description: {
       full: string;
