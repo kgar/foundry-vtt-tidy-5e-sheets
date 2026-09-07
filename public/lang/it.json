@@ -1204,5 +1204,6 @@
         "Orders.EmptyStateHint": "Nessun membro del gruppo ha un ordine in corso.",
         "Facilities.EmptyStateHint": "Questo personaggio non ha ancora costruito alcuna struttura.",
         "EmptyStateHint": "Nessun membro del gruppo con Bastioni. Aggiungi i personaggi dei giocatori per tenere traccia dei loro Bastioni qui."
-    }
+    },
+    "TIDY5E.Table.UnidentifiedPlaceholder": "?"
 }
