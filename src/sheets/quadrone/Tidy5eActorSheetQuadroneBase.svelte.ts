@@ -861,13 +861,15 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     _getMovementSpeeds(): ActorSpeedSenseEntryContext[] {
-      const systemMovement = this.actor.system.attributes.movement.speeds;
-      const sourceMovement =
+      const systemMovement = this.actor.system.attributes.movement;
+      // const systemSpeeds = systemMovement.speeds;
+      const sourceSpeeds =
         this.actor.system._source.attributes?.movement?.speeds ?? {};
 
       function excludeSpeed(key: string) {
         return (
-          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+          isNil(systemMovement.speeds[key], 0, '') &&
+          isNil(sourceSpeeds[key], 0, '')
         );
       }
 
@@ -876,7 +878,7 @@ export function getTidy5eActorSheetQuadroneBase<
           if (excludeSpeed(key) || config.hidden) {
             return acc;
           }
-          if (systemMovement[key] === 0) {
+          if (systemMovement.speeds[key] === 0) {
             return acc;
           }
 
@@ -889,12 +891,13 @@ export function getTidy5eActorSheetQuadroneBase<
             key,
             label: config.label,
             value:
-              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
-              '',
+              FoundryAdapter.formatNumber(
+                Math.round(+systemMovement.speeds[key]),
+              ) ?? '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
-            unitsKey: key,
+            unitsKey: systemMovement.units,
             parenthetical,
           });
 
@@ -915,20 +918,26 @@ export function getTidy5eActorSheetQuadroneBase<
           units:
             CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
             systemMovement.units,
-          value: systemMovement.walk?.toString() ?? '0',
-          unitsKey: sourceMovement.units,
+          value: systemMovement.speeds.walk?.toString() ?? '0',
+          unitsKey: systemMovement.units,
         });
       }
 
       // Add special movement if set
-      if (sourceMovement.special && sourceMovement.special.trim() !== '') {
-        speeds.push({
-          key: 'special',
-          label: sourceMovement.special,
-          units: '',
-          value: '',
-          unitsKey: '',
-        });
+      if (systemMovement.special && systemMovement.special.trim() !== '') {
+        for (const special of systemMovement.special.split(';')) {
+          const proposedSpecialKey = `special-${special.slugify()}`;
+          const key = speeds.some((speed) => speed.key === proposedSpecialKey)
+            ? `${proposedSpecialKey}-copy`
+            : proposedSpecialKey;
+          speeds.push({
+            key: key,
+            label: special,
+            units: '',
+            value: '',
+            unitsKey: '',
+          });
+        }
       }
 
       if (systemMovement.ignoredDifficultTerrain?.size > 0) {
