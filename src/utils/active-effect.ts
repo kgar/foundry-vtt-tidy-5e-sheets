@@ -1,5 +1,6 @@
+import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
-import type { ActiveEffect5e } from 'src/types/types';
+import type { ActiveEffect5e, EffectPill } from 'src/types/types';
 import { isNil } from './data';
 import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -81,26 +82,54 @@ export class ActiveEffectsHelper {
     }
   }
 
-  static getActiveEffectPills(activeEffect: ActiveEffect5e) {
-    let result = [];
+  static getActiveEffectPills(activeEffect: ActiveEffect5e): EffectPill[] {
+    const isEnchantment =
+      activeEffect.type === CONSTANTS.EFFECT_TYPE_ENCHANTMENT;
 
-    if (activeEffect.disabled) {
-      result.push('EFFECT.Disabled');
-    }
-
-    if (activeEffect.transfer) {
-      result.push('EFFECT.Transfer');
-    }
-
-    if (activeEffect.isSuppressed) {
-      result.push('DND5E.Suppressed');
-    }
+    let result: EffectPill[] = [];
 
     Array.from<string>(activeEffect.statuses)
       .map((x: string) => ActiveEffectsHelper.getStatusEffectName(x) ?? x)
       .forEach((e) => {
-        result.push(e);
+        result.push({ label: e });
       });
+
+    // Follow system ActiveEffect5e#getPreviewContext` in active-effect.mjs
+    if (activeEffect.isSuppressed) {
+      result.push({ label: 'DND5E.EFFECT.Status.Unavailable' });
+    } else if (activeEffect.disabled) {
+      result.push({ label: 'DND5E.EFFECT.Status.Inactive' });
+    } else if (activeEffect.isTemporary) {
+      result.push({ label: 'DND5E.EFFECT.Status.Temporary' });
+    } else {
+      result.push({ label: 'DND5E.EFFECT.Status.Passive' });
+    }
+
+    // Show the system "transfer" label (applies to parent)
+    if (activeEffect.transfer && isEnchantment) {
+      result.push({
+        label: 'DND5E.ENCHANTMENT.Transfer.Label',
+      });
+    }
+
+    if (isEnchantment) {
+      result.push({ label: 'DND5E.ENCHANTMENT.Label' });
+    }
+
+    // Shows the system description for `magical` effects.
+    if (activeEffect.system?.magical) {
+      result.push(
+        isEnchantment
+          ? {
+              label: 'DND5E.ENCHANTMENT.FIELDS.magical.label',
+              tooltip: 'DND5E.ENCHANTMENT.FIELDS.magical.hint',
+            }
+          : {
+              label: 'DND5E.EFFECT.BASE.FIELDS.magical.label',
+              tooltip: 'DND5E.EFFECT.BASE.FIELDS.magical.hint',
+            },
+      );
+    }
 
     return result;
   }

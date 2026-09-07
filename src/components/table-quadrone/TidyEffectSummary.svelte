@@ -78,7 +78,11 @@
       class="inline-wrapped-elements"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
     >
-      {#each pills as pill}<span class="tag">{localize(pill)}</span>{/each}
+      {#each pills as pill}<span
+          class="tag"
+          data-tooltip={pill.tooltip ? localize(pill.tooltip) : undefined}
+          >{localize(pill.label)}</span
+        >{/each}
     </div>
   {/if}
 </div>

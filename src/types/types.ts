@@ -786,6 +786,12 @@ export type EffectSummaryData = {
   };
 };
 
+/** Support a label + tooltip for newer system descriptions. */
+export type EffectPill = {
+  label: string;
+  tooltip?: string;
+};
+
 export type MaxPreparedSpellFormula = {
   label: string;
   value: string;
