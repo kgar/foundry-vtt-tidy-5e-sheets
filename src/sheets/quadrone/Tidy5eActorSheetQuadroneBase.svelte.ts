@@ -861,9 +861,9 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     _getMovementSpeeds(): ActorSpeedSenseEntryContext[] {
-      const systemMovement = this.actor.system.attributes.movement;
+      const systemMovement = this.actor.system.attributes.movement.speeds;
       const sourceMovement =
-        this.actor.system._source.attributes?.movement ?? {};
+        this.actor.system._source.attributes?.movement?.speeds ?? {};
 
       function excludeSpeed(key: string) {
         return (

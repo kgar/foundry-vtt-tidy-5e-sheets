@@ -303,7 +303,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       let units = unitsConfig?.abbreviation ?? unitsKey;
 
       Object.entries<number | unknown>(
-        actor.system.attributes.movement,
+        actor.system.attributes.movement.speeds,
       ).forEach(([key, speed]) => {
         const movementType = CONFIG.DND5E.movementTypes[key];
         if (
