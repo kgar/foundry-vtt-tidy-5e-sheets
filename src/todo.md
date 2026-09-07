@@ -436,6 +436,7 @@ https://github.com/foundryvtt/dnd5e/pull/7406
 
 ## The Accretion Disk of To Do's
 
+- [ ] onDropToContainer - eliminate and leverage the standard onDrop handling at the sheet document mixin level.
 - [ ] <!-- TODO: Swap to tidy table roll button -->
 - [ ] Group Bastion tables - these are necessarily complex. Any way we can simplify so that the Facilities section actor rows don't have to be semi-hardcoded with colum headers / cells?
 - [ ] Group Bastion tables - show/hide columns based on resize observer width?
