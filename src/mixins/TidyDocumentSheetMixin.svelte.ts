@@ -1903,7 +1903,7 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     async _onDropActiveEffect(event: DragEvent, data: any): Promise<any> {
-      return undefined;
+      return super._onDropActiveEffect(event, data);
     }
 
     async _onDropActor(
