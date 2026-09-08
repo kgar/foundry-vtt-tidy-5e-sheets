@@ -671,11 +671,14 @@ export type SpecialTraitSectionField = {
   field: DataField; // A data field subclass from Foundry or dnd5e
   hint?: string;
   input?: any; // A function that receives field and config; e.g., createCheckboxInput(field, config)
+  label?: string;
   name: string;
   section?: string; // Seems superfluous
   type?: any; // Boolean(), String(), Number(), etc.
   placeholder?: any; // A placeholder of the specified type; e.g., 30
   value?: any;
+  classes?: string;
+  choices?: Record<string, any>;
 };
 
 export type SpecialTraitClass = {
@@ -685,6 +688,14 @@ export type SpecialTraitClass = {
 
 export type SpecialTraitSection = {
   label: string;
+  fields: (SpecialTraitSectionField | SpecialTraitFieldGroup)[];
+};
+
+export type SpecialTraitFieldGroup = {
+  group: {
+    hint: string;
+    label: string;
+  };
   fields: SpecialTraitSectionField[];
 };
 
