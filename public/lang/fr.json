@@ -1047,7 +1047,7 @@
         "option.origin": "Regrouper par type d'élément ou de fonctionnalité"
     },
     "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
-        "name": "Onglet Fiche de personnage : inclure automatiquement les objets utilisables",
+        "name": "Onglet Fiche de personnage: inclure automatiquement les objets utilisables",
         "hint": "Inclure automatiquement tous les objets, sorts et fonctionnalités actuellement utilisables dans l'onglet de la fiche."
     },
     "TIDY5E.Drakkenheim": {
