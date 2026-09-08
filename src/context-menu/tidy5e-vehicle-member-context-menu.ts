@@ -71,21 +71,21 @@ function getVehicleItemMemberOptions(
 
   return [
     {
-      name: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       callback: async () => {
         const actor = await fromUuid(memberUuid);
         app._openDocumentSheet(actor);
       },
-      condition: () =>
+      visible: () =>
         !empty &&
         !brokenLink &&
         app.actor.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.actor),
     },
     {
-      name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
-      condition: () => !!memberUuid,
+      label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      visible: () => !!memberUuid,
       icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
         if (item && memberUuid) {
@@ -94,10 +94,10 @@ function getVehicleItemMemberOptions(
       },
     },
     {
-      name: FoundryAdapter.localize('TIDY5E.AddSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.AddSpecific', {
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
       }),
-      condition: () => empty,
+      visible: () => empty,
       icon: '<i class="fa-solid fa-book-atlas"></i>',
       callback: () => app.browseAssignActor(item),
     },
@@ -114,13 +114,13 @@ function getDraftMemberOptions(
 
   return [
     {
-      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
         name: FoundryAdapter.localize(
           'TIDY5E.Vehicle.Member.DraftAnimal.Label',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
-      condition: () => canChange,
+      visible: () => canChange,
       callback: async () => {
         if (memberUuid) {
           await app.removeDraftAnimal(memberUuid);
@@ -160,16 +160,16 @@ function getCrewMemberOptions(
   const assignableItemOptions: ContextMenuEntry[] = Object.values(
     assignableItems,
   )
-    .map((mountableItem) => {
+    .map<ContextMenuEntry>((mountableItem) => {
       return {
-        name: `${FoundryAdapter.localize(
+        label: `${FoundryAdapter.localize(
           'TIDY5E.ContextMenuActionAssignToEntity',
           { entityName: mountableItem.name },
         )} ${mountableItem.crew?.value ?? '0'}/${
           mountableItem.crew?.max ?? '—'
         }`,
         icon: '<i class="fa-solid fa-user-plus fa-fw"></i>',
-        condition: () => area === 'crew' && canChange,
+        visible: () => area === 'crew' && canChange,
         callback: async () => {
           if (!memberUuid) {
             return;
@@ -189,13 +189,13 @@ function getCrewMemberOptions(
         },
       };
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => (a.label && b.label ? a.label.localeCompare(b.label) : 0));
 
   return [
     {
-      name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       icon: '<i class="fa-solid fa-user-minus fa-fw"></i>',
-      condition: () => !!currentlyAssignedItemId && canChange,
+      visible: () => !!currentlyAssignedItemId && canChange,
       callback: async () => {
         if (!memberUuid) {
           return;
@@ -212,13 +212,13 @@ function getCrewMemberOptions(
     },
     ...assignableItemOptions,
     {
-      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
         name: FoundryAdapter.localize(
           'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
-      condition: () => area === 'crew' && unassigned && canChange,
+      visible: () => area === 'crew' && unassigned && canChange,
       callback: async () => {
         if (memberUuid) {
           app.removeUnassignedCrew(memberUuid);
@@ -226,11 +226,11 @@ function getCrewMemberOptions(
       },
     },
     {
-      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
-      condition: () => area === 'passengers' && canChange,
+      visible: () => area === 'passengers' && canChange,
       callback: async () => {
         if (memberUuid) {
           app.removePassengers(memberUuid);

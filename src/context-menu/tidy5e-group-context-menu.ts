@@ -36,18 +36,18 @@ export function getGroupMemberContextOptions(
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
-      name: 'DND5E.Group.Action.View',
+      label: 'DND5E.Group.Action.View',
       icon: `<i class="fa-solid fa-eye fa-fw"></i>`,
       callback: async () =>
         group.sheet._openDocumentSheet(await fromUuid(actor.uuid)),
-      condition: () =>
+      visible: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
       group: 'common',
     },
     {
-      name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+      label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
       icon: '<i class="fa-solid fa-diagram-cells"></i>',
-      condition: () => group.isOwner,
+      visible: () => group.isOwner,
       group: 'customize',
       callback: () =>
         group.sheet._renderChild(
@@ -62,10 +62,10 @@ export function getGroupMemberContextOptions(
         ),
     },
     {
-      name: 'DND5E.Group.Action.Remove',
+      label: 'DND5E.Group.Action.Remove',
       icon: `<i class="fa-solid fa-trash fa-fw"></i>`,
       callback: async () => await group.system.removeMember(actor),
-      condition: () =>
+      visible: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
       group: 'be-careful',
     },

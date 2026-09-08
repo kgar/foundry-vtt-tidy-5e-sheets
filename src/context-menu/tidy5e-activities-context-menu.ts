@@ -66,17 +66,17 @@ export function getContextMenuOptions(
 
   const entries: ContextMenuEntry[] = [];
   entries.push({
-    name: 'DND5E.ContextMenuActionView',
+    label: 'DND5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
-    condition: () => configurable && !isUnlockedForOwner,
+    visible: () => configurable && !isUnlockedForOwner,
     callback: async () => await app._renderChild(activity.sheet),
     group: 'common',
   });
 
   entries.push({
-    name: 'DND5E.ContextMenuActionEdit',
+    label: 'DND5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pen-to-square fa-fw"></i>',
-    condition: () => configurable && isUnlockedForOwner,
+    visible: () => configurable && isUnlockedForOwner,
     callback: async () => await app._renderChild(activity.sheet),
     group: 'common',
   });
@@ -87,11 +87,11 @@ export function getContextMenuOptions(
     }`;
     const isFavorited = app.actor.system.hasFavorite(uuid);
     entries.push({
-      name: isFavorited ? 'DND5E.FavoriteRemove' : 'DND5E.Favorite',
+      label: isFavorited ? 'DND5E.FavoriteRemove' : 'DND5E.Favorite',
       icon: isFavorited
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
-      condition: () => isUnlockedForOwner,
+      visible: () => isUnlockedForOwner,
       callback: async () => {
         if (isFavorited) {
           await app.actor.system.removeFavorite(uuid);
@@ -104,9 +104,9 @@ export function getContextMenuOptions(
   }
 
   entries.push({
-    name: 'DND5E.ContextMenuActionDuplicate',
+    label: 'DND5E.ContextMenuActionDuplicate',
     icon: '<i class="fas fa-copy fa-fw"></i>',
-    condition: () => !isInFavorites && configurable && isUnlockedForOwner,
+    visible: () => !isInFavorites && configurable && isUnlockedForOwner,
     callback: async () => {
       const createData = activity.toObject();
       delete createData._id;
@@ -120,14 +120,14 @@ export function getContextMenuOptions(
   // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
 
   entries.push({
-    name: 'TIDY5E.ContextMenuActionPin',
+    label: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     callback: async () => {
       if (tabId) {
         await SheetPinsProvider.pin(activity, tabId, 'activity');
       }
     },
-    condition: () =>
+    visible: () =>
       app.actor &&
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
@@ -138,14 +138,14 @@ export function getContextMenuOptions(
   });
 
   entries.push({
-    name: 'TIDY5E.ContextMenuActionUnpin',
+    label: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
     callback: async () => {
       if (tabId) {
         await SheetPinsProvider.unpin(activity, tabId);
       }
     },
-    condition: () =>
+    visible: () =>
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
       SheetPinsProvider.isPinnable(activity, 'activity') &&
@@ -158,7 +158,7 @@ export function getContextMenuOptions(
 
   if (aggregatePinTab) {
     entries.push({
-      name: FoundryAdapter.localize(
+      label: FoundryAdapter.localize(
         'TIDY5E.ContextMenuActionPinToSpecificTab',
         { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
       ),
@@ -170,7 +170,7 @@ export function getContextMenuOptions(
           'activity',
         );
       },
-      condition: () =>
+      visible: () =>
         tabId !== aggregatePinTab.tabId &&
         app.actor &&
         activity.item.isOwner &&
@@ -184,9 +184,9 @@ export function getContextMenuOptions(
   // Be Careful - These are the no-going-back changes
 
   entries.push({
-    name: 'DND5E.ContextMenuActionDelete',
+    label: 'DND5E.ContextMenuActionDelete',
     icon: `<i class="fas fa-trash fa-fw" style="color: var(--t5e-warning-accent-color);"></i>`,
-    condition: () => !isInFavorites && configurable && isUnlockedForOwner,
+    visible: () => !isInFavorites && configurable && isUnlockedForOwner,
     callback: async () => await activity.deleteDialog({ sheet: app }),
     group: 'be-careful',
   });

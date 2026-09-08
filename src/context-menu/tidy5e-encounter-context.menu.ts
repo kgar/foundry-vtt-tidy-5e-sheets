@@ -39,15 +39,15 @@ export function getEncounterMemberContextOptions(
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
-      name: 'DND5E.Group.Action.View',
+      label: 'DND5E.Group.Action.View',
       icon: `<i class="fas fa-eye fa-fw"></i>`,
       callback: async () =>
         encounter.sheet._openDocumentSheet(await memberPromise),
-      condition: () =>
+      visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
     },
     {
-      name: 'DND5E.HPFormulaRollMessage',
+      label: 'DND5E.HPFormulaRollMessage',
       icon: `<i class="fas fa-dice-d6 fa-fw"></i>`,
       callback: async () => {
         await new Tidy5eNpcSheetQuadrone({
@@ -55,15 +55,15 @@ export function getEncounterMemberContextOptions(
         }).rollFormula();
         encounter.sheet.render();
       },
-      condition: () =>
+      visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
     },
     {
-      name: 'DND5E.Group.Action.Remove',
+      label: 'DND5E.Group.Action.Remove',
       icon: `<i class="fas fa-trash fa-fw"></i>`,
       callback: async () =>
         await encounter.system.removeMember(await memberPromise),
-      condition: () =>
+      visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
     },
   ];

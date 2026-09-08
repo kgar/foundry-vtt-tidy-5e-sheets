@@ -4,7 +4,7 @@ import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDo
 
 export function configureSectionContextMenu(
   element: HTMLElement,
-  app: TidyExtensibleDocumentSheetMixinInstance
+  app: TidyExtensibleDocumentSheetMixinInstance,
 ) {
   const section: TidySectionBase | undefined = app._sectionForMenu;
 
@@ -16,8 +16,8 @@ export function configureSectionContextMenu(
 
   const sectionActions: SectionCommand[] = section.sectionActions ?? [];
 
-  ui.context.menuItems = sectionActions.map((action) => ({
-    callback: () => {
+  ui.context.menuItems = sectionActions.map<ContextMenuEntry>((action) => ({
+    visible: () => {
       try {
         action.execute?.({
           document: app.document,
@@ -29,6 +29,6 @@ export function configureSectionContextMenu(
       }
     },
     icon: `<i class="${action.iconClass}"></i>`,
-    name: action.label ?? action.tooltip,
+    label: action.label ?? action.tooltip,
   })) satisfies ContextMenuEntry[];
 }
