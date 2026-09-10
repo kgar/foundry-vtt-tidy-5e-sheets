@@ -4,14 +4,7 @@
   .editor-rendered-content {
     color: var(--t5e-color-text-longform);
     font: var(--t5e-font-default-longform);
-    padding-block-start: var(--t5e-size-2x);
     word-wrap: anywhere;
-
-    .user-select-text {
-      > :first-child {
-        margin-block-start: 0;
-      }
-    }
 
     h1,
     h2,
@@ -458,6 +451,16 @@
       .embed-caption {
         color: var(--t5e-color-text-gold-emphasis);
         font: var(--t5e-font-label-medium);
+      }
+    }
+  }
+
+  .editor {
+    padding-block-start: var(--t5e-size-2x);
+
+    .user-select-text {
+      > :first-child {
+        margin-block-start: 0;
       }
     }
   }
