@@ -286,6 +286,17 @@
       font: var(--t5e-font-title-small);
       text-align: center;
     }
+
+    /* Gradient version for rarity varies */
+    .item-rarity-text.rarity-varies {
+      background-image: var(--t5e-rarity-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      max-width: 100%;
+      margin-inline: auto;
+      width: fit-content;
+    }
   }
 
   .spell-method-text {

@@ -187,6 +187,8 @@ export type RarityContext = {
     selected: boolean;
     value: string;
   }[];
+  /** Selected rarity keys in system order. */
+  selectedRarities: string[];
 };
 
 /**

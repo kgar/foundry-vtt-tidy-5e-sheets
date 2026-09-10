@@ -14,6 +14,7 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { Rarity } from 'src/features/rarity/Rarity';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -71,11 +72,43 @@
     SheetSections.itemSupportsCustomSections(context.item.type),
   );
 
+  // Does rarity vary? Don't include unidentified items.
+  // Derived from selectedRarities rather than a raw rarity count, so this can never claim
+  // "varies" for rarities we have no color for — the gradient is built from the same array.
+  let rarityVaries = $derived(
+    !unidentified && (context.rarities?.selectedRarities.length ?? 0) > 1,
+  );
+
+  // The transform used here matches the math we use for the rarity text in the sidebar.
+  let rarityTextGradient = $derived(
+    rarityVaries
+      ? Rarity.getRarityVariesGradient(context.rarities!.selectedRarities, {
+          transform: (color) =>
+            `oklch(from ${color} calc(l + 0.2) calc(c - 0.08) h)`,
+        })
+      : undefined,
+  );
+
+  // Only turn on the gradient if the rarity varies. (we send the ID to do it)
+  let rarityBorderGradientId = $derived(
+    rarityVaries ? `t5e-rarity-varies-${context.document.id}` : undefined,
+  );
+
+  // Taste the rainbow.
+  let rarityVariesColors = $derived(
+    rarityVaries
+      ? context.rarities!.selectedRarities.map((key) =>
+          Rarity.getRarityColorVariable(key),
+        )
+      : undefined,
+  );
+
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>({
     disabled: unidentified && !FoundryAdapter.isInGmEditMode(context.document),
     rarity: !!context.rarities,
     unidentified,
+    'rarity-varies': rarityVaries,
     [coalesce(context.rarities?.rarity?.slugify(), 'none')]:
       !unidentified && context.rarities,
     'spell-method': !isNil(config?.key),
@@ -198,16 +231,22 @@
         data-action={context.unlocked ? 'editImage' : 'showIcon'}
         data-edit={context.unlocked ? 'img' : null}
       />
-      <ItemImageBorder />
+      <ItemImageBorder
+        gradientId={rarityBorderGradientId}
+        gradientColors={rarityVariesColors}
+      />
     </div>
     {#if context.rarities}
-      {#if !context.unlocked}
-        <div class="item-rarity-container">
-          <div class={['rarity', 'item-rarity-text', itemColorClasses]}>
-            {context.rarities.rarityLabel}
-          </div>
+      <div class="item-rarity-container">
+        <div
+          class={['rarity', 'item-rarity-text', itemColorClasses]}
+          style={rarityTextGradient
+            ? `--t5e-rarity-gradient: ${rarityTextGradient}`
+            : undefined}
+        >
+          {context.rarities.rarityLabel}
         </div>
-      {/if}
+      </div>
     {:else if !isNil(spellPreparationText, '')}
       <div class={['spell-method-text', itemColorClasses]}>
         {spellPreparationText}
