@@ -37,7 +37,7 @@ export const NpcSheetQuadroneRuntime =
         tabOptionsBuilder: buildActorInventoryTabOptions,
       },
       {
-        title: 'DND5E.Spellbook',
+        title: 'TYPES.Item.spellPl',
         content: {
           component: ActorSpellbookTab,
           type: 'svelte',

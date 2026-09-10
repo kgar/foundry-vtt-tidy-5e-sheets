@@ -911,7 +911,7 @@ export class SheetSections {
         : item.type === CONSTANTS.ITEM_TYPE_FEAT
           ? 'DND5E.Features'
           : item.type === CONSTANTS.ITEM_TYPE_SPELL
-            ? 'DND5E.Spellbook'
+            ? 'TYPES.Item.spellPl'
             : 'TIDY5E.Section.Label';
 
     return FoundryAdapter.localize(value);

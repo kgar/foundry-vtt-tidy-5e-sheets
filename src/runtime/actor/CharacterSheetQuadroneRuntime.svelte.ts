@@ -51,7 +51,7 @@ export const CharacterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-notebook',
       },
       {
-        title: 'DND5E.Spellbook',
+        title: 'TYPES.Item.spellPl',
         content: {
           component: ActorSpellbookTab,
           type: 'svelte',
