@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { Item5e } from 'src/types/item.types';
+import type { ActivitySectionQuadrone, Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
   ActorInventoryTypes,
@@ -9,7 +9,6 @@ import type {
   FavoriteSection,
   FeatureSection,
   EffectFavoriteSection,
-  ActivitySection,
   CharacterSheetQuadroneContext,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -326,7 +325,7 @@ export class CharacterSheetSections {
   ) {
     let sectionsMap: Record<
       string,
-      Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
+      Exclude<FavoriteSection, EffectFavoriteSection | ActivitySectionQuadrone>
     > = {};
     for (let section of sections) {
       if (

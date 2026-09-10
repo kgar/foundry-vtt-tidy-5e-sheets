@@ -1,5 +1,4 @@
 import { warn } from 'src/utils/logging';
-import type { SupportedSpellSchoolIcon } from './spell-school.types';
 
 /**
  * Allows for configuration related to Spell Schools.
@@ -20,7 +19,7 @@ export class SpellSchoolApi {
    * });
    * ```
    */
-  setIcon(schoolKey: string, iconClass: SupportedSpellSchoolIcon) {
+  setIcon(schoolKey: never, iconClass: never) {
     warn(
       'This feature is no longer supported. The API for it will be removed in a future Tidy version.',
     );

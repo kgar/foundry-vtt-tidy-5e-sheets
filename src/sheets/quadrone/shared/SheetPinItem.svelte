@@ -38,7 +38,6 @@
     ) ??
       Activities.getVisibleActivities(
         ctx.document,
-        ctx.document.system.activities ?? [],
       ),
   );
 

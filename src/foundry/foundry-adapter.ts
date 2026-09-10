@@ -535,13 +535,6 @@ export const FoundryAdapter = {
         .map((activities) => activities.uuid),
     );
   },
-  getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
-    return items.filter(
-      (x: ActionItem) =>
-        searchCriteria.trim() === '' ||
-        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
-    );
-  },
   parseAdditionalClassesDropDownItems(
     spellClassFilterAdditionalClassesText: string,
   ) {

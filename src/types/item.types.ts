@@ -292,8 +292,6 @@ export type ContainerSheetQuadroneContext = {
   userPreferences: UserPreferences;
 } & DocumentSheetV2Context;
 
-export type ContainerSection = { items: Item5e[] } & TidySectionBase;
-
 export type ContainerContents = {
   capacity: { max: number; value: number; units: string; pct: number };
   contents: InventorySection[];

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
+  import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.d.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
 

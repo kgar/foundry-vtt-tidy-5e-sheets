@@ -101,7 +101,6 @@ export class Container {
 
       ctx.activities = Activities.getVisibleActivities(
         item,
-        item.system.activities,
       )?.map((activity) =>
         Activities.getActivityItemContext(
           sheet,

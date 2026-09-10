@@ -1,5 +1,4 @@
-import type { PortraitMenuCommand } from 'src/api/api.types';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+import { warn } from 'src/utils/logging';
 
 /**
  * API functionality related to Actor portraits.
@@ -8,30 +7,11 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
  */
 export class ActorPortraitApi {
   /**
-   * Register actor portrait menu commands which Tidy 5e can render on the sheet when appropriate.
-   * @param commands actor portrait menu commands for Tidy 5e to render
-   *
-   * @example Registering a command
-   * ```js
-   * Hooks.once("tidy5e-sheet.ready", (api) => {
-   *   api.config.actorPortrait.registerMenuCommands([
-   *     {
-   *       label: "Test",
-   *       iconClass: "fa-solid fa-flask",
-   *       tooltip: "Click for test result",
-   *       enabled: (params) => params.actor.type !== "vehicle",
-   *       execute: (params) => {
-   *         console.log(params);
-   *         ui.notifications.info(
-   *           "Hello, Test Portrait Menu Command for " + params.actor.name
-   *         );
-   *       },
-   *     },
-   *   ]);
-   * });
-   * ```
+   * This feature is no longer supported. The API for it will be removed in a future Tidy version.
    */
-  registerMenuCommands(commands: PortraitMenuCommand[]) {
-    ActorPortraitRuntime.registerMenuCommands([...commands]);
+  registerMenuCommands(commands: never) {
+    warn(
+      'This feature is no longer supported. The API for it will be removed in a future Tidy version.',
+    );
   }
 }

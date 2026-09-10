@@ -8,7 +8,6 @@ import { error } from 'src/utils/logging';
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { DrakkenheimCoreModuleIntegration } from './modules/Drakkenheim/DrakkenheimCore';
 import { McdmClassBundleModuleIntegration } from './modules/McdmClassBundle/McdmClassBundle';
-import { TidyCustomSectionsInDefaultItemSheetIntegration } from './system/TidyCustomSectionsInDefaultItemSheetIntegration';
 import { ColorisThirdPartyIntegration } from './third-party/Coloris.svelte';
 import { DndTashasCauldronModuleIntegration } from './modules/DndTashasCauldron/DndTashasCauldron';
 import { SebastianCrowesGuideToDrakkenheimModuleIntegration } from './modules/Drakkenheim/SebastianCrowesGuideToDrakkenheim';
@@ -23,8 +22,7 @@ export function setupIntegrations(api: Tidy5eSheetsApi) {
 /* System Integrations */
 
 const systemIntegrations: SystemIntegrationBase[] = [
-  new TidyCustomSectionsInDefaultItemSheetIntegration(),
-  // Add other system integrations here
+  // Add system integrations here
 ];
 
 function setupSystemIntegrations(api: Tidy5eSheetsApi) {

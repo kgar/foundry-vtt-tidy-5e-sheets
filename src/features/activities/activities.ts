@@ -16,12 +16,11 @@ export class Activities {
     return 'isHidden' in activity ? !activity.isHidden : activity.canUse;
   }
 
-  // TODO: Tidy this up and remove `activities` once we're off Classic. Just use `item.system.activities` instead.
   static getVisibleActivities(
     item: Item5e,
-    activities: Activity5e[],
     forItemSheet: boolean = false,
   ): Activity5e[] {
+    const activities = Array.from(item.system.activities ?? []);
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
       activities: (activities ?? []).filter((activity: Activity5e) =>
@@ -49,7 +48,6 @@ export class Activities {
 
     return Activities.getVisibleActivities(
       item,
-      Array.from(item.system.activities ?? []),
       true,
     );
   }

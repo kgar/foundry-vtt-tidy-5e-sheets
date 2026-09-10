@@ -1,8 +1,6 @@
 import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import type { GetFunctionReturnType } from 'src/types/types';
-import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
@@ -870,7 +868,7 @@ export function initSettings() {
   // Register before init-time reads
   registerSetting('truesight', SettingsProvider.settings.truesight);
 
-  const initRegisteredKeys = new Set(['hideClassic', 'truesight']);
+  const initRegisteredKeys = new Set(['truesight']);
 
   for (let setting of Object.entries(SettingsProvider.settings).filter(
     (x: [string, Tidy5eSetting]) =>

@@ -11,17 +11,6 @@ import type { CONSTANTS } from 'src/constants';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 
-export interface GroupItemContext {
-  activities?: ActivityItemContext[];
-  canToggle?: false;
-  containerContents?: ContainerContents;
-  hasUses?: boolean;
-  isStack?: boolean;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  totalWeight?: number;
-}
-
 export interface GroupMemberContext {
   index: number;
   canObserve: boolean;
@@ -48,11 +37,6 @@ export type GroupMemberSkillInfo = {
   formattedTotal: string;
   passive: number;
 };
-
-export interface GroupMovementContext {
-  primary: string;
-  secondary: string;
-}
 
 export type GroupMemberSection = TidySectionBase & {
   members: Actor5e[];
@@ -86,10 +70,6 @@ export interface Group5eCurrency {
   ep: number;
   sp: number;
   cp: number;
-}
-
-export interface Group5eType {
-  value: 'party' | 'encounter' | '';
 }
 
 export interface Group5eDescription {
@@ -128,11 +108,6 @@ export interface Group5eDetails {
 export interface Group5eXp {
   value: number | null;
   derived: number;
-}
-
-export interface GroupLanguage {
-  label: string;
-  members: Actor5e[];
 }
 
 export interface GroupSkill {

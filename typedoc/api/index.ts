@@ -9,7 +9,6 @@ export * from 'src/api/config/ConfigApi';
 export * from 'src/api/config/exhaustion/ExhaustionApi.svelte';
 export * from 'src/api/config/item-summary/ItemSummaryApi';
 export * from 'src/api/config/item/ItemConfigApi';
-export * from 'src/api/config/spell-school/spell-school.types';
 export * from 'src/api/config/spell-school/SpellSchoolApi';
 export * from 'src/api/content/CustomContentBase';
 export * from 'src/api/content/HandlebarsContent';

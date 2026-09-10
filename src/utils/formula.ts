@@ -88,47 +88,6 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
   ];
 }
 
-export function getDcTooltip(actor: Actor5e, spellAbility: string) {
-  const base = 8;
-
-  const abilityMod =
-    (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-  const abilityName =
-    CONFIG.DND5E.abilities[spellAbility as keyof typeof CONFIG.DND5E.abilities]
-      ?.label ?? FoundryAdapter.localize('DND5E.None');
-  const prof = actor.system.attributes.prof ?? 0;
-
-  let tooltip = base.toString();
-
-  if (abilityMod !== 0) {
-    tooltip += abilityMod < 0 ? ' - ' : ' + ';
-    tooltip += `${Math.abs(abilityMod)} (${abilityName})`;
-  }
-
-  if (prof !== 0) {
-    tooltip += prof < 0 ? ' - ' : ' + ';
-    tooltip += `${Math.abs(prof)} (${FoundryAdapter.localize(
-      'DND5E.ProficiencyBonus'
-    )})`;
-  }
-
-  const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
-  if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
-    const bonusRoll = new Roll(rawBonus);
-    bonusRoll.evaluateSync({ allowInteractive: false });
-    const bonusTotal = bonusRoll.total;
-
-    if (bonusTotal !== 0) {
-      tooltip += bonusTotal < 0 ? ' - ' : ' + ';
-      tooltip += `${Math.abs(bonusTotal)} (${FoundryAdapter.localize(
-        'DND5E.Bonus'
-      )})`;
-    }
-  }
-
-  return tooltip;
-}
-
 const faces: Record<string, string> = {
   '1': 'fa-solid fa-dice-one',
   '2': 'fa-solid fa-dice-two',

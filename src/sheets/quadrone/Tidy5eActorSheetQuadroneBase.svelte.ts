@@ -382,7 +382,6 @@ export function getTidy5eActorSheetQuadroneBase<
       if (item.system.activities) {
         ctx.activities = Activities.getVisibleActivities(
           item,
-          item.system.activities,
         )?.map((activity) =>
           Activities.getActivityItemContext(
             this,

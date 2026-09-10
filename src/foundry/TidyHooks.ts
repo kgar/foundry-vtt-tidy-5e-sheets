@@ -424,7 +424,7 @@ export class TidyHooks {
    * Sheet item/effect sections are about to be configured. Use this hook to inject additional items, sections, etc., or to adjust context data.
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext} data The data context from `getData()`.
+   * @param {ContainerSheetQuadroneContext | ItemSheetQuadroneContext} data The data context from `getData()`.
    *
    * @example
    * ```js
@@ -496,7 +496,7 @@ export class TidyHooks {
 
   /**
    * The portrait picker is about to open.
-   * @param {ActorSheetContextV1 | ActorSheetClassicContextV2} context The actor sheet data from `getData()`.
+   * @param {ActorSheetQuadroneContext} context The actor sheet data from `getData()`.
    * @param {MouseEvent & { currentTarget: EventTarget & HTMLElement }} event The triggering event.
    * @returns {boolean} `true` to allow the picker to open, `false` to prevent it.
    *

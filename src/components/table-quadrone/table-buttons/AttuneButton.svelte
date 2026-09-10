@@ -1,11 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type { CharacterItemContext } from 'src/types/types';
+  import type { CharacterItemQuadroneContext } from 'src/types/types';
 
   interface Props {
     doc: Item5e;
-    ctx: CharacterItemContext | ContainerItemContext;
+    ctx: CharacterItemQuadroneContext | ContainerItemContext;
   }
   let { doc, ctx }: Props = $props();
 

@@ -14,19 +14,6 @@ export function processInputChangeDelta(
   return Number(value);
 }
 
-export function processInputChangeDeltaFromValues(
-  newValue: string,
-  originalValue: unknown,
-) {
-  if (['+', '-'].includes(newValue[0])) {
-    const delta = parseFloat(newValue);
-    return Number(originalValue) + delta;
-  } else if (newValue[0] === '=') {
-    return Number(newValue.slice(1));
-  }
-  return Number(newValue);
-}
-
 export function applyNumberInputConstraints(
   value: number,
   input: HTMLElement | null | undefined,

@@ -14,7 +14,6 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
-  RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { CONSTANTS } from 'src/constants';
@@ -153,15 +152,6 @@ export type CharacterFeatureSection = {
   custom?: CustomSectionOptions;
 } & FeatureSection;
 
-export type SpellcastingInfo = {
-  currentFilteredClass: Item5e;
-  calculations: SpellCalculations;
-  prepared?: {
-    value: number;
-    max: number;
-  };
-};
-
 export type SpellCalculations = {
   dc: string;
   dcTooltip: string;
@@ -263,22 +253,6 @@ export type ActivitySection = TidySectionBase & {
   >;
 };
 
-export type VehicleFeatureSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
-  items: Item5e[];
-  columns: SectionColumnSpecifications<
-    ConfiguredColumnSpecification<ItemColumnSpec>
-  >;
-} & TidySectionBase;
-
-export type SimpleEditableColumn = {
-  label: string;
-  css?: string;
-  property: string;
-  maxProperty?: string;
-  editable?: string;
-};
-
 export type SpellbookSectionLegacy = {
   label: string;
   order: number;
@@ -333,31 +307,6 @@ export type ItemSaveContext = {
     formula: string;
     value: number;
   };
-};
-
-export type CharacterItemContext = {
-  actionSubtitle?: string; // Quadrone only
-  activities?: ActivityItemContext[];
-  attunement?: AttunementContext;
-  availableLevels?: AvailableLevel[];
-  chosen?: ChosenFacilityContext;
-  concealDetails?: boolean;
-  containerName?: string;
-  containerContents?: ContainerContents;
-  favoriteId?: string;
-  group?: string;
-  hasRecharge?: boolean;
-  hasUses?: boolean;
-  isStack?: boolean;
-  linkedUses?: LinkedUses;
-  needsSubclass?: boolean;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  totalWeight?: number;
-  concentration?: boolean;
-  parent?: Item5e;
-  subtitle?: string;
-  includeInCharacterSheetTab?: boolean;
 };
 
 export type CharacterItemQuadroneContext = {
@@ -429,18 +378,6 @@ export type LanguageTraitContext = {
   label: string;
   value?: unknown;
 };
-
-export type AttributeItemPinContext = {
-  document: Item5e;
-  linkedUses?: LinkedUses;
-} & AttributePinFlag & { type: 'item' };
-
-export type AttributeActivityPinContext = {
-  document: Activity5e;
-} & AttributePinFlag & { type: 'activity' };
-
-export type AttributePinContext =
-  AttributeItemPinContext | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
@@ -555,20 +492,6 @@ export type VehicleItemCrewAssignment = {
   brokenLink?: boolean;
 };
 
-export type VehicleItemContext = {
-  actionSubtitle?: string;
-  activities?: ActivityItemContext[];
-  containerContents?: ContainerContents;
-  cover?: string;
-  crew?: VehicleItemCrewAssignment[];
-  hasUses?: boolean;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  threshold?: number | string;
-  toggleClass?: string;
-  toggleTitle?: string;
-};
-
 export type VehicleItemQuadroneContext = {
   actionSubtitle?: string;
   cover?: string;
@@ -580,26 +503,6 @@ export type VehicleItemQuadroneContext = {
   toggleClass?: string;
   toggleTitle?: string;
 } & ActorItemQuadroneContext;
-
-export type VehicleMember = {
-  actor: Actor5e;
-  quantity: number;
-  // etc.
-};
-
-export type VehicleMemberSection = {
-  members: VehicleMember[];
-  dropLabel: string;
-  // etc.
-} & TidySectionBase;
-
-export type VehicleCargoSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
-  items: any[];
-  css?: string;
-  editableName?: boolean;
-  columns?: SimpleEditableColumn[];
-} & TidySectionBase;
 
 export type DerivedDamage = {
   label: string;
@@ -617,18 +520,9 @@ export type ActionItem = {
   containerContents?: ContainerContents;
 };
 
-export type ActionSectionClassic = {
-  actions: ActionItem[];
-} & TidySectionBase;
-
 export type CustomItemSectionQuadrone = {
   type: typeof CONSTANTS.SECTION_TYPE_CUSTOM;
 } & TidyItemSectionBase;
-
-export type ExtensibleComponent = {
-  cssClasses: string[];
-  dataset: Record<string, string>;
-};
 
 export type MessageBus = { message: MessageBusMessage | undefined };
 
@@ -737,17 +631,6 @@ export type DocumentPreparationWarning = Partial<{
 
 export type DropdownListOption = { value: any; text: string };
 
-export type PortraitCharmRadiusClass =
-  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
-
-export type ItemLayoutMode = 'grid' | 'list';
-
-export type SheetStats = {
-  lastSubmissionTime: Date | null;
-};
-
-export type CargoOrCrewItem = { name: string; quantity: number };
-
 export type GetFunctionReturnType<T> = T extends {
   get: () => infer V;
 }
@@ -760,21 +643,11 @@ export type SheetTabCacheable = {
 
 export type OnTabSelectedFn = (tabId: string) => void;
 
-export type SheetExpandedItemsCacheable = {
-  onItemToggled: OnItemToggledFn;
-};
-
 export type OnItemToggledFn = (
   itemId: string,
   isVisible: boolean,
   location: string,
 ) => void;
-
-export type SearchFilterCacheable = {
-  onSearch: OnSearchFn;
-};
-
-export type OnSearchFn = (location: string, text: string) => void;
 
 /**
  * A map from location to search criteria.
@@ -834,29 +707,10 @@ export type ContainerCapacityContext = {
   hidden?: boolean;
 };
 
-export type RenderableClassicControl<TParams> = {
-  component: Component<any>;
-  props?: (params: TParams) => Record<string, unknown>;
-  visible?: (params: TParams) => boolean;
-};
-
 export type AvailableClassLevel = {
   delta: number;
   disabled: boolean;
   level: number;
-};
-
-export type DamageModificationData = {
-  amount: Record<string, string>;
-  bypasses: Set<string>;
-};
-
-export type ModificationConsequence = 'benefit' | 'detriment' | 'none';
-
-export type DamageModificationContextEntry = {
-  label: string;
-  consequence: ModificationConsequence;
-  icons?: string[];
 };
 
 export type EffectCategory<TEffectContext> = {
@@ -900,9 +754,6 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
       ConfiguredColumnSpecification<EffectColumnSpec>
     >;
   };
-
-export type HTMLElementOrGettable =
-  HTMLElement | { get(index: number): HTMLElement };
 
 export type ActorV2 = {
   isOwner: boolean;
@@ -1167,10 +1018,6 @@ export type FavoriteContextEntry =
   | SlotsFavoriteContextEntry
   | SkillToolFavoriteContextEntry;
 
-export type SystemSettings = {
-  currencyWeight: boolean;
-};
-
 export type InspirationSource = {
   change: (delta: number) => Promise<void>;
   value: number;
@@ -1182,10 +1029,6 @@ export type ActorTraitItemContext = {
   id: string;
   name: string;
   img: string;
-};
-
-export type SheetTabEffectSection = ActiveEffectSection & {
-  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
 };
 
 export type SheetTabSection =
@@ -1478,19 +1321,6 @@ export type GroupSkillRollProcessConfiguration = {
   ability: string;
   event: Event;
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
-};
-
-export type SkillToolRollProcessConfiguration = {
-  ability: string;
-  bonus: string;
-  item: Item5e;
-  skill: string;
-  tool: string;
-  page: TravelPaceConfig;
-} & D20RollProcessConfiguration;
-
-type D20RollProcessConfiguration = {
-  // TODO: Type this out if it's actually needed at some point.
 };
 
 export type GroupSheetQuadroneContext = {

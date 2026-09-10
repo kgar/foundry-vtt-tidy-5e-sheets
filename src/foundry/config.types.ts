@@ -230,13 +230,6 @@ export type CONFIG = {
           canConfigure: boolean;
           default: boolean;
         };
-        'dnd5e.Tidy5eGroupSheetClassic': {
-          id: string;
-          label: string;
-          canBeDefault: boolean;
-          canConfigure: boolean;
-          default: boolean;
-        };
       };
     };
   };

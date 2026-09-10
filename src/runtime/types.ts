@@ -101,23 +101,6 @@ export type RegisteredItemSummaryCommandExecuteParams =
     event: PointerEvent | MouseEvent;
   };
 
-export type RegisteredPortraitMenuCommand = {
-  label?: string;
-  iconClass?: string;
-  tooltip?: string;
-  enabled?: (params: RegisteredPortraitMenuCommandEnabledParams) => boolean;
-  execute?: (params: RegisteredPortraitMenuCommandExecuteParams) => void;
-};
-
-export type RegisteredPortraitMenuCommandEnabledParams = {
-  actor: Actor5e;
-};
-
-export type RegisteredPortraitMenuCommandExecuteParams = {
-  actor: Actor5e;
-  context: any;
-};
-
 export type RegisteredSectionCommand = {
   label?: string;
   iconClass?: string;

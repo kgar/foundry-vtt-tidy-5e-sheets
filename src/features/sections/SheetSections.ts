@@ -2,7 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActionSectionClassic,
   Actor5e,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
@@ -27,7 +26,6 @@ import { UserSheetPreferencesService } from '../user-preferences/SheetPreference
 import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -765,31 +763,6 @@ export class SheetSections {
     }
 
     return features;
-  }
-
-  static configureActions(
-    sections: ActionSectionClassic[],
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined,
-  ) {
-    try {
-      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      return sections.map(({ ...section }) => {
-        section.actions = getSortedActions(section, sortMode);
-
-        section.show = sectionConfigs?.[section.key]?.show !== false;
-
-        return section;
-      });
-    } catch (e) {
-      error('An error occurred while configuring actions', false, e);
-    }
-
-    return sections;
   }
 
   static configureActionsQuadrone<T extends TidyItemSectionBase>(

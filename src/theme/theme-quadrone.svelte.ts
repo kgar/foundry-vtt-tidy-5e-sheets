@@ -1,7 +1,3 @@
-import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
-import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
-import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
-import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type {
   PortraitShape,
   ThemeQuadroneStyleDeclaration,
@@ -17,12 +13,6 @@ import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
-
-export type ThemeableSheetType =
-  | Tidy5eCharacterSheetQuadrone
-  | Tidy5eNpcSheetQuadrone
-  | Tidy5eItemSheetQuadrone
-  | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
   static readonly DEFAULT_ACCENT_COLOR = 'rgb(116, 27, 43)';
