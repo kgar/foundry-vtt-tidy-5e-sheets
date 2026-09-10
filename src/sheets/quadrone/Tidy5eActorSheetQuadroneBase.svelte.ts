@@ -1186,14 +1186,11 @@ export function getTidy5eActorSheetQuadroneBase<
       let { type: datasetType, ...restDataSet } = args.data ?? {};
 
       if (args.tabId === CONSTANTS.TAB_EFFECTS) {
-        return await ActiveEffect.implementation.create(
-          {
-            name: game.i18n.localize('DND5E.EFFECT.New'),
-            icon: 'icons/svg/aura.svg',
-            type: datasetType,
-            ...restDataSet,
-          },
-          { parent: this.actor, renderSheet: true },
+        // Effect sections key off the effect category, not an ActiveEffect
+        // subtype, so `datasetType` is deliberately not forwarded here.
+        return await FoundryAdapter.addEffect(
+          restDataSet.effectType,
+          this.actor,
         );
       }
 

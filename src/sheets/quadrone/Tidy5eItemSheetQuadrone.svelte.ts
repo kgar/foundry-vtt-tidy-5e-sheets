@@ -759,7 +759,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           ...value,
           canCreate:
             context.editable && !value.isEnchantment && !value.disabled,
-          dataset: {}, // TODO: put things that help with effect creation via _addDocument here
+          dataset: { effectType: value.type },
           show: !value.hidden || !!value.effects.length,
           sectionActions: [],
           columns: EffectColumnRuntime.getColumnSpecifications({
@@ -1528,16 +1528,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     let { type: datasetType, ...restDataSet } = args.data ?? {};
 
     if (args.tabId === CONSTANTS.TAB_EFFECTS) {
-      return await ActiveEffect.implementation.createDialog(
-        {
-          name: game.i18n.localize('DND5E.EFFECT.New'),
-          icon: 'icons/svg/aura.svg',
-          type: datasetType,
-          ...restDataSet,
-        },
-        { parent: this.item, renderSheet: true },
-        { sheet: this },
-      );
+      // Effect sections key off the effect category, not an ActiveEffect
+      // subtype, so `datasetType` is deliberately not forwarded here.
+      return await FoundryAdapter.addEffect(restDataSet.effectType, this.item);
     }
 
     if (args.tabId === CONSTANTS.TAB_ITEM_ACTIVITIES) {

@@ -94,12 +94,20 @@ export const FoundryAdapter = {
   addEffect(effectType: string, parent: any) {
     const isActor = parent instanceof Actor;
 
+    // Follow Item creation method for effects
     const effectData = {
       name: isActor ? game.i18n.localize('DND5E.EFFECT.New') : parent.name,
       img: isActor ? 'icons/svg/aura.svg' : parent.img,
-      origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
       disabled: effectType === 'inactive',
+      system: {
+        // Effects created from a magic item are also magical now
+        magical: !isActor && !!parent.system.properties?.has('mgc'),
+        // Origin is in system data now, and set the parent type
+        origin: {
+          [isActor ? 'actor' : 'item']: parent.uuid,
+        },
+      },
     };
 
     if (
