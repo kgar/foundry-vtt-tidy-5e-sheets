@@ -1356,17 +1356,6 @@ export const FoundryAdapter = {
     }
     return Object.entries<any>(groupMap);
   },
-  getFilteredClassOrOriginal(actor: Actor5e): Item5e | undefined | null {
-    return (
-      FoundryAdapter.getFilteredClass(actor) ??
-      actor.items.get(actor.system.details.originalClass) ??
-      actor.itemTypes.class[0]
-    );
-  },
-  getFilteredClass(actor: Actor5e): Item5e | undefined {
-    const classSpellbookFilter = actor.sheet.classSpellbookFilter;
-    return actor.identifiedItems.get(classSpellbookFilter)?.first();
-  },
   getSaveAbilityAbbreviation(save: any) {
     return save.ability?.size
       ? save.ability.size === 1
