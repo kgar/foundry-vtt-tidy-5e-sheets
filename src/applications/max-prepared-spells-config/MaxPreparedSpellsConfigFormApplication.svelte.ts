@@ -22,8 +22,8 @@ export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
   static DEFAULT_OPTIONS: Partial<DocumentSheetApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'sheet',
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     sheetConfig: false,
     position: {
@@ -35,7 +35,7 @@ export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
   constructor(
     documentName: string,
     classToUpdate: Item5e,
-    config: DocumentSheetApplicationConfiguration
+    config: DocumentSheetApplicationConfiguration,
   ) {
     super(config);
     this.documentName = documentName;

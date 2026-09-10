@@ -135,7 +135,7 @@
   <!-- Damage Immunities -->
   <ActorTraitConfigurableListEntry
     configButtonLocation="label"
-    label={localize('DND5E.TraitDIPlural.other')}
+    label={localize('DND5E.TRAIT.Damage.Immunity.other')}
     entries={context.traits.di}
     configAttributes={{
       'data-action': 'showConfiguration',
@@ -153,7 +153,7 @@
   <!-- Condition Immunities -->
   <ActorTraitConfigurableListEntry
     configButtonLocation="label"
-    label={localize('DND5E.TraitCIPlural.other')}
+    label={localize('DND5E.TRAIT.Condition.Immunity.other')}
     entries={context.traits.ci}
     configAttributes={{
       'data-action': 'showConfiguration',

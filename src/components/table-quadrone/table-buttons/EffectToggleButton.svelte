@@ -21,7 +21,7 @@
 
   let title = $derived(
     FoundryAdapter.localize(
-      effect.disabled ? 'DND5E.EffectEnable' : 'DND5E.EffectDisable',
+      effect.disabled ? 'DND5E.EFFECT.Action.EnableEffect' : 'DND5E.EFFECT.Action.DisableEffect',
     ),
   );
 
@@ -32,15 +32,22 @@
 </script>
 
 {#if isConcentration}
+  <!-- svelte-ignore a11y_missing_attribute -->
   <a
+    role="button"
+    tabindex="0"
     class="tidy-table-button"
     data-action="toggle"
-    data-tooltip={'DND5E.ConcentrationBreak'}
+    data-tooltip={'DND5E.CONCENTRATION.Action.Break'}
   >
     <Dnd5eIcon src={`systems/dnd5e/icons/svg/break-concentration.svg`} />
   </a>
 {:else}
+  <!-- svelte-ignore a11y_missing_attribute -->
+   <!-- svelte-ignore a11y_consider_explicit_label -->
   <a
+    role="button"
+    tabindex="0"
     class={[
       'tidy-table-button tidy-table-toggle',
       { disabled: !context.editable },

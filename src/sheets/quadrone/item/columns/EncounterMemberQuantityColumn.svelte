@@ -10,7 +10,6 @@
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
 
   let {
-    rowDocument,
     rowContext,
   }: {
     rowDocument: Actor5e | undefined;
@@ -48,8 +47,10 @@
       }}
     />
   {:else}
-    <span class="font-label-large color-text-default"
+  <span class="quantity">
+    <span class="units font-default-medium color-text-lightest">&times;</span><span class="font-label-large color-text-default value"
       >{rowContext.quantity.value}</span
     >
+  </span>
   {/if}
 {/if}

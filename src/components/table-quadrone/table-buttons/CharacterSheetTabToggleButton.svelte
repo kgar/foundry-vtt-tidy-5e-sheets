@@ -1,12 +1,12 @@
 <script lang="ts">
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterItemContext } from 'src/types/types';
+  import type { CharacterItemQuadroneContext } from 'src/types/types';
   import type { ContainerItemContext } from 'src/types/item.types';
 
   interface Props {
     doc: any;
-    ctx: CharacterItemContext | ContainerItemContext;
+    ctx: CharacterItemQuadroneContext | ContainerItemContext;
   }
 
   let { doc, ctx }: Props = $props();

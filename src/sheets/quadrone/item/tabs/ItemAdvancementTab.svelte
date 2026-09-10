@@ -101,18 +101,31 @@
             rowClass="advancement-item"
           >
             {#snippet children()}
-              <span class="tidy-table-row-use-button disabled">
+              <!--svelte-ignore a11y_missing_attribute-->
+              <a
+                role="button"
+                tabindex="0"
+                class={[
+                  'tidy-table-row-use-button',
+                  { disabled: !context.unlocked },
+                ]}
+                aria-label={localize('DND5E.ADVANCEMENT.Action.Edit')}
+                data-action={context.unlocked ? 'editDocument' : undefined}
+                data-uuid={context.item.system.advancement?.get(
+                  advancement.id,
+                )?.uuid}
+              >
                 <img
                   class="item-image"
-                  src={advancement.icon}
-                  alt={advancement.title ?? ''}
+                  src={advancement.img}
+                  alt={advancement.name ?? ''}
                 />
-              </span>
+              </a>
               <TidyTableCell primary={true}>
                 <div class="item-name">
                   <div class="cell-text">
                     <div class="cell-name">
-                      {@html advancement.title}
+                      {@html advancement.name}
                       {#each advancement.tags as tag}
                         <i class={tag.iconClass} title={localize(tag.label)}
                         ></i>

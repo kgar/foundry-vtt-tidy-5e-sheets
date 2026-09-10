@@ -50,13 +50,14 @@ import {
   getTabVisibilityLevels,
 } from 'src/settings/settings-data-models';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
-import { mapGetOrInsertComputed } from 'src/utils/map';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { isNil } from 'src/utils/data';
 import { checkCondition } from 'src/utils/iteration';
 import type {
   ItemTabRegistrationOptions,
   TabEnabledCallbackFunctionOverrideOptions,
 } from 'src/api/api.types';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -72,6 +73,7 @@ class ItemSheetQuadroneRuntimeImpl {
     TabEnabledCallbackFunctionOverrideOptions[]
   >;
   private _tabIdsWithSubtypeConditions: SvelteSet<string>;
+  private _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] = [];
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -311,11 +313,11 @@ class ItemSheetQuadroneRuntimeImpl {
 
     // Modify the rules for whether to enable the tab.
     if (tab && options?.tabCondition?.predicate) {
-      const subtypePredicates = mapGetOrInsertComputed(
-        this._registeredSubtypeTabConditions,
-        subtype,
-        () => [],
-      );
+      const subtypePredicates =
+        this._registeredSubtypeTabConditions.getOrInsertComputed(
+          subtype,
+          () => [],
+        );
 
       if (!this._tabIdsWithSubtypeConditions.has(tabId)) {
         this._tabIdsWithSubtypeConditions.add(tabId);
@@ -332,14 +334,24 @@ class ItemSheetQuadroneRuntimeImpl {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
   }
+
+  registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
+  }
 }
 
 function countItemSheetActivities(
   sections: ItemSheetQuadroneContext['activities'] | undefined,
 ) {
   return (
-    sections?.reduce((count, section) => count + section.activities.length, 0) ??
-    0
+    sections?.reduce(
+      (count, section) => count + section.activities.length,
+      0,
+    ) ?? 0
   );
 }
 
@@ -374,7 +386,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
       itemCount: (context) => context.document.system.advancement?.size ?? 0,
       layout: 'quadrone',
-      title: 'DND5E.AdvancementTitle',
+      title: 'DND5E.ADVANCEMENT.Label',
       content: {
         component: ItemAdvancementQuadroneTab,
         type: 'svelte',
@@ -582,7 +594,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       itemCount: (context) =>
         Array.from(context.document?.effects ?? []).length,
       layout: 'quadrone',
-      title: 'DND5E.Effects',
+      title: 'DND5E.EFFECT.Tab',
       content: {
         component: ItemEffectsQuadroneTab,
         type: 'svelte',

@@ -5,6 +5,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import ItemRarities from '../parts/ItemRarities.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -15,6 +16,7 @@
 
 <fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
+  <ItemRarities />
 </fieldset>
 
 <fieldset disabled={!context.unlocked}>
@@ -22,6 +24,19 @@
     {localize('DND5E.ItemToolProperties')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
+
+  <!-- Identifier -->
+  <FormGroup
+    labelFor="{appId}-identifier"
+    document={context.document}
+    field={context.fields.identifier}
+    config={{
+      value: context.source.identifier,
+      placeholder: context.item.identifier,
+      id: `${appId}-identifier`,
+    }}
+    hint="DND5E.IdentifierError"
+  />
 
   <!-- Tool Type -->
   <FormGroup

@@ -20,7 +20,7 @@ export const CharacterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
     [
       {
-        title: 'DND5E.Effects',
+        title: 'DND5E.EFFECT.Tab',
         content: {
           component: ActorEffectsTab,
           type: 'svelte',
@@ -51,7 +51,7 @@ export const CharacterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-notebook',
       },
       {
-        title: 'DND5E.Spellbook',
+        title: 'TYPES.Item.spellPl',
         content: {
           component: ActorSpellbookTab,
           type: 'svelte',
@@ -104,7 +104,7 @@ export const CharacterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-house-turret',
       },
       {
-        title: () => game.release.generation < 14 ? 'Sheet' : 'DOCUMENT.Sheet',
+        title: 'DOCUMENT.Sheet',
         content: {
           component: CharacterSheetTab,
           type: 'svelte',

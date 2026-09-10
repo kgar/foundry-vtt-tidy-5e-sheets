@@ -219,7 +219,7 @@
             class="button button-icon-only button-borderless flexshrink"
             disabled={availableActions <= 0 || !context.editable}
             onclick={decrementActions}
-            aria-label={localize('DND5E.Subtract', { value: 1 })}
+            aria-label={localize('DND5E.VEHICLE.Action.Crew.Decrease')}
           >
             <i class="fa-solid fa-hexagon-minus"></i>
           </button>
@@ -247,7 +247,7 @@
             class="button button-icon-only button-borderless flexshrink"
             disabled={usedActions <= 0 || !context.editable}
             onclick={incrementActions}
-            aria-label={localize('DND5E.Add', { value: 1 })}
+            aria-label={localize('DND5E.VEHICLE.Action.Crew.Increase')}
           >
             <i class="fa-solid fa-hexagon-plus"></i>
           </button>

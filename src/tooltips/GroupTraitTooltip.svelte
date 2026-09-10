@@ -62,11 +62,11 @@
           <div class="item-name truncate">{member.context.actor.name}</div>
           {#if member.value}
             <div class="text-align-right">
-              <span class="font-label-medium color-text-default"
+              <span class="value font-label-medium color-text-default"
                 >{member.value}</span
               >
               {#if member.units}
-                <span class="font-body-medium color-text-lighter"
+                <span class="units font-body-medium color-text-lighter"
                   >{member.units}</span
                 >
               {/if}

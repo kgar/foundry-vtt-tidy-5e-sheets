@@ -1,18 +1,37 @@
+import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
-import type { ActiveEffect5e } from 'src/types/types';
+import type { ActiveEffect5e, EffectPill } from 'src/types/types';
 import { isNil } from './data';
 import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**
- * Map category types from `EffectsElement.prepareCategories` to `DND5E.EffectType` 
- * labels for the switch pills.
+ * Icons to make the effect changes clearer.
+ */
+const EFFECT_CHANGE_TYPE_ICONS: Record<string, string> = {
+  // Standard change types
+  add: 'fa-circle-plus',
+  subtract: 'fa-circle-minus',
+  multiply: 'fa-circle-x',
+  downgrade: 'fa-circle-down',
+  upgrade: 'fa-circle-up',
+  override: 'fa-pen-circle',
+  custom: 'fa-code',
+  // Rule change types from `CONFIG.DND5E.activeEffectChangeTypes`.
+  'dnd5e.advantage': 'fa-dice-d20',
+  'dnd5e.bonus': 'fa-plus-minus',
+  'dnd5e.maximum': 'fa-arrow-up-to-line',
+  'dnd5e.minimum': 'fa-arrow-down-to-line',
+};
+
+/**
+ * Labels for effect category types.
  */
 const EFFECT_CATEGORY_TYPE_LABEL_KEYS: Record<string, string> = {
-  temporary: 'DND5E.EffectType.Temporary',
-  passive: 'DND5E.EffectType.Passive',
-  inactive: 'DND5E.EffectType.Inactive',
-  suppressed: 'DND5E.EffectType.Unavailable',
+  temporary: 'DND5E.EFFECT.Status.Temporary',
+  passive: 'DND5E.EFFECT.Status.Passive',
+  inactive: 'DND5E.EFFECT.Status.Inactive',
+  suppressed: 'DND5E.EFFECT.Status.Unavailable',
 };
 
 export class ActiveEffectsHelper {
@@ -33,10 +52,7 @@ export class ActiveEffectsHelper {
    */
   static getStatusEffectName(statusId: string): string | undefined {
     const statusEffects = CONFIG.statusEffects as any;
-
-    return game.release.generation < 14
-      ? statusEffects.find((s: any) => s.id === statusId)?.name
-      : statusEffects[statusId]?.name;
+    return statusEffects[statusId]?.name;
   }
 
   /**
@@ -84,42 +100,79 @@ export class ActiveEffectsHelper {
     }
   }
 
-  static getActiveEffectPills(activeEffect: ActiveEffect5e) {
-    let result = [];
+  static getActiveEffectPills(activeEffect: ActiveEffect5e): EffectPill[] {
+    const isEnchantment =
+      activeEffect.type === CONSTANTS.EFFECT_TYPE_ENCHANTMENT;
 
-    if (activeEffect.disabled) {
-      result.push('EFFECT.Disabled');
-    }
-
-    if (activeEffect.transfer) {
-      result.push('EFFECT.Transfer');
-    }
-
-    if (activeEffect.isSuppressed) {
-      result.push('DND5E.Suppressed');
-    }
+    let result: EffectPill[] = [];
 
     Array.from<string>(activeEffect.statuses)
       .map((x: string) => ActiveEffectsHelper.getStatusEffectName(x) ?? x)
       .forEach((e) => {
-        result.push(e);
+        result.push({ label: e });
       });
+
+    // Follow system ActiveEffect5e#getPreviewContext` in active-effect.mjs
+    if (activeEffect.isSuppressed) {
+      result.push({ label: 'DND5E.EFFECT.Status.Unavailable' });
+    } else if (activeEffect.disabled) {
+      result.push({ label: 'DND5E.EFFECT.Status.Inactive' });
+    } else if (activeEffect.isTemporary) {
+      result.push({ label: 'DND5E.EFFECT.Status.Temporary' });
+    } else {
+      result.push({ label: 'DND5E.EFFECT.Status.Passive' });
+    }
+
+    // Show the system "transfer" label (applies to parent)
+    if (activeEffect.transfer && isEnchantment) {
+      result.push({
+        label: 'DND5E.ENCHANTMENT.Transfer.Label',
+      });
+    }
+
+    if (isEnchantment) {
+      result.push({ label: 'DND5E.ENCHANTMENT.Label' });
+    }
+
+    // Shows the system description for `magical` effects.
+    if (activeEffect.system?.magical) {
+      result.push(
+        isEnchantment
+          ? {
+              label: 'DND5E.ENCHANTMENT.FIELDS.magical.label',
+              tooltip: 'DND5E.ENCHANTMENT.FIELDS.magical.hint',
+            }
+          : {
+              label: 'DND5E.EFFECT.BASE.FIELDS.magical.label',
+              tooltip: 'DND5E.EFFECT.BASE.FIELDS.magical.hint',
+            },
+      );
+    }
 
     return result;
   }
 
   static findMode(change: any, fallback = '—') {
-    if (game.release.generation >= 14) {
-      const key = `EFFECT.CHANGES.TYPES.${change.type}`;
-      return change.type ? FoundryAdapter.localize(key) : fallback;
+    if (!change.type) {
+      return fallback;
     }
 
-    const entry = Object.entries(CONST.ACTIVE_EFFECT_MODES).find(
-      ([_, value]) => value === change.mode,
-    );
 
-    return entry
-      ? FoundryAdapter.localize(`EFFECT.MODE_${entry[0]}`)
-      : fallback;
+    // First look for system rule change types (e.g. `dnd5e.advantage`), otherwise
+    // look for the Foundry standard change types (e.g. `add`).
+    const key =
+      ActiveEffect.CHANGE_TYPES[change.type]?.label ??
+      `EFFECT.CHANGES.TYPES.${change.type}`;
+
+    return FoundryAdapter.localize(key);
+  }
+
+  /**
+   * Get the icon that stands in for a change's mode, e.g. a plus sign for `add`.
+   * Neither Foundry nor the system maps change types to icons, so this mapping
+   * is Tidy's own; unrecognized types (modules can register their own) get none.
+   */
+  static findModeIcon(change: any): string | undefined {
+    return EFFECT_CHANGE_TYPE_ICONS[change.type];
   }
 }

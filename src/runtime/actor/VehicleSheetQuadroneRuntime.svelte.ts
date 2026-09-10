@@ -49,7 +49,7 @@ export const VehicleSheetQuadroneRuntime =
       },
       {
         id: CONSTANTS.TAB_EFFECTS,
-        title: 'DND5E.Effects',
+        title: 'DND5E.EFFECT.Tab',
         content: {
           component: ActorEffectsTab,
           type: 'svelte',

@@ -1,5 +1,11 @@
+## dnd5e 6.0 todos
+
+- [ ] Go through the types files and find/delete unused types
+- [ ] SheetHeaderModeToggleV2 was a classic component. Does it need to be replaced or refined in any way? It now is in the quadrone shared folder.
+
 ## The Accretion Disk of To Do's
 
+- [ ] onDropToContainer - eliminate and leverage the standard onDrop handling at the sheet document mixin level.
 - [ ] <!-- TODO: Swap to tidy table roll button -->
 - [ ] Group Bastion tables - these are necessarily complex. Any way we can simplify so that the Facilities section actor rows don't have to be semi-hardcoded with colum headers / cells?
 - [ ] Group Bastion tables - show/hide columns based on resize observer width?

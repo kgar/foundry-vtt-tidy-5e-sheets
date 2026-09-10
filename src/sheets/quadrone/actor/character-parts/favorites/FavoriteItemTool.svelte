@@ -6,14 +6,19 @@
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
   const { favorite }: Props = $props();
-
+  const localize = FoundryAdapter.localize;
   const context = $derived(getCharacterSheetQuadroneContext());
+  const unidentified = $derived(ItemUtils.isUnidentified(favorite.item));
+  const concealed = $derived(
+    ItemUtils.isConcealed(favorite.item, { unlocked: context.unlocked }),
+  );
 
   const subtitle = $derived(favorite.item.system.type.label);
 
@@ -23,7 +28,7 @@
 </script>
 
 <div
-  class="list-entry favorite"
+  class="list-entry favorite {unidentified ? 'diminished' : ''}"
   data-favorite-type="tool"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -40,7 +45,9 @@
   />
   <div class="">
     <span class="primary">
-      {#if !isNil(modifier)}
+      {#if concealed}
+        <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+      {:else if !isNil(modifier)}
         {const mod = $derived(getModifierData(modifier))}
         <span class="modifier">
           <span class="sign">

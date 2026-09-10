@@ -4,7 +4,10 @@ import type {
   SpecialTraits as Flags,
 } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type SpecialTraitsContext = {
@@ -39,8 +42,12 @@ export function getSpecialTraitsSettingsEditor(
 
     config.flags.sections
       .flatMap((x) => x.fields)
-      .forEach((field) => {
-        toSave[field.name] = field.value;
+      .forEach((fieldOrGroup) => {
+        const fields =
+          'group' in fieldOrGroup ? fieldOrGroup.fields : [fieldOrGroup];
+        fields.forEach((field) => {
+          toSave[field.name] = field.value;
+        });
       });
     return toSave;
   }
@@ -87,14 +94,10 @@ export function getSpecialTraitsSettingsEditor(
 
     // Global Bonuses
     const globals: SpecialTraitSectionField[] = [];
-    const addBonus = (field: any) => {
-      if (field === undefined) {
-        return;
-      }
-
+    const addBonus = (field: any, checkName = false) => {
       if (field instanceof foundry.data.fields.SchemaField) {
-        Object.values(field.fields).forEach((f) => addBonus(f));
-      } else {
+        Object.values(field.fields).forEach((f) => addBonus(f, checkName));
+      } else if (!checkName || field.name === 'bonus') {
         globals.push({
           field,
           name: field.fieldPath,
@@ -104,6 +107,7 @@ export function getSpecialTraitsSettingsEditor(
     };
 
     addBonus(document.system.schema.fields.bonuses);
+    addBonus(document.system.schema.fields.rolls, true);
 
     if (globals.length) {
       sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
@@ -120,9 +124,47 @@ export function getSpecialTraitsSettingsEditor(
         label: game.i18n.localize('DND5E.NPC.Label'),
         fields: [
           {
+            field: document.system.schema.fields.identifier,
+            hint: 'DND5E.IdentifierError',
+            name: 'system.identifier',
+            placeholder: document.identifier,
+            value: source.system.identifier,
+          },
+          {
             field: document.system.schema.fields.traits.fields.important,
             name: 'system.traits.important',
             value: source.system.traits.important,
+          },
+          {
+            group: {
+              label: 'DND5E.NPC.FIELDS.attributes.price.label',
+              hint: 'DND5E.NPC.FIELDS.attributes.price.hint',
+            },
+            fields: [
+              {
+                classes: 'label-top',
+                field:
+                  document.system.schema.fields.attributes.fields.price.fields
+                    .value,
+                name: 'system.attributes.price.value',
+                value: source.system.attributes.price.value,
+                label:
+                  document.system.schema.fields.attributes.fields.price.fields
+                    .value.label,
+              },
+              {
+                choices: CONFIG.DND5E.currencies,
+                classes: 'label-top',
+                field:
+                  document.system.schema.fields.attributes.fields.price.fields
+                    .denomination,
+                name: 'system.attributes.price.denomination',
+                value: source.system.attributes.price.denomination,
+                label:
+                  document.system.schema.fields.attributes.fields.price.fields
+                    .denomination.label,
+              },
+            ],
           },
         ],
       });
@@ -143,12 +185,20 @@ export function getSpecialTraitsSettingsEditor(
     canUseDefault: true,
 
     resetToDefault() {
+      function resetField(field: SpecialTraitSectionField) {
+        current.flags.data[field.name] = field.field.initial;
+        field.value = field.field.initial;
+      }
+
       current.originalClass = undefined;
       current.flags.sections
         .flatMap((section) => section.fields)
-        .forEach((field) => {
-          current.flags.data[field.name] = field.field.initial;
-          field.value = field.field.initial;
+        .forEach((fieldOrGroup) => {
+          if ('group' in fieldOrGroup) {
+            fieldOrGroup.fields.forEach(resetField);
+          } else {
+            resetField(fieldOrGroup);
+          }
         });
     },
 

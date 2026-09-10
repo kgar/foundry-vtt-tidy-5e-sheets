@@ -24,6 +24,31 @@ export function mapPropertiesToSave(
 }
 
 // TODO: Eliminate these specific mappers for more generalized versions, as needed.
+export function mapRaritiesToSave(
+  context: ItemSheetQuadroneContext,
+  ev: Event & { currentTarget: HTMLInputElement },
+  keyToSave: string
+) {
+  const allRarities = context.rarities;
+
+  if (!allRarities) {
+    return;
+  }
+
+  const raritiesToSave = allRarities.options
+    .filter((rarity) => rarity.value !== keyToSave && rarity.selected)
+    .map((rarity) => rarity.value);
+
+  if (ev.currentTarget.checked) {
+    raritiesToSave.push(keyToSave);
+  }
+
+  return {
+    'system.rarities': raritiesToSave,
+  };
+}
+
+// TODO: Eliminate these specific mappers for more generalized versions, as needed.
 export function mapMulticlassingAbilitiesToSave(
   context: ItemSheetQuadroneContext,
   ev: Event & { currentTarget: HTMLInputElement }

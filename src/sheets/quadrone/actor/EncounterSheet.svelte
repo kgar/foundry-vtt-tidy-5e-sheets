@@ -54,7 +54,14 @@
                 data-tidy-sheet-part="actor-name"
                 data-tooltip={context.actor.name}
               >
-                <a data-action="copyInnerText" class="cursor highlight-on-hover">
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <a 
+                  data-action="copyInnerText" 
+                  class="cursor highlight-on-hover"
+                  role="button"
+                  tabindex="0"
+                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                >
                   {context.actor.name}
                 </a>
               </h1>

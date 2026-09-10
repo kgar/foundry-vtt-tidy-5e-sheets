@@ -53,38 +53,3 @@ export function applySheetAttributesToWindow(
   element?.setAttribute('data-document-type', type);
   element?.setAttribute('data-document-uuid', documentUuid);
 }
-
-export async function maintainCustomContentInputFocus(
-  app: any,
-  asyncRender: () => Promise<unknown>
-) {
-  // TODO: Eliminate jQuery
-  let focus = globalThis.$(app.element).find(':focus');
-  focus = focus.length ? focus[0] : null;
-
-  await asyncRender();
-
-  if (focus && focus.name) {
-    const input = app.form?.[focus.name];
-    if (input && input.focus instanceof Function) input.focus();
-  }
-}
-
-export function blurUntabbableButtonsOnClick(element: HTMLElement) {
-  element.removeEventListener('click', blurUntabbableButton);
-  element.addEventListener('click', blurUntabbableButton);
-}
-
-function blurUntabbableButton(event: MouseEvent) {
-  const target = event.target;
-
-  if (!(target instanceof HTMLElement)) {
-    return;
-  }
-
-  const button = target.closest('button');
-
-  if (button?.tabIndex === -1) {
-    target.blur();
-  }
-}

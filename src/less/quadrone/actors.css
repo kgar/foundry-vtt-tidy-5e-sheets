@@ -454,6 +454,7 @@
     .favorite {
       display: flex;
       flex-direction: row;
+      align-items: center;
       padding-block-start: var(--t5e-size-1x);
       padding-block-end: var(--t5e-size-1x);
       border-bottom: var(--t5e-size-1) solid var(--t5e-table-row-divider);
@@ -510,6 +511,7 @@
       .stacked {
         display: flex;
         flex-direction: column;
+        align-content: center;
         flex-wrap: nowrap;
         overflow: hidden;
 
@@ -529,7 +531,11 @@
         }
 
         .subtitle {
-          margin-block-start: -0.125rem;
+          margin-block-start: 0;
+        }
+
+        .units {
+          margin-inline-start: var(--t5e-size-halfx);
         }
       }
 
@@ -541,6 +547,18 @@
         .primary,
         .secondary {
           width: 100%;
+        }
+      }
+
+      .label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .row {
+          display: flex;
+          justify-content: center;
+          gap: var(--t5e-size-halfx);
         }
       }
 
@@ -627,6 +645,23 @@
 
         .effect-use-icon img {
           opacity: 0.5;
+        }
+      }
+
+      &.diminished {
+        .title {
+          font: var(--t5e-font-default-medium);
+          color: var(--t5e-color-text-lighter);
+          font-style: italic;
+        }
+
+        .subtitle {
+          color: var(--t5e-color-text-lightest);
+          font-style: italic;
+        }
+
+        .tidy-table-row-use-button img {
+          filter: grayscale(100%) opacity(75%);
         }
       }
     }
@@ -1225,7 +1260,8 @@
         }
       }
 
-      label {
+      label,
+      .condition-toggle-label {
         display: flex;
         align-items: center;
         gap: 0.375rem;
@@ -1252,6 +1288,22 @@
       dnd5e-icon {
         --icon-width: 1.125rem;
         --icon-height: 1.125rem;
+      }
+
+      &.exhaustion {
+        padding-block: 0;
+
+        .quantity-tracker-input-wrapper {
+          width: var(--t5e-field-size-default);
+
+          .command:hover i {
+            color: var(--t5e-color-text-default);
+          }
+        }
+
+        .quantity-tracker-input {
+          font: var(--t5e-font-label-large);
+        }
       }
     }
   }

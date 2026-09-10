@@ -45,7 +45,7 @@ import {
 
 import {
   AdvancementDataField,
-  AdvancementField,
+  TypedField,
   AdvantageModeField,
   FormulaField,
   IdentifierField,
@@ -73,7 +73,7 @@ declare global {
     dataModels: {
       fields: {
         AdvancementDataField: typeof AdvancementDataField;
-        AdvancementField: typeof AdvancementField;
+        TypedField: typeof TypedField;
         AdvantageModeField: typeof AdvantageModeField;
         FormulaField: typeof FormulaField;
         IdentifierField: typeof IdentifierField;
@@ -209,8 +209,6 @@ declare global {
       height: number
     ): HTMLElement;
   }
-
-  /* game.release.generation > 13 */
 
   declare var _del: any;
   function _replace<T>(arg: T): T;

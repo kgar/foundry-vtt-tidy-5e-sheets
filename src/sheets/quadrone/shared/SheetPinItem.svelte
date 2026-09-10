@@ -1,5 +1,4 @@
 <script lang="ts">
-  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import { Activities } from 'src/features/activities/activities';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
@@ -9,10 +8,12 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
+  import { Container } from 'src/features/containers/Container';
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import type { ClassValue } from 'svelte/elements';
+    import RechargeControl from 'src/components/unsorted/RechargeControl.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -22,6 +23,13 @@
 
   const context = $derived(getActorSheetQuadroneContext());
 
+  // Hide the tooltip if unidentified container contents are hidden.
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(ctx.document, {
+      unlocked: context.unlocked,
+    }),
+  );
+
   let isEditing = $state(false);
 
   let visibleActivities = $derived(
@@ -30,7 +38,6 @@
     ) ??
       Activities.getVisibleActivities(
         ctx.document,
-        ctx.document.system.activities ?? [],
       ),
   );
 
@@ -211,7 +218,7 @@
         {const capacity = $derived(
           context.itemContext[ctx.document.id].containerCapacity,
         )}
-        {#if capacity}
+        {#if capacity && contentsVisibility !== 'hidden'}
           <ContainerCapacityTooltip
             bind:this={containerCapacityTooltip}
             container={ctx.document}
@@ -220,6 +227,7 @@
           />
 
           <div
+            role="tooltip"
             class="pin-container"
             onmouseover={(ev) => containerCapacityTooltip?.tryShow(ev)}
             onfocus={(ev) => containerCapacityTooltip?.tryShow(ev)}

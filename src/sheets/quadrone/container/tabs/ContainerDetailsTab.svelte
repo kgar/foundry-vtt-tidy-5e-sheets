@@ -74,6 +74,18 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
+  <FormGroup
+    labelFor="{appId}-identifier"
+    document={context.document}
+    field={context.fields.identifier}
+    config={{
+      value: context.source.identifier,
+      placeholder: context.item.identifier,
+      id: `${appId}-identifier`,
+    }}
+    hint="DND5E.IdentifierError"
+  />
+
   <div class="form-group stacked container-properties checkbox-grid">
     <label>{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>
     <div class="form-fields">

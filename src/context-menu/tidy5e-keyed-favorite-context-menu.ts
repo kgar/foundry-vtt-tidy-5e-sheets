@@ -7,7 +7,7 @@ import { getSkillRollContextOptions } from './tidy5e-skill-roll-context-menu';
 
 export function configureKeyedFavoriteContextMenu(
   element: HTMLElement,
-  app: Tidy5eCharacterSheetQuadrone & { document: any }
+  app: Tidy5eCharacterSheetQuadrone & { document: any },
 ) {
   if (app.actor.system.isGroup) {
     return;
@@ -52,14 +52,15 @@ export function configureKeyedFavoriteContextMenu(
 
   ui.context.menuItems = [
     {
-      name: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.ContextMenuActionEdit',
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
-      condition: () => app.isEditable,
+      visible: () => app.isEditable,
       group: 'common',
       callback: () => onEdit(app),
     },
     {
-      name: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      // TODO: Could we move this to TIDY5E.AddSpecific?
+      label: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: hasFavorite
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
@@ -68,8 +69,8 @@ export function configureKeyedFavoriteContextMenu(
           ? app.actor.system.removeFavorite(favorite.id)
           : app.actor.system.addFavorite(favorite);
       },
-      condition: () => !FoundryAdapter.isLockedInCompendium(app.actor),
+      visible: () => !FoundryAdapter.isLockedInCompendium(app.actor),
     },
-    ...skillRolls
-  ];
+    ...skillRolls,
+  ] satisfies ContextMenuEntry[];
 }

@@ -69,7 +69,7 @@
 
   color: var(--t5e-color-text-default);
   /* Sheet Body Typography */
-  font-family: var(--font-family-default, var(--t5e-font-roboto-condensed));
+  font-family: var(--t5e-font-family-default, var(--t5e-font-roboto-condensed));
   font-size: var(--font-size-default, 0.8125rem);
   font-style: normal;
   font-weight: var(--font-weight-default);

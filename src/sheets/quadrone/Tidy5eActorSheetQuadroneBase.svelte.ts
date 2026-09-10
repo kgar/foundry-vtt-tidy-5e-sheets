@@ -58,7 +58,6 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
-import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { error, warn } from 'src/utils/logging';
@@ -69,6 +68,7 @@ import { Container } from 'src/features/containers/Container';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
+import { Rarity } from 'src/features/rarity/Rarity';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -382,7 +382,6 @@ export function getTidy5eActorSheetQuadroneBase<
       if (item.system.activities) {
         ctx.activities = Activities.getVisibleActivities(
           item,
-          item.system.activities,
         )?.map((activity) =>
           Activities.getActivityItemContext(
             this,
@@ -396,6 +395,12 @@ export function getTidy5eActorSheetQuadroneBase<
       ctx.linkedUses = Activities.getLinkedUses(item);
 
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+
+      if (item.system.rarities) {
+        const { rarity, rarityLabel } = Rarity.getRarityAndLabel(item.system);
+        ctx.rarity = rarity;
+        ctx.rarityLabel = rarityLabel;
+      }
     }
 
     async _preparePortrait(
@@ -832,7 +837,11 @@ export function getTidy5eActorSheetQuadroneBase<
       };
 
       return Object.entries(context.system[property] ?? {})
-        .filter(([key]) => key in CONFIG.DND5E[property] || ((property === 'tools') && (key in CONFIG.DND5E.vehicleTypes)))
+        .filter(
+          ([key]) =>
+            key in CONFIG.DND5E[property] ||
+            (property === 'tools' && key in CONFIG.DND5E.vehicleTypes),
+        )
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
@@ -852,12 +861,14 @@ export function getTidy5eActorSheetQuadroneBase<
 
     _getMovementSpeeds(): ActorSpeedSenseEntryContext[] {
       const systemMovement = this.actor.system.attributes.movement;
-      const sourceMovement =
-        this.actor.system._source.attributes?.movement ?? {};
+      // const systemSpeeds = systemMovement.speeds;
+      const sourceSpeeds =
+        this.actor.system._source.attributes?.movement?.speeds ?? {};
 
       function excludeSpeed(key: string) {
         return (
-          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+          isNil(systemMovement.speeds[key], 0, '') &&
+          isNil(sourceSpeeds[key], 0, '')
         );
       }
 
@@ -866,7 +877,7 @@ export function getTidy5eActorSheetQuadroneBase<
           if (excludeSpeed(key) || config.hidden) {
             return acc;
           }
-          if (systemMovement[key] === 0) {
+          if (systemMovement.speeds[key] === 0) {
             return acc;
           }
 
@@ -879,12 +890,13 @@ export function getTidy5eActorSheetQuadroneBase<
             key,
             label: config.label,
             value:
-              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
-              '',
+              FoundryAdapter.formatNumber(
+                Math.round(+systemMovement.speeds[key]),
+              ) ?? '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
-            unitsKey: key,
+            unitsKey: systemMovement.units,
             parenthetical,
           });
 
@@ -905,20 +917,32 @@ export function getTidy5eActorSheetQuadroneBase<
           units:
             CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
             systemMovement.units,
-          value: systemMovement.walk?.toString() ?? '0',
-          unitsKey: sourceMovement.units,
+          value: systemMovement.speeds.walk?.toString() ?? '0',
+          unitsKey: systemMovement.units,
         });
       }
 
       // Add special movement if set
-      if (sourceMovement.special && sourceMovement.special.trim() !== '') {
-        speeds.push({
-          key: 'special',
-          label: sourceMovement.special,
-          units: '',
-          value: '',
-          unitsKey: '',
-        });
+      if (systemMovement.special && systemMovement.special.trim() !== '') {
+        const usedKeys = new Set(speeds.map((speed) => speed.key));
+
+        for (const special of systemMovement.special.split(';')) {
+          const proposedSpecialKey = `special-${special.slugify()}`;
+          // Catch N dupes while we're at it
+          let key = proposedSpecialKey;
+          let suffix = 1;
+          while (usedKeys.has(key)) {
+            key = `${proposedSpecialKey}-${suffix++}`;
+          }
+          usedKeys.add(key);
+          speeds.push({
+            key: key,
+            label: special,
+            units: '',
+            value: '',
+            unitsKey: '',
+          });
+        }
       }
 
       if (systemMovement.ignoredDifficultTerrain?.size > 0) {
@@ -963,7 +987,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
       const senses = Object.entries(CONFIG.DND5E.senses).reduce<
         ActorSpeedSenseEntryContext[]
-      >((acc, [key, label]) => {
+      >((acc, [key, config]) => {
         const value = senseConfig.ranges[key];
 
         if (!value || value === 0) {
@@ -972,7 +996,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
         acc.push({
           key,
-          label,
+          label: config.label,
           value: Math.round(+value).toString(),
           units:
             CONFIG.DND5E.movementUnits[senseConfig.units]?.abbreviation ??
@@ -1161,17 +1185,15 @@ export function getTidy5eActorSheetQuadroneBase<
       let { type: datasetType, ...restDataSet } = args.data ?? {};
 
       if (args.tabId === CONSTANTS.TAB_EFFECTS) {
-        return await ActiveEffect.implementation.create(
-          {
-            name: game.i18n.localize('DND5E.EffectNew'),
-            icon: 'icons/svg/aura.svg',
-            type: datasetType,
-            ...restDataSet,
-          },
-          { parent: this.actor, renderSheet: true },
+        // Effect sections key off the effect category, not an ActiveEffect
+        // subtype, so `datasetType` is deliberately not forwarded here.
+        return await FoundryAdapter.addEffect(
+          restDataSet.effectType,
+          this.actor,
         );
       }
 
+      // TODO: Later, if we want to keep the current behavior of preselecting the type: `const types = this._addDocumentItemTypes(args.tabId).filter(` and delete the if() below.
       let types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
           !CONFIG.Item.dataModels[type].metadata?.singleton ||
@@ -1186,19 +1208,12 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (types.length > 1) {
-        let dialogV1HookId: number | null = null;
+        const createData = types.includes(datasetType)
+          ? { type: datasetType, ...restDataSet }
+          : { ...restDataSet };
 
-        if (!isNil(datasetType, '') && types.includes(datasetType)) {
-          dialogV1HookId = Hooks.once('renderDialog', (app: any) => {
-            const typeToPreselect = app.element
-              .get(0)
-              .querySelector(`[value="${datasetType}"]`);
-            typeToPreselect && (typeToPreselect.checked = true);
-          });
-        }
-
-        let result = await Item.implementation.createDialog(
-          { type: datasetType, ...restDataSet },
+        return await Item.implementation.createDialog(
+          createData,
           {
             parent: this.actor,
             pack: this.actor.pack,
@@ -1206,10 +1221,6 @@ export function getTidy5eActorSheetQuadroneBase<
           },
           { sheet: this },
         );
-
-        Hooks.off('renderDialog', dialogV1HookId);
-
-        return result;
       }
 
       const type = types[0];
@@ -1459,7 +1470,7 @@ export function getTidy5eActorSheetQuadroneBase<
         sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.getRelativeUUID(sheetPinDoc);
+        let relativeUuid = FoundryAdapter.buildRelativeUuid(sheetPinDoc);
         return await this._onDropPin(event, {
           id: relativeUuid,
           doc: sheetPinDoc,
@@ -1784,7 +1795,7 @@ export function getTidy5eActorSheetQuadroneBase<
       // Check to make sure items of this type are allowed on this actor
       if (!isSupportedItemType) {
         ui.notifications.warn(
-          game.i18n.format('DND5E.ActorWarningInvalidItem', {
+          game.i18n.format('DND5E.ACTOR.Warning.InvalidItem', {
             itemType: game.i18n.localize(CONFIG.Item.typeLabels[itemData.type]),
             actorType: game.i18n.localize(
               CONFIG.Actor.typeLabels[this.actor.type],
@@ -2483,8 +2494,7 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     onItemToggled(itemId: string, isVisible: boolean, location: string) {
-      const locationSet = mapGetOrInsert(
-        this.expandedItems,
+      const locationSet = this.expandedItems.getOrInsert(
         itemId,
         new Set<string>(),
       );

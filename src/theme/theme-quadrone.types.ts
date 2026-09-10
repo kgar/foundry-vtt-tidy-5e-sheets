@@ -5,17 +5,6 @@ export type ThemeColorSetting = {
   value: string;
 };
 
-export type ThemeSettingsV2Old = {
-  accentColor: string;
-  actorHeaderBackground: string;
-  headerBackgroundColor: string;
-  itemSidebarBackground: string;
-  portraitShape: PortraitShape | undefined;
-  rarityColors: Record<string, string>;
-  spellPreparationModeColors: Record<string, string>;
-  // etc. settings here ;)
-};
-
 export type ThemeSettingsV3 = {
   accentColor: string;
   useBasicTheme: boolean;

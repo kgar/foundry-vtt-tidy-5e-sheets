@@ -59,7 +59,11 @@
       <h4 class="flex-row-space-between">
         {localize('DND5E.CreatureType')}
         {#if context.unlocked}
+        <!-- svelte-ignore a11y_missing_attribute -->
           <a
+            aria-label={localize('DND5E.CreatureTypeTitle')}
+            role="button"
+            tabindex="0"
             class="button button-borderless button-icon-only"
             data-action="showConfiguration"
             data-config="type"
@@ -88,7 +92,11 @@
       <h4 class="flex-row-space-between">
         {localize('DND5E.Movement')}
         {#if context.unlocked}
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
+            aria-label={localize('DND5E.Movement.Action.Configure')}
+            role="button"
+            tabindex="0"
             class="button button-borderless button-icon-only"
             data-action="showConfiguration"
             data-config="movement"
@@ -133,7 +141,11 @@
       <h4 class="flex-row-space-between">
         {localize('DND5E.Senses')}
         {#if context.unlocked}
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
+            aria-label={localize('DND5E.SensesConfig')}
+            role="button"
+            tabindex="0"
             class="button button-borderless button-icon-only"
             data-action="showConfiguration"
             data-config="senses"

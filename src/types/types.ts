@@ -14,10 +14,8 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
-  RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
-import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
@@ -154,15 +152,6 @@ export type CharacterFeatureSection = {
   custom?: CustomSectionOptions;
 } & FeatureSection;
 
-export type SpellcastingInfo = {
-  currentFilteredClass: Item5e;
-  calculations: SpellCalculations;
-  prepared?: {
-    value: number;
-    max: number;
-  };
-};
-
 export type SpellCalculations = {
   dc: string;
   dcTooltip: string;
@@ -264,22 +253,6 @@ export type ActivitySection = TidySectionBase & {
   >;
 };
 
-export type VehicleFeatureSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
-  items: Item5e[];
-  columns: SectionColumnSpecifications<
-    ConfiguredColumnSpecification<ItemColumnSpec>
-  >;
-} & TidySectionBase;
-
-export type SimpleEditableColumn = {
-  label: string;
-  css?: string;
-  property: string;
-  maxProperty?: string;
-  editable?: string;
-};
-
 export type SpellbookSectionLegacy = {
   label: string;
   order: number;
@@ -336,35 +309,10 @@ export type ItemSaveContext = {
   };
 };
 
-export type CharacterItemContext = {
-  actionSubtitle?: string; // Quadrone only
-  activities?: ActivityItemContext[];
-  attunement?: AttunementContext;
-  availableLevels?: AvailableLevel[];
-  chosen?: ChosenFacilityContext;
-  concealDetails?: boolean;
-  containerName?: string;
-  containerContents?: ContainerContents;
-  favoriteId?: string;
-  group?: string;
-  hasRecharge?: boolean;
-  hasUses?: boolean;
-  isStack?: boolean;
-  linkedUses?: LinkedUses;
-  needsSubclass?: boolean;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  totalWeight?: number;
-  concentration?: boolean;
-  parent?: Item5e;
-  subtitle?: string;
-  includeInCharacterSheetTab?: boolean;
-};
-
 export type CharacterItemQuadroneContext = {
   actionSubtitle?: string;
-  attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
+  attunement?: AttunementContext;
   chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
   favoriteId?: string;
@@ -373,11 +321,11 @@ export type CharacterItemQuadroneContext = {
   hasUses?: boolean;
   isStack?: boolean;
   needsSubclass?: boolean;
+  parent?: Item5e;
   save?: ItemSaveContext;
   toHit?: number | null;
   totalWeight?: number;
   concentration?: boolean;
-  parent?: Item5e;
   subtitle?: string;
   includeInCharacterSheetTab?: boolean;
 } & ActorItemQuadroneContext;
@@ -431,18 +379,6 @@ export type LanguageTraitContext = {
   value?: unknown;
 };
 
-export type AttributeItemPinContext = {
-  document: Item5e;
-  linkedUses?: LinkedUses;
-} & AttributePinFlag & { type: 'item' };
-
-export type AttributeActivityPinContext = {
-  document: Activity5e;
-} & AttributePinFlag & { type: 'activity' };
-
-export type AttributePinContext =
-  AttributeItemPinContext | AttributeActivityPinContext;
-
 export type SheetPinItemContext = {
   document: Item5e;
   linkedUses?: LinkedUses;
@@ -480,45 +416,6 @@ export type FacilityDefenderContext = {
   /** Defender's facility ID. */
   facility: string;
 };
-
-export type CharacterSheetContext = {
-  actorClassesToImages: Record<string, string>;
-  allowMaxHpOverride: boolean;
-  appearanceEnrichedHtml: string;
-  attributePins: AttributePinContext[];
-  bastion: {
-    description: string;
-  };
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defenders: FacilityDefenderContext[];
-  effects: Record<string, EffectCategory<ActiveEffectContext>>;
-  epicBoonsEarned: string | undefined;
-  facilities: FacilitiesContext;
-  favorites: FavoriteSection[];
-  features: CharacterFeatureSection[];
-  flawEnrichedHtml: string;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, CharacterItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  utilities: Utilities<CharacterSheetContext>;
-} & ActorSheetContextV1;
 
 /** A list of available actions that can be done on behalf of a facility type. */
 type AvailableBastionActionContext = {
@@ -567,26 +464,6 @@ export type NpcAbilitySection = {
   isClass?: boolean;
 } & FeatureSection;
 
-export type NpcItemContext = {
-  activities?: ActivityItemContext[];
-  attunement?: AttunementContext;
-  availableLevels?: AvailableLevel[];
-  canToggle?: boolean;
-  concentration?: boolean;
-  containerContents?: ContainerContents;
-  hasRecharge?: boolean;
-  hasUses?: boolean;
-  isStack?: boolean;
-  linkedUses?: LinkedUses;
-  needsSubclass?: boolean;
-  parent?: Item5e;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  toggleTitle?: string;
-  totalWeight?: number;
-  subtitle?: string;
-};
-
 export type NpcItemQuadroneContext = {
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
@@ -609,60 +486,10 @@ export type NpcHabitat = {
   subtype?: string;
 };
 
-export type NpcSheetContext = {
-  appearanceEnrichedHtml: string;
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defaultSkills: Set<string>;
-  features: NpcAbilitySection[];
-  flags: SpecialTraits;
-  flawEnrichedHtml: string;
-  hasLegendaries: boolean;
-  habitat: { label: string }[];
-  hideEmptySpellbook: boolean;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, NpcItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  showLoyalty: boolean;
-  showSpellbookTab: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  treasure: { label: string }[];
-  utilities: Utilities<NpcSheetContext>;
-} & ActorSheetContextV1;
-
 export type VehicleItemCrewAssignment = {
   // TODO: reconsider doing this?
   actor: Actor5e | { uuid: string } | undefined;
   brokenLink?: boolean;
-};
-
-export type VehicleItemContext = {
-  actionSubtitle?: string;
-  activities?: ActivityItemContext[];
-  containerContents?: ContainerContents;
-  cover?: string;
-  crew?: VehicleItemCrewAssignment[];
-  hasUses?: boolean;
-  save?: ItemSaveContext;
-  toHit?: number | null;
-  threshold?: number | string;
-  toggleClass?: string;
-  toggleTitle?: string;
 };
 
 export type VehicleItemQuadroneContext = {
@@ -676,38 +503,6 @@ export type VehicleItemQuadroneContext = {
   toggleClass?: string;
   toggleTitle?: string;
 } & ActorItemQuadroneContext;
-
-export type VehicleMember = {
-  actor: Actor5e;
-  quantity: number;
-  // etc.
-};
-
-export type VehicleMemberSection = {
-  members: VehicleMember[];
-  dropLabel: string;
-  // etc.
-} & TidySectionBase;
-
-export type VehicleSheetContext = {
-  inventory: InventorySection[];
-  draft: VehicleMemberSection;
-  passengers: VehicleMemberSection;
-  crew: VehicleMemberSection;
-  features: FeatureSection;
-  weaponStations: InventorySection;
-  equipmentStations: InventorySection;
-  itemContext: Record<string, VehicleItemContext>;
-  utilities: Utilities<VehicleSheetContext>;
-} & ActorSheetContextV1;
-
-export type VehicleCargoSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
-  items: any[];
-  css?: string;
-  editableName?: boolean;
-  columns?: SimpleEditableColumn[];
-} & TidySectionBase;
 
 export type DerivedDamage = {
   label: string;
@@ -725,18 +520,9 @@ export type ActionItem = {
   containerContents?: ContainerContents;
 };
 
-export type ActionSectionClassic = {
-  actions: ActionItem[];
-} & TidySectionBase;
-
 export type CustomItemSectionQuadrone = {
   type: typeof CONSTANTS.SECTION_TYPE_CUSTOM;
 } & TidyItemSectionBase;
-
-export type ExtensibleComponent = {
-  cssClasses: string[];
-  dataset: Record<string, string>;
-};
 
 export type MessageBus = { message: MessageBusMessage | undefined };
 
@@ -751,13 +537,6 @@ export type MessageBusMessage =
       message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
       options?: { includeInlineToggles?: boolean };
     };
-
-export type Utilities<TContext> = Record<
-  string,
-  {
-    utilityToolbarCommands?: UtilityToolbarCommandParams<TContext>[];
-  }
->;
 
 type ActorSave = {
   isConcentration: boolean;
@@ -786,11 +565,14 @@ export type SpecialTraitSectionField = {
   field: DataField; // A data field subclass from Foundry or dnd5e
   hint?: string;
   input?: any; // A function that receives field and config; e.g., createCheckboxInput(field, config)
+  label?: string;
   name: string;
   section?: string; // Seems superfluous
   type?: any; // Boolean(), String(), Number(), etc.
   placeholder?: any; // A placeholder of the specified type; e.g., 30
   value?: any;
+  classes?: string;
+  choices?: Record<string, any>;
 };
 
 export type SpecialTraitClass = {
@@ -800,6 +582,14 @@ export type SpecialTraitClass = {
 
 export type SpecialTraitSection = {
   label: string;
+  fields: (SpecialTraitSectionField | SpecialTraitFieldGroup)[];
+};
+
+export type SpecialTraitFieldGroup = {
+  group: {
+    hint: string;
+    label: string;
+  };
   fields: SpecialTraitSectionField[];
 };
 
@@ -833,83 +623,6 @@ export type DocumentSheetV2Context = {
   user: any;
 };
 
-export type ActorSheetContextV1 = {
-  abilities: any;
-  actions: ActionSectionClassic[];
-  actor: Actor5e;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  allowEffectsManagement: boolean;
-  appId: string;
-  biographyHTML: string;
-  config: typeof CONFIG.DND5E;
-  customActorTraits: RegisteredCustomActorTrait[];
-  customContent: CustomContent[];
-  disableExperience: boolean;
-  effects: Record<string, EffectCategory<ActiveEffect5e>>;
-  elements: unknown;
-  encumbrance?: EncumbranceContext;
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  flags: SpecialTraits; // TODO: Type it
-  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
-  hasSpecialSaves?: boolean;
-  /**
-   * Represents remaining health as a percentage within the range of `0` to `100`.
-   *
-   * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
-   */
-  healthPercentage: number;
-  hp: {
-    value: number;
-    max: number;
-    temp?: number;
-    tempmax?: number;
-  };
-  isCharacter: boolean;
-  isNPC: boolean;
-  isVehicle: boolean;
-  limited: boolean;
-  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
-  /** All items without a container. */
-  items: Item5e[];
-  labels: Record<string, any>;
-  lockExpChanges: boolean;
-  lockHpMaxChanges: boolean;
-  /**
-   * Item Quantity should be uneditable.
-   */
-  lockItemQuantity: boolean;
-  lockLevelSelector: boolean;
-  lockMoneyChanges: boolean;
-  lockSensitiveFields: boolean;
-  modernRules: boolean;
-  movement: {
-    primary: string;
-    special?: string;
-    secondary?: string;
-  };
-  options: unknown;
-  overrides: unknown;
-  /**
-   * The current user owns the actor.
-   */
-  owner: boolean;
-  saves: ActorSaves;
-  rollData: unknown;
-  senses: unknown;
-  skills: any;
-  showLimitedSheet: boolean;
-  system: any;
-  tabs: Tab[];
-  tools: any;
-  traits: any;
-  useActionsFeature?: boolean;
-  useClassicControls: boolean;
-  useRoundedPortraitStyle: boolean;
-  viewableWarnings: DocumentPreparationWarning[];
-  warnings: DocumentPreparationWarning[];
-} & DocumentSheetV2Context;
-
 export type DocumentPreparationWarning = Partial<{
   message: string;
   link: string;
@@ -917,17 +630,6 @@ export type DocumentPreparationWarning = Partial<{
 }>;
 
 export type DropdownListOption = { value: any; text: string };
-
-export type PortraitCharmRadiusClass =
-  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'rounded';
-
-export type ItemLayoutMode = 'grid' | 'list';
-
-export type SheetStats = {
-  lastSubmissionTime: Date | null;
-};
-
-export type CargoOrCrewItem = { name: string; quantity: number };
 
 export type GetFunctionReturnType<T> = T extends {
   get: () => infer V;
@@ -941,21 +643,11 @@ export type SheetTabCacheable = {
 
 export type OnTabSelectedFn = (tabId: string) => void;
 
-export type SheetExpandedItemsCacheable = {
-  onItemToggled: OnItemToggledFn;
-};
-
 export type OnItemToggledFn = (
   itemId: string,
   isVisible: boolean,
   location: string,
 ) => void;
-
-export type SearchFilterCacheable = {
-  onSearch: OnSearchFn;
-};
-
-export type OnSearchFn = (location: string, text: string) => void;
 
 /**
  * A map from location to search criteria.
@@ -976,6 +668,26 @@ export type EffectSummaryData = {
   description: {
     value: string;
   };
+  changes: EffectChangeSummary[];
+};
+
+/**
+ * Follow the system's effect changes table in
+ * `ActiveEffect5e#getSheetChangeContext`.
+ */
+export type EffectChangeSummary = {
+  /** System key `system.attributes.ac.bonus`. */
+  key: string;
+  /** The readable label that most people actually need. */
+  name: string;
+  type: string;
+  value: string;
+};
+
+/** Support a label + tooltip for newer system descriptions. */
+export type EffectPill = {
+  label: string;
+  tooltip?: string;
 };
 
 export type MaxPreparedSpellFormula = {
@@ -992,31 +704,13 @@ export type ContainerCapacityContext = {
   pct: number;
   value: number;
   units: string;
-};
-
-export type RenderableClassicControl<TParams> = {
-  component: Component<any>;
-  props?: (params: TParams) => Record<string, unknown>;
-  visible?: (params: TParams) => boolean;
+  hidden?: boolean;
 };
 
 export type AvailableClassLevel = {
   delta: number;
   disabled: boolean;
   level: number;
-};
-
-export type DamageModificationData = {
-  amount: Record<string, string>;
-  bypasses: Set<string>;
-};
-
-export type ModificationConsequence = 'benefit' | 'detriment' | 'none';
-
-export type DamageModificationContextEntry = {
-  label: string;
-  consequence: ModificationConsequence;
-  icons?: string[];
 };
 
 export type EffectCategory<TEffectContext> = {
@@ -1061,29 +755,12 @@ export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
     >;
   };
 
-export type HTMLElementOrGettable =
-  HTMLElement | { get(index: number): HTMLElement };
-
 export type ActorV2 = {
   isOwner: boolean;
   // TODO: Put universal ActorV2 members here.
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
 } & {};
-
-// TODO: Deprecate
-export type ActorSheetClassicContextV2<TActor = ActorV2> = {
-  actor: TActor;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  customContent: CustomContent[];
-  editable: boolean;
-  healthPercentage: number;
-  modernRules: boolean;
-  lockSensitiveFields: boolean;
-  tabs: Tab[];
-  unlocked: boolean;
-  useRoundedPortraitStyle: boolean;
-};
 
 export type GroupableSelectOption = {
   value: string;
@@ -1147,6 +824,8 @@ export type ActorItemQuadroneContext = {
   containerCapacity?: ContainerCapacityContext;
   containerContents?: ContainerContents;
   linkedUses?: LinkedUses;
+  rarity?: string;
+  rarityLabel?: string;
   subtitle?: string;
   totalWeight?: number;
   rowActions?: ItemRowAction[];
@@ -1339,10 +1018,6 @@ export type FavoriteContextEntry =
   | SlotsFavoriteContextEntry
   | SkillToolFavoriteContextEntry;
 
-export type SystemSettings = {
-  currencyWeight: boolean;
-};
-
 export type InspirationSource = {
   change: (delta: number) => Promise<void>;
   value: number;
@@ -1354,10 +1029,6 @@ export type ActorTraitItemContext = {
   id: string;
   name: string;
   img: string;
-};
-
-export type SheetTabEffectSection = ActiveEffectSection & {
-  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
 };
 
 export type SheetTabSection =
@@ -1436,7 +1107,7 @@ export type NpcSheetQuadroneContext = {
   important: boolean;
   includeSpellbookInStatblockTab: boolean;
   inventory: InventorySection[];
-  itemContext: NpcItemQuadroneContext;
+  itemContext: Record<string, NpcItemQuadroneContext>;
   orphanedSubclasses: Item5e[];
   showDeathSaves: boolean;
   showLairTracker: boolean;
@@ -1652,21 +1323,9 @@ export type GroupSkillRollProcessConfiguration = {
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
 };
 
-export type SkillToolRollProcessConfiguration = {
-  ability: string;
-  bonus: string;
-  item: Item5e;
-  skill: string;
-  tool: string;
-  page: TravelPaceConfig;
-} & D20RollProcessConfiguration;
-
-type D20RollProcessConfiguration = {
-  // TODO: Type this out if it's actually needed at some point.
-};
-
 export type GroupSheetQuadroneContext = {
   abilities: GroupAbility[];
+  effects: ActiveEffectSection[];
   enriched: {
     description: {
       full: string;
@@ -1917,8 +1576,6 @@ export type VehicleSheetQuadroneContext = {
     };
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-  useActionsFeature?: boolean;
-  utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
 

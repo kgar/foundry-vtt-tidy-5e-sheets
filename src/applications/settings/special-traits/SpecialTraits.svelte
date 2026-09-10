@@ -3,7 +3,8 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
   import type { SpecialTraitsContext } from 'src/settings/editors/special-traits-settings-editor.svelte';
-  import type { Actor5e } from 'src/types/types';
+  import type { Actor5e, SpecialTraitSectionField } from 'src/types/types';
+  import type { ClassValue } from 'svelte/elements';
 
   type Props = {
     actor: Actor5e;
@@ -52,24 +53,67 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
     {#each section.fields as fieldContext}
-      {const isCheckbox =
-        $derived(fieldContext instanceof foundry.data.fields.BooleanField)}
-      {const id = $derived(`${actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`)}
-      <FormGroup
-        labelFor={id}
-        field={fieldContext.field}
-        config={{
-          id,
-          value: fieldContext.value,
-          name: fieldContext.name,
-        }}
-        localize={true}
-        groupClasses={{ slim: isCheckbox }}
-        disableOverriddenInputs
-        onChange={(value) => {
-          fieldContext.value = value;
-        }}
-      />
+      {#if 'group' in fieldContext}
+        <FormGroup
+          labelFor="{actor.id}-{fieldContext.fields[0]?.name
+            .slugify()
+            .replaceAll('.', '-')}"
+          localize={true}
+          groupClasses="split-group"
+          disableOverriddenInputs
+          label={fieldContext.group.label}
+          hint={fieldContext.group.hint}
+        >
+          {#each fieldContext.fields as fieldGroupMember}
+            {const id = $derived(
+              `${actor.id}-${fieldGroupMember.name.slugify().replaceAll('.', '-')}`,
+            )}
+            <FormGroup
+              field={fieldGroupMember.field}
+              choices={fieldGroupMember.choices}
+              label={fieldGroupMember.label}
+              labelFor={id}
+              config={{
+                id: id,
+                value: fieldGroupMember.value,
+                name: fieldGroupMember.name,
+                classes: fieldGroupMember.classes,
+                placeholder: fieldGroupMember.placeholder,
+              }}
+              groupClasses="label-top"
+              onChange={(value) => {
+                fieldGroupMember.value = value;
+              }}
+            />
+          {/each}
+        </FormGroup>
+      {:else}
+        {const isCheckbox = $derived(
+          fieldContext instanceof foundry.data.fields.BooleanField,
+        )}
+        {const id = $derived(
+          `${actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`,
+        )}
+        <FormGroup
+          labelFor={id}
+          label={fieldContext.label}
+          field={fieldContext.field}
+          choices={fieldContext.choices}
+          config={{
+            id,
+            value: fieldContext.value,
+            name: fieldContext.name,
+            classes: fieldContext.classes,
+            placeholder: fieldContext.placeholder,
+          }}
+          localize={true}
+          groupClasses={[{ slim: isCheckbox }, fieldContext.classes]}
+          disableOverriddenInputs
+          onChange={(value) => {
+            fieldContext.value = value;
+          }}
+        />
+      {/if}
     {/each}
   </fieldset>
 {/each}

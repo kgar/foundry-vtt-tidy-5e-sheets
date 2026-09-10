@@ -14,7 +14,7 @@ import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-conte
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
-import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
+import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu';
 import { configureVehicleMemberContextMenu } from './tidy5e-vehicle-member-context-menu';
 import { configureGroupSkillRollContextMenu } from './tidy5e-group-skill-roll-context-menu';
 import { configureSkillRollContextMenu } from './tidy5e-skill-roll-context-menu';
@@ -22,15 +22,11 @@ import { configureSkillRollContextMenu } from './tidy5e-skill-roll-context-menu'
 export function initTidy5eContextMenu(
   sheet: any,
   html: HTMLElement,
-  layout:
-    | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
-    | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE,
-  contextMenuSelector: string = '[data-context-menu]'
+  contextMenuSelector: string = '[data-context-menu]',
 ) {
   new FloatingContextMenu(html, contextMenuSelector, [], {
     onOpen: onDocumentContextOpened.bind(sheet),
     jQuery: false,
-    layout,
   });
 }
 
@@ -95,7 +91,7 @@ function onDocumentContextOpened(this: any, element: HTMLElement) {
       break;
     default:
       warn(
-        `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
+        `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`,
       );
       break;
   }

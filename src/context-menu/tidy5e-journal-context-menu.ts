@@ -17,7 +17,7 @@ export function configureActorJournalContextMenu(
 
   ui.context.menuItems = [
     {
-      name: 'TIDY5E.ContextMenuActionView',
+      label: 'TIDY5E.ContextMenuActionView',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       callback: () => {
         app._renderChild(new JournalEntryApplication(id, 'view', {
@@ -27,9 +27,9 @@ export function configureActorJournalContextMenu(
       group: 'common',
     },
     {
-      name: 'SIDEBAR.Edit',
+      label: 'SIDEBAR.Edit',
       icon: '<i class="fa-solid fa-pencil-alt fa-fw"></i>',
-      condition: () =>
+      visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {
@@ -40,9 +40,9 @@ export function configureActorJournalContextMenu(
       group: 'common',
     },
     {
-      name: 'SIDEBAR.Duplicate',
+      label: 'SIDEBAR.Duplicate',
       icon: '<i class="fa-solid fa-copy fa-fw"></i>',
-      condition: () =>
+      visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {
@@ -51,9 +51,9 @@ export function configureActorJournalContextMenu(
       group: 'common',
     },
     {
-      name: 'SIDEBAR.Delete',
+      label: 'SIDEBAR.Delete',
       icon: `<i class="fa-solid fa-trash" style='color: var(--t5e-warning-accent-color);'></i>`,
-      condition: () =>
+      visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {

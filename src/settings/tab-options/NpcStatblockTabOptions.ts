@@ -84,7 +84,7 @@ export function buildNpcStatblockTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.SpellbookSections',
+      title: 'TIDY5E.SpellsSections',
       settings: [
         {
           type: 'radio',
@@ -130,7 +130,7 @@ export function buildNpcStatblockTabOptions(
         },
         {
           type: 'boolean',
-          label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
+          label: 'TIDY5E.Utilities.IncludeSpellsInNpcStatblockTab',
           doc: game.user,
           prop: spellbookInStatblockProp,
           default: spellbookInStatblockUserPreference,

@@ -114,7 +114,11 @@
                 data-tidy-sheet-part="actor-name"
                 data-tooltip={context.actor.name}
               >
+                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
+                  role="button"
+                  tabindex="0"
+                  aria-label={localize('TIDY5E.CopyToClipboard')}
                   data-action="copyInnerText"
                   class="cursor highlight-on-hover"
                 >
@@ -252,6 +256,7 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
+                  aria-label={localize('TIDY5E.DecreaseSpecific', { name: localize('DND5E.Loyalty') })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -263,6 +268,7 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
+                  aria-label={localize('TIDY5E.IncreaseSpecific', { name: localize('DND5E.Loyalty') })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -404,8 +410,8 @@
         </span>
         {#if context.unlocked}
           <button
-            aria-label={localize('DND5E.ArmorConfig')}
-            data-tooltip="DND5E.ArmorConfig"
+            aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+            data-tooltip="DND5E.ARMORCLASS.Action.Configure"
             type="button"
             class="button button-borderless button-icon-only button-config"
             data-action="showConfiguration"
@@ -418,12 +424,20 @@
     </div>
   </div>
   <div class="tabs-row">
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button"
+      tabindex="0"
       class="sidebar-toggle button button-borderless"
       data-tooltip={localize(
         sidebarExpanded ? 'JOURNAL.ViewCollapse' : 'JOURNAL.ViewExpand',
       )}
       onclick={() => (sidebarExpanded = !sidebarExpanded)}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          sidebarExpanded = !sidebarExpanded;
+        }
+      }}
     >
       {#if sidebarExpanded}
         <i class="fa-solid fa-caret-left"></i>

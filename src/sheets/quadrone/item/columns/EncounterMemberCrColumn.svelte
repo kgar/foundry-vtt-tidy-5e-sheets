@@ -23,8 +23,8 @@
   {const formattedCr = $derived(
     FoundryAdapter.formatCr(rowDocument.system.details.cr),
   )}
-  <span class="cr-value font-label-large color-text-default">{formattedCr}</span
+  <span class="value font-label-large color-text-default">{formattedCr}</span
   >
 {:else}
-  <span class="color-text-disabled">—</span>
+  <span class="value font-label-large color-text-disabled">—</span>
 {/if}

@@ -4,7 +4,10 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ConditionToggleQuadrone from './ConditionToggleQuadrone.svelte';
+  import ExhaustionToggle from './ExhaustionToggle.svelte';
 
   interface Props {
     conditions: Dnd5eActorCondition[];
@@ -13,7 +16,14 @@
 
   let { conditions, isBasicTheme }: Props = $props();
 
+  const context = $derived(getSheetContext<ActorSheetQuadroneContext>());
   const localize = FoundryAdapter.localize;
+
+  // Vehicles and similar actors have exhaustion in the condition catalog
+  // but no numeric exhaustion attribute to increment.
+  let hasExhaustionAttribute = $derived(
+    Number.isFinite(context.system.attributes?.exhaustion),
+  );
 </script>
 
 <TidyTable key="conditions">
@@ -31,6 +41,7 @@
           class={[
             'condition',
             {
+              exhaustion: condition.id === 'exhaustion',
               active: !condition.disabled,
               'content-link': !!condition.reference,
             },
@@ -39,7 +50,11 @@
           data-condition-id={condition.id}
           data-tooltip={condition.name}
         >
-          <ConditionToggleQuadrone {condition} />
+          {#if condition.id === 'exhaustion' && hasExhaustionAttribute}
+            <ExhaustionToggle {condition} />
+          {:else}
+            <ConditionToggleQuadrone {condition} />
+          {/if}
         </li>
       {/each}
     </ul>

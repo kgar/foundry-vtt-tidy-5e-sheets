@@ -35,7 +35,6 @@
     return item
       ? Activities.getVisibleActivities(
           item,
-          item.system.activities,
         ).map<ActivityItemContext>((activity) =>
           Activities.getActivityItemContext(
             context.sheet,

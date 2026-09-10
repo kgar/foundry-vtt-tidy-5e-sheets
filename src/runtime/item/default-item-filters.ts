@@ -11,7 +11,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_ACTION]: {
     name: 'activationCostAction',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION,
       ),
     text: 'DND5E.Action',
@@ -20,7 +20,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_BONUS]: {
     name: 'activationCostBonus',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS,
       ),
     text: 'DND5E.BonusAction',
@@ -29,7 +29,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_REACTION]: {
     name: 'activationCostReaction',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION,
       ),
     text: 'DND5E.Reaction',
@@ -38,7 +38,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_LEGENDARY]: {
     name: 'activationCostLegendary',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY,
       ),
     text: 'DND5E.LegendaryAction.Label',
@@ -46,7 +46,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_MYTHIC]: {
     name: 'activationCostMythic',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC,
       ),
     text: 'DND5E.MythicActionLabel',
@@ -54,7 +54,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_LAIR]: {
     name: 'activationCostLair',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
       ),
     text: 'DND5E.LAIR.Action.Label',
@@ -62,7 +62,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_CREW]: {
     name: 'activationCostCrew',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_CREW,
       ),
     text: 'DND5E.ACTIVATION.Type.Crew.Label',
@@ -70,7 +70,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_SPECIAL]: {
     name: 'activationCostSpecial',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
+      !!Activities.getVisibleActivities(item)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL,
       ),
     text: 'DND5E.Special',
@@ -78,7 +78,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_OTHER]: {
     name: 'activationCostOther',
     predicate: (item) =>
-      !!Activities.getVisibleActivities(item, item.system.activities)?.every(
+      !!Activities.getVisibleActivities(item)?.every(
         (a: any) =>
           ![
             CONSTANTS.ACTIVATION_COST_ACTION,
@@ -166,7 +166,7 @@ export function getItemRarityFilters(): ItemFilter[] {
       ({
         name: key,
         predicate: (item) =>
-          !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
+          !FoundryAdapter.concealDetails(item) && item.system.rarities.has(key),
         text: text,
       }) satisfies ItemFilter,
   );
@@ -201,16 +201,6 @@ export function getSourceItemFilters(actor: Actor5e): ItemFilter[] {
   return [...filters.values()];
 }
 
-export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
-  return getItemRarityFilters().reduce<Record<string, ItemFilter>>(
-    (prev, curr) => {
-      prev[curr.name] = curr;
-      return prev;
-    },
-    {},
-  );
-}
-
 export function getSpellSchoolFilters(): ItemFilter[] {
   const spellSchools = CONFIG.DND5E.spellSchools as Record<string, any>;
 
@@ -221,16 +211,6 @@ export function getSpellSchoolFilters(): ItemFilter[] {
         predicate: (item) => item.system.school === key,
         text: schoolData.label,
       }) satisfies ItemFilter,
-  );
-}
-
-export function getSpellSchoolFiltersAsObject(): Record<string, ItemFilter> {
-  return getSpellSchoolFilters().reduce<Record<string, ItemFilter>>(
-    (prev, curr) => {
-      prev[curr.name] = curr;
-      return prev;
-    },
-    {},
   );
 }
 
@@ -261,16 +241,6 @@ export function getAttunementFilters(): ItemFilter[] {
       text: 'DND5E.AttunementAttuned',
     },
   ];
-}
-
-export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
-  return getAttunementFilters().reduce<Record<string, ItemFilter>>(
-    (prev, curr) => {
-      prev[curr.name] = curr;
-      return prev;
-    },
-    {},
-  );
 }
 
 export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {

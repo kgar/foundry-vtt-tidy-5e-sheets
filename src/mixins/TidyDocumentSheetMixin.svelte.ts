@@ -77,8 +77,6 @@ export function getTidyExtensibleDocumentSheetMixin<
   }>,
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends getDragAndDropMixin(BaseApplication) {
-    // TODO: Remove _fixedMode when classic sheets are gone
-    _fixedMode: number | undefined;
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
     _sectionForMenu?: TidySectionBase;
@@ -182,13 +180,10 @@ export function getTidyExtensibleDocumentSheetMixin<
     }
 
     get sheetMode() {
-      return this._fixedMode ?? this._mode;
+      return this._mode;
     }
 
     set sheetMode(value) {
-      if (this._fixedMode !== undefined) {
-        return;
-      }
       this._mode = value;
     }
 
@@ -210,7 +205,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     _onChangeForm(formConfig: unknown, event: any) {
       if (
-        FoundryAdapter.isElementInstanceOf(
+        foundry.utils.isElementInstanceOf(
           event.target,
           foundry.applications.elements.HTMLSecretBlockElement,
         )
@@ -763,7 +758,7 @@ export function getTidyExtensibleDocumentSheetMixin<
      * Toggles the user's sheet mode relative to the current mode.
      * @protected
      */
-    async toggleSheetMode() {
+    async changeMode() {
       const newMode =
         this.sheetMode === CONSTANTS.SHEET_MODE_PLAY
           ? CONSTANTS.SHEET_MODE_EDIT

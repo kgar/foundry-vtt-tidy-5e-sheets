@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { RarityColors } from 'src/features/rarity-colors/RarityColors';
   import { getContainerOrItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import ItemImageBorder from './ItemImageBorder.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
-  import { SectionSelectorApplication } from 'src/applications/classic-section-selector/SectionSelectorApplication.svelte';
+  import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Snippet } from 'svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
@@ -16,6 +14,7 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { Rarity } from 'src/features/rarity/Rarity';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -34,32 +33,11 @@
     includeSidebarProperties = true,
   }: Props = $props();
 
-  // Rarity
-  let rarity = $derived(
-    context.unlocked ? context.source.rarity : context.system.rarity,
-  );
-
   const unidentified = $derived(context.system.identified === false);
 
   // Hide mechanical details from players, and from GMs in view mode, until the item is identified.
   let concealDetails = $derived(
     unidentified && !FoundryAdapter.isInGmEditMode(context.document),
-  );
-
-  let rarityText = $derived(
-    unidentified
-      ? localize('DND5E.Unidentified.Title')
-      : RarityColors.getRarityText(rarity).titleCase(),
-  );
-
-  let itemRarities = $derived(
-    Object.entries(context.config.itemRarity).map(([key, value]) => {
-      return {
-        key,
-        label: value,
-        rarityColorVariableName: RarityColors.getRarityColorVariableName(key),
-      };
-    }),
   );
 
   // Facility Disrepair
@@ -94,19 +72,48 @@
     SheetSections.itemSupportsCustomSections(context.item.type),
   );
 
+  // Does rarity vary? Don't include unidentified items.
+  // Derived from selectedRarities rather than a raw rarity count, so this can never claim
+  // "varies" for rarities we have no color for — the gradient is built from the same array.
+  let rarityVaries = $derived(
+    !unidentified && (context.rarities?.selectedRarities.length ?? 0) > 1,
+  );
+
+  // The transform used here matches the math we use for the rarity text in the sidebar.
+  let rarityTextGradient = $derived(
+    rarityVaries
+      ? Rarity.getRarityVariesGradient(context.rarities!.selectedRarities, {
+          transform: (color) =>
+            `oklch(from ${color} calc(l + 0.2) calc(c - 0.08) h)`,
+        })
+      : undefined,
+  );
+
+  // Only turn on the gradient if the rarity varies. (we send the ID to do it)
+  let rarityBorderGradientId = $derived(
+    rarityVaries ? `t5e-rarity-varies-${context.document.id}` : undefined,
+  );
+
+  // Taste the rainbow.
+  let rarityVariesColors = $derived(
+    rarityVaries
+      ? context.rarities!.selectedRarities.map((key) =>
+          Rarity.getRarityColorVariable(key),
+        )
+      : undefined,
+  );
+
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
-  let itemColorClasses = $derived<ClassValue>([
-    unidentified && !FoundryAdapter.isInGmEditMode(context.document)
-      ? 'disabled'
-      : undefined,
-    !isNil(rarity, '') ? 'rarity' : undefined,
-    unidentified ? 'unidentified' : undefined,
-    !unidentified && 'rarity' in context.system
-      ? coalesce(rarity?.slugify(), 'none')
-      : undefined,
-    !isNil(config?.key) ? 'spell-method' : undefined,
-    !isNil(config?.key) ? 'method-' + config.key.slugify() : undefined,
-  ]);
+  let itemColorClasses = $derived<ClassValue>({
+    disabled: unidentified && !FoundryAdapter.isInGmEditMode(context.document),
+    rarity: !!context.rarities,
+    unidentified,
+    'rarity-varies': rarityVaries,
+    [coalesce(context.rarities?.rarity?.slugify(), 'none')]:
+      !unidentified && context.rarities,
+    'spell-method': !isNil(config?.key),
+    ['method-' + config?.key?.slugify()]: !isNil(config?.key),
+  });
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
 
@@ -167,7 +174,7 @@
         }
 
         return {
-          title: x.title,
+          title: x.name,
           value,
           toCopy: formula,
         } satisfies ScaleValuePill;
@@ -224,34 +231,21 @@
         data-action={context.unlocked ? 'editImage' : 'showIcon'}
         data-edit={context.unlocked ? 'img' : null}
       />
-      <ItemImageBorder />
+      <ItemImageBorder
+        gradientId={rarityBorderGradientId}
+        gradientColors={rarityVariesColors}
+      />
     </div>
-    {#if 'rarity' in context.system}
+    {#if context.rarities}
       <div class="item-rarity-container">
-        {#if context.unlocked && (!unidentified || FoundryAdapter.isInGmEditMode(context.document))}
-          <SelectQuadrone
-            id="rarity-{context.sheet.id}"
-            document={context.item}
-            field="system.rarity"
-            class={['item-rarity-selector', 'capitalize', itemColorClasses]}
-            value={context.source.rarity}
-            disabled={!context.editable &&
-              !FoundryAdapter.isInGmEditMode(context.document)}
-            blankValue=""
-          >
-            <option class="none" value="">{localize('DND5E.None')}</option>
-            {#each itemRarities as rarity (rarity.key)}
-              <option
-                value={rarity.key}
-                class={['rarity', rarity.key.slugify()]}
-              >
-                {rarity.label}
-              </option>
-            {/each}
-          </SelectQuadrone>
-        {:else}
-          <div class={['item-rarity-text', itemColorClasses]}>{rarityText}</div>
-        {/if}
+        <div
+          class={['rarity', 'item-rarity-text', itemColorClasses]}
+          style={rarityTextGradient
+            ? `--t5e-rarity-gradient: ${rarityTextGradient}`
+            : undefined}
+        >
+          {context.rarities.rarityLabel}
+        </div>
       </div>
     {:else if !isNil(spellPreparationText, '')}
       <div class={['spell-method-text', itemColorClasses]}>
@@ -509,9 +503,7 @@
     {const sectionLabel = $derived(SheetSections.getSectionLabel(context.item))}
     {const sectionType = $derived(
       context.item.parent?.system.isCharacter
-        ? game.release.generation < 14
-          ? 'Sheet'
-          : 'DOCUMENT.Sheet'
+        ? 'DOCUMENT.Sheet'
         : 'TIDY5E.Section.Label',
     )}
     <div>
@@ -536,6 +528,19 @@
                 document: context.item,
               }),
             )}
+          onkeydown={(ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              context.sheet._renderChild(
+                new SectionSelectorApplication({
+                  flag: TidyFlags.section.prop,
+                  sectionType: localize(sectionType),
+                  callingDocument: context.item,
+                  document: context.item,
+                }),
+              );
+            }
+          }}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -566,6 +571,19 @@
                   document: context.item,
                 }),
               )}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                context.sheet._renderChild(
+                  new SectionSelectorApplication({
+                    flag: TidyFlags.actionSection.prop,
+                    sectionType: localize('TIDY5E.Section.ActionLabel'),
+                    callingDocument: context.item,
+                    document: context.item,
+                  }),
+                );
+              }
+            }}
           >
             <span class="text-normal">
               {actionSectionLabel}

@@ -122,6 +122,10 @@
     display: grid;
     grid-template-columns: 1.5rem 10rem 2.25rem;
     gap: var(--t5e-size-1x);
+
+    .units {
+      margin-inline-start: var(--t5e-size-halfx);
+    }
   }
 
   .group-tool-grid {

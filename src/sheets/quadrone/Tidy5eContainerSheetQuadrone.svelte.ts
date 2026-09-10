@@ -39,9 +39,9 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { mapGetOrInsert } from 'src/utils/map';
 import SectionActions from 'src/features/sections/SectionActions';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { Rarity } from 'src/features/rarity/Rarity';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -163,7 +163,7 @@ export class Tidy5eContainerSheetQuadrone
       context: context,
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
@@ -320,6 +320,7 @@ export class Tidy5eContainerSheetQuadrone
         object: {},
         options: [],
       },
+      rarities: Rarity.getRarityContext(documentSheetContext.source),
       rollData: rollData,
       system: this.document.system,
       tabs: [],
@@ -503,6 +504,12 @@ export class Tidy5eContainerSheetQuadrone
       }
 
       if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
+        return;
+      }
+
+      // TODO: kgar, There's no drop target for an unidentified container right now.
+      // Confirm with system prompt before adding to an unidentified container.
+      if (!(await Container.canDropContents(this.item))) {
         return;
       }
 
@@ -786,10 +793,6 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   _renderChild(app: any, options = {}) {
-    if (game.release.generation < 14) {
-      return app.render({ force: true, ...options });
-    }
-
     if (this.parent) {
       return this.parent.renderChild(app, options);
     }
@@ -818,8 +821,7 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
-    const locationSet = mapGetOrInsert(
-      this.expandedItems,
+    const locationSet = this.expandedItems.getOrInsert(
       itemId,
       new Set<string>(),
     );

@@ -103,6 +103,8 @@ export const CONSTANTS = {
   ITEM_SUBTYPE_SIEGE_WEAPON: 'siege',
   ITEM_SUBTYPE_VEHICLE_EQUIPMENT: 'vehicle',
   ITEM_SYSTEM_TYPE_AMMO: 'ammo',
+  /** Hide container contents from players if container is unidentified. */
+  ITEM_PROPERTY_UNIDENTIFIED_CONTENTS: 'unidentifiedContents',
   MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
   MESSAGE_BUS_EXPAND_ALL: 'expand-all',
   /**
@@ -226,7 +228,6 @@ export const CONSTANTS = {
   SHEET_TYPE_ENCOUNTER: 'encounter',
   SHEET_TYPE_GROUP: 'group',
   SHEET_LAYOUT_ALL: 'all',
-  SHEET_LAYOUT_CLASSIC: 'classic',
   SHEET_LAYOUT_QUADRONE: 'quadrone',
   CIRCULAR_PORTRAIT_OPTION_ALL: 'all',
   CIRCULAR_PORTRAIT_OPTION_CHARACTER: 'pc',

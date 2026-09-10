@@ -1,9 +1,9 @@
 <script lang="ts">
-  import SectionActionHeaderControl from 'src/components/item-list/controls/SectionActionHeaderControl.svelte';
-  import type { TidySectionBase } from 'src/types/types';
+  import type { SectionCommand, TidySectionBase } from 'src/types/types';
   import SectionActions from 'src/features/sections/SectionActions';
   import { CONSTANTS } from 'src/constants';
   import { iterateReversed } from 'src/utils/array';
+  import type { HTMLAttributes } from 'svelte/elements';
 
   type Props = {
     maxRowActionsCount: number;
@@ -23,18 +23,26 @@
 
 {#if section.sectionActions.length <= maxRowActionsCount}
   {#each reversedSectionActions as action}
-    <SectionActionHeaderControl
-      {action}
-      {section}
-      {sheetDocument}
-      {...action.attributes}
-    />
+    {@render SectionActionHeaderControl(action, action.attributes ?? {})}
   {/each}
 {:else}
-  <SectionActionHeaderControl
-    action={menuAction}
-    {section}
-    {sheetDocument}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_SECTION}
-  />
+  {@render SectionActionHeaderControl(menuAction, {
+    'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_SECTION,
+  })}
 {/if}
+
+{#snippet SectionActionHeaderControl(
+  action: SectionCommand,
+  attributes: HTMLAttributes<HTMLElement>,
+)}
+  <a
+    class="tidy-table-button"
+    onclick={(event) =>
+      action.execute?.({ document: sheetDocument, event, section })}
+    {...attributes}
+  >
+    {#if action.iconClass}
+      <i class={action.iconClass}></i>
+    {/if}
+  </a>
+{/snippet}
