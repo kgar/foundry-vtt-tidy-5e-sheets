@@ -3,10 +3,10 @@
 
   let { rowDocument }: { rowDocument: Actor5e } = $props();
 
-  let speeds = $derived(rowDocument.system.attributes.movement.speeds);
-  let walkSpeed = $derived(speeds.walk ?? 0);
+  let movement = $derived(rowDocument.system.attributes.movement);
+  let walkSpeed = $derived(movement.speeds.walk ?? 0);
   let units = $derived(
-    CONFIG.DND5E.movementUnits[speeds.units]?.abbreviation ?? speeds.units,
+    CONFIG.DND5E.movementUnits[movement.units]?.abbreviation ?? movement.units,
   );
 </script>
 

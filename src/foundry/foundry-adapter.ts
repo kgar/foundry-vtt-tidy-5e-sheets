@@ -1410,7 +1410,7 @@ export const FoundryAdapter = {
     >(
       (obj, [k, config]) => {
         if (!config.hidden) {
-          const value = movement[k];
+          const value = movement.speeds?.[k];
           if (value)
             obj[k] = { label: config.label, value, unit: units.abbreviation };
         }

@@ -925,11 +925,17 @@ export function getTidy5eActorSheetQuadroneBase<
 
       // Add special movement if set
       if (systemMovement.special && systemMovement.special.trim() !== '') {
+        const usedKeys = new Set(speeds.map((speed) => speed.key));
+
         for (const special of systemMovement.special.split(';')) {
           const proposedSpecialKey = `special-${special.slugify()}`;
-          const key = speeds.some((speed) => speed.key === proposedSpecialKey)
-            ? `${proposedSpecialKey}-copy`
-            : proposedSpecialKey;
+          // Catch N dupes while we're at it
+          let key = proposedSpecialKey;
+          let suffix = 1;
+          while (usedKeys.has(key)) {
+            key = `${proposedSpecialKey}-${suffix++}`;
+          }
+          usedKeys.add(key);
           speeds.push({
             key: key,
             label: special,
