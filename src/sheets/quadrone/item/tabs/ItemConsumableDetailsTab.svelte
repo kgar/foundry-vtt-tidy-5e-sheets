@@ -28,6 +28,18 @@
   </legend>
 
   <FormGroup
+    labelFor="{appId}-identifier"
+    document={context.document}
+    field={context.fields.identifier}
+    config={{
+      value: context.source.identifier,
+      placeholder: context.item.identifier,
+      id: `${appId}-identifier`,
+    }}
+    hint="DND5E.IdentifierError"
+  />
+
+  <FormGroup
     label="DND5E.ItemConsumableType"
     labelFor="{appId}-type-value"
     document={context.document}

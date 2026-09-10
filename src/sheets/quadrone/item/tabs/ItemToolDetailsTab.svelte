@@ -25,6 +25,19 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
+  <!-- Identifier -->
+  <FormGroup
+    labelFor="{appId}-identifier"
+    document={context.document}
+    field={context.fields.identifier}
+    config={{
+      value: context.source.identifier,
+      placeholder: context.item.identifier,
+      id: `${appId}-identifier`,
+    }}
+    hint="DND5E.IdentifierError"
+  />
+
   <!-- Tool Type -->
   <FormGroup
     label="DND5E.ItemToolType"
