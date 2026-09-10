@@ -1,6 +1,5 @@
 ## dnd5e 6.0 todos
 
-- [ ] Check on / fix src\applications\max-prepared-spells-config\MaxPreparedSpellsConfigFormApplication.svelte.ts. It had to be swapped from classic to quadrone, and it probably doesn't have the appropriate classes in place.
 - [ ] Go through the types files and find/delete unused types
 - [ ] SheetHeaderModeToggleV2 was a classic component. Does it need to be replaced or refined in any way? It now is in the quadrone shared folder.
 

@@ -22,7 +22,7 @@ export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
   static DEFAULT_OPTIONS: Partial<DocumentSheetApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application-shell',
+      'sheet',
       CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     sheetConfig: false,
