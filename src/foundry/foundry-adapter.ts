@@ -1444,7 +1444,7 @@ export const FoundryAdapter = {
         bonus: 'DND5E.BonusActionAbbr',
         reaction: 'DND5E.ReactionAbbr',
         legendary: 'TIDY5E.NPC.Legendary.Abbreviation',
-        lair: 'DND5E.LAIR.Label',
+        lair: 'TIDY5E.NPC.Lair.Abbreviation',
         minute: 'DND5E.TimeMinuteAbbr',
         hour: 'DND5E.TimeHourAbbr',
         day: 'DND5E.TimeDayAbbr',

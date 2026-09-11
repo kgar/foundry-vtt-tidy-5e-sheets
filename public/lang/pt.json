@@ -259,6 +259,9 @@
         "Title": "Tidy 5e Sheets"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Covil"
+        },
         "Legendary": {
             "Abbreviation": "AL",
             "Toolbar": {

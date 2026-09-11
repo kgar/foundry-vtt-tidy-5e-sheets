@@ -300,6 +300,9 @@
         "Title": "Deníky Tidy 5e"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Doupě"
+        },
         "Legendary": {
             "Abbreviation": "LA",
             "Toolbar": {

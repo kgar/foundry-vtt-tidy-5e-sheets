@@ -300,6 +300,9 @@
         "Title": "Schede Tidy 5e"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Tana"
+        },
         "Legendary": {
             "Abbreviation": "Leg",
             "Toolbar": {

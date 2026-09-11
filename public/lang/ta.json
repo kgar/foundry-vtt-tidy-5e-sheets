@@ -264,6 +264,9 @@
         "Title": "நேர்த்தியான 5e தாள்கள்"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "லாயர்"
+        },
         "Legendary": {
             "Abbreviation": "தி",
             "Toolbar": {

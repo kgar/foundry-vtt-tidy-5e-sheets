@@ -300,6 +300,9 @@
         "Title": "Feuilles Tidy 5e"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Antre"
+        },
         "Legendary": {
             "Abbreviation": "AL",
             "Toolbar": {

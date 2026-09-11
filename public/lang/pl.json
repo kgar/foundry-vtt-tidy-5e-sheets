@@ -265,6 +265,9 @@
         "Title": "Karty Tidy 5e"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Leże"
+        },
         "Legendary": {
             "Abbreviation": "AL",
             "Toolbar": {

@@ -300,6 +300,9 @@
         "Title": "Tidy 5e Charakterbögen"
     },
     "TIDY5E.NPC": {
+        "Lair": {
+            "Abbreviation": "Hort"
+        },
         "Legendary": {
             "Abbreviation": "LA",
             "Toolbar": {
