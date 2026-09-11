@@ -43,7 +43,7 @@ function getGroupMemberContextOptions(
             ability: ability.label,
             skill: skill.label,
           }),
-          callback: (_target, event) =>
+          onClick: (event) =>
             app.onRollSkill({
               skill: skillKey,
               ability: abilityKey,

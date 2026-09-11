@@ -9,7 +9,7 @@ export class JournalQuadrone {
     const newSort = this.getMaxSort(doc) + 10;
 
     const updateProp = `${TidyFlags.getFlagPropertyPath(
-      TidyFlags.documentJournal.key
+      TidyFlags.documentJournal.key,
     )}.${newId}`;
 
     await doc.update({
@@ -87,7 +87,7 @@ export class JournalQuadrone {
       (prev, acc) => {
         return Math.max(prev, acc.sort ?? 0);
       },
-      0
+      0,
     );
   }
 
@@ -96,13 +96,13 @@ export class JournalQuadrone {
     const journal = TidyFlags.documentJournal.get(doc);
     const deletions = Object.entries(journal)
       .filter(([key, entry]) => key === id || entry.id === id)
-      .map(([key]) => {
-        return `${TidyFlags.getFlagPropertyPath(
-          TidyFlags.documentJournal.key
-        )}.-=${key}`;
-      })
-      .reduce<Record<string, null>>((prev, curr) => {
-        prev[curr] = null;
+      .reduce<Record<string, null>>((prev, [key, entry]) => {
+        const propPath = `${TidyFlags.getFlagPropertyPath(
+          TidyFlags.documentJournal.key,
+        )}.${key}`;
+
+        prev[propPath] = _del;
+
         return prev;
       }, {});
 

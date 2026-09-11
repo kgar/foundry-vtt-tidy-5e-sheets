@@ -1290,7 +1290,7 @@ export const FoundryAdapter = {
     if (isMovedToNewSection) {
       sectionUpdate[TidyFlags[sectionProp].prop] = targetSection;
     } else if (isMovedToDefaultSection) {
-      sectionUpdate[TidyFlags[sectionProp].unsetProp] = null;
+      sectionUpdate[TidyFlags[sectionProp].prop] = _del;
     }
 
     return sectionUpdate;

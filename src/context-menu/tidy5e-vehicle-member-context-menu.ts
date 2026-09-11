@@ -73,7 +73,7 @@ function getVehicleItemMemberOptions(
     {
       label: 'TIDY5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: async () => {
+      onClick: async () => {
         const actor = await fromUuid(memberUuid);
         app._openDocumentSheet(actor);
       },
@@ -87,7 +87,7 @@ function getVehicleItemMemberOptions(
       label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       visible: () => !!memberUuid,
       icon: '<i class="fa-solid fa-user-minus"></i>',
-      callback: async () => {
+      onClick: async () => {
         if (item && memberUuid) {
           await app._unassignCrew(memberUuid, item.uuid);
         }
@@ -99,7 +99,7 @@ function getVehicleItemMemberOptions(
       }),
       visible: () => empty,
       icon: '<i class="fa-solid fa-book-atlas"></i>',
-      callback: () => app.browseAssignActor(item),
+      onClick: () => app.browseAssignActor(item),
     },
   ];
 }
@@ -121,7 +121,7 @@ function getDraftMemberOptions(
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
       visible: () => canChange,
-      callback: async () => {
+      onClick: async () => {
         if (memberUuid) {
           await app.removeDraftAnimal(memberUuid);
         }
@@ -170,7 +170,7 @@ function getCrewMemberOptions(
         }`,
         icon: '<i class="fa-solid fa-user-plus fa-fw"></i>',
         visible: () => area === 'crew' && canChange,
-        callback: async () => {
+        onClick: async () => {
           if (!memberUuid) {
             return;
           }
@@ -196,7 +196,7 @@ function getCrewMemberOptions(
       label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       icon: '<i class="fa-solid fa-user-minus fa-fw"></i>',
       visible: () => !!currentlyAssignedItemId && canChange,
-      callback: async () => {
+      onClick: async () => {
         if (!memberUuid) {
           return;
         }
@@ -219,7 +219,7 @@ function getCrewMemberOptions(
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
       visible: () => area === 'crew' && unassigned && canChange,
-      callback: async () => {
+      onClick: async () => {
         if (memberUuid) {
           app.removeUnassignedCrew(memberUuid);
         }
@@ -231,7 +231,7 @@ function getCrewMemberOptions(
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
       visible: () => area === 'passengers' && canChange,
-      callback: async () => {
+      onClick: async () => {
         if (memberUuid) {
           app.removePassengers(memberUuid);
         }

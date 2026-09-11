@@ -24,7 +24,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
     {
       label: 'TIDY5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: async () => {
+      onClick: async () => {
         const actor = await fromUuid(occupantUuid);
         app._openDocumentSheet(actor);
       },
@@ -37,7 +37,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
         { facilityName },
       ),
       icon: "<i class='fas fas fa-trash t5e-warning-color fa-fw'></i>",
-      callback: async () => {
+      onClick: async () => {
         await app.deleteOccupant(item, prop, Number(index));
       },
       visible: () =>
