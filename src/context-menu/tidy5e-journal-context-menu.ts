@@ -19,7 +19,7 @@ export function configureActorJournalContextMenu(
     {
       label: 'TIDY5E.ContextMenuActionView',
       icon: '<i class="fas fa-eye fa-fw"></i>',
-      callback: () => {
+      onClick: () => {
         app._renderChild(new JournalEntryApplication(id, 'view', {
           document: app.document,
         }));
@@ -32,7 +32,7 @@ export function configureActorJournalContextMenu(
       visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
-      callback: () => {
+      onClick: () => {
         app._renderChild(new JournalEntryApplication(id, 'edit', {
           document: app.document,
         }));
@@ -45,7 +45,7 @@ export function configureActorJournalContextMenu(
       visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
-      callback: () => {
+      onClick: () => {
         JournalQuadrone.duplicate(app.actor, id);
       },
       group: 'common',
@@ -56,7 +56,7 @@ export function configureActorJournalContextMenu(
       visible: () =>
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
-      callback: () => {
+      onClick: () => {
         JournalQuadrone.remove(app.actor, id);
       },
       group: 'be-careful',

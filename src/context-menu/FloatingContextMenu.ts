@@ -1,26 +1,15 @@
 import { CONSTANTS } from 'src/constants';
+import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
-interface ContextMenuEntry {
-  name: string;
-  icon?: string;
-  classes?: string;
-  group?: string;
-  callback: (target: any) => void;
-  condition?: (html: any) => boolean | boolean;
-}
-
-type ContextMenuOptionsV13 = {
-  /** Optionally override the triggering event which can spawn the menu. If the menu is using a fixed position, this event must be a MouseEvent. */
+interface ContextMenuOptions {
   eventName?: string;
-  /** A function to call when the context menu is opened. */
-  onOpen?: (target: any) => void;
-  /** A function to call when the context menu is closed. */
-  onClose?: (target: any) => void;
-  /** If true, callbacks will be passed jQuery objects instead of HTMLElement instances. */
-  jQuery?: false;
-  /** If true, the context menu is given a fixed position rather than being injected into the target. */
+  onOpen?: (target: HTMLElement) => void;
+  onClose?: (target: HTMLElement) => void;
   fixed?: boolean;
-};
+  relative?: "target" | "cursor";
+  jQuery?: boolean;
+  closeOnSelect?: boolean;
+}
 
 /**
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
@@ -33,7 +22,7 @@ export default class FloatingContextMenu
     container: any,
     selector: string,
     menuItems: ContextMenuEntry[],
-    options: ContextMenuOptionsV13,
+    options: ContextMenuOptions,
   ) {
     super(container, selector, menuItems, options);
   }

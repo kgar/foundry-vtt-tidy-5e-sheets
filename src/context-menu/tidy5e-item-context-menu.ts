@@ -65,7 +65,7 @@ export function getItemContextOptions(
     label: 'TIDY5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
     group: 'common',
-    callback: () =>
+    onClick: () =>
       app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
   });
 
@@ -74,7 +74,7 @@ export function getItemContextOptions(
     icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
     visible: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
-    callback: () =>
+    onClick: () =>
       app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
   });
 
@@ -92,7 +92,7 @@ export function getItemContextOptions(
         ? "<i class='fa-regular fa-sun fa-fw'></i>"
         : "<i class='fa-solid fa-sun fa-fw'></i>",
       group: 'common',
-      callback: () =>
+      onClick: () =>
         item.update({
           'system.attuned': !item.system.attuned,
         }),
@@ -111,7 +111,7 @@ export function getItemContextOptions(
         ? "<i class='fa-regular fa-hand fa-fw'></i>"
         : "<i class='fa-solid fa-hand-fist equip-icon fa-fw'></i>",
       group: 'common',
-      callback: () => item.update({ 'system.equipped': !isEquipped }),
+      onClick: () => item.update({ 'system.equipped': !isEquipped }),
       visible: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
@@ -131,7 +131,7 @@ export function getItemContextOptions(
         ? "<i class='fas fa-book fa-fw'></i>"
         : "<i class='fas fa-book fa-fw'></i>",
       group: 'common',
-      callback: () => item.update({ 'system.prepared': newValue }),
+      onClick: () => item.update({ 'system.prepared': newValue }),
       visible: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });
@@ -149,7 +149,7 @@ export function getItemContextOptions(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
-    callback: () =>
+    onClick: () =>
       item.update({
         'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
       }),
@@ -166,7 +166,7 @@ export function getItemContextOptions(
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
       group: 'common',
-      callback: () => {
+      onClick: () => {
         FoundryAdapter.toggleFavoriteItem(item);
       },
       visible: () =>
@@ -186,7 +186,7 @@ export function getItemContextOptions(
       item.isOwner &&
       !compendiumLocked &&
       !!CONFIG.Item.dataModels[item.type]?.schema.has('quantity'),
-    callback: () => {
+    onClick: () => {
       const properties = item.system.toObject().properties;
       item.update({
         'system.properties': item.system.properties.has('gear')
@@ -202,7 +202,7 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-message-arrow-up-right"></i>',
     group: 'common',
     visible: () => item.actor,
-    callback: () => item.displayCard(),
+    onClick: () => item.displayCard(),
   });
 
   options.push({
@@ -213,7 +213,7 @@ export function getItemContextOptions(
       item.isOwner &&
       !compendiumLocked &&
       (item.system.quantity ?? 0) > 1,
-    callback: () => {
+    onClick: () => {
       if (item.system.quantity === 2) {
         item.system.split();
       } else {
@@ -235,7 +235,7 @@ export function getItemContextOptions(
       itemParent?.isOwner &&
       !FoundryAdapter.isLockedInCompendium(itemParent),
     group: 'action',
-    callback: async () => {
+    onClick: async () => {
       const options: Record<string, unknown> = {};
 
       if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
@@ -262,13 +262,13 @@ export function getItemContextOptions(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
-    callback: () => item.sheet._renderChild(item.system.linkedActivity.sheet),
+    onClick: () => item.sheet._renderChild(item.system.linkedActivity.sheet),
   });
 
   options.push({
     label: 'DND5E.Identify',
     icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
-    callback: () => item.update({ 'system.identified': true }),
+    onClick: () => item.update({ 'system.identified': true }),
     visible: () =>
       item.system.identified === false &&
       FoundryAdapter.canIdentify(item) &&
@@ -284,7 +284,7 @@ export function getItemContextOptions(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
-    callback: () =>
+    onClick: () =>
       item.clone(
         {
           name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
@@ -314,7 +314,7 @@ export function getItemContextOptions(
       !!itemParent?.isOwner &&
       isCharacter,
     group: 'customize',
-    callback: () => {
+    onClick: () => {
       TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
     },
   });
@@ -344,7 +344,7 @@ export function getItemContextOptions(
         item.system.uses?.max > 0 &&
         inspirationSourceItem?.id !== item.id,
       group: 'customize',
-      callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
+      onClick: () => TidyFlags.inspirationSource.set(itemParent, item.id),
     });
 
     options.push({
@@ -356,7 +356,7 @@ export function getItemContextOptions(
         itemInspirationSourceAvailable &&
         inspirationSourceItem?.id === item.id,
       group: 'customize',
-      callback: () => TidyFlags.inspirationSource.unset(itemParent),
+      onClick: () => TidyFlags.inspirationSource.unset(itemParent),
     });
   }
 
@@ -370,7 +370,7 @@ export function getItemContextOptions(
         !showActionSectionConfig) &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
-    callback: () =>
+    onClick: () =>
       app._renderChild(
         new SectionSelectorApplication({
           flag: TidyFlags.section.prop,
@@ -409,7 +409,7 @@ export function getItemContextOptions(
       app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
-    callback: () =>
+    onClick: () =>
       app._renderChild(
         new SectionSelectorApplication({
           flag: TidyFlags.actionSection.prop,
@@ -423,7 +423,7 @@ export function getItemContextOptions(
   options.push({
     label: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: () => {
+    onClick: () => {
       if (tabId) {
         SheetPinsProvider.pin(item, tabId, 'item');
       }
@@ -441,7 +441,7 @@ export function getItemContextOptions(
   options.push({
     label: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: () => {
+    onClick: () => {
       if (tabId) {
         SheetPinsProvider.unpin(item, tabId);
       }
@@ -465,7 +465,7 @@ export function getItemContextOptions(
         { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
       ),
       icon: `<i class="fa-solid fa-thumbtack"></i>`,
-      callback: () => {
+      onClick: () => {
         SheetPinsProvider.pin(item, aggregatePinTab.tabId, 'item');
       },
       visible: () =>
@@ -484,7 +484,7 @@ export function getItemContextOptions(
     options.push({
       label: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => {
+      onClick: () => {
         if (tabId) {
           SheetPinsProvider.setItemResourceType(item, tabId, 'limited-uses');
         }
@@ -500,7 +500,7 @@ export function getItemContextOptions(
     options.push({
       label: 'TIDY5E.ContextMenuActionShowQuantity',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => {
+      onClick: () => {
         if (tabId) {
           SheetPinsProvider.setItemResourceType(item, tabId, 'quantity');
         }
@@ -526,7 +526,7 @@ export function getItemContextOptions(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'be-careful',
-    callback: () => item.deleteDialog({ sheet: app }),
+    onClick: () => item.deleteDialog({ sheet: app }),
   });
 
   return options;

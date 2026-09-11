@@ -56,7 +56,7 @@ export function configureKeyedFavoriteContextMenu(
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
       visible: () => app.isEditable,
       group: 'common',
-      callback: () => onEdit(app),
+      onClick: () => onEdit(app),
     },
     {
       // TODO: Could we move this to TIDY5E.AddSpecific?
@@ -64,7 +64,7 @@ export function configureKeyedFavoriteContextMenu(
       icon: hasFavorite
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
-      callback: () => {
+      onClick: () => {
         hasFavorite
           ? app.actor.system.removeFavorite(favorite.id)
           : app.actor.system.addFavorite(favorite);

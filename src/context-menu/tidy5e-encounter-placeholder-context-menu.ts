@@ -33,7 +33,7 @@ function getEncounterPlaceholderContextOptions(
     {
       label: 'TIDY5E.Encounter.DeletePlaceholder.Label',
       icon: `<i class="fas fa-trash fa-fw"></i>`,
-      callback: async () =>
+      onClick: async () =>
         TidyFlags.placeholders.deleteEntry(encounter, placeholderId),
       visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),

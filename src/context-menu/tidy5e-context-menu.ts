@@ -33,11 +33,11 @@ export function initTidy5eContextMenu(
 /**
  * Handle activation of a context menu for an embedded Item or ActiveEffect document.
  * Dynamically populate the array of context menu options.
- * @param {HTMLElement} element       The HTML element for which the context menu is activated
+ * @param {HTMLElement} target       The HTML element for which the context menu is activated
  * @protected
  */
-function onDocumentContextOpened(this: any, element: HTMLElement) {
-  const contextMenuType = element.getAttribute('data-context-menu');
+function onDocumentContextOpened(this: any, target: HTMLElement) {
+  const contextMenuType = target.getAttribute('data-context-menu');
 
   const app = this;
 
@@ -45,49 +45,49 @@ function onDocumentContextOpened(this: any, element: HTMLElement) {
 
   switch (contextMenuType) {
     case CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES:
-      configureActivitiesContextMenu(element, app);
+      configureActivitiesContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS:
-      configureActiveEffectsContextMenu(element, app);
+      configureActiveEffectsContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER:
-      configureEncounterContextMenu(element, app);
+      configureEncounterContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER:
-      configureEncounterPlaceholderContextMenu(element, app);
+      configureEncounterPlaceholderContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS:
-      configureFacilityContextMenu(element, app);
+      configureFacilityContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER:
-      configureVehicleMemberContextMenu(element, app);
+      configureVehicleMemberContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_FACILITY:
-      configureGroupBastionFacilityContextMenu(element, app);
+      configureGroupBastionFacilityContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_BASTION_MEMBER:
-      configureGroupBastionMemberContextMenu(element, app);
+      configureGroupBastionMemberContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER:
-      configureGroupContextMenu(element, app);
+      configureGroupContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ITEMS:
-      configureItemContextMenu(element, app);
+      configureItemContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE:
-      configureKeyedFavoriteContextMenu(element, app);
+      configureKeyedFavoriteContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL:
-      configureActorJournalContextMenu(element, app);
+      configureActorJournalContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_SECTION:
-      configureSectionContextMenu(element, app);
+      configureSectionContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_SKILL_ROLL:
-      configureSkillRollContextMenu(element, app);
+      configureSkillRollContextMenu(target, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL:
-      configureGroupSkillRollContextMenu(element, app);
+      configureGroupSkillRollContextMenu(target, app);
       break;
     default:
       warn(
