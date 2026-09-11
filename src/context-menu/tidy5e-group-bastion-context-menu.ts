@@ -45,23 +45,23 @@ export function configureGroupBastionMemberContextMenu(
 
   ui.context.menuItems = [
     {
-      name: 'DND5E.FACILITY.AvailableFacility.basic.build',
+      label: 'DND5E.FACILITY.AvailableFacility.basic.build',
       icon: '<i class="fa-solid fa-trowel fa-fw"></i>',
-      condition: canModify,
+      visible: canModify,
       callback: (_target, event) =>
         app.addMemberFacility(member, CONSTANTS.FACILITY_TYPE_BASIC, event),
     },
     {
-      name: 'DND5E.FACILITY.AvailableFacility.special.free',
+      label: 'DND5E.FACILITY.AvailableFacility.special.free',
       icon: '<i class="fa-solid fa-building-columns fa-fw"></i>',
-      condition: canModify,
+      visible: canModify,
       callback: (_target, event) =>
         app.addMemberFacility(member, CONSTANTS.FACILITY_TYPE_SPECIAL, event),
     },
     {
-      name: 'TIDY5E.Bastion.Group.MaintainOrder.Label',
+      label: 'TIDY5E.Bastion.Group.MaintainOrder.Label',
       icon: '<i class="fa-solid fa-broom fa-fw"></i>',
-      condition: () =>
+      visible: () =>
         FoundryAdapter.userIsGm() &&
         canModify() &&
         !!member.itemTypes.facility?.length,
@@ -87,24 +87,24 @@ export function configureGroupBastionFacilityContextMenu(
 
   ui.context.menuItems = [
     {
-      name: 'TIDY5E.ContextMenuActionView',
+      label: 'TIDY5E.ContextMenuActionView',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       group: 'common',
       callback: () =>
         app._renderChild(facility.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
     },
     {
-      name: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.ContextMenuActionEdit',
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
-      condition: canModify,
+      visible: canModify,
       group: 'common',
       callback: () =>
         app._renderChild(facility.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
     },
     {
-      name: 'DND5E.FACILITY.Order.Execute',
+      label: 'DND5E.FACILITY.Order.Execute',
       icon: '<i class="fa-solid fa-scroll fa-fw"></i>',
-      condition: () =>
+      visible: () =>
         canModify() &&
         !facility.system.disabled &&
         isNil(facility.system.progress?.order, ''),
@@ -114,9 +114,9 @@ export function configureGroupBastionFacilityContextMenu(
     },
     {
       // Runs the system's order evaluation so gold and crafted items are awarded.
-      name: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
+      label: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
       icon: '<i class="fa-solid fa-clipboard-check fa-fw"></i>',
-      condition: () =>
+      visible: () =>
         FoundryAdapter.userIsGm() &&
         canModify() &&
         !isNil(facility.system.progress?.order, ''),
@@ -126,9 +126,9 @@ export function configureGroupBastionFacilityContextMenu(
     {
       // Cancels the order, skipping the system's order evaluation, so no gold
       // or crafted items are awarded.
-      name: 'TIDY5E.Bastion.Group.CancelOrder.Label',
+      label: 'TIDY5E.Bastion.Group.CancelOrder.Label',
       icon: '<i class="fa-solid fa-xmark fa-fw"></i>',
-      condition: () => canModify() && !isNil(facility.system.progress?.order, ''),
+      visible: () => canModify() && !isNil(facility.system.progress?.order, ''),
       group: 'common',
       callback: () =>
         facility.update({
@@ -137,17 +137,17 @@ export function configureGroupBastionFacilityContextMenu(
     },
     // {
     //   // TODO: Tidy-only functionality here, not via the system.
-    //   name: 'TIDY5E.Bastion.Group.KillDefenders.Label',
+    //   label: 'TIDY5E.Bastion.Group.KillDefenders.Label',
     //   icon: '<i class="fa-solid fa-skull fa-fw"></i>',
     //   classes: 'color-text-lighter',
-    //   condition: () => canModify() && facility.system.defenders?.max > 0,
+    //   visible: () => canModify() && facility.system.defenders?.max > 0,
     //   group: 'common',
     //   callback: () => {console.log('TODO: Kill defenders functionality');},
     // },
     {
-      name: 'TIDY5E.ContextMenuActionDelete',
+      label: 'TIDY5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-      condition: () => canModify() && facility.canDelete,
+      visible: () => canModify() && facility.canDelete,
       group: 'be-careful',
       callback: () => facility.deleteDialog({ sheet: app }),
     },

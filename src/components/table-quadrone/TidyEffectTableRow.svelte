@@ -5,19 +5,19 @@
     description: {
       value: '',
     },
+    changes: [],
   };
 </script>
 
 <script lang="ts">
   import { type OnItemToggledFn } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
-  import type { EffectSummaryData, ActiveEffectContext } from 'src/types/types';
+  import type {  ActiveEffectContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TidyEffectSummary from './TidyEffectSummary.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
-  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     effectContext: ActiveEffectContext;
@@ -73,6 +73,11 @@
               effectContext.effect.description ?? '',
             ),
           },
+          changes: await Promise.all(
+            effectContext.effect.changes.map((change: any) =>
+              effectContext.effect.getSheetChangeContext(change),
+            ),
+          ),
         };
       })}
       {#await summaryDataPromise then summaryData}

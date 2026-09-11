@@ -14,7 +14,7 @@ export function configureEncounterPlaceholderContextMenu(
     return;
   }
 
-  ui.context.menuItems = getEncounterPlaceholderContextOptionsQuadrone(
+  ui.context.menuItems = getEncounterPlaceholderContextOptions(
     app.document,
     placeholderId,
   );
@@ -25,17 +25,17 @@ export function configureEncounterPlaceholderContextMenu(
     ui.context.menuItems,
   );
 }
-function getEncounterPlaceholderContextOptionsQuadrone(
+function getEncounterPlaceholderContextOptions(
   encounter: Actor5e,
   placeholderId: string,
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
-      name: 'TIDY5E.Encounter.DeletePlaceholder.Label',
+      label: 'TIDY5E.Encounter.DeletePlaceholder.Label',
       icon: `<i class="fas fa-trash fa-fw"></i>`,
       callback: async () =>
         TidyFlags.placeholders.deleteEntry(encounter, placeholderId),
-      condition: () =>
+      visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
     },
   ];

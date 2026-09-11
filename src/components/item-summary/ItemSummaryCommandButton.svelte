@@ -31,7 +31,6 @@
   type="button"
   class="button button-borderless {label ? '' : 'button-icon-only'}"
   onclick={(event) => command.execute?.({ ...params, event })}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   data-tooltip={FoundryAdapter.localize(tooltip ?? '')}
 >
   {#if label}

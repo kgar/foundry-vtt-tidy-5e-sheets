@@ -39,7 +39,7 @@ function getGroupMemberContextOptions(
     .map(
       ([abilityKey, ability]) =>
         ({
-          name: FoundryAdapter.localize('DND5E.SkillRoll', {
+          label: FoundryAdapter.localize('DND5E.SkillRoll', {
             ability: ability.label,
             skill: skill.label,
           }),

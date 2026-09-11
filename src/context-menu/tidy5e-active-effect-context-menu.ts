@@ -1,14 +1,12 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
 import { warn } from 'src/utils/logging';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { getActiveEffectContextOptionsQuadrone } from './tidy5e-active-effect-context-menu-quadrone';
 
 export function configureActiveEffectsContextMenu(
   element: HTMLElement,
-  app: any
+  app: any,
 ) {
   const effectId =
     element.closest('[data-effect-id]')?.getAttribute('data-effect-id') ?? '';
@@ -25,47 +23,88 @@ export function configureActiveEffectsContextMenu(
     return;
   }
 
-  const isQuadroneSheet = element.closest('.quadrone');
-
-  ui.context.menuItems = isQuadroneSheet
-    ? getActiveEffectContextOptionsQuadrone(effect, app, element)
-    : getActiveEffectContextOptions(effect, app);
+  ui.context.menuItems = getActiveEffectContextOptions(effect, app, element);
   TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
 }
 
-export function getActiveEffectContextOptions(effect: any, app: any) {
+export function getActiveEffectContextOptions(
+  effect: any,
+  app: any,
+  element: HTMLElement,
+) {
   const effectParent = effect.parent;
 
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
-    return [];
-  }
-
-  if (
-    actor.system.isCharacter &&
-    !FoundryAdapter.allowCharacterEffectsManagement(actor)
-  ) {
+  if (!effectParent?.isOwner) {
     return [];
   }
 
   const isConcentrationEffect = FoundryAdapter.isConcentrationEffect(
     effect,
-    app
+    app,
   );
 
+  const isInFavorites = !!element.closest('.favorites');
+
   const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
-  const favoriteIcon = 'fa-bookmark';
 
   let tidy5eKgarContextOptions: ContextMenuEntry[] = [
     {
-      name: 'DND5E.ContextMenuActionEdit',
-      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: () => app._renderChild(effect.sheet),
+      label: 'TIDY5E.ContextMenuActionViewItem',
+      icon: '<i class="fas fa-eye fa-fw"></i>',
+      group: 'common',
+      callback: () =>
+        app._renderChild(effect.item.sheet, {
+          mode: CONSTANTS.SHEET_MODE_PLAY,
+        }),
+      visible: () =>
+        !!effect.item &&
+        app.document.documentName !== CONSTANTS.DOCUMENT_NAME_ITEM,
     },
     {
-      name: 'DND5E.ContextMenuActionDuplicate',
+      label: effect.disabled
+        ? 'DND5E.ContextMenuActionEnable'
+        : 'DND5E.ContextMenuActionDisable',
+      icon: effect.disabled
+        ? "<i class='fas fa-check fa-fw'></i>"
+        : "<i class='fas fa-times fa-fw'></i>",
+      callback: () => effect.update({ disabled: !effect.disabled }),
+      visible: () => effect.isOwner && !isConcentrationEffect,
+      group: 'state',
+    },
+    {
+      label: 'DND5E.CONCENTRATION.Action.Break',
+      icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
+      visible: () => isConcentrationEffect,
+      callback: () => app.document.endConcentration(effect),
+      group: 'state',
+    },
+    {
+      label: 'DND5E.ContextMenuActionEdit',
+      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+      callback: () => app._renderChild(effect.sheet),
+      group: 'common',
+    },
+    {
+      // TODO: Could we move this to TIDY5E.AddSpecific?
+      label: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      icon: isFav
+        ? `<i class='fa-regular fa-star fa-fw'></i>`
+        : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
+      visible: () => 'favorites' in actor.system,
+      callback: () => {
+        if (!effect) {
+          warn(`tidy5e-context-menu | Effect Not Found.`);
+          return;
+        }
+        FoundryAdapter.toggleFavoriteEffect(effect);
+      },
+      group: 'common',
+    },
+    {
+      label: 'DND5E.ContextMenuActionDuplicate',
       icon: "<i class='fas fa-copy fa-fw'></i>",
       callback: () =>
         effect.clone(
@@ -74,48 +113,18 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
               name: effect.name,
             }),
           },
-          { save: true }
+          { save: true },
         ),
-      condition: () => canEditEffect(effect),
+      visible: () => !isInFavorites && canEditEffect(effect),
+      group: 'common',
     },
     {
-      name: 'DND5E.ContextMenuActionDelete',
-      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
+      label: 'DND5E.ContextMenuActionDelete',
+      icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
       callback: () => effect.deleteDialog({ sheet: actor?.sheet }),
-      condition: () => canEditEffect(effect) && !isConcentrationEffect,
-    },
-    {
-      name: effect.disabled
-        ? 'DND5E.ContextMenuActionEnable'
-        : 'DND5E.ContextMenuActionDisable',
-      icon: effect.disabled
-        ? "<i class='fas fa-check fa-fw'></i>"
-        : "<i class='fas fa-times fa-fw'></i>",
-      callback: () => effect.update({ disabled: !effect.disabled }),
-      condition: () => effect.isOwner && !isConcentrationEffect,
-      group: 'state',
-    },
-    {
-      name: 'DND5E.ConcentrationBreak',
-      icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
-      condition: () => isConcentrationEffect,
-      callback: () => app.document.endConcentration(effect),
-      group: 'state',
-    },
-    {
-      name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
-      icon: isFav
-        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-        : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
-      condition: () => 'favorites' in actor.system,
-      callback: () => {
-        if (!effect) {
-          warn(`tidy5e-context-menu | Effect Not Found.`);
-          return;
-        }
-        FoundryAdapter.toggleFavoriteEffect(effect);
-      },
-      group: 'state',
+      visible: () =>
+        !isInFavorites && canEditEffect(effect) && !isConcentrationEffect,
+      group: 'be-careful',
     },
   ];
 

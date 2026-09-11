@@ -14,6 +14,9 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
+  import { Container } from 'src/features/containers/Container';
+  import { tryGetSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { onDropToContainer } from 'src/features/containers/attachments';
 
   interface Props {
     container: Item5e;
@@ -33,6 +36,14 @@
     sheetDocument,
   }: Props = $props();
 
+  // Get context so that we can check the sheet and see if container content should be shown.
+  const sheetContext = $derived(tryGetSheetContext<{ unlocked?: boolean }>());
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(container, {
+      unlocked: sheetContext?.unlocked === true,
+    }),
+  );
+
   let currencies = $derived(containerContents.currencies);
 
   let toggleServiceMap = $derived(inlineToggleService.map);
@@ -42,22 +53,7 @@
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
-
-  async function onDrop(
-    event: DragEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    const sheet = new Tidy5eContainerSheetQuadrone({ document: container });
-
-    sheet._onDrop(
-      event as DragEvent & {
-        currentTarget: EventTarget & HTMLElement;
-        target: HTMLElement;
-      },
-    );
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }
+  let localize = FoundryAdapter.localize;
 
   $effect(() => {
     if (
@@ -93,57 +89,81 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
   deferRendering
 >
-  <div class="inline-content-view full-height" data-item-id={container.id}>
+  {#if contentsVisibility !== 'hidden'}
     <div
-      class="flex-column extra-small-gap flex-1 inline-container-view"
-      data-tidy-container-id={container.id}
-      ondrop={onDrop}
+      class={[
+        'inline-content-view full-height',
+        contentsVisibility === 'gmSecret' ? 'secret-block gm-secret' : '',
+      ]}
+      data-item-id={container.id}
     >
-      <InventoryTables
-        sections={inventory}
-        {container}
-        {editable}
-        itemContext={containerContents.itemContext}
-        {inlineToggleService}
-        {searchCriteria}
-        {sheetDocument}
-      />
-      {#if !containerContents.contents.some((c) => c.items.length > 0)}
-        <div class="empty-container">
-          <span class="empty-container-text"
-            >{FoundryAdapter.localize('TIDY5E.EmptyContainer')}</span
-          >
+      {#if contentsVisibility === 'gmSecret'}
+        <div class="gm-only">
+          {localize(
+            'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+          )}
         </div>
       {/if}
-    </div>
+      <div
+        role="region"
+        class="flex-column extra-small-gap flex-1 inline-container-view"
+        data-tidy-container-id={container.id}
+        {@attach onDropToContainer(container)}
+      >
+        <InventoryTables
+          sections={inventory}
+          {container}
+          {editable}
+          itemContext={containerContents.itemContext}
+          {inlineToggleService}
+          {searchCriteria}
+          {sheetDocument}
+        />
+        {#if !containerContents.contents.some((c) => c.items.length > 0)}
+          <div class="empty-container">
+            <span class="empty-container-text"
+              >{FoundryAdapter.localize('TIDY5E.EmptyContainer')}</span
+            >
+          </div>
+        {/if}
+      </div>
 
-    <div
-      class="currency-container flexrow flex1 extra-small-gap align-items-center"
-    >
-      {#each currencies as currency (currency.key)}
-        <label class="input-group">
-          <i class="currency {currency.key}" aria-label={currency.key}></i>
-          <TextInputQuadrone
-            document={container}
-            field="system.currency.{currency.key}"
-            id="{container.id}-system.currency.{currency.key}"
-            value={currency.value}
-            enableDeltaChanges={true}
-            selectOnFocus={true}
-            disabled={!editable}
-            class="currency-item uninput currency-{currency.key}"
-            placeholder="0"
-          />
-          <span class="denomination {currency.key}" data-denom={currency.key}>
-            {currency.abbr}
-          </span>
-        </label>
-      {/each}
-      <TransferCurrencyButton
-        {container}
-        currencies={containerContents.currencies}
-        class="flexshrink"
-      />
+      <div
+        class="currency-container flexrow flex1 extra-small-gap align-items-center"
+      >
+        {#each currencies as currency (currency.key)}
+          <label class="input-group">
+            <i class="currency {currency.key}" aria-label={currency.key}></i>
+            <TextInputQuadrone
+              document={container}
+              field="system.currency.{currency.key}"
+              id="{container.id}-system.currency.{currency.key}"
+              value={currency.value}
+              enableDeltaChanges={true}
+              selectOnFocus={true}
+              disabled={!editable}
+              class="currency-item uninput currency-{currency.key}"
+              placeholder="0"
+            />
+            <span class="denomination {currency.key}" data-denom={currency.key}>
+              {currency.abbr}
+            </span>
+          </label>
+        {/each}
+        <TransferCurrencyButton
+          {container}
+          currencies={containerContents.currencies}
+          class="flexshrink"
+        />
+      </div>
     </div>
-  </div>
+  {:else}
+    <div
+      class="inventory-empty empty-state-container color-text-lightest"
+      data-tidy-container-id={container.id}
+      {@attach onDropToContainer(container)}
+    >
+      <p>{localize('DND5E.Unidentified.Notice')}</p>
+    </div>
+  {/if}
 </ExpandableContainer>

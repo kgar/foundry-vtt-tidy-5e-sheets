@@ -34,12 +34,6 @@ export const WorldSettingsTabIds = {
   sheetPreferences: 'settings:sheet-preferences',
 } as const;
 
-export type WorldSettingsTabInfo = {
-  id: string;
-  title: string;
-  iconClass?: string;
-};
-
 export type WorldSettingsContext = {};
 
 export type WorldSettingsApplicationConfiguration =

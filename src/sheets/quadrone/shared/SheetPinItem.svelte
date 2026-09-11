@@ -1,6 +1,6 @@
 <script lang="ts">
-  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { Activities } from 'src/features/activities/activities';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getActorSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -8,10 +8,12 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
+  import { Container } from 'src/features/containers/Container';
   import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
   import SpellPipsQuadrone from 'src/components/pips/SpellPipsQuadrone.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import type { ClassValue } from 'svelte/elements';
+    import RechargeControl from 'src/components/unsorted/RechargeControl.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -21,7 +23,23 @@
 
   const context = $derived(getActorSheetQuadroneContext());
 
+  // Hide the tooltip if unidentified container contents are hidden.
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(ctx.document, {
+      unlocked: context.unlocked,
+    }),
+  );
+
   let isEditing = $state(false);
+
+  let visibleActivities = $derived(
+    context.itemContext[ctx.document.id]?.activities?.map(
+      (activityCtx) => activityCtx.activity,
+    ) ??
+      Activities.getVisibleActivities(
+        ctx.document,
+      ),
+  );
 
   const { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
@@ -39,7 +57,7 @@
         };
       }
 
-      const primaryActivity = ctx.document.system.activities?.contents[0];
+      const primaryActivity = visibleActivities[0];
       const usePrimaryActivity =
         ctx.document.system.uses.max === '' &&
         !isNil(primaryActivity?.uses?.max, '');
@@ -200,7 +218,7 @@
         {const capacity = $derived(
           context.itemContext[ctx.document.id].containerCapacity,
         )}
-        {#if capacity}
+        {#if capacity && contentsVisibility !== 'hidden'}
           <ContainerCapacityTooltip
             bind:this={containerCapacityTooltip}
             container={ctx.document}
@@ -209,6 +227,7 @@
           />
 
           <div
+            role="tooltip"
             class="pin-container"
             onmouseover={(ev) => containerCapacityTooltip?.tryShow(ev)}
             onfocus={(ev) => containerCapacityTooltip?.tryShow(ev)}
@@ -281,12 +300,12 @@
             />
           {/if}
         </div>
-      {:else if ctx.document.system.activities?.size > 0}
+      {:else if visibleActivities.length > 0}
         <div class="pin-counter {ctx.resource}">
           <span class="subtitle font-default-medium color-text-lighter"
-            >{ctx.document.system.activities.size}
+            >{visibleActivities.length}
             {localize(
-              ctx.document.system.activities.size === 1
+              visibleActivities.length === 1
                 ? 'DND5E.ACTIVITY.Title.one'
                 : 'DND5E.ACTIVITY.Title.other',
             )}</span

@@ -2,12 +2,9 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActionSectionClassic,
   Actor5e,
-  ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
-  CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
   VehicleDraftAnimalSection,
@@ -16,7 +13,6 @@ import type {
   GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
-  NpcSheetContext,
   NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
@@ -30,7 +26,6 @@ import { UserSheetPreferencesService } from '../user-preferences/SheetPreference
 import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { getSortedActions } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -62,8 +57,7 @@ export class SheetSections {
   }
 
   static applySpellToSection(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spellbook: Record<string, SpellbookSection>,
     spell: Item5e,
@@ -88,8 +82,7 @@ export class SheetSections {
   }
 
   static createSpellbookSection(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     customSectionName: string,
     options: Partial<SpellbookSection>,
@@ -171,8 +164,7 @@ export class SheetSections {
 
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
-    context:
-      CharacterSheetContext | NpcSheetContext | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {},
@@ -256,7 +248,7 @@ export class SheetSections {
    * @protected
    */
   static _prepareSpellbookLegacy(
-    context: ActorSheetContextV1 | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     items: Item5e[],
   ) {
     const owner = context.actor.isOwner;
@@ -398,11 +390,7 @@ export class SheetSections {
   }
 
   static prepareClassItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e,
@@ -439,11 +427,7 @@ export class SheetSections {
   }
 
   static collocateSubItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     items: Item5e[],
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -651,8 +635,9 @@ export class SheetSections {
             // Sort Favorite Effects
             if (sortMode === 'm') {
               const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
+                favoritesIdMap.get(
+                  foundry.utils.buildRelativeUuid(effects, actor),
+                )?.sort ?? Number.MAX_SAFE_INTEGER;
 
               effectContexts = effectContexts.toSorted(
                 (a, b) => getSort(a.effect) - getSort(b.effect),
@@ -688,8 +673,8 @@ export class SheetSections {
             // Sort Favorites Items
             if (sortMode === 'm') {
               const getSort = (item: Item5e) =>
-                favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
+                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))
+                  ?.sort ?? Number.MAX_SAFE_INTEGER;
 
               items = items.toSorted((a, b) => getSort(a) - getSort(b));
             } else {
@@ -751,11 +736,7 @@ export class SheetSections {
       CharacterFeatureSection | FeatureSection | NpcAbilitySection,
   >(
     features: TSection[],
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>,
@@ -782,31 +763,6 @@ export class SheetSections {
     }
 
     return features;
-  }
-
-  static configureActions(
-    sections: ActionSectionClassic[],
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined,
-  ) {
-    try {
-      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      return sections.map(({ ...section }) => {
-        section.actions = getSortedActions(section, sortMode);
-
-        section.show = sectionConfigs?.[section.key]?.show !== false;
-
-        return section;
-      });
-    } catch (e) {
-      error('An error occurred while configuring actions', false, e);
-    }
-
-    return sections;
   }
 
   static configureActionsQuadrone<T extends TidyItemSectionBase>(
@@ -928,7 +884,7 @@ export class SheetSections {
         : item.type === CONSTANTS.ITEM_TYPE_FEAT
           ? 'DND5E.Features'
           : item.type === CONSTANTS.ITEM_TYPE_SPELL
-            ? 'DND5E.Spellbook'
+            ? 'TYPES.Item.spellPl'
             : 'TIDY5E.Section.Label';
 
     return FoundryAdapter.localize(value);
@@ -936,11 +892,10 @@ export class SheetSections {
 
   static getActionSectionLabel(item: Item5e) {
     return item.parent?.system.isCharacter
-      ? FoundryAdapter.localize('Sheet')
+      ? FoundryAdapter.localize('DOCUMENT.Sheet')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 
-  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
   static configureGroupMembers(
     sections: GroupMemberSection[],
     tabId: string,

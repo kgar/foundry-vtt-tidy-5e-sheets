@@ -20,6 +20,12 @@
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(context.item, {
+      unlocked: context.unlocked,
+    }),
+  );
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
@@ -42,43 +48,47 @@
   });
 
   let footerEl: HTMLElement | undefined = $state();
-
 </script>
 
-<ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
+{#if contentsVisibility === 'visible'}
+  <ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
 
+  <!-- Tables -->
+  <InventoryTables
+    sections={configuredContents}
+    container={context.item}
+    editable={context.editable}
+    itemContext={context.containerContents.itemContext}
+    {inlineToggleService}
+    {searchCriteria}
+    sheetDocument={context.item}
+    root={true}
+  />
 
-<!-- Tables -->
-<InventoryTables
-  sections={configuredContents}
-  container={context.item}
-  editable={context.editable}
-  itemContext={context.containerContents.itemContext}
-  {inlineToggleService}
-  {searchCriteria}
-  sheetDocument={context.item}
-  root={true}
-/>
-
-<footer bind:this={footerEl} class="contents-footer">
-  <!-- Capacity Bar -->
-  <CapacityBar container={context.item} capacity={context.capacity} />
-  <!-- svelte-ignore a11y_missing_attribute -->
-  <a
-    aria-label={localize('DND5E.ItemCreate')}
-    role="button"
-    tabindex="0"
-    data-tooltip="DND5E.ItemCreate"
-    class="button button-icon-only button-primary item-create"
-    class:disabled={!context.editable}
-    onclick={() => Container.promptCreateInventoryItem(context.item)}
-    onkeydown={(event) => {
-      if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
-        event.preventDefault();
-        Container.promptCreateInventoryItem(context.item);
-      }
-    }}
-  >
-    <i class="fas fa-plus"></i>
-  </a>
-</footer>
+  <footer bind:this={footerEl} class="contents-footer">
+    <!-- Capacity Bar -->
+    <CapacityBar container={context.item} capacity={context.capacity} />
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a
+      aria-label={localize('DND5E.ItemCreate')}
+      role="button"
+      tabindex="0"
+      data-tooltip="DND5E.ItemCreate"
+      class="button button-icon-only button-primary item-create"
+      class:disabled={!context.editable}
+      onclick={() => Container.promptCreateInventoryItem(context.item)}
+      onkeydown={(event) => {
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          Container.promptCreateInventoryItem(context.item);
+        }
+      }}
+    >
+      <i class="fas fa-plus"></i>
+    </a>
+  </footer>
+{:else}
+  <div class="inventory-empty empty-state-container color-text-lightest">
+    <p>{localize('DND5E.Unidentified.Notice')}</p>
+  </div>
+{/if}

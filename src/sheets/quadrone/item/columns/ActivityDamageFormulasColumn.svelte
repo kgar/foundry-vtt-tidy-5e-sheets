@@ -1,8 +1,10 @@
 <script lang="ts">
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { Actions } from 'src/features/actions/actions.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { error } from 'src/utils/logging';
   import ListItemsTooltip from 'src/tooltips/ListItemsTooltip.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import type { ActivityItemContext } from 'src/types/types';
 
@@ -12,6 +14,18 @@
   };
 
   let { rowDocument, rowContext }: Props = $props();
+  const localize = FoundryAdapter.localize;
+
+  let context = $derived(getSheetContext());
+  let unidentified = $derived(rowDocument.item?.system?.identified === false);
+  let onItemSheet = $derived(
+    context.document?.documentName === 'Item' &&
+      context.document?.id === rowDocument.item?.id,
+  );
+  let conceal = $derived(
+    unidentified &&
+      !(onItemSheet && FoundryAdapter.isInGmEditMode(context.document)),
+  );
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
@@ -42,22 +56,30 @@
 
 <div
   class="flexcol truncate"
-  onmouseover={(ev) => labels?.length && tooltip?.tryShow(ev.currentTarget)}
+  role="tooltip"
+  onmouseover={(ev) =>
+    !conceal && labels?.length && tooltip?.tryShow(ev.currentTarget)}
+  onfocus={(ev) =>
+    !conceal && labels?.length && tooltip?.tryShow(ev.currentTarget)}
 >
-  {#each rowDocument.labels.damages ?? [] as damage}
-    {const formula = $derived(getTrimmedExpression(damage.formula))}
-    {const damageHealingIcon = $derived(
-      damageHealingTypeIcons[damage.damageType],
-    )}
-    <div class="flexrow damage-formula-container">
-      <span class="flexshrink damage-formula truncate">{formula}</span>
-      {#if damageHealingIcon}
-        <span class="flexshrink damage-icon" aria-label={damage.label}>
-          <Dnd5eIcon src={damageHealingIcon} />
-        </span>
-      {/if}
-    </div>
+  {#if !conceal}
+    {#each rowDocument.labels.damages ?? [] as damage}
+      {const formula = $derived(getTrimmedExpression(damage.formula))}
+      {const damageHealingIcon = $derived(
+        damageHealingTypeIcons[damage.damageType],
+      )}
+      <div class="flexrow damage-formula-container">
+        <span class="flexshrink damage-formula truncate">{formula}</span>
+        {#if damageHealingIcon}
+          <span class="flexshrink damage-icon" aria-label={damage.label}>
+            <Dnd5eIcon src={damageHealingIcon} />
+          </span>
+        {/if}
+      </div>
+    {:else}
+      <span class="color-text-disabled">{unidentified ? localize('TIDY5E.Table.UnidentifiedPlaceholder') : '—'}</span>
+    {/each}
   {:else}
-    <span class="color-text-disabled">&mdash;</span>
-  {/each}
+    <span class="color-text-disabled">{unidentified ? localize('TIDY5E.Table.UnidentifiedPlaceholder') : '—'}</span>
+  {/if}
 </div>

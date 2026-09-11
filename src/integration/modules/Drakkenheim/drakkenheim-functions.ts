@@ -2,7 +2,6 @@ import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import DrakkenheimCoreContaminationTab from './DrakkenheimCoreContaminationTab.svelte';
 import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
-import { SettingsProvider } from 'src/settings/settings.svelte';
 import { loadConditionalStyles } from 'src/utils/css-loading';
 
 function getDrakkenheimModuleScope(): string | undefined {
@@ -38,10 +37,6 @@ export function registerDrakkenheimContaminationTab(
     return;
   }
 
-  if (!SettingsProvider.settings.hideClassic.get()) {
-    import('./DrakkenheimContaminationTabClassic.less');
-    loadConditionalStyles('DrakkenheimContaminationTabClassic');
-  }
   import('./DrakkenheimContaminationTab.css');
   loadConditionalStyles('DrakkenheimContaminationTab');
 
@@ -74,7 +69,7 @@ export function registerDrakkenheimContaminationTab(
   });
 
   api.registerCharacterTab(contaminationTab, {
-    layout: ['classic', 'quadrone'],
+    layout: ['quadrone'],
   });
-  api.registerNpcTab(contaminationTab, { layout: ['classic', 'quadrone'] });
+  api.registerNpcTab(contaminationTab, { layout: ['quadrone'] });
 }

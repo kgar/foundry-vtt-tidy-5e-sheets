@@ -3,12 +3,12 @@ import type { CONSTANTS } from 'src/constants';
 export type ContextMenuEntryCallback = (target: HTMLElement, event?: PointerEvent /* generation < 14 ; drop the ? when >= 14 */) => void;
 
 export type ContextMenuEntry = {
-  name?: string;
+  label?: string;
   icon?: string;
   group?: string;
   callback?: ContextMenuEntryCallback;
   classes?: string;
-  condition?: (target: HTMLElement) => void;
+  visible?: (target: HTMLElement) => void;
 };
 
 /**

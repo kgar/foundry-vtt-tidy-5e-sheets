@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { debug, error } from 'src/utils/logging';
@@ -8,7 +8,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
-  const context = $derived(getSheetContext<ActorSheetContextV1>());
+  const context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   interface Props {
     condition: Dnd5eActorCondition;

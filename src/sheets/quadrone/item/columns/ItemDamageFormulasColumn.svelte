@@ -8,12 +8,15 @@
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { TidyTableToggleSummaryFunction } from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = {
     rowDocument: Item5e;
   };
 
+  const localize = FoundryAdapter.localize;
   let { rowDocument }: Props = $props();
+  let identified = $derived(rowDocument?.system?.identified !== false);
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
@@ -53,35 +56,55 @@
 
 <div
   class="flexcol truncate"
+  role="tooltip"
   onmouseover={(ev) =>
-    allDamageLabels?.length && tooltip?.tryShow(ev.currentTarget)}
+    identified &&
+    allDamageLabels?.length &&
+    tooltip?.tryShow(ev.currentTarget)}
+  onfocus={(ev) =>
+    identified &&
+    allDamageLabels?.length &&
+    tooltip?.tryShow(ev.currentTarget)}
 >
-  {#each topTwoDamages ?? [] as damage, i}
-    {const formula = $derived(getTrimmedExpression(damage.formula))}
-    {const damageHealingIcon = $derived(
-      damageHealingTypeIcons[damage.damageType],
-    )}
-    <div class="flexrow damage-formula-container">
-      <span class="flexshrink damage-formula truncate">{formula}</span>
-      {#if damageHealingIcon}
-        <span class="flexshrink damage-icon" aria-label={damage.label}>
-          <Dnd5eIcon src={damageHealingIcon} />
-        </span>
-      {/if}
-      {#if i === 1 && remainingDamagesCount > 0}
-        <a
-          type="button"
-          class="button remaining-damages-count"
-          onclick={() => {
-            toggleSummary?.(true);
-            Tooltip.hide();
-          }}
-        >
-          +{remainingDamagesCount}
-        </a>
-      {/if}
-    </div>
+  {#if identified}
+    {#each topTwoDamages ?? [] as damage, i}
+      {const formula = $derived(getTrimmedExpression(damage.formula))}
+      {const damageHealingIcon = $derived(
+        damageHealingTypeIcons[damage.damageType],
+      )}
+      <div class="flexrow damage-formula-container">
+        <span class="flexshrink damage-formula truncate">{formula}</span>
+        {#if damageHealingIcon}
+          <span class="flexshrink damage-icon" aria-label={damage.label}>
+            <Dnd5eIcon src={damageHealingIcon} />
+          </span>
+        {/if}
+        {#if i === 1 && remainingDamagesCount > 0}
+          <!-- svelte-ignore a11y_missing_attribute -->
+          <a
+            type="button"
+            role="button"
+            tabindex="0"
+            class="button remaining-damages-count"
+            onclick={() => {
+              toggleSummary?.(true);
+              Tooltip.hide();
+            }}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                toggleSummary?.(true);
+                Tooltip.hide();
+              }
+            }}
+          >
+            +{remainingDamagesCount}
+          </a>
+        {/if}
+      </div>
+    {:else}
+      <span class="color-text-disabled">{identified ? '—' : localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+    {/each}
   {:else}
-    <span class="color-text-disabled">&mdash;</span>
-  {/each}
+    <span class="color-text-disabled">{identified ? '—' : localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+  {/if}
 </div>

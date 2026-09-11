@@ -81,6 +81,12 @@
               label: skill.name,
               members: context.memberContext.skilled,
             })}
+          onfocus={(ev) =>
+            tooltip?.tryShow(ev, {
+              key: skill.key,
+              label: skill.name,
+              members: context.memberContext.skilled,
+            })}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_SKILL_ROLL}
         >
           <button

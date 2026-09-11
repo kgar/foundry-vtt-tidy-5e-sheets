@@ -243,6 +243,7 @@
 
   &:not(.theme-basic) .abilities-container:not(.abilities-size-compact) {
     .ability-score.modifier-swapped {
+
       &:hover,
       &:focus-within {
         background: var(--t5e-score-image-hover) top center / auto no-repeat;
@@ -737,6 +738,12 @@
           --ability-collapsed-outline-highlight: var(--t5e-color-palette-gold-56);
         }
       }
+    }
+  }
+
+  &.theme-dark {
+    .ability-abbr {
+      font-weight: 560;
     }
   }
 }

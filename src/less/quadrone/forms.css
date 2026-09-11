@@ -30,7 +30,7 @@
     > legend {
       color: var(--t5e-color-text-default);
       /* title/small */
-      font-family: var(--font-family-title, 'Modesto Condensed');
+      font-family: var(--t5e-font-family-title, 'Modesto Condensed');
       font-size: var(--font-size-18);
       letter-spacing: 0.01rem;
       padding-block: var(--t5e-size-3x) var(--t5e-size-2x);

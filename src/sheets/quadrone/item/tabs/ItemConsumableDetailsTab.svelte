@@ -7,6 +7,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import ItemRarities from '../parts/ItemRarities.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -17,6 +18,7 @@
 
 <fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
+  <ItemRarities />
 </fieldset>
 
 <fieldset disabled={!context.unlocked}>
@@ -24,6 +26,18 @@
     {localize('DND5E.ItemConsumableDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
+
+  <FormGroup
+    labelFor="{appId}-identifier"
+    document={context.document}
+    field={context.fields.identifier}
+    config={{
+      value: context.source.identifier,
+      placeholder: context.item.identifier,
+      id: `${appId}-identifier`,
+    }}
+    hint="DND5E.IdentifierError"
+  />
 
   <FormGroup
     label="DND5E.ItemConsumableType"
@@ -38,10 +52,12 @@
   />
 
   {#if context.itemSubtypes}
-    {const consumableSubTypeLabel = $derived(localize('DND5E.ItemConsumableSubtype', {
-      category:
-        context.config.consumableTypes[context.system.type.value]?.label,
-    }))}
+    {const consumableSubTypeLabel = $derived(
+      localize('DND5E.ItemConsumableSubtype', {
+        category:
+          context.config.consumableTypes[context.system.type.value]?.label,
+      }),
+    )}
 
     <FormGroup
       label={consumableSubTypeLabel}

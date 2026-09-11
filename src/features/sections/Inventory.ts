@@ -87,11 +87,6 @@ export class Inventory {
     defaultInventoryTypes: string[];
     /** When creating a custom section during this operation, merge in these options over the defaults.  */
     customSectionOptions?: Partial<InventorySection>;
-    /** 
-     * The custom section flag to use when looking for a custom section name. 
-     * @deprecated game.release.generation < 14
-    */
-    customSectionFlag?: 'section' | 'actionSection';
   }) {
     const {
       sheetDocument,
@@ -101,10 +96,9 @@ export class Inventory {
       item,
       defaultInventoryTypes,
       customSectionOptions,
-      customSectionFlag = 'section',
     } = params;
 
-    const customSectionName = TidyFlags[customSectionFlag].get(item);
+    const customSectionName = TidyFlags.section.get(item);
 
     if (!customSectionName) {
       let partition = inventory[item.type];

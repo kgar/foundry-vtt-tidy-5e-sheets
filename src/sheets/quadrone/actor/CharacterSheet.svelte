@@ -112,6 +112,21 @@
       }
     }
   });
+
+  function handleHpInputKeyDown(
+    ev: KeyboardEvent & { currentTarget: EventTarget & HTMLElement },
+    originalValue: string | number,
+    closeOverlay = false,
+  ) {
+    if (ev.key !== 'Enter' && ev.key !== 'Escape') return;
+    ev.preventDefault();
+    if (ev.key === 'Escape') {
+      ev.stopPropagation();
+      (ev.currentTarget as HTMLInputElement).value = String(originalValue);
+    }
+    if (closeOverlay) hpOverlayCloseOnBlur = true;
+    ev.currentTarget.blur();
+  }
 </script>
 
 <header class="sheet-header flexcol">
@@ -140,7 +155,14 @@
                 data-tidy-sheet-part="actor-name"
                 data-tooltip={context.actor.name}
               >
-                <a data-action="copyInnerText" class="cursor highlight-on-hover">
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <a 
+                  data-action="copyInnerText" 
+                  class="cursor highlight-on-hover"
+                  role="button"
+                  tabindex="0"
+                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                >
                   {context.actor.name}
                 </a>
               </h1>
@@ -219,8 +241,8 @@
             <span class="ac-label font-label-medium color-text-gold">AC</span>
             {#if context.unlocked}
               <button
-                aria-label={localize('DND5E.ArmorConfig')}
-                data-tooltip="DND5E.ArmorConfig"
+                aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+                data-tooltip="DND5E.ARMORCLASS.Action.Configure"
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 data-action="showConfiguration"
@@ -369,6 +391,11 @@
                 hpValueInputFocused = true;
                 hpValueInput?.selectText();
               }}
+              oncontextmenu={(ev) => {
+                ev.preventDefault();
+                hpOverlayFocusTarget = 'tempmax';
+                hpOverlayOpen = true;
+              }}
               disabled={!context.editable}
             >
               <div
@@ -403,6 +430,7 @@
               enableDeltaChanges={true}
               onfocus={() => (hpValueInputFocused = true)}
               onblur={() => (hpValueInputFocused = false)}
+              onkeydown={(ev) => handleHpInputKeyDown(ev, hpValue)}
               blurAfterChange={true}
               hidden={!hpValueInputFocused}
             />
@@ -410,12 +438,20 @@
 
           {#if !context.unlocked}
             {#if hpTemp > 0}
-              <!-- TODO: Convert to buttons -->
+              <!-- TODO: Convert to button -->
               <div
+                role="button"
+                tabindex="0"
                 class="temp-hp label pointer"
                 onclick={() => {
                   hpOverlayFocusTarget = 'temp';
                   hpOverlayOpen = true;
+                }}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                  hpOverlayFocusTarget = 'temp';
+                  hpOverlayOpen = true;
+                  }
                 }}
                 oncontextmenu={(ev) => {
                   ev.preventDefault();
@@ -495,11 +531,7 @@
                 value={hpTempMax}
                 selectOnFocus={true}
                 enableDeltaChanges={false}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    hpOverlayCloseOnBlur = true;
-                  }
-                }}
+                onkeydown={(ev) => handleHpInputKeyDown(ev, hpTempMax, true)}
                 onfocus={() => {
                   hpOverlayOpen = true;
                 }}
@@ -521,11 +553,7 @@
                 value={hpTemp}
                 selectOnFocus={true}
                 enableDeltaChanges={true}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    hpOverlayCloseOnBlur = true;
-                  }
-                }}
+                onkeydown={(ev) => handleHpInputKeyDown(ev, hpTemp, true)}
                 onfocus={() => {
                   hpOverlayOpen = true;
                 }}
@@ -689,12 +717,20 @@
     </div>
   </div>
   <div class="tabs-row">
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button"
+      tabindex="0"
       class="sidebar-toggle button button-borderless"
       data-tooltip={localize(
         sidebarExpanded ? 'JOURNAL.ViewCollapse' : 'JOURNAL.ViewExpand',
       )}
       onclick={() => (sidebarExpanded = !sidebarExpanded)}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          sidebarExpanded = !sidebarExpanded;
+        }
+      }}
     >
       {#if sidebarExpanded}
         <i class="fa-solid fa-caret-left"></i>

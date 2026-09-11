@@ -242,6 +242,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
         condition: (args) =>
           args.data.editable &&
           !args.data.unlocked &&
+          args.rowDocument.system.identified !== false &&
           // TODO: remove doc type logic after partitioning
           (args.sheetDocument.system.isCharacter ||
             args.sheetDocument.system.isNPC) &&

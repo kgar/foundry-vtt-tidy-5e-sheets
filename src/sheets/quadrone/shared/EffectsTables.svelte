@@ -72,12 +72,17 @@
         10,
       ),
     )}
+    {const effectEntries = $derived(
+      section.effects.map((effect: ActiveEffectContext) => ({
+        effect,
+      })),
+    )}
 
     <TidyTable key={section.key}>
       {#snippet header(expanded)}
         <TidyTableHeaderRow
           class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
-            'suppressed' || section.disabled
+            'suppressed' || section.disabled || effectEntries.length === 0
             ? 'diminished'
             : ''}"
         >
@@ -103,11 +108,7 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {const effectEntries = $derived(
-          section.effects.map((effect: ActiveEffectContext) => ({
-            effect,
-          })),
-        )}
+
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,

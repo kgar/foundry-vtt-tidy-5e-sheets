@@ -108,7 +108,7 @@
           onclick={() => context.sheet._browseAddNpc()}
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.Encounter.AddMember.Label')}
+          {localize('TIDY5E.AddSpecific', { name: localize('DND5E.Group.Member.one') })}
         </button>
       </div>
     {/if}

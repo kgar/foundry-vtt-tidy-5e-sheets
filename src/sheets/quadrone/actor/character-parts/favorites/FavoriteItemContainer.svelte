@@ -3,7 +3,8 @@
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import CapacityTracker from 'src/sheets/quadrone/container/parts/CapacityTracker.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -12,16 +13,14 @@
   const { favorite }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+  const unidentified = $derived(ItemUtils.isUnidentified(favorite.item));
 
   const subtitle = $derived(
     localize(CONFIG.Item.typeLabels[favorite.item.type]),
   );
-
-  const context = $derived(getCharacterSheetQuadroneContext());
 </script>
-
 <div
-  class="list-entry favorite"
+  class="list-entry favorite {unidentified ? 'diminished' : ''}"
   data-favorite-type="container"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -39,11 +38,12 @@
   <div class="">
     <span class="primary">
       {#if favorite.capacity}
-        <span class="value">{favorite.capacity.value}</span>
-        <span class="separator">&sol;</span>
-        <span class="max">{favorite.capacity.max}</span>
+        <CapacityTracker
+          container={favorite.item}
+          capacity={favorite.capacity}
+          showIcon={false}
+        />
       {/if}
-    </span>
-    <!-- <span class="secondary"> </span> -->
+    </span>    <!-- <span class="secondary"> </span> -->
   </div>
 </div>

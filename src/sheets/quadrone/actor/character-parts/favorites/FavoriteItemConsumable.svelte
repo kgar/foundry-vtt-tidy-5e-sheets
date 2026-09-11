@@ -4,12 +4,20 @@
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
   let { favorite }: Props = $props();
+  const localize = FoundryAdapter.localize;
+  const context = $derived(getCharacterSheetQuadroneContext());
+  const unidentified = $derived(ItemUtils.isUnidentified(favorite.item));
+  const concealed = $derived(
+    ItemUtils.isConcealed(favorite.item, { unlocked: context.unlocked }),
+  );
 
   let quantity = $derived(favorite.item.system.quantity);
 
@@ -17,7 +25,7 @@
     [
       favorite.item.system.type.label,
       favorite.item.labels.activation,
-      quantity > 1 ? `&times;${quantity}` : null,
+      !concealed && quantity > 1 ? `&times;${quantity}` : null,
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
@@ -29,7 +37,7 @@
 </script>
 
 <div
-  class="list-entry favorite"
+  class="list-entry favorite {unidentified ? 'diminished' : ''}"
   data-favorite-type="consumable"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -49,6 +57,8 @@
       <span class="primary">
         {#if uses?.max}
           <FavoriteItemUses {favorite} {uses} />
+        {:else if concealed}
+          <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
         {:else}
           <span class="sign font-default-medium color-text-lighter"
             >&times;</span

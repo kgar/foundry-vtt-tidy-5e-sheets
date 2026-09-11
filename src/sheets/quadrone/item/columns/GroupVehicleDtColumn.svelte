@@ -5,7 +5,7 @@
 </script>
 
 <span
-  class="font-data-large color-text-{rowDocument.system.attributes.hp.dt
+  class="value font-data-large color-text-{rowDocument.system.attributes.hp.dt
     ? 'default'
     : 'lightest'}">{rowDocument.system.attributes.hp.dt ?? '—'}</span
 >

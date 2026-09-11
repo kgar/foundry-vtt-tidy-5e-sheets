@@ -18,49 +18,46 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="flex-column">
-  <div class="form-field">
+<section class="dialog-content-container flexcol">
+  <div class="form-group">
     <label for="max-prepared-spells-edit-{appId}"
       >{localize('DND5E.Formula')}</label
     >
-    <input
-      id="max-prepared-spells-edit-{appId}"
-      type="text"
-      placeholder="0"
-      bind:value={context.maxPreparedSpells}
-    />
+    <div class="form-fields">
+      <input
+        id="max-prepared-spells-edit-{appId}"
+        type="text"
+        placeholder="0"
+        bind:value={context.maxPreparedSpells}
+      />
+    </div>
   </div>
-  <div role="presentation">
-    <h3>{localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
-    <p class="flex-row flex-wrap sample-formulas">
-      {#each context.formulas as formula}
-        <button
-          type="button"
-          class="highlight-on-hover"
-          onclick={() => {
-            context.maxPreparedSpells = formula.value;
-          }}>{localize(formula.label)}</button
-        >
-      {/each}
-    </p>
-    <p>
-      <a
-        target="_blank"
-        href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Max-Prepared-Spells-Formulas"
-        >{localize('TIDY5E.MaxPreparedSpellsConfig.MoreFormulas')}</a
-      >
-    </p>
-  </div>
-  <button type="button" onclick={() => save()}>
-    <i class="far fa-save"></i>
-    {localize('Save')}
-  </button>
-</section>
+  <br />
 
-<style lang="less">
-  .sample-formulas {
-    button {
-      flex: 0 0 1rem;
-    }
-  }
-</style>
+  <h3>{localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
+  <p class="flex-row flex-wrap sample-formulas">
+    {#each context.formulas as formula}
+      <button
+        type="button"
+        class="button button-secondary"
+        onclick={() => {
+          context.maxPreparedSpells = formula.value;
+        }}>{localize(formula.label)}</button
+      >
+    {/each}
+  </p>
+  <p>
+    <a
+      target="_blank"
+      href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/08.-Helpful-Resources#max-prepared-spells-formulas"
+      >{localize('TIDY5E.MaxPreparedSpellsConfig.MoreFormulas')}</a
+    >
+  </p>
+</section>
+<br />
+<div class="button-bar">
+  <button type="button" onclick={() => save()} class="button button-primary">
+    <i class="fas fa-save"></i>
+    {localize('TIDY5E.SaveChanges')}
+  </button>
+</div>

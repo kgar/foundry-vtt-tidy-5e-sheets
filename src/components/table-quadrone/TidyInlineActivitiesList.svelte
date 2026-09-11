@@ -28,7 +28,6 @@
   let { item = null, activities = [] }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
-  let identified = $derived(item?.identified !== false);
 
   let section = $derived({
     ...SheetSections.EMPTY,
@@ -56,7 +55,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if identified}
+{#if activities?.length}
 <TidyTable
   key="activities-{item.name}"
   toggleable={false}
@@ -86,6 +85,7 @@
         }}
         rowClass="activity"
       >
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
           class={['tidy-table-row-use-button', { disabled: !context.editable }]}
           data-action="activity-use"

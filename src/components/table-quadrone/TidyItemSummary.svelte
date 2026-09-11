@@ -35,7 +35,6 @@
     return item
       ? Activities.getVisibleActivities(
           item,
-          item.system.activities,
         ).map<ActivityItemContext>((activity) =>
           Activities.getActivityItemContext(
             context.sheet,
@@ -57,6 +56,9 @@
   let unidentifiedDescription = $derived(item.system.unidentified?.description);
   let showGmUnidentifiedDescription = $derived(
     isGm && !identified && !!unidentifiedDescription,
+  );
+  let showGmSecretDescription = $derived(
+    isGm && !identified && !gmEditMode,
   );
   let enrichmentOptions = $derived({
     relativeTo: item,
@@ -99,8 +101,8 @@
         {/await}
       </div>
     {/if}
-    <div data-target="system.description.value" data-uuid={item.uuid} class={{ 'secret-block': showGmUnidentifiedDescription }}>
-      {#if showGmUnidentifiedDescription}
+    <div data-target="system.description.value" data-uuid={item.uuid} class={{ 'secret-block': showGmSecretDescription }}>
+      {#if showGmSecretDescription}
         <div class="gm-only">
           {localize(
             'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',

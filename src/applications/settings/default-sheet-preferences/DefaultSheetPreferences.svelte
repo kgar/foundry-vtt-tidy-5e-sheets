@@ -20,8 +20,8 @@
 
   const localize = FoundryAdapter.localize;
 
-  const tidyOptionText = localize('TIDY5E.SheetPreferences.TidySheets');
-  const systemOptionText = localize('TIDY5E.SheetPreferences.SystemSheets');
+  const tidyOptionText = localize('TIDY5E.Settings.SheetPreferences.TidySheets');
+  const systemOptionText = localize('TIDY5E.Settings.SheetPreferences.SystemSheets');
 </script>
 
 <div class="dialog-content-container flexcol">

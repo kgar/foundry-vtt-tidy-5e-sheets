@@ -6,6 +6,7 @@ import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
 import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
+import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import { buildGroupMembersTabOptions } from 'src/settings/tab-options/GroupMemberTabOptions';
 import { buildActorInventoryTabOptions } from 'src/settings/tab-options/ActorInventoryTabOptions';
 import { systemSettings } from 'src/settings/settings.svelte';
@@ -66,11 +67,22 @@ export const GroupSheetQuadroneRuntime =
         layout: 'quadrone',
         iconClass: 'fa-solid fa-feather',
       },
+      {
+        title: 'DND5E.EFFECT.Tab',
+        content: {
+          component: ActorEffectsTab,
+          type: 'svelte',
+        },
+        id: CONSTANTS.TAB_EFFECTS,
+        layout: 'quadrone',
+        iconClass: 'fa-solid fa-bolt',
+      },
     ],
     [
       CONSTANTS.TAB_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
       CONSTANTS.TAB_GROUP_BASTIONS,
       CONSTANTS.TAB_DESCRIPTION,
+      CONSTANTS.TAB_EFFECTS,
     ]
   );

@@ -560,7 +560,6 @@ export function getSvelteApplicationMixin<
      * @returns options for a detached window.
      */
     _detachOptions(): Record<string, any> {
-      if (game.release.generation < 14) return {};
       const { windowId } = (this.parent ?? this).window ?? {};
       return windowId ? { window: { detached: true, windowId } } : {};
     }
@@ -572,10 +571,6 @@ export function getSvelteApplicationMixin<
      * @returns an app v2 instance
      */
     _renderChild(app: any, options = {}) {
-      if (game.release.generation < 14) {
-        return app.render({ force: true, ...options });
-      }
-
       return (
         this.parent?.sheet?.renderChild?.(app, options) ??
         this.renderChild(app, options)

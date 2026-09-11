@@ -22,17 +22,17 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
 
   let contextOptions: ContextMenuEntry[] = [
     {
-      name: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       callback: async () => {
         const actor = await fromUuid(occupantUuid);
         app._openDocumentSheet(actor);
       },
-      condition: () =>
+      visible: () =>
         actor.isOwner && !FoundryAdapter.isLockedInCompendium(actor),
     },
     {
-      name: FoundryAdapter.localize(
+      label: FoundryAdapter.localize(
         'TIDY5E.Facilities.ContextMenuActionRemove',
         { facilityName },
       ),
@@ -40,7 +40,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
       callback: async () => {
         await app.deleteOccupant(item, prop, Number(index));
       },
-      condition: () =>
+      visible: () =>
         actor.isOwner && !FoundryAdapter.isLockedInCompendium(actor),
     },
   ];

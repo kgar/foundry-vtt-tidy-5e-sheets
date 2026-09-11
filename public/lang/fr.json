@@ -1047,7 +1047,7 @@
         "option.origin": "Regrouper par type d'élément ou de fonctionnalité"
     },
     "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
-        "name": "Onglet Fiche de personnage : inclure automatiquement les objets utilisables",
+        "name": "Onglet Fiche de personnage: inclure automatiquement les objets utilisables",
         "hint": "Inclure automatiquement tous les objets, sorts et fonctionnalités actuellement utilisables dans l'onglet de la fiche."
     },
     "TIDY5E.Drakkenheim": {
@@ -1184,5 +1184,24 @@
     "TIDY5E.WorldSettings.SheetConfiguration": {
         "label": "Configuration de la feuille {sheetName}",
         "hint": "Configurez les paramètres des feuilles {sheetName}. Masquez ou affichez les éléments d'en-tête, puis choisissez les onglets à afficher sur la feuille, leur ordre d'affichage et les utilisateurs autorisés à les consulter."
-    }
+    },
+    "TIDY5E.Facilities": {
+        "Progress.Label": "Progression (jours)"
+    },
+    "TIDY5E.Bastion.Group": {
+        "RollEvent.Label": "Événement de Bastion",
+        "MaintainOrder.Label": "Maintenir l'ordre",
+        "MaintainOrder.DialogTitle": "Personnages capables de donner des ordres au bastion",
+        "MaintainOrder.DialogHint": "Les ordres de bastion seront exécutés pour tous les personnages sélectionnés. Décochez les personnages qui ne sont pas en mesure de donner des ordres. Leurs bastions recevront un ordre de « Maintien », et les ordres relatifs aux installations en cours ne seront pas exécutés.",
+        "MaintainOrder.Chat": "A émis l'ordre d'entretien à destination de leur bastion, {bastionName}.",
+        "TakeBastionTurn.Confirm": "Faire avancer d'un tour de bastion les personnages de ce groupe ?",
+        "CancelOrder.Label": "Annuler l'ordre",
+        "CompleteOrder.Label": "Finaliser l'ordre",
+        "CompleteOrder.Confirm": "Souhaitez-vous finaliser cette ordre maintenant ? Les jours restants seront ignorés et les récompenses seront attribuées.",
+        "ChooseFacility.Title": "Choisissez une installation",
+        "Orders.EmptyStateHint": "Aucun membre du groupe n'a d'ordre en cours.",
+        "Facilities.EmptyStateHint": "Ce personnage n'a encore construit aucune installation.",
+        "EmptyStateHint": "Aucun membre du groupe ne possède de bastions. Ajoutez ici les personnages des joueurs pour suivre leurs bastions."
+    },
+    "TIDY5E.Table.UnidentifiedPlaceholder": "Espace réservé inconnue ?"
 }

@@ -5,34 +5,9 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import { getThemeV2 } from 'src/theme/theme';
 
 export function initKeybindings() {
-  registerSheetLockToggleKeybinding();
   registerHeaderMenuToggleKeybinding();
   registerSheetToggleKeybinding();
   registerThemeToggleKeybinding();
-}
-
-function registerSheetLockToggleKeybinding() {
-  game.keybindings.register(CONSTANTS.MODULE_ID, 'toggleSheetLock', {
-    name: 'TIDY5E.Keybindings.ToggleSheetLock.Name',
-    hint: 'TIDY5E.Keybindings.ToggleSheetLock.Hint',
-    onDown: async () => {
-      const tidyApi = Tidy5eSheetsApi._getApi();
-
-      if (!ui.activeWindow || !tidyApi.isTidy5eSheet(ui.activeWindow)) {
-        return;
-      }
-
-      const sheetDocument = ui.activeWindow.document;
-
-      if (!sheetDocument || !sheetDocument.sheet?.isEditable) {
-        return;
-      }
-
-      await sheetDocument.sheet.toggleSheetMode?.();
-    },
-    onUp: () => {},
-    precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
-  });
 }
 
 function registerHeaderMenuToggleKeybinding() {
@@ -88,22 +63,6 @@ function registerSheetToggleKeybinding() {
           !defaultSheetNames.includes(x),
       ),
     downKey: 'KeyQ',
-    modifiers: ['Shift'],
-  });
-
-  new QuickSheetSwitchKeybind({
-    registrationKey: 'tidyQssClassic',
-    name: 'Quick Sheet Switch - Tidy Classic Sheet',
-    debounceDelay: 1000,
-    invocationCountToTrigger: 3,
-    getSheetKey: (sheetClasses) =>
-      Object.keys(sheetClasses).find(
-        (x) =>
-          x.toLocaleLowerCase().includes('tidy') &&
-          !x.toLocaleLowerCase().includes('quadrone') &&
-          !x.toLocaleLowerCase().includes('debug'),
-      ),
-    downKey: 'KeyT',
     modifiers: ['Shift'],
   });
 

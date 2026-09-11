@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import Search from 'src/components/utility-bar/Search.svelte';
+  import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -63,7 +63,7 @@
   </p>
   <div class="flexcol flexgap-3">
     <div role="presentation" class="flexrow flexgap-3">
-      <Search bind:value={searchCriteria} />
+      <Search bind:searchCriteria />
       <label class="flexshrink checkbox">
         <input type="checkbox" bind:checked={showUnassignedOnly} />
         {localize('TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text')}
@@ -74,10 +74,7 @@
         {#snippet header()}
           <TidyTableHeaderRow class="unset-header-height theme-dark">
             <TidyTableHeaderCell primary={true}>
-              <h3
-                class="truncate"
-                data-tooltip="DND5E.spell"
-              >
+              <h3 class="truncate" data-tooltip="DND5E.spell">
                 {localize('TYPES.Item.spell')}
               </h3>
             </TidyTableHeaderCell>
@@ -102,11 +99,13 @@
         {#snippet body()}
           {#each config.assignments as assignment (assignment._id)}
             {const sourceItemValue = $derived(currentSource(assignment))}
-            {const sourceItemIsUnassigned = $derived(sourceItemValue.trim() === '')}
+            {const sourceItemIsUnassigned = $derived(
+              sourceItemValue.trim() === '',
+            )}
             {const hideRow = $derived(
               !visibleSelectablesIdSubset.has(assignment._id) ||
-              (showUnassignedOnly && !sourceItemIsUnassigned)
-              )}
+                (showUnassignedOnly && !sourceItemIsUnassigned),
+            )}
             <TidyTableRow hidden={hideRow}>
               <TidyTableCell primary={true} class="flexrow">
                 <!--svelte-ignore a11y_missing_attribute-->
@@ -128,7 +127,7 @@
               </TidyTableCell>
               {const isCustomSource = $derived(
                 sourceItemValue !== '' &&
-                !classColumns.some((c) => c.identifier === sourceItemValue)
+                  !classColumns.some((c) => c.identifier === sourceItemValue),
               )}
               <TidyTableCell
                 columnWidth="12.5rem"

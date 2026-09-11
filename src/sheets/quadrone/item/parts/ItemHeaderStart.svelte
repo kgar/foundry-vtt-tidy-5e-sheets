@@ -1,6 +1,6 @@
 <script lang="ts">
   import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
-  import SheetHeaderEditModeToggleV2 from 'src/sheets/classic/shared/SheetHeaderModeToggleV2.svelte';
+  import SheetHeaderEditModeToggleV2 from 'src/sheets/quadrone/shared/SheetHeaderModeToggleV2.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ContainerSheetQuadroneContext,

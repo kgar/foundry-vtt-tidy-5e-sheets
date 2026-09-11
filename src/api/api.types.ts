@@ -196,67 +196,6 @@ export interface ItemSummaryCommandExecuteParams {
 }
 
 /**
- * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor when accessing actor portrait menu options.
- */
-/** @category Configuration */
-export interface PortraitMenuCommand {
-  /**
-   * A label to use when displaying the command. Localization keys also work.
-   */
-  label?: string;
-  /**
-   * Optional string of CSS classes representing a FontAwesome icon to be rendered with the command.
-   */
-  iconClass?: string;
-  /**
-   * Optional tooltip text for the target command.
-   */
-  tooltip?: string;
-  /**
-   * An optional callback which allows for conditionally including a command. If not included, defaults to `true`.
-   * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
-   * @returns whether to include this command in the UI for the target actor
-   */
-  enabled?: (params: PortraitMenuCommandEnabledParams) => boolean;
-  /**
-   * An optional callback to allow for executing logic when a user executes the command.
-   * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
-   * @returns void
-   *
-   * @remarks
-   * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
-   * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
-   */
-  execute?: (params: PortraitMenuCommandExecuteParams) => void;
-}
-
-/**
- * Contextual information to assist with determining whether a command is appropriate for a particular actor
- */
-/** @category Configuration */
-export interface PortraitMenuCommandEnabledParams {
-  /**
-   * The actor for which the command will show.
-   */
-  actor: any;
-}
-
-/**
- * Contextual information related to the actor for which the target command was executed.
- */
-/** @category Configuration */
-export interface PortraitMenuCommandExecuteParams {
-  /**
-   * The actor for which the command was executed.
-   */
-  actor: any;
-  /**
-   * The actor sheet context which is typically provided on render.
-   */
-  context: any;
-}
-
-/**
  * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor item section.
  */
 /** @category Configuration */
@@ -305,8 +244,7 @@ export interface ActorItemSectionFooterCommandEnabledParams {
    */
   section: any;
   /**
-   * The sheet is in Edit Mode, or unlocked. For Classic sheets, this is always `true`.
-   * For Quadrone sheets, this corresponds to the sheet lock toggle.
+   * The sheet is in Edit Mode, or unlocked. This corresponds to the sheet lock toggle.
    */
   unlocked: boolean;
 }

@@ -43,7 +43,6 @@ import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
-import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { getTidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -52,6 +51,7 @@ import { GroupMemberRowActionRuntime } from 'src/runtime/table-row-actions/Group
 import { GroupMemberColumnRuntime } from 'src/runtime/table-columns/GroupMemberColumnRuntime';
 import { BastionFacilityColumnRuntime } from 'src/runtime/table-columns/BastionFacilityColumnRuntime';
 import { BastionOrderColumnRuntime } from 'src/runtime/table-columns/BastionOrderColumnRuntime';
+import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 
 export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP,
@@ -102,7 +102,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       ]),
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
@@ -118,6 +118,19 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const actorContext = (await super._prepareContext(
       options,
     )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
+
+    // Effects
+    let baseEffects =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.actor.allApplicableEffects(),
+      );
+
+    let { effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffectsForActorQuadrone(
+        actorContext,
+        this.object,
+        baseEffects,
+      );
 
     const paces: TravelPaceConfigEntry[] = Object.entries(
       CONFIG.DND5E.travelPace,
@@ -144,6 +157,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         memberDependentContext.memberContext,
         actorContext,
       ),
+      effects: enhancedEffectSections,
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -386,8 +400,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
       let sectionKey = customSections[actor.id] ?? actor.type;
 
-      let section: GroupMemberSection = mapGetOrInsertComputed(
-        sections,
+      let section: GroupMemberSection = sections.getOrInsertComputed(
         sectionKey,
         (key) => ({
           label: FoundryAdapter.localize(key),
@@ -579,7 +592,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         trait: 'tool',
       });
 
-      const groupTool = mapGetOrInsert(tools, key, {
+      const groupTool = tools.getOrInsert(key, {
         identifiers: new Set<string>(),
         label: toolLabel,
         key: key,
@@ -591,7 +604,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
   _prepareMemberMasteries(actor: any, masteries: Map<string, GroupTrait>) {
     for (const key of actor.system.traits?.weaponProf?.mastery?.value ?? []) {
-      const groupMastery = mapGetOrInsertComputed(masteries, key, (key) => ({
+      const groupMastery = masteries.getOrInsertComputed(key, (key) => ({
         key,
         label: dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key,
         identifiers: new Set<string>(),
@@ -627,7 +640,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
-        title: 'DND5E.Bastion.Action.BastionTurn',
+        title: 'DND5E.Bastion.Action.Advance',
       },
     });
 
@@ -1069,6 +1082,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       },
       type: 'request',
     });
+
     return false;
   }
 
@@ -1089,36 +1103,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       return;
     }
 
-    const abilityConfig = CONFIG.DND5E.abilities[config.ability];
+    await this.document.system.rollSavingThrow(config);
 
-    const abilityLabel = abilityConfig?.label ?? '';
-
-    await foundry.documents.ChatMessage.implementation.create({
-      flavor: FoundryAdapter.localize('DND5E.SavePromptTitle', {
-        ability: abilityLabel,
-      }),
-      speaker: ChatMessage.getSpeaker({
-        actor: this.actor,
-        alias: this.actor.name,
-      }),
-      system: {
-        button: {
-          icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize('DND5E.SavingThrowRoll', {
-            ability: abilityLabel,
-          }),
-        },
-        data: { ...config },
-        handler: CONSTANTS.ROLL_REQUEST_SAVE_KEY,
-        targets: this.actor.system.members.flatMap(
-          ({ actor }: { actor: Actor5e }) => {
-            if (actor.system.abilities) return { actor: actor.uuid };
-            return [];
-          },
-        ),
-      },
-      type: 'request',
-    });
     return false;
   }
 

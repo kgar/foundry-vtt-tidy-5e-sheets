@@ -1,6 +1,9 @@
 <script lang="ts">
-    import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { isNil } from 'src/utils/data';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+  let localize = FoundryAdapter.localize;
 
   interface Props {
     label: string;
@@ -37,6 +40,7 @@
       type="button"
       class="button button-icon-only button-borderless flexshrink decrementer"
       disabled={value <= min}
+      aria-label={localize('TIDY5E.Decrease')}
       data-action="decrease"
       data-property={valuePath}
     >
@@ -104,6 +108,7 @@
       type="button"
       class="button button-icon-only button-borderless flexshrink decrementer"
       disabled={!isNil(max) && value >= max}
+      aria-label={localize('TIDY5E.Increase')}
       data-action="increase"
       data-property={valuePath}
     >

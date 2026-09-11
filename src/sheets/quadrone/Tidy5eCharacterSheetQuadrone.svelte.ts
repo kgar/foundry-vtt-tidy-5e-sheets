@@ -62,7 +62,10 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 ) {
   currentTabId: string;
   currentSidebarTabId: string;
-  aggregatePinTab = { tabId: CONSTANTS.TAB_ACTOR_ACTIONS, tabName: 'Sheet' };
+  aggregatePinTab = {
+    tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+    tabName: 'DOCUMENT.Sheet',
+  };
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -98,12 +101,21 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       context: new Map<any, any>(this._getActorSvelteContext()),
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
+    initTidy5eContextMenu(this, this.element);
 
     return component;
   }
 
-  _showDeathSaves: boolean = false;
+  /**
+   * Denotes whether to show the death saves UI
+   * on the character sheet.
+   *
+   * **Important**: This is a system-controlled field.
+   * The character document will manage this prop when
+   * a character reaches 0 HP and other conditions are correct
+   * for showing the Death Saves UI.
+   */
+  _deathTrayOpen: boolean = false;
 
   async _prepareContext(
     options: ApplicationRenderOptions,
@@ -228,7 +240,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       },
       skills: [],
       sheetTabSections: [],
-      showDeathSaves: this._showDeathSaves,
+      showDeathSaves: this._deathTrayOpen,
       species: species
         ? {
             id: species.id,
@@ -713,16 +725,21 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           const ctx: CharacterItemQuadroneContext = (context.itemContext[
             item.id
           ] ??= {});
-          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
-          // Item usage
-          ctx.hasUses = item.hasLimitedUses;
-          ctx.hasRecharge = item.hasRecharge;
+          const unidentified = item.system.identified === false;
 
           // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && item.system.identified === false;
+          ctx.concealDetails = !game.user.isGM && unidentified;
+
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement =
+            FoundryAdapter.getAttunementContext(item) && !unidentified
+              ? FoundryAdapter.getAttunementContext(item)
+              : undefined;
+
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses && !unidentified;
+          ctx.hasRecharge = item.hasRecharge && !unidentified;
 
           // Item grouping
           const originId = FoundryAdapter.getAdvancementOriginId(item);
@@ -1060,29 +1077,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     return element;
   }
 
-  async _preRender(
-    context: CharacterSheetQuadroneContext,
-    options: TidyDocumentSheetRenderOptions,
-  ) {
-    await super._preRender(context, options);
-
-    // Show death tray at 0 HP
-    const renderContext = options.renderContext ?? options.action;
-    const renderData = options.renderData ?? options.data;
-    const isUpdate =
-      renderContext === 'update' || renderContext === 'updateActor';
-    const hp = foundry.utils.getProperty(
-      renderData ?? {},
-      'system.attributes.hp.value',
-    );
-
-    if (isUpdate && hp === 0) {
-      this._showDeathSaves = context.showDeathSaves = true;
-    }
-  }
-
   toggleDeathSaves(force?: boolean) {
-    this._showDeathSaves = force ?? !this._showDeathSaves;
+    this._deathTrayOpen = force ?? !this._deathTrayOpen;
     this.render();
   }
 
@@ -1380,7 +1376,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     if (!event.target.closest('.favorites') || effect.target !== this.actor) {
       return await super._onDropActiveEffect(event, effect);
     }
-    const uuid = effect.getRelativeUUID(this.actor);
+    const uuid = foundry.utils.buildRelativeUuid(effect, this.actor);
     return await this._onDropFavorite(event, { type: 'effect', id: uuid });
   }
 
@@ -1399,7 +1395,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       return await super._onDropActivity(event, document);
     }
 
-    const relativeUuid = `${document.item.getRelativeUUID(
+    const relativeUuid = `${foundry.utils.buildRelativeUuid(
+      document.item,
       this.actor,
     )}.Activity.${document.id}`;
 
@@ -1437,7 +1434,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
       return await super._onDropItem(event, document);
     }
-    const uuid = document.getRelativeUUID(this.actor);
+    const uuid = foundry.utils.buildRelativeUuid(document, this.actor);
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 
