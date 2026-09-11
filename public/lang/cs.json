@@ -1,1179 +1,814 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Klasický deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Klasický deník NPC Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Klasický deník položky Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Klasický deník dopravního prostředku Tidy 5e",
-    "TIDY5E.PlayerName": "Jméno hráče",
-    "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
-    "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
-    "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
-    "TIDY5E.ShowTokenArt": "Zobrazit token",
-    "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
-    "TIDY5E.ShowItemArt": "Zobrazit obrázek",
-    "TIDY5E.AbbrInitiative": "Inic.",
-    "TIDY5E.RestHint": "Odpočinek",
-    "TIDY5E.ShortRest": "Krátký odpočinek",
-    "TIDY5E.LongRest": "Důkladný odpočinek",
-    "TIDY5E.HitDiceRollAverage": "Pravé tlačítko: Použít průměr",
-    "TIDY5E.JournalTabName": "Záznamy",
-    "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
-    "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
-    "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
-    "TIDY5E.JournalQuests": "Úkoly",
-    "TIDY5E.JournalMisc": "Různé",
-    "TIDY5E.JournalEntries": "Záznamy deníku",
-    "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
-    "TIDY5E.SheetEdit.Enable.Hint": "Povolit úpravy - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Zakázat úpravy - {description}",
-    "TIDY5E.SheetEdit.Description": "Přepnout viditelnost tlačítek přidat/odstranit a prázdné sekce",
-    "TIDY5E.SheetLock.Unlock.Hint": "Odemknout - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Zamknout - {description}",
-    "TIDY5E.SheetLock.Description": "Přepínání zámku citlivých polí, která by se neměla často měnit",
-    "TIDY5E.ContextMenuActionEquip": "Vybavit",
-    "TIDY5E.ContextMenuActionUnequip": "Odložit",
-    "TIDY5E.ContextMenuActionAttune": "Sladění",
-    "TIDY5E.ContextMenuActionUnattune": "Ukončit sladění",
-    "TIDY5E.ContextMenuActionPrepare": "Připravit",
-    "TIDY5E.ContextMenuActionUnprepare": "Odebrat z připravených",
-    "TIDY5E.ContextMenuActionEdit": "Upravit",
-    "TIDY5E.ContextMenuActionDelete": "Odstranit",
-    "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkni deník.",
-    "TIDY5E.GMOnlyEdit": "Tuto sekci může upravovat pouze PJ.",
-    "TIDY5E.AttunementWarning": "Sladění: Nemůžeš se sladit s více než s {number} předměty.",
-    "TIDY5E.AttunementItems": "Sladěné předměty",
-    "TIDY5E.AttunementMax": "Maximum sladění",
-    "TIDY5E.GridLayout": "Mřížkové rozvržení",
-    "TIDY5E.ListLayout": "Seznamové rozvržení",
-    "TIDY5E.LayoutNotSupported": "Režim rozvržení není podporován",
-    "TIDY5E.Encumbrance": "Zatížení",
-    "TIDY5E.AddFavorite": "Přidat do oblíbených",
-    "TIDY5E.Favorite": "Oblíbené",
-    "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
-    "TIDY5E.ShowNotProficientSkills": "Ukázat i ty bez zdatnosti",
-    "TIDY5E.HideNotProficientSkills": "Skrýt ty bez zdatnosti",
-    "TIDY5E.Abilities": "Vlastnosti",
-    "TIDY5E.Environment": "Prostředí",
-    "TIDY5E.Search": "Vyhledat",
-    "TIDY5E.SearchClear": "Vyčistit hledání",
-    "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
-    "TIDY5E.ItemCardsMouseHint": "Střední tlačítko myši pro zobrazení/editaci položky",
-    "TIDY5E.AbbrMod": "Oprava",
-    "TIDY5E.AbbrSavingThrow": "Záchrana",
-    "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
-    "TIDY5E.PreparedSpells": "Připravená kouzla",
-    "TIDY5E.TokenLinked": "Token propojený s aktérem",
-    "TIDY5E.TokenUnlinked": "Token nepropojený s aktérem",
-    "TIDY5E.SpellClass": null,
-    "TIDY5E.Class.Artificer": "Divotvůrce",
-    "TIDY5E.Class.Barbarian": "Barbar",
-    "TIDY5E.Class.Bard": "Bard",
-    "TIDY5E.Class.Cleric": "Klerik",
-    "TIDY5E.Class.Custom": "Vlastní povolání",
-    "TIDY5E.Class.Druid": "Druid",
-    "TIDY5E.Class.Fighter": "Bojovník",
-    "TIDY5E.Class.Monk": "Mnich",
-    "TIDY5E.Class.Paladin": "Paladin",
-    "TIDY5E.Class.Ranger": "Hraničář",
-    "TIDY5E.Class.Rogue": "Tulák",
-    "TIDY5E.Class.Sorcerer": "Čaroděj",
-    "TIDY5E.Class.Warlock": "Černokněžník",
-    "TIDY5E.Class.Wizard": "Kouzelník",
-    "TIDY5E.OriginSummaryConfig": "Souhrnné nastavení původu: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr kouzel multipovolání",
-    "TIDY5E.UserSettings.Menu": {
-        "name": "Uživatelské nastavení",
-        "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
-        "label": "Uživatelská nastavení",
-        "title": "Uživatelské nastavení: {userName}"
-    },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Hráči",
-        "header": "Deníky postav hráčů"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NP",
-        "header": "Deníky NP"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Dopravní prostředky",
-        "header": "Deníky dopravních prostředků"
-    },
-    "TIDY5E.WorldSettings.TabMisc": {
-        "tabLabel": "Nastavení PJ"
-    },
-    "TIDY5E.WorldSettings.TabSheetLock": {
-        "tabLabel": "Zámek deníku",
-        "header": "Možnosti uzamčení",
-        "hint": "Zabrání hráčům ve změnách těch aspektů jejich postav, které by se měly měnit jen zřídka. Volitelně umožní i skrýt některé elementy, které nechceš vůbec používat.",
-        "hint2": "Důležité: funkce zámku deníku slouží jako vodítko pro používání deníku hráči a pomáhá předcházet chybám, jako je náhodné přidání/odstranění zdatnosti či záchrany. Nastavení zámku deníku neposkytuje bezpečné uzamčení proti hráčům se zlými úmysly.",
-        "labelGeneralLocks": "Celkový zámek",
-        "labelInventoryLocks": "Zámek inventáře",
-        "labelFeaturesLocks": "Zámek schopností"
-    },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Zobrazovat karty položek ve všech rozvrženích?",
-        "hint": "Vypni, pokud chceš, aby se karty položek ukazovaly pouze v mřížkovém rozvržení."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Má karta položky plout vedle kurzoru?",
-        "hint": "Umožní odepnutí karty z deníku a její zobrazení jako plovoucího rámečku u kurzoru. Je to nejlepší používat s opožděným zobrazením."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Opoždění zobrazení karet položek (v ms)",
-        "hint": "Zpozdí zobrazení karet položek o zadané milisekundy (ms). 0 znamená bez zpoždění. Výchozí hodnota: 300."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Používat klasické ovládací prvky seznamu?",
-        "hint": "Zobrazí ovládací prvky v náhledu seznamu."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Zobrazovat popisky rysů?",
-        "hint": "Zobrazí štítky rysů postav, NP a dopravních prostředků. Po vypnutí se zobrazí pouze ikony."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Zobrazovat jméno hráče?",
-        "hint": "Zaškrtnutím zobrazíš pole se jménem hráče pod jménem postavy."
-    },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Zobrazovat seznam povolání?",
-        "hint": "Zobrazí seznam povolání pod jménem postavy."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Animovat ukazatel Inspirace?",
-        "hint": "Zaškrtnutím deaktivuješ zářící animaci ukazatele inspirace."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Skrývat vyčerpání a Inspiraci, pokud je postava nemá?",
-        "hint": "Zaškrtnutí skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při přejetí myší."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Zobrazovat ukazatel Inspirace jen po přejetí myší?",
-        "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Zobrazovat ukazatel vyčerpání jen po přejetí myší?",
-        "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při přejetí myší na portrét."
-    },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Používat panel BV?",
-        "hint": "Zobrazí barevný panel označující zbývající BV. Čísla BV budou stále viditelná."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Používat překryv výdrže?",
-        "hint": "Zobrazí barevný překryv BV."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Přesunout rysy napravo od dovedností?",
-        "hint": "Zaškrtni pro přesunutí rysů z levé strany pod zdroje."
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Zobrazovat pouze vybavenou munici?",
-        "hint": "Ve výběru munice zbraně zobrazí pouze aktuálně vybavená munice."
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Zobrazovat dovednosti vždy?",
-        "hint": "Odstraní přepínač viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zobrazovat záložku kouzel?",
-        "hint": "Zobrazí záložku kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Zobrazovat značku aktivního efektu?",
-        "hint": "Zobrazuje značku zobrazení seznamu položek s aktivními efekty."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Používat kontextovou nabídku?",
-        "hint": "Povolí kontextovou nabídku položek kliknutím pravým tlačítkem myši."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Zobrazovat rozšířený deník hráčům s omezeným oprávněním?",
-        "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s omezeným oprávněním."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Prstencový styl portrétu",
-        "hint": "Zobrazí prstencové portréty/ikony aktérů.",
-        "all": "Všichni aktéři",
-        "pc": "Postavy hráčů",
-        "npc": "NP/Dop. prostředky",
-        "none": "Žádné",
-        "default": "žádné"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Zamykat citlivá pole?",
-        "hint": "Zaškrtni, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Smí aktivní efekty upravovat pouze PJ?",
-        "hint": "Zaškrtnutí zakáže hráčům upravovat aktivní efekty ve svých denících. Aplikované efekty však pořád uvidí."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Používat ukazatel inspirace?",
-        "hint": "Zobrazovat ukazatel inspirace v profilu postavy."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Používat ukazatel pohybu dopravního prostředku?",
-        "hint": "Zobrazovat ukazatel pohybu na profilu dopravního prostředku."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Používat ukazatel vyčerpání?",
-        "hint": "Zobrazovat ukazatel vyčerpání postav, NP a dopravních prostředků."
-    },
-    "TIDY5E.Settings.UseNPCRest": {
-        "name": "Odpočinek pro CP.",
-        "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Zobrazovat odpočinek NP v chatu?",
-        "hint": "Zobrazí kartu chatu odpočinku NP."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Označení propojených/nepropojených nehráčských postav",
-        "hint": "Přidá barevné ohraničení a ikonu na propojené/nepropojené deníky nehráčských postav.",
-        "default": "Bez označení propojení (default)",
-        "unlinked": "Zvýraznit nepropojené tokeny",
-        "linked": "Zvýraznit propojené tokeny",
-        "both": "Zvýraznit propojené a nepropojené tokeny"
-    },
-    "TIDY5E.Settings.InitialSheetTab": {
-        "name": "Úvodní záložka deníku",
-        "hint": "Při prvním otevření deníku se zobrazí uvedená záložka."
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Skrývat záchrany před smrtí před hráči?",
-        "hint": "Učiní výsledky záchran před smrtí viditelné pouze pro PJ. Tlačítko hodů zůstává viditelné."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Používat u postav panel zatížení?",
-        "hint": "Zobrazí panel zatížení na denících postav."
-    },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Používat u NP panel zatížení?",
-        "hint": "Zobrazí panel zatížení na denících NP."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Používat panel zatížení dopravních prostředků?",
-        "hint": "Zobrazí panel zatížení na denících dopravních prostředků."
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Používat filtr kouzel multipovolání",
-        "hint": "Umožňuje filtrovat kouzla v záložce kouzel podle povolání. Kouzlo musí být přiřazeno k povolání pomocí úpravy na kartě kouzla."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Používat ikonu povolání u kouzel?",
-        "hint": "Zobrazí u kouzel ikony povolání namísto vlastní ikony kouzla. Kouzlo musí být přiřazeno k povolání pomocí úpravy na kartě kouzla. Při multipovoláních pak tato funkce na první pohled rozlišuje, která kouzla patří kterému povolání."
-    },
-    "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-        "name": null,
-        "hint": null
-    },
-    "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": "Umožnit přípravu triků?",
-        "hint": "Volitelné pravidlo 'formule triků' z knihy Tasha's Cauldron of Everything umožňuje kouzelníkům po důkladném odpočinku připravovat triky stejným způsobem jako u kouzel se stupni. Připravené triky se nezapočítávají do celkového počtu připravených kouzel."
-    },
-    "TIDY5E.Settings.LockMoneyChanges": {
-        "name": "Zamknout mince?",
-        "hint": "Zabrání nePJům provádět změny mincí."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Zamknout zkušenosti?",
-        "hint": "Zabrání nePJům provádět změny u zkušeností."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Zamknout změny maximálního počtu BV?",
-        "hint": "Zabrání nePJům provádět změny u maxima BV."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Zamknout úrovně?",
-        "hint": "Zabrání nePJům nastavovat úroveň postav pomocí výběru úrovní."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Zamknout množství položek?",
-        "hint": "Zabrání nePJům měnit množství u položky."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Používat vlastní barevný motiv?",
-        "hint": "Zobrazit barvy vlastního motivu"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Hlavní důraz"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Vybaveno"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Ukazatele BV"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Nástin vybavených"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Důraz na vybavené"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Připraveno"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Nástin připravených"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Důraz na připravené"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pakt"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Nástin paktů"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Důraz na pakt"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "Dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Nástin dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Důraz dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Vrozené"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Nástin vrozených"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Důraz na vrozené"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Vždy připravené"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Nástin vždy připravených"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Důraz na vždy připravené"
-    },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Umožnit u postavy přepsání maxima BV?",
-        "hint": "Umožní PJ manuálně měnit maximální BV v deníku postavy"
-    },
-    "TIDY5E.Settings.Reset": {
-        "name": "Obnovení výchozího nastavení",
-        "hint": "Tímto obnovíš všechna nastavení aktivního herního systému na výchozí hodnoty. Týká se to pouze 'celkového' nastavení, například PJ voleb.",
-        "dialogs": {
-            "title": "Obnovení základního nastavení modulu",
-            "content": "Jsi si jistý(á), že opravdu chceš obnovit všechna nastavení modulu na výchozí hodnoty aktuálního systému? 1<strong>Je to nevratné!</strong>",
-            "confirm": "Obnovení výchozího nastavení modulu",
-            "cancel": "Zrušit"
+    "TIDY5E.ACTOR": {
+        "Ability": {
+            "Action": {
+                "EditScore": "Upravit skóre",
+                "Roll": "Ověření vlastnosti {ability}"
+            }
+        },
+        "Attunement": {
+            "Title": "Sladěné předměty",
+            "Warning": {
+                "Maximum": "Sladění: Nemůžeš se sladit s více než s {number} předměty."
+            }
+        },
+        "Characteristics": {
+            "Title": "Charakteristiky"
+        },
+        "Favorites": {
+            "Action": {
+                "Add": "Přidat do oblíbených",
+                "Remove": "Odebrat z oblíbených"
+            },
+            "Empty": "Klikni pravým tlačítkem myši a vyber možnost 'Přidat do oblíbených', nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku."
+        },
+        "HitDice": {
+            "Action": {
+                "ApplyAverage": "Pravé tlačítko: Použít průměr"
+            },
+            "Current": {
+                "Label": "Stávající kostky obnovy"
+            },
+            "Max": {
+                "Label": "Maximum kostek obnovy"
+            }
+        },
+        "Inspiration": {
+            "Source": {
+                "Tooltip": "Zdroj Inspirace"
+            }
+        },
+        "Proficiency": {
+            "Abbreviation": "ZD"
+        },
+        "Skill": {
+            "Aggregate": {
+                "High": "Vysoké",
+                "Low": "Nízké"
+            }
+        },
+        "Tool": {
+            "Empty": "Žádná dovednost s nástroji."
         }
     },
-    "TIDY5E.Settings.Debug": {
-        "name": "Povolit ladění?",
-        "hint": "Vypíše zprávy z ladění do konzole."
+    "TIDY5E.BASTION": {
+        "Group": {
+            "Action": {
+                "CancelOrder": "Zrušit rozkaz",
+                "CompleteOrder": "Splnit rozkaz",
+                "RollEvent": "Událost pevnosti"
+            },
+            "ChooseFacility": {
+                "Title": "Volba zařízení"
+            },
+            "Confirm": {
+                "CompleteOrder": "Chceš tento rozkaz splnit hned? Zbývající dny budou přeskočeny a odměny budou uděleny.",
+                "TakeTurn": "Odehrát tah pevnosti postav v této skupině?"
+            },
+            "Empty": "Nikdo ve skupině nemá pevnost. Přidej sem postavy hráčů, abys mohl/a sledovat jejich pevnosti.",
+            "Facilities": {
+                "Empty": "Tato postava zatím nemá postaveno žádné zařízení."
+            },
+            "MaintainOrder": {
+                "Chat": "Vydal/a rozkaz k údržbě pevnosti {bastionName}.",
+                "Dialog": {
+                    "Hint": "Rozkazy pevnosti se budou provádět u všech vybraných postav. Odškrtni u postav, které rozkazy nemohou vydávat. Jejich pevnosti obdrží rozkaz 'Údržba' a nebudou prováděny žádné probíhající rozkazy týkající se zařízení.",
+                    "Title": "Postavy, které mohou vydávat rozkazy pevnosti"
+                },
+                "Label": "Údržba"
+            },
+            "Orders": {
+                "Empty": "Žádný ze členů skupiny nemá prováděný rozkaz."
+            }
+        }
     },
-    "TIDY5E.ThemeSettings": {
-        "SheetMenu": {
-            "name": "Nastavení motivu Tidy",
-            "buttonLabel": "Nastavení motivů",
-            "hint": "Pouze klasické deníky Tidy: Přizpůsob si barvy deníků Tidy 5e."
+    "TIDY5E.CHARACTER": {
+        "Empty": "<h3>Jak začít.</h3>Začni přidáním povolání a prvních položek do záložky <i class='fa-solid fa-wreath-laurel'></i><strong>Povolání</strong>. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost <strong>Přidat do záložky deníku</strong>. <h3>Úprava svého deníku</h3><p>Vyber si mezi motivy deníku Stylistic a Basic , změň zvýrazňovací barvu deníku či obrázek záhlaví otevřením nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení</strong> a zvolením možnosti <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Nastavení motivu Tidy</strong></a>.</p><h3>Postranní panel</h3><p>Pro pozdější použití si ulož cokoli do <i class='fa-solid fa-sidebar'></i> <strong>Postranní panel</strong>. Pomocí nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení </strong> či kliknutím pravým tlačítkem na libovolnou položku a volbou <i class='fa-solid fa-star'></i> <strong>Přidat do oblíbených</strong> ji přidej do postranního panelu.</p><h3>Nastavení</h3><p>Uprav nastavení jednotlivých záložek a přizpůsob si sekce pomocí tlačítka <i class='fa-solid fa-gear'></i> <strong>Nastavení</strong> v každé záložce.</p>",
+        "Sidebar": {
+            "SkillsAndTraits": "Dovednosti a rysy",
+            "Title": "Nastavení postranního panelu"
+        },
+        "Traits": {
+            "DifficultTerrain": {
+                "IgnoreAll": "Ignorovat veškerý obtížný terén"
+            },
+            "Title": "Rysy postavy"
+        }
+    },
+    "TIDY5E.COMMON": {
+        "Action": {
+            "AddCustomNamed": "Přidat volitelné {name}",
+            "AddFromCompendium": "Přidat {name} z kompendia",
+            "AddNamed": "Přidat {name}",
+            "Hide": "Skrýt",
+            "RemoveNamed": "Odstranit {name}",
+            "Reset": "Obnovení výchozího nastavení",
+            "SaveChanges": "Uložit změny",
+            "Show": "Zobrazit",
+            "UndoChanges": "Vrátit změny",
+            "UseDefault": "Použít výchozí",
+            "UseGlobalDefaults": "Použít globální výchozí nastavení"
+        },
+        "BrokenLink": "Přerušený odkaz",
+        "GMOnly": {
+            "Message": "Pouze pro PJ: {message}",
+            "Title": "Pouze PJ"
+        },
+        "Listbox": {
+            "Action": {
+                "MoveDown": "Přesun dolů (Alt + Šipka dolů)",
+                "MoveUp": "Přesun nahoru (Alt + Šipka nahoru)"
+            }
+        },
+        "Search": {
+            "Label": "Vyhledat"
+        },
+        "Unidentified": {
+            "Placeholder": "?"
+        },
+        "UseDefaultDialog": {
+            "Text": "Jsi si jistý(á), že chceš použít výchozí nastavení?",
+            "Title": "Potvrdit: Použít výchozí nastavení"
+        }
+    },
+    "TIDY5E.CONTAINER": {
+        "Action": {
+            "HidePanel": "Skrýt panel kontejnerů",
+            "ShowPanel": "Zobrazit panel kontejnerů",
+            "TransferCurrencyToParent": "Převést veškeré mince nadřazenému aktérovi"
+        },
+        "Capacity": {
+            "HoldsUnits": "{holdsElementStart}Podržet{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
+        },
+        "Empty": "Tento kontejner je prázdný."
+    },
+    "TIDY5E.CONTEXTMENU": {
+        "Action": {
+            "AddToSheetTab": "Přidat k záložkám deníku",
+            "AssignTo": "Přiřadit k {entityName}",
+            "Attune": "Sladění",
+            "Delete": "Odstranit",
+            "Edit": "Upravit",
+            "Equip": "Vybavit",
+            "PickColor": "Zvol barvu",
+            "Pin": "Připnout navrch",
+            "PinToTab": "Připnout k záložce {tabName}",
+            "Prepare": "Připravit",
+            "RemoveAsInspirationSource": "Odstranit zdroj Inspirace",
+            "RemoveFromSheetTab": "Odstranit ze záložek deníku",
+            "SetAsInspirationSource": "Nastavit jako zdroj Inspirace",
+            "ShowLimitedUses": "Zobrazit omezená použití",
+            "ShowQuantity": "Zobrazit množství",
+            "Unassign": "Zrušit přiřazení",
+            "Unattune": "Ukončit sladění",
+            "Unequip": "Odložit",
+            "Unpin": "Odpojit z vrchu",
+            "Unprepare": "Odebrat z připravených",
+            "View": "Náhled",
+            "ViewSourceItem": "Zobrazit zdrojovou položku"
+        }
+    },
+    "TIDY5E.ENCOUNTER": {
+        "Combat": {
+            "Action": {
+                "Exclude": "Vyloučit z bojových aktivit",
+                "Include": "Zahrnout do bojových aktivit"
+            },
+            "Visibility": {
+                "Hidden": "Po přidání do sledovače skryto před hráči",
+                "Visible": "Po přidání do sledovače viditelné pro hráče"
+            }
+        },
+        "Combatants": {
+            "Title": "Bojovníci",
+            "Warning": {
+                "NoEncounterSelected": "Abys mohl střetnutí přidat do sledovače střetnutí, musíš jej mít vybrané"
+            }
+        },
+        "Difficulty": {
+            "Label": "Obtížnost",
+            "Target": "Obtížný cíl"
+        },
+        "Initiative": {
+            "Action": {
+                "AddCount": "Přidat {count} iniciativ",
+                "Preroll": "Přehodit iniciativu"
+            }
+        },
+        "Placeholder": {
+            "Action": {
+                "Add": "Vytvořit zástupný symbol pro boj",
+                "AddAll": "Přidat vše jako zástupné symboly",
+                "AddToTracker": "Přidat do aktuálního střetnutí jako zástupný symbol",
+                "Delete": "Odstranit zástupný symbol"
+            },
+            "Field": {
+                "Name": "Název zástupného symbolu",
+                "Notes": "Poznámky"
+            }
+        }
+    },
+    "TIDY5E.FACILITY": {
+        "Action": {
+            "RemoveOccupant": "Odstranit z {facilityName}"
+        },
+        "Creatures": {
+            "Label": "Bytosti"
+        },
+        "Progress": {
+            "Label": "Postup (dny)",
+            "OrderAndCraft": "{orderName} - {craftingItemName}"
+        },
+        "RosterMember": {
+            "Label": "{actorName} - {facilityName}"
+        }
+    },
+    "TIDY5E.FILTER": {
+        "Action": {
+            "ClearAll": "Vymazat vše"
+        },
+        "CanCast": {
+            "IncludeRituals": "Zařadit rituály do výběru 'Lze seslat'",
+            "Label": "Lze seslat"
+        },
+        "CanUse": {
+            "Label": "Lze použít"
+        },
+        "Category": {
+            "Miscellaneous": "Různé",
+            "Other": "Další"
+        },
+        "Title": "Filtry"
+    },
+    "TIDY5E.GROUP": {
+        "Members": {
+            "Empty": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu."
+        },
+        "PrimaryParty": {
+            "Label": "Hlavní družina"
+        }
+    },
+    "TIDY5E.INTEGRATION": {
+        "Drakkenheim": {
+            "Contamination": {
+                "Action": {
+                    "Clear": "Vyčistit kontaminaci",
+                    "RollDeepHazeSave": "Záchrana proti Hlubokému oparu",
+                    "RollMutation": "Hod na mutaci",
+                    "RollSave": "Hod záchrany před kontaminací"
+                },
+                "Chat": {
+                    "RolledMutation": "{name} hodil na mutaci s úrovní kontaminace {level}."
+                },
+                "Empty": "Žádná kontaminace ani symptomy."
+            }
+        }
+    },
+    "TIDY5E.ITEM": {
+        "Activity": {
+            "Cast": {
+                "SourceHint": "Z {itemName}"
+            }
+        },
+        "FeatureOrigin": {
+            "Label": "Nadání"
+        },
+        "Recharge": {
+            "Hint": "{rechargeLabel} (Shift+klik pro přeskočení hodu a okamžité dobití) "
+        },
+        "Spell": {
+            "PactLevelCast": "Seslat v pořadí"
+        },
+        "Weapon": {
+            "Mastery": {
+                "Label": "Mistrovství se zbraní: {mastery}"
+            }
+        }
+    },
+    "TIDY5E.JOURNAL": {
+        "Entry": {
+            "NewTitle": "Záznam číslo {number}"
+        }
+    },
+    "TIDY5E.KEYBINDINGS": {
+        "ToggleHeaderMenu": {
+            "hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato klávesová zkratka záhlaví nabídky deníku.",
+            "name": "Přepínání záhlaví nabídky"
+        }
+    },
+    "TIDY5E.MODULE": {
+        "Title": "Deníky Tidy 5e"
+    },
+    "TIDY5E.NPC": {
+        "Legendary": {
+            "Abbreviation": "LA",
+            "Toolbar": {
+                "Title": "Legendární/doupěte akce"
+            }
+        },
+        "Statblock": {
+            "Option": {
+                "ShowLegendaryTrackers": "Zobrazit legendární akce a akce doupěte v záložce statistik"
+            }
+        }
+    },
+    "TIDY5E.SECTION": {
+        "Action": {
+            "Show": "Zobrazení sekce",
+            "Title": "Sekce akcí"
+        },
+        "Selector": {
+            "Choose": "Vyber sekci",
+            "ChooseAction": "Zvol sekci Akce",
+            "ChooseForTab": "Zvol sekci {tabName}",
+            "CreateNew": "Vytvořit novou sekci",
+            "Existing": "Stávající sekce",
+            "NewName": "Název nové sekce",
+            "SaveNew": "Uložit novou sekci",
+            "Title": "{sectionType}: {documentName}"
+        },
+        "Title": {
+            "one": "Sekce",
+            "other": "Sekce"
+        }
+    },
+    "TIDY5E.SETTINGS": {
+        "About": {
+            "Discord": "{urlStart}Discord Deníků Tidy 5e{urlEnd}: Diskutuj o nápadech na nové funkce, získej pomoc od ostatních a sleduj vývoj tohoto modulu.",
+            "FinancialSupport": "Pokud se ti Tidy 5e líbí a chceš je finančně podpořit, zde je několik možností, jak to udělat:",
+            "Github": "Máš nápad na nějakou funkci? Je něco špatně? Odešli problém na {urlStart}Githubub{urlEnd}.",
+            "Link": {
+                "BuyMeACoffee": "{urlStart}Kup mi kafe{urlEnd}",
+                "KoFi": "{urlStart}Ko-Fi{urlEnd}"
+            },
+            "Localization": "{urlStart}Weblate{urlEnd}: Lokalizuješ obsah webu? Deníky Tidy 5e by potřebovaly tvou pomoc! Přejdi na webové stránky Weblate a podívej se na průběh lokalizace do různých jazyků. Tento modul přijímá nové jazykové překlady a úpravy stávajících překladů.",
+            "LogoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně.",
+            "Maintainer": "Deníky Tidy 5e spravuje {urlStart}kgar{urlEnd}."
+        },
+        "Menu": {
+            "Defaults": {
+                "hint": "Pokud nabídka 'Foundry→ Výchozí deníky' nefunguje dle očekávání, pak výchozí deníky postav a položek nastav zde.",
+                "label": "Nastavit Tidy jako výchozí deník",
+                "name": "Nastavit Tidy jako výchozí deník"
+            },
+            "HeaderControls": {
+                "buttonLabel": "Ovládací prvky záhlaví",
+                "hint": "Pouze nové deníky Tidy: Nastavení umístění ovládacích prvků záhlaví deníku.",
+                "name": "Nastavení ovládacích prvků záhlaví"
+            },
+            "Tabs": {
+                "hint": "Pouze nové deníky Tidy: Nastav, které záložky budou viditelné u všech deníků aktérů a položek.",
+                "name": "Záložky deníků"
+            },
+            "TidySettings": {
+                "hint": "Nastav si deníky Tidy ve své hře. Nastav výchozí deníky, přizpůsob si motivy a globální výchozí nastavení deníků svých hráčů.",
+                "label": "Nastavení nástrojů Tidy",
+                "name": "Nastavení deníku Tidy"
+            }
+        },
+        "Option": {
+            "ActionList": {
+                "IncludeConsumables": {
+                    "hint": "Ve výchozím nastavení zahrne jednorázové položky, které mají aktivační náklady (akce, bonusová akce atd.), do akcí.",
+                    "name": "Zahrnout jednorázové položky do akcí?"
+                },
+                "IncludeMinuteLongSpells": {
+                    "hint": "Ve výchozím nastavení zahrne záložku/panel akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí.",
+                    "name": "Zahrnout kouzla do minuty do akcí?"
+                },
+                "IncludeSpellsWithActiveEffects": {
+                    "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do záložky/panelu akcí.",
+                    "name": "Zahrnout kouzla s aktivními efekty do akcí?"
+                },
+                "LimitToCantrips": {
+                    "hint": "Místo toho, aby se v záložce/panelu akcí ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
+                    "name": "Omezit akce na triky?"
+                }
+            },
+            "Debug": {
+                "hint": "Vypíše zprávy z ladění do konzole.",
+                "name": "Povolit ladění?"
+            },
+            "Inspiration": {
+                "Banked": {
+                    "Enable": {
+                        "hint": "Po zaškrtnutí této možnosti bude moci uživatel nastavit odbornost jako zdroj Inspirace. Tuto možnost najdeš jako položku kontextového menu položek odborností s použitím.",
+                        "name": "Povolit ukládání Inspirace?"
+                    },
+                    "GmOnly": {
+                        "hint": "Zaškrtnutím této možnosti se omezuje správa nahromaděných Inspirací pouze pro PJ.",
+                        "name": "Umožnit správu ukládání Inspirace pouze PJ?"
+                    },
+                    "Title": "Uložená Inspirace"
+                }
+            },
+            "Interaction": {
+                "ContextMenu": {
+                    "hint": "Povolí kontextovou nabídku položek kliknutím pravým tlačítkem myši.",
+                    "name": "Používat kontextovou nabídku?"
+                }
+            },
+            "Item": {
+                "IdentificationPermission": {
+                    "hint": "Určuje, který typ uživatele má přístup k ovládacím prvkům uživatelského rozhraní identifikace položek.",
+                    "name": "Povolení k identifikaci položky",
+                    "option": {
+                        "GmAndOwners": "PJ a vlastníci položky",
+                        "GmOnly": "Pouze PJ"
+                    }
+                }
+            },
+            "Section": {
+                "CharacterTabIncludeUsableItems": {
+                    "hint": "Automaticky včetně všech aktuálně použitelných položek, kouzla a schopností v záložce deníku.",
+                    "name": "Záložka deníku postavy: Automaticky včetně použitelných položek"
+                },
+                "CharacterTabOrganization": {
+                    "hint": "Určuje, jak by měly být sekce ve výchozím nastavení deníku postavy uspořádány.",
+                    "name": "Organizace sekcí deníku postavy",
+                    "option": {
+                        "action": "Seskupit podle ekonomiky akcí",
+                        "origin": "Seskupit podle položek nebo typu schopností"
+                    }
+                },
+                "GlobalCustom": {
+                    "hint": "Celkové nastavení sekcí, které lze konfigurovat pro různé účely. Celkově nastavené sekce budou vždy zahrnuty do výběru sekcí.",
+                    "name": "Celkově nastavené sekcí"
+                }
+            },
+            "Security": {
+                "GroupSheetMembers": {
+                    "hint": "Umožní PJ kontrolovat, jaké informace o členech skupiny může uživatel vidět na deníku skupiny. Pokud hráč nemá ke členovi skupiny oprávnění, deník skupiny tohoto člena nezobrazí, a ani jeho souhrnné informace. S omezeným oprávněním může uživatel vidět jméno člena, ale žádné další informace. S oprávněním pozorovatele a vyšším může uživatel v deníku skupiny vidět všechny informace o členovi.",
+                    "name": "Použít zabezpečení členů skupiny"
+                }
+            },
+            "Sheet": {
+                "DefaultDeathSaveRoll": {
+                    "hint": "Určuje výchozí typ hodu, který se použije při záchraně před smrtí.",
+                    "name": "Výchozí hod na záchranu před smrtí"
+                },
+                "DefaultTabs": {
+                    "hint": "Určuje, které záložky se zobrazí ve výchozím nastavení a v jakém pořadí. Použije se v případě, že nebyly navoleny u aktéra.",
+                    "name": "Výchozí záložky deníků"
+                },
+                "InlineActivitiesPosition": {
+                    "hint": "Při rozbalení položky se zobrazí aktivity dané položky. Toto nastavení určí, zda se aktivity umístí nahoru nad popis položky, nebo dolů pod popis položky, tlačítka a značky.",
+                    "name": "Vložené pozice aktivit",
+                    "option": {
+                        "bottom": "Dole",
+                        "top": "Nahoře"
+                    }
+                },
+                "SwapAbilityScoreAndBonus": {
+                    "hint": "Prohoz hodnoty vlastnosti a její opravy v záhlaví deníku.",
+                    "name": "Prohoz hodnoty vlastnosti a její opravy",
+                    "Title": "Prohoz hodnoty vlastnosti a její opravy"
+                }
+            },
+            "Spells": {
+                "IncludeFlagsInScrollCreation": {
+                    "hint": "Kouzla mohou někdy obsahovat speciální údaje z jiných modulů, které je užitečné přenést do svitku kouzla. Umožňuje zkopírovat do svitku kouzla všechna data založená při jeho vytvoření jako příznaková.",
+                    "name": "Zahrnovat příznaky při vytváření svitků kouzel?"
+                }
+            },
+            "Tooltip": {
+                "Condition": {
+                    "name": "Zobrazit systémové popisky stavů"
+                },
+                "CreatureType": {
+                    "name": "Zobrazit systémové popisky typů bytostí"
+                },
+                "Mastery": {
+                    "name": "Zobrazit systémové popisky mistrovství zbraní"
+                },
+                "Skill": {
+                    "name": "Zobrazit systémové popisky dovedností"
+                },
+                "Tool": {
+                    "name": "Zobrazit systémové popisky nástrojů"
+                }
+            }
+        },
+        "Preference": {
+            "Action": {
+                "EnableAll": "Přepnout na deníky Tidy",
+                "RevertToSystem": "Vrátit se k deníkům systému"
+            },
+            "Column": {
+                "DocumentType": "Typ dokumentu",
+                "SystemSheets": "Deníky systému",
+                "TidySheets": "Deníky Tidy"
+            },
+            "Dialog": {
+                "Message": "Opravdu chceš nastavit výchozí nastavení všech deníků na Tidy?",
+                "Title": "Nastavit Tidy jako výchozí deník"
+            },
+            "Explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
+            "name": "Nastavit Tidy jako základní deníky",
+            "World": {
+                "Action": {
+                    "ChooseSpecific": "Zvol místo toho konkrétní typy deníků",
+                    "SwitchToTidy": "Přepnout na deníky Tidy"
+                },
+                "hint": "Zvol všechny typy dokumentů, u nichž si přeješ, aby byly nastaveny jako výchozí deníky Tidy 5e.",
+                "name": "Nastav Tidy jako výchozí deník"
+            }
+        },
+        "Reset": {
+            "Dialog": {
+                "Content": "Jsi si jistý(á), že opravdu chceš obnovit všechna nastavení modulu na výchozí hodnoty aktuálního systému? 1<strong>Je to nevratné!</strong>",
+                "Title": "Obnovení základního nastavení modulu"
+            },
+            "name": "Obnovení výchozího nastavení"
         },
         "Sheet": {
-            "title": "Nastavení motivu: {userName}",
-            "header": "Vlastní barvy motivu",
-            "useDefaultLightColors": "Výchozí světlý motiv",
-            "useDefaultDarkColors": "Výchozí tmavý motiv",
-            "export": "Export",
-            "import": "Import",
-            "importDropHint": "Tip: Do tohoto formuláře můžeš přetáhnout '.tidy5e-theme' a tak jej importovat.",
-            "importError": "Import motivu se nezdařil. Další podrobnosti nalezneš v konzoli.",
-            "importSuccess": "Motiv byl úspěšně importován!",
-            "menuLabel": "Nabídka",
-            "explanation": "Vyber barvu, kterou chceš použít pro každou volbu. Hodnota '#00000000' znamená zákaz barvy."
+            "Group": {
+                "Settings": "Nastavení deníku",
+                "Tabs": "Záložky"
+            },
+            "HeaderControls": {
+                "Action": {
+                    "MoveAllToHeader": "Přesunout vše do záhlaví",
+                    "MoveAllToMenu": "Přesunout vše do nabídky",
+                    "OpenWorldSettings": "Otevřít nastavení světa"
+                },
+                "Hint": "Umístění ovládacích prvků v záhlaví je nastavení na úrovni celého světa, které sdílejí všechny deníky {sheetName}. Zde provedené změny se projeví u všech těchto deníků.",
+                "Location": {
+                    "Header": "Záhlaví",
+                    "Menu": "Menu"
+                },
+                "Preview": "Náhled ovládacích prvků záhlaví",
+                "ShowControl": "Zobrazit v {location}"
+            },
+            "Sidebar": {
+                "Expanded": {
+                    "label": "Zobrazit postranní panel",
+                    "name": "Rozbalený postranní panel"
+                },
+                "Title": "Postranní panel"
+            },
+            "Spells": {
+                "AssignToClasses": {
+                    "Hint": "Přiřaď kouzla ke zdrojovému povolání, aby se aktualizovalo seskupení a vizuální označení kouzel na záložce Kouzla."
+                }
+            },
+            "Tabs": {
+                "Empty": "V současné době nejsou zobrazeny žádné záložky. Chceš-li záložky zapnout, uprav jejich nastavení."
+            },
+            "Title": "Nastavení deníku Tidy"
         },
-        "hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
-        "AccentColor.title": "Akcentující barva",
-        "ActorHeaderBackground.title": "Obrázek záhlaví aktéra",
-        "ItemSidebarBackground.title": "Obrázek postranního panelu položky",
-        "PortraitShape": {
-            "title": "Tvar portrétu typu {typ}",
-            "option.round": "Kolo",
-            "option.transparent": "Transparentní",
-            "option.square": "Čtverec",
-            "option.token": "Token"
+        "TabOptions": {
+            "ConfigureTab": {
+                "Title": "Nastavit záložku {tabName}"
+            },
+            "DefaultPrefix": "Výchozí: {value}",
+            "DisplayOptions": {
+                "Actor": "Možnosti zobrazení aktéra",
+                "GlobalDefault": "Globální výchozí nastavení zobrazení"
+            },
+            "Group": {
+                "Tools": "Nástroje"
+            },
+            "IncludeUsableItems": "Automaticky včetně použitelných položek",
+            "SectionOrganization": "Organizace sekcí",
+            "Title": "Možnost",
+            "UseSpecificDefault": "Použít výchozí ({value})"
         },
-        "RarityColors.title": "Vzácné barvy",
-        "SheetTheme.title": "Barva motivu deníku",
-        "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
-        "SpellcastingMethodColors.title": "Barvy režimu přípravy kouzel",
-        "UseHeaderBackground.title": "Použít pozadí záhlaví",
-        "UseHeaderBackground.hint": "Zahrnuje styly podporující barevné záhlaví deníku s obrázkovým pozadím.",
-        "AccentColor": {
-            "hint": "Přizpůsob barvu zvýraznění deníku včetně tlačítek, záhlaví tabulek a dalších prvků uživatelského rozhraní."
+        "Theme": {
+            "AccentColor": {
+                "Title": "Akcentující barva"
+            },
+            "Action": {
+                "Export": "Export",
+                "Import": "Import"
+            },
+            "ActorHeaderBackground": {
+                "Title": "Obrázek záhlaví aktéra"
+            },
+            "HeaderBackgroundColor": {
+                "Hint": "Pro záhlaví deníku použít jinou barvu, než je zvýrazňovací barva deníku.",
+                "Title": "Barva záhlaví aktéra"
+            },
+            "Hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
+            "ItemSidebarBackground": {
+                "Title": "Obrázek postranního panelu položky"
+            },
+            "Menu": {
+                "buttonLabel": "Nastavení motivů",
+                "name": "Nastavení motivu Tidy"
+            },
+            "Notification": {
+                "ImportError": "Import motivu se nezdařil. Další podrobnosti nalezneš v konzoli.",
+                "ImportSuccess": "Motiv byl úspěšně importován!"
+            },
+            "PortraitShape": {
+                "option": {
+                    "round": "Kolo",
+                    "square": "Čtverec",
+                    "token": "Token",
+                    "transparent": "Transparentní"
+                },
+                "Title": "Tvar portrétu typu {typ}"
+            },
+            "RarityColors": {
+                "Title": "Vzácné barvy"
+            },
+            "SheetTheme": {
+                "Title": "Barva motivu deníku"
+            },
+            "SpellcastingMethodColors": {
+                "Title": "Barvy režimu přípravy kouzel"
+            },
+            "UseBasicTheme": {
+                "Hint": "Použít klasický pergamenový vzhled bez stylizovaných záhlaví deníku a tabulek.",
+                "Title": "Použít základní motiv"
+            },
+            "UseHeaderBackground": {
+                "Hint": "Zahrnuje styly podporující barevné záhlaví deníku s obrázkovým pozadím.",
+                "Title": "Použít pozadí záhlaví"
+            }
         },
-        "HeaderColor": {
-            "title": "Barva pozadí záhlaví",
-            "hint": "Pro záhlaví deníku použij jinou barvu než barvu zvýraznění."
-        },
-        "UseBasicTheme.title": "Použít základní motiv",
-        "UseBasicTheme.hint": "Použít klasický pergamenový vzhled bez stylizovaných záhlaví deníku a tabulek.",
-        "HeaderBackgroundColor": {
-            "title": "Barva záhlaví aktéra",
-            "hint": "Pro záhlaví deníku použít jinou barvu, než je zvýrazňovací barva deníku."
+        "World": {
+            "Defaults": {
+                "Intro": "Vítej v <span>Denících Tidy</span>. Zde si nastav výchozí nastavení v celém světě a poté pomocí záložek vlevo doladíš vzhled, záložky v deníku a další možnosti.",
+                "ResetHint": "Obnovit všechna nastavení světa v denících Tidy 5e na výchozí hodnoty. Tato akce je nevratná."
+            },
+            "Group": {
+                "ActorSheets": "Deníky aktérů",
+                "ItemSheets": "Deníky položek",
+                "TidySettings": "Nastavení Tidy"
+            },
+            "Homebrew": {
+                "name": "Nastavení domácích pravidel"
+            },
+            "SheetConfiguration": {
+                "Hint": "Nastav deník {sheetName}. Skryj či zobraz ovládací prvky záhlaví a urči, které záložky se na deníku zobrazí, v jakém pořadí a komu.",
+                "Label": "Nastavení deníku {sheetName}"
+            },
+            "Tab": {
+                "Character": "Postava",
+                "DefaultSheets": "Výchozí deníky",
+                "Homebrew": "Domácí pravidla",
+                "Overview": "Přehled",
+                "Theme": "Nastavení motivu"
+            },
+            "Title": "Celková nastavení"
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "Stupeň kouzla {number}",
-    "TIDY5E.ApplyChanges": "Použít změny",
-    "TIDY5E.SaveChanges": "Uložit změny",
-    "TIDY5E.VehicleInMotion": "Dopravní prostředek je v pohybu",
-    "TIDY5E.VehicleMotionless": "Dopravní prostředek je nehybný",
-    "TIDY5E.TotalCrewCount": "Posádka celkem",
-    "TIDY5E.ActionsPerTurn": "Akcí za kolo",
-    "TIDY5E.SheetMenu": {
-        "label": "Nabídka",
-        "themeLabel": "Motiv"
-    },
-    "TIDY5E.ActiveEffectsMarkerTitle": "Tato položka má aktivní efekty",
-    "TIDY5E.GMOnly.Message": "Pouze pro PJ: {message}",
-    "TIDY5E.PortraitTitle": "Portrét: {subject}",
-    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
-        "options.GmAndOwners": "PJ a vlastníci položky",
-        "name": "Povolení k identifikaci položky",
-        "hint": "Určuje, který typ uživatele má přístup k ovládacím prvkům uživatelského rozhraní identifikace položek.",
-        "options.GmOnly": "Pouze PJ"
-    },
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
-    "TIDY5E.ItemFilters.Filter.Other": "Další",
-    "TIDY5E.TabConfiguration": {
-        "SelectedHeader": "Viditelné záložky",
-        "Explanation": "Jakékoli záložky, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
-        "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není pro výběr záložek aktuálně nastaven.",
-        "Title": "Nastavení záložek deníku {documentName}",
-        "MenuOptionText": "Nastavit záložky",
-        "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna záložka.",
-        "AvailableHeader": "Skryté záložky",
-        "SelectionTab.Title": "Výběr záložky",
-        "VisibilityTab.Title": "Viditelnost záložky",
-        "buttonLabel": "Nastavení záložek",
-        "options.viewers": "Uživatelský přístup",
-        "options.visibility": "Zobrazit záložku",
-        "showTabTooltip": "Zobrazit tuto záložku",
-        "hideTabTooltip": "Skrýt tuto záložku",
-        "headers.tab": "Záložka",
-        "headers.userVisibility": "Viditelnost uživatelů",
-        "headers.showTab": "Zobrazit záložku"
-    },
-    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identifikátor zdrojového povolání",
-    "TIDY5E.Settings.Migrations": {
-        "CcssToTidy": {
-            "deleteFlags": "Odstranění dotčených příznaků CCSS",
-            "section": "Sekce",
-            "overwrite": "Přepis",
-            "sectionTitle": "CCSS do Tidy 5e",
-            "overwriteTooltip": "Umožňuje přepsat existující příznak sekce Tidy. Pokud není zaškrtnuto, budou migrovaná data CCSS přijímat pouze prázdné příznaky Tidy.",
-            "explanation1": "Tidy 5e nyní nativně podporuje vlastní sekce a poskytuje další funkce týkající se vlastních sekcí. Tato migrace zkopíruje názvy sekcí CCSS (vlastní sekce deníku postavy) do nastavení sekcí v Tidy.",
-            "deleteFlagsTooltip": "Při přechodu z CCSS na vlastní sekce Tidy zůstávají příznaky CCSS ve výchozím nastavení. Zaškrtnutím této možnosti tyto příznaky odstraníš.",
-            "ccss": "CCSS",
-            "selectionDialogTitle": "Migrace: CCSS do Tidy 5e"
+    "TIDY5E.SHEET": {
+        "Action": {
+            "CollapseAll": "Sbalit vše",
+            "ExpandAll": "Rozbalit vše"
         },
-        "dialogTitle": "Migrovat data Tidy",
-        "Selection": {
-            "TotalSelectedLabel": "Celkem vybraných: {total}",
-            "SelectAllNoneTooltip": "Vyber všechny, nebo žádný",
-            "ToMigrate": "Migrovat"
+        "Class": {
+            "Character": "Deník postavy Tidy 5e",
+            "Container": "Deník kontejneru Tidy 5e",
+            "Encounter": "Deník střetnutí (NP) Tidy 5e",
+            "Group": "Deník skupiny Tidy 5e",
+            "Item": "Deník položky Tidy 5e",
+            "Npc": "Deník NPC Tidy 5e",
+            "Vehicle": "Deník dopravního prostředku Tidy 5e"
         },
-        "migrateConfirmButtonYes": "Migrovat",
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migrace: Vyčerpání NP do systému",
-            "sectionTitle": "Vyčerpání NP"
+        "Expansion": {
+            "AllSections": "Všechny sekce",
+            "Title": "Chování při rozbalování a sbalování",
+            "TopLevel": "Sekce nejvyšší úrovně"
         },
-        "migrationBeginningMessage": "Migrace dat. Neobnovuj stránku, dokud migrace nebude hotová.",
-        "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "MigrateCompendia.Title": "Migrovat kompendia",
-        "OptionDeleteFlags.Tooltip": "Při migraci z vlastních dat příznaků Tidy na oficiální systémová data zůstávají příznaky ve výchozím nastavení. Zaškrtnutím této možnosti tyto příznaky odstraníš.",
-        "NpcDeathSaves": {
-            "sectionTitle": "Záchrany před smrtí NP",
-            "selectionDialogTitle": "Migrace: Záchrany před smrtí NP"
+        "Mode": {
+            "Edit": "Přepnout do herního režimu",
+            "Play": "Přepnout do režimu úprav"
         },
-        "UnlinkedExplanation": "Tato migrace umožňuje migrovat nepropojené dokumenty tokenů v aktuální scéně. Migraci můžeš dle potřeby spustit i v dalších scénách.",
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "Migrace: Ideály, pouta a vady NP do systému",
-            "sectionTitle": "Ideály, pouta a vady NP"
-        },
-        "MigrateCompendia.SelectionDialogTitle": "Vybrat kompendia k migraci",
-        "v1": {
-            "originalHeader": "Původní deník Tidy 5e",
-            "mainExplanation2": "{boldStart}Poznámka{boldEnd}: Nastavení klienta nejsou součástí této migrace. V Tidy se dost změnilo fungování klientských nastavení, proto doporučujeme podívat se na klientská nastavení znovu.",
-            "originalExplanation": "Migrace nastavení PJ a datových příznaků deníku Tidy z původního deníku Tidy5e. Většina rozdílů v datech pochází z nastavení PJ. Pokud migruješ nastavení a zjistíš, že ti některé nastavení nevyhovuje, jednoduše jej změň v nabídce nastavení.",
-            "sectionTitle": "Migrace na Tidy V1",
-            "mainExplanation1": "Pro použití nového modulu deníků Tidy 5e není nutná migrace dat do tohoto modulu. V nejhorším případě, pokud jsi původním uživatelem modulu deníků Tidy5e a migraci přeskočíš, budeš je muset znovu nastavit podle svých představ."
-        },
-        "migrateGmSettingsButtonLabel": "Migrace nastavení PJ",
-        "buttonLabel": "Migrovat data Tidy",
-        "migrationErrorMessage": "Došlo k chybě. Další podrobnosti nalezneš ve vývojářské konzoli.",
-        "hint": "Pokud jsi byl uživatelem původního modulu deníků Tidy5e, můžeš volitelně použít tuto nabídku pro migraci nastavení PJ a dat deníků Tidy.",
-        "migrateConfirmMessage1": "Jsi si jistý(á), že si přeješ tuto migraci provést?",
-        "migrateConfirmMessage2": "{boldStart}Poznámka{boldEnd}: Nikdy nezapomínej {boldStart}zálohovat svá data{boldEnd}.",
-        "OptionsHeader": "Nabídka migrace",
         "Notification": {
-            "Explanation2": "Poznámka: Migrace přesouvají data z jednoho místa na druhé. Někdy je třeba dat, která byla původně uložena v systému deníků Tidy 5e, přesunout do oficiálně podporovaných datových polí systému. V jiných případech může Tidy převzít funkce z jiného modulu, a v důsledku toho může být poskytnuta vhodná migrace, která usnadní přechod. Pokud ti po aktualizaci systému deníků Tidy 5e nechybějí data v denících, není migrace nutná.",
-            "Title": "Deníky Tidy 5e: Migrace k dispozici",
-            "Button.DoNotShowAgain": "Znovu již nezobrazovat",
-            "Explanation": "K dispozici jsou nové migrace dat z deníků Tidy 5e. Více informací najdeš v nabídce {boldStart}Nastavení migrace{boldEnd}.",
-            "DoNotShowAgain.ConfirmMessage": "Potvrzeno. Tato zpráva se znovu nezobrazí, dokud nebude k dispozici další migrace."
-        },
-        "FavoritesToSystem": {
-            "sectionTitle": "Oblíbené postavy",
-            "selectionDialogTitle": "Migrace: Oblíbené postavy do systému"
-        },
-        "ButtonMigration.Text": "Migrovat",
-        "migrationCompleteMessage": "Migrace kompletní.",
-        "migrateConfirmTitle": "Potvrzení migrace",
-        "migrateDocumentFlagsButtonLabel": "Migrace příznaků dokumentů",
-        "migrateConfirmButtonNo": "Zrušit",
-        "OptionDeleteFlags.Text": "Odstranění dotčených příznaků Tidy",
-        "OptionOverwrite.Tooltip": "Umožňuje přepsat stávající data deníku. Pokud není zaškrtnuto, budou data migrována pouze do prázdných polí systému.",
-        "CharacterBiography": {
-            "sectionTitle": "Životopis postavy",
-            "selectionDialogTitle": "Migrace: Životopis postavy"
-        },
-        "Parent": "Rodič",
-        "name": "Migrace",
-        "MigrateCompendia.TotalEntriesLabel": "Celkový počet záznamů",
-        "OptionOverwrite.Text": "Přepis",
-        "chatNotification": "K dispozici je migrace na nové deníky Tidy 5e. Dostupné migrace nalezneš v Nastavení deníků Tidy 5e.",
-        "Journal": {
-            "explanation1": "V rámci přepracování uživatelského rozhraní aplikace Deníků Tidy 5e byl deník upraven tak, aby mohl obsahovat libovolný počet záznamů. Z tohoto důvodu je nutné provést migraci ze staré struktury deníku do nové rozšiřitelné struktury. Stará data deníku nebudou v přepracované aplikaci Deníků Tidy 5e viditelná."
+            "ClassicsRetired": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e byly ve Foundry v14 z modulu Tidy 5e odstraněny.",
+            "FirstTimeWelcome": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}."
         }
     },
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Výchozí záložky deníků",
-        "AvailableHeader": "Dostupné záložky",
-        "SelectedHeader": "Vybrané záložky",
-        "hint": "Určuje, které záložky se zobrazí ve výchozím nastavení a v jakém pořadí. Použije se v případě, že nebyly navoleny u aktéra.",
-        "AtLeastOneTabRequiredErrorMessage": "Výchozí záložky: U každého typu aktéra je vyžadována alespoň jedna záložka."
-    },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.specific.levels.hint": "Určuje maximální počet úrovní vyčerpání.",
-        "options.open.explanation": "Zobrazí uživateli číselný vstup pro zadání úrovně vyčerpání.",
-        "options.specific.levels.tooltip.hint": "Popisek pro tuto úroveň vyčerpání. Fungují též lokalizační klávesy.",
-        "options.specific.levels.name": "Úrovně celkem",
-        "options.specific.levels.tooltip.name": "Popisek úrovně vyčerpání {level}",
-        "AtLeastOneLevelRequiredErrorMessage": "Je vyžadována alespoň jedna úroveň vyčerpání.",
-        "Header": "Vyčerpání postavy/NP",
-        "options.open.text": "Otevřený číselný vstup",
-        "hint": "Určuje, jak je vyčerpání mimo dopravní prostředky nastaveno a prezentováno na denících postav a NP.",
-        "name": "Nastavení vyčerpání",
-        "options.specific.text": "Určité úrovně"
-    },
-    "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "Je vyžadována alespoň jedna úroveň vyčerpání dopravního prostředku.",
-        "hint": "Určuje nastavení a zobrazení vyčerpání dopravního prostředku na deníku dopravního prostředku.",
-        "name": "Nastavení vyčerpání dopravního prostředku",
-        "Header": "Vyčerpání dopravního prostředku"
-    },
-    "TIDY5E.ButtonConfirm.Text": "Potvrdit",
-    "TIDY5E.Section": {
-        "ConfigDialog": {
-            "showTooltip": "Zobrazit tuto sekci",
-            "hideTooltip": "Skrýt tuto sekci",
-            "title": "Nastavení sekce: {tabTitle}"
+    "TIDY5E.SORT": {
+        "Alphabetical": {
+            "Ascending": {
+                "Label": "Vzestupně",
+                "Tooltip": "Řadit abecedně vzestupně"
+            },
+            "Descending": {
+                "Label": "Sestupně",
+                "Tooltip": "Řadit abecedně sestupně"
+            }
         },
-        "ActionLabel": "Sekce akcí",
-        "ActionTooltip": "Po umístění záložky Akce vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
-        "Label": "Sekce",
-        "Default": "Výchozí sekce",
-        "Tooltip": "Po umístění do deníku aktéra vytvoř pro tuto položku vlastní sekci, nebo ji pro výchozí chování ponech prázdnou.",
-        "SectionSelectorTitle": "{sectionType}: {documentName}",
-        "SectionSelectorChooseSectionTooltip": "Vyber sekci",
-        "LabelPl": "Sekce",
-        "SectionSelectorExistingSections": "Stávající sekce",
-        "SectionSelectorNewSectionName": "Název nové sekce",
-        "SectionSelectorSaveNewSection": "Uložit novou sekci",
-        "SectionSelectorChooseActionSectionTooltip": "Zvol sekci Akce",
-        "SectionSelectorCreateNewSection": "Vytvořit novou sekci",
-        "SectionSelectorChooseTabSectionTooltip": "Zvol sekci {tabName}",
-        "ShowSection": "Zobrazení sekce"
-    },
-    "TIDY5E.MaxPreparedSpellsConfig": {
-        "ButtonTooltip": "Nastavit maximum připravených kouzel",
-        "Title": "Nastavení maxima připravených kouzel: {documentName}",
-        "MoreFormulas": "Více vzorců",
-        "ExamplesHeader": "Ukázkové vzorce"
-    },
-    "TIDY5E.Utilities.AssignSpellsToClasses": "Přiřadit kouzla povoláním",
-    "TIDY5E.ItemImageTitle": "Položka: {subject}",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identifikátor povolání: {identifier}",
-    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+klik pro přeskočení hodu a okamžité dobití) ",
-    "TIDY5E.SortMode.ActionListDefault": "Výchozí řazení seznamu akcí",
-    "TIDY5E.EnvironmentTooltip": "Prostředí: {environment}",
-    "TIDY5E.Listbox": {
-        "MoveDown": "Přesun dolů (Alt + Šipka dolů)",
-        "MoveLeft": "Přesun doleva (Mezerník)",
-        "MoveUp": "Přesun nahoru (Alt + Šipka nahoru)",
-        "MoveAllRight": "Přesunout vše doprava",
-        "MoveRight": "Přesun doprava (Mezerník)",
-        "MoveAllLeft": "Přesunout vše doleva"
-    },
-    "TIDY5E.ItemFilters.CanUse": "Lze použít",
-    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - útok kouzlem na blízko",
-    "TIDY5E.EmptyContainer": "Tento kontejner je prázdný.",
-    "TIDY5E.WorldSettings.TabItem": {
-        "tabLabel": "Položka"
-    },
-    "TIDY5E.Settings.ActionListIncludeConsumables": {
-        "hint": "Ve výchozím nastavení zahrne jednorázové položky, které mají aktivační náklady (akce, bonusová akce atd.), do akcí.",
-        "name": "Zahrnout jednorázové položky do akcí?"
-    },
-    "TIDY5E.Commands.ShowContainerPanel": "Zobrazit panel kontejnerů",
-    "TIDY5E.UseDefaultDialog": {
-        "text": "Jsi si jistý(á), že chceš použít výchozí nastavení?",
-        "title": "Potvrdit: Použít výchozí nastavení"
-    },
-    "TIDY5E.LocalizationTestKey": "Testovací klíč lokalizace",
-    "TIDY5E.Actions": {
-        "OverriddenSetOverrideTrue": "Přidat do seznamu akcí (Shift+klik pro vymazání přepisu)",
-        "SetOverrideFalse": "Odebrat ze seznamu akcí",
-        "TabName": "Akce",
-        "OverriddenSetOverrideFalse": "Odebrat ze seznamu akcí (Shift+klik pro vymazání přepisu)",
-        "SetOverrideTrue": "Přidat do seznamu akcí",
-        "ResetActionDefault": "Výchozí nastavení akcí"
-    },
-    "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Používat klávesové zkratky?",
-        "hint": "Umožní uživatelům tabelovat na deníku většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z 'Konfigurace ovládacích prvků' nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Tabelovat výchozí rysy pomocí tabulátoru na klávesnici?",
-        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba 'Používání klávesových zkratek'."
-    },
-    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "hint": "Místo toho, aby se v záložce/panelu akcí ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
-        "name": "Omezit akce na triky?"
-    },
-    "TIDY5E.Settings.SheetPreferences": {
-        "buttonLabel": "Základní deníky",
-        "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
-        "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
-        "name": "Nastavit Tidy jako základní deníky",
-        "disableAll": "Přepnout na deníky systému",
-        "enableAll": "Přepnout na deníky Tidy",
-        "RevertToSystemSheets": "Vrátit se k deníkům systému",
-        "Sheet": "Typ dokumentu",
-        "TidySheets": "Deníky Tidy",
-        "SystemSheets": "Deníky systému",
-        "dialogTitle": "Nastavit Tidy jako výchozí deník",
-        "dialogMessage": "Opravdu chceš nastavit výchozí nastavení všech deníků na Tidy?"
-    },
-    "TIDY5E.Utilities.Tools": "Nástroje",
-    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
-    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Zobrazit pouze nepřiřazené",
-    "TIDY5E.HitDC": "Zásah / SO",
-    "TIDY5E.Inventory.Weight.Tooltip": "Váha: {weight} {weightUnit}",
-    "TIDY5E.AttackMod": "Oprava útoku",
-    "TIDY5E.WorldSettings.TabCharacter": {
-        "tabLabel": "Postava"
-    },
-    "TIDY5E.WorldSettings.Menu": {
-        "label": "Celková nastavení",
-        "title": "Celkové nastavení (pouze PJ)",
-        "hint": "Uprav nastavení na celkové úrovni a přizpůsob si tak zážitek z deníků Tidy 5e. Toto nastavení je následně uloženo v tomto světě Foundry a platí pro veškerý příslušný obsah deníků Tidy 5e.",
-        "name": "Přehled",
-        "tabLabel": "Přehled"
-    },
-    "TIDY5E.UserSettings.TabActionsList": {
-        "tabLabel": "Seznam akcí"
-    },
-    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
-        "name": "Zahrnout kouzla do minuty do akcí?",
-        "hint": "Ve výchozím nastavení zahrne záložku/panel akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
-    },
-    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do záložky/panelu akcí.",
-        "name": "Zahrnout kouzla s aktivními efekty do akcí?"
-    },
-    "TIDY5E.Settings.About": {
-        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-        "hint": "Informace o modulu Tidy 5e.",
-        "buttonLabel": "O denících Tidy 5e",
-        "dialogTitle": "O denících Tidy 5e",
-        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Lokalizuješ obsah webu? Deníky Tidy 5e by potřebovaly tvou pomoc! Přejdi na webové stránky Weblate a podívej se na průběh lokalizace do různých jazyků. Tento modul přijímá nové jazykové překlady a úpravy stávajících překladů.",
-        "PatreonLink": "{urlStart}Patreon{urlEnd}",
-        "FinancialSupportParagraph": "Pokud se ti Tidy 5e líbí a chceš je finančně podpořit, zde je několik možností, jak to udělat:",
-        "name": "O Tidy 5e",
-        "BuyMeACoffeeLink": "{urlStart}Kup mi kafe{urlEnd}",
-        "MaintainerParagraph": "Deníky Tidy 5e spravuje {urlStart}kgar{urlEnd}.",
-        "GithubParagraph": "Máš nápad na nějakou funkci? Je něco špatně? Odešli problém na {urlStart}Githubub{urlEnd}.",
-        "DiscordParagraph": "{urlStart}Discord Deníků Tidy 5e{urlEnd}: Diskutuj o nápadech na nové funkce, získej pomoc od ostatních a sleduj vývoj tohoto modulu.",
-        "FinancialSupportHeader": "Způsoby podpory Deníků Tidy 5e",
-        "logoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně."
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Nástin rituálů"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Pouze rituál"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Důraz na rituály"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Ukazatel posuvníku"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Panel posuvníku"
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "Použije ručně přiřazené ikony Tidy pro školy magie. Chceš-li přizpůsobit ikony škol kouzel prostřednictvím souboru CONFIG.DND5E nebo jiných modulů, tuto možnost zakaž. Chceš-li rozšířit vlastní ikony škol kouzel v Tidy, nahlédni do dokumentace API Tidy.",
-        "name": "Používat ikony škol magie Tidy?"
-    },
-    "TIDY5E.Commands.HideContainerPanel": "Skrýt panel kontejnerů",
-    "TIDY5E.ItemFilters.CanCast": "Lze seslat",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Ikony"
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost 'Používat podporu přístupnosti klávesnicí'.",
-        "name": "Tabelovat výchozí BV deníku pomocí tabulátoru na klávesnici?"
-    },
-    "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
-    "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
-    "TIDY5E.Utilities.ConfigureSections": "Nastavení sekcí",
-    "TIDY5E.Commands.CollapseAll": "Sbalit vše",
-    "TIDY5E.Commands.ExpandAll": "Rozbalit vše",
-    "TIDY5E.ItemFilters.ClearAll": "Vymazat vše",
-    "TIDY5E.ReminderToBackUp": "Nikdy nezapomínej svůj svět zálohovat.",
-    "TIDY5E.GenericErrorNotification": "Při provádění této akce došlo k chybě. Další podrobnosti nalezneš ve vývojářské konzoli.",
-    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
-        "hint": "Kouzla mohou někdy obsahovat speciální údaje z jiných modulů, které je užitečné přenést do svitku kouzla. Umožňuje zkopírovat do svitku kouzla všechna data založená při jeho vytvoření jako příznaková.",
-        "name": "Zahrnovat příznaky při vytváření svitků kouzel?"
-    },
-    "TIDY5E.Utilities.IdentifyAll": "Identifikace všech položek",
-    "TIDY5E.Utilities.GMTools": "Nástroje PJ",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Označit všechny položky jako neidentifikované",
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Důraz na nástin magických předmětů"
-    },
-    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - útok kouzlem na dálku",
-    "TIDY5E.ActorSpellAttackTitle": "{actorName} - útok kouzlem",
-    "TIDY5E.ActorSpellAttackFlavorText": "Útok kouzlem",
-    "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
-    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Přidává přepínací tlačítko pro zobrazení/skrytí prázdných dovedností.",
-        "name": "Přepínat prázdné dovednosti postav?"
-    },
-    "TIDY5E.UseDefault": "Použít výchozí",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Zobrazit panel nástrojů legendárních předmětů",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Skrýt panel legendárních předmětů",
-    "TIDY5E.RangedSpellAttackMod": "Oprava útoku kouzlem na dálku",
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NP"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Dopravní prostředek"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Vyčerpání"
-    },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Klasický deník kontejneru Tidy 5e",
-    "TIDY5E.Reset": "Obnovení výchozího nastavení",
-    "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
-    "TIDY5E.ExhaustionLevelTooltip": "Úroveň vyčerpání {level}",
-    "TIDY5E.Group.ShowMemberTabInfoPanel": "Zobrazit informační panel",
-    "TIDY5E.Group.HideMemberTabInfoPanel": "Skrýt informační panel",
-    "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Klasický deník skupiny Tidy 5e",
-    "TIDY5E.NoSpecialSenses": "Žádné zvláštní smysly",
-    "TIDY5E.Group.NamePlaceholder": "Název skupiny",
-    "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
-    "TIDY5E.PreviewSheetImageHint": "Levé tlačítko myši: Náhled obrázku",
-    "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
-    "TIDY5E.ModuleName": "Deníky Tidy 5e",
-    "TIDY5E.WorldSettings.TabCustomSections": {
-        "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
-        "ShowWhenEmptyTooltip": "Všechny záložky s tabulkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když tam nejsou žádné položky. Sekce se zobrazí vždy , i když je prázdná.",
-        "LimitToSpecificTabsLabel": "Limit zobrazených sekcí na konkrétních záložkách",
-        "tabLabel": "Vlastní sekce",
-        "CustomizedIndicatorLabel": "Přizpůsobené",
-        "ShowWhenEmptyLabel": "Zobrazit sekci, i když je prázdná"
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Kontrolní klíč informační karty",
-        "hint": "Stisknutím tohoto znaku na klávesnici (například klávesy 't') při prohlížení informační karty bude karta vysunuta."
-    },
-    "TIDY5E.BrokenLink": "Přerušený odkaz",
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Zobrazovat informační karty aktivních efektů?",
-        "hint": "Umožňuje zobrazení informační karty aktivních efektů u všech aktérů a položek s aktivními efekty."
-    },
-    "TIDY5E.ContextMenuActionView": "Náhled",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Připnout k rysům",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Odepnout od rysů",
-    "TIDY5E.ContextMenuActionShowLimitedUses": "Zobrazit omezená použití",
-    "TIDY5E.UserSettings.TabActivities": {
-        "tabLabel": "Aktivity"
-    },
-    "TIDY5E.Settings.InlineActivitiesPosition": {
-        "name": "Vložené pozice aktivit",
-        "top": "Nahoře",
-        "bottom": "Dole",
-        "hint": "Při rozbalení položky se zobrazí aktivity dané položky. Toto nastavení určí, zda se aktivity umístí nahoru nad popis položky, nebo dolů pod popis položky, tlačítka a značky."
-    },
-    "TIDY5E.Settings.GlobalCustomSections": {
-        "name": "Celkově nastavené sekcí",
-        "AddSection": "Přidat sekci",
-        "hint": "Celkové nastavení sekcí, které lze konfigurovat pro různé účely. Celkově nastavené sekce budou vždy zahrnuty do výběru sekcí."
-    },
-    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Zařadit rituály do výběru 'Lze seslat'",
-    "TIDY5E.Facilities.Hirelings.Label": "Pracovníci",
-    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato klávesová zkratka záhlaví nabídky deníku.",
-    "TIDY5E.Settings.DefaultDeathSaveRoll": {
-        "hint": "Určuje výchozí typ hodu, který se použije při záchraně před smrtí.",
-        "name": "Výchozí hod na záchranu před smrtí"
-    },
-    "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
-    "TIDY5E.RollRecharge.Label": "Dobití",
-    "TIDY5E.Facilities.Defenders.Label": "Obránci",
-    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Abecedně (A-Z)",
-    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Všechny sekce",
-    "TIDY5E.SortMenu.OptionManual": "Ručně",
-    "TIDY5E.SortMenu.OptionPrepared": "Připraveno",
-    "TIDY5E.SortMenu.OptionEquipped": "Vybaveno",
-    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Chování při rozbalování a sbalování",
-    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
-    "TIDY5E.Facilities.Creatures.Label": "Bytosti",
-    "TIDY5E.Facilities.ContextMenuActionRemove": "Odstranit z {facilityName}",
-    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Sekce nejvyšší úrovně",
-    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Podržet{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
-    "TIDY5E.InfoCardInspectHint": "Kontrola",
-    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Přepínání záhlaví nabídky",
-    "TIDY5E.ContextMenuActionShowQuantity": "Zobrazit množství",
-    "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Řadit abecedně vzestupně",
-    "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "Řadit abecedně sestupně",
-    "TIDY5E.SortMenu.OptionPriority": "Priorita",
-    "TIDY5E.Utilities.SpellPips": "Označení kouzel",
-    "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max",
-    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NPC Tidy 5e",
-    "TIDY5E.Tidy5eContainerSheetQuadrone": "Deník kontejneru Tidy 5e",
-    "TIDY5E.Visible": "Viditelné",
-    "TIDY5E.DisplayOptions.Title": "Zobrazit možnosti",
-    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Zobrazit řádku kontejneru",
-    "TIDY5E.ItemSheet.PactLevelCastLabel": "Seslat v pořadí",
-    "TIDY5E.Hidden": "Skryté",
-    "TIDY5E.AddSpecific": "Přidat {name}",
-    "TIDY5E.Options.Title": "Možnost",
-    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Deník dopravního prostředku Tidy 5e",
-    "TIDY5E.ConfigureTab.Title": "Nastavit záložku {tabName}",
-    "TIDY5E.Tidy5eItemSheetQuadrone": "Deník položky Tidy 5e",
-    "TIDY5E.Tidy5eGroupSheetQuadrone": "Deník skupiny Tidy 5e",
-    "TIDY5E.StatblockTabName": "Blok statistik",
-    "TIDY5E.Ability.EditScore.label": "Upravit skóre",
-    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Sledování pozic kouzel",
-    "TIDY5E.ItemSheet.FeatureOriginLabel": "Nadání",
-    "TIDY5E.HitDice.Abbreviation": "K.O.",
-    "TIDY5E.HitDice.Current.Label": "Stávající kostky obnovy",
-    "TIDY5E.HitDice.Max.Label": "Maximum kostek obnovy",
-    "TIDY5E.CharacterTraits.Title": "Rysy postavy",
-    "TIDY5E.JournalEntry.NewTitle": "Záznam číslo {number}",
-    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Nastavit jako zdroj Inspirace",
-    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Odstranit zdroj Inspirace",
-    "TIDY5E.ContextMenuActionAddToSheetTab": "Přidat k záložkám deníku",
-    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Odstranit ze záložek deníku",
-    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Zdroj Inspirace",
-    "TIDY5E.SettingsMenu.WorldThemeSettings": {
-        "name": "Motiv nastavení",
-        "label": "Nastavit motiv nastavení",
-        "hint": "Pouze nové deníky Tidy: Nastav výchozí motiv pro svůj herní svět. Tato nastavení se vztahují na všechny typy deníků."
-    },
-    "TIDY5E.SettingsMenu.Homebrew": {
-        "name": "Domácí tvorba",
-        "label": "Nastavit domácí tvorbu",
-        "hint": "Povolit a nastavit možnosti domácí tvorby poskytované tímto modulem."
-    },
-    "TIDY5E.SettingsMenu.TabConfiguration": {
-        "name": "Záložky deníků",
-        "label": "Nastavit záložky deníku",
-        "hint": "Pouze nové deníky Tidy: Nastav, které záložky budou viditelné u všech deníků aktérů a položek."
-    },
-    "TIDY5E.Settings.BankedInspiration.title": "Uložená Inspirace",
-    "TIDY5E.Settings.EnableBankedInspiration": {
-        "name": "Povolit ukládání Inspirace?",
-        "hint": "Po zaškrtnutí této možnosti bude moci uživatel nastavit odbornost jako zdroj Inspirace. Tuto možnost najdeš jako položku kontextového menu položek odborností s použitím."
-    },
-    "TIDY5E.Settings.BankedInspirationGmOnly": {
-        "name": "Umožnit správu ukládání Inspirace pouze PJ?",
-        "hint": "Zaškrtnutím této možnosti se omezuje správa nahromaděných Inspirací pouze pro PJ."
-    },
-    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Seskupení aktivit sesílání kouzla",
-    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekce dalších kouzel",
-    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekce na položku",
-    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Vzestupně",
-    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
-    "TIDY5E.SheetLock.Empty.Hint": "<h3>Jak začít.</h3>Začni přidáním povolání a prvních položek do záložky <i class='fa-solid fa-wreath-laurel'></i><strong>Povolání</strong>. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost <strong>Přidat do záložky deníku</strong>. <h3>Úprava svého deníku</h3><p>Vyber si mezi motivy deníku Stylistic a Basic , změň zvýrazňovací barvu deníku či obrázek záhlaví otevřením nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení</strong> a zvolením možnosti <a class='tidy-link-theme' data-action='themeSettings'><i class='fa-solid fa-swatchbook'></i> <strong>Nastavení motivu Tidy</strong></a>.</p><h3>Postranní panel</h3><p>Pro pozdější použití si ulož cokoli do <i class='fa-solid fa-sidebar'></i> <strong>Postranní panel</strong>. Pomocí nabídky <i class='fa-solid fa-ellipsis-vertical'></i> <strong>Přetečení </strong> či kliknutím pravým tlačítkem na libovolnou položku a volbou <i class='fa-solid fa-star'></i> <strong>Přidat do oblíbených</strong> ji přidej do postranního panelu.</p><h3>Nastavení</h3><p>Uprav nastavení jednotlivých záložek a přizpůsob si sekce pomocí tlačítka <i class='fa-solid fa-gear'></i> <strong>Nastavení</strong> v každé záložce.</p>",
-    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost 'Přidat do oblíbených', nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
-    "TIDY5E.EmptyTools": "Žádná dovednost s nástroji.",
-    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
-    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí Tidy 5e",
-    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
-    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
-        "name": "Použít zabezpečení členů skupiny",
-        "hint": "Umožní PJ kontrolovat, jaké informace o členech skupiny může uživatel vidět na deníku skupiny. Pokud hráč nemá ke členovi skupiny oprávnění, deník skupiny tohoto člena nezobrazí, a ani jeho souhrnné informace. S omezeným oprávněním může uživatel vidět jméno člena, ale žádné další informace. S oprávněním pozorovatele a vyšším může uživatel v deníku skupiny vidět všechny informace o členovi."
-    },
-    "TIDY5E.AggregateSkill.HighMeasure": "Vysoké",
-    "TIDY5E.AggregateSkill.LowMeasure": "Nízké",
-    "TIDY5E.Group.PrimaryParty.Label": "Hlavní družina",
-    "TIDY5E.CombatTabName": "Boj",
-    "TIDY5E.Difficulty": "Obtížnost",
-    "TIDY5E.Encounter": {
-        "CombatantsSection.Title": "Bojovníci",
-        "Combat.IncludeInCombat.Tooltip": "Zahrnout do bojových aktivit",
-        "Combat.ExcludeFromCombat.Tooltip": "Vyloučit z bojových aktivit",
-        "AddMember.Label": "Přidat člena",
-        "AddPlaceholderToCombatTracker.Label": "Přidat do aktuálního střetnutí jako zástupný symbol",
-        "AddPlaceholder.Label": "Vytvořit zástupný symbol pro boj",
-        "DeletePlaceholder.Label": "Odstranit zástupný symbol",
-        "DifficultyTarget.Label": "Obtížný cíl",
-        "AddAllPlaceholders.Label": "Přidat vše jako zástupné symboly",
-        "PrerollInitiative": "Přehodit iniciativu",
-        "NewPlaceholder.Name": "Nový zástupný symbol",
-        "NewPlaceholder.SubtitlePlaceholderText": "Poznámka k tomuto zástupnému symbolu",
-        "AddCombatants.MustHaveEncounter.Message": "Abys mohl střetnutí přidat do sledovače střetnutí, musíš jej mít vybrané",
-        "CombatVisibility.Hidden.Label": "Po přidání do sledovače skryto před hráči",
-        "CombatVisibility.Visible.Label": "Po přidání do sledovače viditelné pro hráče",
-        "InitiativeCount.Label": "Přidat {count} iniciativ",
-        "PlaceholderNameField.PlaceholderText": "Název zástupného symbolu",
-        "PlaceholderNotesField.PlaceholderText": "Poznámky"
-    },
-    "TIDY5E.Actor.Characteristics": "Charakteristiky",
-    "TIDY5E.Show": "Zobrazit",
-    "TIDY5E.Hide": "Skrýt",
-    "TIDY5E.LegendaryLairToolbar": "Legendární/doupěte akce",
-    "TIDY5E.SpellbookSections": "Sekce kouzel",
-    "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
-    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
-    "TIDY5E.Character.Sidebar.Title": "Nastavení postranního panelu",
-    "TIDY5E.ContextMenuActionPin": "Připnout navrch",
-    "TIDY5E.ContextMenuActionUnpin": "Odpojit z vrchu",
-    "TIDY5E.HeaderControlConfiguration": {
-        "LocationMenu": "Menu",
-        "LocationHeader": "Záhlaví"
-    },
-    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
-        "name": "Nastavení ovládacích prvků záhlaví",
-        "label": "Nastavení ovládacích prvků záhlaví",
-        "hint": "Pouze nové deníky Tidy: Nastavení umístění ovládacích prvků záhlaví deníku."
-    },
-    "TIDY5E.GMOnly.Title": "Pouze PJ",
-    "TIDY5E.SheetPin": {
-        "Label": "Připnutý deník",
-        "LabelPl": "Připnuté deníky"
-    },
-    "TIDY5E.InspirationAdd": "Přidat inspiraci",
-    "TIDY5E.InspirationRemove": "Odebrat inspiraci",
-    "TIDY5E.LegendaryAbbr": "LA",
-    "TIDY5E.LairAbbr": "Doupě",
-    "TIDY5E.AddCustom": "Přidat volitelné {name}",
-    "TIDY5E.CompendiumBrowser": "Přidat {name} z kompendia",
-    "TIDY5E.SheetMode.Edit": "Přepnout do herního režimu",
-    "TIDY5E.SheetMode.Play": "Přepnout do režimu úprav",
-    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Tažné zvíře / Zvíře k práci",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Tažná zvířata / Zvířata k práci",
-    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Převést veškeré mince nadřazenému aktérovi",
-    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e budou ve Foundry v14 z modulu Tidy 5e odstraněny.",
-    "TIDY5E.Notifications.ClassicsRetired": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e byly ve Foundry v14 z modulu Tidy 5e odstraněny.",
-    "TIDY5E.RemoveSpecific": "Odstranit {name}",
-    "TIDY5E.ContextMenuActionUnassign": "Zrušit přiřazení",
-    "TIDY5E.ContextMenuActionAssignToEntity": "Přiřadit k {entityName}",
-    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Přiřazená posádka",
-    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Nepřiřazená posádka",
-    "TIDY5E.Vehicle.Member.Passenger.Label": "Cestující",
-    "TIDY5E.Vehicle.Member.AssignTo.Label": "Přiřadit k",
-    "TIDY5E.Vehicle.Member.Assigned.Label": "Přiřazeno",
-    "TIDY5E.Vehicle.Repair.Label": "Opravit",
-    "TIDY5E.Vehicle.Features.EmptyState": "Klikni na přidání schopností, nebo je sem přetáhni a pusť.",
-    "TIDY5E.Vehicle.Weapons.EmptyState": "Klikni na přidání zbraní, nebo je sem přetáhni a pusť.",
-    "TIDY5E.Vehicle.Equipment.EmptyState": "Klikni na přidání vybavení, nebo jej sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení dopravního prostředku.",
-    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Klikni na přidání tažných či pracovních zvířat, nebo je sem přetáhni a pusť.",
-    "TIDY5E.Vehicle.Equipment.HP.Label": "Prům. BV",
-    "TIDY5E.Vehicle.Unassigned.EmptyState": "Klikni na přidání posádku, nebo ji sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení či schopnostem dopravního prostředku.",
-    "TIDY5E.Vehicle.Passenger.EmptyState": "Klikni na přidání cestujících, nebo je sem přetáhni a pusť.",
-    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorovat {value}",
-    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorovat veškerý obtížný terén",
-    "TIDY5E.Drakkenheim": {
-        "Contamination": {
-            "rollSave": "Hod záchrany před kontaminací",
-            "rollMutation": "Hod na mutaci",
-            "rolledMutation": "{name} hodil na mutaci s úrovní kontaminace {level}.",
-            "clear": "Vyčistit kontaminaci",
-            "none": "Žádná kontaminace ani symptomy.",
-            "rollDeepHazeSave": "Záchrana proti Hlubokému oparu"
+        "Menu": {
+            "Manual": "Ručně",
+            "Priority": "Priorita"
         }
     },
-    "TIDY5E.SectionOrganization": "Organizace sekcí",
-    "TIDY5E.AutomaticallyIncludeUsableItems": "Automaticky včetně použitelných položek",
-    "TIDY5E.GenericDefaultPrefix": "Výchozí: {value}",
-    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
-        "name": "Organizace sekcí deníku postavy",
-        "hint": "Určuje, jak by měly být sekce ve výchozím nastavení deníku postavy uspořádány.",
-        "option.action": "Seskupit podle ekonomiky akcí",
-        "option.origin": "Seskupit podle položek nebo typu schopností"
-    },
-    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
-        "name": "Záložka deníku postavy: Automaticky včetně použitelných položek",
-        "hint": "Automaticky včetně všech aktuálně použitelných položek, kouzla a schopností v záložce deníku."
-    },
-    "TIDY5E.AbilityRoll": "Ověření vlastnosti {ability}",
-    "TIDY5E.AbbrProficiency": "ZD",
-    "TIDY5E.Weapon.Mastery.LabelWithMastery": "Mistrovství se zbraní: {mastery}",
-    "TIDY5E.DisplayOptionsActor.Title": "Možnosti zobrazení aktéra",
-    "TIDY5E.Utilities.CastActivityMissingSpell": "S touto aktivitou není spojeno žádné kouzlo.",
-    "TIDY5E.Settings.ShowTooltipCondition": {
-        "name": "Zobrazit systémové popisky stavů"
-    },
-    "TIDY5E.Settings.ShowTooltipCreatureType": {
-        "name": "Zobrazit systémové popisky typů bytostí"
-    },
-    "TIDY5E.Settings.ShowTooltipMastery": {
-        "name": "Zobrazit systémové popisky mistrovství zbraní"
-    },
-    "TIDY5E.Settings.ShowTooltipSkill": {
-        "name": "Zobrazit systémové popisky dovedností"
-    },
-    "TIDY5E.Settings.ShowTooltipTool": {
-        "name": "Zobrazit systémové popisky nástrojů"
-    },
-    "TIDY5E.Settings.ColorPickerHeaderBackgroundColor": {
-        "name": "Barva pozadí záhlaví"
-    },
-    "TIDY5E.WorldSettings.Homebrew": {
-        "name": "Nastavení domácích pravidel",
-        "tabLabel": "Domácí pravidla"
-    },
-    "TIDY5E.WorldSettings.HideClassic": {
-        "name": "Skrýt klasické deníky Tidy 5e",
-        "hint": "Skrýt klasické deníky Tidy 5e v tomto světě."
-    },
-    "TIDY5E.WorldSettings.label": "Nastavení deníku Tidy",
-    "TIDY5E.WorldSettings.hint": "Nastav globálně deníky Tidy.",
-    "TIDY5E.WorldSettings.Group": {
-        "TidySettings": "Nastavení Tidy",
-        "ActorSheets": "Deníky aktérů",
-        "ItemSheets": "Deníky položek"
-    },
-    "TIDY5E.WorldSettings.SheetConfiguration": {
-        "label": "Nastavení deníku {sheetName}",
-        "hint": "Nastav deník {sheetName}. Skryj či zobraz ovládací prvky záhlaví a urči, které záložky se na deníku zobrazí, v jakém pořadí a komu."
-    },
-    "TIDY5E.WorldSettings.TabConfiguration": {
-        "label": "Nastavení záložky {tabName}",
-        "hint": "Nastav, jaké záložky se mají zobrazovat na deníku {tabName}, v jakém pořadí a komu."
-    },
-    "TIDY5E.SheetSettings": {
-        "title": "Nastavení deníku Tidy",
-        "hint": "Nastavte parametry deníku.",
-        "Group": {
-            "SheetSettings": "Nastavení deníku",
-            "Tabs": "Záložky"
+    "TIDY5E.SPELLS": {
+        "Action": {
+            "AssignToClasses": "Přiřadit kouzla povoláním"
         },
-        "Sidebar": {
-            "title": "Postranní panel",
-            "Hint": "Nastavení záložek postranního panelu."
+        "CastActivity": {
+            "Grouping": {
+                "Additional": "Sekce dalších kouzel",
+                "PerItem": "Sekce na položku",
+                "Title": "Seskupení aktivit sesílání kouzla"
+            },
+            "MissingSpell": "S touto aktivitou není spojeno žádné kouzlo."
         },
-        "HeaderControls": {
-            "ShowControl": "Zobrazit v {location}",
-            "Preview": "Náhled ovládacích prvků záhlaví",
-            "MoveAllToMenu": "Přesunout vše do nabídky",
-            "MoveAllToHeader": "Přesunout vše do záhlaví",
-            "WorldSettingHint": "Umístění ovládacích prvků v záhlaví je nastavení na úrovni celého světa, které sdílejí všechny deníky {sheetName}. Zde provedené změny se projeví u všech těchto deníků.",
-            "OpenWorldSettings": "Otevřít nastavení světa"
+        "MaxPrepared": {
+            "ExamplesHeader": "Ukázkové vzorce",
+            "Formula": {
+                "Artificer": "Divotvůrce",
+                "Bard": "Bard",
+                "Cleric": "Klerik",
+                "Druid": "Druid",
+                "Paladin": "Paladin",
+                "Ranger": "Hraničář",
+                "Sorcerer": "Čaroděj",
+                "Wizard": "Kouzelník"
+            },
+            "MoreFormulas": "Více vzorců",
+            "Title": "Nastavení maxima připravených kouzel: {documentName}"
         },
-        "ConfigureTab": {
-            "title": "Nastavit záložku {tabName}",
-            "hint": "Nastavení parametrů, viditelnosti a sekcí záložky {tabName}."
+        "SlotTracking": {
+            "Pips": "Označení kouzel",
+            "Title": "Sledování pozic kouzel",
+            "ValueMax": "Hodnota kouzla/Max"
         },
-        "AssignSpellsToClasses": {
-            "hint": "Přiřaď kouzla ke zdrojovému povolání, aby se aktualizovalo seskupení a vizuální označení kouzel na záložce Kouzla."
-        },
-        "NoTabsHint": "V současné době nejsou zobrazeny žádné záložky. Chceš-li záložky zapnout, uprav jejich nastavení."
-    },
-    "TIDY5E.TabSettings": {
-        "SidebarSettings": {
-            "name": "Rozbalený postranní panel",
-            "label": "Zobrazit postranní panel"
+        "SourceItem": {
+            "Identifier": "Identifikátor zdrojového povolání",
+            "IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
+            "ShowUnassignedOnly": "Zobrazit pouze nepřiřazené"
         }
     },
-    "TIDY5E.SettingsMenu": {
-        "TidySettings": {
-            "name": "Nastavení deníku Tidy",
-            "label": "Nastavení nástrojů Tidy",
-            "hint": "Nastav si deníky Tidy ve své hře. Nastav výchozí deníky, přizpůsob si motivy a globální výchozí nastavení deníků svých hráčů."
+    "TIDY5E.TAB": {
+        "Configuration": {
+            "ButtonLabel": "Nastavení záložek",
+            "Column": {
+                "ShowTab": "Zobrazit záložku",
+                "Tab": "Záložka",
+                "UserVisibility": "Viditelnost uživatelů"
+            },
+            "MenuOptionText": "Nastavit záložky",
+            "Option": {
+                "Viewers": "Uživatelský přístup",
+                "Visibility": "Zobrazit záložku"
+            },
+            "Title": "Nastavení záložek deníku {documentName}",
+            "Visibility": {
+                "Title": "Viditelnost záložky"
+            }
         },
-        "Defaults": {
-            "name": "Nastavit Tidy jako výchozí deník",
-            "label": "Nastavit Tidy jako výchozí deník",
-            "hint": "Pokud nabídka 'Foundry→ Výchozí deníky' nefunguje dle očekávání, pak výchozí deníky postav a položek nastav zde."
-        },
-        "HeaderControlConfiguration": {
-            "buttonLabel": "Ovládací prvky záhlaví"
+        "Name": {
+            "Actions": "Akce",
+            "Combat": "Boj",
+            "Journal": "Záznamy",
+            "Statblock": "Blok statistik"
         }
     },
-    "TIDY5E.WorldSettings.SheetPreferences": {
-        "name": "Nastav Tidy jako výchozí deník",
-        "tabLabel": "Výchozí deníky",
-        "switchToTidySheets": "Přepnout na deníky Tidy",
-        "revertToSystemSheets": "Vrátit se k deníkům systému",
-        "chooseSpecific": "Zvol místo toho konkrétní typy deníků",
-        "hint": "Zvol všechny typy dokumentů, u nichž si přeješ, aby byly nastaveny jako výchozí deníky Tidy 5e."
-    },
-    "TIDY5E.WorldSettings.GlobalTheme": {
-        "name": "Nastavení globálních motivů",
-        "hint": "Nastav výchozí parametry motivu pro svůj herní svět. Tyto parametry se vztahují na všechny deníky. Můžeš také nastavit parametry motivu pro konkrétní deníky.",
-        "tabLabel": "Nastavení motivu"
-    },
-    "TIDY5E.WorldSettings.Defaults": {
-        "intro": "Vítej v <span>Denících Tidy</span>. Zde si nastav výchozí nastavení v celém světě a poté pomocí záložek vlevo doladíš vzhled, záložky v deníku a další možnosti.",
-        "useTidyHint": "Nastav deníky Tidy 5e jako výchozí pro všechny typy postav a položek v tomto světě.",
-        "resetHint": "Obnovit všechna nastavení světa v denících Tidy 5e na výchozí hodnoty. Tato akce je nevratná."
-    },
-    "TIDY5E.UseGlobalDefaults": "Použít globální výchozí nastavení",
-    "TIDY5E.UndoChanges": "Vrátit změny",
-    "TIDY5E.ContextMenuActionViewItem": "Zobrazit zdrojovou položku",
-    "TIDY5E.ContextMenuActionPickColor": "Zvol barvu",
-    "TIDY5E.ContextMenuActionPinToSpecificTab": "Připnout k záložce {tabName}",
-    "TIDY5E.Settings.SwapAbilityScoreAndBonus": {
-        "title": "Prohoz hodnoty vlastnosti a její opravy",
-        "name": "Prohoz hodnoty vlastnosti a její opravy",
-        "hint": "Prohoz hodnoty vlastnosti a její opravy v záhlaví deníku."
-    },
-    "TIDY5E.Vehicle.RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů",
-    "TIDY5E.Character.Sidebar.SkillsAndTraits": "Dovednosti a rysy",
-    "TIDY5E.Facilities": {
-        "Progress.Label": "Postup (dny)"
-    },
-    "TIDY5E.Bastion.Group": {
-        "RollEvent.Label": "Událost pevnosti",
-        "MaintainOrder.Label": "Údržba",
-        "MaintainOrder.DialogTitle": "Postavy, které mohou vydávat rozkazy pevnosti",
-        "MaintainOrder.DialogHint": "Rozkazy pevnosti se budou provádět u všech vybraných postav. Odškrtni u postav, které rozkazy nemohou vydávat. Jejich pevnosti obdrží rozkaz 'Údržba' a nebudou prováděny žádné probíhající rozkazy týkající se zařízení.",
-        "MaintainOrder.Chat": "Vydal/a rozkaz k údržbě pevnosti {bastionName}.",
-        "TakeBastionTurn.Confirm": "Odehrát tah pevnosti postav v této skupině?",
-        "CancelOrder.Label": "Zrušit rozkaz",
-        "CompleteOrder.Label": "Splnit rozkaz",
-        "CompleteOrder.Confirm": "Chceš tento rozkaz splnit hned? Zbývající dny budou přeskočeny a odměny budou uděleny.",
-        "ChooseFacility.Title": "Volba zařízení",
-        "Orders.EmptyStateHint": "Žádný ze členů skupiny nemá prováděný rozkaz.",
-        "Facilities.EmptyStateHint": "Tato postava zatím nemá postaveno žádné zařízení.",
-        "EmptyStateHint": "Nikdo ve skupině nemá pevnost. Přidej sem postavy hráčů, abys mohl/a sledovat jejich pevnosti."
-    },
-    "TIDY5E.Table.UnidentifiedPlaceholder": "?"
+    "TIDY5E.VEHICLE": {
+        "Action": {
+            "RemoveBrokenLinks": "Odstranit {value} nefunkčních odkazů",
+            "Repair": "Opravit"
+        },
+        "Crew": {
+            "Assigned": {
+                "Title": "Přiřazená posádka"
+            },
+            "Unassigned": {
+                "Empty": "Klikni na přidání posádku, nebo ji sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení či schopnostem dopravního prostředku.",
+                "Title": "Nepřiřazená posádka"
+            }
+        },
+        "DraftAnimals": {
+            "Empty": "Klikni na přidání tažných či pracovních zvířat, nebo je sem přetáhni a pusť."
+        },
+        "Equipment": {
+            "Empty": "Klikni na přidání vybavení, nebo jej sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení dopravního prostředku.",
+            "HP": {
+                "Label": "Prům. BV"
+            }
+        },
+        "Features": {
+            "Empty": "Klikni na přidání schopností, nebo je sem přetáhni a pusť."
+        },
+        "Member": {
+            "Action": {
+                "AssignTo": "Přiřadit k"
+            },
+            "DraftAnimal": {
+                "Title": {
+                    "one": "Tažné zvíře / Zvíře k práci",
+                    "other": "Tažná zvířata / Zvířata k práci"
+                }
+            },
+            "Passenger": {
+                "Title": {
+                    "one": "Cestující"
+                }
+            }
+        },
+        "Passengers": {
+            "Empty": "Klikni na přidání cestujících, nebo je sem přetáhni a pusť."
+        },
+        "Weapons": {
+            "Empty": "Klikni na přidání zbraní, nebo je sem přetáhni a pusť."
+        }
+    }
 }
