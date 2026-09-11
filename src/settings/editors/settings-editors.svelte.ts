@@ -77,10 +77,10 @@ export function createCompositeEditorController(
 export async function confirmUseDefault(): Promise<boolean> {
   return await foundry.applications.api.DialogV2.confirm({
     window: {
-      title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      title: FoundryAdapter.localize('TIDY5E.COMMON.UseDefaultDialog.Title'),
     },
     content: `<p>${FoundryAdapter.localize(
-      'TIDY5E.UseDefaultDialog.text',
+      'TIDY5E.COMMON.UseDefaultDialog.Text',
     )}</p>`,
   });
 }

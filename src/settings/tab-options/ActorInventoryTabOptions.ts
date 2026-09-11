@@ -35,6 +35,6 @@ export function buildActorInventoryTabOptions(
     sections,
     defaultSections: context.inventory,
     optionsGroups: [],
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

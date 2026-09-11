@@ -39,9 +39,9 @@
   );
 
   let portraitShapeDefaultLabel = $derived(
-    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+    localize('TIDY5E.SETTINGS.TabOptions.UseSpecificDefault', {
       value: localize(
-        `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
+        `TIDY5E.SETTINGS.Theme.PortraitShape.option.${portraitShapeDefaultValue}`,
       ),
     }),
   );
@@ -128,7 +128,7 @@
   );
 
   let useBasicThemeDefaultLabel = $derived(
-    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+    localize('TIDY5E.SETTINGS.TabOptions.UseSpecificDefault', {
       value: localize(
         (placeholders?.useBasicTheme ?? false)
           ? localize('COMMON.Yes')
@@ -137,7 +137,7 @@
     }),
   );
   let useHeaderBackgroundDefaultLabel = $derived(
-    localize('TIDY5E.UseSpecificDefaultValue.Label', {
+    localize('TIDY5E.SETTINGS.TabOptions.UseSpecificDefault', {
       value: localize(
         (placeholders?.useHeaderBackground ?? true)
           ? localize('COMMON.Yes')
@@ -182,7 +182,7 @@
 <div class="dialog-content-container flexcol" ondrop={onDrop} role="region">
   <div class="flexrow flexgap-1">
     <h2>
-      {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
+      {localize('TIDY5E.SETTINGS.Theme.Menu.name')}
     </h2>
     <ImportButton onfilechanged={(file) => processImportFile(file)} />
     <button
@@ -195,19 +195,19 @@
         })}
     >
       <i class="fa-solid fa-file-export"></i>
-      {localize('TIDY5E.ThemeSettings.Sheet.export')}
+      {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
     </button>
   </div>
 
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.SheetTheme.title')}
+      {localize('TIDY5E.SETTINGS.Theme.SheetTheme.Title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
     <ThemeSettingColorFormGroupQuadrone
       key="accent-color"
       bind:value={context.accentColor}
-      label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
+      label={localize('TIDY5E.SETTINGS.Theme.AccentColor.Title')}
       placeholder={coalesce(
         placeholders?.accentColor,
         ThemeQuadrone.DEFAULT_ACCENT_COLOR,
@@ -219,7 +219,7 @@
       {#if !app.document?.documentName || app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
         <div class="form-group">
           <label for="{idPrefix}-actor-portrait-shape">
-            {localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+            {localize('TIDY5E.SETTINGS.Theme.PortraitShape.Title', {
               type: localize(CONSTANTS.DOCUMENT_NAME_ACTOR),
             })}
           </label>
@@ -232,7 +232,7 @@
               {#each portraitShapes as shape}
                 <option value={shape}
                   >{localize(
-                    `TIDY5E.ThemeSettings.PortraitShape.option.${shape}`,
+                    `TIDY5E.SETTINGS.Theme.PortraitShape.option.${shape}`,
                   )}</option
                 >
               {/each}
@@ -244,7 +244,7 @@
       {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
         <div class="form-group">
           <label for="{idPrefix}-use-header-background">
-            {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
+            {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
           </label>
           <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
             {#if app.document}
@@ -284,14 +284,14 @@
             {/if}
           </div>
           <p class="hint">
-            {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
+            {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Hint')}
           </p>
         </div>
 
         {#if useHeaderBackgroundIfChanged}
           <div class="form-group">
             <label for="{idPrefix}-actor-header-background">
-              {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+              {localize('TIDY5E.SETTINGS.Theme.ActorHeaderBackground.Title')}
             </label>
             <div class="form-fields">
               <input
@@ -311,9 +311,9 @@
           <ThemeSettingColorFormGroupQuadrone
             key="sheet-accent-color"
             bind:value={context.headerBackgroundColor}
-            label={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.title')}
+            label={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Title')}
             placeholder={placeholders?.headerBackgroundColor}
-            hint={localize('TIDY5E.ThemeSettings.HeaderBackgroundColor.hint')}
+            hint={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Hint')}
           />
         {/if}
       {/if}
@@ -321,7 +321,7 @@
 
     <div class="form-group">
       <label for="{idPrefix}-use-basic-theme">
-        {localize('TIDY5E.ThemeSettings.UseBasicTheme.title')}
+        {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
       </label>
       <div class={`form-fields ${app.document ? 'vertical' : ''}`}>
         {#if app.document}
@@ -362,7 +362,7 @@
         {/if}
       </div>
       <p class="hint">
-        {localize('TIDY5E.ThemeSettings.UseBasicTheme.hint')}
+        {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Hint')}
       </p>
     </div>
 
@@ -370,7 +370,7 @@
     {#if app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ITEM}
       <div class="form-group">
         <label for="{idPrefix}-item-sidebar-background">
-          {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
+          {localize('TIDY5E.SETTINGS.Theme.ItemSidebarBackground.Title')}
         </label>
         <div class="form-fields">
           <input
@@ -389,7 +389,7 @@
   </fieldset>
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.RarityColors.title')}
+      {localize('TIDY5E.SETTINGS.Theme.RarityColors.Title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
@@ -405,7 +405,7 @@
 
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.SpellcastingMethodColors.title')}
+      {localize('TIDY5E.SETTINGS.Theme.SpellcastingMethodColors.Title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 

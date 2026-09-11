@@ -194,7 +194,7 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+            <span class="flex1">{localize('TIDY5E.ACTOR.Characteristics.Title')}</span>
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -253,7 +253,7 @@
               <button
                 type="button"
                 class="button button-borderless button-icon-only flexshrink"
-                aria-label={localize('TIDY5E.ContextMenuActionEdit')}
+                aria-label={localize('TIDY5E.CONTEXTMENU.Action.Edit')}
                 onclick={() => edit(value, enriched, field)}
               >
                 <i class="fa-solid fa-feather"></i>

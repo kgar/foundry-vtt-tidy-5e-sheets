@@ -504,17 +504,17 @@
     {const sectionType = $derived(
       context.item.parent?.system.isCharacter
         ? 'DOCUMENT.Sheet'
-        : 'TIDY5E.Section.Label',
+        : 'TIDY5E.SECTION.Title.one',
     )}
     <div>
-      <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
+      <h4>{localize('TIDY5E.SECTION.Title.other')}</h4>
       <div class="pills stacked">
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
           role="button"
           tabindex="0"
           aria-label={localize(
-            'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+            'TIDY5E.SECTION.Selector.Choose',
           )}
           data-tooltip=""
           class="pill interactive wrapped no-row-gap centered"
@@ -561,12 +561,12 @@
             tabindex="0"
             class="pill interactive wrapped no-row-gap centered"
             class:disabled={!context.editable}
-            data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
+            data-tooltip="TIDY5E.SECTION.Selector.ChooseAction"
             onclick={() =>
               context.sheet._renderChild(
                 new SectionSelectorApplication({
                   flag: TidyFlags.actionSection.prop,
-                  sectionType: localize('TIDY5E.Section.ActionLabel'),
+                  sectionType: localize('TIDY5E.SECTION.Action.Title'),
                   callingDocument: context.item,
                   document: context.item,
                 }),
@@ -577,7 +577,7 @@
                 context.sheet._renderChild(
                   new SectionSelectorApplication({
                     flag: TidyFlags.actionSection.prop,
-                    sectionType: localize('TIDY5E.Section.ActionLabel'),
+                    sectionType: localize('TIDY5E.SECTION.Action.Title'),
                     callingDocument: context.item,
                     document: context.item,
                   }),

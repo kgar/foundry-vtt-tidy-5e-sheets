@@ -114,7 +114,7 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
 
     canUseDefault: true,
 
-    useDefaultLabel: 'TIDY5E.Settings.SheetPreferences.RevertToSystemSheets',
+    useDefaultLabel: 'TIDY5E.SETTINGS.Preference.Action.RevertToSystem',
 
     get value() {
       return current;

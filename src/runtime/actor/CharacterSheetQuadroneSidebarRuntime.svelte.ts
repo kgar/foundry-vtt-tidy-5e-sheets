@@ -23,7 +23,7 @@ export const CharacterSheetQuadroneSidebarRuntime =
       },
       {
         id: CONSTANTS.TAB_SIDEBAR_SKILLS_AND_TRAITS,
-        title: 'TIDY5E.Character.Sidebar.SkillsAndTraits',
+        title: 'TIDY5E.CHARACTER.Sidebar.SkillsAndTraits',
         content: {
           type: 'svelte',
           component: SidebarTabSkillsAndTraits,

@@ -48,8 +48,8 @@ export class ItemSummaryRuntime {
       execute: toggleContainerContents,
       label: (params) =>
         params.containerContentsExpanded
-          ? 'TIDY5E.Commands.HideContainerPanel'
-          : 'TIDY5E.Commands.ShowContainerPanel',
+          ? 'TIDY5E.CONTAINER.Action.HidePanel'
+          : 'TIDY5E.CONTAINER.Action.ShowPanel',
       iconClass: (params) =>
         params.containerContentsExpanded
           ? 'fa-solid fa-angle-down'
@@ -62,7 +62,7 @@ export class ItemSummaryRuntime {
     },
     {
       execute: openItemSheet,
-      tooltip: 'TIDY5E.ContextMenuActionView',
+      tooltip: 'TIDY5E.CONTEXTMENU.Action.View',
       iconClass: (params) =>
         isContainer(params.item) ? 'fa-solid fa-box-open' : 'fa-solid fa-eye',
     },

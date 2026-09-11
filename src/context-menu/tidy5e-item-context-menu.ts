@@ -62,7 +62,7 @@ export function getItemContextOptions(
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
 
   options.push({
-    label: 'TIDY5E.ContextMenuActionView',
+    label: 'TIDY5E.CONTEXTMENU.Action.View',
     icon: '<i class="fas fa-eye fa-fw"></i>',
     group: 'common',
     onClick: () =>
@@ -70,7 +70,7 @@ export function getItemContextOptions(
   });
 
   options.push({
-    label: 'TIDY5E.ContextMenuActionEdit',
+    label: 'TIDY5E.CONTEXTMENU.Action.Edit',
     icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
     visible: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     group: 'common',
@@ -86,8 +86,8 @@ export function getItemContextOptions(
   ) {
     options.push({
       label: item.system.attuned
-        ? 'TIDY5E.ContextMenuActionUnattune'
-        : 'TIDY5E.ContextMenuActionAttune',
+        ? 'TIDY5E.CONTEXTMENU.Action.Unattune'
+        : 'TIDY5E.CONTEXTMENU.Action.Attune',
       icon: item.system.attuned
         ? "<i class='fa-regular fa-sun fa-fw'></i>"
         : "<i class='fa-solid fa-sun fa-fw'></i>",
@@ -105,8 +105,8 @@ export function getItemContextOptions(
     const isEquipped = item.system.equipped;
     options.push({
       label: isEquipped
-        ? 'TIDY5E.ContextMenuActionUnequip'
-        : 'TIDY5E.ContextMenuActionEquip',
+        ? 'TIDY5E.CONTEXTMENU.Action.Unequip'
+        : 'TIDY5E.CONTEXTMENU.Action.Equip',
       icon: isEquipped
         ? "<i class='fa-regular fa-hand fa-fw'></i>"
         : "<i class='fa-solid fa-hand-fist equip-icon fa-fw'></i>",
@@ -125,8 +125,8 @@ export function getItemContextOptions(
     const newValue = ((item.system?.prepared ?? 0) + 1) % 2;
     options.push({
       label: isPrepared
-        ? 'TIDY5E.ContextMenuActionUnprepare'
-        : 'TIDY5E.ContextMenuActionPrepare',
+        ? 'TIDY5E.CONTEXTMENU.Action.Unprepare'
+        : 'TIDY5E.CONTEXTMENU.Action.Prepare',
       icon: isPrepared
         ? "<i class='fas fa-book fa-fw'></i>"
         : "<i class='fas fa-book fa-fw'></i>",
@@ -160,8 +160,8 @@ export function getItemContextOptions(
     let isFav = FoundryAdapter.isItemFavorited(item);
 
     options.push({
-      // TODO: Could we move this to TIDY5E.AddSpecific?
-      label: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      // TODO: Could we move this to TIDY5E.COMMON.Action.AddNamed?
+      label: isFav ? 'TIDY5E.ACTOR.Favorites.Action.Remove' : 'TIDY5E.ACTOR.Favorites.Action.Add',
       icon: isFav
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
@@ -303,8 +303,8 @@ export function getItemContextOptions(
   const inSheetTab = isItemInActionList(item, inclusionMode);
   options.push({
     label: inSheetTab
-      ? 'TIDY5E.ContextMenuActionRemoveFromSheetTab'
-      : 'TIDY5E.ContextMenuActionAddToSheetTab',
+      ? 'TIDY5E.CONTEXTMENU.Action.RemoveFromSheetTab'
+      : 'TIDY5E.CONTEXTMENU.Action.AddToSheetTab',
     icon: inSheetTab
       ? '<i class="fa-regular fa-bookmark"></i>'
       : '<i class="fa-solid fa-bookmark"></i>',
@@ -334,7 +334,7 @@ export function getItemContextOptions(
         FoundryAdapter.userIsGm());
 
     options.push({
-      label: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
+      label: 'TIDY5E.CONTEXTMENU.Action.SetAsInspirationSource',
       icon: '<i class="fa-solid fa-sparkles"></i>',
       visible: () =>
         bankedInspirationIsEnabled &&
@@ -348,7 +348,7 @@ export function getItemContextOptions(
     });
 
     options.push({
-      label: 'TIDY5E.ContextMenuActionRemoveAsInspirationSource',
+      label: 'TIDY5E.CONTEXTMENU.Action.RemoveAsInspirationSource',
       icon: '<i class="fa-regular fa-sparkles"></i>',
       visible: () =>
         bankedInspirationIsEnabled &&
@@ -361,7 +361,7 @@ export function getItemContextOptions(
   }
 
   options.push({
-    label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+    label: 'TIDY5E.SECTION.Selector.Choose',
     icon: '<i class="fa fa-diagram-cells"></i>',
     visible: () =>
       item.isOwner &&
@@ -374,7 +374,7 @@ export function getItemContextOptions(
       app._renderChild(
         new SectionSelectorApplication({
           flag: TidyFlags.section.prop,
-          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
           callingDocument: itemParent ?? item,
           document: item,
         }),
@@ -383,21 +383,21 @@ export function getItemContextOptions(
 
   let actionSectionContextName = itemParent?.system.isCharacter
     ? FoundryAdapter.localize(
-        'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+        'TIDY5E.SECTION.Selector.ChooseForTab',
         { tabName: FoundryAdapter.localize('DOCUMENT.Sheet') },
       )
     : itemParent?.system.isNPC
       ? FoundryAdapter.localize(
-          'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
-          { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
+          'TIDY5E.SECTION.Selector.ChooseForTab',
+          { tabName: FoundryAdapter.localize('TIDY5E.TAB.Name.Statblock') },
         )
-      : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
+      : 'TIDY5E.SECTION.Selector.ChooseAction';
 
   let actionSectionConfigTitle = itemParent?.system.isCharacter
     ? FoundryAdapter.localize('DOCUMENT.Sheet')
     : itemParent?.system.isNPC
-      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
-      : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
+      ? FoundryAdapter.localize('TIDY5E.TAB.Name.Statblock')
+      : FoundryAdapter.localize('TIDY5E.SECTION.Action.Title');
 
   options.push({
     label: actionSectionContextName,
@@ -421,7 +421,7 @@ export function getItemContextOptions(
   });
 
   options.push({
-    label: 'TIDY5E.ContextMenuActionPin',
+    label: 'TIDY5E.CONTEXTMENU.Action.Pin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     onClick: () => {
       if (tabId) {
@@ -439,7 +439,7 @@ export function getItemContextOptions(
   });
 
   options.push({
-    label: 'TIDY5E.ContextMenuActionUnpin',
+    label: 'TIDY5E.CONTEXTMENU.Action.Unpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
     onClick: () => {
       if (tabId) {
@@ -461,7 +461,7 @@ export function getItemContextOptions(
   if (aggregatePinTab)
     options.push({
       label: FoundryAdapter.localize(
-        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        'TIDY5E.CONTEXTMENU.Action.PinToTab',
         { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
       ),
       icon: `<i class="fa-solid fa-thumbtack"></i>`,
@@ -482,7 +482,7 @@ export function getItemContextOptions(
 
   if (isSheetPin && item.system.activities) {
     options.push({
-      label: 'TIDY5E.ContextMenuActionShowLimitedUses',
+      label: 'TIDY5E.CONTEXTMENU.Action.ShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
       onClick: () => {
         if (tabId) {
@@ -498,7 +498,7 @@ export function getItemContextOptions(
       group: 'customize',
     });
     options.push({
-      label: 'TIDY5E.ContextMenuActionShowQuantity',
+      label: 'TIDY5E.CONTEXTMENU.Action.ShowQuantity',
       icon: '<i class="fa-solid fa-fw"></i>',
       onClick: () => {
         if (tabId) {
@@ -518,7 +518,7 @@ export function getItemContextOptions(
   // Be Careful - These are the no-going-back changes
 
   options.push({
-    label: 'TIDY5E.ContextMenuActionDelete',
+    label: 'TIDY5E.CONTEXTMENU.Action.Delete',
     icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
     visible: () =>
       !isInFavorites &&

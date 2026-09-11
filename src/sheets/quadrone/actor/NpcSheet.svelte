@@ -118,7 +118,7 @@
                 <a
                   role="button"
                   tabindex="0"
-                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                  aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
                   data-action="copyInnerText"
                   class="cursor highlight-on-hover"
                 >
@@ -256,7 +256,7 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
-                  aria-label={localize('TIDY5E.DecreaseSpecific', { name: localize('DND5E.Loyalty') })}
+                  aria-label={localize('TIDY5E.COMMON.Action.DecreaseNamed', { name: localize('DND5E.Loyalty') })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -268,7 +268,7 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
-                  aria-label={localize('TIDY5E.IncreaseSpecific', { name: localize('DND5E.Loyalty') })}
+                  aria-label={localize('TIDY5E.COMMON.Action.IncreaseNamed', { name: localize('DND5E.Loyalty') })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -344,7 +344,7 @@
                 type="button"
                 class="roll-hp button button-borderless button-icon-only"
                 aria-label="{localize('DND5E.HitDiceRoll')} / {localize(
-                  'TIDY5E.HitDiceRollAverage',
+                  'TIDY5E.ACTOR.HitDice.Action.ApplyAverage',
                 )}"
                 data-tooltip
                 onclick={() => context.sheet.rollFormula()}

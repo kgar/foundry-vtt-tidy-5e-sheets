@@ -77,7 +77,7 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
     });
 
     characterSidebarContext.title = FoundryAdapter.localize(
-      'TIDY5E.Character.Sidebar.Title',
+      'TIDY5E.CHARACTER.Sidebar.Title',
     );
 
     config.push(characterSidebarContext);

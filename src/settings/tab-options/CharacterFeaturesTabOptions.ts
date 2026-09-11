@@ -32,6 +32,6 @@ export function buildCharacterFeaturesTabOptions(
     sections,
     defaultSections: context.features,
     optionsGroups: [],
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

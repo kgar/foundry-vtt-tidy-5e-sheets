@@ -52,7 +52,7 @@ export function getActiveEffectContextOptions(
 
   let tidy5eKgarContextOptions: ContextMenuEntry[] = [
     {
-      label: 'TIDY5E.ContextMenuActionViewItem',
+      label: 'TIDY5E.CONTEXTMENU.Action.ViewSourceItem',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       group: 'common',
       onClick: () =>
@@ -88,8 +88,8 @@ export function getActiveEffectContextOptions(
       group: 'common',
     },
     {
-      // TODO: Could we move this to TIDY5E.AddSpecific?
-      label: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      // TODO: Could we move this to TIDY5E.COMMON.Action.AddNamed?
+      label: isFav ? 'TIDY5E.ACTOR.Favorites.Action.Remove' : 'TIDY5E.ACTOR.Favorites.Action.Add',
       icon: isFav
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,

@@ -18,8 +18,8 @@
   let tooltip = $derived(
     localize(
       included
-        ? 'TIDY5E.ContextMenuActionRemoveFromSheetTab'
-        : 'TIDY5E.ContextMenuActionAddToSheetTab',
+        ? 'TIDY5E.CONTEXTMENU.Action.RemoveFromSheetTab'
+        : 'TIDY5E.CONTEXTMENU.Action.AddToSheetTab',
     ),
   );
 

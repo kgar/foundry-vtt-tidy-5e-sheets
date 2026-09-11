@@ -20,16 +20,16 @@
 
   const localize = FoundryAdapter.localize;
 
-  const tidyOptionText = localize('TIDY5E.Settings.SheetPreferences.TidySheets');
-  const systemOptionText = localize('TIDY5E.Settings.SheetPreferences.SystemSheets');
+  const tidyOptionText = localize('TIDY5E.SETTINGS.Preference.Column.TidySheets');
+  const systemOptionText = localize('TIDY5E.SETTINGS.Preference.Column.SystemSheets');
 </script>
 
 <div class="dialog-content-container flexcol">
   <h2 class="settings-header">
-    {localize('TIDY5E.Settings.SheetPreferences.name')}
+    {localize('TIDY5E.SETTINGS.Preference.name')}
   </h2>
   <p class="settings-description">
-    {localize('TIDY5E.Settings.SheetPreferences.explanation')}
+    {localize('TIDY5E.SETTINGS.Preference.Explanation')}
   </p>
 
   <div class="controls-row flexrow">
@@ -43,7 +43,7 @@
       }}
     >
       <i class="fas fa-check-double"></i>
-      {localize('TIDY5E.Settings.SheetPreferences.enableAll')}
+      {localize('TIDY5E.SETTINGS.Preference.Action.EnableAll')}
     </button>
   </div>
 
@@ -56,20 +56,20 @@
       <TidyTableHeaderRow class="unset-header-height theme-dark">
         <TidyTableHeaderCell primary={true}>
           <h3 class="sheet-preferences-label">
-            {localize('TIDY5E.Settings.SheetPreferences.Sheet')}
+            {localize('TIDY5E.SETTINGS.Preference.Column.DocumentType')}
           </h3>
         </TidyTableHeaderCell>
         <TidyTableHeaderCell
           class="sheet-preferences-column-label"
           columnWidth="7rem"
         >
-          {localize('TIDY5E.Settings.SheetPreferences.SystemSheets')}
+          {localize('TIDY5E.SETTINGS.Preference.Column.SystemSheets')}
         </TidyTableHeaderCell>
         <TidyTableHeaderCell
           class="sheet-preferences-column-label"
           columnWidth="7rem"
         >
-          {localize('TIDY5E.Settings.SheetPreferences.TidySheets')}
+          {localize('TIDY5E.SETTINGS.Preference.Column.TidySheets')}
         </TidyTableHeaderCell>
       </TidyTableHeaderRow>
     {/snippet}

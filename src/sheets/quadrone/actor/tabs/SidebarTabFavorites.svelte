@@ -40,7 +40,7 @@
 {:else}
   <div class="favorites list">
     <div class="empty-state-container empty-state-description">
-      {localize('TIDY5E.EmptyFavorites')}
+      {localize('TIDY5E.ACTOR.Favorites.Empty')}
     </div>
   </div>
 {/if}

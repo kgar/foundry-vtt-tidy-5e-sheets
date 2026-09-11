@@ -17,7 +17,7 @@ export function configureActorJournalContextMenu(
 
   ui.context.menuItems = [
     {
-      label: 'TIDY5E.ContextMenuActionView',
+      label: 'TIDY5E.CONTEXTMENU.Action.View',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       onClick: () => {
         app._renderChild(new JournalEntryApplication(id, 'view', {

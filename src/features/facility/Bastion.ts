@@ -229,7 +229,7 @@ export async function rollBastionEvent(actor?: Actor5e): Promise<void> {
   const roll = await new Roll('1d100').evaluate();
   await roll.toMessage({
     speaker,
-    flavor: FoundryAdapter.localize('TIDY5E.Bastion.Group.RollEvent.Label'),
+    flavor: FoundryAdapter.localize('TIDY5E.BASTION.Group.Action.RollEvent'),
   });
 }
 
@@ -269,12 +269,12 @@ export async function completeOrder(facility: Item5e): Promise<void> {
 export async function confirmCompleteOrder(): Promise<boolean> {
   return !!(await foundry.applications.api.DialogV2.confirm({
     content: FoundryAdapter.localize(
-      'TIDY5E.Bastion.Group.CompleteOrder.Confirm',
+      'TIDY5E.BASTION.Group.Confirm.CompleteOrder',
     ),
     rejectClose: false,
     window: {
       icon: 'fa-solid fa-flag-checkered',
-      title: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
+      title: 'TIDY5E.BASTION.Group.Action.CompleteOrder',
     },
   }));
 }
@@ -286,7 +286,7 @@ export async function issueMaintainOrder(actor: Actor5e): Promise<void> {
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: FoundryAdapter.localize(
-      'TIDY5E.Bastion.Group.MaintainOrder.Chat',
+      'TIDY5E.BASTION.Group.MaintainOrder.Chat',
       { bastionName: getBastionDisplayName(actor) },
     ),
   });

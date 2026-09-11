@@ -40,7 +40,7 @@
       type="button"
       class="button button-icon-only button-borderless flexshrink decrementer"
       disabled={value <= min}
-      aria-label={localize('TIDY5E.Decrease')}
+      aria-label={localize('TIDY5E.COMMON.Action.Decrease')}
       data-action="decrease"
       data-property={valuePath}
     >
@@ -108,7 +108,7 @@
       type="button"
       class="button button-icon-only button-borderless flexshrink decrementer"
       disabled={!isNil(max) && value >= max}
-      aria-label={localize('TIDY5E.Increase')}
+      aria-label={localize('TIDY5E.COMMON.Action.Increase')}
       data-action="increase"
       data-property={valuePath}
     >

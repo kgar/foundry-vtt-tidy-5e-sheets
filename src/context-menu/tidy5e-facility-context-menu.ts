@@ -22,7 +22,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
 
   let contextOptions: ContextMenuEntry[] = [
     {
-      label: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.CONTEXTMENU.Action.Edit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       onClick: async () => {
         const actor = await fromUuid(occupantUuid);
@@ -33,7 +33,7 @@ export function configureFacilityContextMenu(element: HTMLElement, app: any) {
     },
     {
       label: FoundryAdapter.localize(
-        'TIDY5E.Facilities.ContextMenuActionRemove',
+        'TIDY5E.FACILITY.Action.RemoveOccupant',
         { facilityName },
       ),
       icon: "<i class='fas fas fa-trash t5e-warning-color fa-fw'></i>",

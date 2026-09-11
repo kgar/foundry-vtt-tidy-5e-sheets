@@ -58,7 +58,7 @@
         {#if uses?.max}
           <FavoriteItemUses {favorite} {uses} />
         {:else if concealed}
-          <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+          <span class="value color-text-lightest">{localize('TIDY5E.COMMON.Unidentified.Placeholder')}</span>
         {:else}
           <span class="sign font-default-medium color-text-lighter"
             >&times;</span

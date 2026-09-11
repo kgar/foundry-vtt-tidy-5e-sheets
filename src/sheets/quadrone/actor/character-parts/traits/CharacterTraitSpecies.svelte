@@ -41,7 +41,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('TIDY5E.DescriptionView', {
+        aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
           description: localize('TYPES.Item.race'),
         })}
         data-keyboard-focus
@@ -86,7 +86,7 @@
       {/if}
     {:else}
       <button
-        aria-label={localize('TIDY5E.CompendiumBrowser', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
           name: localize('TYPES.Item.race'),
         })}
         type="button"
@@ -99,7 +99,7 @@
         {localize('DND5E.Species.Add')}
       </button>
       <button
-        aria-label={localize('TIDY5E.AddCustom', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.race'),
         })}
         type="button"
@@ -107,7 +107,7 @@
         onclick={(ev) =>
           FoundryAdapter.createItem({ type: 'race' }, context.actor)}
       >
-        {localize('TIDY5E.AddCustom', {
+        {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.race'),
         })}
       </button>
@@ -128,7 +128,7 @@
       class="list-values trait-item"
       role="button"
       tabindex="0"
-      aria-label={localize('TIDY5E.DescriptionView', {
+      aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
         description: localize('DND5E.CreatureType'),
       })}
       data-keyboard-focus

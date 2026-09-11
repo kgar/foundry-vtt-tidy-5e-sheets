@@ -185,7 +185,7 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span
+            <span class="flex1">{localize('TIDY5E.ACTOR.Characteristics.Title')}</span
             >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>

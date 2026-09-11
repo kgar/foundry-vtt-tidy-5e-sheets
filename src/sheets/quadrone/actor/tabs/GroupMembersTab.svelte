@@ -192,7 +192,7 @@
 
     {#if !context.system.members.length}
       <div class="empty-state-container empty-state-description">
-        {localize('TIDY5E.Group.EmptyMembersTabHint')}
+        {localize('TIDY5E.GROUP.Members.Empty')}
       </div>
     {/if}
   </div>

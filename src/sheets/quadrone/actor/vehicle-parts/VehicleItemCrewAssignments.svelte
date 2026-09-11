@@ -64,7 +64,7 @@
                   data-action="showContextMenu"
                   data-target-selector="[data-context-menu]"
                   data-tooltip=""
-                  aria-label={localize('TIDY5E.BrokenLink')}
+                  aria-label={localize('TIDY5E.COMMON.BrokenLink')}
                 >
                   <i class="fa-solid fa-link-slash broken-link-icon"></i>
                 </a>

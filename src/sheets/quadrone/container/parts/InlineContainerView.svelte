@@ -100,7 +100,7 @@
       {#if contentsVisibility === 'gmSecret'}
         <div class="gm-only">
           {localize(
-            'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+            'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.option.GmOnly',
           )}
         </div>
       {/if}
@@ -122,7 +122,7 @@
         {#if !containerContents.contents.some((c) => c.items.length > 0)}
           <div class="empty-container">
             <span class="empty-container-text"
-              >{FoundryAdapter.localize('TIDY5E.EmptyContainer')}</span
+              >{FoundryAdapter.localize('TIDY5E.CONTAINER.Empty')}</span
             >
           </div>
         {/if}

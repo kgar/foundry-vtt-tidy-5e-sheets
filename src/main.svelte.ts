@@ -65,7 +65,7 @@ Hooks.once('init', () => {
     Tidy5eCharacterSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-      label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Character',
     },
   );
 
@@ -93,7 +93,7 @@ Hooks.once('init', () => {
     Tidy5eItemSheetQuadrone,
     {
       types: quadroneItemTypes,
-      label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Item',
     },
   );
 
@@ -103,7 +103,7 @@ Hooks.once('init', () => {
     Tidy5eContainerSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'TIDY5E.Tidy5eContainerSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Container',
     },
   );
 
@@ -113,7 +113,7 @@ Hooks.once('init', () => {
     Tidy5eNpcSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_NPC],
-      label: 'TIDY5E.Tidy5eNpcSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Npc',
     },
   );
 
@@ -123,7 +123,7 @@ Hooks.once('init', () => {
     Tidy5eGroupSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_GROUP],
-      label: 'TIDY5E.Tidy5eGroupSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Group',
     },
   );
 
@@ -133,7 +133,7 @@ Hooks.once('init', () => {
     Tidy5eEncounterSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
-      label: 'TIDY5E.Tidy5eEncounterSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Encounter',
     },
   );
 
@@ -143,7 +143,7 @@ Hooks.once('init', () => {
     Tidy5eVehicleSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-      label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
+      label: 'TIDY5E.SHEET.Class.Vehicle',
     },
   );
 

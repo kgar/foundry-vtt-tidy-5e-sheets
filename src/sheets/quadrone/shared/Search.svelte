@@ -17,7 +17,7 @@
     <i class="fas fa-magnifying-glass fa-fw"></i>
     <input
       type="text"
-      placeholder={localize('TIDY5E.Search')}
+      placeholder={localize('TIDY5E.COMMON.Search.Label')}
       bind:value={searchCriteria}
       {disabled}
     />

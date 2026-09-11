@@ -18,7 +18,7 @@
     role="button"
     tabindex="0"
     class="tidy-table-button"
-    aria-label={localize('TIDY5E.AddSpecific', { name: localize('DND5E.Group.Member.one') })}
+    aria-label={localize('TIDY5E.COMMON.Action.AddNamed', { name: localize('DND5E.Group.Member.one') })}
     data-tooltip
     data-action="browseAddNpc"
   >

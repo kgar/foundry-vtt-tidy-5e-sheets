@@ -76,7 +76,7 @@
           'item-state-indicator',
           'color-text-gold-emphasis',
         ]}
-        data-tooltip="TIDY5E.InspirationSource.ItemIsSourceTooltip"
+        data-tooltip="TIDY5E.ACTOR.Inspiration.Source.Tooltip"
       ></i>
     {/if}
   {/snippet}

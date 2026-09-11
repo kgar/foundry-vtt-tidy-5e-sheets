@@ -34,7 +34,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('TIDY5E.DescriptionView', {
+        aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
           description: localize('TYPES.Item.race'),
         })}
         data-keyboard-focus
@@ -44,7 +44,7 @@
       >
         <!-- svelte-ignore a11y_missing_attribute -->
         <span
-          aria-label={localize('TIDY5E.DescriptionView', {
+          aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
             description: localize('TYPES.Item.race'),
           })}
           class="item-image-link"
@@ -81,12 +81,12 @@
       {/if}
     {:else}
       <button
-        aria-label={localize('TIDY5E.CompendiumBrowser', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
           name: localize('TYPES.Item.race'),
         })}
         type="button"
         class="button button-primary"
-        data-tooltip={localize('TIDY5E.CompendiumBrowser', {
+        data-tooltip={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
           name: localize('TYPES.Item.race'),
         })}
         data-action="findItem"
@@ -96,7 +96,7 @@
         {localize('DND5E.Species.Add')}
       </button>
       <button
-        aria-label={localize('TIDY5E.AddCustom', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.race'),
         })}
         type="button"
@@ -104,7 +104,7 @@
         onclick={(ev) =>
           FoundryAdapter.createItem({ type: 'race' }, context.actor)}
       >
-        {localize('TIDY5E.AddCustom', {
+        {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.race'),
         })}
       </button>

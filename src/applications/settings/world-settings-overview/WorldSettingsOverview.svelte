@@ -28,9 +28,9 @@
   async function resetToDefaults() {
     const proceed = await foundry.applications.api.DialogV2.confirm({
       window: {
-        title: localize('TIDY5E.Settings.Reset.dialogs.title'),
+        title: localize('TIDY5E.SETTINGS.Reset.Dialog.Title'),
       },
-      content: `<p>${localize('TIDY5E.Settings.Reset.dialogs.content')}</p>`,
+      content: `<p>${localize('TIDY5E.SETTINGS.Reset.Dialog.Content')}</p>`,
     });
 
     if (!proceed) {
@@ -57,23 +57,23 @@
         <img
           class="logo"
           src="../modules/tidy5e-sheet/images/tidy-shield-large.webp"
-          alt={localize('TIDY5E.Settings.About.logoAltText')}
+          alt={localize('TIDY5E.SETTINGS.About.LogoAltText')}
         />
       </a>
       <p class="banner-text font-body-large">
-        {@html localize('TIDY5E.WorldSettings.Defaults.intro')}
+        {@html localize('TIDY5E.SETTINGS.World.Defaults.Intro')}
       </p>
     </div>
   </FiligreeCard>
 
   <fieldset>
     <legend>
-      <h2>{localize('TIDY5E.WorldSettings.SheetPreferences.name')}</h2>
+      <h2>{localize('TIDY5E.SETTINGS.Preference.World.name')}</h2>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <p class="settings-description">
-      {localize('TIDY5E.WorldSettings.SheetPreferences.hint')}
+      {localize('TIDY5E.SETTINGS.Preference.World.hint')}
     </p>
 
     <div class="flexrow setting-actions">
@@ -83,14 +83,14 @@
         onclick={() => useTidyForAllSheets()}
       >
         <i class="fas fa-check-double"></i>
-        {localize('TIDY5E.WorldSettings.SheetPreferences.switchToTidySheets')}
+        {localize('TIDY5E.SETTINGS.Preference.World.Action.SwitchToTidy')}
       </button>
       <button
         type="button"
         class="button button-secondary button-large choose-specific-btn"
         onclick={() => chooseSpecificSheets()}
       >
-        {localize('TIDY5E.WorldSettings.SheetPreferences.chooseSpecific')}
+        {localize('TIDY5E.SETTINGS.Preference.World.Action.ChooseSpecific')}
       </button>
     </div>
   </fieldset>
@@ -103,7 +103,7 @@
 
     <h3>Report an Issue or Suggest a Feature</h3>
     <p class="settings-description">
-      {@html localize('TIDY5E.Settings.About.GithubParagraph', {
+      {@html localize('TIDY5E.SETTINGS.About.Github', {
         urlStart:
           '<a href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues" target="_blank">',
         urlEnd: '</a>',
@@ -112,7 +112,7 @@
 
     <h3>Join the Discord Server</h3>
     <p class="settings-description">
-      {@html localize('TIDY5E.Settings.About.DiscordParagraph', {
+      {@html localize('TIDY5E.SETTINGS.About.Discord', {
         urlStart:
           '<a href="https://discord.gg/kdqbcWJrYU" target="_blank">',
         urlEnd: '</a>',
@@ -121,7 +121,7 @@
 
     <h3>Help Translate the Module</h3>
     <p class="settings-description">
-      {@html localize('TIDY5E.Settings.About.LocalizationParagraph', {
+      {@html localize('TIDY5E.SETTINGS.About.Localization', {
         urlStart:
           '<a href="https://hosted.weblate.org/projects/foundry-vtt-tidy-5e-sheets/" target="_blank">',
         urlEnd: '</a>',
@@ -130,13 +130,13 @@
 
     <h3>Support the Developer</h3>
     <p class="settings-description">
-      {@html localize('TIDY5E.Settings.About.MaintainerParagraph', {
+      {@html localize('TIDY5E.SETTINGS.About.Maintainer', {
         urlStart: '<a href="https://github.com/kgar" target="_blank">',
         urlEnd: '</a>',
       })}
     </p>
     <p class="settings-description">
-      {@html localize('TIDY5E.Settings.About.FinancialSupportParagraph', {
+      {@html localize('TIDY5E.SETTINGS.About.FinancialSupport', {
         urlStart:
           '<a href="https://www.buymeacoffee.com/kgar" target="_blank">',
         urlEnd: '</a>',
@@ -144,13 +144,13 @@
     </p>  
     <ul class="settings-description-list">
       <li>
-        {@html localize('TIDY5E.Settings.About.BuyMeACoffeeLink', {
+        {@html localize('TIDY5E.SETTINGS.About.Link.BuyMeACoffee', {
           urlStart: '<a href="https://www.buymeacoffee.com/kgar" target="_blank">',
           urlEnd: '</a>',
         })}
       </li>
       <li>
-        {@html localize('TIDY5E.Settings.About.KoFiLink', {
+        {@html localize('TIDY5E.SETTINGS.About.Link.KoFi', {
           urlStart: '<a href="https://ko-fi.com/iamkgar" target="_blank">',
           urlEnd: '</a>',
         })}
@@ -160,12 +160,12 @@
 
   <fieldset>
     <legend>
-      <h2>{localize('TIDY5E.Settings.Reset.name')}</h2>
+      <h2>{localize('TIDY5E.SETTINGS.Reset.name')}</h2>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <p class="settings-description">
-      {localize('TIDY5E.WorldSettings.Defaults.resetHint')}
+      {localize('TIDY5E.SETTINGS.World.Defaults.ResetHint')}
     </p>
 
     <div class="flexrow setting-actions">
@@ -175,7 +175,7 @@
         onclick={() => resetToDefaults()}
       >
         <i class="fas fa-broom-wide"></i>
-        {localize('TIDY5E.Settings.Reset.name')}
+        {localize('TIDY5E.SETTINGS.Reset.name')}
       </button>
     </div>
   </fieldset>

@@ -13,7 +13,7 @@ export class TidyNotificationsManager {
 
     if (!notifications.firstTimeWelcome) {
       const message = FoundryAdapter.localize(
-        'TIDY5E.Notifications.FirstTimeWelcome1',
+        'TIDY5E.SHEET.Notification.FirstTimeWelcome',
         {
           sheetLinkStart: `<a href="${CONSTANTS.WIKI_LINK_CHANGE_SHEET_GUIDE}" target="_blank">`,
           sheetLinkEnd: `</a>`,
@@ -28,7 +28,7 @@ export class TidyNotificationsManager {
     }
 
     if (!notifications.classicRetired) {
-      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');
+      const message = FoundryAdapter.localize('TIDY5E.SHEET.Notification.ClassicsRetired');
       this.sendTidyChatMessageToGm(`<p>${message}</p>`);
       notifications.classicRetired = true;
     }
@@ -39,7 +39,7 @@ export class TidyNotificationsManager {
   static sendTidyChatMessageToGm(message: string) {
     let chatMessage = {
       speaker: ChatMessage.getSpeaker({
-        alias: FoundryAdapter.localize('TIDY5E.ModuleName'),
+        alias: FoundryAdapter.localize('TIDY5E.MODULE.Title'),
       }),
       user: game.user._id,
       whisper: game.users.filter((u: any) => u.isGM).map((u: any) => u._id),

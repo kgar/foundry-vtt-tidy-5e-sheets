@@ -62,7 +62,7 @@ export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
   }
 
   get title() {
-    return FoundryAdapter.localize('TIDY5E.MaxPreparedSpellsConfig.Title', {
+    return FoundryAdapter.localize('TIDY5E.SPELLS.MaxPrepared.Title', {
       documentName: this.documentName,
     });
   }

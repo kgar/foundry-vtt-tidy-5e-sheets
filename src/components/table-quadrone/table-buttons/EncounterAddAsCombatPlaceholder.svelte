@@ -8,7 +8,7 @@
 <a
   class={['tidy-table-button', { disabled: !context.editable }]}
   aria-label={FoundryAdapter.localize(
-    'TIDY5E.Encounter.AddPlaceholderToCombatTracker.Label',
+    'TIDY5E.ENCOUNTER.Placeholder.Action.AddToTracker',
   )}
   data-tooltip
   data-action={context.editable ? 'addToCombatAsPlaceholder' : undefined}

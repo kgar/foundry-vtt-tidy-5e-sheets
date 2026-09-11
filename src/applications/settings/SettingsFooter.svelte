@@ -50,7 +50,7 @@
     onclick={useDefaultClicked}
   >
     <i class="fas fa-rotate-left"></i>
-    {localize(host.useDefaultLabel ?? 'TIDY5E.UseGlobalDefaults')}
+    {localize(host.useDefaultLabel ?? 'TIDY5E.COMMON.Action.UseGlobalDefaults')}
   </button>
   <button
     type="button"
@@ -58,7 +58,7 @@
     onclick={undoClicked}
   >
     <i class="fas fa-arrow-rotate-left"></i>
-    {localize('TIDY5E.UndoChanges')}
+    {localize('TIDY5E.COMMON.Action.UndoChanges')}
   </button>
   <button
     type="button"
@@ -69,6 +69,6 @@
     onclick={save}
   >
     <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
+    {localize('TIDY5E.COMMON.Action.SaveChanges')}
   </button>
 </div>

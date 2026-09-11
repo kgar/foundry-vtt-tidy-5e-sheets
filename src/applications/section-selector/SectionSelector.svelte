@@ -53,7 +53,7 @@
 </script>
 
 <div class="dialog-content-container flexcol">
-  <h2>{localize('TIDY5E.Section.LabelPl')}</h2>
+  <h2>{localize('TIDY5E.SECTION.Title.other')}</h2>
   <form
     onsubmit={(ev) => {
       ev.preventDefault();
@@ -63,20 +63,20 @@
   >
     <fieldset>
       <legend>
-        {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+        {localize('TIDY5E.SECTION.Selector.CreateNew')}
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <div class="flexrow button-bar">
         <input
           type="text"
           bind:value={freeText}
-          placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
+          placeholder={localize('TIDY5E.SECTION.Selector.NewName')}
           class="flex2"
           autofocus
           {@attach InputAttachments.selectOnFocus}
         />
         <button type="submit" class="button flex1"
-          >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
+          >{localize('TIDY5E.SECTION.Selector.SaveNew')}</button
         >
       </div>
     </fieldset>
@@ -84,7 +84,7 @@
   
   <fieldset>
     <legend>
-      {localize('TIDY5E.Section.SectionSelectorExistingSections')}
+      {localize('TIDY5E.SECTION.Selector.Existing')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
   
@@ -99,7 +99,7 @@
         {#if isDefault}
           <i class="fa-solid fa-check"></i>
         {/if}
-        {localize('TIDY5E.UseDefault')}
+        {localize('TIDY5E.COMMON.Action.UseDefault')}
       </button>
       {#each filteredResults as section (section)}
         {const isSelected = $derived(context.data?.currentSection === section)}

@@ -41,7 +41,7 @@ export const CharacterSheetQuadroneRuntime =
         tabOptionsBuilder: buildActorInventoryTabOptions,
       },
       {
-        title: 'TIDY5E.JournalTabName',
+        title: 'TIDY5E.TAB.Name.Journal',
         content: {
           component: ActorJournalTab,
           type: 'svelte',
@@ -62,7 +62,7 @@ export const CharacterSheetQuadroneRuntime =
         tabOptionsBuilder: buildActorSpellbookTabOptions,
       },
       {
-        title: 'TIDY5E.WorldSettings.TabCharacter.tabLabel',
+        title: 'TIDY5E.SETTINGS.World.Tab.Character',
         content: {
           component: CharacterAttributesTab,
           type: 'svelte',

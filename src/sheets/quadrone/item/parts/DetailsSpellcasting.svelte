@@ -46,7 +46,7 @@
   {#if context.unlocked}
     <button
       type="button"
-      title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
+      title={localize('TIDY5E.SPELLS.MaxPrepared.ExamplesHeader')}
       class="spell-method-search button button-icon-only"
       onclick={() => {
         context.sheet._renderChild(

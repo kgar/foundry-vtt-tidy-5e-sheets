@@ -49,15 +49,15 @@
             style="--bar-percentage: {hdPct}%"
           >
             <span class="label">
-              <div class="value" data-tooltip="TIDY5E.HitDice.Current.Label">
+              <div class="value" data-tooltip="TIDY5E.ACTOR.HitDice.Current.Label">
                 {context.system.attributes.hd.value}
               </div>
               <div class="separator">/</div>
-              <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
+              <div class="max" data-tooltip="TIDY5E.ACTOR.HitDice.Max.Label">
                 {context.system.attributes.hd.max}
               </div>
               <div class="hd-label" data-tooltip="DND5E.HitDice">
-                {localize('TIDY5E.HitDice.Abbreviation')}
+                {localize('DND5E.HITDICE.Abbreviation')}
               </div>
             </span>
             {#if context.unlocked}

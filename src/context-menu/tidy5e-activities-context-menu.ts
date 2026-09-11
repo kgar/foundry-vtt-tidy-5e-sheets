@@ -120,7 +120,7 @@ export function getContextMenuOptions(
   // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
 
   entries.push({
-    label: 'TIDY5E.ContextMenuActionPin',
+    label: 'TIDY5E.CONTEXTMENU.Action.Pin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     onClick: async () => {
       if (tabId) {
@@ -138,7 +138,7 @@ export function getContextMenuOptions(
   });
 
   entries.push({
-    label: 'TIDY5E.ContextMenuActionUnpin',
+    label: 'TIDY5E.CONTEXTMENU.Action.Unpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
     onClick: async () => {
       if (tabId) {
@@ -159,7 +159,7 @@ export function getContextMenuOptions(
   if (aggregatePinTab) {
     entries.push({
       label: FoundryAdapter.localize(
-        'TIDY5E.ContextMenuActionPinToSpecificTab',
+        'TIDY5E.CONTEXTMENU.Action.PinToTab',
         { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
       ),
       icon: `<i class="fa-solid fa-thumbtack"></i>`,

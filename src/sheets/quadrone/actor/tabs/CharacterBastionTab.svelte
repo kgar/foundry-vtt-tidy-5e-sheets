@@ -258,7 +258,7 @@
                   {@attach dropzoneClass('occupant-dropzone')}
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
-                    {localize('TIDY5E.Facilities.Creatures.Label')}
+                    {localize('TIDY5E.FACILITY.Creatures.Label')}
                   </div>
                   <ul class="slots creatures">
                     {#each chosen.creatures as { actor, uuid }, index}
@@ -427,7 +427,7 @@
         <div class="bastion-header">
           <h3 class="font-title-small">
             <i class="fa-solid fa-shield"></i>
-            {localize('TIDY5E.Facilities.Defenders.Label')}
+            {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -459,7 +459,7 @@
         <div class="bastion-header">
           <h3 class="font-title-small">
             <i class="fa-solid fa-users"></i>
-            {localize('TIDY5E.Facilities.Hirelings.Label')}
+            {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -492,7 +492,7 @@
         <div class="bastion-header">
           <h3 class="font-title-small">
             <i class="fa-solid fa-horse-head"></i>
-            {localize('TIDY5E.Facilities.Creatures.Label')}
+            {localize('TIDY5E.FACILITY.Creatures.Label')}
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>

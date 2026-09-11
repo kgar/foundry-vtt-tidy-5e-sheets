@@ -25,8 +25,8 @@
   class="tidy-table-button tidy-table-toggle action-include-in-combat"
   aria-label={FoundryAdapter.localize(
     include
-      ? 'TIDY5E.Encounter.Combat.IncludeInCombat.Tooltip'
-      : 'TIDY5E.Encounter.Combat.ExcludeFromCombat.Tooltip',
+      ? 'TIDY5E.ENCOUNTER.Combat.Action.Include'
+      : 'TIDY5E.ENCOUNTER.Combat.Action.Exclude',
   )}
   data-tooltip
   data-action={context.editable ? 'toggleCombatantInclusion' : undefined}

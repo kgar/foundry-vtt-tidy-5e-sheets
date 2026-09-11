@@ -55,34 +55,34 @@ export function simplifyFormula(
 export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] {
   return [
     {
-      label: 'TIDY5E.Class.Artificer',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Artificer',
       value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
     },
     {
-      label: 'TIDY5E.Class.Bard',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Bard',
       value:
         'max(@classes.bard.levels + 3 - floor(@classes.bard.levels/20), (min(floor(@classes.bard.levels/10),1) * (14 + min(floor(@classes.bard.levels/11),1) + min(floor(@classes.bard.levels/13),1) + (min(floor(@classes.bard.levels/14),1) * 2) + min(floor(@classes.bard.levels/15),1) + min(floor(@classes.bard.levels/17),1) + (min(floor(@classes.bard.levels/18),1) * 2))))',
     },
     {
-      label: 'TIDY5E.Class.Cleric',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Cleric',
       value: '@abilities.wis.mod + @classes.cleric.levels',
     },
     {
-      label: 'TIDY5E.Class.Druid',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Druid',
       value: '@abilities.wis.mod + @classes.druid.levels',
     },
     {
-      label: 'TIDY5E.Class.Paladin',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Paladin',
       value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
     },
-    { label: 'TIDY5E.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
+    { label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
     {
-      label: 'TIDY5E.Class.Sorcerer',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Sorcerer',
       value:
         'min(@classes.sorcerer.levels + 1, 12 + min(floor(@classes.sorcerer.levels/13),1) + min(floor(@classes.sorcerer.levels/15),1) + min(floor(@classes.sorcerer.levels/17),1))',
     },
     {
-      label: 'TIDY5E.Class.Wizard',
+      label: 'TIDY5E.SPELLS.MaxPrepared.Formula.Wizard',
       value: '@abilities.int.mod + @classes.wizard.levels',
     },
   ];

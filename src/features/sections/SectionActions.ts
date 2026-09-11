@@ -173,7 +173,7 @@ class SectionActions {
 
     if (unlocked && group.isOwner && !!section.members.length) {
       controls.push({
-        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+        label: 'TIDY5E.SECTION.Selector.Choose',
         iconClass: 'fa-solid fa-diagram-cells',
         execute: (params) => {
           const firstMember = params.section.members[0].actor;
@@ -181,7 +181,7 @@ class SectionActions {
             flag: `${TidyFlags.sections.prop}.${firstMember.id}`,
             callingDocument: group,
             document: group,
-            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
             getKnownCustomSections:
               SheetSections.getKnownCustomGroupMemberSections,
             async onSave(newSectionName) {
@@ -201,9 +201,9 @@ class SectionActions {
             },
             window: {
               title: FoundryAdapter.localize(
-                'TIDY5E.Section.SectionSelectorTitle',
+                'TIDY5E.SECTION.Selector.Title',
                 {
-                  sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+                  sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
                   documentName: FoundryAdapter.localize(section.label),
                 },
               ),
@@ -223,11 +223,11 @@ class SectionActions {
       type === 'crew'
         ? 'DND5E.VEHICLE.Crew.Label'
         : type === 'draft'
-          ? 'TIDY5E.Vehicle.Member.DraftAnimal.Label'
-          : 'TIDY5E.Vehicle.Member.Passenger.Label';
+          ? 'TIDY5E.VEHICLE.Member.DraftAnimal.Title.one'
+          : 'TIDY5E.VEHICLE.Member.Passenger.Title.one';
 
     const addSpecificLabel = FoundryAdapter.localize(
-      'TIDY5E.CompendiumBrowser',
+      'TIDY5E.COMMON.Action.AddFromCompendium',
       {
         name: FoundryAdapter.localize(entityNameKey),
       },
@@ -288,13 +288,13 @@ class SectionActions {
                   parent: actor,
                 });
               },
-              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+              sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
               window: {
                 title: FoundryAdapter.localize(
-                  'TIDY5E.Section.SectionSelectorTitle',
+                  'TIDY5E.SECTION.Selector.Title',
                   {
                     sectionType: FoundryAdapter.localize(
-                      'TIDY5E.Section.Label',
+                      'TIDY5E.SECTION.Title.one',
                     ),
                     documentName: FoundryAdapter.localize(section.label),
                   },
@@ -305,7 +305,7 @@ class SectionActions {
             actor.sheet._renderChild(app);
           },
           iconClass: 'fa-solid fa-diagram-cells',
-          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+          label: 'TIDY5E.SECTION.Selector.Choose',
         }
       : undefined;
   }
@@ -333,22 +333,22 @@ class SectionActions {
               },
               window: {
                 title: FoundryAdapter.localize(
-                  'TIDY5E.Section.SectionSelectorTitle',
+                  'TIDY5E.SECTION.Selector.Title',
                   {
                     sectionType: FoundryAdapter.localize(
-                      'TIDY5E.Section.Label',
+                      'TIDY5E.SECTION.Title.one',
                     ),
                     documentName: FoundryAdapter.localize(section.label),
                   },
                 ),
               },
-              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+              sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
             });
 
             container.sheet._renderChild(app);
           },
           iconClass: 'fa-solid fa-diagram-cells',
-          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+          label: 'TIDY5E.SECTION.Selector.Choose',
         }
       : undefined;
   }
@@ -363,7 +363,7 @@ class SectionActions {
         );
       },
       iconClass: 'fa-solid fa-ellipsis-vertical',
-      label: 'TIDY5E.Options.Title',
+      label: 'TIDY5E.SETTINGS.TabOptions.Title',
     };
   }
 

@@ -57,7 +57,7 @@
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-reflect-both"></i>
-          {localize('TIDY5E.Encounter.DifficultyTarget.Label')}
+          {localize('TIDY5E.ENCOUNTER.Difficulty.Target')}
         </h4>
       </div>
       <div class="list-content">
@@ -72,7 +72,7 @@
               <option value={target.id}>
                 {target.name}
                 {#if target.primary}
-                  ({localize('TIDY5E.Group.PrimaryParty.Label')})
+                  ({localize('TIDY5E.GROUP.PrimaryParty.Label')})
                 {/if}
               </option>
             {/each}

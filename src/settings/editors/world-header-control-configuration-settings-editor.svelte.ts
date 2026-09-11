@@ -185,7 +185,7 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
 
     canUseDefault: true,
 
-    useDefaultLabel: 'TIDY5E.UseDefault',
+    useDefaultLabel: 'TIDY5E.COMMON.Action.UseDefault',
 
     async useDefault() {
       const proceed = await confirmUseDefault();

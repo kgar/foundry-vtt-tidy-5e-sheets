@@ -46,7 +46,7 @@
         value={placeholder.name}
         {@attach InputAttachments.selectOnFocus}
         placeholder={localize(
-          'TIDY5E.Encounter.PlaceholderNameField.PlaceholderText',
+          'TIDY5E.ENCOUNTER.Placeholder.Field.Name',
         )}
       />
       <input
@@ -56,7 +56,7 @@
         value={placeholder.note}
         {@attach InputAttachments.selectOnFocus}
         placeholder={localize(
-          'TIDY5E.Encounter.PlaceholderNotesField.PlaceholderText',
+          'TIDY5E.ENCOUNTER.Placeholder.Field.Notes',
         )}
       />
     {:else}

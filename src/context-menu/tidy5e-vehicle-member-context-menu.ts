@@ -71,7 +71,7 @@ function getVehicleItemMemberOptions(
 
   return [
     {
-      label: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.CONTEXTMENU.Action.Edit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
       onClick: async () => {
         const actor = await fromUuid(memberUuid);
@@ -84,7 +84,7 @@ function getVehicleItemMemberOptions(
         !FoundryAdapter.isLockedInCompendium(app.actor),
     },
     {
-      label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      label: FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.Unassign'),
       visible: () => !!memberUuid,
       icon: '<i class="fa-solid fa-user-minus"></i>',
       onClick: async () => {
@@ -94,7 +94,7 @@ function getVehicleItemMemberOptions(
       },
     },
     {
-      label: FoundryAdapter.localize('TIDY5E.AddSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.COMMON.Action.AddNamed', {
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
       }),
       visible: () => empty,
@@ -114,9 +114,9 @@ function getDraftMemberOptions(
 
   return [
     {
-      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
         name: FoundryAdapter.localize(
-          'TIDY5E.Vehicle.Member.DraftAnimal.Label',
+          'TIDY5E.VEHICLE.Member.DraftAnimal.Title.one',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
@@ -163,7 +163,7 @@ function getCrewMemberOptions(
     .map<ContextMenuEntry>((mountableItem) => {
       return {
         label: `${FoundryAdapter.localize(
-          'TIDY5E.ContextMenuActionAssignToEntity',
+          'TIDY5E.CONTEXTMENU.Action.AssignTo',
           { entityName: mountableItem.name },
         )} ${mountableItem.crew?.value ?? '0'}/${
           mountableItem.crew?.max ?? '—'
@@ -193,7 +193,7 @@ function getCrewMemberOptions(
 
   return [
     {
-      label: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      label: FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.Unassign'),
       icon: '<i class="fa-solid fa-user-minus fa-fw"></i>',
       visible: () => !!currentlyAssignedItemId && canChange,
       onClick: async () => {
@@ -212,9 +212,9 @@ function getCrewMemberOptions(
     },
     ...assignableItemOptions,
     {
-      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
         name: FoundryAdapter.localize(
-          'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+          'TIDY5E.VEHICLE.Crew.Unassigned.Title',
         ),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
@@ -226,7 +226,7 @@ function getCrewMemberOptions(
       },
     },
     {
-      label: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+      label: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
