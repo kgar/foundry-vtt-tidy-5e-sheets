@@ -19,7 +19,7 @@
 <div class="item-recharge">
   {#if !conceal}
     <span class="color-text-lighter text-data">
-      {localize('TIDY5E.RollRecharge.Label')}
+      {localize('DND5E.USES.Recovery.Recharge.Label')}
     </span>
     <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
     <span class="recharge-range-text text-data">

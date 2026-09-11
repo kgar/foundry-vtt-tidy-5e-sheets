@@ -28,5 +28,5 @@
     <span class="value font-label-medium">{rowContext.save.dc.value}</span>
   </div>
 {:else}
-  <span class="color-text-disabled">{identified ? '—' : localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+  <span class="color-text-disabled">{identified ? '—' : localize('TIDY5E.COMMON.Unidentified.Placeholder')}</span>
 {/if}

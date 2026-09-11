@@ -94,7 +94,7 @@
   >
     {#if !hasAtLeastOneItem}
       <div class="empty-state-container empty-state-description">
-        {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+        {@html localize('TIDY5E.CHARACTER.Empty')}
       </div>
     {:else}
       {#each sections as section}
@@ -180,10 +180,10 @@
           <i class="fas fa-arrow-right-arrow-left"></i>
           {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION
             ? localize(
-                'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+                'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.option.action',
               )
             : localize(
-                'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+                'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.option.origin',
               )}
         </button>
       {/if}
@@ -191,16 +191,16 @@
     <div class="sheet-footer-right footer-content-right flexshrink">
       <button
         type="button"
-        aria-label="TIDY5E.SheetLock.Empty.Hint"
+        aria-label="TIDY5E.CHARACTER.Empty"
         class="button button-borderless button-icon-only"
-        data-tooltip="TIDY5E.SheetLock.Empty.Hint"
+        data-tooltip="TIDY5E.CHARACTER.Empty"
       >
         <i class="fas fa-circle-question"></i>
       </button>
       {#if context.editable}
         <button
           type="button"
-          aria-label={localize('TIDY5E.ConfigureTab.Title', {
+          aria-label={localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', {
             tabName: tabName,
           })}
           class="button button-borderless button-icon-only"

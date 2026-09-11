@@ -252,7 +252,7 @@
         class="facility-occupants"
       >
         <h4>
-          {localize('TIDY5E.Facilities.Creatures.Label')}
+          {localize('TIDY5E.FACILITY.Creatures.Label')}
         </h4>
         <ul class="occupants creatures unlist" data-prop="system.trade.creatures">
           {#each context.facilityContext.creatures as { actor, uuid }, index}
@@ -280,7 +280,7 @@
         occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.hirelings.value ?? []),
-          localize('TIDY5E.Facilities.Hirelings.Label'),
+          localize('DND5E.FACILITY.FIELDS.hirelings.max.label'),
         )}
     >
       <span class="text-normal">
@@ -306,7 +306,7 @@
         occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.defenders.value ?? []),
-          localize('TIDY5E.Facilities.Defenders.Label'),
+          localize('DND5E.FACILITY.FIELDS.defenders.max.label'),
         )}
     >
       <span class="text-normal">

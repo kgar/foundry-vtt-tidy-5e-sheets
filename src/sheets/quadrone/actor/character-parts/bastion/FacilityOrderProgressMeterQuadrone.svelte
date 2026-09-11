@@ -41,7 +41,7 @@
         {/if}
         <span class="progress-meter-label truncate">
           {#if chosen.craft && showCraftName}
-            {localize('TIDY5E.Facilities.Progress.OrderAndCraftLabel', {
+            {localize('TIDY5E.FACILITY.Progress.OrderAndCraft', {
               orderName: orderLabel,
               craftingItemName: chosen.craft.name,
             })}

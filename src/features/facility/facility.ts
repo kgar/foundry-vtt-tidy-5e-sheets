@@ -29,9 +29,9 @@ export function getTidyFacilityIcon(
     FacilityOccupantSlot,
     string
   > = {
-    creatures: 'TIDY5E.Facilities.Creatures.Label',
-    defenders: 'TIDY5E.Facilities.Defenders.Label',
-    hirelings: 'TIDY5E.Facilities.Hirelings.Label',
+    creatures: 'TIDY5E.FACILITY.Creatures.Label',
+    defenders: 'DND5E.FACILITY.FIELDS.defenders.max.label',
+    hirelings: 'DND5E.FACILITY.FIELDS.hirelings.max.label',
   };
 
   /** System data path for each kind of facility occupant. */

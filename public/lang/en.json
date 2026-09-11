@@ -147,7 +147,7 @@
       "TransferCurrencyToParent": "Transfer all currency to parent actor"
     },
     "Capacity": {
-      "Holds": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
+      "HoldsUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}"
     },
     "Empty": "This container is empty."
   },

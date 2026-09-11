@@ -10,7 +10,7 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
   static DEFAULT_OPTIONS = {
     window: {
       icon: 'fa-solid fa-scroll',
-      title: 'TIDY5E.Settings.SheetPreferences.dialogTitle',
+      title: 'TIDY5E.SETTINGS.Preference.Dialog.Title',
     },
     position: { width: 400 },
     buttons: [
@@ -50,7 +50,7 @@ export class MakeAllSheetsTidyDialog extends foundry.applications.api.DialogV2 {
     options = super._initializeApplicationOptions(options);
 
     options.content = `<p style="margin-bottom:1rem;">
-      ${FoundryAdapter.localize('TIDY5E.Settings.SheetPreferences.dialogMessage')}
+      ${FoundryAdapter.localize('TIDY5E.SETTINGS.Preference.Dialog.Message')}
     </p>`;
 
     return options;

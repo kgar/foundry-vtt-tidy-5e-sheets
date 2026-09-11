@@ -19,17 +19,17 @@
 </script>
 
 <div class="dialog-content-container flexcol">
-  <h2>{localize('TIDY5E.WorldSettings.Homebrew.name')}</h2>
+  <h2>{localize('TIDY5E.SETTINGS.World.Homebrew.name')}</h2>
   <div class="flexcol flex1">
     <fieldset>
       <legend>
-        <h3>{localize('TIDY5E.Settings.BankedInspiration.title')}</h3>
+        <h3>{localize('TIDY5E.SETTINGS.Option.Inspiration.Banked.Title')}</h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
 
       <div class="form-group slim">
         <label for="banked-inspiration-{idPrefix}">
-          {localize('TIDY5E.Settings.EnableBankedInspiration.name')}
+          {localize('TIDY5E.SETTINGS.Option.Inspiration.Banked.Enable.name')}
         </label>
         <div class="form-fields">
           <input
@@ -39,12 +39,12 @@
           />
         </div>
         <p class="hint">
-          {localize('TIDY5E.Settings.EnableBankedInspiration.hint')}
+          {localize('TIDY5E.SETTINGS.Option.Inspiration.Banked.Enable.hint')}
         </p>
       </div>
       <div class="form-group slim">
         <label for="banked-inspiration-gm-only-{idPrefix}">
-          {localize('TIDY5E.Settings.BankedInspirationGmOnly.name')}
+          {localize('TIDY5E.SETTINGS.Option.Inspiration.Banked.GmOnly.name')}
         </label>
         <div class="form-fields">
           <input
@@ -54,18 +54,18 @@
           />
         </div>
         <p class="hint">
-          {localize('TIDY5E.Settings.BankedInspirationGmOnly.hint')}
+          {localize('TIDY5E.SETTINGS.Option.Inspiration.Banked.GmOnly.hint')}
         </p>
       </div>
     </fieldset>
     <fieldset>
       <legend>
-        <h3>{localize('TIDY5E.Settings.SwapAbilityScoreAndBonus.title')}</h3>
+        <h3>{localize('TIDY5E.SETTINGS.Option.Sheet.SwapAbilityScoreAndBonus.Title')}</h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <div class="form-group slim">
         <label for="swap-ability-score-and-bonus-{idPrefix}">
-          {localize('TIDY5E.Settings.SwapAbilityScoreAndBonus.name')}
+          {localize('TIDY5E.SETTINGS.Option.Sheet.SwapAbilityScoreAndBonus.name')}
         </label>
         <div class="form-fields">
           <input
@@ -75,7 +75,7 @@
           />
         </div>
         <p class="hint">
-          {localize('TIDY5E.Settings.SwapAbilityScoreAndBonus.hint')}
+          {localize('TIDY5E.SETTINGS.Option.Sheet.SwapAbilityScoreAndBonus.hint')}
         </p>
       </div>
     </fieldset>

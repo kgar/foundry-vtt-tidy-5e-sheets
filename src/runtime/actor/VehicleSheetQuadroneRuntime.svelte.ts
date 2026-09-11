@@ -14,7 +14,7 @@ export const VehicleSheetQuadroneRuntime =
     [
       {
         id: CONSTANTS.TAB_STATBLOCK,
-        title: 'TIDY5E.StatblockTabName',
+        title: 'TIDY5E.TAB.Name.Statblock',
         content: {
           component: VehicleStatblockTab,
           type: 'svelte',

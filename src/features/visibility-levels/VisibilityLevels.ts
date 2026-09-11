@@ -27,7 +27,7 @@ export class VisibilityLevels {
       },
       gmOnly: {
         key: 'gmOnly',
-        label: FoundryAdapter.localize('TIDY5E.GMOnly.Title'),
+        label: FoundryAdapter.localize('TIDY5E.COMMON.GMOnly.Title'),
         value: Number.MAX_SAFE_INTEGER,
       },
     } satisfies Record<string, VisibilityLevelOption>;

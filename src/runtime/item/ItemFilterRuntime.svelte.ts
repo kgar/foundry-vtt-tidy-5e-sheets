@@ -215,7 +215,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           defaultItemFilters.canUse,
         ],
@@ -227,7 +227,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -247,7 +247,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostBonus,
           defaultItemFilters.activationCostReaction,
         ],
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.canUse,
         ],
       },
@@ -283,7 +283,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -301,7 +301,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -315,7 +315,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -329,7 +329,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -357,7 +357,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.magical,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -382,7 +382,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.magical,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -421,7 +421,7 @@ export class ItemFilterRuntime {
             pinnedFilterClass: 'hide-under-400',
           },
         ],
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.canUse,
         ],
       },
@@ -447,7 +447,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           defaultItemFilters.canUse,
         ],
@@ -485,7 +485,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           defaultItemFilters.canUse,
         ],
@@ -508,7 +508,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.magical,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -541,7 +541,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -555,7 +555,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
@@ -569,7 +569,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+        'TIDY5E.FILTER.Category.Miscellaneous': () => [
           ...getAttunementFilters(),
         ],
       },

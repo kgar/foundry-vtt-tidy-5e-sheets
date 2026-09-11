@@ -30,13 +30,13 @@ export class ThemeQuadroneImportService {
       );
 
       ui.notifications.info(
-        FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.importSuccess')
+        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportSuccess')
       );
 
       return settings;
     } catch (e) {
       ui.notifications.error(
-        FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.importError')
+        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportError')
       );
       error(
         'An error occurred while attempting to import a theme file. See the devtools console for more details.',

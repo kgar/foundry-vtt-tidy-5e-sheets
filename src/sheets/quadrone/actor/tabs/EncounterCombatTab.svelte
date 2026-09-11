@@ -39,7 +39,7 @@
     data-has-roll-modes
   >
     <i class="fas fa-dice-d20"></i>
-    {localize('TIDY5E.Encounter.PrerollInitiative')}
+    {localize('TIDY5E.ENCOUNTER.Initiative.Action.Preroll')}
   </button>
   <button
     type="button"
@@ -47,7 +47,7 @@
     data-action="addAllAsPlaceholders"
   >
     <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
+    {localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAll')}
   </button>
   <hr />
   <button
@@ -56,7 +56,7 @@
     data-action="addNewPlaceholder"
   >
     <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
+    {localize('TIDY5E.ENCOUNTER.Placeholder.Action.Add')}
   </button>
   <button
     type="button"
@@ -73,7 +73,7 @@
     data-initiative="20"
   >
     <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 20 })}
+    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 20 })}
   </button>
   <button
     type="button"
@@ -82,7 +82,7 @@
     data-initiative="15"
   >
     <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 15 })}
+    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 15 })}
   </button>
   <button
     type="button"
@@ -91,7 +91,7 @@
     data-initiative="10"
   >
     <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 10 })}
+    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 10 })}
   </button>
 </aside>
 
@@ -108,7 +108,7 @@
           onclick={() => context.sheet._browseAddNpc()}
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.AddSpecific', { name: localize('DND5E.Group.Member.one') })}
+          {localize('TIDY5E.COMMON.Action.AddNamed', { name: localize('DND5E.Group.Member.one') })}
         </button>
       </div>
     {/if}

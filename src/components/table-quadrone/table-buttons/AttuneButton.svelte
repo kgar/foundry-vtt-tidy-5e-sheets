@@ -22,7 +22,7 @@
     } else {
       if (currentAttunementCount >= actor.system.attributes.attunement.max) {
         ui.notifications.warn(
-          `${FoundryAdapter.localize('TIDY5E.AttunementWarning', {
+          `${FoundryAdapter.localize('TIDY5E.ACTOR.Attunement.Warning.Maximum', {
             number: currentAttunementCount,
           })}`,
         );

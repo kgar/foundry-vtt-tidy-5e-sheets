@@ -140,7 +140,7 @@
       )}
       {const tooltip = $derived(
         !isNil(mastery?.label, '')
-          ? FoundryAdapter.localize('TIDY5E.Weapon.Mastery.LabelWithMastery', {
+          ? FoundryAdapter.localize('TIDY5E.ITEM.Weapon.Mastery.Label', {
               mastery: mastery.label,
             })
           : game.i18n.format('DND5E.WEAPON.Mastery.Label'),

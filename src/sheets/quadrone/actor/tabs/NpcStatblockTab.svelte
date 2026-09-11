@@ -66,7 +66,7 @@
 
   {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">
-      {@html localize('TIDY5E.SheetLock.Empty.Hint')}
+      {@html localize('TIDY5E.CHARACTER.Empty')}
     </div>
   {/if}
 
@@ -81,7 +81,7 @@
   {#if context.unlocked || context.background || context.species || context.classes.length > 0}
     <div class="tidy-table character-traits">
       <div class="tidy-table-header-row">
-        <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
+        <h3>{localize('TIDY5E.CHARACTER.Traits.Title')}</h3>
       </div>
       <div class="list traits">
         <ActorTraitClasses />

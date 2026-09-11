@@ -157,7 +157,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     if (!game.actors.party) {
       difficultyTargets.push({
-        name: FoundryAdapter.localize('TIDY5E.Group.PrimaryParty.Label'),
+        name: FoundryAdapter.localize('TIDY5E.GROUP.PrimaryParty.Label'),
         primary: true,
         id: '',
       });
@@ -351,7 +351,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
         {
           key: CONSTANTS.SHEET_TYPE_NPC,
           dataset: {},
-          label: 'TIDY5E.Encounter.CombatantsSection.Title',
+          label: 'TIDY5E.ENCOUNTER.Combatants.Title',
           show: true,
           columns: EncounterCombatantColumnRuntime.getColumnSpecifications({
             sheetDocument: this.document,
@@ -545,7 +545,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       this.addNewPlaceholder(
         {
           name: FoundryAdapter.localize(
-            'TIDY5E.Encounter.InitiativeCount.Label',
+            'TIDY5E.ENCOUNTER.Initiative.Action.AddCount',
             {
               count: initiativeNumber,
             },
@@ -567,7 +567,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       {
         id: foundry.utils.randomID(),
         img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-        name: FoundryAdapter.localize('DND5E.ItemNew', { type: 'TIDY5E.Encounter.Placeholder' }),
+        name: FoundryAdapter.localize('DND5E.ItemNew', { type: 'TIDY5E.ENCOUNTER.Placeholder.Title' }),
       },
       data,
     );
@@ -665,7 +665,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     if (!game.combat) {
       ui.notifications.warn(
         FoundryAdapter.localize(
-          'TIDY5E.Encounter.AddCombatants.MustHaveEncounter.Message',
+          'TIDY5E.ENCOUNTER.Combatants.Warning.NoEncounterSelected',
         ),
       );
       return;

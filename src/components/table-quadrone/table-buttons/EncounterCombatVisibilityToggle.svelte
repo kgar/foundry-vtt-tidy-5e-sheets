@@ -21,8 +21,8 @@
   const label = $derived(
     FoundryAdapter.localize(
       visible
-        ? 'TIDY5E.Encounter.CombatVisibility.Visible.Label'
-        : 'TIDY5E.Encounter.CombatVisibility.Hidden.Label',
+        ? 'TIDY5E.ENCOUNTER.Combat.Visibility.Visible'
+        : 'TIDY5E.ENCOUNTER.Combat.Visibility.Hidden',
     ),
   );
 

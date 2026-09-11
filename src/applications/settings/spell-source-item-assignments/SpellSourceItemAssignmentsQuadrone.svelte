@@ -57,16 +57,16 @@
 </script>
 
 <section class="spell-source-item-assignments dialog-content-container flexcol">
-  <h2>{localize('TIDY5E.Utilities.AssignSpellsToClasses')}</h2>
+  <h2>{localize('TIDY5E.SPELLS.Action.AssignToClasses')}</h2>
   <p class="settings-description">
-    {localize('TIDY5E.SheetSettings.AssignSpellsToClasses.hint')}
+    {localize('TIDY5E.SETTINGS.Sheet.Spells.AssignToClasses.Hint')}
   </p>
   <div class="flexcol flexgap-3">
     <div role="presentation" class="flexrow flexgap-3">
       <Search bind:searchCriteria />
       <label class="flexshrink checkbox">
         <input type="checkbox" bind:checked={showUnassignedOnly} />
-        {localize('TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text')}
+        {localize('TIDY5E.SPELLS.SourceItem.ShowUnassignedOnly')}
       </label>
     </div>
     <div role="presentation" class="scroll-container flex1">
@@ -84,13 +84,13 @@
             <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
               <span
                 >{localize(
-                  'TIDY5E.SpellSourceItemAssignments.Identifier',
+                  'TIDY5E.SPELLS.SourceItem.Identifier',
                 )}</span
               >
               <i
                 class="fas fa-question-circle"
                 title={localize(
-                  'TIDY5E.SpellSourceItemAssignments.IdentifierHint',
+                  'TIDY5E.SPELLS.SourceItem.IdentifierHint',
                 )}
               ></i>
             </TidyTableHeaderCell>

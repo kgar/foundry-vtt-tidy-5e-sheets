@@ -46,31 +46,31 @@ export function buildNpcStatblockTabOptions(
     preferences.includeSpellbookInNpcStatblockTab ?? true;
 
   const legendariesDefaultTextKey = legendariesUserPreference
-    ? 'TIDY5E.Show'
-    : 'TIDY5E.Hide';
+    ? 'TIDY5E.COMMON.Action.Show'
+    : 'TIDY5E.COMMON.Action.Hide';
 
   const spellbookInStatblockDefaultTextKey = spellbookInStatblockUserPreference
-    ? 'TIDY5E.Show'
-    : 'TIDY5E.Hide';
+    ? 'TIDY5E.COMMON.Action.Show'
+    : 'TIDY5E.COMMON.Action.Hide';
 
   const optionsGroups: SectionOptionGroup[] = [
     {
-      title: 'TIDY5E.LegendaryLairToolbar',
+      title: 'TIDY5E.NPC.Legendary.Toolbar.Title',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: 'TIDY5E.Show',
+              label: 'TIDY5E.COMMON.Action.Show',
               value: true,
             },
             {
-              label: 'TIDY5E.Hide',
+              label: 'TIDY5E.COMMON.Action.Hide',
               value: false,
             },
             {
               label: FoundryAdapter.localize(
-                'TIDY5E.UseSpecificDefaultValue.Label',
+                'TIDY5E.SETTINGS.TabOptions.UseSpecificDefault',
                 { value: FoundryAdapter.localize(legendariesDefaultTextKey) },
               ),
               value: null,
@@ -84,22 +84,22 @@ export function buildNpcStatblockTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.SpellsSections',
+      title: 'TIDY5E.SPELLS.Sections.Title',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: 'TIDY5E.Show',
+              label: 'TIDY5E.COMMON.Action.Show',
               value: true,
             },
             {
-              label: 'TIDY5E.Hide',
+              label: 'TIDY5E.COMMON.Action.Hide',
               value: false,
             },
             {
               label: FoundryAdapter.localize(
-                'TIDY5E.UseSpecificDefaultValue.Label',
+                'TIDY5E.SETTINGS.TabOptions.UseSpecificDefault',
                 {
                   value: FoundryAdapter.localize(
                     spellbookInStatblockDefaultTextKey,
@@ -119,18 +119,18 @@ export function buildNpcStatblockTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      title: 'TIDY5E.SETTINGS.TabOptions.DisplayOptions.GlobalDefault',
       settings: [
         {
           type: 'boolean',
-          label: 'TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock',
+          label: 'TIDY5E.NPC.Statblock.Option.ShowLegendaryTrackers',
           doc: game.user,
           prop: legendariesProp,
           default: legendariesUserPreference,
         },
         {
           type: 'boolean',
-          label: 'TIDY5E.Utilities.IncludeSpellsInNpcStatblockTab',
+          label: 'TIDY5E.NPC.Statblock.Option.IncludeSpells',
           doc: game.user,
           prop: spellbookInStatblockProp,
           default: spellbookInStatblockUserPreference,
@@ -152,6 +152,6 @@ export function buildNpcStatblockTabOptions(
     sections,
     defaultSections: context.features,
     optionsGroups,
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

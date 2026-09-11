@@ -55,7 +55,7 @@ export class DndTashasCauldronModuleIntegration
       Tidy5eItemSheetQuadrone,
       {
         types: [DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO],
-        label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+        label: 'TIDY5E.SHEET.Class.Item',
       }
     );
 

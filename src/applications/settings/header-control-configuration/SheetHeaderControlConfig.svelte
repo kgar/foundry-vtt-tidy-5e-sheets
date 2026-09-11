@@ -17,16 +17,16 @@
   const localize = FoundryAdapter.localize;
 
   const menuOptionText = localize(
-    'TIDY5E.HeaderControlConfiguration.LocationMenu',
+    'TIDY5E.SETTINGS.Sheet.HeaderControls.Location.Menu',
   );
   const headerOptionText = localize(
-    'TIDY5E.HeaderControlConfiguration.LocationHeader',
+    'TIDY5E.SETTINGS.Sheet.HeaderControls.Location.Header',
   );
 </script>
 
 <div class="header-controls-preview">
   <div class="header-controls-preview-label font-label-medium">
-    {localize('TIDY5E.SheetSettings.HeaderControls.Preview')}
+    {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Preview')}
   </div>
   <button
     aria-label={localize('APPLICATION.TOOLS.ToggleControls')}
@@ -65,7 +65,7 @@
     <TidyTableHeaderRow class="unset-header-height theme-dark">
       <TidyTableHeaderCell primary={true}>
         <h3 class="sheet-preferences-label">
-          {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
+          {localize('TIDY5E.SETTINGS.Menu.HeaderControls.name')}
         </h3>
       </TidyTableHeaderCell>
       <TidyTableHeaderCell
@@ -74,9 +74,9 @@
       >
         <i class="fas fa-square-list header-cell-icon"></i>
         <span class="header-cell-label">
-          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', {
+          {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.ShowControl', {
             location: localize(
-              'TIDY5E.HeaderControlConfiguration.LocationMenu',
+              'TIDY5E.SETTINGS.Sheet.HeaderControls.Location.Menu',
             ),
           })}
         </span>
@@ -87,9 +87,9 @@
       >
         <i class="fas fa-ellipsis-horizontal header-cell-icon"></i>
         <span class="header-cell-label">
-          {localize('TIDY5E.SheetSettings.HeaderControls.ShowControl', {
+          {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.ShowControl', {
             location: localize(
-              'TIDY5E.HeaderControlConfiguration.LocationHeader',
+              'TIDY5E.SETTINGS.Sheet.HeaderControls.Location.Header',
             ),
           })}
         </span>
@@ -146,7 +146,7 @@
     }}
   >
     <i class="fas fa-square-list"></i>
-    {localize('TIDY5E.SheetSettings.HeaderControls.MoveAllToMenu')}
+    {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.MoveAllToMenu')}
   </button>
   <button
     type="button"
@@ -158,6 +158,6 @@
     }}
   >
     <i class="fas fa-ellipsis-vertical"></i>
-    {localize('TIDY5E.SheetSettings.HeaderControls.MoveAllToHeader')}
+    {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.MoveAllToHeader')}
   </button>
 </div>

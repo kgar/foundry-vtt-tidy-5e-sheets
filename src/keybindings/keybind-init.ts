@@ -12,8 +12,8 @@ export function initKeybindings() {
 
 function registerHeaderMenuToggleKeybinding() {
   game.keybindings.register(CONSTANTS.MODULE_ID, 'toggleHeaderMenu', {
-    name: 'TIDY5E.Keybindings.ToggleHeaderMenu.Name',
-    hint: 'TIDY5E.Keybindings.ToggleHeaderMenu.Hint',
+    name: 'TIDY5E.KEYBINDINGS.ToggleHeaderMenu.name',
+    hint: 'TIDY5E.KEYBINDINGS.ToggleHeaderMenu.hint',
     onDown: async () => {
       const tidyApi = Tidy5eSheetsApi._getApi();
 

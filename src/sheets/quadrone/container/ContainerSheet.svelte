@@ -28,7 +28,7 @@
   let itemNameEl: HTMLElement | undefined = $state();
 
   let holdsMarkup = $derived.by(() => {
-    return localize('TIDY5E.Containers.HoldsNumberUnits', {
+    return localize('TIDY5E.CONTAINER.Capacity.HoldsUnits', {
       holdsElementStart: '<span class="color-text-lighter fw-normal">',
       holdsElementEnd: '</span>',
       numberElementStart: '<span>',

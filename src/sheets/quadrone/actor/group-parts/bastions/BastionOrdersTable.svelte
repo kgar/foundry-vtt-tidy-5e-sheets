@@ -154,7 +154,7 @@
 
     {#if !orders.length}
       <div class="empty-state-container empty-state-description">
-        {localize('TIDY5E.Bastion.Group.Orders.EmptyStateHint')}
+        {localize('TIDY5E.BASTION.Group.Orders.Empty')}
       </div>
     {/if}
   {/snippet}

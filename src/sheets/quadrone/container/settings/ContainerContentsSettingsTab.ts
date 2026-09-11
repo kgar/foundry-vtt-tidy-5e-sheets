@@ -38,6 +38,6 @@ export function buildContainerContentsSettingsTab(
     sections,
     defaultSections: context.containerContents.contents,
     optionsGroups: [],
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

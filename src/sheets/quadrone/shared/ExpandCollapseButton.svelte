@@ -49,14 +49,14 @@
     : 'collapsed'}"
   buttonAttributes={{
     title: localize(
-      allExpanded ? 'TIDY5E.Commands.CollapseAll' : 'TIDY5E.Commands.ExpandAll',
+      allExpanded ? 'TIDY5E.SHEET.Action.CollapseAll' : 'TIDY5E.SHEET.Action.ExpandAll',
     ),
   }}
   onclick={() => toggleContents()}
 >
   <i class="expand-button-indicator fas fa-angles-down fa-fw"></i>
   {#snippet menu()}
-    <h4>{localize('TIDY5E.ExpandCollapseMenu.OptionTitle')}</h4>
+    <h4>{localize('TIDY5E.SHEET.Expansion.Title')}</h4>
     <label
       class="radio"
       for="{context.document.id}-expand-collapse-behavior-top-level-sections"
@@ -68,7 +68,7 @@
         value={'top-level' satisfies ExpandCollapseBehavior}
         onchange={onExpandCollapseBehaviorChanged}
       />
-      {localize('TIDY5E.ExpandCollapseMenu.OptionTopLevel')}
+      {localize('TIDY5E.SHEET.Expansion.TopLevel')}
     </label>
     <label
       class="radio"
@@ -81,7 +81,7 @@
         value={'all' satisfies ExpandCollapseBehavior}
         onchange={onExpandCollapseBehaviorChanged}
       />
-      {localize('TIDY5E.ExpandCollapseMenu.OptionAllSections')}
+      {localize('TIDY5E.SHEET.Expansion.AllSections')}
     </label>
   {/snippet}
 </ButtonWithOptionPanel>

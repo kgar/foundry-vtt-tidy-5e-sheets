@@ -992,7 +992,7 @@ export const FoundryAdapter = {
     }
 
     try {
-      return FoundryAdapter.localize('TIDY5E.GMOnly.Message', {
+      return FoundryAdapter.localize('TIDY5E.COMMON.GMOnly.Message', {
         message: item.toJSON().name,
       });
     } catch (e) {
@@ -1443,8 +1443,8 @@ export const FoundryAdapter = {
         action: 'DND5E.ActionAbbr',
         bonus: 'DND5E.BonusActionAbbr',
         reaction: 'DND5E.ReactionAbbr',
-        legendary: 'TIDY5E.LegendaryAbbr',
-        lair: 'TIDY5E.LairAbbr',
+        legendary: 'TIDY5E.NPC.Legendary.Abbreviation',
+        lair: 'DND5E.LAIR.Label',
         minute: 'DND5E.TimeMinuteAbbr',
         hour: 'DND5E.TimeHourAbbr',
         day: 'DND5E.TimeDayAbbr',

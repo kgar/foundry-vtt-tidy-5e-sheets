@@ -60,7 +60,7 @@
                   class="cursor highlight-on-hover"
                   role="button"
                   tabindex="0"
-                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                  aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
                 >
                   {context.actor.name}
                 </a>

@@ -38,7 +38,7 @@
   {#if optionGroups?.length}
     <fieldset>
       <legend>
-        {localize('TIDY5E.Options.Title')}
+        {localize('TIDY5E.SETTINGS.TabOptions.Title')}
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       {#each optionGroups as group}
@@ -99,7 +99,7 @@
 
   <fieldset class="section-config-container">
     <legend>
-      {localize('TIDY5E.Section.LabelPl')}
+      {localize('TIDY5E.SECTION.Title.other')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
@@ -121,12 +121,12 @@
       items={sections}
       columns={[
         {
-          title: 'TIDY5E.Section.Label',
+          title: 'TIDY5E.SECTION.Title.one',
           titleClasses: 'tabs-label',
           cellSnippet: listboxItemName,
         },
         {
-          title: 'TIDY5E.Section.ShowSection',
+          title: 'TIDY5E.SECTION.Action.Show',
           titleClasses: 'visibility-label',
           cellSnippet: listboxItemShow,
         },

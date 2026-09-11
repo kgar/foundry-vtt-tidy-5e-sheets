@@ -14,8 +14,8 @@ export const defaultItemSortSchemes = {
         CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
       );
     },
-    label: 'TIDY5E.SortMethod.AlphabeticalAscending.Label',
-    tooltip: 'TIDY5E.SortMethod.AlphabeticalAscending.Tooltip',
+    label: 'TIDY5E.SORT.Alphabetical.Ascending.Label',
+    tooltip: 'TIDY5E.SORT.Alphabetical.Ascending.Tooltip',
     comparator: (a, b) => a.name.localeCompare(b.name, game.i18n.lang),
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING]: {
@@ -29,8 +29,8 @@ export const defaultItemSortSchemes = {
         CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
       );
     },
-    label: 'TIDY5E.SortMethod.AlphabeticalDescending.Label',
-    tooltip: 'TIDY5E.SortMethod.AlphabeticalDescending.Tooltip',
+    label: 'TIDY5E.SORT.Alphabetical.Descending.Label',
+    tooltip: 'TIDY5E.SORT.Alphabetical.Descending.Tooltip',
     comparator: (a, b) => b.name.localeCompare(a.name, game.i18n.lang),
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL]: {
@@ -44,7 +44,7 @@ export const defaultItemSortSchemes = {
         CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL
       );
     },
-    label: 'TIDY5E.SortMenu.OptionManual',
+    label: 'TIDY5E.SORT.Menu.Manual',
     tooltip: 'SIDEBAR.SortModeManual',
     comparator: (a, b) => (a.sort || 0) - (b.sort || 0),
   },
@@ -59,7 +59,7 @@ export const defaultItemSortSchemes = {
         CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY
       );
     },
-    label: 'TIDY5E.SortMenu.OptionPriority',
+    label: 'TIDY5E.SORT.Menu.Priority',
     tooltip: 'SIDEBAR.SortModePriority',
     comparator: (a, b) =>
       a.system.linkedActivity?.item?.name.localeCompare(

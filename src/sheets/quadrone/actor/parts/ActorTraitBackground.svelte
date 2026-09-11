@@ -42,7 +42,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize('TIDY5E.DescriptionView', {
+          aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
             description: localize('TYPES.Item.background'),
           })}
           data-keyboard-focus
@@ -80,7 +80,7 @@
         {/if}
       {:else}
         <button
-          aria-label={localize('TIDY5E.CompendiumBrowser', {
+          aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
             name: localize('TYPES.Item.background'),
           })}
           type="button"
@@ -93,7 +93,7 @@
           {localize('DND5E.BackgroundAdd')}
         </button>
         <button
-          aria-label={localize('TIDY5E.AddCustom', {
+          aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
             name: localize('TYPES.Item.background'),
           })}
           type="button"
@@ -101,7 +101,7 @@
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'background' }, context.actor)}
         >
-          {localize('TIDY5E.AddCustom', {
+          {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
             name: localize('TYPES.Item.background'),
           })}
         </button>

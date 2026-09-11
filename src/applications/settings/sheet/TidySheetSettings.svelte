@@ -47,13 +47,13 @@
   let sheetConfigOptions: SettingsTab[] = $derived([
     {
       id: SETTINGS_THEME,
-      title: localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel'),
+      title: localize('TIDY5E.SETTINGS.Theme.Menu.buttonLabel'),
       iconClass: 'fa-solid fa-swatchbook',
       hasChanges: app.themeSettingsTab?.hasChanges,
     },
     {
       id: SETTINGS_TAB_CONFIG,
-      title: localize('TIDY5E.TabConfiguration.buttonLabel'),
+      title: localize('TIDY5E.TAB.Configuration.ButtonLabel'),
       iconClass: 'fas fa-file-invoice',
       hasChanges: app.sheetTabsConfigurationSettingsTab?.hasChanges,
     },
@@ -71,7 +71,7 @@
           {
             id: SETTINGS_HEADER_CONTROLS,
             title: localize(
-              'TIDY5E.SettingsMenu.HeaderControlConfiguration.buttonLabel',
+              'TIDY5E.SETTINGS.Menu.HeaderControls.buttonLabel',
             ),
             iconClass: 'fas fa-ellipsis-vertical',
             hasChanges: app.headerControlsTab.hasChanges,
@@ -82,7 +82,7 @@
       ? [
           {
             id: SETTINGS_SPELL_ASSIGNMENTS,
-            title: localize('TIDY5E.Utilities.AssignSpellsToClasses'),
+            title: localize('TIDY5E.SPELLS.Action.AssignToClasses'),
             iconClass: 'fa-solid fa-list-check',
           },
         ]
@@ -91,7 +91,7 @@
       ? [
           {
             id: SETTINGS_SIDEBAR_TAB_CONFIG,
-            title: localize('TIDY5E.Character.Sidebar.Title'),
+            title: localize('TIDY5E.CHARACTER.Sidebar.Title'),
             iconClass: 'fas fa-sidebar',
             hasChanges: app.sidebarTabDisplaySettingsTab.hasChanges,
           },
@@ -232,7 +232,7 @@
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.SheetSettings.Group.SheetSettings')}
+        {localize('TIDY5E.SETTINGS.Sheet.Group.Settings')}
       </h3>
       {#each sheetConfigOptions as entry (entry.id)}
         <button
@@ -258,11 +258,11 @@
 
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.SheetSettings.Group.Tabs')}
+        {localize('TIDY5E.SETTINGS.Sheet.Group.Tabs')}
       </h3>
       {#if app.tabConfigOptions.length === 0}
         <div class="nav-empty hint">
-          {localize('TIDY5E.SheetSettings.NoTabsHint')}
+          {localize('TIDY5E.SETTINGS.Sheet.Tabs.Empty')}
         </div>
       {:else}
         <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -333,10 +333,10 @@
     {:else if activeSelectedId === SETTINGS_HEADER_CONTROLS && headerControlEntry}
       <div class="dialog-content-container flexcol">
         <h2>
-          {localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}
+          {localize('TIDY5E.SETTINGS.Menu.HeaderControls.name')}
         </h2>
         <p class="settings-description">
-          {localize('TIDY5E.SheetSettings.HeaderControls.WorldSettingHint', {
+          {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Hint', {
             sheetName,
           })}
           <!-- svelte-ignore a11y_invalid_attribute -->
@@ -345,7 +345,7 @@
             href="javascript:void(0)"
             role="button"
             aria-label={localize(
-              'TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings',
+              'TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings',
             )}
             class="inline-link"
             onclick={() => app.openWorldHeaderControlSettings()}
@@ -356,7 +356,7 @@
               }
             }}
           >
-            {localize('TIDY5E.SheetSettings.HeaderControls.OpenWorldSettings')}
+            {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings')}
           </a>
         </p>
         <SheetHeaderControlConfig

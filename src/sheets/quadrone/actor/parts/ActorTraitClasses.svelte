@@ -37,7 +37,7 @@
 
     <div class="list-content">
       <button
-        aria-label={localize('TIDY5E.CompendiumBrowser', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
           name: localize('TYPES.Item.class'),
         })}
         type="button"
@@ -50,7 +50,7 @@
         {localize('DND5E.ClassAdd')}
       </button>
       <button
-        aria-label={localize('TIDY5E.AddCustom', {
+        aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.class'),
         })}
         type="button"
@@ -58,7 +58,7 @@
         onclick={(ev) =>
           FoundryAdapter.createItem({ type: 'class' }, context.actor)}
       >
-        {localize('TIDY5E.AddCustom', {
+        {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
           name: localize('TYPES.Item.class'),
         })}
       </button>
@@ -112,7 +112,7 @@
       </div>
       <div class="list-content">
         <button
-          aria-label={localize('TIDY5E.CompendiumBrowser', {
+          aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
             name: localize('TYPES.Item.class'),
           })}
           type="button"
@@ -126,7 +126,7 @@
         </button>
         <div class="list-values trait-item">
           <button
-            aria-label={localize('TIDY5E.AddCustom', {
+            aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
               name: localize('TYPES.Item.class'),
             })}
             type="button"
@@ -137,7 +137,7 @@
               FoundryAdapter.createItem({ type: 'class' }, context.actor)}
           >
             <i class="fa-solid fa-plus"></i>
-            {localize('TIDY5E.AddCustom', {
+            {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
               name: localize('TYPES.Item.class'),
             })}
           </button>
@@ -159,7 +159,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize('TIDY5E.DescriptionView', {
+          aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
             description: localize('TYPES.Item.class'),
           })}
           data-keyboard-focus
@@ -170,7 +170,7 @@
           {#if cls}
             <!-- svelte-ignore a11y_missing_attribute -->
             <span
-              aria-label={localize('TIDY5E.DescriptionView', {
+              aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
                 description: localize('TYPES.Item.class'),
               })}
               class="item-image-link"
@@ -285,7 +285,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('TIDY5E.DescriptionView', {
+        aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
           description: localize('TYPES.Item.subclass'),
         })}
         data-keyboard-focus
@@ -353,7 +353,7 @@
           class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"
         ></i>
         <button
-          aria-label={localize('TIDY5E.CompendiumBrowser', {
+          aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
             name: localize('TYPES.Item.subclass'),
           })}
           type="button"
@@ -367,7 +367,7 @@
           {localize('DND5E.SubclassAdd')}
         </button>
         <button
-          aria-label={localize('TIDY5E.AddCustom', {
+          aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
             name: localize('TYPES.Item.subclass'),
           })}
           type="button"
@@ -382,7 +382,7 @@
               context.actor,
             )}
         >
-          {localize('TIDY5E.AddCustom', {
+          {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
             name: localize('TYPES.Item.subclass'),
           })}
         </button>

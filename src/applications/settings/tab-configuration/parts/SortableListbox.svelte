@@ -203,7 +203,7 @@
       <button
         type="button"
         class="button button-primary button-icon-only"
-        title={localize('TIDY5E.Listbox.MoveUp')}
+        title={localize('TIDY5E.COMMON.Listbox.Action.MoveUp')}
         aria-keyshortcuts="Alt+ArrowUp"
         disabled={selectedIndex === null || selectedIndex === 0}
         onclick={moveUp}
@@ -213,7 +213,7 @@
       <button
         type="button"
         class="button button-primary button-icon-only"
-        title={localize('TIDY5E.Listbox.MoveDown')}
+        title={localize('TIDY5E.COMMON.Listbox.Action.MoveDown')}
         aria-keyshortcuts="Alt+ArrowDown"
         disabled={selectedIndex === null || selectedIndex >= items.length - 1}
         onclick={moveDown}

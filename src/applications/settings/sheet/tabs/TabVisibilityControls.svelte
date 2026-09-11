@@ -72,12 +72,12 @@
 
 <fieldset>
   <legend>
-    {localize('TIDY5E.TabConfiguration.VisibilityTab.Title')}
+    {localize('TIDY5E.TAB.Configuration.Visibility.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
   <div class="form-group">
     <label for={tabVisibilityId()}>
-      {localize('TIDY5E.TabConfiguration.VisibilityTab.Title')}
+      {localize('TIDY5E.TAB.Configuration.Visibility.Title')}
     </label>
     <div class="form-fields vertical">
       <label class="checkbox">
@@ -87,7 +87,7 @@
           checked={isVisible}
           onchange={(ev) => toggleVisibility(ev.currentTarget.checked)}
         />
-        {localize('TIDY5E.TabConfiguration.options.visibility')}
+        {localize('TIDY5E.TAB.Configuration.Option.Visibility')}
       </label>
     </div>
   </div>
@@ -95,7 +95,7 @@
   {#if showSidebarExpandedControl}
     <div class="form-group">
       <label for={sidebarExpandedId()}>
-        {localize('TIDY5E.TabSettings.SidebarSettings.name')}
+        {localize('TIDY5E.SETTINGS.Sheet.Sidebar.Expanded.name')}
       </label>
       <div class="form-fields vertical">
         <label class="checkbox">
@@ -105,7 +105,7 @@
             checked={sidebarExpanded}
             onchange={(ev) => stageSidebarExpanded(ev.currentTarget.checked)}
           />
-          {localize('TIDY5E.TabSettings.SidebarSettings.label')}
+          {localize('TIDY5E.SETTINGS.Sheet.Sidebar.Expanded.label')}
         </label>
       </div>
     </div>
@@ -114,7 +114,7 @@
   {#if canConfigureViewers}
     <div class="form-group">
       <label for={viewersId()}>
-        {localize('TIDY5E.TabConfiguration.options.viewers')}
+        {localize('TIDY5E.TAB.Configuration.Option.Viewers')}
       </label>
       <div class="form-fields">
         <select

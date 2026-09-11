@@ -217,7 +217,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: HtmlColumn,
           props: () => ({
             html: FoundryAdapter.localize(
-              'TIDY5E.Facilities.Progress.Label',
+              'TIDY5E.FACILITY.Progress.Label',
             ),
           }),
         },
@@ -1228,7 +1228,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: FoundryAdapter.localize('TIDY5E.Vehicle.Equipment.HP.Label'),
+            html: FoundryAdapter.localize('TIDY5E.VEHICLE.Equipment.HP.Label'),
           }),
         },
         cell: {
@@ -1280,7 +1280,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: FoundryAdapter.localize('TIDY5E.Vehicle.Equipment.HP.Label'),
+            html: FoundryAdapter.localize('TIDY5E.VEHICLE.Equipment.HP.Label'),
           }),
         },
         cell: {
@@ -1377,7 +1377,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           component: HtmlColumn,
           props: () => ({
             html: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Member.AssignTo.Label',
+              'TIDY5E.VEHICLE.Member.Action.AssignTo',
             ),
           }),
         },

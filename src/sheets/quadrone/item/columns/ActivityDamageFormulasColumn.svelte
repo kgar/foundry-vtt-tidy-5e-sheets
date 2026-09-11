@@ -77,9 +77,9 @@
         {/if}
       </div>
     {:else}
-      <span class="color-text-disabled">{unidentified ? localize('TIDY5E.Table.UnidentifiedPlaceholder') : '—'}</span>
+      <span class="color-text-disabled">{unidentified ? localize('TIDY5E.COMMON.Unidentified.Placeholder') : '—'}</span>
     {/each}
   {:else}
-    <span class="color-text-disabled">{unidentified ? localize('TIDY5E.Table.UnidentifiedPlaceholder') : '—'}</span>
+    <span class="color-text-disabled">{unidentified ? localize('TIDY5E.COMMON.Unidentified.Placeholder') : '—'}</span>
   {/if}
 </div>

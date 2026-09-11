@@ -145,7 +145,7 @@
 
         {#if !facilities.length}
           <div class="empty-state-container empty-state-description">
-            {localize('TIDY5E.Bastion.Group.Facilities.EmptyStateHint')}
+            {localize('TIDY5E.BASTION.Group.Facilities.Empty')}
           </div>
         {/if}
       </div>

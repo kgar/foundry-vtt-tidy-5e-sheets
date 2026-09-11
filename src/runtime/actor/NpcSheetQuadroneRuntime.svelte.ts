@@ -15,7 +15,7 @@ export const NpcSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(
     [
       {
-        title: 'TIDY5E.StatblockTabName',
+        title: 'TIDY5E.TAB.Name.Statblock',
         content: {
           component: NpcStatblockTab,
           type: 'svelte',
@@ -68,7 +68,7 @@ export const NpcSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-feather',
       },
       {
-        title: 'TIDY5E.JournalTabName',
+        title: 'TIDY5E.TAB.Name.Journal',
         content: {
           component: ActorJournalTab,
           type: 'svelte',

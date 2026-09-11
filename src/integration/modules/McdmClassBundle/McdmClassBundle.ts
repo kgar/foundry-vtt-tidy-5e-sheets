@@ -107,7 +107,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       Tidy5eItemSheetQuadrone,
       {
         types: [MCDM_CLASS_BUNDLE_CONSTANTS.POWER_ITEM_TYPE],
-        label: 'TIDY5E.Tidy5eItemSheetQuadrone',
+        label: 'TIDY5E.SHEET.Class.Item',
       },
     );
     ItemSheetQuadroneRuntime.registerItemSheet(
