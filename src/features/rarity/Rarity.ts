@@ -66,7 +66,7 @@ export class Rarity {
       (rarity || rarityVaries) && source.identified === false
         ? FoundryAdapter.localize('DND5E.Unidentified.Title')
         : rarityVaries
-          ? FoundryAdapter.localize('TIDY5E.Item.Rarity.Varies.Label')
+          ? FoundryAdapter.localize('TIDY5E.ITEM.Rarity.Varies')
           : rarity
             ? CONFIG.DND5E.itemRarity[rarity]
             : undefined;

@@ -21,7 +21,7 @@
 
 <span class="inline-uses">
   {#if concealed}
-    <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+    <span class="value color-text-lightest">{localize('TIDY5E.COMMON.Unidentified.Placeholder')}</span>
   {:else if context.owner}
     <input
       type="text"

@@ -634,9 +634,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     }
 
     const proceed = await foundry.applications.api.DialogV2.confirm({
-      content: FoundryAdapter.localize(
-        'TIDY5E.Bastion.Group.TakeBastionTurn.Confirm',
-      ),
+      content: FoundryAdapter.localize('TIDY5E.BASTION.Group.Confirm.TakeTurn'),
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
@@ -885,7 +883,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       window: {
         icon: 'fa-solid fa-house-turret',
         title: FoundryAdapter.localize(
-          'TIDY5E.Bastion.Group.ChooseFacility.Title',
+          'TIDY5E.BASTION.Group.ChooseFacility.Title',
         ),
       },
       buttons: [
@@ -922,17 +920,27 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
     const context = await this._prepareContext({ tidy: { soft: true } });
 
-    const refreshes = context.members
-      .flatMap((m) => m.members)
-      .filter((m) => isNil(actorType, '') || m.actor.type === actorType)
-      .map((m) =>
-        m.actor._rest({
-          type: 'long',
-          dialog: false,
-          chat: false,
-          newDay: true,
-        }),
-      );
+    const sectionKey = target.closest<HTMLElement>('[data-tidy-section-key]')
+      ?.dataset?.tidySectionKey;
+
+    const membersToUpdate =
+      context.members
+        .filter(
+          (section) => isNil(section.key, '') || section.key === sectionKey,
+        )
+        .flatMap((section) => section.members)
+        ?.filter(
+          (members) => isNil(actorType, '') || members.actor.type === actorType,
+        ) ?? [];
+
+    const refreshes = membersToUpdate.map((m) =>
+      m.actor._rest({
+        type: 'long',
+        dialog: false,
+        chat: false,
+        newDay: true,
+      }),
+    );
 
     await Promise.all(refreshes);
 
@@ -1067,7 +1075,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       system: {
         button: {
           icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, {
+          label: FoundryAdapter.localize(`TIDY5E.ACTOR.Ability.Action.Roll`, {
             ability: abilityLabel,
           }),
         },

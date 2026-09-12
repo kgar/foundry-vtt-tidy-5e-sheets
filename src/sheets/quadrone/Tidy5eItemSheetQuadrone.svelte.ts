@@ -92,7 +92,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       controls: [
         {
           icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.SheetSettings.title',
+          label: 'TIDY5E.SETTINGS.Sheet.Title',
           action: 'sheetSettings',
           ownership: 'OWNER',
           visible: function (this: Tidy5eItemSheetQuadrone) {

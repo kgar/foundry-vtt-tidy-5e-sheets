@@ -43,23 +43,23 @@
   let worldConfigOptions: SettingsTab[] = $derived([
     {
       id: WorldSettingsTabIds.defaults,
-      title: localize('TIDY5E.WorldSettings.Menu.tabLabel'),
+      title: localize('TIDY5E.SETTINGS.World.Tab.Overview'),
       iconClass: 'fa-solid fa-house',
     },
     {
       id: WorldSettingsTabIds.sheetPreferences,
-      title: localize('TIDY5E.WorldSettings.SheetPreferences.tabLabel'),
+      title: localize('TIDY5E.SETTINGS.World.Tab.DefaultSheets'),
       iconClass: 'fa-solid fa-scroll',
     },
     {
       id: WorldSettingsTabIds.theme,
-      title: localize('TIDY5E.WorldSettings.GlobalTheme.tabLabel'),
+      title: localize('TIDY5E.SETTINGS.World.Tab.Theme'),
       iconClass: 'fa-solid fa-swatchbook',
       hasChanges: app.editors.themeSettingsTab.hasChanges,
     },
     {
       id: WorldSettingsTabIds.homebrew,
-      title: localize('TIDY5E.WorldSettings.Homebrew.tabLabel'),
+      title: localize('TIDY5E.SETTINGS.World.Tab.Homebrew'),
       iconClass: 'fa-solid fa-beer-mug',
       hasChanges: app.editors.homebrewTab.hasChanges,
     },
@@ -121,7 +121,7 @@
   <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.WorldSettings.Group.TidySettings')}
+        {localize('TIDY5E.SETTINGS.World.Group.TidySettings')}
       </h3>
       {#each worldConfigOptions as entry (entry.id)}
         <button
@@ -146,7 +146,7 @@
     </div>
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.WorldSettings.Group.ActorSheets')}
+        {localize('TIDY5E.SETTINGS.World.Group.ActorSheets')}
       </h3>
       {#each actorSheetConfigOptions as entry (entry.id)}
         <button
@@ -162,7 +162,7 @@
     </div>
     <div class="nav-group">
       <h3 class="nav-group-header">
-        {localize('TIDY5E.WorldSettings.Group.ItemSheets')}
+        {localize('TIDY5E.SETTINGS.World.Group.ItemSheets')}
       </h3>
       {#each itemSheetConfigOptions as entry (entry.id)}
         <button

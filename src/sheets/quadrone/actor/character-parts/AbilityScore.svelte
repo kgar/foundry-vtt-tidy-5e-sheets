@@ -181,7 +181,7 @@
     {/if}
     {#if unlocked && editingScore}
       <span class="editing-score-label font-label-medium color-text-default">
-        {localize('TIDY5E.Ability.EditScore.label')}
+        {localize('TIDY5E.ACTOR.Ability.Action.EditScore')}
       </span>
     {/if}
   </div>

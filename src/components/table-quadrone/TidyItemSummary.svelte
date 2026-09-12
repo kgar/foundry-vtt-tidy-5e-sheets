@@ -81,7 +81,7 @@
   {#if linked}
     {#await FoundryAdapter.enrichHtml(Enrichers.reference(linked.uuid, linked.name)) then enriched}
       <div class="item-summary-linked-source">
-        {@html localize('TIDY5E.Activities.Cast.SourceHintText', {
+        {@html localize('TIDY5E.ITEM.Activity.Cast.SourceHint', {
           itemName: enriched,
         })}
       </div>
@@ -105,7 +105,7 @@
       {#if showGmSecretDescription}
         <div class="gm-only">
           {localize(
-            'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+            'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.option.GmOnly',
           )}
         </div>
       {/if}

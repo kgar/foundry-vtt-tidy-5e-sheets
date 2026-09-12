@@ -62,7 +62,8 @@
         {/if}
         <span class="separator">/</span>
         <span class="uses-max font-default-medium color-text-default">
-          {favorite.uses.max ?? localize('TIDY5E.Table.UnidentifiedPlaceholder')}
+          {favorite.uses.max ??
+            localize('TIDY5E.COMMON.Unidentified.Placeholder')}
         </span>
       </span>
     </span>

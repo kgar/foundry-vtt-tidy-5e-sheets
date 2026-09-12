@@ -79,7 +79,7 @@
         {#if context.crewBrokenLinks.length && context.editable}
           <a data-action="removeBrokenLinks">
             <i class="fa-solid fa-link-broken"></i>
-            {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+            {localize('TIDY5E.VEHICLE.Action.RemoveBrokenLinks', {
               value: context.crewBrokenLinks.length,
             })}
           </a>
@@ -92,7 +92,7 @@
           tabindex="0"
           class="button button-icon-only button-borderless highlight-on-hover"
           data-action="browseActors"
-          aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          aria-label={FoundryAdapter.localize('TIDY5E.COMMON.Action.AddFromCompendium', {
             name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
           })}
           data-tooltip=""
@@ -147,7 +147,7 @@
         {#if context.passengerBrokenLinks.length && context.editable}
           <a data-action="removeBrokenLinks">
             <i class="fa-solid fa-link-broken"></i>
-            {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+            {localize('TIDY5E.VEHICLE.Action.RemoveBrokenLinks', {
               value: context.passengerBrokenLinks.length,
             })}
           </a>
@@ -160,9 +160,9 @@
           tabindex="0"
           class="button button-icon-only button-borderless highlight-on-hover"
           data-action="browseActors"
-          aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          aria-label={FoundryAdapter.localize('TIDY5E.COMMON.Action.AddFromCompendium', {
             name: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Member.Passenger.Label',
+              'TIDY5E.VEHICLE.Member.Passenger.Title.one',
             ),
           })}
           data-tooltip=""
@@ -328,7 +328,7 @@
           data-action="browseActors"
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
+          {localize('TIDY5E.VEHICLE.Crew.Unassigned.Empty')}
         </button>
       </div>
     {/snippet}
@@ -341,7 +341,7 @@
           data-action="browseActors"
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.Vehicle.Passenger.EmptyState')}
+          {localize('TIDY5E.VEHICLE.Passengers.Empty')}
         </button>
       </div>
     {/snippet}

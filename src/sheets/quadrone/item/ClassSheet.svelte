@@ -81,7 +81,7 @@
             class="pill interactive centered wrapped copy-to-clipboard"
             data-action="copyValue"
             data-value={context.item.system.identifier}
-            aria-label={localize('TIDY5E.CopyToClipboard')}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
           >
             <span class="text-normal">
               {localize('DND5E.Identifier')}

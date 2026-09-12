@@ -55,7 +55,7 @@
     imageTypeClassName == 'token' ? occupant?.token.img : occupant?.img,
   )}
   {const name = $derived(
-    occupant ? occupant.name : localize('TIDY5E.BrokenLink'),
+    occupant ? occupant.name : localize('TIDY5E.COMMON.BrokenLink'),
   )}
 
   <li

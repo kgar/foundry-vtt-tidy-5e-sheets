@@ -59,7 +59,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
   currentTabId: string;
   aggregatePinTab = {
     tabId: CONSTANTS.TAB_STATBLOCK,
-    tabName: 'TIDY5E.StatblockTabName',
+    tabName: 'TIDY5E.TAB.Name.Statblock',
   };
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -201,7 +201,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const assignedCrewSection = {
       ...SheetSections.EMPTY,
       type: CONSTANTS.SECTION_TYPE_CREW,
-      label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
+      label: 'TIDY5E.VEHICLE.Crew.Assigned.Title',
       members: [],
       key: CONSTANTS.SECTION_KEY_ASSIGNED,
       columns: VehicleAssignedCrewColumnRuntime.getColumnSpecifications({
@@ -222,7 +222,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     const unassignedCrewSection = {
       ...SheetSections.EMPTY,
       type: CONSTANTS.SECTION_TYPE_CREW,
-      label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+      label: 'TIDY5E.VEHICLE.Crew.Unassigned.Title',
       members: [],
       key: CONSTANTS.SECTION_KEY_UNASSIGNED,
       columns: VehicleUnassignedCrewColumnRuntime.getColumnSpecifications({
@@ -367,7 +367,7 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
       ...SheetSections.EMPTY,
       type: 'draft',
       key: 'draft',
-      label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
+      label: 'TIDY5E.VEHICLE.Member.DraftAnimal.Title.other',
       members: [],
       columns: VehicleDraftAnimalColumnRuntime.getColumnSpecifications({
         sheetDocument: this.document,

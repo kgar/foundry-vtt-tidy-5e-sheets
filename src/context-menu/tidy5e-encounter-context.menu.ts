@@ -41,7 +41,7 @@ export function getEncounterMemberContextOptions(
     {
       label: 'DND5E.Group.Action.View',
       icon: `<i class="fas fa-eye fa-fw"></i>`,
-      callback: async () =>
+      onClick: async () =>
         encounter.sheet._openDocumentSheet(await memberPromise),
       visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
@@ -49,7 +49,7 @@ export function getEncounterMemberContextOptions(
     {
       label: 'DND5E.HPFormulaRollMessage',
       icon: `<i class="fas fa-dice-d6 fa-fw"></i>`,
-      callback: async () => {
+      onClick: async () => {
         await new Tidy5eNpcSheetQuadrone({
           document: await memberPromise,
         }).rollFormula();
@@ -61,7 +61,7 @@ export function getEncounterMemberContextOptions(
     {
       label: 'DND5E.Group.Action.Remove',
       icon: `<i class="fas fa-trash fa-fw"></i>`,
-      callback: async () =>
+      onClick: async () =>
         await encounter.system.removeMember(await memberPromise),
       visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),

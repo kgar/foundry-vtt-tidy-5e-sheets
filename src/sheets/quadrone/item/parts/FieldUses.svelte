@@ -78,7 +78,7 @@
             disabled={!context.unlocked}
           >
             <i class="fas fa-plus"></i>
-            {localize('TIDY5E.AddSpecific', {
+            {localize('TIDY5E.COMMON.Action.AddNamed', {
               name: localize('DND5E.Recovery'),
             })}
           </button>

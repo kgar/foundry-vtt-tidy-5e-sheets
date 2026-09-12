@@ -48,7 +48,7 @@
     await roll.evaluate();
     await roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: context.actor }),
-      flavor: localize('TIDY5E.Drakkenheim.Contamination.rolledMutation', {
+      flavor: localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Chat.RolledMutation', {
         name: actorName,
         level: contaminationLevel,
       }),
@@ -117,7 +117,7 @@
       class="button button-secondary"
     >
       <i class="fa-solid fa-dice-d20"></i>
-      {localize('TIDY5E.Drakkenheim.Contamination.rollSave')}
+      {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Action.RollSave')}
     </button>
     <button
       type="button"
@@ -129,7 +129,7 @@
       class="button button-secondary"
     >
       <i class="fa-solid fa-dice-d20"></i>
-      {localize('TIDY5E.Drakkenheim.Contamination.rollDeepHazeSave')}
+      {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Action.RollDeepHazeSave')}
     </button>
     <button
       type="button"
@@ -137,7 +137,7 @@
       class="button button-secondary"
     >
       <i class="fa-solid fa-bacteria"></i>
-      {localize('TIDY5E.Drakkenheim.Contamination.rollMutation')}
+      {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Action.RollMutation')}
     </button>
   </div>
   <div class="contamination-title title-underlined">
@@ -178,7 +178,7 @@
         <i class="fa-solid fa-heart"></i>
       </span>
       <span class="level-label">
-        {localize('TIDY5E.Drakkenheim.Contamination.none')}
+        {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Empty')}
       </span>
       {#if contaminationLevel > 0}
         <div
@@ -193,7 +193,7 @@
           class="button button-secondary clear-contamination"
         >
           <i class="fa-solid fa-syringe"></i>
-          {localize('TIDY5E.Drakkenheim.Contamination.clear')}
+          {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Action.Clear')}
         </div>
       {/if}
     </button>

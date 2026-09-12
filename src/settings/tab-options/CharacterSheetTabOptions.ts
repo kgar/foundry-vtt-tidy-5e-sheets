@@ -21,13 +21,13 @@ export function buildCharacterSheetTabOptions(
 
   const optionsGroups: SectionOptionGroup[] = [
     {
-      title: 'TIDY5E.SectionOrganization',
+      title: 'TIDY5E.SETTINGS.TabOptions.SectionOrganization',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: localize('TIDY5E.GenericDefaultPrefix', {
+              label: localize('TIDY5E.SETTINGS.TabOptions.DefaultPrefix', {
                 value: localize(
                   SettingsProvider.settings.characterSheetTabOrganization
                     .options.choices[organization],
@@ -55,13 +55,13 @@ export function buildCharacterSheetTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.AutomaticallyIncludeUsableItems',
+      title: 'TIDY5E.SETTINGS.TabOptions.IncludeUsableItems',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: localize('TIDY5E.GenericDefaultPrefix', {
+              label: localize('TIDY5E.SETTINGS.TabOptions.DefaultPrefix', {
                 value:
                   SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
                     ? 'Yes'
@@ -94,6 +94,6 @@ export function buildCharacterSheetTabOptions(
     sections: context.sheetTabSections,
     defaultSections: defaultSections,
     optionsGroups,
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

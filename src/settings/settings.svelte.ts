@@ -160,9 +160,9 @@ export function createSettings() {
     menus: {
       worldSettings: {
         options: {
-          name: `TIDY5E.SettingsMenu.TidySettings.name`,
-          label: 'TIDY5E.SettingsMenu.TidySettings.label',
-          hint: `TIDY5E.SettingsMenu.TidySettings.hint`,
+          name: `TIDY5E.SETTINGS.Menu.TidySettings.name`,
+          label: 'TIDY5E.SETTINGS.Menu.TidySettings.label',
+          hint: `TIDY5E.SETTINGS.Menu.TidySettings.hint`,
           icon: 'fa-solid fa-swatchbook',
           type: WorldSettingsQuadroneApplication,
           restricted: true,
@@ -170,9 +170,9 @@ export function createSettings() {
       },
       makeAllSheetsTidy: {
         options: {
-          name: `TIDY5E.SettingsMenu.Defaults.name`,
-          label: 'TIDY5E.SettingsMenu.Defaults.label',
-          hint: `TIDY5E.SettingsMenu.Defaults.hint`,
+          name: `TIDY5E.SETTINGS.Menu.Defaults.name`,
+          label: 'TIDY5E.SETTINGS.Menu.Defaults.label',
+          hint: `TIDY5E.SETTINGS.Menu.Defaults.hint`,
           icon: 'fa-solid fa-scroll',
           type: MakeAllSheetsTidyDialog,
           restricted: true,
@@ -215,8 +215,8 @@ export function createSettings() {
       // Context Menu
       useContextMenu: {
         options: {
-          name: 'TIDY5E.Settings.UseContextMenu.name',
-          hint: 'TIDY5E.Settings.UseContextMenu.hint',
+          name: 'TIDY5E.SETTINGS.Option.Interaction.ContextMenu.name',
+          hint: 'TIDY5E.SETTINGS.Option.Interaction.ContextMenu.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -231,8 +231,8 @@ export function createSettings() {
 
       defaultCharacterSheetTabs: {
         options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -257,8 +257,8 @@ export function createSettings() {
 
       headerControlConfiguration: {
         options: {
-          name: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.name',
-          hint: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.hint',
+          name: 'TIDY5E.SETTINGS.Menu.HeaderControls.name',
+          hint: 'TIDY5E.SETTINGS.Menu.HeaderControls.hint',
           scope: 'world',
           config: false,
           type: new foundry.data.fields.TypedObjectField(
@@ -285,8 +285,8 @@ export function createSettings() {
 
       tabConfiguration: {
         options: {
-          name: 'TIDY5E.SettingsMenu.TabConfiguration.name',
-          hint: 'TIDY5E.SettingsMenu.TabConfiguration.hint',
+          name: 'TIDY5E.SETTINGS.Menu.Tabs.name',
+          hint: 'TIDY5E.SETTINGS.Menu.Tabs.hint',
           scope: 'world',
           config: false,
           type: new foundry.data.fields.TypedObjectField(
@@ -316,8 +316,8 @@ export function createSettings() {
 
       defaultNpcSheetTabs: {
         options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -337,8 +337,8 @@ export function createSettings() {
 
       defaultGroupSheetTabs: {
         options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -357,8 +357,8 @@ export function createSettings() {
 
       useGroupSheetMemberSecurity: {
         options: {
-          name: 'TIDY5E.Settings.UseGroupSheetMemberSecurity.name',
-          hint: 'TIDY5E.Settings.UseGroupSheetMemberSecurity.hint',
+          name: 'TIDY5E.SETTINGS.Option.Security.GroupSheetMembers.name',
+          hint: 'TIDY5E.SETTINGS.Option.Security.GroupSheetMembers.hint',
           scope: 'world',
           type: Boolean,
           config: true,
@@ -373,8 +373,8 @@ export function createSettings() {
 
       defaultEncounterSheetTabs: {
         options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.DefaultTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -393,8 +393,8 @@ export function createSettings() {
 
       defaultDeathSaveRoll: {
         options: {
-          name: 'TIDY5E.Settings.DefaultDeathSaveRoll.name',
-          hint: 'TIDY5E.Settings.DefaultDeathSaveRoll.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.DefaultDeathSaveRoll.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.DefaultDeathSaveRoll.hint',
           scope: 'world',
           config: true,
           default: 'public',
@@ -408,8 +408,8 @@ export function createSettings() {
 
       actionListLimitActionsToCantrips: {
         options: {
-          name: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.name',
-          hint: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.hint',
+          name: 'TIDY5E.SETTINGS.Option.ActionList.LimitToCantrips.name',
+          hint: 'TIDY5E.SETTINGS.Option.ActionList.LimitToCantrips.hint',
           scope: 'client',
           config: true,
           default: false,
@@ -424,8 +424,8 @@ export function createSettings() {
 
       actionListIncludeMinuteLongSpellsAsActions: {
         options: {
-          name: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.name',
-          hint: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.hint',
+          name: 'TIDY5E.SETTINGS.Option.ActionList.IncludeMinuteLongSpells.name',
+          hint: 'TIDY5E.SETTINGS.Option.ActionList.IncludeMinuteLongSpells.hint',
           scope: 'client',
           config: true,
           default: true,
@@ -440,8 +440,8 @@ export function createSettings() {
 
       actionListIncludeSpellsWithActiveEffects: {
         options: {
-          name: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.name',
-          hint: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.hint',
+          name: 'TIDY5E.SETTINGS.Option.ActionList.IncludeSpellsWithActiveEffects.name',
+          hint: 'TIDY5E.SETTINGS.Option.ActionList.IncludeSpellsWithActiveEffects.hint',
           scope: 'client',
           config: true,
           default: true,
@@ -456,8 +456,8 @@ export function createSettings() {
 
       actionListIncludeConsumables: {
         options: {
-          name: 'TIDY5E.Settings.ActionListIncludeConsumables.name',
-          hint: 'TIDY5E.Settings.ActionListIncludeConsumables.hint',
+          name: 'TIDY5E.SETTINGS.Option.ActionList.IncludeConsumables.name',
+          hint: 'TIDY5E.SETTINGS.Option.ActionList.IncludeConsumables.hint',
           scope: 'client',
           config: true,
           default: true,
@@ -472,17 +472,17 @@ export function createSettings() {
 
       itemIdentificationPermission: {
         options: {
-          name: 'TIDY5E.WorldSettings.ItemIdentificationPermission.name',
-          hint: 'TIDY5E.WorldSettings.ItemIdentificationPermission.hint',
+          name: 'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.name',
+          hint: 'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.hint',
           scope: 'world',
           type: String,
           default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS,
           config: true,
           choices: {
             [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
-              'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmAndOwners',
+              'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.option.GmAndOwners',
             [CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY]:
-              'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+              'TIDY5E.SETTINGS.Option.Item.IdentificationPermission.option.GmOnly',
           },
         },
         get() {
@@ -494,8 +494,8 @@ export function createSettings() {
 
       includeFlagsInSpellScrollCreation: {
         options: {
-          name: 'TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation.name',
-          hint: 'TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation.hint',
+          name: 'TIDY5E.SETTINGS.Option.Spells.IncludeFlagsInScrollCreation.name',
+          hint: 'TIDY5E.SETTINGS.Option.Spells.IncludeFlagsInScrollCreation.hint',
           scope: 'world',
           type: Boolean,
           default: false,
@@ -510,8 +510,8 @@ export function createSettings() {
 
       worldThemeSettings: {
         options: {
-          name: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
-          hint: 'TIDY5E.ThemeSettings.hint',
+          name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.Hint',
           scope: 'world',
           type: Object,
           default: undefined,
@@ -534,8 +534,8 @@ export function createSettings() {
       // Custom Sections
       globalCustomSections: {
         options: {
-          name: 'TIDY5E.Settings.GlobalCustomSections.name',
-          hint: 'TIDY5E.Settings.GlobalCustomSections.hint',
+          name: 'TIDY5E.SETTINGS.Option.Section.GlobalCustom.name',
+          hint: 'TIDY5E.SETTINGS.Option.Section.GlobalCustom.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -556,17 +556,17 @@ export function createSettings() {
       // Activities
       inlineActivitiesPosition: {
         options: {
-          name: 'TIDY5E.Settings.InlineActivitiesPosition.name',
-          hint: 'TIDY5E.Settings.InlineActivitiesPosition.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.InlineActivitiesPosition.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.InlineActivitiesPosition.hint',
           scope: 'client',
           config: true,
           default: CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP,
           type: String,
           choices: {
             [CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP]:
-              'TIDY5E.Settings.InlineActivitiesPosition.top',
+              'TIDY5E.SETTINGS.Option.Sheet.InlineActivitiesPosition.option.top',
             [CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM]:
-              'TIDY5E.Settings.InlineActivitiesPosition.bottom',
+              'TIDY5E.SETTINGS.Option.Sheet.InlineActivitiesPosition.option.bottom',
           },
         },
         get() {
@@ -579,8 +579,8 @@ export function createSettings() {
       // Homebrew
       enableBankedInspiration: {
         options: {
-          name: 'TIDY5E.Settings.EnableBankedInspiration.name',
-          hint: 'TIDY5E.Settings.EnableBankedInspiration.hint',
+          name: 'TIDY5E.SETTINGS.Option.Inspiration.Banked.Enable.name',
+          hint: 'TIDY5E.SETTINGS.Option.Inspiration.Banked.Enable.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -594,8 +594,8 @@ export function createSettings() {
       },
       bankedInspirationGmOnly: {
         options: {
-          name: 'TIDY5E.Settings.BankedInspirationGmOnly.name',
-          hint: 'TIDY5E.Settings.BankedInspirationGmOnly.hint',
+          name: 'TIDY5E.SETTINGS.Option.Inspiration.Banked.GmOnly.name',
+          hint: 'TIDY5E.SETTINGS.Option.Inspiration.Banked.GmOnly.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -609,8 +609,8 @@ export function createSettings() {
       },
       swapAbilityScoreAndBonus: {
         options: {
-          name: 'TIDY5E.Settings.SwapAbilityScoreAndBonus.name',
-          hint: 'TIDY5E.Settings.SwapAbilityScoreAndBonus.hint',
+          name: 'TIDY5E.SETTINGS.Option.Sheet.SwapAbilityScoreAndBonus.name',
+          hint: 'TIDY5E.SETTINGS.Option.Sheet.SwapAbilityScoreAndBonus.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -640,16 +640,16 @@ export function createSettings() {
       },
       characterSheetTabOrganization: {
         options: {
-          name: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.name',
-          hint: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.hint',
+          name: 'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.name',
+          hint: 'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.hint',
           scope: 'world',
           config: true,
           type: String,
           choices: {
             [CONSTANTS.SECTION_ORGANIZATION_ORIGIN]:
-              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+              'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.option.origin',
             [CONSTANTS.SECTION_ORGANIZATION_ACTION]:
-              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+              'TIDY5E.SETTINGS.Option.Section.CharacterTabOrganization.option.action',
           },
           default: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
         },
@@ -663,8 +663,8 @@ export function createSettings() {
 
       characterSheetTabAutomaticallyIncludeUsableItems: {
         options: {
-          name: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.name',
-          hint: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.hint',
+          name: 'TIDY5E.SETTINGS.Option.Section.CharacterTabIncludeUsableItems.name',
+          hint: 'TIDY5E.SETTINGS.Option.Section.CharacterTabIncludeUsableItems.hint',
           scope: 'world',
           config: true,
           type: Boolean,
@@ -679,7 +679,7 @@ export function createSettings() {
 
       referenceTooltipCondition: {
         options: {
-          name: 'TIDY5E.Settings.ShowTooltipCondition.name',
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Condition.name',
           scope: 'user',
           config: true,
           default: true,
@@ -693,7 +693,7 @@ export function createSettings() {
       },
       referenceTooltipCreatureType: {
         options: {
-          name: 'TIDY5E.Settings.ShowTooltipCreatureType.name',
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.CreatureType.name',
           scope: 'user',
           config: true,
           default: true,
@@ -707,7 +707,7 @@ export function createSettings() {
       },
       referenceTooltipSkill: {
         options: {
-          name: 'TIDY5E.Settings.ShowTooltipSkill.name',
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Skill.name',
           scope: 'user',
           config: true,
           default: true,
@@ -721,7 +721,7 @@ export function createSettings() {
       },
       referenceTooltipTool: {
         options: {
-          name: 'TIDY5E.Settings.ShowTooltipTool.name',
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Tool.name',
           scope: 'user',
           config: true,
           default: true,
@@ -733,7 +733,7 @@ export function createSettings() {
       },
       referenceTooltipMastery: {
         options: {
-          name: 'TIDY5E.Settings.ShowTooltipMastery.name',
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Mastery.name',
           scope: 'user',
           config: true,
           default: true,
@@ -749,8 +749,8 @@ export function createSettings() {
       // Development and Troubleshooting
       debug: {
         options: {
-          name: `TIDY5E.Settings.Debug.name`,
-          hint: `TIDY5E.Settings.Debug.hint`,
+          name: `TIDY5E.SETTINGS.Option.Debug.name`,
+          hint: `TIDY5E.SETTINGS.Option.Debug.hint`,
           scope: 'client',
           config: true,
           default: false,

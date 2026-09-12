@@ -94,7 +94,7 @@
 
     {#if eyeDropperEnabled}
       <button
-        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionPickColor')}
+        title={FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.PickColor')}
         type="button"
         class="button button-secondary eye-dropper"
         onclick={() => activateEyeDropper()}
@@ -106,7 +106,7 @@
     {#if !isNil(value, '') && !disableDelete}
       <button
         type="button"
-        title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
+        title={FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.Delete')}
         class="button button-secondary button-icon-only"
         onclick={() => {
           value = '';

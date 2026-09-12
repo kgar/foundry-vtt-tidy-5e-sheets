@@ -121,7 +121,7 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
   get title() {
     return coalesce(
       this.options?.window?.title,
-      FoundryAdapter.localize('TIDY5E.Section.SectionSelectorTitle', {
+      FoundryAdapter.localize('TIDY5E.SECTION.Selector.Title', {
         sectionType: this._sectionType,
         documentName: this.document.name,
       })

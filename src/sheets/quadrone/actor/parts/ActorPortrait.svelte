@@ -48,9 +48,9 @@
   let action = $derived(context.unlocked ? editAction : 'showArtwork');
 
   let cyclerTooltip = $derived(
-    localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+    localize('TIDY5E.SETTINGS.Theme.PortraitShape.Title', {
       type: localize(
-        `TIDY5E.ThemeSettings.PortraitShape.option.${currentPortraitShape}`,
+        `TIDY5E.SETTINGS.Theme.PortraitShape.option.${currentPortraitShape}`,
       ),
     }),
   );

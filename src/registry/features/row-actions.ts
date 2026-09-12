@@ -318,7 +318,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
           'data-member-uuid': args.actor.uuid,
           'data-item-uuid': args.ctx?.assignedTo?.uuid,
           iconClasses: 'fa-solid fa-user-minus',
-          tooltip: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+          tooltip: FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.Unassign'),
         }),
       } satisfies VehicleCrewRowAction<typeof GenericActionButton>,
       menu: {
@@ -336,9 +336,9 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
           'data-action': 'removeDraftAnimal',
           'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
-          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+          tooltip: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
             name: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Member.DraftAnimal.Label',
+              'TIDY5E.VEHICLE.Member.DraftAnimal.Title.one',
             ),
           }),
         }),
@@ -358,7 +358,7 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
           'data-action': 'removePassengers',
           'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
-          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+          tooltip: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
             name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
           }),
         }),
@@ -430,9 +430,9 @@ export function getRowActionsRegistry(): TidyRowActionRegistry {
           'data-action': 'removeUnassignedCrew',
           'data-uuid': args.actor.uuid,
           iconClasses: 'fa-solid fa-trash fa-fw',
-          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+          tooltip: FoundryAdapter.localize('TIDY5E.COMMON.Action.RemoveNamed', {
             name: FoundryAdapter.localize(
-              'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+              'TIDY5E.VEHICLE.Crew.Unassigned.Title',
             ),
           }),
         }),

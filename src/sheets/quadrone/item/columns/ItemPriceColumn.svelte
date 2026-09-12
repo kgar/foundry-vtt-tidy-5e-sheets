@@ -15,5 +15,5 @@
 {#if !conceal}
   <ItemPriceSummary {item} icon={false} truncate={true} showTitle={true} />
 {:else}
-  <span class="color-text-disabled">{conceal ? localize('TIDY5E.Table.UnidentifiedPlaceholder') : '—'}</span>
+  <span class="color-text-disabled">{conceal ? localize('TIDY5E.COMMON.Unidentified.Placeholder') : '—'}</span>
 {/if}

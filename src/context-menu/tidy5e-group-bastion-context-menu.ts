@@ -48,25 +48,25 @@ export function configureGroupBastionMemberContextMenu(
       label: 'DND5E.FACILITY.AvailableFacility.basic.build',
       icon: '<i class="fa-solid fa-trowel fa-fw"></i>',
       visible: canModify,
-      callback: (_target, event) =>
+      onClick: (event) =>
         app.addMemberFacility(member, CONSTANTS.FACILITY_TYPE_BASIC, event),
     },
     {
       label: 'DND5E.FACILITY.AvailableFacility.special.free',
       icon: '<i class="fa-solid fa-building-columns fa-fw"></i>',
       visible: canModify,
-      callback: (_target, event) =>
+      onClick: (event) =>
         app.addMemberFacility(member, CONSTANTS.FACILITY_TYPE_SPECIAL, event),
     },
     {
-      label: 'TIDY5E.Bastion.Group.MaintainOrder.Label',
+      label: 'TIDY5E.BASTION.Group.MaintainOrder.Label',
       icon: '<i class="fa-solid fa-broom fa-fw"></i>',
       visible: () =>
         FoundryAdapter.userIsGm() &&
         canModify() &&
         !!member.itemTypes.facility?.length,
       group: 'common',
-      callback: () => app.issueMemberMaintainOrder(member),
+      onClick: () => app.issueMemberMaintainOrder(member),
     },
   ] satisfies ContextMenuEntry[];
 }
@@ -87,18 +87,18 @@ export function configureGroupBastionFacilityContextMenu(
 
   ui.context.menuItems = [
     {
-      label: 'TIDY5E.ContextMenuActionView',
+      label: 'TIDY5E.CONTEXTMENU.Action.View',
       icon: '<i class="fas fa-eye fa-fw"></i>',
       group: 'common',
-      callback: () =>
+      onClick: () =>
         app._renderChild(facility.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
     },
     {
-      label: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.CONTEXTMENU.Action.Edit',
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
       visible: canModify,
       group: 'common',
-      callback: () =>
+      onClick: () =>
         app._renderChild(facility.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
     },
     {
@@ -109,28 +109,28 @@ export function configureGroupBastionFacilityContextMenu(
         !facility.system.disabled &&
         isNil(facility.system.progress?.order, ''),
       group: 'common',
-      callback: (_target, event) =>
+      onClick: (event) =>
         app.useMemberFacility(member, facility.id, event),
     },
     {
       // Runs the system's order evaluation so gold and crafted items are awarded.
-      label: 'TIDY5E.Bastion.Group.CompleteOrder.Label',
+      label: 'TIDY5E.BASTION.Group.Action.CompleteOrder',
       icon: '<i class="fa-solid fa-clipboard-check fa-fw"></i>',
       visible: () =>
         FoundryAdapter.userIsGm() &&
         canModify() &&
         !isNil(facility.system.progress?.order, ''),
       group: 'common',
-      callback: () => app.completeMemberFacilityOrder(facility),
+      onClick: () => app.completeMemberFacilityOrder(facility),
     },
     {
       // Cancels the order, skipping the system's order evaluation, so no gold
       // or crafted items are awarded.
-      label: 'TIDY5E.Bastion.Group.CancelOrder.Label',
+      label: 'TIDY5E.BASTION.Group.Action.CancelOrder',
       icon: '<i class="fa-solid fa-xmark fa-fw"></i>',
       visible: () => canModify() && !isNil(facility.system.progress?.order, ''),
       group: 'common',
-      callback: () =>
+      onClick: () =>
         facility.update({
           'system.progress': { value: 0, max: null, order: '' },
         }),
@@ -142,14 +142,14 @@ export function configureGroupBastionFacilityContextMenu(
     //   classes: 'color-text-lighter',
     //   visible: () => canModify() && facility.system.defenders?.max > 0,
     //   group: 'common',
-    //   callback: () => {console.log('TODO: Kill defenders functionality');},
+    //   onClick: () => {console.log('TODO: Kill defenders functionality');},
     // },
     {
-      label: 'TIDY5E.ContextMenuActionDelete',
+      label: 'TIDY5E.CONTEXTMENU.Action.Delete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
       visible: () => canModify() && facility.canDelete,
       group: 'be-careful',
-      callback: () => facility.deleteDialog({ sheet: app }),
+      onClick: () => facility.deleteDialog({ sheet: app }),
     },
   ] satisfies ContextMenuEntry[];
 }

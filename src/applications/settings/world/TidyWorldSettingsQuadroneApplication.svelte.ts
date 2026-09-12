@@ -72,7 +72,7 @@ export class WorldSettingsQuadroneApplication
       positioned: true,
       resizable: true,
       controls: [],
-      title: 'TIDY5E.WorldSettings.Menu.label',
+      title: 'TIDY5E.SETTINGS.World.Title',
       contentClasses: ['flexcol'],
     },
     position: {

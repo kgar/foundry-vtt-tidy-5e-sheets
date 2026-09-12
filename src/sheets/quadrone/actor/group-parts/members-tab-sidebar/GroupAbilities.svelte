@@ -63,10 +63,10 @@
         </span>
       {:else}
         <span class="ability-measure-header">
-          {localize('TIDY5E.AggregateSkill.HighMeasure')}
+          {localize('TIDY5E.ACTOR.Skill.Aggregate.High')}
         </span>
         <span class="ability-measure-header">
-          {localize('TIDY5E.AggregateSkill.LowMeasure')}
+          {localize('TIDY5E.ACTOR.Skill.Aggregate.Low')}
         </span>
       {/if}
     </span>

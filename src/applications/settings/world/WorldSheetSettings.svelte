@@ -40,7 +40,7 @@
 
       result.push({
         id: `${prefix}-tabs`,
-        title: 'TIDY5E.TabConfiguration.MenuOptionText',
+        title: 'TIDY5E.TAB.Configuration.MenuOptionText',
         content: {
           type: 'svelte',
           component: TabConfigurationSortableListbox,
@@ -54,7 +54,7 @@
 
       result.push({
         id: `${prefix}-header-controls`,
-        title: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.name',
+        title: 'TIDY5E.SETTINGS.Menu.HeaderControls.name',
         content: {
           type: 'svelte',
           component: SheetHeaderControlConfig,
@@ -68,7 +68,7 @@
 
       result.push({
         id: `${prefix}-sidebar`,
-        title: 'TIDY5E.Character.Sidebar.Title',
+        title: 'TIDY5E.CHARACTER.Sidebar.Title',
         content: {
           type: 'svelte',
           component: TabConfigurationSortableListbox,
@@ -90,12 +90,12 @@
   aria-label={title}
 >
   <h2>
-    {localize('TIDY5E.WorldSettings.SheetConfiguration.label', {
+    {localize('TIDY5E.SETTINGS.World.SheetConfiguration.Label', {
       sheetName: title,
     })}
   </h2>
   <p class="settings-description">
-    {localize('TIDY5E.WorldSettings.SheetConfiguration.hint', {
+    {localize('TIDY5E.SETTINGS.World.SheetConfiguration.Hint', {
       sheetName: title,
     })}
   </p>

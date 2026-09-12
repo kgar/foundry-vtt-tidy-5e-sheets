@@ -38,22 +38,22 @@ export function getGroupMemberContextOptions(
     {
       label: 'DND5E.Group.Action.View',
       icon: `<i class="fa-solid fa-eye fa-fw"></i>`,
-      callback: async () =>
+      onClick: async () =>
         group.sheet._openDocumentSheet(await fromUuid(actor.uuid)),
       visible: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
       group: 'common',
     },
     {
-      label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+      label: 'TIDY5E.SECTION.Selector.Choose',
       icon: '<i class="fa-solid fa-diagram-cells"></i>',
       visible: () => group.isOwner,
       group: 'customize',
-      callback: () =>
+      onClick: () =>
         group.sheet._renderChild(
           new SectionSelectorApplication({
             flag: `${TidyFlags.sections.prop}.${actor.id}`,
-            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
             callingDocument: group,
             document: group,
             getKnownCustomSections:
@@ -64,7 +64,7 @@ export function getGroupMemberContextOptions(
     {
       label: 'DND5E.Group.Action.Remove',
       icon: `<i class="fa-solid fa-trash fa-fw"></i>`,
-      callback: async () => await group.system.removeMember(actor),
+      onClick: async () => await group.system.removeMember(actor),
       visible: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
       group: 'be-careful',

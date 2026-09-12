@@ -44,7 +44,7 @@
 </script>
 
 <div class="form-group">
-  <label for={id}>{localize('TIDY5E.ItemSheet.FeatureOriginLabel')}</label>
+  <label for={id}>{localize('TIDY5E.ITEM.FeatureOrigin.Label')}</label>
   <div class="form-fields">
     <SelectQuadrone
       {id}
