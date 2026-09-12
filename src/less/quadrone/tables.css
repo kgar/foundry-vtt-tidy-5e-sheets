@@ -826,6 +826,15 @@
     }
 
     > input[type="text"].uses-value {
+      /* Keep line-height locked to height. When an input's box is taller than
+         its line box, Chromium centers the inner editor within that slack
+         differently than a sibling span's half-leading resolves, so the value
+         renders ~1px above the divider and max -- visible in Chromium at
+         devicePixelRatio 1 only, never in Firefox. Matching the two leaves no
+         slack to mis-center. Do not set height without setting line-height. */
+      align-self: center;
+      height: var(--t5e-field-size-default);
+      line-height: var(--t5e-field-size-default);
       padding-inline-end: var(--t5e-size-halfx);
       margin-inline-end: calc(var(--t5e-size-1) * -1);
 
@@ -842,7 +851,8 @@
     }
 
     > .uses-max {
-      text-align: left;
+      margin-inline-start: var(--t5e-size-1);
+      text-align: start;
       flex: 1;
     }
   }
