@@ -507,6 +507,7 @@ export const CONSTANTS = {
     FUNCTIONS: 'functions',
     HOVERED_FACILITY_OCCUPANT: 'hoveredFacilityOccupant',
     HP_TOOLTIP: 'hpTooltip',
+    INLINE_EFFECTS_READONLY: 'inlineEffectsReadonly',
     INLINE_TOGGLE_SERVICE: 'inlineToggleService',
     ITEM_FILTER_SERVICE: 'itemFilterService',
     ITEM_TABLE_TOGGLES: 'itemTableToggles',

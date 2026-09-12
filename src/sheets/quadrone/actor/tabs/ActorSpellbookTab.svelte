@@ -7,7 +7,7 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
   import {
@@ -30,6 +30,9 @@
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
+
+  // Disable inline effects in the Spells tab.
+  setContext(CONSTANTS.SVELTE_CONTEXT.INLINE_EFFECTS_READONLY, true);
 
   let searchCriteria = $state('');
 
