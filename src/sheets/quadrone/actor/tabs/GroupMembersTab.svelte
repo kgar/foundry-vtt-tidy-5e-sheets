@@ -140,21 +140,6 @@
                 columnWidth="{rowActionInfo.widthRems}rem"
                 data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
               >
-                {#if section.key === CONSTANTS.SHEET_TYPE_NPC && FoundryAdapter.userIsGm()}
-                  <!-- kgar: option 2, the least obvious but my top option -->
-                  <!-- svelte-ignore a11y_missing_attribute -->
-                  <a
-                    role="button"
-                    tabindex="0"
-                    class="tidy-table-button"
-                    aria-label={localize('TIDY5E.NPC.Refresh.Group.label')}
-                    data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
-                    data-action="refreshActor"
-                    data-type="npc"
-                  >
-                    <i class="fas fa-arrows-rotate-reverse"></i>
-                  </a>
-                {/if}
                 <SectionActionsColumnHeader
                   {section}
                   maxRowActionsCount={rowActionInfo.maxRowActionsCount}

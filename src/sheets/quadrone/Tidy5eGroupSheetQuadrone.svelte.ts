@@ -634,9 +634,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     }
 
     const proceed = await foundry.applications.api.DialogV2.confirm({
-      content: FoundryAdapter.localize(
-        'TIDY5E.BASTION.Group.Confirm.TakeTurn',
-      ),
+      content: FoundryAdapter.localize('TIDY5E.BASTION.Group.Confirm.TakeTurn'),
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
@@ -922,17 +920,27 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
     const context = await this._prepareContext({ tidy: { soft: true } });
 
-    const refreshes = context.members
-      .flatMap((m) => m.members)
-      .filter((m) => isNil(actorType, '') || m.actor.type === actorType)
-      .map((m) =>
-        m.actor._rest({
-          type: 'long',
-          dialog: false,
-          chat: false,
-          newDay: true,
-        }),
-      );
+    const sectionKey = target.closest<HTMLElement>('[data-tidy-section-key]')
+      ?.dataset?.tidySectionKey;
+
+    const membersToUpdate =
+      context.members
+        .filter(
+          (section) => isNil(section.key, '') || section.key === sectionKey,
+        )
+        .flatMap((section) => section.members)
+        ?.filter(
+          (members) => isNil(actorType, '') || members.actor.type === actorType,
+        ) ?? [];
+
+    const refreshes = membersToUpdate.map((m) =>
+      m.actor._rest({
+        type: 'long',
+        dialog: false,
+        chat: false,
+        newDay: true,
+      }),
+    );
 
     await Promise.all(refreshes);
 
