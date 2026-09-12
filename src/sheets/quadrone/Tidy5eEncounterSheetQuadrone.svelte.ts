@@ -568,7 +568,9 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       {
         id: foundry.utils.randomID(),
         img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-        name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+        name: FoundryAdapter.localize('DND5E.ItemNew', {
+          type: FoundryAdapter.localize('TIDY5E.Encounter.Placeholder'),
+        }),
       },
       data,
     );

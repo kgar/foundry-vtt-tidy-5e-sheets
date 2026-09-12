@@ -1135,7 +1135,6 @@
     "DifficultyTarget.Label": "Difficulty Target",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
-    "NewPlaceholder.Name": "New Placeholder",
     "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
     "AddCombatants.MustHaveEncounter.Message": "Must have an encounter selected to add to encounter tracker",
     "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",

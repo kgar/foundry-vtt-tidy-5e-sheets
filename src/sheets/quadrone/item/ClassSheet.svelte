@@ -74,10 +74,14 @@
           </li>
         {/if}
         <li>
+          <!--svelte-ignore a11y_missing_attribute-->
           <a
+            role="button"
+            tabindex="0"
             class="pill interactive centered wrapped copy-to-clipboard"
             data-action="copyValue"
             data-value={context.item.system.identifier}
+            aria-label={localize('TIDY5E.CopyToClipboard')}
           >
             <span class="text-normal">
               {localize('DND5E.Identifier')}

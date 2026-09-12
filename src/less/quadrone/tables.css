@@ -1131,9 +1131,15 @@
       }
 
       &.advancement-item {
-        .tidy-table-row-use-button img {
-          &[src$='.svg'] {
-            filter: invert(78%) sepia(21%) saturate(544%) hue-rotate(2deg) brightness(88%) contrast(83%);
+        .tidy-table-row-use-button {
+          img {
+            &[src$='.svg'] {
+              filter: invert(78%) sepia(21%) saturate(544%) hue-rotate(2deg) brightness(88%) contrast(83%);
+            }
+          }
+
+          &:is(:hover, :focus-within, :active) img {
+            opacity: 0.8;
           }
         }
       }
