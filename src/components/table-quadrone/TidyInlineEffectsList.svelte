@@ -9,6 +9,8 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import EffectPillSwitch from './EffectPillSwitch.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -17,6 +19,10 @@
   let { item = null }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  const readonly =
+    getContext<boolean>(CONSTANTS.SVELTE_CONTEXT.INLINE_EFFECTS_READONLY) ??
+    false;
 
   function getEffectNotes(
     category: EffectCategory<ActiveEffect5e>,
@@ -87,7 +93,7 @@
         effect={entry.effect}
         categoryLabel={entry.categoryLabel}
         enabled={entry.enabled}
-        disabled={entry.toggleDisabled}
+        disabled={entry.toggleDisabled || readonly}
         notes={entry.notes}
       />
     {/each}
