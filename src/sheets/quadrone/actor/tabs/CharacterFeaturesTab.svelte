@@ -68,30 +68,29 @@
     {searchCriteria}
     sheetDocument={context.actor}
   />
-</div>
-  
-<!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
-<div class="sheet-footer flexrow features-footer">
 
-  {#if context.editable}
-    <div class="footer-content-right flexrow flexshrink">
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        role="button"
-        tabindex="0"
-        aria-label={localize('DND5E.ItemCreate')}
-        data-tooltip="DND5E.ItemCreate"
-        class="button button-icon-only button-primary item-create flexshrink"
-        onclick={onAddClicked}
-        onkeydown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            onAddClicked();
-          }
-        }}
-      >
-        <i class="fas fa-plus"></i>
-      </a>
-    </div>
-  {/if}
+  <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
+  <div class="sheet-footer flexrow sticky-footer">
+    {#if context.editable}
+      <div class="footer-content-right flexrow flexshrink">
+        <!-- svelte-ignore a11y_missing_attribute -->
+        <a
+          role="button"
+          tabindex="0"
+          aria-label={localize('DND5E.ItemCreate')}
+          data-tooltip="DND5E.ItemCreate"
+          class="button button-icon-only button-primary item-create flexshrink"
+          onclick={onAddClicked}
+          onkeydown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              onAddClicked();
+            }
+          }}
+        >
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+    {/if}
+  </div>
 </div>
 

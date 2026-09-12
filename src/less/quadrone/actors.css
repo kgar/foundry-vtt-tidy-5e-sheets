@@ -200,16 +200,6 @@
     }
   }
 
-  .main-content .tidy-tab.features .tab-content {
-    padding-block-end: var(--t5e-size-8x);
-  }
-
-  .features-footer {
-    margin-block-start: calc(var(--t5e-size-8x) * -1);
-    z-index: 1;
-    justify-content: flex-end;
-  }
-
   /* STYLE UTILITY CLASSES
   ------------------------------------------------------------ */
   i.highlighted {
@@ -432,6 +422,19 @@
     &.fixed {
       padding-block: var(--t5e-size-1x) var(--t5e-size-3x);
       padding-inline: 0;
+    }
+
+    &.sticky-footer {
+      align-content: end;
+      align-items: end;
+      bottom: 0;
+      flex: 0 0 fit-content;
+      justify-content: flex-end;
+      min-height: 2.25rem;
+      padding-inline: 0;
+      padding-block: 0;
+      position: sticky;
+      z-index: 1;
     }
 
     .sheet-footer-left {
