@@ -278,6 +278,7 @@
         border-color: var(--t5e-color-gold);
 
         .label {
+          gap: var(--t5e-size-halfx);
           justify-content: space-between;
 
           .order,
@@ -293,11 +294,7 @@
         }
 
         .order {
-          gap: 0.25rem;
-        }
-
-        .units {
-          margin-inline-start: 0.25rem;
+          gap: var(--t5e-size-1x);
         }
       }
     }

@@ -191,6 +191,13 @@
     gap: var(--t5e-size-halfx);
   }
 
+  .flexrow.hit-die,
+  .flexrow.hit-points {
+    span {
+      line-height: 1rem;
+    }
+  }
+
   [data-tidy-column-key="crew"],
   [data-tidy-column-key="hd"],
   [data-tidy-column-key="hp"] > .hit-points-container {
@@ -565,11 +572,17 @@
       }
     }
 
-    .bastion-occupancy.interactive {
-      cursor: pointer;
+    .bastion-occupancy {
+      display: flex;
+      align-items: center;
+      gap: var(--t5e-size-halfx);
 
-      &:is(:hover, :focus-within, :active) {
-        text-shadow: 0 0 0.5rem var(--t5e-color-text-gold);
+      &.interactive {
+        cursor: pointer;
+
+        &:is(:hover, :focus-within, :active) {
+          text-shadow: 0 0 0.5rem var(--t5e-color-text-gold);
+        }
       }
     }
 

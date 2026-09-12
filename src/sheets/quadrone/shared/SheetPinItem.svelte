@@ -252,18 +252,18 @@
           {#if ctx.presentation === 'limited-uses-recharging'}
             <RechargeControl document={ctx.document} {uses} />
           {:else if ctx.presentation === 'limited-uses-recharged'}
-            <span class="inline-uses color-text-default charged-text">
+            <span class="inline-uses charged-text">
               <input
                 type="text"
                 inputmode="numeric"
-                class={['uninput uses-value', { diminished: value < 1 }]}
+                class={['uninput uses-value align-end font-label-large color-text-default', { diminished: value < 1 }]}
                 data-name={valueProp}
                 {@attach InputAttachments.selectOnFocus}
                 {value}
               />
-              <span class="divider color-text-gold-emphasis">/</span>
-              <span class="uses-max">{maxText}</span>
-              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+              <span class="separator">/</span>
+              <span class="uses-max font-default-large color-text-default">{maxText}</span>
+              <i class="fas fa-bolt color-text-gold-emphasis" title={localize('DND5E.Charged')}></i>
             </span>
           {:else if ctx.presentation === 'spell-slots'}
             {@render spellSlots(
@@ -282,18 +282,18 @@
               <input
                 type="text"
                 inputmode="numeric"
-                class={['uninput uses-value', { diminished: value < 1 }]}
+                class={['uninput uses-value align-end font-label-large color-text-default', { diminished: value < 1 }]}
                 data-name={valueProp}
                 {@attach InputAttachments.selectOnFocus}
                 {value}
               />
-              <span class="divider color-text-gold-emphasis">/</span>
-              <span class="uses-max">{maxText}</span>
+              <span class="separator">/</span>
+              <span class="uses-max font-default-large color-text-default">{maxText}</span>
             </span>
           {:else if ctx.presentation === 'quantity'}
             <input
               type="text"
-              class={['uninput uses-value centered', { diminished: value < 1 }]}
+              class={['uninput uses-value align-center font-label-large color-text-default', { diminished: value < 1 }]}
               data-name={'system.quantity'}
               inputmode="numeric"
               value={ctx.document.system.quantity}

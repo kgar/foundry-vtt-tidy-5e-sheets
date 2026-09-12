@@ -57,16 +57,16 @@
         <span class="inline-uses color-text-default">
           <span
             class={[
-              'uses-value',
+              'uses-value font-label-default color-text-default',
               { diminished: context.system.crew.value.length < 1 },
             ]}
           >
             {context.system.crew.value.length}
           </span>
-          <span class="divider color-text-gold-emphasis">/</span>
+          <span class="separator">/</span>
           <TextInputQuadrone
             class={[
-              'uses-max',
+              'uses-max color-text-default',
               { uninput: !context.unlocked },
               { diminished: context.system.crew.max < 1 },
             ]}
@@ -125,16 +125,16 @@
         <span class="inline-uses color-text-default">
           <span
             class={[
-              'uses-value',
+              'uses-value font-label-default color-text-default',
               { diminished: context.system.passengers.value.length < 1 },
             ]}
           >
             {context.system.passengers.value.length}
           </span>
-          <span class="divider color-text-gold-emphasis">/</span>
+          <span class="separator">/</span>
           <TextInputQuadrone
             class={[
-              'uses-max',
+              'uses-max color-text-default',
               { uninput: !context.unlocked },
               { diminished: context.system.passengers.max < 1 },
             ]}
