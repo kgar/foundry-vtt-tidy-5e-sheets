@@ -161,7 +161,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize('DND5E.DescriptionView', {
+          aria-label={localize('TIDY5E.DescriptionView', {
             description: localize('TYPES.Item.class'),
           })}
           data-keyboard-focus
@@ -172,7 +172,7 @@
           {#if cls}
             <!-- svelte-ignore a11y_missing_attribute -->
             <span
-              aria-label={localize('DND5E.DescriptionView', {
+              aria-label={localize('TIDY5E.DescriptionView', {
                 description: localize('TYPES.Item.class'),
               })}
               class="item-image-link"
@@ -287,7 +287,7 @@
       <a
         role="button"
         tabindex="0"
-        aria-label={localize('DND5E.DescriptionView', {
+        aria-label={localize('TIDY5E.DescriptionView', {
           description: localize('TYPES.Item.subclass'),
         })}
         data-keyboard-focus
