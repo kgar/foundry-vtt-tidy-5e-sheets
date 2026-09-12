@@ -118,11 +118,11 @@
               <span
                 class="value {context.facilities.special.count > 0
                   ? 'color-text-default'
-                  : 'color-text-lightest'} font-label-medium"
+                  : 'color-text-lightest'}"
                 >{context.facilities.special.count}</span
               >
               <span class="separator">/</span>
-              <span class="max font-default-medium color-text-default"
+              <span class="max color-text-lighter"
                 >{context.facilities.special.max}</span
               >
             </span>
@@ -310,11 +310,11 @@
               <span
                 class="value {context.facilities.basic.count > 0
                   ? 'color-text-default'
-                  : 'color-text-lightest'} font-label-medium"
+                  : 'color-text-lightest'}"
                 >{context.facilities.basic.count}</span
               >
               <span class="separator">/</span>
-              <span class="max font-default-medium color-text-default"
+              <span class="max color-text-lighter"
                 >{context.facilities.basic.max}</span
               >
             </span>

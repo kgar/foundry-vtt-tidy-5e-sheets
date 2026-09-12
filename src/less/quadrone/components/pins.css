@@ -62,7 +62,7 @@
   }
 
   &.sheet-mode-play .sheet-pin .pin-details {
-    margin-block-end: 0.5rem;
+    margin-block-end: 0;
   }
 
   &.sheet-mode-edit .sheet-pin .pin-details {
@@ -142,6 +142,8 @@
     }
 
     .pin-counter input[type="text"] {
+      line-height: var(--t5e-field-size-default);
+
       &.align-end {
         text-align: end;
       }

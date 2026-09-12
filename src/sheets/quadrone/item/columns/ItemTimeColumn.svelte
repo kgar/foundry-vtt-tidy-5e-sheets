@@ -48,7 +48,7 @@
 {#if !isNil(abbrOrLabel.abbreviation, '')}
   <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent.trim()}>
     {@html inferredActivation?.value != null && inferredActivation?.value !== ''
-      ? inferredActivation.value + '&nbsp;'
+      ? inferredActivation.value 
       : ''}
     {localize(abbrOrLabel.abbreviation)}
   </span>
