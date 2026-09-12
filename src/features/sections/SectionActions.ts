@@ -219,7 +219,7 @@ class SectionActions {
       section.members.some((m) => m.actor.type === CONSTANTS.SHEET_TYPE_NPC)
     ) {
       controls.push({
-        label: 'TIDY5E.SECTION.Selector.Choose',
+        label: 'TIDY5E.NPC.Refresh.Group.label',
         iconClass: 'fas fa-arrows-rotate-reverse',
         attributes: {
           'data-action': 'refreshActor',
