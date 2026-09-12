@@ -18,10 +18,6 @@
       .label {
         display: flex;
         column-gap: 0.25rem;
-
-        .separator {
-          color: var(--t5e-color-text-gold);
-        }
       }
     }
 

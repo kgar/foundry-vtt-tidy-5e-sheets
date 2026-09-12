@@ -55,7 +55,7 @@
       {#if activity.uses.value > 1}
         <span>{activity.uses.value}</span>
       {/if}
-      <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
+      <i class="fas fa-bolt color-text-gold-emphasis" data-tooltip={localize('DND5E.Charged')}></i>
     </span>
   {:else}
     <!-- 
@@ -69,13 +69,13 @@
       value={activity.uses.value}
       {@attach InputAttachments.selectOnFocus}
       data-name="uses.value"
-      class="uninput uses-value color-text-default"
+      class="uninput uses-value font-label-default color-text-default"
       disabled={!context.editable}
       data-item-id={activity.item.id}
       data-activity-id={activity.id}
     />
-    <span class="color-text-gold">/</span>
-    <span class="uses-max color-text-lighter">{activity.uses.max}</span>
+    <span class="separator">/</span>
+    <span class="uses-max font-default-medium color-text-default">{activity.uses.max}</span>
   {/if}
 {:else}
   <span class="color-text-disabled">&mdash;</span>

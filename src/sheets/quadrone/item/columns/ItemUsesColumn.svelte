@@ -63,7 +63,7 @@
       {#if item.system.uses.value > 1}
         <span>{item.system.uses.value}</span>
       {/if}
-      <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
+      <i class="fas fa-bolt color-text-gold-emphasis" data-tooltip={localize('DND5E.Charged')}></i>
     </span>
   {:else}
     <input
@@ -72,11 +72,11 @@
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
       data-name="system.uses.value"
-      class="uninput uses-value color-text-default"
+      class="uninput uses-value font-label-default color-text-default"
       disabled={!context.editable}
     />
-    <span class="divider color-text-gold">/</span>
-    <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
+    <span class="separator">/</span>
+    <span class="uses-max font-default-medium color-text-default">{item.system.uses.max}</span>
   {/if}
 {:else if item.system.linkedActivity}
   {const ctx = $derived(

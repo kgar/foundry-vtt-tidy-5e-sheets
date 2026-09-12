@@ -106,6 +106,14 @@
           var(--t5e-theme-color-lighter) 100%);
       --bar-border-color: var(--t5e-theme-color-default);
 
+      .counter {
+        gap: var(--t5e-size-halfx);
+      }
+
+      .units {
+        margin-inline-start: var(--t5e-size-halfx);
+      }
+
       &.disabled {
         --bar-background: linear-gradient(to right,
             var(--t5e-color-palette-grey-29) 0%,

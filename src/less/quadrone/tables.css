@@ -808,14 +808,22 @@
     display: flex;
     align-items: center;
 
+    > span,
+    > .divider,
+    > .uses-max {
+      line-height: 1rem;
+    }
+
     input[type="text"]:disabled {
       background: none;
     }
 
+    > span.uses-value {}
+
     > .uses-value {
-      font: var(--t5e-font-default-medium);
-      font-size: var(--font-size-13);
-      text-align: right;
+      font: var(--t5e-font-label-medium);
+      line-height: 1rem;
+      text-align: end;
       flex: 1;
     }
 

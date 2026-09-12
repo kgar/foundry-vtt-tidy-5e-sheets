@@ -37,11 +37,11 @@
         {@attach InputAttachments.selectOnFocus}
         inputmode="numeric"
         data-name="system.hp.value"
-        class="uninput uses-value hp-value color-text-default"
+        class="uninput uses-value hp-value font-label-default color-text-default"
         disabled={!context.editable}
       />
-      <span class="divider color-text-gold flexshrink">/</span>
-      <span class="uses-max hp-max color-text-lighter">{effectiveMaxHp}</span>
+      <span class="separator flexshrink">/</span>
+      <span class="uses-max hp-max font-default-medium color-text-default">{effectiveMaxHp}</span>
     </div>
   </div>
 {/if}

@@ -121,8 +121,8 @@
                   : 'color-text-lightest'} font-label-medium"
                 >{context.facilities.special.count}</span
               >
-              <span class="divider color-text-gold font-default-medium">/</span>
-              <span class="max color-text-default font-label-medium"
+              <span class="separator">/</span>
+              <span class="max font-default-medium color-text-default"
                 >{context.facilities.special.max}</span
               >
             </span>
@@ -313,8 +313,8 @@
                   : 'color-text-lightest'} font-label-medium"
                 >{context.facilities.basic.count}</span
               >
-              <span class="divider color-text-gold font-default-medium">/</span>
-              <span class="max color-text-default font-label-medium"
+              <span class="separator">/</span>
+              <span class="max font-default-medium color-text-default"
                 >{context.facilities.basic.max}</span
               >
             </span>

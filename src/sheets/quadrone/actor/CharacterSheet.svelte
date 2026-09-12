@@ -624,7 +624,7 @@
                     >
                       {context.system.attributes?.hd?.value ?? '0'}
                     </div>
-                    <div class="separator">/</div>
+                    <div class="separator color-text-gold">/</div>
                     <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
                       {context.system.attributes?.hd?.max ?? '0'}
                     </div>
