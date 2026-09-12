@@ -150,7 +150,7 @@ export function getTidy5eActorSheetQuadroneBase<
           },
           {
             icon: 'fa-solid fa-swatchbook',
-            label: 'TIDY5E.SheetSettings.title',
+            label: 'TIDY5E.SETTINGS.Sheet.Title',
             action: 'sheetSettings',
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
@@ -963,7 +963,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
         const label = hasAll
           ? FoundryAdapter.localize(
-              'TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain',
+              'TIDY5E.CHARACTER.Traits.DifficultTerrain.IgnoreAll',
             )
           : new Intl.ListFormat(game.i18n.lang).format(
               [...systemMovement.ignoredDifficultTerrain]

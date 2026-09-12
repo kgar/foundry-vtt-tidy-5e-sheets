@@ -86,7 +86,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
             CONSTANTS.ACTIVATION_COST_REACTION,
           ].includes(a.activation?.type),
       ),
-    text: 'TIDY5E.ItemFilters.Filter.Other',
+    text: 'TIDY5E.FILTER.Category.Other',
   },
   [CONSTANTS.FILTER_MAGICAL]: {
     name: 'magical',
@@ -140,12 +140,12 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
         (SpellUtils.isCastableCantrip(item) || SpellUtils.isCastableSpell(item))
       );
     },
-    text: 'TIDY5E.ItemFilters.CanCast',
+    text: 'TIDY5E.FILTER.CanCast.Label',
   },
   [CONSTANTS.FILTER_CAN_USE]: {
     name: 'canUse',
     predicate: (item) => ItemUtils.canUse(item),
-    text: 'TIDY5E.ItemFilters.CanUse',
+    text: 'TIDY5E.FILTER.CanUse.Label',
   },
   [CONSTANTS.FILTER_EQUIPPED]: {
     name: 'equipped',

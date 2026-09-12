@@ -106,7 +106,7 @@
         <span class="sign font-default-medium color-text-lightest">&times;</span>
         <span class="value">{quantity}</span>
       {:else if concealed}
-        <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+        <span class="value color-text-lightest">{localize('TIDY5E.COMMON.Unidentified.Placeholder')}</span>
       {/if}
     </span>
     {/if}

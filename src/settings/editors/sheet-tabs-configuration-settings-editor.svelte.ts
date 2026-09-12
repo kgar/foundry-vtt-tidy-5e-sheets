@@ -80,7 +80,7 @@ export function getSheetTabsConfigurationSettingsEditor(
 
   const inclusionTabTitle =
     title ??
-    FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
+    FoundryAdapter.localize('TIDY5E.TAB.Configuration.Title', {
       documentName: FoundryAdapter.localize(
         `TYPES.${document.documentName}.${document.type}`,
       ),

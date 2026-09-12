@@ -34,7 +34,7 @@
   </div>
   <br />
 
-  <h3>{localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
+  <h3>{localize('TIDY5E.SPELLS.MaxPrepared.ExamplesHeader')}</h3>
   <p class="flex-row flex-wrap sample-formulas">
     {#each context.formulas as formula}
       <button
@@ -50,7 +50,7 @@
     <a
       target="_blank"
       href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/08.-Helpful-Resources#max-prepared-spells-formulas"
-      >{localize('TIDY5E.MaxPreparedSpellsConfig.MoreFormulas')}</a
+      >{localize('TIDY5E.SPELLS.MaxPrepared.MoreFormulas')}</a
     >
   </p>
 </section>
@@ -58,6 +58,6 @@
 <div class="button-bar">
   <button type="button" onclick={() => save()} class="button button-primary">
     <i class="fas fa-save"></i>
-    {localize('TIDY5E.SaveChanges')}
+    {localize('TIDY5E.COMMON.Action.SaveChanges')}
   </button>
 </div>

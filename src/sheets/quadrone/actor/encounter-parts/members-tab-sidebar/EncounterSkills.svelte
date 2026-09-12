@@ -43,7 +43,7 @@
         </span>
       {:else}
         <span class="skill-measure-header">
-          {localize('TIDY5E.AggregateSkill.HighMeasure')}
+          {localize('TIDY5E.ACTOR.Skill.Aggregate.High')}
         </span>
       {/if}
       <span class="skill-measure-header">

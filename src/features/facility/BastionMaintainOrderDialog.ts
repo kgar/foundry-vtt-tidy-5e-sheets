@@ -47,7 +47,7 @@ export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV
     position: { width: 480 },
     window: {
       icon: 'fa-solid fa-calendar-clock',
-      title: 'TIDY5E.Bastion.Group.MaintainOrder.DialogTitle',
+      title: 'TIDY5E.BASTION.Group.MaintainOrder.Dialog.Title',
     },
     buttons: [
       {
@@ -106,7 +106,7 @@ export class BastionMaintainOrderDialog extends foundry.applications.api.DialogV
     const members = options.members ?? [];
     const hint = foundry.utils.escapeHTML(
       FoundryAdapter.localize(
-        'TIDY5E.Bastion.Group.MaintainOrder.DialogHint',
+        'TIDY5E.BASTION.Group.MaintainOrder.Dialog.Hint',
       ),
     );
     const rows = members.map(buildMemberRow).join('');

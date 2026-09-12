@@ -16,7 +16,7 @@
   <div class="flexrow space-between character-traits-header">
     <div class="character-traits-title">
       <h3 class="font-title-small">
-        {localize('TIDY5E.CharacterTraits.Title')}
+        {localize('TIDY5E.CHARACTER.Traits.Title')}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>

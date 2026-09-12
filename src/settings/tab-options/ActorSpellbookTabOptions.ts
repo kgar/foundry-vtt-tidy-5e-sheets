@@ -29,17 +29,17 @@ export function buildActorSpellbookTabOptions(
 
   const optionsGroups: SectionOptionGroup[] = [
     {
-      title: 'TIDY5E.Utilities.SpellSlotTrackingModeTitle',
+      title: 'TIDY5E.SPELLS.SlotTracking.Title',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: 'TIDY5E.Utilities.SpellValueMax',
+              label: 'TIDY5E.SPELLS.SlotTracking.ValueMax',
               value: CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
             },
             {
-              label: 'TIDY5E.Utilities.SpellPips',
+              label: 'TIDY5E.SPELLS.SlotTracking.Pips',
               value: CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
             },
           ],
@@ -51,18 +51,18 @@ export function buildActorSpellbookTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.Utilities.CastActivitySpellGroupingTitle',
+      title: 'TIDY5E.SPELLS.CastActivity.Grouping.Title',
       settings: [
         {
           type: 'radio',
           options: [
             {
               label:
-                'TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional',
+                'TIDY5E.SPELLS.CastActivity.Grouping.Additional',
               value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL,
             },
             {
-              label: 'TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem',
+              label: 'TIDY5E.SPELLS.CastActivity.Grouping.PerItem',
               value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM,
             },
           ],
@@ -73,11 +73,11 @@ export function buildActorSpellbookTabOptions(
       ],
     },
     {
-      title: 'TIDY5E.DisplayOptionsActor.Title',
+      title: 'TIDY5E.SETTINGS.TabOptions.DisplayOptions.Actor',
       settings: [
         {
           type: 'boolean',
-          label: 'TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast',
+          label: 'TIDY5E.FILTER.CanCast.IncludeRituals',
           checked: TidyFlags.includeRitualsInCanCast.get(context.actor),
           prop: TidyFlags.includeRitualsInCanCast.prop,
           doc: context.actor,
@@ -88,12 +88,12 @@ export function buildActorSpellbookTabOptions(
     ...(actorHasSpells
       ? ([
           {
-            title: 'TIDY5E.Utilities.Tools',
+            title: 'TIDY5E.SETTINGS.TabOptions.Group.Tools',
             settings: [
               {
                 type: 'navigationButton',
                 icon: 'fa-solid fa-list-check',
-                label: 'TIDY5E.Utilities.AssignSpellsToClasses',
+                label: 'TIDY5E.SPELLS.Action.AssignToClasses',
                 onclick: (_ev, app) =>
                   app.navigator?.selectTab(
                     TidySheetSettingsTabIds.spellAssignments,
@@ -118,6 +118,6 @@ export function buildActorSpellbookTabOptions(
     sections,
     defaultSections: context.spellbook,
     optionsGroups,
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

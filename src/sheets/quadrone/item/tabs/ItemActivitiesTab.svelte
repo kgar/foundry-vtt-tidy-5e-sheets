@@ -120,7 +120,7 @@
                   {#if ctx.type === CONSTANTS.ACTIVITY_TYPE_CAST && !ctx.spell?.uuid}
                     <span
                       data-tooltip={localize(
-                        'TIDY5E.Utilities.CastActivityMissingSpell',
+                        'TIDY5E.SPELLS.CastActivity.MissingSpell',
                       )}
                       class="cast-activity-missing-spell-indicator"
                     >

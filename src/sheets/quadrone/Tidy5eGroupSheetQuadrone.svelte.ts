@@ -635,7 +635,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
 
     const proceed = await foundry.applications.api.DialogV2.confirm({
       content: FoundryAdapter.localize(
-        'TIDY5E.Bastion.Group.TakeBastionTurn.Confirm',
+        'TIDY5E.BASTION.Group.Confirm.TakeTurn',
       ),
       rejectClose: false,
       window: {
@@ -885,7 +885,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       window: {
         icon: 'fa-solid fa-house-turret',
         title: FoundryAdapter.localize(
-          'TIDY5E.Bastion.Group.ChooseFacility.Title',
+          'TIDY5E.BASTION.Group.ChooseFacility.Title',
         ),
       },
       buttons: [
@@ -1067,7 +1067,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
       system: {
         button: {
           icon: 'fa-solid fa-dice-d20',
-          label: FoundryAdapter.localize(`TIDY5E.AbilityRoll`, {
+          label: FoundryAdapter.localize(`TIDY5E.ACTOR.Ability.Action.Roll`, {
             ability: abilityLabel,
           }),
         },

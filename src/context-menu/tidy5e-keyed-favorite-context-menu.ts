@@ -52,19 +52,19 @@ export function configureKeyedFavoriteContextMenu(
 
   ui.context.menuItems = [
     {
-      label: 'TIDY5E.ContextMenuActionEdit',
+      label: 'TIDY5E.CONTEXTMENU.Action.Edit',
       icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
       visible: () => app.isEditable,
       group: 'common',
-      callback: () => onEdit(app),
+      onClick: () => onEdit(app),
     },
     {
-      // TODO: Could we move this to TIDY5E.AddSpecific?
-      label: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      // TODO: Could we move this to TIDY5E.COMMON.Action.AddNamed?
+      label: hasFavorite ? 'TIDY5E.ACTOR.Favorites.Action.Remove' : 'TIDY5E.ACTOR.Favorites.Action.Add',
       icon: hasFavorite
         ? `<i class='fa-regular fa-star fa-fw'></i>`
         : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
-      callback: () => {
+      onClick: () => {
         hasFavorite
           ? app.actor.system.removeFavorite(favorite.id)
           : app.actor.system.addFavorite(favorite);

@@ -51,7 +51,7 @@
       <div class="difficulty-row flexrow">
         <div
           class="pill pill-medium flexshrink"
-          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
+          data-tooltip="{localize('TIDY5E.ENCOUNTER.Difficulty.Label')}: {context.difficulty
             .label}"
         >
           {context.difficulty.label}
@@ -72,7 +72,7 @@
           onclick={() => context.sheet._browseAddNpc()}
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.AddSpecific', { name: localize('DND5E.Group.Member.one') })}
+          {localize('TIDY5E.COMMON.Action.AddNamed', { name: localize('DND5E.Group.Member.one') })}
         </button>
       </div>
     {/if}

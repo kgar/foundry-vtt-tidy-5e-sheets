@@ -880,12 +880,12 @@ export class SheetSections {
     let value = Inventory.isItemInventoryType(item)
       ? 'DND5E.Inventory'
       : item.parent?.system.isNPC && item.type === CONSTANTS.ITEM_TYPE_FEAT
-        ? 'TIDY5E.StatblockTabName'
+        ? 'TIDY5E.TAB.Name.Statblock'
         : item.type === CONSTANTS.ITEM_TYPE_FEAT
           ? 'DND5E.Features'
           : item.type === CONSTANTS.ITEM_TYPE_SPELL
             ? 'TYPES.Item.spellPl'
-            : 'TIDY5E.Section.Label';
+            : 'TIDY5E.SECTION.Title.one';
 
     return FoundryAdapter.localize(value);
   }
@@ -893,7 +893,7 @@ export class SheetSections {
   static getActionSectionLabel(item: Item5e) {
     return item.parent?.system.isCharacter
       ? FoundryAdapter.localize('DOCUMENT.Sheet')
-      : FoundryAdapter.localize('TIDY5E.Actions.TabName');
+      : FoundryAdapter.localize('TIDY5E.TAB.Name.Actions');
   }
 
   static configureGroupMembers(

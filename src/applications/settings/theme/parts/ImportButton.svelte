@@ -31,7 +31,7 @@
   onclick={() => fileImportInput.click()}
 >
   <i class="fa-solid fa-file-import"></i>
-  {localize('TIDY5E.ThemeSettings.Sheet.import')}
+  {localize('TIDY5E.SETTINGS.Theme.Action.Import')}
 </button>
 
 <input

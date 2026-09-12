@@ -40,7 +40,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let name = $derived(occupant ? occupant.name : localize('TIDY5E.BrokenLink'));
+  let name = $derived(occupant ? occupant.name : localize('TIDY5E.COMMON.BrokenLink'));
 </script>
 
 <li
@@ -56,7 +56,7 @@
     },
   ]}
   data-actor-uuid={uuid}
-  data-tooltip={localize('TIDY5E.Facilities.RosterMember.Label', {
+  data-tooltip={localize('TIDY5E.FACILITY.RosterMember.Label', {
     actorName: name,
     facilityName: facilityName,
   })}

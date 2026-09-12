@@ -37,6 +37,6 @@ export function buildVehicleStatblockTabOptions(
     sections,
     defaultSections: context.statblock,
     optionsGroups: [],
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

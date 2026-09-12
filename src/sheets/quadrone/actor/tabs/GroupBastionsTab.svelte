@@ -118,7 +118,7 @@
       <BastionFacilitiesTable {sectionsInlineWidth} />
     {:else}
       <div class="empty-state-container empty-state-description">
-        {localize('TIDY5E.Bastion.Group.EmptyStateHint')}
+        {localize('TIDY5E.BASTION.Group.Empty')}
       </div>
     {/if}
   </div>

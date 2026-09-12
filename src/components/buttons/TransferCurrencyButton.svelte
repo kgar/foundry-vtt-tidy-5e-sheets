@@ -24,7 +24,7 @@
     type="button"
     class={['button button-secondary transfer-currency', cssClass]}
     data-action="transfer-currency"
-    aria-label={FoundryAdapter.localize('TIDY5E.Containers.TransferCurrencyToParent.Tooltip')}
+    aria-label={FoundryAdapter.localize('TIDY5E.CONTAINER.Action.TransferCurrencyToParent')}
     data-tooltip=""
     {...rest}
   >

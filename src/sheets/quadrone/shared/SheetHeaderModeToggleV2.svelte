@@ -47,7 +47,7 @@
     <TidySwitch
       --tidy-switch-scale="1"
       --tidy-switch-thumb-transform-duration="0.15s"
-      data-tooltip={unlocked ? 'TIDY5E.SheetMode.Edit' : 'TIDY5E.SheetMode.Play'}
+      data-tooltip={unlocked ? 'TIDY5E.SHEET.Mode.Edit' : 'TIDY5E.SHEET.Mode.Play'}
       checked={unlocked}
       thumbIconClass="{unlocked
         ? 'fas fa-feather'

@@ -39,7 +39,7 @@
   buttonClasses="button-icon-only button-toggle"
   containerClasses="filter-menu"
   buttonAttributes={{
-    title: localize('TIDY5E.ItemFilters.MenuTooltip.Filters'),
+    title: localize('TIDY5E.FILTER.Title'),
   }}
 >
   <i class="fas fa-filter"></i>
@@ -72,7 +72,7 @@
       }}
     >
       <i class="fa-solid fa-xmark"></i>
-      {localize('TIDY5E.ItemFilters.ClearAll')}
+      {localize('TIDY5E.FILTER.Action.ClearAll')}
     </button>
   {/snippet}
 </ButtonWithOptionPanel>

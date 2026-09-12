@@ -33,7 +33,7 @@ export const EncounterSheetQuadroneRuntime =
       // TODO: Figure out how to do Placeholder Combatants in dnd5e 6.0+. See https://discord.com/channels/1167985253072257115/1545585824832159864/1545866451468943421
       // {
       //   id: CONSTANTS.TAB_ACTOR_COMBAT,
-      //   title: 'TIDY5E.CombatTabName',
+      //   title: 'TIDY5E.TAB.Name.Combat',
       //   content: {
       //     component: EncounterCombatTab,
       //     type: 'svelte',

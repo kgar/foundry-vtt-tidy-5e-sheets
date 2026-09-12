@@ -158,7 +158,7 @@
     <!-- Do we want any kind of content for when there are no proficient tools? -->
 
     <div class="tools-empty">
-      {localize('TIDY5E.EmptyTools')}
+      {localize('TIDY5E.ACTOR.Tool.Empty')}
     </div>
   {/if}
 {/snippet}

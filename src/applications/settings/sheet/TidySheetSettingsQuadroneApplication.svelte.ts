@@ -143,7 +143,7 @@ export class TidySheetSettingsQuadroneApplication
       positioned: true,
       resizable: true,
       controls: [],
-      title: 'TIDY5E.SheetSettings.title',
+      title: 'TIDY5E.SETTINGS.Sheet.Title',
       contentClasses: ['flexcol'],
     },
     position: {
@@ -232,9 +232,9 @@ export class TidySheetSettingsQuadroneApplication
                 defaultSettings: defaultSetting,
               }),
           },
-          title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
+          title: FoundryAdapter.localize('TIDY5E.TAB.Configuration.Title', {
             documentName: FoundryAdapter.localize(
-              'TIDY5E.SheetSettings.Sidebar.title',
+              'TIDY5E.SETTINGS.Sheet.Sidebar.Title',
             ),
           }),
           docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
@@ -318,7 +318,7 @@ export class TidySheetSettingsQuadroneApplication
       currentTabId.startsWith('sheet:') ||
       currentTabId === TidySheetSettingsTabIds.headerControls
     ) {
-      return 'TIDY5E.UseDefault';
+      return 'TIDY5E.COMMON.Action.UseDefault';
     }
     return undefined;
   }

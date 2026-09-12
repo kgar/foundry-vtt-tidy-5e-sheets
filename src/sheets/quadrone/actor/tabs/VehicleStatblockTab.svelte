@@ -258,8 +258,8 @@
             class="button button-icon-only button-borderless flexshrink button-reset-actions"
             disabled={usedActions <= 0 || !context.editable}
             onclick={resetActions}
-            aria-label={localize('TIDY5E.Reset')}
-            data-tooltip={localize('TIDY5E.Reset')}
+            aria-label={localize('TIDY5E.COMMON.Action.Reset')}
+            data-tooltip={localize('TIDY5E.COMMON.Action.Reset')}
           >
             <i class="fas fa-rotate-right"></i>
           </button>
@@ -309,9 +309,9 @@
               {#if !hideEmptyStates}
                 {const buttonTextKey = $derived(
                   section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT
-                    ? 'TIDY5E.Vehicle.Equipment.EmptyState'
+                    ? 'TIDY5E.VEHICLE.Equipment.Empty'
                     : section.key === CONSTANTS.ITEM_TYPE_WEAPON
-                      ? 'TIDY5E.Vehicle.Weapons.EmptyState'
+                      ? 'TIDY5E.VEHICLE.Weapons.Empty'
                       : null,
                 )}
 
@@ -361,7 +361,7 @@
                     })}
                 >
                   <i class="fas fa-plus"></i>
-                  {localize('TIDY5E.Vehicle.Features.EmptyState')}
+                  {localize('TIDY5E.VEHICLE.Features.Empty')}
                 </button>
               </div>
             {/if}
@@ -446,13 +446,13 @@
                         context.document.sheet.browseAddActor('draft')}
                       type="button"
                       class="button button-tertiary"
-                      title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                      title={localize('TIDY5E.VEHICLE.DraftAnimals.Empty')}
                       aria-label={localize(
-                        'TIDY5E.Vehicle.DraftAnimals.EmptyState',
+                        'TIDY5E.VEHICLE.DraftAnimals.Empty',
                       )}
                     >
                       <i class="fas fa-plus"></i>
-                      {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                      {localize('TIDY5E.VEHICLE.DraftAnimals.Empty')}
                     </button>
                   </div>
                 {/if}
@@ -534,7 +534,7 @@
               data-area={CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS}
             >
               <i class="fa-solid fa-link-broken"></i>
-              {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
+              {localize('TIDY5E.VEHICLE.Action.RemoveBrokenLinks', {
                 value: context.draftBrokenLinks.length,
               })}
             </button>

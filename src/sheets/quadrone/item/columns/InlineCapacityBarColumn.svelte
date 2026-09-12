@@ -34,7 +34,7 @@
     {/if}
   {:else}
     <div class="label">
-      <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+      <span class="value color-text-lightest">{localize('TIDY5E.COMMON.Unidentified.Placeholder')}</span>
     </div>
   {/if}
 </div>

@@ -80,7 +80,7 @@
                   class="cursor highlight-on-hover"
                   role="button"
                   tabindex="0"
-                  aria-label={localize('TIDY5E.CopyToClipboard')}
+                  aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
                 >
                   {context.actor.name}
                 </a>
@@ -94,13 +94,13 @@
                 <button
                   type="button"
                   class="button repair-vehicle button-gold"
-                  data-tooltip="TIDY5E.Vehicle.Repair.Label"
-                  aria-label={localize('TIDY5E.Vehicle.Repair.Label')}
+                  data-tooltip="TIDY5E.VEHICLE.Action.Repair"
+                  aria-label={localize('TIDY5E.VEHICLE.Action.Repair')}
                   onclick={() => context.actor.repair()}
                   disabled={!context.editable}
                 >
                   <i class="fas fa-wrench"></i>
-                  {localize('TIDY5E.Vehicle.Repair.Label')}
+                  {localize('TIDY5E.VEHICLE.Action.Repair')}
                 </button>
               {/if}
             </div> -->
@@ -194,7 +194,7 @@
               type="button"
               class="roll-hp button button-borderless button-icon-only"
               aria-label="{localize('DND5E.HitDiceRoll')} / {localize(
-                'TIDY5E.HitDiceRollAverage',
+                'TIDY5E.ACTOR.HitDice.Action.ApplyAverage',
               )}"
               data-tooltip
               onclick={() => context.sheet.rollFormula()}

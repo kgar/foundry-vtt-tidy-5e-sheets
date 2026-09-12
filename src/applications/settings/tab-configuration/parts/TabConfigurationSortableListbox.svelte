@@ -30,7 +30,7 @@
   {#if item.show}
     <select
       class="tab-viewers-button"
-      title={localize('TIDY5E.TabConfiguration.options.viewers')}
+      title={localize('TIDY5E.TAB.Configuration.Option.Viewers')}
       bind:value={item.visibilityLevel}
     >
       {#each visibilityLevels as option (option.key)}
@@ -59,17 +59,17 @@
   items={tabConfigEntry.tabs}
   columns={[
     {
-      title: 'TIDY5E.TabConfiguration.headers.tab',
+      title: 'TIDY5E.TAB.Configuration.Column.Tab',
       titleClasses: 'tabs-label',
       cellSnippet: listboxItemName,
     },
     {
-      title: 'TIDY5E.TabConfiguration.headers.userVisibility',
+      title: 'TIDY5E.TAB.Configuration.Column.UserVisibility',
       titleClasses: 'viewers-label',
       cellSnippet: listboxItemVisibility,
     },
     {
-      title: 'TIDY5E.TabConfiguration.headers.showTab',
+      title: 'TIDY5E.TAB.Configuration.Column.ShowTab',
       titleClasses: 'visibility-label',
       cellSnippet: listboxItemShow,
     },

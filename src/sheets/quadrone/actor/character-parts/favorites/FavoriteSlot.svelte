@@ -62,7 +62,7 @@
         {/if}
         <span class="divider color-text-gold">/</span>
         <span class="uses-max color-text-lighter">
-          {favorite.uses.max ?? localize('TIDY5E.Table.UnidentifiedPlaceholder')}
+          {favorite.uses.max ?? localize('TIDY5E.COMMON.Unidentified.Placeholder')}
         </span>
       </span>
     </span>

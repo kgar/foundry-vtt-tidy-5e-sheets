@@ -20,7 +20,7 @@
     FoundryAdapter.localize(
       rowContext.type === 'member'
         ? 'DND5E.Group.Action.Remove'
-        : 'TIDY5E.Encounter.DeletePlaceholder.Label',
+        : 'TIDY5E.ENCOUNTER.Placeholder.Action.Delete',
     ),
   );
 

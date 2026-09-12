@@ -41,7 +41,7 @@ export function getSkillRollContextOptions(
             ability: ability.label,
             skill: skill.label,
           }),
-          callback: (_target, event) =>
+          onClick: (event) =>
             app.document.rollSkill({
               skill: skillKey,
               ability: abilityKey,

@@ -150,6 +150,6 @@ export function buildMcdmPowersSettingsTab(
     sections,
     optionsGroups: [],
     defaultSections,
-    formTitle: localize('TIDY5E.ConfigureTab.Title', { tabName }),
+    formTitle: localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', { tabName }),
   };
 }

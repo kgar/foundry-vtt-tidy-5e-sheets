@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 
   let rechargeLabel = $derived(
-    localize('TIDY5E.RollRecharge.Hint', {
+    localize('TIDY5E.ITEM.Recharge.Hint', {
       rechargeLabel: item.labels?.recharge ?? '',
     }),
   );

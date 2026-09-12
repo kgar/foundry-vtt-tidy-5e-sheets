@@ -67,7 +67,6 @@ export class TidyFlags {
   static actionSection = {
     key: 'actionSection' as const,
     prop: TidyFlags.getFlagPropertyPath('actionSection'),
-    unsetProp: TidyFlags.getFlagPropertyPath('-=actionSection'),
     /** Gets the item's Action Section setting. */
     get(item: Item5e): string | undefined {
       const actionSectionValue = TidyFlags.tryGetFlag(
@@ -1067,7 +1066,7 @@ export class TidyFlags {
       delete placeholders[placeholderId];
 
       // @ts-ignore - Foundry delete operation.
-      placeholders[`-=${placeholderId}`] = null;
+      placeholders[placeholderId] = _del;
 
       return TidyFlags.placeholders.set(actor, placeholders);
     },
@@ -1106,7 +1105,6 @@ export class TidyFlags {
   static section = {
     key: 'section' as const,
     prop: TidyFlags.getFlagPropertyPath('section'),
-    unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
       const sectionValue = TidyFlags.tryGetFlag(item, TidyFlags.section.key);

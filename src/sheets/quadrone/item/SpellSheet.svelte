@@ -39,7 +39,7 @@
   );
   const pactCastableLevelText = $derived(
     isPactSpell && !isNil(actorPactLevelOrdinal)
-      ? ` (${localize('TIDY5E.ItemSheet.PactLevelCastLabel', { ordinal: actorPactLevelOrdinal })})`
+      ? ` (${localize('TIDY5E.ITEM.Spell.PactLevelCast', { ordinal: actorPactLevelOrdinal })})`
       : '',
   );
 

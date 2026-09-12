@@ -71,7 +71,7 @@
 
   // TODO: Eliminate this, if possible
   function getFallbackTitle(index: number) {
-    return localize('TIDY5E.JournalEntry.NewTitle', { number: index + 1 });
+    return localize('TIDY5E.JOURNAL.Entry.NewTitle', { number: index + 1 });
   }
 
   function edit(journalId: string) {

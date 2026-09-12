@@ -33,7 +33,7 @@
 <div class="hidden">
   <div bind:this={tooltip} class="document-list-summary-tooltip">
     <h3 class="font-title-medium color-text-default">
-      {localize('TIDY5E.AttunementItems')}
+      {localize('TIDY5E.ACTOR.Attunement.Title')}
     </h3>
     <hr />
     <ul>

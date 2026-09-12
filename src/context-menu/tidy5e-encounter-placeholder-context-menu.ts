@@ -31,9 +31,9 @@ function getEncounterPlaceholderContextOptions(
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
-      label: 'TIDY5E.Encounter.DeletePlaceholder.Label',
+      label: 'TIDY5E.ENCOUNTER.Placeholder.Action.Delete',
       icon: `<i class="fas fa-trash fa-fw"></i>`,
-      callback: async () =>
+      onClick: async () =>
         TidyFlags.placeholders.deleteEntry(encounter, placeholderId),
       visible: () =>
         encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),

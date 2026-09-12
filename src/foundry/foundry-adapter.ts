@@ -992,7 +992,7 @@ export const FoundryAdapter = {
     }
 
     try {
-      return FoundryAdapter.localize('TIDY5E.GMOnly.Message', {
+      return FoundryAdapter.localize('TIDY5E.COMMON.GMOnly.Message', {
         message: item.toJSON().name,
       });
     } catch (e) {
@@ -1290,7 +1290,7 @@ export const FoundryAdapter = {
     if (isMovedToNewSection) {
       sectionUpdate[TidyFlags[sectionProp].prop] = targetSection;
     } else if (isMovedToDefaultSection) {
-      sectionUpdate[TidyFlags[sectionProp].unsetProp] = null;
+      sectionUpdate[TidyFlags[sectionProp].prop] = _del;
     }
 
     return sectionUpdate;
@@ -1443,8 +1443,8 @@ export const FoundryAdapter = {
         action: 'DND5E.ActionAbbr',
         bonus: 'DND5E.BonusActionAbbr',
         reaction: 'DND5E.ReactionAbbr',
-        legendary: 'TIDY5E.LegendaryAbbr',
-        lair: 'TIDY5E.LairAbbr',
+        legendary: 'TIDY5E.NPC.Legendary.Abbreviation',
+        lair: 'TIDY5E.NPC.Lair.Abbreviation',
         minute: 'DND5E.TimeMinuteAbbr',
         hour: 'DND5E.TimeHourAbbr',
         day: 'DND5E.TimeDayAbbr',
