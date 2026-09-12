@@ -502,8 +502,7 @@
     }
 
     .inline-wrapped-elements {
-      margin-block-start: var(--t5e-size-3x);
-      margin-block-end: var(--t5e-size-1x);
+      margin-block: var(--t5e-size-2x) var(--t5e-size-1x);
     }
 
     .left-aligned-elements {

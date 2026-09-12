@@ -830,6 +830,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             types: new Set(['character', 'npc', 'vehicle', 'group']),
           },
         },
+        // Have to specify a tab now, otherwise it defaults to items and fails.
+        tab: 'actors',
       },
       this._detachOptions(),
     );

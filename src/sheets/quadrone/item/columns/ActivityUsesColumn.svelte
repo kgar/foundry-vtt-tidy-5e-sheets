@@ -69,7 +69,7 @@
       value={activity.uses.value}
       {@attach InputAttachments.selectOnFocus}
       data-name="uses.value"
-      class="uninput uses-value font-label-default color-text-default"
+      class="uninput uses-value font-label-medium color-text-default"
       disabled={!context.editable}
       data-item-id={activity.item.id}
       data-activity-id={activity.id}

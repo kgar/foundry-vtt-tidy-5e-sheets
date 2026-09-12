@@ -72,7 +72,7 @@
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
       data-name="system.uses.value"
-      class="uninput uses-value font-label-default color-text-default"
+      class="uninput uses-value font-label-medium color-text-default"
       disabled={!context.editable}
     />
     <span class="separator">/</span>

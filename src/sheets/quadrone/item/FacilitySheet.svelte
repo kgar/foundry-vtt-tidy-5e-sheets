@@ -189,7 +189,7 @@
         data-item-id={context.item.id}
         data-facility-id={context.item.id}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        class="facility-occupants"
+        class="occupants-list"
       >
         <h4>
           {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -219,7 +219,7 @@
         data-item-id={context.item.id}
         data-facility-id={context.item.id}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        class="facility-occupants"
+        class="occupants-list"
       >
         <h4>
           {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
@@ -249,7 +249,7 @@
         data-item-id={context.item.id}
         data-facility-id={context.item.id}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        class="facility-occupants"
+        class="occupants-list"
       >
         <h4>
           {localize('TIDY5E.Facilities.Creatures.Label')}
@@ -275,12 +275,19 @@
 {#snippet hirelingsPill()}
   <li>
     <span
+      role="region"
       class="pill centered"
       onmouseover={(ev) =>
         occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.hirelings.value ?? []),
           localize('TIDY5E.Facilities.Hirelings.Label'),
+        )}
+      onfocus={(ev) =>
+        occupantSummaryTooltip.tryShow(
+          ev,
+          Array.from(context.item.system.hirelings.value ?? []),
+          localize('DND5E.FACILITY.FIELDS.hirelings.max.label'),
         )}
     >
       <span class="text-normal">
@@ -301,12 +308,19 @@
 {#snippet defendersPill()}
   <li>
     <span
+      role="region"
       class="pill centered"
       onmouseover={(ev) =>
         occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.defenders.value ?? []),
           localize('TIDY5E.Facilities.Defenders.Label'),
+        )}
+      onfocus={(ev) =>
+        occupantSummaryTooltip.tryShow(
+          ev,
+          Array.from(context.item.system.defenders.value ?? []),
+          localize('DND5E.FACILITY.FIELDS.defenders.max.label'),
         )}
     >
       <span class="text-normal">

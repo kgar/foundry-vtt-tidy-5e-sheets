@@ -83,7 +83,7 @@
               }}
             />
           {:else}
-            <span class="uses-value font-label-default color-text-default">
+            <span class="uses-value font-label-medium color-text-default">
               {uses.value}
             </span>
           {/if}

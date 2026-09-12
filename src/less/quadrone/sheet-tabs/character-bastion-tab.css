@@ -218,6 +218,10 @@
         transition: box-shadow var(--t5e-transition-default);
       }
 
+      .facility-image svg {
+        padding: 0.125rem;
+      }
+
       .facility-header-details {
         display: flex;
         flex-direction: row;
@@ -375,7 +379,7 @@
         }
 
         .facility-header :is(.facility-image, .facility-image svg) {
-          --icon-fill: var(--t5e-component-field-background);
+          --icon-fill: var(--t5e-color-icon-disabled);
         }
       }
     }

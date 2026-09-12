@@ -190,6 +190,23 @@
     }
   }
 
+  .crew-and-passengers-wrapper {
+    padding-inline-start: var(--t5e-size-2x);
+    padding-block-start: var(--t5e-size-1x);
+
+    + .editor-rendered-content {
+      margin: 0;
+    }
+
+    .tidy-table-header-row {
+      background: var(--t5e-component-card-darker);
+    }
+  }
+
+  .crew-and-passengers-table {
+    margin-block-start: var(--t5e-size-1x);
+  }
+
   .button-reset-actions {
     position: absolute;
     top: calc(50% - 0.9375rem);
@@ -231,6 +248,14 @@
 
     .npc-score-tracker.tracker-warning {
       --t5e-text-warning: var(--t5e-color-palette-orange-55);
+    }
+  }
+
+  &.theme-dark {
+    .crew-and-passengers-wrapper {
+      .tidy-table-header-row {
+        background: rgba(255, 255, 255, 0.08);
+      }
     }
   }
 }
