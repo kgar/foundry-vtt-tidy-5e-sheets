@@ -200,6 +200,16 @@
     }
   }
 
+  .main-content .tidy-tab.features .tab-content {
+    padding-block-end: var(--t5e-size-8x);
+  }
+
+  .features-footer {
+    margin-block-start: calc(var(--t5e-size-8x) * -1);
+    z-index: 1;
+    justify-content: flex-end;
+  }
+
   /* STYLE UTILITY CLASSES
   ------------------------------------------------------------ */
   i.highlighted {
