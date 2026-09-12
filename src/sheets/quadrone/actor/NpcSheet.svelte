@@ -136,7 +136,7 @@
                     type="button"
                     class="button button-icon-only button-gold"
                     data-tooltip=""
-                    aria-label="TIDY5E.RefreshNPC"
+                    aria-label="TIDY5E.NPC.Refresh.label"
                     data-action="refreshActor"
                   >
                     <i class="fa-solid fa-arrows-rotate-reverse"></i>

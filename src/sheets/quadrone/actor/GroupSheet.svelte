@@ -97,10 +97,10 @@
               class="button long-rest button-gold flexshrink"
               data-action="refreshActor"
               data-type="npc"
-              data-tooltip={localize('TIDY5E.RefreshNPC')}
+              data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
             >
               <i class="fas fa-arrows-rotate-reverse"></i>
-              {localize('TIDY5E.RefreshGroupNPCs')}
+              {localize('TIDY5E.NPC.Refresh.Group.label')}
             </button>
           {/if}
           {#each Object.entries(context.config.restTypes) as [key, rest]}

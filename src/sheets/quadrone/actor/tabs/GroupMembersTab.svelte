@@ -147,8 +147,8 @@
                     role="button"
                     tabindex="0"
                     class="tidy-table-button"
-                    aria-label={localize('TIDY5E.RefreshGroupNPCs')}
-                    data-tooltip={localize('TIDY5E.RefreshNPC')}
+                    aria-label={localize('TIDY5E.NPC.Refresh.Group.label')}
+                    data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
                     data-action="refreshActor"
                     data-type="npc"
                   >
@@ -210,10 +210,10 @@
           class="button long-rest button-gold flexshrink"
           data-action="refreshActor"
           data-type="npc"
-          data-tooltip={localize('TIDY5E.RefreshNPC')}
+          data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
         >
           <i class="fas fa-arrows-rotate-reverse"></i>
-          {localize('TIDY5E.RefreshNPC')}
+          {localize('TIDY5E.NPC.Refresh.label')}
         </button>
         {/if}
       {/if}
