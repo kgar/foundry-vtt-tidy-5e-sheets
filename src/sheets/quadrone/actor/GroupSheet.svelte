@@ -51,8 +51,8 @@
             data-tooltip={context.actor.name}
           >
             <!-- svelte-ignore a11y_missing_attribute -->
-            <a 
-              data-action="copyInnerText" 
+            <a
+              data-action="copyInnerText"
               class="cursor highlight-on-hover"
               role="button"
               tabindex="0"
@@ -90,19 +90,6 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
-          <!-- kgar: option 1. It works here, but it forces wrapping in most cases, and it doesn't apply to the whole sheet, so I don't think it fits here. -->
-          {#if FoundryAdapter.userIsGm()}
-            <button
-              type="button"
-              class="button long-rest button-gold flexshrink"
-              data-action="refreshActor"
-              data-type="npc"
-              data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
-            >
-              <i class="fas fa-arrows-rotate-reverse"></i>
-              {localize('TIDY5E.NPC.Refresh.Group.label')}
-            </button>
-          {/if}
           {#each Object.entries(context.config.restTypes) as [key, rest]}
             <button
               type="button"

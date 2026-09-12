@@ -202,20 +202,6 @@
             {/each}
           {/snippet}
         </TidyTable>
-        
-        <!-- kgar: option 3, probably the most obvious. I'd recommend this over the heade.r -->
-        {#if section.key === CONSTANTS.SHEET_TYPE_NPC}
-          <button
-          type="button"
-          class="button long-rest button-gold flexshrink"
-          data-action="refreshActor"
-          data-type="npc"
-          data-tooltip={localize('TIDY5E.NPC.Refresh.label')}
-        >
-          <i class="fas fa-arrows-rotate-reverse"></i>
-          {localize('TIDY5E.NPC.Refresh.label')}
-        </button>
-        {/if}
       {/if}
     {/each}
 
