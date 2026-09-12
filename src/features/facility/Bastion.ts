@@ -427,6 +427,18 @@ export function getFacilitiesWithOpenSlot(
   });
 }
 
+/** Replace a facility occupant, such as a broken link, in the same slot. */
+export function replaceOccupant(
+  facility: Item5e,
+  prop: string,
+  index: number,
+  actorUuid: string,
+): Promise<Item5e> {
+  const value = [...foundry.utils.getProperty(facility, prop).value];
+  value[index] = actorUuid;
+  return facility.update({ [`${prop}.value`]: value });
+}
+
 /** Deleting an occupant from a facility. */
 export function deleteOccupant(
   facility: Item5e,

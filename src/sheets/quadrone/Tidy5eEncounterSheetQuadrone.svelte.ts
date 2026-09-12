@@ -707,6 +707,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
             types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
           },
         },
+        // Have to specify a tab now, otherwise it defaults to items and fails.
+        tab: 'monsters',
       },
       this._detachOptions(),
     );

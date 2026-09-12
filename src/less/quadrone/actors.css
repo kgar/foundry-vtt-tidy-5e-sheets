@@ -845,6 +845,10 @@
         flex: 0 1 fit-content;
       }
     }
+
+    .mastery {
+      color: var(--t5e-theme-color-lighter);
+    }
   }
 
   .traits-actor-size,

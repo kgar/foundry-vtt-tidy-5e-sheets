@@ -24,8 +24,9 @@
     CONSTANTS.SVELTE_CONTEXT.HOVERED_FACILITY_OCCUPANT,
   );
 
+  // Broken links always offer their menu, so they can be replaced or removed.
   const linkAttributes = $derived(
-    context.unlocked
+    context.unlocked || (context.editable && !occupant)
       ? {
           'data-action': 'showContextMenu',
           'data-target-selector': '[data-actor-uuid]',

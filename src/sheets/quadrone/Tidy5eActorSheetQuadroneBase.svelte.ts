@@ -771,7 +771,7 @@ export function getTidy5eActorSheetQuadroneBase<
           traits.weapon.push(value);
         }
         (value.icons ??= []).push({
-          icon: 'fa-solid fa-circle-star color-icon-theme-highlight mastery',
+          icon: 'fa-solid fa-circle-star mastery',
           label: game.i18n.format('DND5E.WEAPON.Mastery.Label'),
         });
       }

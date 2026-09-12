@@ -24,6 +24,7 @@ import { getPercentage } from 'src/utils/numbers';
 import type {
   ActiveEffect5e,
   ActiveEffectSection,
+  Actor5e,
   GroupableSelectOption,
   ActiveEffectContext,
   DocumentSheetQuadroneContext,
@@ -49,6 +50,7 @@ import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementC
 import { EffectRowActionRuntime } from 'src/runtime/table-row-actions/EffectRowActionRuntime.svelte';
 import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-actions/ItemAdvancementRowActions.svelte';
 import * as Bastions from 'src/features/facility/Bastion';
+import * as VehicleCrew from 'src/features/vehicle/VehicleCrew';
 import { error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
 import { Rarity } from 'src/features/rarity/Rarity';
@@ -107,6 +109,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     },
     actions: {
       addOccupant: Tidy5eItemSheetQuadrone.#addOccupant,
+      assignCrew: Tidy5eItemSheetQuadrone.#assignCrew,
       showIcon: Tidy5eItemSheetQuadrone.#showIcon,
       showConfiguration: Tidy5eItemSheetQuadrone.#showConfiguration,
     },
@@ -635,6 +638,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       );
     }
 
+    // Vehicle Crew
+    if (this.item.system.isMountable) {
+      context.vehicleCrew = await VehicleCrew.prepareCrewAssignments(this.item);
+    }
+
     if (
       type?.value === 'special' &&
       (order === 'craft' || order === 'harvest')
@@ -1145,6 +1153,56 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     await this.addOccupant(event, this.item, facilityType, prop);
   }
 
+  /* -------------------------------------------- */
+
+  static async #assignCrew(this: Tidy5eItemSheetQuadrone) {
+    if (!this.isEditable) {
+      return;
+    }
+
+    await this.browseAssignActor(this.item);
+  }
+
+  /**
+   * Choose an actor from the compendium browser.
+   */
+  async browseAssignActor(item: Item5e, replaceUuid?: string) {
+    const newCrewmateUuid =
+      await dnd5e.applications.CompendiumBrowser.selectOne(
+        {
+          filters: {
+            locked: {
+              documentClass: 'Actor',
+              types: new Set(['npc']),
+            },
+          },
+          // Have to specify a tab now, otherwise it defaults to items and fails.
+          tab: 'monsters',
+        },
+        this._detachOptions(),
+      );
+
+    if (!newCrewmateUuid) {
+      return;
+    }
+
+    if (replaceUuid) {
+      await VehicleCrew.replaceCrewMember(item, replaceUuid, newCrewmateUuid);
+    } else {
+      await VehicleCrew.assignCrewMember(item, newCrewmateUuid);
+    }
+  }
+
+  async _unassignCrew(memberUuid: string, itemUuid: string) {
+    const item = await fromUuid(itemUuid);
+
+    if (!item) {
+      return;
+    }
+
+    await VehicleCrew.unassignCrewMember(item, memberUuid);
+  }
+
   static async #showConfiguration(
     this: Tidy5eItemSheetQuadrone,
     _event: Event,
@@ -1271,6 +1329,19 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     }
 
     return super._onDrop(event);
+  }
+
+  /* -------------------------------------------- */
+
+  async _onDropActor(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    document: Actor5e,
+  ): Promise<any> {
+    if (!event.target.closest('[data-crew-list]') || !document.uuid) {
+      return await super._onDropActor(event, document);
+    }
+
+    return await VehicleCrew.assignCrewMember(this.item, document.uuid);
   }
 
   /* -------------------------------------------- */

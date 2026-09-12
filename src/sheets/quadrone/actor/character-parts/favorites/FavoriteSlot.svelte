@@ -51,12 +51,12 @@
             document={context.actor}
             field={favorite.uses.field}
             enableDeltaChanges={true}
-            class="uninput uses-value font-label-default color-text-default"
+            class="uninput uses-value font-label-medium color-text-default"
             value={favorite.uses.value}
             selectOnFocus={true}
           />
         {:else}
-          <span class="uses-value font-label-default color-text-default">
+          <span class="uses-value font-label-medium color-text-default">
             {favorite.uses.value}
           </span>
         {/if}

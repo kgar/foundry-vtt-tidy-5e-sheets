@@ -933,8 +933,6 @@
   }
 
   /* Inline Containers */
-  .tidy-table-row ~ .expandable .expandable-child-animation-wrapper {}
-
   .tidy-table-row ~ .expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
@@ -1139,6 +1137,23 @@
       max-width: var(--t5e-field-size-default);
       text-align: right;
       padding-block-end: var(--t5e-size-1);
+    }
+  }
+
+  .tidy-table-header-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+  }
+
+  .tidy-table-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+
+    .command {
+      opacity: 0;
+      transition: opacity var(--t5e-transition-default);
+    }
+
+    &:hover .command {
+      opacity: 1;
     }
   }
 
