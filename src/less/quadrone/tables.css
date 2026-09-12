@@ -818,8 +818,6 @@
       background: none;
     }
 
-    > span.uses-value {}
-
     > .uses-value {
       font: var(--t5e-font-label-medium);
       line-height: 1rem;
