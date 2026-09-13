@@ -16,7 +16,7 @@
   let title = $state('');
 
   export async function tryShow(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
+    event: Event & { currentTarget: EventTarget & HTMLElement },
     uuids: string[],
     tooltipTitle: string,
     /**

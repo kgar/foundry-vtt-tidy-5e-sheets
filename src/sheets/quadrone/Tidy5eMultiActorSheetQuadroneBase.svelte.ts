@@ -366,7 +366,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       actor: any,
       senses: Map<string, MeasurableGroupTrait<number>>,
     ) {
-      let unitsKey = actor.system.attributes.movement.units;
+      let unitsKey = actor.system.attributes.senses.units;
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
       let units = unitsConfig?.abbreviation ?? unitsKey;
 

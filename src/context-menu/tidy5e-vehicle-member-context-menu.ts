@@ -1,11 +1,19 @@
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry, CrewArea5e } from 'src/foundry/foundry.types';
+import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
+
+/**
+ * Crew can be managed from the vehicle sheet, as well as from the sheet of a
+ * mountable item which has its own crew roster.
+ */
+type VehicleMemberContextMenuApp =
+  Tidy5eVehicleSheetQuadrone | Tidy5eItemSheetQuadrone;
 
 export function configureVehicleMemberContextMenu(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone,
+  app: VehicleMemberContextMenuApp,
 ) {
   ui.context.menuItems = getVehicleMemberContextOptionsQuadrone(element, app);
 
@@ -27,7 +35,7 @@ export function configureVehicleMemberContextMenu(
  */
 function getVehicleMemberContextOptionsQuadrone(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone,
+  app: VehicleMemberContextMenuApp,
 ) {
   const vehicleItemId = getVehicleItemId(element);
 
@@ -36,9 +44,9 @@ function getVehicleMemberContextOptionsQuadrone(
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
     : area === 'crew' || area === 'passengers'
-      ? getCrewMemberOptions(element, app)
+      ? getCrewMemberOptions(element, app as Tidy5eVehicleSheetQuadrone)
       : area === 'draft'
-        ? getDraftMemberOptions(element, app)
+        ? getDraftMemberOptions(element, app as Tidy5eVehicleSheetQuadrone)
         : [];
 
   return options;
@@ -56,14 +64,20 @@ function getVehicleItemId(element: HTMLElement) {
 
 function getVehicleItemMemberOptions(
   element: HTMLElement,
-  app: Tidy5eVehicleSheetQuadrone,
+  app: VehicleMemberContextMenuApp,
   vehicleItemId: string,
 ): ContextMenuEntry[] {
   const brokenLink = !!element.closest('.broken');
   const empty = !!element.closest('.empty');
   const memberUuid = element.closest('[data-uuid]')?.getAttribute('data-uuid');
 
-  const item = app.document.items.get(vehicleItemId);
+  // Either a vehicle or the mountable item itself can summon this menu.
+  const item =
+    app.document.items?.get(vehicleItemId) ??
+    (app.document.id === vehicleItemId ? app.document : undefined);
+
+  // The owning actor governs permissions, when there is one.
+  const permissionsDocument = app.document.actor ?? app.document;
 
   if (!item) {
     return [];
@@ -80,11 +94,15 @@ function getVehicleItemMemberOptions(
       condition: () =>
         !empty &&
         !brokenLink &&
-        app.actor.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(app.actor),
+        permissionsDocument.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(permissionsDocument),
     },
     {
-      name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      name: brokenLink
+        ? FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+            name: FoundryAdapter.localize('TIDY5E.BrokenLink'),
+          })
+        : FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       condition: () => !!memberUuid,
       icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
@@ -97,9 +115,14 @@ function getVehicleItemMemberOptions(
       name: FoundryAdapter.localize('TIDY5E.AddSpecific', {
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
       }),
-      condition: () => empty,
+      // A broken link is replaced in place by the chosen actor.
+      condition: () => empty || brokenLink,
       icon: '<i class="fa-solid fa-book-atlas"></i>',
-      callback: () => app.browseAssignActor(item),
+      callback: () =>
+        app.browseAssignActor(
+          item,
+          brokenLink ? (memberUuid ?? undefined) : undefined,
+        ),
     },
   ];
 }
@@ -213,9 +236,7 @@ function getCrewMemberOptions(
     ...assignableItemOptions,
     {
       name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
-        name: FoundryAdapter.localize(
-          'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
-        ),
+        name: FoundryAdapter.localize('TIDY5E.Vehicle.Section.Crew.Unassigned.Label'),
       }),
       icon: '<i class="fa-solid fa-trash"></i>',
       condition: () => area === 'crew' && unassigned && canChange,

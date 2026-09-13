@@ -10,6 +10,7 @@ import type {
   GroupableSelectOption,
   InventorySection,
   Tab,
+  OccupantContext,
   TidySectionBase,
   Utilities,
 } from './types';
@@ -278,6 +279,8 @@ export type ItemSheetQuadroneContext = {
     fields: any;
     prefix: string;
   }[];
+  /** The crew slots of a mountable item. */
+  vehicleCrew?: OccupantContext[];
   tabs: Tab[];
 } & DocumentSheetV2Context;
 

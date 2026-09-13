@@ -69,7 +69,7 @@
 
   color: var(--t5e-color-text-default);
   /* Sheet Body Typography */
-  font-family: var(--font-family-default, var(--t5e-font-roboto-condensed));
+  font-family: var(--t5e-font-family-default, var(--t5e-font-roboto-condensed));
   font-size: var(--font-size-default, 0.8125rem);
   font-style: normal;
   font-weight: var(--font-weight-default);
@@ -105,14 +105,15 @@
       &:active {
         color: var(--t5e-theme-color-foreground);
         border-radius: 100%;
-        background: rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0.5);
+        border-color: transparent;
       }
 
       /* TODO: Figure out how to make the header UUID control use a copy cursor. */
     }
   }
 
-  &.theme-basic {
+  &.theme-basic.theme-light {
     .window-header {
       button.header-control {
         color: var(--t5e-text-icon-lighter);
@@ -121,6 +122,7 @@
         &:focus-within,
         &:active {
           color: var(--t5e-color-icon-default);
+          background: rgba(0, 0, 0, 0.12);
         }
       }
     }
@@ -652,16 +654,6 @@
       button.header-control:focus-within,
       button.header-control:active {
         background: rgba(0, 0, 0, 1);
-        border-color: transparent;
-      }
-    }
-
-    .window-header {
-
-      button.header-control:hover,
-      button.header-control:focus-within,
-      button.header-control:active {
-        background: rgba(0, 0, 0, 0.5);
         border-color: transparent;
       }
     }

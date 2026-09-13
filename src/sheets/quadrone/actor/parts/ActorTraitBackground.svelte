@@ -42,7 +42,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize('DND5E.DescriptionView', {
+          aria-label={localize('TIDY5E.DescriptionView', {
             description: localize('TYPES.Item.background'),
           })}
           data-keyboard-focus

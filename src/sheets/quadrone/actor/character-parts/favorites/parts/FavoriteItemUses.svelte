@@ -1,7 +1,9 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -11,10 +13,16 @@
   let { favorite, uses }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
+  const localize = FoundryAdapter.localize;
+  const concealed = $derived(
+    ItemUtils.isConcealed(favorite.item, { unlocked: context.unlocked }),
+  );
 </script>
 
 <span class="inline-uses">
-  {#if context.owner}
+  {#if concealed}
+    <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
+  {:else if context.owner}
     <input
       type="text"
       id={`favorite-item-${favorite.item.item?.id}`}
@@ -25,12 +33,14 @@
       {@attach InputAttachments.selectOnFocus}
     />
   {:else}
-    <span class="uses-value color-text-default">
+    <span class="uses-value font-label-medium color-text-default">
       {uses.value}
     </span>
   {/if}
-  <span class="divider color-text-gold">/</span>
-  <span class="uses-max color-text-lighter">
-    {uses.max}
-  </span>
+  {#if !concealed}
+    <span class="separator">/</span>
+    <span class="uses-max font-default-medium color-text-default">
+      {uses.max}
+    </span>
+  {/if}
 </span>

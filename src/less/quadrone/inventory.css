@@ -1,7 +1,5 @@
 .tidy5e-sheet:is(.quadrone) {
-
   .tidy-table {
-
     .item-price {
       flex: 1;
       min-width: 0;
@@ -19,11 +17,7 @@
 
       .label {
         display: flex;
-        gap: 0.125rem;
-
-        .separator {
-          color: var(--t5e-color-text-gold);
-        }
+        column-gap: 0.25rem;
       }
     }
 

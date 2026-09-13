@@ -17,9 +17,11 @@
 
 {#if max !== undefined || value > 0}
   <span class={['inline-crew-count', { 'crew-warning': value > max }]}>
-    <span class="uses-value">
+    <span class="uses-value font-label-medium color-text-default">
       {value}
-    </span>/<span class="uses-max color-text-lighter">{max ?? '—'}</span>
+    </span>
+    <span class="separator">/</span>
+    <span class="uses-max font-default-medium color-text-default">{max ?? '—'}</span>
   </span>
 {:else}
   <span class="uses-max font-default-medium color-text-disabled"

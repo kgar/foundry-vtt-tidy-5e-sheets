@@ -384,7 +384,7 @@
     }
 
     input[type="text"] {
-      font-family: var(--font-family-default);
+      font-family: var(--t5e-font-family-default);
     }
   }
 
@@ -808,18 +808,33 @@
     display: flex;
     align-items: center;
 
+    > span,
+    > .divider,
+    > .uses-max {
+      line-height: 1rem;
+    }
+
     input[type="text"]:disabled {
       background: none;
     }
 
     > .uses-value {
-      font: var(--t5e-font-default-medium);
-      font-size: var(--font-size-13);
-      text-align: right;
+      font: var(--t5e-font-label-medium);
+      line-height: 1rem;
+      text-align: end;
       flex: 1;
     }
 
     > input[type="text"].uses-value {
+      /* Keep line-height locked to height. When an input's box is taller than
+         its line box, Chromium centers the inner editor within that slack
+         differently than a sibling span's half-leading resolves, so the value
+         renders ~1px above the divider and max -- visible in Chromium at
+         devicePixelRatio 1 only, never in Firefox. Matching the two leaves no
+         slack to mis-center. Do not set height without setting line-height. */
+      align-self: center;
+      height: var(--t5e-field-size-default);
+      line-height: var(--t5e-field-size-default);
       padding-inline-end: var(--t5e-size-halfx);
       margin-inline-end: calc(var(--t5e-size-1) * -1);
 
@@ -836,7 +851,8 @@
     }
 
     > .uses-max {
-      text-align: left;
+      margin-inline-start: var(--t5e-size-1);
+      text-align: start;
       flex: 1;
     }
   }
@@ -917,8 +933,6 @@
   }
 
   /* Inline Containers */
-  .tidy-table-row ~ .expandable .expandable-child-animation-wrapper {}
-
   .tidy-table-row ~ .expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
@@ -945,6 +959,106 @@
 
     .tidy-table-header-row {
       background: var(--t5e-component-card-darker);
+    }
+  }
+
+  secret-block,
+  .secret-block {
+    --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(225, 218, 216) 16%);
+    --color-secret-border: var(--t5e-color-palette-red-60);
+    border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 8%) 1 1 1 0;
+    border-style: solid;
+    border-width: var(--t5e-size-1) var(--t5e-size-1) var(--t5e-size-1) 0;
+    background: var(--color-secret-bg);
+    display: block;
+    margin-inline-start: calc(var(--t5e-size-2x) * -1);
+    padding-inline-start: var(--t5e-size-2x);
+    margin-block-start: var(--t5e-size-2x);
+    padding-block: 0;
+    position: relative;
+
+    .reveal,
+    .gm-only {
+      border-color: var(--color-secret-border);
+      border-radius: 0 0 0 0.125rem;
+      border-style: solid;
+      border-width: 0 0 var(--t5e-size-1) var(--t5e-size-1);
+      height: auto;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      min-height: unset;
+      padding: var(--t5e-size-1x) var(--t5e-size-2x);
+      position: absolute;
+
+      & + * {
+        margin-inline-end: var(--t5e-size-16x);
+      }
+    }
+
+    .gm-only {
+      background-color: oklch(from var(--t5e-color-palette-red-45) l c h / 0.24);
+      color: var(--t5e-color-palette-red-31);
+      font: var(--t5e-font-label-small);
+      text-transform: uppercase;
+    }
+
+    .reveal {
+      background: var(--t5e-component-field-background);
+      color: var(--t5e-color-text-default);
+      font: var(--t5e-font-label-medium);
+      text-transform: none;
+      outline-width: var(--t5e-size-1);
+
+      &:is(:hover, :focus, :active) {
+        background: var(--t5e-component-field-background-hover);
+        border-color: transparent;
+        outline: var(--t5e-size-1) solid var(--t5e-component-field-border-hover);
+        box-shadow: var(--button-shadow);
+      }
+    }
+  }
+
+  secret-block {
+    --color-secret-bg: linear-gradient(to right, transparent 0%, rgb(207, 197, 193) 16%);
+    margin-block: var(--t5e-size-3x) var(--t5e-size-2x);
+
+    &:has(> .revealed) {
+      --color-secret-bg: linear-gradient(to right, transparent 8%, rgb(225, 218, 216) 56%);
+      --color-secret-border: var(--t5e-color-gold);
+      border-image: linear-gradient(to right, transparent 0%, var(--color-secret-border) 72%) 1 1 1 0;
+    }
+
+    .secret {
+      background: none;
+      border: none;
+      padding-inline: 0;
+      transition: all var(--t5e-transition-default);
+
+      &:not(.revealed) > *:not(.reveal) {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      > :not(.reveal, .gm-only):first-child {
+        margin-block-start: 0;
+      }
+    }
+  }
+
+  .secret-block {
+    padding-block: var(--t5e-size-1x) var(--t5e-size-2x);
+    padding-inline-end: var(--t5e-size-2x);
+
+    &.gm-secret {
+      padding-block-end: 0;
+
+      &.inline-content-view {
+        background: var(--color-secret-bg);
+      }
+
+      > .inline-container-view {
+        margin-block-start: var(--t5e-size-5x);
+        margin-inline-end: 0;
+      }
     }
   }
 
@@ -1023,6 +1137,23 @@
       max-width: var(--t5e-field-size-default);
       text-align: right;
       padding-block-end: var(--t5e-size-1);
+    }
+  }
+
+  .tidy-table-header-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+  }
+
+  .tidy-table-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+
+    .command {
+      opacity: 0;
+      transition: opacity var(--t5e-transition-default);
+    }
+
+    &:hover .command {
+      opacity: 1;
     }
   }
 
@@ -1131,9 +1262,15 @@
       }
 
       &.advancement-item {
-        .tidy-table-row-use-button img {
-          &[src$='.svg'] {
-            filter: invert(78%) sepia(21%) saturate(544%) hue-rotate(2deg) brightness(88%) contrast(83%);
+        .tidy-table-row-use-button {
+          img {
+            &[src$='.svg'] {
+              filter: invert(78%) sepia(21%) saturate(544%) hue-rotate(2deg) brightness(88%) contrast(83%);
+            }
+          }
+
+          &:is(:hover, :focus-within, :active) img {
+            opacity: 0.8;
           }
         }
       }
@@ -1160,6 +1297,26 @@
 
       .tidy-table-row-container {
         background: var(--t5e-component-card-default);
+      }
+    }
+
+    secret-block,
+    .secret-block {
+      --color-secret-bg: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 16%);
+      --color-secret-border: var(--t5e-color-palette-red-45);
+
+      .gm-only {
+        background-color: var(--t5e-color-palette-red-27);
+        color: var(--t5e-color-text-default);
+      }
+
+      &:has(> .revealed) {
+        --color-secret-bg: linear-gradient(to right, transparent 8%, rgba(0, 0, 0, 0.4) 48%);
+        --color-secret-border: var(--t5e-color-gold);
+
+        .gm-only {
+          border-color: var(--color-secret-border);
+        }
       }
     }
   }

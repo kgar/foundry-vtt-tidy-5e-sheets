@@ -32,6 +32,10 @@
   "TIDY5E.AddCustom": "Add Custom {name}",
   "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
   "TIDY5E.RemoveSpecific": "Remove {name}",
+  "TIDY5E.IncreaseSpecific": "Increase {name}",
+  "TIDY5E.DecreaseSpecific": "Decrease {name}",
+  "TIDY5E.Increase": "Increase",
+  "TIDY5E.Decrease": "Decrease",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",
@@ -135,8 +139,6 @@
   "TIDY5E.ContextMenuActionAssignToEntity": "Assign to {entityName}",
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
-  "TIDY5E.InspirationAdd": "Add Inspiration",
-  "TIDY5E.InspirationRemove": "Remove Inspiration",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
@@ -895,8 +897,7 @@
   },
   "TIDY5E.Settings.GlobalCustomSections": {
     "name": "Global Custom Sections",
-    "hint": "World custom sections which can be configured for various purposes. Global Custom Sections will always be included in the Section Selector.",
-    "AddSection": "Add Section"
+    "hint": "World custom sections which can be configured for various purposes. Global Custom Sections will always be included in the Section Selector."
   },
   "TIDY5E.Settings.ShowTooltipCondition": {
     "name": "Show system Condition tooltips"
@@ -1127,14 +1128,13 @@
     "CombatantsSection.Title": "Combatants",
     "Combat.IncludeInCombat.Tooltip": "Include in combat activities",
     "Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
-    "AddMember.Label": "Add Member",
     "AddPlaceholderToCombatTracker.Label": "Add to Current Encounter as Placeholder",
+    "Placeholder": "Placeholder",
     "AddPlaceholder.Label": "Create Combat Placeholder",
     "DeletePlaceholder.Label": "Delete Placeholder",
     "DifficultyTarget.Label": "Difficulty Target",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
-    "NewPlaceholder.Name": "New Placeholder",
     "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
     "AddCombatants.MustHaveEncounter.Message": "Must have an encounter selected to add to encounter tracker",
     "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",
@@ -1158,5 +1158,9 @@
       "none": "No contamination or symptoms."
     }
   },
-  "TIDY5E.Table.UnidentifiedPlaceholder": "?"
+  "TIDY5E.Table.UnidentifiedPlaceholder": "?",
+  "TIDY5E.ActiveEffectOverrideWarning": "This value is being modified by an Active Effect and cannot be edited.",
+  "TIDY5E.DescriptionView": "View {description}",
+  "TIDY5E.ArmorClassMotionless": "Motionless",
+  "TIDY5E.CopyToClipboard": "Copy to Clipboard"
 }

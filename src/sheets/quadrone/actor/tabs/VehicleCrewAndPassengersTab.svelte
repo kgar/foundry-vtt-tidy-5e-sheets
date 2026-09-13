@@ -54,19 +54,19 @@
             {localize('DND5E.VEHICLE.FIELDS.crew.max.label')}
           </span>
         </div>
-        <span class="inline-uses color-text-default">
+        <span class="inline-uses">
           <span
             class={[
-              'uses-value',
+              'uses-value font-label-large color-text-default',
               { diminished: context.system.crew.value.length < 1 },
             ]}
           >
             {context.system.crew.value.length}
           </span>
-          <span class="divider color-text-gold-emphasis">/</span>
+          <span class="separator">/</span>
           <TextInputQuadrone
             class={[
-              'uses-max',
+              'uses-max font-label-large color-text-default align-start',
               { uninput: !context.unlocked },
               { diminished: context.system.crew.max < 1 },
             ]}
@@ -77,7 +77,12 @@
           />
         </span>
         {#if context.crewBrokenLinks.length && context.editable}
-          <a data-action="removeBrokenLinks">
+          <!-- svelte-ignore a11y_missing_attribute -->
+          <a
+            role="button"
+            tabindex="0"
+            data-action="removeBrokenLinks"
+          >
             <i class="fa-solid fa-link-broken"></i>
             {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
               value: context.crewBrokenLinks.length,
@@ -122,19 +127,19 @@
             {localize('DND5E.VEHICLE.FIELDS.passengers.max.label')}
           </span>
         </div>
-        <span class="inline-uses color-text-default">
+        <span class="inline-uses">
           <span
             class={[
-              'uses-value',
+              'uses-value font-label-large color-text-default',
               { diminished: context.system.passengers.value.length < 1 },
             ]}
           >
             {context.system.passengers.value.length}
           </span>
-          <span class="divider color-text-gold-emphasis">/</span>
+          <span class="separator">/</span>
           <TextInputQuadrone
             class={[
-              'uses-max',
+              'uses-max font-label-large color-text-default align-start',
               { uninput: !context.unlocked },
               { diminished: context.system.passengers.max < 1 },
             ]}
@@ -145,7 +150,12 @@
           />
         </span>
         {#if context.passengerBrokenLinks.length && context.editable}
-          <a data-action="removeBrokenLinks">
+          <!-- svelte-ignore a11y_missing_attribute -->
+          <a
+            role="button"
+            tabindex="0"
+            data-action="removeBrokenLinks"
+          >
             <i class="fa-solid fa-link-broken"></i>
             {localize('TIDY5E.Vehicle.RemoveBrokenLinks', {
               value: context.passengerBrokenLinks.length,

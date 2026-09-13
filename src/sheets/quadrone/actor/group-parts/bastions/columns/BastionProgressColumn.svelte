@@ -37,12 +37,13 @@
     data-tooltip={localize('DND5E.TimeDay')}
   >
     <div class="label">
-      <span class="counter">
-        <span class="value font-data-medium">{progress.value}</span><span
-          class="separator">&sol;</span
-        ><span class="max font-label-medium color-text-lighter"
+      <span class="flexrow counter">
+        <span class="value font-label-medium">{progress.value}</span><span
+          class="separator">/</span
+        ><span class="max font-default-medium"
           >{progress.max}</span
         >
+        <span class="units font-default-medium color-text-lighter lowercase">{localize('DND5E.TimeDay')}</span>
       </span>
     </div>
   </div>

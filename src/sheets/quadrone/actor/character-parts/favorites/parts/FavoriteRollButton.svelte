@@ -84,7 +84,7 @@
       </span>
       <span
         class={[
-          'subtitle flexrow color-text-lighter font-default-medium',
+          'subtitle flexrow color-text-lighter font-default-small',
           { hidden: !showSubtitle },
         ]}
         bind:this={theSubtitle}

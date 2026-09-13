@@ -32,7 +32,10 @@
 </script>
 
 {#if isConcentration}
+  <!-- svelte-ignore a11y_missing_attribute -->
   <a
+    role="button"
+    tabindex="0"
     class="tidy-table-button"
     data-action="toggle"
     data-tooltip={'DND5E.ConcentrationBreak'}
@@ -40,7 +43,11 @@
     <Dnd5eIcon src={`systems/dnd5e/icons/svg/break-concentration.svg`} />
   </a>
 {:else}
+  <!-- svelte-ignore a11y_missing_attribute -->
+   <!-- svelte-ignore a11y_consider_explicit_label -->
   <a
+    role="button"
+    tabindex="0"
     class={[
       'tidy-table-button tidy-table-toggle',
       { disabled: !context.editable },

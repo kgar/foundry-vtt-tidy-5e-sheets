@@ -14,6 +14,8 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import TransferCurrencyButton from 'src/components/buttons/TransferCurrencyButton.svelte';
+  import { Container } from 'src/features/containers/Container';
+  import { tryGetSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     container: Item5e;
@@ -33,6 +35,14 @@
     sheetDocument,
   }: Props = $props();
 
+  // Get context so that we can check the sheet and see if container content should be shown.
+  const sheetContext = $derived(tryGetSheetContext<{ unlocked?: boolean }>());
+  const contentsVisibility = $derived(
+    Container.getContentsVisibility(container, {
+      unlocked: sheetContext?.unlocked === true,
+    }),
+  );
+
   let currencies = $derived(containerContents.currencies);
 
   let toggleServiceMap = $derived(inlineToggleService.map);
@@ -42,6 +52,7 @@
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
+  let localize = FoundryAdapter.localize;
 
   async function onDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLElement },
@@ -93,8 +104,20 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
   deferRendering
 >
-  <div class="inline-content-view full-height" data-item-id={container.id}>
+  {#if contentsVisibility !== 'hidden'}
+  <div
+    class={['inline-content-view full-height', contentsVisibility === 'gmSecret' ? 'secret-block gm-secret' : '']}
+    data-item-id={container.id}
+  >
+    {#if contentsVisibility === 'gmSecret'}
+      <div class="gm-only">
+        {localize(
+          'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+        )}
+      </div>
+    {/if}   
     <div
+      role="region"
       class="flex-column extra-small-gap flex-1 inline-container-view"
       data-tidy-container-id={container.id}
       ondrop={onDrop}
@@ -146,4 +169,9 @@
       />
     </div>
   </div>
+  {:else}
+    <div class="inventory-empty empty-state-container color-text-lightest">
+      <p>{localize('DND5E.Unidentified.Notice')}</p>
+    </div>
+  {/if}
 </ExpandableContainer>

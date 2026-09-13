@@ -25,7 +25,7 @@
     }),
   );
 
-  function onRechargeClicked(ev: MouseEvent) {
+  function onRechargeClicked(ev: MouseEvent | KeyboardEvent) {
     ev.shiftKey
       ? item.update({ ['system.uses.spent']: 0 })
       : item.system.uses?.rollRecharge({ apply: true, event: ev });
@@ -38,14 +38,23 @@
 
 {#if item.hasLimitedUses && !conceal}
   {#if item.hasRecharge && item.isOnCooldown}
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
+      role="button" 
+      tabindex="0"
       class={['item-list-button', { disabled: !item.isOwner }]}
       data-tooltip=""
       aria-label={rechargeLabel}
       onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
+      onkeydown={(ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          item.isOwner && onRechargeClicked(ev);
+        }
+      }}
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
-      <span class="recharge-range-text text-data">
+      <span class="recharge-range-text font-label-medium">
         {rechargeRange}
       </span>
     </a>
@@ -54,7 +63,7 @@
       {#if item.system.uses.value > 1}
         <span>{item.system.uses.value}</span>
       {/if}
-      <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
+      <i class="fas fa-bolt color-text-gold-emphasis" data-tooltip={localize('DND5E.Charged')}></i>
     </span>
   {:else}
     <input
@@ -63,11 +72,11 @@
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
       data-name="system.uses.value"
-      class="uninput uses-value color-text-default"
+      class="uninput uses-value font-label-medium color-text-default"
       disabled={!context.editable}
     />
-    <span class="divider color-text-gold">/</span>
-    <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
+    <span class="separator">/</span>
+    <span class="uses-max font-default-medium color-text-default">{item.system.uses.max}</span>
   {/if}
 {:else if item.system.linkedActivity}
   {const ctx = $derived(

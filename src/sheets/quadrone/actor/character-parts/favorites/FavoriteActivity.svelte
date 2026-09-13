@@ -83,12 +83,12 @@
               }}
             />
           {:else}
-            <span class="uses-value color-text-default">
+            <span class="uses-value font-label-medium color-text-default">
               {uses.value}
             </span>
           {/if}
-          <span class="divider color-text-gold">/</span>
-          <span class="uses-max color-text-lighter">
+          <span class="separator">/</span>
+          <span class="uses-max font-default-medium color-text-default">
             {uses.max}
           </span>
         </span>

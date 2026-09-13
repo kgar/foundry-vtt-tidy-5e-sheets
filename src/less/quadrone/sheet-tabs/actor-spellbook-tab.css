@@ -7,14 +7,6 @@
 
   /* SPELLBOOK FOOTER */
   .spellbook-footer {
-    align-content: end;
-    align-items: end;
-    bottom: 0;
-    flex: 0 0 fit-content;
-    min-height: 2.25rem;
-    padding: var(--t5e-size-2x) 0 0;
-    position: sticky;
-
     .spellcasting-cards.collapse-spellcasting-cards {
       gap: var(--t5e-size-2x);
       flex-wrap: wrap;

@@ -14,10 +14,10 @@
       >{dnd5e.utils.formatNumber(rowDocument.system.details.xp.value)}</span
     >
   {:else if rowDocument.system.details.xp.value}
-    <span class="font-label-large color-text-default"
+    <span class="value font-label-large color-text-default"
       >{rowDocument.system.details.xp.value.toLocaleString()}</span
     >
   {:else}
-    <span class="color-text-disabled">—</span>
+    <span class="value color-text-disabled">—</span>
   {/if}
 {/if}

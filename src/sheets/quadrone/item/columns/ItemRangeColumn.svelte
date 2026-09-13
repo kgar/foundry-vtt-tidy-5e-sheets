@@ -14,16 +14,16 @@
   <span class="range font-label-medium">
     {range.value}
     {#if range.long}&sol; {range.long}{/if}
-  </span>
-  <span class="units font-default-medium color-text-lighter">
-    {units}
+    <span class="units font-default-medium color-text-lighter">
+      {units}
+    </span>
   </span>
 {:else if range?.reach}
   <span class="range font-label-medium">
     {range.reach}
-  </span>
-  <span class="units font-default-medium color-text-lighter">
-    {units}
+    <span class="units font-default-medium color-text-lighter">
+      {units}
+    </span>
   </span>
 {:else}
   <span class="color-text-disabled">—</span>

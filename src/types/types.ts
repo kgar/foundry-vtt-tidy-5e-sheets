@@ -554,12 +554,14 @@ export type ChosenFacilityContext = {
   facility: Item5e;
 };
 
-export type FacilityOccupantContext = {
+export type OccupantContext = {
   /** If present, the occupant's source actor was found. If undefined, then this is a broken link. */
   actor?: Actor5e;
   /** If present, this indicates there is an occupant configured to be here. */
   uuid?: string;
 };
+
+export type FacilityOccupantContext = OccupantContext;
 
 export type NpcAbilitySection = {
   canCreate: boolean;
@@ -992,6 +994,7 @@ export type ContainerCapacityContext = {
   pct: number;
   value: number;
   units: string;
+  hidden?: boolean;
 };
 
 export type RenderableClassicControl<TParams> = {

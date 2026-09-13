@@ -6,12 +6,20 @@
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { ItemUtils } from 'src/utils/ItemUtils';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
 
   const { favorite }: Props = $props();
+  const localize = FoundryAdapter.localize;
+  const context = $derived(getCharacterSheetQuadroneContext());
+  const unidentified = $derived(ItemUtils.isUnidentified(favorite.item));
+  const concealed = $derived(
+    ItemUtils.isConcealed(favorite.item, { unlocked: context.unlocked }),
+  );
 
   const subtitle = $derived(
     [
@@ -47,10 +55,13 @@
   const quantity = $derived(favorite.item?.system?.quantity);
 
   const range = $derived(favorite.item?.system?.range);
+
+  const showPrimary = $derived(uses?.max || !isNil(modifier) || save?.dc?.value || quantity);
+  const showSecondary = $derived(range?.value || range?.reach);
 </script>
 
 <div
-  class="list-entry favorite"
+  class="list-entry favorite {unidentified ? 'diminished' : ''}"
   data-favorite-type="generic"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -67,23 +78,24 @@
   />
   <div
     class={{
-      stacked: uses?.max || !isNil(modifier) || save?.dc?.value || quantity,
+      stacked: showPrimary && showSecondary,
     }}
   >
+    {#if showPrimary}
     <span class="primary">
-      {#if uses?.max}
+      {#if uses?.max && !concealed}
         <FavoriteItemUses {favorite} {uses} />
       {:else if !isNil(modifier)}
         {const mod = $derived(getModifierData(modifier))}
         <span class="modifier">
-          <span class="sign">
+          <span class="sign font-default-medium color-text-lighter">
             {mod.sign}
           </span>
           <span>
             {mod.value}
           </span>
         </span>
-      {:else if save?.dc?.value}
+      {:else if save?.dc?.value && !concealed}
         <span class="ability font-label-medium color-text-gold-emphasis">
           {save.ability}
         </span>
@@ -91,12 +103,16 @@
           {save.dc.value}
         </span>
       {:else if quantity}
-        <span class="sign">&times;</span>
+        <span class="sign font-default-medium color-text-lightest">&times;</span>
         <span class="value">{quantity}</span>
+      {:else if concealed}
+        <span class="value color-text-lightest">{localize('TIDY5E.Table.UnidentifiedPlaceholder')}</span>
       {/if}
     </span>
+    {/if}
+    {#if showSecondary}
     <span class="secondary">
-      {#if uses?.max && quantity}
+      {#if uses?.max && quantity && !concealed}
         <span class="quantity">&times; {quantity}</span>
       {:else if range?.value}
         {const units =
@@ -115,5 +131,6 @@
         </span>
       {/if}
     </span>
+    {/if}
   </div>
 </div>

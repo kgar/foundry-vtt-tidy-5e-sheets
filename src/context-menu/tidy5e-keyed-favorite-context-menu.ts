@@ -59,6 +59,7 @@ export function configureKeyedFavoriteContextMenu(
       callback: () => onEdit(app),
     },
     {
+      // TODO: Could we move this to TIDY5E.AddSpecific?
       name: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: hasFavorite
         ? `<i class='fa-regular fa-star fa-fw'></i>`

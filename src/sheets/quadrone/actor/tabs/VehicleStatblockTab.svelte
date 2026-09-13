@@ -219,7 +219,7 @@
             class="button button-icon-only button-borderless flexshrink"
             disabled={availableActions <= 0 || !context.editable}
             onclick={decrementActions}
-            aria-label={localize('DND5E.Subtract', { value: 1 })}
+            aria-label={localize('DND5E.VEHICLE.Action.Crew.Decrease')}
           >
             <i class="fa-solid fa-hexagon-minus"></i>
           </button>
@@ -247,7 +247,7 @@
             class="button button-icon-only button-borderless flexshrink"
             disabled={usedActions <= 0 || !context.editable}
             onclick={incrementActions}
-            aria-label={localize('DND5E.Add', { value: 1 })}
+            aria-label={localize('DND5E.VEHICLE.Action.Crew.Increase')}
           >
             <i class="fa-solid fa-hexagon-plus"></i>
           </button>
@@ -333,10 +333,12 @@
                 {/if}
               {/if}
             {/snippet}
-
+ 
             {#snippet afterInlineActivities(item, ctx)}
               {#if ctx.crew?.length}
+                <div class="crew-and-passengers-wrapper">
                 <VehicleItemCrewAssignments {ctx} {item} />
+                </div>
               {/if}
             {/snippet}
           </TidyItemTable>
@@ -468,7 +470,11 @@
                   >
                     {#snippet children()}
                       <div class="highlight"></div>
+                      <!-- svelte-ignore a11y_missing_attribute -->
                       <a
+                        role="button"
+                        data-keyboard-focus
+                        tabindex="0"
                         class={[
                           'tidy-table-row-use-button',
                           { disabled: !context.editable },
@@ -488,6 +494,7 @@
                         primary={true}
                         class="item-label text-cell"
                       >
+                        <!-- svelte-ignore a11y_missing_attribute -->
                         <a
                           class="item-name"
                           role="button"

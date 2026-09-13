@@ -1,7 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone) {
 
   /* Rosters */
-  .facility-occupants {
+  .occupants-list {
     --occupant-preview-size: var(--t5e-field-size-default);
     --occupant-border-radius: var(--t5e-size-1x);
 
@@ -36,14 +36,18 @@
       }
 
       li {
-        border-radius: var(--occupant-border-radius);
+        border-radius: calc(var(--occupant-border-radius) - var(--t5e-size-1));
         width: var(--occupant-preview-size);
         height: var(--occupant-preview-size);
         display: flex;
+        overflow: hidden;
 
-        /* overflow: hidden; */
         &:not(.empty) {
           border: var(--t5e-size-1) solid var(--t5e-color-gold);
+
+          &:hover {
+            border-color: var(--t5e-color-text-gold-emphasis);
+          }
         }
 
         a {
@@ -53,6 +57,7 @@
           justify-content: center;
           height: inherit;
           width: inherit;
+          overflow: hidden;
           position: relative;
         }
 

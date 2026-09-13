@@ -16,16 +16,16 @@
 {#if !conceal}
   <div class="item-charges">
     <div class="counter">
-      <span class="value text-data">
+      <span class="value font-label-medium">
         {context.item.system.uses.max - context.item.system.uses.spent}
       </span>
-      <span class="charges-slash separator">/</span>
-      <span class="max text-data">
+      <span class="charges-slash separator font-default-medium">/</span>
+      <span class="max font-label-medium">
         {context.item.system.uses.max}
       </span>
     </div>
     <div class="counter color-text-diminished">&mdash;</div>
-    <span class="charges-text text-label">
+    <span class="charges-text font-label-medium">
       {localize('DND5E.Charges')}
     </span>
   </div>
