@@ -1188,6 +1188,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     } else {
       await VehicleCrew.assignCrewMember(item, newCrewmateUuid);
     }
+
+    this.render();
   }
 
   async _unassignCrew(memberUuid: string, itemUuid: string) {
