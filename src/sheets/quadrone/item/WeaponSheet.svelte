@@ -12,6 +12,9 @@
   import ItemName from './parts/header/ItemName.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
+  import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import OccupantSlot from '../shared/OccupantSlot.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -38,7 +41,39 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar>
+  {#snippet belowStateSwitches()}
+    <!-- Crew Management -->
+    {#if context.vehicleCrew?.length}
+      <div
+        data-crew-list
+        data-item-id={context.item.id}
+        {@attach dropzoneClass('occupant-dropzone')}
+        class="occupants-list"
+      >
+        <h4>
+          {localize('DND5E.VEHICLE.Crew.Label')}
+        </h4>
+        <ul class="occupants crew unlist">
+          {#each context.vehicleCrew as { actor, uuid }}
+            <OccupantSlot
+              occupant={actor}
+              {uuid}
+              type="crew"
+              iconClass="far fa-user"
+              contextMenuType={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
+              addAction="assignCrew"
+              addLabel={localize('TIDY5E.AddSpecific', {
+                name: localize('DND5E.VEHICLE.Crew.Label'),
+              })}
+              attributes={{ 'data-uuid': uuid }}
+            />
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
   <div
