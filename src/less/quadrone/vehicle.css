@@ -242,10 +242,6 @@
     + .editor-rendered-content {
       margin: 0;
     }
-
-    .tidy-table-header-row {
-      background: var(--t5e-component-card-darker);
-    }
   }
 
   .crew-and-passengers-table {
@@ -293,14 +289,6 @@
 
     .npc-score-tracker.tracker-warning {
       --t5e-text-warning: var(--t5e-color-palette-orange-55);
-    }
-  }
-
-  &.theme-dark {
-    .crew-and-passengers-wrapper {
-      .tidy-table-header-row {
-        background: rgba(255, 255, 255, 0.08);
-      }
     }
   }
 }

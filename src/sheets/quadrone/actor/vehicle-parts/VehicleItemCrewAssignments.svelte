@@ -43,7 +43,7 @@
 
 <TidyTable key="assigned" toggleable={false} class="crew-and-passengers-table">
   {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+  <TidyTableHeaderRow class="no-background">
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>
           {localize('DND5E.VEHICLE.Crew.Label')}
