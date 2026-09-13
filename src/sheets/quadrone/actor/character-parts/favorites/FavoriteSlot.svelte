@@ -51,18 +51,19 @@
             document={context.actor}
             field={favorite.uses.field}
             enableDeltaChanges={true}
-            class="uninput uses-value"
+            class="uninput uses-value font-label-medium color-text-default"
             value={favorite.uses.value}
             selectOnFocus={true}
           />
         {:else}
-          <span class="uses-value color-text-default">
+          <span class="uses-value font-label-medium color-text-default">
             {favorite.uses.value}
           </span>
         {/if}
-        <span class="divider color-text-gold">/</span>
-        <span class="uses-max color-text-lighter">
-          {favorite.uses.max ?? localize('TIDY5E.COMMON.Unidentified.Placeholder')}
+        <span class="separator">/</span>
+        <span class="uses-max font-default-medium color-text-default">
+          {favorite.uses.max ??
+            localize('TIDY5E.COMMON.Unidentified.Placeholder')}
         </span>
       </span>
     </span>

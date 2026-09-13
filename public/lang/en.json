@@ -322,6 +322,12 @@
         "Title": "Legendary/Lair Toolbar"
       }
     },
+    "Refresh": {
+      "label": "Refresh All NPC Items and Features",
+      "Group": {
+        "label": "Refresh NPCs"
+      }
+    },
     "Statblock": {
       "Option": {
         "IncludeSpells": "Include Spells sections in the Statblock tab",

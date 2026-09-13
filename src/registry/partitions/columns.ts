@@ -300,14 +300,27 @@ export function getColumnPartitions(): TidyPartitionRegistry['columns'] {
       },
     },
     spell: {
+      [CONSTANTS.SHEET_TYPE_NPC]: {
+        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            uses: { order: 100, priority: 400 },
+            components: { order: 100, priority: 200 },
+            school: { order: 200, priority: 100 },
+            time: { order: 300, priority: 500 },
+            target: { order: 400, priority: 300 },
+            range: { order: 500, priority: 600 },
+            roll: { order: 600, priority: 700 },
+          },
+        },
+      },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             uses: { order: 100, priority: 200 },
-            components: { order: 100, priority: 400 },
+            components: { order: 100, priority: 300 },
             school: { order: 200, priority: 100 },
             time: { order: 300, priority: 500 },
-            target: { order: 400, priority: 300 },
+            target: { order: 400, priority: 400 },
             range: { order: 500, priority: 600 },
             roll: { order: 600, priority: 700 },
           },

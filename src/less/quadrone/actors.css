@@ -845,6 +845,10 @@
         flex: 0 1 fit-content;
       }
     }
+
+    .mastery {
+      color: var(--t5e-theme-color-lighter);
+    }
   }
 
   .traits-actor-size,
@@ -1309,10 +1313,20 @@
   }
 
   .npc-score-tracker {
-    input {
-      font-size: var(--font-size-18);
-      font-weight: var(--font-weight-bold);
 
+    input,
+    .separator,
+    .value,
+    .max {
+      font: var(--t5e-font-label-large);
+      line-height: 1rem;
+    }
+
+    .uninput {
+      line-height: revert-layer;
+    }
+
+    input {
       &:first-child {
         text-align: right;
       }

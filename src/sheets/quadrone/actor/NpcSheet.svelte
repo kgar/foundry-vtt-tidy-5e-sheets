@@ -131,6 +131,17 @@
               data-tidy-sheet-part="sheet-header-actions-container"
             >
               {#if context.editable}
+                {#if FoundryAdapter.userIsGm()}
+                  <button
+                    type="button"
+                    class="button button-icon-only button-gold"
+                    data-tooltip=""
+                    aria-label="TIDY5E.NPC.Refresh.label"
+                    data-action="refreshActor"
+                  >
+                    <i class="fa-solid fa-arrows-rotate-reverse"></i>
+                  </button>
+                {/if}
                 {#each Object.entries(context.config.restTypes) as [key, rest]}
                   <button
                     type="button"
@@ -139,7 +150,6 @@
                     aria-label={localize(rest.label)}
                     data-action="rest"
                     data-type={key}
-                    disabled={!context.editable}
                   >
                     <i class={rest.icon}></i>
                   </button>

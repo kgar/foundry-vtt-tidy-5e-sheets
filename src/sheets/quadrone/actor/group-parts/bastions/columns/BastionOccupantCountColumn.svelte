@@ -55,9 +55,9 @@
     onfocus={showOccupantTooltip}
     {@attach InputAttachments.triggerClickOnKeydown}
   >
-    <span class="value font-data-medium">{occupancy.occupants.length}</span
-    ><span class="separator color-text-lightest">&sol;</span><span
-      class="max font-label-medium color-text-lighter">{occupancy.max}</span
+    <span class="value font-label-medium color-text-default">{occupancy.occupants.length}</span
+    ><span class="separator">&sol;</span><span
+      class="max font-default-medium color-text-default">{occupancy.max}</span
     >
   </div>
 {:else}

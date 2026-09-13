@@ -1,6 +1,8 @@
 export class EventHelper {
   static triggerContextMenu(
-    event: (MouseEvent | PointerEvent | Event) & { currentTarget: HTMLElement },
+    event: (MouseEvent | PointerEvent | KeyboardEvent | Event) & {
+      currentTarget: HTMLElement;
+    },
     targetSelector?: string
   ) {
     event.preventDefault();
@@ -9,7 +11,7 @@ export class EventHelper {
     let clientX = 0;
     let clientY = 0;
 
-    if ('clientX' in event) {
+    if (event instanceof PointerEvent || event instanceof MouseEvent) {
       clientX = event.clientX;
       clientY = event.clientY;
     } else {

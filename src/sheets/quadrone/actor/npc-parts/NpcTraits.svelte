@@ -35,11 +35,11 @@
           data-type="short"
           class="flexshrink hit-dice-container button-borderless"
         >
-          <span class="value font-label-medium"
+          <span class="value font-default-medium color-text-default"
             >{context.system.attributes.hd.value}</span
           >
-          <span class="divider font-body-medium color-text-lightest">/</span>
-          <span class="max font-label-medium"
+          <span class="separator">/</span>
+          <span class="max font-default-medium color-text-default"
             >{context.system.attributes.hd.max}</span
           >
         </button>

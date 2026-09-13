@@ -51,8 +51,8 @@
             data-tooltip={context.actor.name}
           >
             <!-- svelte-ignore a11y_missing_attribute -->
-            <a 
-              data-action="copyInnerText" 
+            <a
+              data-action="copyInnerText"
               class="cursor highlight-on-hover"
               role="button"
               tabindex="0"

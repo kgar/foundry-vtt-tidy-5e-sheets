@@ -21,8 +21,7 @@
       margin-bottom: var(--t5e-size-8x);
     }
 
-    h4,
-    h3 {
+    h4 {
       color: var(--t5e-color-text-lighter);
 
       i {
@@ -30,12 +29,6 @@
         margin-right: 0.1875rem;
         color: var(--t5e-color-icon-button);
       }
-    }
-
-    h4.bordered {
-      border-bottom: 0.0625rem solid var(--t5e-color-gold);
-      padding: 0.25rem 0;
-      margin-bottom: 0.25rem;
     }
 
     .trait-editable {
@@ -91,20 +84,6 @@
         color: var(--t5e-theme-color-highlight);
       }
     }
-
-    .npc-score-tracker {
-      .card-header h3 {
-        padding-top: 0;
-      }
-
-      .uses {
-
-        .max,
-        .value {
-          width: 1.5rem;
-        }
-      }
-    }
   }
 
   .trait-icon-keel {
@@ -120,35 +99,6 @@
   .abilities-container-inner {
     margin: 0;
     overflow: hidden;
-  }
-
-  .initiative-container {
-    text-align: center;
-    align-items: center;
-
-    .ability-labels {
-      bottom: 0.4375rem;
-    }
-
-    .initiative-bonus {
-      margin-right: 0.25rem;
-
-      > * {
-        letter-spacing: -6%;
-      }
-    }
-  }
-
-  /* Smallest abilities when sheet is mid-size and has custom abilities present.
-  /* ------------------------------------------------------------ */
-  .abilities-container.abilities-size-compact {
-    .abilities-container-inner {
-
-      .bonus-container,
-      .initiative-container .bonus-container.initiative-score-container {
-        aspect-ratio: 1 / 1;
-      }
-    }
   }
 
   /* Basic theme overrides
@@ -174,50 +124,68 @@
 
   /* TABS
   /* ------------------------------------------------------------ */
-  .tidy-tab {
-    .tidy-table-cell[data-tidy-column-key="qty"] {
-      padding-left: 0;
-      padding-right: 0;
+  .crew-and-passengers {
+    .sheet-pin {
+      padding-block: var(--t5e-size-1x);
 
-      .command {
-        opacity: 0;
-        transition: opacity var(--t5e-transition-default);
+      .inline-uses {
+        display: flex;
+        flex-direction: row;
+
+        .uses-value {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: end;
+        }
+
+        .separator {
+          font-size: var(--font-size-18);
+          flex: 0;
+        }
+
+        input.uses-max {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: start;
+        }
       }
 
-      &:hover .command {
-        opacity: 1;
+      .remove-broken-links-button {
+        padding-block-end: var(--t5e-size-1x);
+        color: var(--t5e-color-text-lighter);
+
+        i {
+          color: var(--t5e-warning-accent-color);
+        }
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+
+          i {
+            color: oklch(from var(--t5e-warning-accent-color) calc(l * 1.2) calc(c * 1.15) h);
+          }
+        }
       }
     }
+  }
+
+  .crew-and-passengers-wrapper {
+    padding-inline-start: var(--t5e-size-2x);
+    padding-block-start: var(--t5e-size-1x);
+
+    + .editor-rendered-content {
+      margin: 0;
+    }
+  }
+
+  .crew-and-passengers-table {
+    margin-block-start: var(--t5e-size-1x);
   }
 
   .button-reset-actions {
     position: absolute;
     top: calc(50% - 0.9375rem);
     right: 0;
-  }
-
-  .spellbook-footer {
-    .spellcasting-ability {
-      select {
-        height: 1.5rem;
-      }
-    }
-
-    .level {
-      input[type="number"] {
-        height: 1.5rem;
-        max-width: 2.5rem;
-      }
-    }
-
-    .pill.borderless {
-      padding: 0;
-      border: none;
-
-      &.level {
-        padding-left: 0.5rem;
-      }
-    }
   }
 
   /* Light theme styles

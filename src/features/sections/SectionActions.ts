@@ -200,17 +200,34 @@ class SectionActions {
               params.document.update(updates);
             },
             window: {
-              title: FoundryAdapter.localize(
-                'TIDY5E.SECTION.Selector.Title',
-                {
-                  sectionType: FoundryAdapter.localize('TIDY5E.SECTION.Title.one'),
-                  documentName: FoundryAdapter.localize(section.label),
-                },
-              ),
+              title: FoundryAdapter.localize('TIDY5E.SECTION.Selector.Title', {
+                sectionType: FoundryAdapter.localize(
+                  'TIDY5E.SECTION.Title.one',
+                ),
+                documentName: FoundryAdapter.localize(section.label),
+              }),
             },
           });
 
           group.sheet._renderChild(app);
+        },
+      });
+    }
+
+    if (
+      FoundryAdapter.userIsGm() &&
+      section.members.some((m) => m.actor.type === CONSTANTS.SHEET_TYPE_NPC)
+    ) {
+      controls.push({
+        label: 'TIDY5E.NPC.Refresh.Group.label',
+        iconClass: 'fas fa-arrows-rotate-reverse',
+        attributes: {
+          'data-action': 'refreshActor',
+          'data-type': CONSTANTS.SHEET_TYPE_NPC,
+          'aria-label': FoundryAdapter.localize(
+            'TIDY5E.NPC.Refresh.Group.label',
+          ),
+          'data-tooltip': '',
         },
       });
     }

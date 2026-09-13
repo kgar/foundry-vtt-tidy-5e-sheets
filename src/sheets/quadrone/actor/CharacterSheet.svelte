@@ -624,8 +624,11 @@
                     >
                       {context.system.attributes?.hd?.value ?? '0'}
                     </div>
-                    <div class="separator">/</div>
-                    <div class="max" data-tooltip="TIDY5E.ACTOR.HitDice.Max.Label">
+                    <div class="separator color-text-gold">/</div>
+                    <div
+                      class="max"
+                      data-tooltip="TIDY5E.ACTOR.HitDice.Max.Label"
+                    >
                       {context.system.attributes?.hd?.max ?? '0'}
                     </div>
                     <div class="hd-label" data-tooltip="DND5E.HitDice">

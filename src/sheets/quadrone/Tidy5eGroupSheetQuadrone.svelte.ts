@@ -83,6 +83,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
         Tidy5eGroupSheetQuadrone.#addMemberFacilityOccupant,
       adjustMemberFacilityProgress:
         Tidy5eGroupSheetQuadrone.#adjustMemberFacilityProgress,
+      refreshActor: Tidy5eGroupSheetQuadrone.#refreshActor,
       takeBastionTurn: Tidy5eGroupSheetQuadrone.#takeBastionTurn,
       useMemberFacility: Tidy5eGroupSheetQuadrone.#useMemberFacility,
     },
@@ -633,9 +634,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     }
 
     const proceed = await foundry.applications.api.DialogV2.confirm({
-      content: FoundryAdapter.localize(
-        'TIDY5E.BASTION.Group.Confirm.TakeTurn',
-      ),
+      content: FoundryAdapter.localize('TIDY5E.BASTION.Group.Confirm.TakeTurn'),
       rejectClose: false,
       window: {
         icon: 'fa-solid fa-chess-rook',
@@ -842,6 +841,8 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
             types: new Set(['character', 'npc', 'vehicle', 'group']),
           },
         },
+        // Have to specify a tab now, otherwise it defaults to items and fails.
+        tab: 'actors',
       },
       this._detachOptions(),
     );
@@ -908,6 +909,44 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const chosenId = await promise;
 
     return chosenId ? member.items.get(chosenId) : undefined;
+  }
+
+  /* -------------------------------------------- */
+
+  static async #refreshActor(
+    this: Tidy5eGroupSheetQuadrone,
+    event: Event,
+    target: HTMLElement,
+  ) {
+    const actorType = target.dataset.type;
+
+    const context = await this._prepareContext({ tidy: { soft: true } });
+
+    const sectionKey = target.closest<HTMLElement>('[data-tidy-section-key]')
+      ?.dataset?.tidySectionKey;
+
+    const membersToUpdate =
+      context.members
+        .filter(
+          (section) => isNil(section.key, '') || section.key === sectionKey,
+        )
+        .flatMap((section) => section.members)
+        ?.filter(
+          (members) => isNil(actorType, '') || members.actor.type === actorType,
+        ) ?? [];
+
+    const refreshes = membersToUpdate.map((m) =>
+      m.actor._rest({
+        type: 'long',
+        dialog: false,
+        chat: false,
+        newDay: true,
+      }),
+    );
+
+    await Promise.all(refreshes);
+
+    this.render();
   }
 
   /* -------------------------------------------- */

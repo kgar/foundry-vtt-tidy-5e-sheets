@@ -28,8 +28,10 @@
   );
 
   function onEmptySlotClicked(
-    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-  ): any {
+    ev: (MouseEvent | KeyboardEvent) & {
+      currentTarget: EventTarget & HTMLAnchorElement;
+    },
+  ) {
     if (context.unlocked) {
       EventHelper.triggerContextMenu(ev);
       return;
@@ -39,9 +41,9 @@
   }
 </script>
 
-<TidyTable key="assigned" toggleable={false}>
+<TidyTable key="assigned" toggleable={false} class="crew-and-passengers-table">
   {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+  <TidyTableHeaderRow class="no-background">
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>
           {localize('DND5E.VEHICLE.Crew.Label')}
@@ -51,7 +53,7 @@
   {/snippet}
   {#snippet body()}
     <TidyTableRow>
-      <TidyTableCell primary={true}>
+      <TidyTableCell primary={true} class="occupants-list">
         <ul class="slots assigned unlist">
           {#each ctx.crew as slot}
             {#if slot.brokenLink}
@@ -60,7 +62,10 @@
                 data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
+                <!-- svelte-ignore a11y_missing_attribute -->
                 <a
+                  role="button"
+                  tabindex="0"
                   data-action="showContextMenu"
                   data-target-selector="[data-context-menu]"
                   data-tooltip=""
@@ -101,8 +106,19 @@
                 class="slot member-slot empty"
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
+                  <!-- svelte-ignore a11y_missing_attribute -->
                 <a
+                  role="button"
+                  data-keyboard-focus
+                  tabindex="0"
+                  aria-label={localize('TIDY5E.COMMON.Action.AddNamed', localize('DND5E.VEHICLE.Crew.Label'))}
+                  data-tooltip={localize('TIDY5E.COMMON.Action.AddNamed', localize('DND5E.VEHICLE.Crew.Label'))}
                   onclick={(ev) => context.editable && onEmptySlotClicked(ev)}
+                  onkeydown={(ev) => {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                      context.editable && onEmptySlotClicked(ev);
+                    }
+                  }}
                   class="button button-tertiary button-icon-only"
                 >
                   <i class="far fa-user"></i>

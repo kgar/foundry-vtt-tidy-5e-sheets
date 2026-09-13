@@ -1214,7 +1214,28 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      const result = await this.browseOccupant();
+
+      if (result) {
+        return await this._onDropActorAddToFacility(item, prop, result);
+      }
+    }
+
+    /** Replace a facility occupant, such as a broken link, with a chosen actor. */
+    async replaceOccupant(facility: Item5e, prop: string, index: number) {
+      if (!facility || !prop || index === undefined) {
+        return;
+      }
+
+      const result = await this.browseOccupant();
+
+      if (result) {
+        return await Bastion.replaceOccupant(facility, prop, index, result);
+      }
+    }
+
+    browseOccupant(): Promise<string | null> {
+      return dnd5e.applications.CompendiumBrowser.selectOne(
         {
           filters: {
             locked: {
@@ -1222,13 +1243,11 @@ export function getTidyExtensibleDocumentSheetMixin<
               types: new Set(['character', 'npc', 'vehicle', 'group']),
             },
           },
+          // Have to specify a tab now, otherwise it defaults to items and fails.
+          tab: 'actors',
         },
         this._detachOptions(),
       );
-
-      if (result) {
-        return await this._onDropActorAddToFacility(item, prop, result);
-      }
     }
 
     deleteOccupant(facility: Item5e, prop: string, index: number) {
@@ -1905,7 +1924,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       document: Actor5e,
     ): Promise<any> {
-      if (!event.target.closest('.facility-occupants') || !document.uuid) {
+      if (!event.target.closest('.occupants-list') || !document.uuid) {
         return await super._onDropActor(event, document);
       }
 

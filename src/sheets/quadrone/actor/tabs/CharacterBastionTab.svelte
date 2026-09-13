@@ -118,11 +118,11 @@
               <span
                 class="value {context.facilities.special.count > 0
                   ? 'color-text-default'
-                  : 'color-text-lightest'} font-label-medium"
+                  : 'color-text-lightest'}"
                 >{context.facilities.special.count}</span
               >
-              <span class="divider color-text-gold font-default-medium">/</span>
-              <span class="max color-text-default font-label-medium"
+              <span class="separator">/</span>
+              <span class="max color-text-lighter"
                 >{context.facilities.special.max}</span
               >
             </span>
@@ -204,7 +204,7 @@
 
               {#if chosen.hirelings.length}
                 <div
-                  class="facility-occupants"
+                  class="occupants-list"
                   data-prop="system.hirelings"
                   data-facility-type="hireling"
                 >
@@ -228,14 +228,14 @@
               {/if}
               {#if chosen.defenders.length}
                 <div
-                  class="facility-occupants"
+                  class="occupants-list"
                   data-prop="system.defenders"
                   data-facility-type="defender"
                 >
                   <div class="sub-header font-label-medium color-text-lighter">
                     {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
                   </div>
-                  <ul class="slots facility-occupants defenders">
+                  <ul class="slots occupants-list defenders">
                     {#each chosen.defenders as { actor, uuid }, index}
                       <FacilityOccupantQuadrone
                         occupant={actor}
@@ -252,7 +252,7 @@
               {/if}
               {#if chosen.creatures.length}
                 <div
-                  class="facility-occupants"
+                  class="occupants-list"
                   data-prop="system.trade.creatures"
                   data-facility-type="creature"
                   {@attach dropzoneClass('occupant-dropzone')}
@@ -310,11 +310,11 @@
               <span
                 class="value {context.facilities.basic.count > 0
                   ? 'color-text-default'
-                  : 'color-text-lightest'} font-label-medium"
+                  : 'color-text-lightest'}"
                 >{context.facilities.basic.count}</span
               >
-              <span class="divider color-text-gold font-default-medium">/</span>
-              <span class="max color-text-default font-label-medium"
+              <span class="separator">/</span>
+              <span class="max color-text-lighter"
                 >{context.facilities.basic.max}</span
               >
             </span>
@@ -420,7 +420,7 @@
 
     {#if hasDefenders}
       <section
-        class="roster facility-occupants defenders"
+        class="roster occupants-list defenders"
         data-prop="system.defenders"
         data-facility-type="defender"
       >
@@ -452,7 +452,7 @@
 
     {#if hasHirelings}
       <section
-        class="roster facility-occupants hirelings"
+        class="roster occupants-list hirelings"
         data-prop="system.hirelings"
         data-facility-type="hireling"
       >
@@ -485,7 +485,7 @@
 
     {#if hasCreatures}
       <section
-        class="roster facility-occupants creatures"
+        class="roster occupants-list creatures"
         data-prop="system.trade.creatures"
         data-facility-type="creature"
       >

@@ -218,6 +218,10 @@
         transition: box-shadow var(--t5e-transition-default);
       }
 
+      .facility-image svg {
+        padding: 0.125rem;
+      }
+
       .facility-header-details {
         display: flex;
         flex-direction: row;
@@ -278,6 +282,7 @@
         border-color: var(--t5e-color-gold);
 
         .label {
+          gap: var(--t5e-size-halfx);
           justify-content: space-between;
 
           .order,
@@ -293,11 +298,7 @@
         }
 
         .order {
-          gap: 0.25rem;
-        }
-
-        .units {
-          margin-inline-start: 0.25rem;
+          gap: var(--t5e-size-1x);
         }
       }
     }
@@ -378,7 +379,7 @@
         }
 
         .facility-header :is(.facility-image, .facility-image svg) {
-          --icon-fill: var(--t5e-component-field-background);
+          --icon-fill: var(--t5e-color-icon-disabled);
         }
       }
     }

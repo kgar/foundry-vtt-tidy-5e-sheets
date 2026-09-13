@@ -51,8 +51,8 @@
         </span>
       </span>
       <span class="counter flexshrink">
-        <span class="value font-data-medium">{chosen.progress.value}</span><span class="separator">&sol;</span><span class="max font-label-medium color-text-lighter">{chosen.progress.max}</span>
-        <span class="units font-label-medium color-text-lighter lowercase">{localize('DND5E.TimeDay')}</span>
+        <span class="value font-label-medium">{chosen.progress.value}</span><span class="separator">/</span><span class="max font-default-medium color-text-default">{chosen.progress.max}</span>
+        <span class="units font-default-medium color-text-lighter lowercase">{localize('DND5E.TimeDay')}</span>
       </span>
     {:else}
       <span class="order">

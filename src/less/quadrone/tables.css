@@ -26,6 +26,13 @@
     box-shadow: none;
     color: var(--t5e-color-text-lighter);
     padding-bottom: 0.125rem;
+    background: none;
+    box-shadow: none;
+    min-height: unset;
+    border-radius: 0;
+    border-width: 0 0 var(--t5e-size-1) 0;
+    border-style: solid;
+    border-image: var(--t5e-table-row-border-image);
 
     .header-label-cell {
       overflow: visible;
@@ -36,6 +43,10 @@
 
       h3 {
         color: var(--t5e-component-text-lighter);
+      }
+
+      &.primary {
+        padding-inline-start: var(--t5e-size-1x);
       }
     }
 
@@ -808,18 +819,33 @@
     display: flex;
     align-items: center;
 
+    > span,
+    > .divider,
+    > .uses-max {
+      line-height: 1rem;
+    }
+
     input[type="text"]:disabled {
       background: none;
     }
 
     > .uses-value {
-      font: var(--t5e-font-default-medium);
-      font-size: var(--font-size-13);
-      text-align: right;
+      font: var(--t5e-font-label-medium);
+      line-height: 1rem;
+      text-align: end;
       flex: 1;
     }
 
     > input[type="text"].uses-value {
+      /* Keep line-height locked to height. When an input's box is taller than
+         its line box, Chromium centers the inner editor within that slack
+         differently than a sibling span's half-leading resolves, so the value
+         renders ~1px above the divider and max -- visible in Chromium at
+         devicePixelRatio 1 only, never in Firefox. Matching the two leaves no
+         slack to mis-center. Do not set height without setting line-height. */
+      align-self: center;
+      height: var(--t5e-field-size-default);
+      line-height: var(--t5e-field-size-default);
       padding-inline-end: var(--t5e-size-halfx);
       margin-inline-end: calc(var(--t5e-size-1) * -1);
 
@@ -836,7 +862,8 @@
     }
 
     > .uses-max {
-      text-align: left;
+      margin-inline-start: var(--t5e-size-1);
+      text-align: start;
       flex: 1;
     }
   }
@@ -861,24 +888,10 @@
     margin-block: var(--t5e-size-1x) var(--t5e-size-2x);
     margin-inline: var(--t5e-size-1x) 0;
 
-    .tidy-table-header-row {
-      background: none;
-      box-shadow: none;
-      min-height: unset;
-      border-radius: 0;
-      border-width: 0 0 var(--t5e-size-1) 0;
-      border-style: solid;
-      border-image: var(--t5e-table-row-border-image);
-    }
-
     .tidy-table-header-cell {
       color: var(--t5e-color-text-lighter);
       padding-block: 0;
       margin-block: 0;
-
-      &.primary {
-        padding-inline-start: var(--t5e-size-1x);
-      }
     }
 
     .item-use-button {
@@ -917,8 +930,6 @@
   }
 
   /* Inline Containers */
-  .tidy-table-row ~ .expandable .expandable-child-animation-wrapper {}
-
   .tidy-table-row ~ .expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
@@ -1123,6 +1134,23 @@
       max-width: var(--t5e-field-size-default);
       text-align: right;
       padding-block-end: var(--t5e-size-1);
+    }
+  }
+
+  .tidy-table-header-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+  }
+
+  .tidy-table-cell[data-tidy-column-key="quantity"] {
+    padding-inline: 0;
+
+    .command {
+      opacity: 0;
+      transition: opacity var(--t5e-transition-default);
+    }
+
+    &:hover .command {
+      opacity: 1;
     }
   }
 

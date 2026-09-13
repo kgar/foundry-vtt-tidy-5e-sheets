@@ -50,6 +50,7 @@ import { VehicleUnassignedCrewColumnRuntime } from 'src/runtime/table-columns/Ve
 import { VehiclePassengerColumnRuntime } from 'src/runtime/table-columns/VehiclePassengerColumnRuntime';
 import { VehicleDraftAnimalColumnRuntime } from 'src/runtime/table-columns/VehicleDraftAnimalColumnRuntime';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import * as VehicleCrew from 'src/features/vehicle/VehicleCrew';
 
 const localize = FoundryAdapter.localize;
 
@@ -84,12 +85,17 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
     },
   };
 
-  async browseAssignActor(item: Item5e) {
+  async browseAssignActor(item: Item5e, replaceUuid?: string) {
     const newCrewmateUuid = await this.browseActors();
 
     const actor = await fromUuid(newCrewmateUuid);
 
     if (!actor) {
+      return;
+    }
+
+    if (replaceUuid) {
+      await VehicleCrew.replaceCrewMember(item, replaceUuid, newCrewmateUuid);
       return;
     }
 
@@ -105,6 +111,8 @@ export class Tidy5eVehicleSheetQuadrone extends getTidy5eActorSheetQuadroneBase<
             types: new Set(['npc']),
           },
         },
+        // Have to specify a tab now, otherwise it defaults to items and fails.
+        tab: 'monsters',
       },
       this._detachOptions(),
     );

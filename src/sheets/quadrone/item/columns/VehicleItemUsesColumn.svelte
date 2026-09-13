@@ -79,7 +79,7 @@
         {#if item.system.uses.value > 1}
           <span>{item.system.uses.value}</span>
         {/if}
-        <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
+        <i class="fas fa-bolt color-text-gold-emphasis" data-tooltip={localize('DND5E.Charged')}></i>
       </span>
     {:else}
       <div class="inline-uses flexrow">
@@ -89,11 +89,11 @@
           {@attach InputAttachments.selectOnFocus}
           inputmode="numeric"
           data-name="system.uses.value"
-          class="uninput uses-value color-text-default"
+          class="uninput uses-value font-label-medium color-text-default"
           disabled={!context.editable}
         />
-        <span class="divider color-text-gold flexshrink">/</span>
-        <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
+        <span class="separator flexshrink">/</span>
+        <span class="uses-max font-default-medium color-text-default">{item.system.uses.max}</span>
       </div>
     {/if}
   </div>
