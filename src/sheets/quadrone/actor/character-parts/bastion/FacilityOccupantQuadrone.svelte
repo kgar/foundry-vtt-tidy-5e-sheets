@@ -30,7 +30,7 @@
   {type}
   {iconClass}
   contextMenuType={CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS}
-  addAction="addOccupant"
+  action="addOccupant"
   attributes={{
     'data-actor-uuid': uuid,
     'data-facility-name': facilityName,

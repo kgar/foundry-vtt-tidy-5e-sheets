@@ -18,7 +18,7 @@
     iconClass: string;
     contextMenuType: string;
     /** The sheet action which fills an empty slot. */
-    addAction: string;
+    action: string;
     /** Accessible label for filling an empty slot. */
     addLabel?: string;
     /** Data attributes which identify the slot to its context menu and sheet actions. */
@@ -34,7 +34,7 @@
     type,
     iconClass,
     contextMenuType,
-    addAction,
+    action,
     addLabel,
     attributes = {},
     highlightKey,
@@ -120,7 +120,7 @@
     <a
       role="button"
       tabindex="0"
-      data-action={addAction}
+      data-action={action}
       aria-label={addLabel}
       data-tooltip={addLabel ? '' : null}
       class="button button-tertiary button-icon-only"

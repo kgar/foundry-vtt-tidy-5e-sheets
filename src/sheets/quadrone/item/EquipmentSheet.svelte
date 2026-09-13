@@ -87,7 +87,7 @@
               type="crew"
               iconClass="far fa-user"
               contextMenuType={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
-              addAction="assignCrew"
+              action="assignCrew"
               addLabel={localize('TIDY5E.COMMON.Action.AddNamed', {
                 name: localize('DND5E.VEHICLE.Crew.Label'),
               })}
