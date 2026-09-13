@@ -190,6 +190,51 @@
     }
   }
 
+  .crew-and-passengers {
+    .sheet-pin {
+      padding-block: var(--t5e-size-1x);
+
+      .inline-uses {
+        display: flex;
+        flex-direction: row;
+
+        .uses-value {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: end;
+        }
+
+        .separator {
+          font-size: var(--font-size-18);
+          flex: 0;
+        }
+
+        input.uses-max {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: start;
+        }
+      }
+
+      .remove-broken-links-button {
+        padding-block-end: var(--t5e-size-1x);
+        color: var(--t5e-color-text-lighter);
+
+        i {
+          color: var(--t5e-warning-accent-color);
+        }
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+
+          i {
+            color: oklch(from var(--t5e-warning-accent-color) calc(l * 1.2) calc(c * 1.15) h);
+          }
+        }
+      }
+    }
+  }
+
   .crew-and-passengers-wrapper {
     padding-inline-start: var(--t5e-size-2x);
     padding-block-start: var(--t5e-size-1x);
