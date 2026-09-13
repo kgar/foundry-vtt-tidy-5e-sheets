@@ -21,8 +21,7 @@
       margin-bottom: var(--t5e-size-8x);
     }
 
-    h4,
-    h3 {
+    h4 {
       color: var(--t5e-color-text-lighter);
 
       i {
@@ -30,12 +29,6 @@
         margin-right: 0.1875rem;
         color: var(--t5e-color-icon-button);
       }
-    }
-
-    h4.bordered {
-      border-bottom: 0.0625rem solid var(--t5e-color-gold);
-      padding: 0.25rem 0;
-      margin-bottom: 0.25rem;
     }
 
     .trait-editable {
@@ -91,20 +84,6 @@
         color: var(--t5e-theme-color-highlight);
       }
     }
-
-    .npc-score-tracker {
-      .card-header h3 {
-        padding-top: 0;
-      }
-
-      .uses {
-
-        .max,
-        .value {
-          width: 1.5rem;
-        }
-      }
-    }
   }
 
   .trait-icon-keel {
@@ -120,35 +99,6 @@
   .abilities-container-inner {
     margin: 0;
     overflow: hidden;
-  }
-
-  .initiative-container {
-    text-align: center;
-    align-items: center;
-
-    .ability-labels {
-      bottom: 0.4375rem;
-    }
-
-    .initiative-bonus {
-      margin-right: 0.25rem;
-
-      > * {
-        letter-spacing: -6%;
-      }
-    }
-  }
-
-  /* Smallest abilities when sheet is mid-size and has custom abilities present.
-  /* ------------------------------------------------------------ */
-  .abilities-container.abilities-size-compact {
-    .abilities-container-inner {
-
-      .bonus-container,
-      .initiative-container .bonus-container.initiative-score-container {
-        aspect-ratio: 1 / 1;
-      }
-    }
   }
 
   /* Basic theme overrides
@@ -174,22 +124,6 @@
 
   /* TABS
   /* ------------------------------------------------------------ */
-  .tidy-tab {
-    .tidy-table-cell[data-tidy-column-key="qty"] {
-      padding-left: 0;
-      padding-right: 0;
-
-      .command {
-        opacity: 0;
-        transition: opacity var(--t5e-transition-default);
-      }
-
-      &:hover .command {
-        opacity: 1;
-      }
-    }
-  }
-
   .crew-and-passengers {
     .sheet-pin {
       padding-block: var(--t5e-size-1x);
@@ -252,30 +186,6 @@
     position: absolute;
     top: calc(50% - 0.9375rem);
     right: 0;
-  }
-
-  .spellbook-footer {
-    .spellcasting-ability {
-      select {
-        height: 1.5rem;
-      }
-    }
-
-    .level {
-      input[type="number"] {
-        height: 1.5rem;
-        max-width: 2.5rem;
-      }
-    }
-
-    .pill.borderless {
-      padding: 0;
-      border: none;
-
-      &.level {
-        padding-left: 0.5rem;
-      }
-    }
   }
 
   /* Light theme styles
