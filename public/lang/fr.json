@@ -107,7 +107,13 @@
             "Show": "Montrer",
             "UndoChanges": "Annuler les modifications",
             "UseDefault": "Utiliser la valeur par défaut",
-            "UseGlobalDefaults": "Utiliser les paramètres globaux par défaut"
+            "UseGlobalDefaults": "Utiliser les paramètres globaux par défaut",
+            "CopyToClipboard": "Copier dans le presse-papiers",
+            "Decrease": "Diminuer",
+            "DecreaseNamed": "Diminuer {name}",
+            "Increase": "Augmenter",
+            "IncreaseNamed": "Augmenter {name}",
+            "ViewDescription": "Afficher {description}"
         },
         "BrokenLink": "Lien brisé",
         "GMOnly": {
@@ -129,6 +135,9 @@
         "UseDefaultDialog": {
             "Text": "Êtes-vous sûr de vouloir utiliser la valeur par défaut ?",
             "Title": "Confirmer : Utiliser par défaut"
+        },
+        "Warning": {
+            "ActiveEffectOverride": "Cette valeur est modifiée par un effet actif et ne peut pas être modifiée."
         }
     },
     "TIDY5E.CONTAINER": {
@@ -205,7 +214,8 @@
             "Field": {
                 "Name": "Nom de L'emplacement",
                 "Notes": "Notes"
-            }
+            },
+            "Title": "Espace réservé"
         }
     },
     "TIDY5E.FACILITY": {
@@ -283,6 +293,9 @@
             "Mastery": {
                 "Label": "Maîtrise d'arme : {mastery}"
             }
+        },
+        "Rarity": {
+            "Varies": "Rareté variable"
         }
     },
     "TIDY5E.JOURNAL": {
@@ -311,7 +324,14 @@
         },
         "Statblock": {
             "Option": {
-                "ShowLegendaryTrackers": "Afficher les traqueurs légendaires/de repaires dans l'onglet Statblock"
+                "ShowLegendaryTrackers": "Afficher les traqueurs légendaires/de repaires dans l'onglet Statblock",
+                "IncludeSpells": "Ajouter les sections « Sorts » dans l'onglet « Caracteristiques »"
+            }
+        },
+        "Refresh": {
+            "label": "Actualiser tous les objets et toutes les fonctionnalités des PNJ",
+            "Group": {
+                "label": "Actualiser les PNJ"
             }
         }
     },
@@ -738,6 +758,9 @@
             "Identifier": "Identifiant de la classe source",
             "IdentifierHint": "L'identifiant de classe source du sort apparaît ici. Pour attribuer un identifiant que le personnage ne possède pas, saisissez l'identifiant de classe dans cette zone de texte.",
             "ShowUnassignedOnly": "Afficher uniquement les non assignés"
+        },
+        "Sections": {
+            "Title": "Sections des sorts"
         }
     },
     "TIDY5E.TAB": {
