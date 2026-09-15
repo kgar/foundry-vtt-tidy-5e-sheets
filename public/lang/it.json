@@ -107,7 +107,13 @@
             "Show": "Mostra",
             "UndoChanges": "Annulla Modifiche",
             "UseDefault": "Usa Predefinito",
-            "UseGlobalDefaults": "Usa Predefiniti Globali"
+            "UseGlobalDefaults": "Usa Predefiniti Globali",
+            "CopyToClipboard": "Copia negli Appunti",
+            "Decrease": "Diminuisci",
+            "DecreaseNamed": "Diminuisci {name}",
+            "Increase": "Aumenta",
+            "IncreaseNamed": "Aumenta {name}",
+            "ViewDescription": "Vedi {description}"
         },
         "BrokenLink": "Link non funzionante",
         "GMOnly": {
@@ -129,6 +135,9 @@
         "UseDefaultDialog": {
             "Text": "Sei sicuro di voler utilizzare l'impostazione predefinita?",
             "Title": "Conferma: usa predefinito"
+        },
+        "Warning": {
+            "ActiveEffectOverride": "Questo valore è modificato da un Effetto Attivo e non può essere modificato."
         }
     },
     "TIDY5E.CONTAINER": {
@@ -205,7 +214,8 @@
             "Field": {
                 "Name": "Nome Segnaposto",
                 "Notes": "Note"
-            }
+            },
+            "Title": "Segnaposto"
         }
     },
     "TIDY5E.FACILITY": {
@@ -283,6 +293,9 @@
             "Mastery": {
                 "Label": "Padronanza Armi: {mastery}"
             }
+        },
+        "Rarity": {
+            "Varies": "Rarità Variabile"
         }
     },
     "TIDY5E.JOURNAL": {
@@ -311,7 +324,14 @@
         },
         "Statblock": {
             "Option": {
-                "ShowLegendaryTrackers": "Mostra i tracker Leggendari/Tana nella scheda Statistiche"
+                "ShowLegendaryTrackers": "Mostra i tracker Leggendari/Tana nella scheda Statistiche",
+                "IncludeSpells": "Includi le sezioni Incantesimi nella scheda del blocco statistiche"
+            }
+        },
+        "Refresh": {
+            "label": "Aggiorna tutti gli Oggetti e i Privilegi dei PNG",
+            "Group": {
+                "label": "Aggiorna PNG"
             }
         }
     },
@@ -738,6 +758,9 @@
             "Identifier": "Identificatore Classe Sorgente",
             "IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
             "ShowUnassignedOnly": "Mostra Solo Non Assegnato"
+        },
+        "Sections": {
+            "Title": "Sezioni Incantesimi"
         }
     },
     "TIDY5E.TAB": {
