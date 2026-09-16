@@ -165,6 +165,6 @@
       })}
   >
     <i class="fas fa-plus"></i>
-    {localize('DND5E.ADVANCEMENT.Action.Create')}
+    {localize('DND5E.ACTIVITY.Action.Create')}
   </button>
 {/if}
