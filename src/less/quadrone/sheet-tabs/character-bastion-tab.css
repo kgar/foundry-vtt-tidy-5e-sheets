@@ -4,11 +4,6 @@
   /* ------------------------------------------------------------ */
   .tidy-tab.bastion {
     --bastion-row-gap: var(--t5e-size-6x);
-    --bastion-facility-background: linear-gradient(145deg,
-        rgba(248, 244, 241, 0.85) 10%,
-        rgba(248, 244, 241, 0.1) 160%),
-      var(--underlay) 40%,
-      var(--t5e-component-card-default);
     container-name: bastion-tab;
     container-type: inline-size;
 
@@ -68,16 +63,13 @@
     }
 
     .facility:not(.empty) {
-      --bastion-facility-background: linear-gradient(145deg,
+      --bastion-facility-overlay: linear-gradient(145deg,
           rgba(248, 244, 241, 0.85) 10%,
-          rgba(248, 244, 241, 0.1) 160%),
-        var(--underlay) 40%,
-        var(--t5e-component-card-default);
+          rgba(248, 244, 241, 0.1) 160%);
+      --bastion-facility-underlay-blend: multiply;
       border-radius: var(--t5e-component-card-radius);
       padding: 0.75rem 0.5rem;
-      background: var(--bastion-facility-background);
-      background-blend-mode: normal, multiply;
-      background-size: cover, cover;
+      background: var(--t5e-component-card-default);
       box-shadow: var(--t5e-drop-shadow-pill);
       display: flex;
       flex-direction: column;
@@ -85,9 +77,35 @@
       outline: var(--t5e-outline-default);
       outline-offset: -0.03125rem;
       transition: box-shadow var(--t5e-transition-default);
+      isolation: isolate;
+      position: relative;
+
+      > .underlay {
+        block-size: 100%;
+        border: none;
+        border-radius: inherit;
+        inline-size: 100%;
+        inset: 0;
+        mix-blend-mode: var(--bastion-facility-underlay-blend);
+        object-fit: cover;
+        object-position: 40% center;
+        pointer-events: none;
+        position: absolute;
+        z-index: -2;
+      }
+
+      &::after {
+        background: var(--bastion-facility-overlay);
+        border-radius: inherit;
+        content: '';
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+      }
 
       &.basic {
-        background-blend-mode: normal, luminosity;
+        --bastion-facility-underlay-blend: luminosity;
       }
 
       &.no-events {
@@ -253,7 +271,7 @@
       .title {
         font-size: 0.9375rem;
         transition: all 0.3s ease;
-        font-weight: var(--font-heading-weight-label);
+        font-weight: var(--font-weight-label);
       }
 
       .subtitle {
@@ -367,15 +385,14 @@
   &.theme-dark {
     .tidy-tab.bastion {
       .facility:not(.empty) {
-        --bastion-facility-background: linear-gradient(145deg,
+        --bastion-facility-overlay: linear-gradient(145deg,
             rgba(27, 29, 35, 0.95) 10%,
-            rgba(27, 29, 35, 0.1) 170%),
-          var(--underlay) 40%, #2c3e50;
-        background-blend-mode: normal, normal;
-        background-size: cover, cover;
+            rgba(27, 29, 35, 0.1) 170%);
+        --bastion-facility-underlay-blend: normal;
+        background: #2c3e50;
 
         &.basic {
-          background-blend-mode: normal, luminosity;
+          --bastion-facility-underlay-blend: luminosity;
         }
 
         .facility-header :is(.facility-image, .facility-image svg) {

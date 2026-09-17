@@ -7,7 +7,7 @@ type BastionMaintainOrderDialogConfiguration = ApplicationConfiguration & {
 };
 
 function buildMemberRow(actor: Actor5e): string {
-  const img = foundry.utils.escapeHTML(foundry.utils.getRoute(actor.img));
+  const img = foundry.utils.escapeHTML(actor.img);
   const name = foundry.utils.escapeHTML(actor.name);
   const bastionName = actor.system.bastion?.name?.trim();
   const subtitle = bastionName
