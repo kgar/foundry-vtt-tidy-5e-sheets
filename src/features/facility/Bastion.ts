@@ -174,7 +174,7 @@ export async function buildChosenFacilityContext(facility: any) {
     free,
     hirelings: await prepareFacilityOccupants(hirelings),
     id,
-    img: foundry.utils.getRoute(img),
+    img,
     isSpecial: type.value === CONSTANTS.FACILITY_TYPE_SPECIAL,
     labels,
     name,

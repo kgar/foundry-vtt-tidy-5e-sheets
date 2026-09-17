@@ -133,7 +133,7 @@
           {#each context.facilities.special.builtFacilities as chosen}
             {const bgImg = $derived(
               chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
-                ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+                ? 'modules/tidy5e-sheet/images/facility-default-background.webp'
                 : chosen.img,
             )}
 
@@ -157,8 +157,8 @@
               data-item-id={chosen.id}
               data-facility-id={chosen.id}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-              style="--underlay: url('{bgImg}')"
             >
+              <img class="underlay" src={bgImg} alt="" inert />
               <div class="facility-header">
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
@@ -326,7 +326,7 @@
           {#each context.facilities.basic.builtFacilities as chosen}
             {const bgImg = $derived(
               chosen.img.includes('systems/dnd5e/icons/svg/items/facility.svg')
-                ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+                ? 'modules/tidy5e-sheet/images/facility-default-background.webp'
                 : chosen.img,
             )}
 
@@ -344,8 +344,8 @@
               class:no-events={chosen.disabled && !FoundryAdapter.userIsGm()}
               class:building={chosen.building}
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-              style="--underlay: url('{bgImg}')"
             >
+              <img class="underlay" src={bgImg} alt="" inert />
               <div class="facility-header">
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
