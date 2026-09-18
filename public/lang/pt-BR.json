@@ -107,7 +107,13 @@
             "Show": "Exibir",
             "UndoChanges": "Desfazer Alterações",
             "UseDefault": "Usar Padrão",
-            "UseGlobalDefaults": "Usar Padrões Globais"
+            "UseGlobalDefaults": "Usar Padrões Globais",
+            "CopyToClipboard": "Copiar para Área de Transferência",
+            "Decrease": "Diminuir",
+            "DecreaseNamed": "Diminuir {name}",
+            "Increase": "Aumentar",
+            "IncreaseNamed": "Aumentar {name}",
+            "ViewDescription": "Visualizar {description}"
         },
         "BrokenLink": "Link Quebrado",
         "GMOnly": {
@@ -129,6 +135,9 @@
         "UseDefaultDialog": {
             "Text": "Tem certeza que quer usar o padrão?",
             "Title": "Confirmar: Usar Padrão"
+        },
+        "Warning": {
+            "ActiveEffectOverride": "Este valor está sendo modificado por um Efeito Ativo e não pode ser editado."
         }
     },
     "TIDY5E.CONTAINER": {
@@ -205,7 +214,8 @@
             "Field": {
                 "Name": "Nome da Reserva",
                 "Notes": "Notas"
-            }
+            },
+            "Title": "Reserva"
         }
     },
     "TIDY5E.FACILITY": {
@@ -283,6 +293,9 @@
             "Mastery": {
                 "Label": "Weapon Mastery: {mastery}"
             }
+        },
+        "Rarity": {
+            "Varies": "Raridade Variável"
         }
     },
     "TIDY5E.JOURNAL": {
@@ -311,7 +324,14 @@
         },
         "Statblock": {
             "Option": {
-                "ShowLegendaryTrackers": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas"
+                "ShowLegendaryTrackers": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas",
+                "IncludeSpells": "Incluir seções de Magias na aba Bloco de Estatísticas"
+            }
+        },
+        "Refresh": {
+            "label": "Atualizar Todos os Itens e Características dos PNJs",
+            "Group": {
+                "label": "Atualizar PNJs"
             }
         }
     },
@@ -738,6 +758,9 @@
             "Identifier": "Identificador de Classe de Origem",
             "IdentifierHint": "O identificador da classe de origem da magia aparece aqui. Para atribuir um identificador que o personagem não possui, insira o identificador de classe neste campo de texto.",
             "ShowUnassignedOnly": "Exibir Apenas Não-Atribuídos"
+        },
+        "Sections": {
+            "Title": "Seções de Magias"
         }
     },
     "TIDY5E.TAB": {
