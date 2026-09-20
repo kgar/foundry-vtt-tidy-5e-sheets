@@ -684,15 +684,20 @@ export function getTidyExtensibleDocumentSheetMixin<
       const sheetDocumentIsRelatedItem =
         sheetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
         (sheetDocument.id === itemId || !itemId);
-      const item = sheetDocumentIsRelatedItem
+      let item = sheetDocumentIsRelatedItem
         ? sheetDocument
         : sheetDocument.type === CONSTANTS.ITEM_TYPE_CONTAINER
           ? sheetDocument.system.getContainedItem(itemId)
           : sheetDocument?.items?.get(itemId);
 
+      // Compendium containers resolve items async
+      if (item instanceof Promise) {
+        item = undefined;
+      }
+
       const { activityId } =
         target.closest<HTMLElement>('[data-activity-id]')?.dataset ?? {};
-      const activity = item?.system.activities?.get(activityId);
+      const activity = item?.system?.activities?.get(activityId);
 
       const { effectId } =
         target.closest<HTMLElement>('[data-effect-id]')?.dataset ?? {};
@@ -1125,8 +1130,26 @@ export function getTidyExtensibleDocumentSheetMixin<
       this._openAnything(event, target, CONSTANTS.SHEET_MODE_PLAY);
     }
 
-    _openAnything(event: PointerEvent, target: HTMLElement, mode?: number) {
-      // Standard Case
+    async _openAnything(
+      event: PointerEvent,
+      target: HTMLElement,
+      mode?: number,
+    ) {
+      const { itemId } =
+        target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+
+      // Special Case - Compendium Containers 
+      // getContainedItem is only a Promise from a compendium, use await
+      if (
+        this.document.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
+        itemId &&
+        itemId !== this.document.id
+      ) {
+        const item = await this.document.system.getContainedItem(itemId);
+        if (item) {
+          return this._renderChild(item.sheet, { mode });
+        }
+      }
 
       const { targetDocument } = this._getDocumentSubmissionInformation(target);
 
