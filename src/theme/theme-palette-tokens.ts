@@ -4,7 +4,7 @@ import { THEME_CLASS_DARK, THEME_CLASS_LIGHT } from './theme-color-functions';
 type ThemeVariant = typeof THEME_CLASS_LIGHT | typeof THEME_CLASS_DARK;
 
 // Manual copy of our theme tokens for APCA contrast adjustment. 
-// Manually synced with variables-quadrone 🥲
+// Manually synced with variables 🥲
 
 // Foregrounds are not overridden in .theme-dark
 export const BASE_THEME_FOREGROUNDS = {
@@ -22,7 +22,7 @@ export const BASE_CARD_COLOR: Record<ThemeVariant, string> = {
   [THEME_CLASS_DARK]: 'rgb(40, 42, 48)',
 };
 
-// Replicates theme color CSS adjustments in variables-quadrone
+// Replicates theme color CSS adjustments in variables
 export function deriveDarkerAccent(accent: string): string {
   try {
     const [l, c, h] = chroma(accent).oklch();

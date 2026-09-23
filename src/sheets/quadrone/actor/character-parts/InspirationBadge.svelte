@@ -52,7 +52,7 @@
       >
         <button
           type="button"
-          class="button button-borderless button-icon-only"
+          class="button button-borderless button-icon-only inspiration-control"
           aria-label={localize('TIDY5E.COMMON.Action.DecreaseNamed', { name: localize('DND5E.Inspiration') })}
           data-tooltip
           disabled={inspirationSource.value === 0}
@@ -63,7 +63,7 @@
         </button>
         <button
           type="button"
-          class="button button-borderless button-icon-only"
+          class="button button-borderless button-icon-only inspiration-control"
           aria-label={localize('TIDY5E.COMMON.Action.IncreaseNamed', { name: localize('DND5E.Inspiration') })}
           data-tooltip
           disabled={inspirationSource.value === inspirationSource.max}

@@ -22,13 +22,25 @@
     encumbrance.stops?.heavilyEncumbered ?? 0,
   );
 
-  let barSeverity = $derived(
-    percentage > heavilyEncumberedStop
-      ? `high`
-      : percentage > encumberedStop
-        ? `medium`
-        : `low`,
+  // Check exceeded if > max
+  let isExceeded = $derived(
+    Number.isFinite(encumbrance.max) &&
+      encumbrance.max > 0 &&
+      (encumbrance.value ?? 0) > encumbrance.max,
   );
+
+  let barSeverity = $derived.by((): 'low' | 'medium' | 'high' | 'exceeded' => {
+    if (isExceeded) {
+      return 'exceeded';
+    }
+    if (percentage > heavilyEncumberedStop) {
+      return 'high';
+    }
+    if (percentage > encumberedStop) {
+      return 'medium';
+    }
+    return 'low';
+  });
 
   let readableValue = $derived(FoundryAdapter.formatNumber((encumbrance.value ?? 0).toNearest(0.1)));
 

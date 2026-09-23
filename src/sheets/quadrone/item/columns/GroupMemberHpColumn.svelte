@@ -8,6 +8,7 @@
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import Button from 'src/components/buttons/Button.svelte';
   import { getContext } from 'svelte';
   import type GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
 
@@ -62,16 +63,15 @@
   </div>
 </div>
 {#if 'canEdit' in rowContext && rowContext.canEdit}
-  <button
-    type="button"
-    class="button button-borderless button-icon-only"
+  <Button
+    variant="borderless"
+    iconOnly
+    icon="fa-solid fa-dice-d20"
     aria-label={localize('DND5E.HPFormulaRollMessage')}
-    data-tooltip
+    data-tooltip=""
     onclick={async () => {
       await new Tidy5eNpcSheetQuadrone({ document: rowDocument }).rollFormula();
       context.sheet.render();
     }}
-  >
-    <i class="fa-solid fa-dice-d20"></i>
-  </button>
+  />
 {/if}

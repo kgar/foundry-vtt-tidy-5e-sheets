@@ -1,0 +1,632 @@
+.tidy5e-sheet:where(.application) {
+  /* ---------------------------------- */
+  /*  All Tidy5e Apps                   */
+  /* ---------------------------------- */
+
+  --minimized-width: 18.75rem;
+  --color-scrollbar: rgba(0, 0, 0, 0.35);
+  --app-background: var(--t5e-component-card-darker);
+  --t5e-app-border-color: var(--t5e-color-gold);
+  --t5e-app-background: var(--app-background);
+  --t5e-app-background-size: cover;
+  --t5e-app-decor-content: '';
+  --t5e-app-decor-before-background: none;
+  --t5e-app-decor-after-background: none;
+  --t5e-app-decor-background-size: initial;
+  --t5e-app-resize-handle-filter: none;
+  --t5e-app-code-background: rgba(0, 0, 0, 0.08);
+  /* Application window */
+  border-radius: 0.3125rem;
+  border: 0.0625rem solid var(--t5e-app-border-color);
+  background: var(--t5e-app-background);
+  box-shadow: var(--t5e-drop-shadow-sheet);
+  background-size: var(--t5e-app-background-size);
+  color: var(--t5e-color-text-default);
+  /* Sheet Body Typography */
+  font-family: var(--t5e-font-family-default, var(--t5e-font-roboto-condensed));
+  font-size: var(--font-size-default, 0.8125rem);
+  font-style: normal;
+  font-weight: var(--font-weight-default);
+  line-height: normal;
+
+  &::before,
+  &::after {
+    content: var(--t5e-app-decor-content);
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  &::before {
+    background: var(--t5e-app-decor-before-background);
+    background-size: var(--t5e-app-decor-background-size);
+  }
+
+  &::after {
+    background: var(--t5e-app-decor-after-background);
+    background-size: var(--t5e-app-decor-background-size);
+  }
+
+  &:where(.minimized) {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  /* Font Color */
+  &:where(:not(.minimized)) {
+    --color-light-text-heading: var(--t5e-color-text-lighter);
+
+    .window-title {
+      margin-block-end: 0.125rem;
+    }
+  }
+
+  /* Window Header */
+  .window-header {
+    align-items: center;
+    border: none;
+    padding-inline-start: var(--t5e-size-2x);
+
+    h1 {
+      color: var(--t5e-color-text-lighter);
+      font: var(--t5e-font-label-medium);
+    }
+
+    > * {
+      max-block-size: 100%;
+    }
+
+    .window-title {
+      font-size: inherit;
+      line-height: var(--t5e-lineheight-default);
+    }
+
+    button.header-control {
+      --t5e-button-radius: 100%;
+      --t5e-button-text: var(--t5e-theme-color-foreground-diminished);
+
+      &:hover,
+      &:focus-within,
+      &:active {
+        --t5e-button-text: var(--t5e-theme-color-foreground);
+        --t5e-button-background: rgba(0, 0, 0, 0.5);
+      }
+
+      /* TODO: Figure out how to make the header UUID control use a copy cursor. */
+    }
+  }
+
+  &:where(:not(.minimized)) .window-header {
+    background: none;
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .controls-dropdown {
+    background: var(--t5e-component-card-darker);
+    border-radius: 0.3125rem;
+    transition: none;
+
+    &.expanded {
+      border: 0.0625rem solid var(--t5e-component-field-border);
+      box-shadow: var(--t5e-drop-shadow-card);
+    }
+
+    .header-control > button {
+      --t5e-button-icon: var(--t5e-color-text-lighter);
+      --button-text-color: var(--t5e-color-text-default);
+      --button-hover-text-color: var(--t5e-color-text-default);
+      gap: 0.5rem;
+      justify-content: flex-start;
+
+      .control-label {
+        color: var(--t5e-color-text-default);
+        font: var(--t5e-font-default-medium);
+      }
+
+      &:hover {
+        --t5e-button-background: var(--t5e-component-field-background-hover);
+        --t5e-button-icon-hover: var(--t5e-color-icon-default);
+      }
+    }
+  }
+
+  &:where(.scrollable-window-content) .window-content {
+    overflow-y: auto;
+  }
+
+  .window-content {
+    padding-block-start: 0;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--t5e-color-text-default);
+      text-shadow: none;
+      border: none;
+      margin-block: 0;
+      margin-inline: 0;
+    }
+
+    :where(h1, h2, h3) {
+      font-family: var(--t5e-font-modesto-condensed);
+    }
+
+    :where(h4, h5, h6) {
+      font-family: var(--t5e-font-roboto-condensed);
+      font-size: var(--font-size-13);
+      font-style: normal;
+      line-height: var(--font-size-16);
+      letter-spacing: 0.00813rem;
+    }
+
+    :where(h1) {
+      font-size: var(--font-size-46);
+      line-height: var(--font-size-56);
+    }
+
+    :where(h2) {
+      font-size: var(--font-size-28);
+      line-height: var(--font-size-32);
+      letter-spacing: 0.0175rem;
+    }
+
+    :where(h3) {
+      font-size: var(--font-size-16);
+      line-height: var(--font-size-16);
+      letter-spacing: 0.00875rem;
+    }
+
+    :where(h4) {
+      font-size: var(--font-size-13, 0.8125rem);
+      font-style: normal;
+      line-height: var(--font-size-16);
+      letter-spacing: 0.00813rem;
+    }
+
+    :where(h5) {
+      font-size: var(--font-size-12);
+      line-height: var(--font-size-15);
+    }
+
+    :where(h6) {
+      font-size: var(--font-size-11);
+      line-height: var(--font-size-14);
+    }
+  }
+
+  .text-normal {
+    font-weight: var(--font-weight-default);
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .text-data {
+    font-weight: var(--font-weight-bold);
+    color: var(--t5e-color-text-default);
+  }
+
+  .text-label {
+    font-weight: var(--font-weight-label);
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .text-label-icon {
+    color: var(--t5e-color-text-lightest);
+  }
+
+  .separator {
+    font-weight: var(--font-weight-default);
+    color: var(--t5e-color-text-lightest);
+  }
+
+  /* Currencies */
+  :is(i, span).currency {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background: transparent no-repeat center / contain;
+    background-image: var(--currency-icon-url);
+  }
+
+  /* Prose Mirror Editor Customizations */
+  .editor.prosemirror {
+    menu {
+      background: var(--t5e-component-card-lighter);
+      box-sizing: border-box;
+      gap: var(--t5e-size-halfx);
+      padding-block: 0.125rem;
+      padding-inline: 0.125rem;
+
+      .pm-dropdown {
+        justify-content: space-between;
+
+        &.format {
+          min-width: 5.25rem;
+        }
+      }
+
+      li {
+        .pm-dropdown {
+          i {
+            margin-inline-start: 0.25rem;
+          }
+
+          > span {
+            align-self: center;
+            width: auto;
+          }
+        }
+
+        button {
+          --t5e-button-size: var(--t5e-field-size-small);
+          --t5e-button-height: var(--t5e-field-size-small);
+          --t5e-button-background: none;
+          --t5e-button-border-width: 0.0625rem;
+          --t5e-button-border: transparent;
+          --t5e-button-shadow: none;
+          --t5e-button-focus: none;
+          --t5e-button-padding-inline-start: 0.3125rem;
+          --t5e-button-padding-inline-end: 0.3125rem;
+          min-width: var(--t5e-field-size-small);
+          margin-block: 0;
+          margin-inline: 0;
+          padding-block: 0;
+
+          &.active {
+            --t5e-button-icon: var(--t5e-color-icon-button);
+          }
+
+          &:active,
+          &:focus-within {
+            --t5e-button-background: var(--t5e-component-field-background-active);
+            --t5e-button-icon: var(--t5e-color-icon-button);
+            --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+          }
+
+          &:hover {
+            --t5e-button-background: var(--t5e-component-field-background-hover);
+            --t5e-button-border: var(--t5e-component-field-border);
+          }
+        }
+
+        &.active {
+          button {
+            --t5e-button-background: var(--t5e-component-field-background-active);
+            --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+          }
+        }
+      }
+    }
+  }
+
+  &:where(.theme-light) {
+    --t5e-app-decor-before-background: url('../../modules/tidy5e-sheet/images/texture-gray-1.webp') no-repeat top center;
+    --t5e-app-decor-after-background: url('../../modules/tidy5e-sheet/images/texture-gray-2.webp') no-repeat bottom center;
+    --t5e-app-decor-background-size: cover;
+  }
+
+  a[href] {
+    color: var(--t5e-color-link-default);
+    transition: all var(--t5e-transition-default);
+
+    &:hover {
+      color: var(--t5e-color-link-hover);
+      text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+    }
+  }
+
+  code {
+    background-color: var(--t5e-app-code-background);
+    border: none;
+    font-size: var(--font-size-12);
+    margin-block: -0.0625rem;
+    margin-inline: 0;
+  }
+
+  .inline-roll,
+  .content-link,
+  .enricher-action,
+  .roll-link,
+  .reference-link {
+    /* TODO: Cleanup this section. */
+    --icon-fill: var(--t5e-color-text-gold-emphasis);
+    border: none;
+    color: var(--t5e-color-text-default);
+    background: var(--t5e-enricher-background);
+    padding-block: var(--t5e-size-1) var(--t5e-size-halfx);
+    padding-inline: 0.1875rem;
+    text-decoration: underline;
+    text-underline-offset: var(--t5e-size-halfx);
+
+    a {
+      background: none;
+      border: none;
+    }
+
+    i {
+      color: var(--icon-fill);
+      margin-inline-end: var(--t5e-size-1x);
+    }
+
+    &:hover {
+      --icon-fill: var(--t5e-color-text-default);
+      text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+    }
+  }
+
+  .broken {
+    i {
+      color: var(--t5e-color-orange);
+    }
+  }
+
+  .roll-link-group {
+    border: none;
+    background: var(--t5e-enricher-background);
+    padding-inline: var(--t5e-size-1) var(--t5e-size-halfx);
+
+    &:has(.enricher-action) {
+      padding-inline-end: 0;
+    }
+
+    &:hover {
+      --icon-fill: var(--t5e-color-icon-default);
+      text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+
+      i {
+        --icon-fill: var(--t5e-color-icon-default);
+      }
+    }
+
+    .roll-link,
+    .enricher-action {
+      background: none;
+    }
+  }
+
+  .enricher-action {
+    margin-inline: var(--t5e-size-1);
+    padding-inline: var(--t5e-size-1x);
+
+    i {
+      margin-block: 0;
+      margin-inline: 0;
+    }
+  }
+
+  .roll-link {
+    padding-inline-start: var(--t5e-size-halfx);
+  }
+
+  sup,
+  sub {
+    font-size: var(--font-size-10);
+  }
+
+  /* Spell Block */
+  .spell-block {
+    &,
+    * {
+      user-select: text;
+    }
+
+    li + li {
+      margin-block-start: var(--t5e-size-1x);
+    }
+
+    label {
+      font: var(--t5e-font-label-small);
+      font-weight: var(--font-weight-default);
+      color: var(--t5e-color-text-lighter);
+    }
+
+    .value {
+      font: var(--t5e-font-default-small);
+      font-weight: var(--font-weight-label);
+      color: var(--t5e-color-text-default);
+
+      .condition,
+      .materials {
+        font-weight: var(--font-weight-default);
+        color: var(--t5e-color-text-lighter);
+        font-style: italic;
+      }
+    }
+  }
+
+  input[type="text"]:disabled,
+  input[type="number"]:disabled,
+  input[type="password"]:disabled,
+  input[type="date"]:disabled,
+  input[type="time"]:disabled,
+  input[type="search"]:disabled,
+  input[type="file"]:disabled,
+  select:disabled,
+  textarea:disabled {
+    cursor: text;
+  }
+
+  #context-menu.tidy5e-sheet {
+    background: var(--t5e-component-card-darker);
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+    box-shadow: var(--t5e-drop-shadow-card);
+  }
+
+  /* More specific than util.css minimized-state rules. */
+  &.theme-dark {
+    --t5e-app-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim065.png');
+    --t5e-app-background-size: auto;
+    --t5e-app-border-color: var(--t5e-color-palette-gold-45);
+    --t5e-app-decor-content: none;
+    --t5e-app-resize-handle-filter: invert(1);
+    --t5e-app-code-background: rgba(0, 0, 0, 0.5);
+
+    &.minimized .window-header {
+      background: var(--t5e-component-card-darker);
+
+      button.header-control:hover,
+      button.header-control:focus-within,
+      button.header-control:active {
+        --t5e-button-background: rgba(0, 0, 0, 1);
+      }
+    }
+
+    .controls-dropdown {
+      .header-control > button {
+        &:hover,
+        &:focus-within,
+        &:active {
+          --t5e-button-background: rgba(0, 0, 0, 1);
+        }
+      }
+    }
+  }
+
+  &.theme-light {
+    .editor.prosemirror menu {
+      border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
+
+      li button.active {
+        --t5e-button-background: var(--t5e-component-card-darker);
+        --t5e-button-border: var(--t5e-color-gold);
+      }
+    }
+
+    &.minimized .window-header {
+      background: var(--t5e-component-card-darker);
+
+      .window-title {
+        color: var(--t5e-color-text-default);
+      }
+
+      button.header-control {
+        --t5e-button-text: var(--t5e-color-icon-button);
+
+        &:hover,
+        &:focus-within,
+        &:active {
+          --t5e-button-text: var(--t5e-color-icon-default);
+        }
+      }
+    }
+  }
+
+  :where(.rarity) {
+    --t5e-item-color: var(--t5e-color-gold);
+
+    &:where(.common) {
+      --t5e-item-color: var(--t5e-color-rarity-common);
+    }
+
+    &:where(.uncommon) {
+      --t5e-item-color: var(--t5e-color-rarity-uncommon);
+    }
+
+    &:where(.rare) {
+      --t5e-item-color: var(--t5e-color-rarity-rare);
+    }
+
+    &:where(.veryrare) {
+      --t5e-item-color: var(--t5e-color-rarity-veryrare);
+    }
+
+    &:where(.legendary) {
+      --t5e-item-color: var(--t5e-color-rarity-legendary);
+    }
+
+    &:where(.artifact) {
+      --t5e-item-color: var(--t5e-color-rarity-artifact);
+    }
+
+    &.diminished {
+      --t5e-item-color: var(--t5e-color-palette-grey-40);
+    }
+  }
+
+  :where(.spell-method:is(.cannot-prepare, .can-prepare.always, .method-pact)) {
+    --t5e-icon-color: var(--t5e-method-color);
+
+    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always, .method-pact))) {
+      --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.5) calc(c * .88) h);
+    }
+  }
+
+  :where(.spell-method.diminished) {
+    --t5e-icon-color: var(--t5e-color-text-lighter);
+  }
+
+  :where(.method-atwill) {
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-atwill));
+  }
+
+  :where(.method-pact) {
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-pact));
+  }
+
+  :where(.method-innate) {
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-innate));
+  }
+
+  :where(.method-ritual) {
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-ritual));
+  }
+
+  :where(.method-spell) {
+    --t5e-method-color: var(--t5e-theme-basic, var(--t5e-color-spellcasting-spell));
+  }
+
+  :where(.diminished) {
+    --t5e-item-color: var(--t5e-color-palette-grey-40);
+  }
+
+  .window-resize-handle {
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    filter: var(--t5e-app-resize-handle-filter);
+  }
+
+  .button-bar {
+    flex: 0;
+    display: flex;
+    gap: var(--t5e-size-1x);
+
+    button {
+      flex: 1;
+    }
+  }
+
+  /* Overrides the `.theme-light` minimized header rules above. */
+  &:where(.theme-basic).theme-light {
+    .window-header {
+      button.header-control {
+        &:hover,
+        &:focus-within,
+        &:active {
+          --t5e-button-text: var(--t5e-color-icon-default);
+          --t5e-button-background: rgba(0, 0, 0, 0.12);
+        }
+      }
+    }
+  }
+
+  &:where(.disable-transitions) {
+    --t5e-transition-default: none;
+  }
+
+  &:where(.tidy-dragging) {
+    --t5e-transition-default: 0 none;
+    --t5e-drop-shadow-sheet: none;
+    --t5e-drop-shadow-card: none;
+    --t5e-drop-shadow-pill: none;
+    --t5e-drop-shadow-field: none;
+    --t5e-drop-shadow-field-hover: none;
+    --t5e-drop-shadow-field-focus: none;
+    --t5e-filter-drop-shadow-token: none;
+  }
+}

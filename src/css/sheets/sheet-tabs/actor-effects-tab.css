@@ -1,0 +1,24 @@
+.tidy5e-sheet:where(.application.actor) {
+  --t5e-effects-icon-enabled-color: var(--t5e-theme-color-darker);
+  --t5e-effects-toggle-icon-color: inherit;
+
+  .tidy-tab.effects {
+    i.enabled {
+      color: var(--t5e-effects-icon-enabled-color);
+    }
+
+    .tidy-table-toggle i:not(.enabled) {
+      color: var(--t5e-effects-toggle-icon-color);
+    }
+
+    .inline-activity-arrow {
+      padding-inline: 0.25rem;
+      align-self: center;
+    }
+  }
+
+  &:where(.theme-dark) .tidy-tab.effects .tidy-table-toggle {
+    --t5e-effects-icon-enabled-color: var(--t5e-theme-color-highlight);
+    --t5e-effects-toggle-icon-color: var(--t5e-color-text-lighter);
+  }
+}

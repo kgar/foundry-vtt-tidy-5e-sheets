@@ -1,0 +1,258 @@
+.tidy5e-sheet:where(.application.tooltip) {
+  min-height: unset;
+  min-width: unset;
+
+  /* More specific than util.css `.font-title-*`. */
+  :is(.document-list-summary-tooltip, .container-capacity-tooltip) h3 {
+    color: var(--t5e-color-text-default);
+    font: var(--t5e-font-title-small);
+    font-size: var(--font-size-24);
+    text-align: center;
+    margin-block-end: 0;
+    max-width: 25rem;
+  }
+
+  hr {
+    background-image: linear-gradient(to right, transparent, var(--t5e-color-gold) 40%, var(--t5e-color-gold) 60%, transparent);
+    height: var(--t5e-size-1);
+    margin-block: 0.375rem 0.625rem;
+    margin-inline: 0;
+  }
+
+  &:where(:has(.document-list-summary-tooltip)) {
+    padding-block: var(--t5e-size-1x) var(--t5e-size-3x);
+    padding-inline: var(--t5e-size-3x);
+  }
+
+  .document-list-summary-tooltip {
+    ul {
+      margin-block: 0;
+      margin-inline: 0 var(--t5e-size-2x);
+      padding-block: 0;
+      padding-inline: 0;
+      text-align: start;
+
+      > li {
+        align-items: center;
+      }
+
+      > li + li {
+        margin-block-start: var(--t5e-size-2x);
+      }
+
+      li:not(.group-tooltip-header) .text-align-right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      li .text-align-right {
+        text-align: end;
+      }
+    }
+
+    > .weight-distribution {
+      > li {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+
+    .highlighted {
+      color: var(--t5e-color-yellow);
+    }
+
+    i {
+      text-shadow: 0 0 var(--t5e-size-1x) rgba(0, 0, 0, 0.24);
+      font-size: 0.75rem;
+      margin-inline-end: var(--t5e-size-1x);
+    }
+
+    .image-and-name {
+      display: flex;
+      gap: var(--t5e-size-1x);
+      align-items: center;
+    }
+
+    .item-image {
+      align-self: center;
+      justify-self: center;
+      flex: 0 0 var(--t5e-size-6x);
+      height: var(--t5e-size-6x);
+      width: var(--t5e-size-6x);
+      background-size: cover;
+      background-position: 50% 0;
+      border-radius: var(--t5e-size-1);
+      border: var(--t5e-size-1) solid var(--t5e-color-gold);
+
+      &.round {
+        border-radius: 100%;
+      }
+
+      &.token {
+        border: none;
+      }
+
+      &.transparent {
+        border: none;
+        position: relative;
+
+        &::before {
+          content: '';
+          border-radius: 100%;
+          border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-62);
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+        }
+      }
+    }
+
+    .item-name {
+      margin-inline: 0.375rem var(--t5e-size-1x);
+    }
+  }
+
+  .group-trait-grid {
+    display: grid;
+    grid-template-columns: 1.5rem 10rem 2.25rem;
+    gap: var(--t5e-size-1x);
+
+    .units {
+      margin-inline-start: var(--t5e-size-halfx);
+    }
+  }
+
+  .group-tool-grid {
+    display: grid;
+    grid-template-columns: 1.5rem 10rem 2.25rem 2rem;
+    gap: var(--t5e-size-1x);
+  }
+
+  .group-ability-grid {
+    display: grid;
+    grid-template-columns: repeat(6, min-content);
+    gap: var(--t5e-size-1x);
+    align-items: center;
+
+    li {
+      display: contents;
+    }
+
+    .proficiency-pip-container {
+      text-align: center;
+
+      i {
+        margin-block: var(--t5e-size-halfx);
+        margin-inline: 0;
+      }
+    }
+  }
+
+  .group-skill-grid {
+    display: grid;
+    grid-template-columns: 1.5rem 9rem 2.25rem 2.25rem 2.5rem;
+    gap: var(--t5e-size-1x);
+  }
+
+  .group-tooltip-header {
+    margin-block: -0.125rem -0.375rem;
+    margin-inline: 0;
+
+    > * {
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .list-items-tooltip {
+    li:not(:last-child) {
+      margin-block-end: var(--t5e-size-1x);
+    }
+  }
+
+  .weight-distribution {
+    li {
+      display: flex;
+      align-items: center;
+
+      .label {
+        flex: 1;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+    }
+  }
+
+  /* For faster tooltip style development. Not meant for production use. */
+  &:where(#tooltip.debug-show) {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .hp-tooltip {
+    ul.hp-tooltip-list {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin-block: var(--t5e-size-2x) 0;
+      margin-inline: 0;
+      padding-block: 0;
+      padding-inline: 0;
+
+      li {
+        position: relative;
+        padding-inline-start: 1rem;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset-block-start: 0.125rem;
+          inset-block-end: 0;
+          inset-inline-start: 0;
+          border-radius: 100%;
+          width: 0.625rem;
+          height: 0.625rem;
+        }
+
+        &.hp-current::before {
+          background: var(--t5e-color-hp-medium);
+        }
+
+        &.hp-temp::before {
+          background: var(--t5e-color-hp-temp);
+        }
+
+        &.hp-max::before {
+          background: var(--t5e-color-hp-dark);
+        }
+
+        &.hp-tempmax-positive::before {
+          background: var(--t5e-color-hp-temp-dark);
+        }
+
+        &.hp-tempmax-negative::before {
+          background: var(--t5e-color-hp-hd-light);
+        }
+      }
+    }
+
+    .label {
+      text-wrap: nowrap;
+    }
+
+    .value {
+      flex: 0 1 fit-content;
+      align-content: flex-end;
+      justify-self: flex-end;
+      text-align: end;
+    }
+
+    .flexrow {
+      justify-content: space-between;
+      gap: var(--t5e-size-4x);
+    }
+  }
+}
