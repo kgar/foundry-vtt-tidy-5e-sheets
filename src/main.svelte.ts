@@ -171,6 +171,16 @@ Hooks.once('ready', async () => {
   registerCustomTidyRollRequests();
 
   preloadSheetImages();
+
+  // TODO: Remove this if/when the system adjusts the logic in combatant.mjs: https://github.com/foundryvtt/dnd5e/issues/7531
+  Hooks.on('dnd5e.preCombatRecovery', (combatant: any) => {
+    // Actively prevent recovery logic when there is no actor to speak of.
+    // Yes, I, the Tidy developer, understand that short-circuiting this hook is outside of my normal realm of influence,
+    // but if Tidy is being used, we need to prevent these errors from occurring because of Tidy's tokenless/actorless combatants.
+    if (!combatant.actor) {
+      return false;
+    }
+  });
 });
 
 Hooks.once('setup', async () => {
