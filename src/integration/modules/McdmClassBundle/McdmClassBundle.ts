@@ -80,7 +80,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
 
   init(api: Tidy5eSheetsApi): void {
     // Powers tab
-    import('./McdmPowersTab.less');
+    import('./McdmPowersTab.css');
     loadConditionalStyles('McdmPowersTab');
 
     const powersTab = new api.models.SvelteTab({

@@ -1,0 +1,57 @@
+.tidy5e-sheet:where(.application) {
+  .action-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    container: action-bar / inline-size;
+
+    search {
+      flex: 1;
+    }
+
+    .button-toggle {
+      --t5e-button-width: fit-content;
+      gap: 0;
+      min-width: var(--t5e-field-size-default);
+
+      &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
+        font-size: 0;
+
+        &.exclude,
+        &.disabled {
+          --t5e-button-background: var(--t5e-component-card-darker);
+        }
+      }
+    }
+
+    [data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
+      &::before {
+        text-align: center;
+        content: attr(data-filter-text);
+        font-size: var(--font-size-13);
+        color: var(--t5e-button-text, var(--t5e-color-text-default));
+      }
+
+      &:is(.exclude, .disabled)::before {
+        font-style: italic;
+        color: var(--t5e-color-text-lightest);
+      }
+    }
+
+    @container action-bar (width < 30rem) {
+      [data-filter-text][data-filter-abbr]:not([data-filter-abbr=""])::before {
+        content: attr(data-filter-abbr);
+      }
+    }
+  }
+
+  @container action-bar (width < 40rem) {
+
+    .spellbook,
+    .contents {
+      .action-bar .button-group [data-filter-text][data-filter-abbr]:not([data-filter-abbr=""])::before {
+        content: attr(data-filter-abbr);
+      }
+    }
+  }
+}

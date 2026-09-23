@@ -5,6 +5,7 @@
     type WorldSettingsQuadroneApplication,
   } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
   import { CONSTANTS } from 'src/constants';
+  import Button from 'src/components/buttons/Button.svelte';
   import { log } from 'src/utils/logging';
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
 
@@ -77,14 +78,14 @@
     </p>
 
     <div class="flexrow setting-actions">
-      <button
-        type="button"
-        class="button button-primary button-large"
+      <Button
+        variant="primary"
+        size="large"
+        icon="fas fa-check-double"
         onclick={() => useTidyForAllSheets()}
       >
-        <i class="fas fa-check-double"></i>
         {localize('TIDY5E.SETTINGS.Preference.World.Action.SwitchToTidy')}
-      </button>
+      </Button>
       <button
         type="button"
         class="button button-secondary button-large choose-specific-btn"

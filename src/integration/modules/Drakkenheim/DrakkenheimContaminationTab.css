@@ -25,7 +25,7 @@
 /* -------------------------------------- */
 /* Quadrone Styles                        */
 /* -------------------------------------- */
-.tidy5e-sheet.quadrone {
+.tidy5e-sheet {
   --t5e-color-spellcasting-apothecary: rgb(122, 66, 203);
 
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
@@ -82,7 +82,6 @@
     }
 
     .contamination-levels {
-      gap: 0;
       list-style: none;
       padding: 0 0 var(--t5e-size-8x) 0;
       gap: 0.0625rem;
@@ -237,7 +236,7 @@
   }
 }
 
-.tidy5e-sheet.quadrone.theme-light {
+.tidy5e-sheet.theme-light {
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
     /* Primary palette - light theme adjustments */
     --dod-color-primary-background-lightest: #a294bd77;

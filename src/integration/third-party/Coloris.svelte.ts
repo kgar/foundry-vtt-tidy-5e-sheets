@@ -9,7 +9,7 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
   userColorCss: string = '';
 
   init(_api: Tidy5eSheetsApi): void {
-    import('./coloris.less');
+    import('./coloris.css');
     loadConditionalStyles('coloris');
     
     Coloris.init();

@@ -1,0 +1,296 @@
+.tidy5e-sheet:where(.application.character) {
+  --t5e-bastion-facility-blend-mode: multiply;
+  --t5e-bastion-facility-background: var(--t5e-component-card-default);
+
+  /* BASTION TAB ------------------------------------------------------------ */
+  .tidy-tab.bastion {
+    --bastion-row-gap: var(--t5e-size-6x);
+    container-name: bastion-tab;
+    container-type: inline-size;
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .name {
+      margin: -0.125rem -0.3125rem;
+      margin-block-end: 0;
+    }
+
+    .bastion-header {
+      margin-block-end: var(--t5e-size-1x);
+    }
+
+    .facility-panels,
+    .roster,
+    .description {
+      margin-block-end: var(--bastion-row-gap);
+    }
+
+    /* Facilities */
+    .facility-panels {
+      display: grid;
+      grid-template-areas: 'special basic';
+      grid-template-columns: 1fr 1fr;
+      row-gap: var(--bastion-row-gap);
+      column-gap: 2rem;
+
+      .facilities {
+        &.special {
+          grid-area: special;
+        }
+
+        &.basic {
+          grid-area: basic;
+        }
+
+        .occupant-dropzone {
+          background: var(--t5e-component-field-background);
+          border-radius: 0.125rem;
+          outline: 0.125rem solid var(--t5e-color-gold);
+
+          > * {
+            pointer-events: none;
+          }
+        }
+      }
+    }
+
+    .facilities .facility-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .facility:not(.empty) {
+      --bastion-facility-overlay: linear-gradient(145deg,
+          rgba(248, 244, 241, 0.85) 10%,
+          rgba(248, 244, 241, 0.1) 160%);
+      border-radius: var(--t5e-component-card-radius);
+      padding: 0.75rem 0.5rem;
+      background: var(--t5e-bastion-facility-background);
+      box-shadow: var(--t5e-drop-shadow-pill);
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+      outline: var(--t5e-outline-default);
+      outline-offset: -0.03125rem;
+      transition: box-shadow var(--t5e-transition-default);
+      isolation: isolate;
+      position: relative;
+
+      > .underlay {
+        block-size: 100%;
+        border: none;
+        border-radius: inherit;
+        inline-size: 100%;
+        inset: 0;
+        mix-blend-mode: var(--bastion-facility-underlay-blend, var(--t5e-bastion-facility-blend-mode));
+        object-fit: cover;
+        object-position: 40% center;
+        pointer-events: none;
+        position: absolute;
+        z-index: -2;
+      }
+
+      &::after {
+        background: var(--bastion-facility-overlay);
+        border-radius: inherit;
+        content: '';
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+      }
+
+      &.basic {
+        --bastion-facility-underlay-blend: luminosity;
+      }
+
+      &.no-events {
+        pointer-events: none;
+      }
+
+      &:hover,
+      &:focus {
+        box-shadow: var(--t5e-drop-shadow-card);
+      }
+    }
+
+    .facility.disabled {
+      filter: grayscale(1);
+      pointer-events: all;
+      /* Prevent Foundry CSS from disabling pointer-events when `.disabled` here */
+    }
+
+    .facility.empty a {
+      border-radius: var(--t5e-component-card-radius);
+      border: 0.0625rem dashed var(--t5e-component-field-border);
+      height: 3rem;
+      gap: 0.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all var(--t5e-transition-default);
+
+      &:hover {
+        border-style: solid;
+        background: var(--t5e-component-field-background);
+        border-color: var(--t5e-component-field-border-hover);
+      }
+    }
+
+    .facility-menu {
+      transition: all var(--t5e-transition-default);
+      padding: 0.5rem 0.75rem;
+    }
+
+    .facility-header {
+      display: flex;
+      gap: 0.125rem;
+      margin-block-end: var(--t5e-size-1x);
+
+      .facility-image,
+      .facility-image svg {
+        --img-size: var(--t5e-icon-size-8x);
+        --icon-fill: var(--t5e-color-text-lightest);
+        border: 0.0625rem solid var(--t5e-color-gold);
+        width: var(--img-size);
+        height: var(--img-size);
+        margin-inline-end: 0.25rem;
+        border-radius: 0.1875rem;
+        transition: box-shadow var(--t5e-transition-default);
+      }
+
+      .facility-image svg {
+        padding: 0.125rem;
+      }
+
+      .facility-header-details {
+        display: flex;
+        flex-direction: row;
+        gap: 0.125rem;
+        flex: 1;
+
+        span {
+          transition: color var(--t5e-transition-default);
+        }
+
+        &:hover {
+          span {
+            color: var(--t5e-color-text-default);
+          }
+
+          .facility-image {
+            box-shadow: 0 0 0.25rem var(--t5e-color-text-gold-emphasis);
+          }
+        }
+      }
+
+      .title-and-subtitle {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .title {
+        font-size: 0.9375rem;
+        transition: all 0.3s ease;
+        font-weight: var(--font-weight-label);
+      }
+
+      .subtitle {
+        font-size: 0.8125rem;
+        color: var(--t5e-color-text-lighter);
+      }
+    }
+
+    /* Order Progress Meter */
+    .crafting-item {
+      --img-size: 2rem;
+      width: var(--img-size);
+      height: var(--img-size);
+      margin-inline-end: 0.5rem;
+      border-radius: 0.1875rem;
+    }
+
+    .craft-and-meter {
+      display: flex;
+      gap: 0.125rem;
+      margin-top: var(--t5e-size-1x);
+
+      .facility-progress {
+        --meter-height: 2rem;
+        flex: 1;
+        border-color: var(--t5e-color-gold);
+
+        .label {
+          gap: var(--t5e-size-halfx);
+          justify-content: space-between;
+
+          .order,
+          i {
+            font-size: var(--font-size-14);
+          }
+
+          .order {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+          }
+        }
+
+        .order {
+          gap: var(--t5e-size-1x);
+        }
+      }
+    }
+
+    /* Description */
+    .description {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      &:not(:has(.editor)) {
+        padding-bottom: var(--t5e-size-8x);
+      }
+
+      .editor {
+        flex: 1;
+        min-height: var(--t5e-size-12x);
+        border-radius: var(--t5e-size-1x);
+      }
+    }
+  }
+
+  @container bastion-tab (width < 32rem) {
+    .tidy-tab.bastion {
+      .facility-panels {
+        grid-template-areas:
+          'special'
+          'basic';
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  &:where(.theme-dark) {
+    --t5e-bastion-facility-blend-mode: normal;
+    --t5e-bastion-facility-background: #2c3e50;
+
+    .tidy-tab.bastion {
+      .facility:not(.empty) {
+        --bastion-facility-overlay: linear-gradient(145deg,
+            rgba(27, 29, 35, 0.95) 10%,
+            rgba(27, 29, 35, 0.1) 170%);
+
+        .facility-header :is(.facility-image, .facility-image svg) {
+          --icon-fill: var(--t5e-color-icon-disabled);
+        }
+      }
+    }
+  }
+}
