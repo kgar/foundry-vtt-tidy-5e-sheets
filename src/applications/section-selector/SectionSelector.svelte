@@ -6,6 +6,7 @@
   } from './SectionSelectorApplication.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import { isNil } from 'src/utils/data';
+  import Button from 'src/components/buttons/Button.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { untrack } from 'svelte';
@@ -103,17 +104,14 @@
       </button>
       {#each filteredResults as section (section)}
         {const isSelected = $derived(context.data?.currentSection === section)}
-        <button
-          type="button"
+        <Button
+          toggle
+          active={isSelected}
+          icon={isSelected ? 'fa-solid fa-check' : undefined}
           onclick={() => onOptionSelected(section)}
-          class="button button-toggle"
-          class:active={isSelected}
         >
-          {#if isSelected}
-            <i class="fa-solid fa-check"></i>
-          {/if}
           {localize(section)}
-        </button>
+        </Button>
       {/each}
     </section>
   </fieldset>

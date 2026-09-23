@@ -1,0 +1,388 @@
+/* Module-wide utilities */
+.tidy5e-sheet {
+  /* TODO: Find the right home for the equip-icon */
+  .equip-icon {
+    transform: rotate(-90deg) scaleX(-1);
+  }
+
+  /* Height */
+  .full-height {
+    height: 100%;
+  }
+
+  /* Lists */
+  .unlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    :where(li) {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  /* Text */
+  .break-word {
+    overflow-wrap: break-word;
+  }
+}
+
+.tidy5e-sheet:where(.application) {
+  /* Quadrone utilities */
+
+  /* Visibility */
+  .invisible {
+    visibility: hidden;
+  }
+
+  /* Cursor */
+  .pointer {
+    cursor: pointer;
+  }
+
+  /* Typography utilities */
+
+  /* TEXT COLORS
+  ------------------------------------------------------------ */
+  .color-text-default {
+    color: var(--t5e-color-text-default);
+  }
+
+  .color-text-inverse {
+    color: var(--t5e-color-text-oninverse-default);
+  }
+
+  .color-text-gold {
+    color: var(--t5e-color-text-gold);
+  }
+
+  .color-text-gold-emphasis {
+    color: var(--t5e-color-text-gold-emphasis);
+  }
+
+  .color-text-gold-light {
+    color: var(--t5e-color-text-gold-light);
+  }
+
+  .color-text-lighter {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  .color-text-lightest {
+    color: var(--t5e-color-text-lightest);
+  }
+
+  .color-text-disabled {
+    color: var(--t5e-color-text-disabled);
+  }
+
+  .color-text-highlight {
+    color: var(--t5e-theme-color-highlight);
+  }
+
+  .color-icon-default {
+    color: var(--t5e-color-icon-default);
+  }
+
+  .color-icon-button {
+    color: var(--t5e-color-icon-button);
+  }
+
+  .color-icon-diminished {
+    color: var(--t5e-color-icon-diminished);
+  }
+
+  .color-icon-disabled {
+    color: var(--t5e-color-icon-disabled);
+  }
+
+  .color-icon-theme {
+    color: var(--t5e-theme-color-default);
+  }
+
+  .color-icon-theme-lighter {
+    color: var(--t5e-theme-color-lighter);
+  }
+
+  .color-icon-theme-highlight {
+    color: var(--t5e-theme-color-highlight);
+  }
+
+  /* FONT STYLES
+  ------------------------------------------------------------ */
+  /* Body text */
+  .font-default-medium {
+    font: var(--t5e-font-default-medium);
+  }
+
+  .font-default-small {
+    font: var(--t5e-font-default-small);
+  }
+
+  .font-default-longform {
+    font: var(--t5e-font-default-longform);
+  }
+
+  /* Labels */
+  .font-label-xlarge {
+    font: var(--t5e-font-label-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-label-large {
+    font: var(--t5e-font-label-large);
+  }
+
+  .font-label-medium {
+    font: var(--t5e-font-label-medium);
+  }
+
+  .font-label-small {
+    font: var(--t5e-font-label-small);
+  }
+
+  /* Data (bold) */
+  .font-data-xlarge {
+    font: var(--t5e-font-data-xlarge);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-data-large {
+    font: var(--t5e-font-data-large);
+  }
+
+  .font-data-medium {
+    font: var(--t5e-font-data-medium);
+  }
+
+  .font-data-small {
+    font: var(--t5e-font-data-small);
+  }
+
+  /* Titles */
+  .font-title-large {
+    font: var(--t5e-font-title-large);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-title-medium {
+    font: var(--t5e-font-title-medium);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  .font-title-small {
+    font: var(--t5e-font-title-small);
+    letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+  }
+
+  /* FONT FAMILIES
+  ------------------------------------------------------------ */
+  .font-family-title {
+    font-family: var(--t5e-font-family-title);
+  }
+
+  .font-family-default {
+    font-family: var(--t5e-font-family-default);
+  }
+
+  /* FONT WEIGHTS
+  ------------------------------------------------------------ */
+  .font-weight-label {
+    font-weight: var(--font-weight-label);
+  }
+
+  .font-weight-bold {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .font-weight-default {
+    font-weight: var(--font-weight-default);
+  }
+
+  /* HELPERS
+  ------------------------------------------------------------ */
+  /* Selectable Text */
+  .user-select-text * {
+    user-select: text;
+  }
+
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .lowercase {
+    text-transform: lowercase;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  /* Flex helpers */
+
+  .flexshrink {
+    flex: 0 1 auto;
+  }
+
+  .flexgap-1 {
+    gap: var(--t5e-size-1x);
+  }
+
+  .flexgap-2 {
+    gap: var(--t5e-size-2x);
+  }
+
+  .flexgap-3 {
+    gap: var(--t5e-size-3x);
+  }
+
+  /* Minimized window state */
+  &:where(.minimized) {
+    .actor-header-start {
+      display: none;
+    }
+
+    [data-action='copyUuid'],
+    [data-action='configureSheet'] {
+      display: grid;
+    }
+
+    .window-header {
+      gap: var(--t5e-size-halfx);
+      padding-block-end: var(--t5e-size-halfx);
+    }
+
+    .window-title {
+      color: var(--t5e-color-text-default);
+      font: var(--t5e-font-label-medium);
+    }
+
+    .header-control {
+      --t5e-button-text: var(--t5e-color-text-default);
+    }
+
+    .window-content {
+      display: none;
+      background: none;
+    }
+  }
+
+  /* Container Queries */
+
+  /* TODO: Discuss with hightouch the best way to deal with these utility classes. */
+  @container (width < 3.125rem) {
+    .hide-under-50 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 6.25rem) {
+    .hide-under-100 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 9.375rem) {
+    .hide-under-150 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 12.5rem) {
+    .hide-under-200 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 15.625rem) {
+    .hide-under-250 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 18.75rem) {
+    .hide-under-300 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 21.875rem) {
+    .hide-under-350 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 25rem) {
+    .hide-under-400 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 28.125rem) {
+    .hide-under-450 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 31.25rem) {
+    .hide-under-500 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 34.375rem) {
+    .hide-under-550 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 37.5rem) {
+    .hide-under-600 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 40.625rem) {
+    .hide-under-650 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 43.75rem) {
+    .hide-under-700 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 46.875rem) {
+    .hide-under-750 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 50rem) {
+    .hide-under-800 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 53.125rem) {
+    .hide-under-850 {
+      display: none !important;
+    }
+  }
+
+  @container (width < 56.25rem) {
+    .hide-under-900 {
+      display: none !important;
+    }
+  }
+}
