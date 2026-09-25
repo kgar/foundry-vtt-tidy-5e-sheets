@@ -6,7 +6,6 @@
   } from './MaxPreparedSpellsConfigFormApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import Button from 'src/components/buttons/Button.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 
   const appId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.APP_ID);
@@ -57,7 +56,8 @@
 </section>
 <br />
 <div class="button-bar">
-  <Button variant="primary" icon="fas fa-save" onclick={() => save()}>
+  <button type="button" onclick={() => save()} class="button button-primary">
+    <i class="fas fa-save"></i>
     {localize('TIDY5E.COMMON.Action.SaveChanges')}
-  </Button>
+  </button>
 </div>
