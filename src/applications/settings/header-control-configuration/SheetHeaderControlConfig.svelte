@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Button from 'src/components/buttons/Button.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -137,17 +136,18 @@
 </TidyTable>
 
 <div class="controls-row">
-  <Button
-    variant="secondary"
-    icon="fas fa-square-list"
+  <button
+    type="button"
+    class="button button-secondary"
     onclick={() => {
       config.controlSettings.forEach((setting) => {
         setting.location = 'menu';
       });
     }}
   >
+    <i class="fas fa-square-list"></i>
     {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.MoveAllToMenu')}
-  </Button>
+  </button>
   <button
     type="button"
     class="button button-secondary"
