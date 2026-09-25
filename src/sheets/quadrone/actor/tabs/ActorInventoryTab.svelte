@@ -66,10 +66,8 @@
 
   <InventoryTables
     sections={inventory}
-    editable={context.editable}
     itemContext={context.itemContext}
     {inlineToggleService}
-    {searchCriteria}
     sheetDocument={context.actor}
     root={true}
   />

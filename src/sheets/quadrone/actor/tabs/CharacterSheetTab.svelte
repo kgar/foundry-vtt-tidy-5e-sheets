@@ -133,14 +133,11 @@
             {#if showSection}
               <InventoryTable
                 containingDocument={context.document}
-                editable={context.editable}
                 {inlineToggleService}
                 itemContext={context.itemContext}
                 root={true}
-                {searchCriteria}
                 {section}
                 {sectionsInlineWidth}
-                sheetDocument={context.document}
                 {tabId}
               />
             {/if}
@@ -156,12 +153,7 @@
                 SectionVisibility.shouldShowItemSection(sectionSearchState),
             )}
             {#if showSection}
-              <FeatureTable
-                {section}
-                {itemToggleMap}
-                {sectionsInlineWidth}
-                sheetDocument={context.document}
-              />
+              <FeatureTable {section} {itemToggleMap} {sectionsInlineWidth} />
             {/if}
           {/if}
         {/if}
@@ -200,9 +192,12 @@
       {#if context.editable}
         <button
           type="button"
-          aria-label={localize('TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title', {
-            tabName: tabName,
-          })}
+          aria-label={localize(
+            'TIDY5E.SETTINGS.TabOptions.ConfigureTab.Title',
+            {
+              tabName: tabName,
+            },
+          )}
           class="button button-borderless button-icon-only"
           data-action="configureTab"
           data-tab-id={tabId}

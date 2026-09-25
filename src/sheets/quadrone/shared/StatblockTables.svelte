@@ -94,12 +94,7 @@
       )}
       {#if showSection}
         {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-          <FeatureTable
-            {section}
-            {itemToggleMap}
-            {sectionsInlineWidth}
-            {sheetDocument}
-          />
+          <FeatureTable {section} {itemToggleMap} {sectionsInlineWidth} />
         {:else if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
           <SpellTable
             {section}

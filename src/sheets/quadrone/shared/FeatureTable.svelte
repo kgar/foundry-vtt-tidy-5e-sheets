@@ -16,19 +16,13 @@
 
   interface Props {
     section: FeatureSection;
-    sheetDocument: Actor5e;
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
     bodyNoEntries?: Snippet;
   }
 
-  let {
-    section,
-    sheetDocument,
-    sectionsInlineWidth,
-    itemToggleMap,
-    bodyNoEntries,
-  }: Props = $props();
+  let { section, sectionsInlineWidth, itemToggleMap, bodyNoEntries }: Props =
+    $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -66,18 +60,4 @@
   entryToggleMap={itemToggleMap}
   {tabId}
   {bodyNoEntries}
->
-  {#snippet afterFirstCell(entry)}
-    {#if 'inspirationSource' in context && context.inspirationSource?.itemId === entry.id}
-      <i
-        class={[
-          'fa-solid',
-          'fa-sparkles',
-          'item-state-indicator',
-          'color-text-gold-emphasis',
-        ]}
-        data-tooltip="TIDY5E.ACTOR.Inspiration.Source.Tooltip"
-      ></i>
-    {/if}
-  {/snippet}
-</TidyItemTable>
+/>
