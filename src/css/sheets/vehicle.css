@@ -150,10 +150,10 @@
 
         &:hover {
           color: var(--t5e-color-text-default);
+        }
 
-          i {
-            color: oklch(from var(--t5e-warning-accent-color) calc(l * 1.2) calc(c * 1.15) h);
-          }
+        &:hover i {
+          color: oklch(from var(--t5e-warning-accent-color) calc(l * 1.2) calc(c * 1.15) h);
         }
       }
     }
@@ -180,7 +180,7 @@
 
   /* Light theme styles
   /* ------------------------------------------------------------ */
-  &.theme-light {
+  &:where(.theme-light) {
     .crew-warning {
       .uses-value {
         --t5e-text-warning: var(--t5e-color-palette-orange-55);

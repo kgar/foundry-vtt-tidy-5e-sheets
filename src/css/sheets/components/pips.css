@@ -45,6 +45,7 @@
   }
 }
 
+/* stylelint-disable-next-line tidy/root-prefix -- must beat pins.css `.sheet-pin .pips.spell-pips` */
 .tidy5e-sheet:where(.application.theme-basic).theme-light .pips.spell-pips {
   --pip-border-color: var(--t5e-theme-color-default);
   --pip-hover-color: var(--t5e-theme-color-highlight);

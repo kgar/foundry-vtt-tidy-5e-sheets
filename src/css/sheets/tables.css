@@ -85,12 +85,18 @@
   }
 
   .tidy-table-header-row {
+    /* Lea Verou's OKLCH color contrast infinity clamp formula. */
+    /* (l / threshold - 1) is positive above the threshold and negative below it. Multiplying by -infinity snaps to 0 (black) or 1 (white). */
+    --l-threshold: 0.623;
+    --row-foreground-color: oklch(from var(--t5e-table-header-background-left) clamp(0, (l / var(--l-threshold) - 1) * -infinity, 1) 0 h);
+    --row-foreground-color-lighter: oklch(from var(--t5e-table-header-background-right) clamp(0, (l / var(--l-threshold) - 1) * -infinity, 0.92) 0 h);
+    --row-foreground-color-diminished: oklch(from var(--t5e-table-header-background-left) clamp(0, (l / var(--l-threshold) - 1) * -infinity, 1) 0 h / 0.75);
     background: linear-gradient(to right,
         var(--t5e-table-header-background-left),
         var(--t5e-table-header-background-right));
     border-radius: var(--t5e-size-halfx);
     box-shadow: 0 0 var(--t5e-size-1) inset var(--t5e-table-header-border-color);
-    color: var(--t5e-theme-color-foreground);
+    color: var(--row-foreground-color-lighter);
     max-height: var(--t5e-table-header-row-height);
     min-height: var(--t5e-table-header-row-height);
 
@@ -120,13 +126,22 @@
       min-height: unset;
 
       i {
+        --_button-icon: var(--row-foreground-color-diminished);
+        --_button-icon-hover: var(--row-foreground-color);
         transition: transform var(--t5e-transition-default);
+      }
+
+      &.expanded i {
+        transform: rotate(90deg);
+        padding: 0 0 var(--t5e-size-halfx);
       }
 
       &:hover:not(:disabled) {
         --t5e-button-background: none;
         --t5e-button-border-width: 0;
-        --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+        --t5e-button-icon-hover: var(--row-foreground-color);
+
+        i {}
       }
     }
 
@@ -157,36 +172,42 @@
       }
 
       h3 {
-        color: var(--t5e-theme-color-foreground-darker);
+        /* color: var(--t5e-theme-color-foreground-darker); */
+        /* (l / threshold - 1) is positive above the threshold and negative below it. Multiplying by -infinity snaps to 0 (black) or 1 (white). */
+        color: var(--row-foreground-color);
       }
 
       .button.expand-button {
-        --t5e-button-icon: var(--t5e-theme-color-foreground-darker-diminished);
-        --t5e-button-icon-hover: var(--t5e-theme-color-foreground-darker-diminished);
+        --t5e-button-icon:
+          color: var(--row-foreground-color-diminished);
+        --t5e-button-icon-hover:
+          color: var(--row-foreground-color);
 
         &:hover,
         &:active,
         &:focus-within {
-          --t5e-button-icon: var(--t5e-theme-color-foreground-darker);
-          --t5e-button-icon-hover: var(--t5e-theme-color-foreground-darker);
+          --t5e-button-icon: var(--row-foreground-color-diminished);
+          --t5e-button-icon-hover: var(--row-foreground-color-diminished);
         }
       }
 
       .table-header-count {
-        color: var(--t5e-theme-color-foreground-darker-diminished);
+        /* color: var(--t5e-theme-color-foreground-darker-diminished); */
         margin-inline-start: var(--t5e-size-1x);
+        color: var(--row-foreground-color-diminished);
       }
     }
 
     .header-cell-actions {
-      justify-content: flex-end;
       margin: 0;
     }
 
     .tidy-table-button {
+      --_button-icon: var(--row-foreground-color-lighter);
+
       i {
         align-items: center;
-        color: var(--t5e-theme-color-foreground);
+        color: var(--_button-icon);
         display: flex;
         justify-content: center;
         transition: background-color var(--t5e-transition-default);
@@ -205,6 +226,7 @@
 
       &:hover i {
         background: rgba(0, 0, 0, 0.48);
+        color: var(--row-foreground-color);
       }
     }
   }
@@ -217,7 +239,7 @@
     --t5e-theme-color-foreground-diminished: var(--t5e-component-card-foreground-diminished);
     --t5e-theme-color-foreground-darker-disabled: var(--t5e-component-card-foreground-disabled);
     --t5e-theme-color-foreground-darker-diminished: var(--t5e-component-card-foreground-diminished);
-    border-bottom: 0.0625rem solid var(--t5e-table-header-border-bottom-color);
+    border-bottom-color: var(--t5e-table-header-border-bottom-color);
     color: var(--t5e-color-text-lighter);
     padding-bottom: 0.125rem;
     background: none;
@@ -253,7 +275,7 @@
     }
 
     &:hover {
-      border-bottom-color: var(--t5e-theme-color-lighter);
+      border-bottom-color: var(--t5e-table-header-row-hover-border-color, var(--t5e-theme-color-lighter));
 
       .tidy-table-header-cell,
       .table-header-count {
@@ -312,10 +334,10 @@
       .tidy-table-row-use-button {
         img {
           background: transparent;
+        }
 
-          &[src$=".svg"] {
-            filter: var(--t5e-table-advancement-svg-filter);
-          }
+        img[src$=".svg"] {
+          filter: var(--t5e-table-advancement-svg-filter);
         }
 
         &:is(:hover, :focus-within, :active) img {
@@ -563,7 +585,6 @@
 
       h3 {
         flex: 1;
-        margin-block-end: var(--t5e-size-1);
         max-width: max-content;
         min-width: 0;
         overflow: hidden;
@@ -643,19 +664,15 @@
           opacity: 0;
           pointer-events: none;
           align-self: center;
-
-          &:is(:hover, :focus-within, :active) {
-            color: var(--t5e-color-text-default);
-          }
         }
 
         &.expanded {
           transform: rotate(90deg);
           color: var(--t5e-color-icon-diminished);
+        }
 
-          &:is(:hover, :focus-within, :active) {
-            color: var(--t5e-color-text-default);
-          }
+        &:is(.collapsed, .expanded):is(:hover, :focus-within, :active) {
+          color: var(--t5e-color-text-default);
         }
       }
 
@@ -757,13 +774,6 @@
       flex: 1;
     }
 
-    /* .roll-prompt i {
-      inset-block-start: calc(50% - 1.5px);
-      inset-inline-start: 50%;
-      transform: translate(-50%, -50%);
-      inset-inline-end: unset;
-      inset-block-end: unset;
-    } */
     dnd5e-icon {
       --icon-size: 1.625rem;
       --icon-fill: var(--t5e-color-text-lighter);
@@ -776,6 +786,8 @@
     }
 
     &:hover {
+      background: transparent;
+
       img {
         opacity: 0;
       }
@@ -788,8 +800,6 @@
         display: flex;
         opacity: 1;
       }
-
-      background: transparent;
     }
   }
 
@@ -1034,7 +1044,7 @@
   .tidy-table-row {
     &[data-tidy-item-type="spell"] {
       .spell-school-icon dnd5e-icon {
-        --icon-size: calc(1.375rem);
+        --icon-size: 1.375rem;
         --icon-fill: var(--t5e-color-text-gold-emphasis);
       }
 
@@ -1117,7 +1127,7 @@
     }
   }
 
-  :is(button, .button).button.button-icon-only.button-borderless.spell-slot-tracker-button {
+  .spell-slot-tracker-button {
     --t5e-button-width: 1.375rem;
     --t5e-button-height: 1.375rem;
     min-height: unset;

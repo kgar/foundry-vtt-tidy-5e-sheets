@@ -3,7 +3,7 @@
     /* Force overlap for image shadows in the header.
      * Content scrolling handled in individual components. */
     padding-block-start: var(--t5e-size-2x);
-    margin-block-start: calc(-1 * var(--t5e-size-5x));
+    margin-block-start: calc(-1 * var(--t5e-size-3x));
   }
 
   /* HEADER STYLES */
@@ -153,7 +153,7 @@
       width: 100%;
 
       .label {
-        color: var(--t5e-color-text-gold);
+        color: var(--t5e-concentration-label-color, var(--t5e-color-text-gold));
         overflow: hidden;
         text-overflow: ellipsis;
         width: 100%;
@@ -331,10 +331,11 @@
     padding-bottom: 1.5rem;
   }
 }
+
 /* Parchment theme styles */
 /* ------------------------------------------------------------ */
 .tidy5e-sheet:where(.application.character.theme-parchment) {
-  &.theme-light {
+  &:where(.theme-light) {
     .sheet-header {
       .level-block {
         --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_light.webp');

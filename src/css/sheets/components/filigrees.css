@@ -29,12 +29,17 @@
   }
 
   header:has(.gold-header-underline) {
-    border-bottom: 0.0625rem solid var(--t5e-filigree-underline-border-color);
+    border-bottom: 0.0625rem solid var(--t5e-filigree-header-border-color, var(--t5e-filigree-underline-border-color));
   }
 }
 
 .tidy5e-sheet:where(.application.theme-basic.theme-light) {
   --t5e-filigree-underline-border-color: rgba(0, 0, 0, 0.16);
+
+  /* Underlined table headers keep this border on hover. */
+  header:has(.gold-header-underline) {
+    --t5e-table-header-row-hover-border-color: rgba(0, 0, 0, 0.16);
+  }
 }
 
 .tidy5e-sheet:where(.application) {

@@ -1,8 +1,8 @@
 .tidy5e-sheet:where(.application) {
-  --t5e-input-group-addon-color: inherit;
   --t5e-input-check-border-color-checked-hover: var(--t5e-component-toggle-toggled-border);
   --t5e-input-check-border-color-checked-focus: var(--t5e-theme-color-darker);
   --t5e-input-checkbox-disabled-icon-color: var(--t5e-color-palette-grey-60);
+  --t5e-title-input-background: var(--t5e-component-field-background-disabled);
 
   /* App V2 Reset */
   /* Normalize field styles */
@@ -80,11 +80,6 @@
       resize: none;
     }
 
-    &:has(input[type='text']:disabled) {
-      background: var(--t5e-component-field-background-disabled);
-      color: var(--t5e-color-text-lightest);
-    }
-
     &:disabled {
       background: var(--t5e-component-field-background-disabled);
       box-shadow: none;
@@ -141,10 +136,6 @@
       &:disabled {
         background: none;
       }
-    }
-
-    > :not(input):not(i) {
-      color: var(--t5e-input-group-addon-color);
     }
 
     span {
@@ -306,6 +297,7 @@
     font-weight: var(--font-weight-alternate, 400);
     justify-content: flex-start;
 
+    /* forms.css `.form-group` sets its own gap. */
     &:where(:not(.form-group)) {
       gap: 0.5rem;
     }
@@ -516,7 +508,6 @@
 
     &.h1,
     &.h2 {
-      --t5e-title-input-background: var(--t5e-component-field-background-disabled);
       background: transparent;
       border-color: transparent;
       box-shadow: none;
@@ -585,37 +576,12 @@
     outline: none;
   }
 
-  /* More specific than actors.css `.use-ability-list` selects and header.css vitals inputs. */
-  &.theme-dark,
-  .theme-dark {
-    --t5e-input-group-addon-color: var(--t5e-color-text-lightest);
+  &:where(.theme-dark),
+  :where(.theme-dark) {
     --t5e-input-check-border-color-checked-hover: var(--t5e-component-field-border-hover);
     --t5e-input-check-border-color-checked-focus: var(--t5e-component-field-border-hover);
     --t5e-input-checkbox-disabled-icon-color: var(--t5e-color-palette-grey-21);
-
-    select,
-    .input-group,
-    input[type='text'],
-    input[type='number'] {
-      &:not(.uninput) {
-
-        &:hover,
-        &:focus {
-          background-color: var(--t5e-component-field-background-hover);
-          border-color: var(--t5e-component-field-border-hover);
-        }
-
-        &:focus {
-          outline-color: var(--t5e-component-field-focus);
-        }
-
-        &:disabled {
-          background-color: var(--t5e-component-field-background-disabled);
-          border-color: transparent;
-          box-shadow: none;
-        }
-      }
-    }
+    --t5e-title-input-background: rgba(0, 0, 0, 0.4);
 
     /* Dark mode chevron colors. Icon tokens flip in dark mode, so the baked-in fills must too. */
     select {
@@ -631,14 +597,6 @@
       &:disabled {
         /* --t5e-color-icon-disabled (white @ 50%) */
         --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23FFFFFF' fill-opacity='0.5' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
-      }
-    }
-
-    input[type='text']:not(:disabled):not(.uninput) {
-
-      &.h1,
-      &.h2 {
-        --t5e-title-input-background: rgba(0, 0, 0, 0.4);
       }
     }
   }

@@ -10,11 +10,6 @@
     .tidy-table-toggle i:not(.enabled) {
       color: var(--t5e-effects-toggle-icon-color);
     }
-
-    .inline-activity-arrow {
-      padding-inline: 0.25rem;
-      align-self: center;
-    }
   }
 
   &:where(.theme-dark) .tidy-tab.effects .tidy-table-toggle {

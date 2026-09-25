@@ -81,9 +81,12 @@
     }
 
     &:hover {
+      --hover-text-color: var(--t5e-color-text-default);
+      --icon-fill: var(--t5e-color-icon-default);
       background: var(--t5e-context-item-background-hover);
       border: none;
       text-shadow: none;
+      box-shadow: inset 0 0 0 0.0625rem oklch(from var(--t5e-component-field-border) l c h / 0.5);
       --t5e-warning-accent-color: var(--t5e-color-palette-red-45);
 
       i {

@@ -36,7 +36,7 @@
 
 {#if contentsVisibility === 'visible'}
 <div class="label">
-  <span class="flexrow">
+  <span class="row">
     {#if showIcon}
       <i class="fas fa-weight-hanging text-label-icon"></i>
     {/if}
