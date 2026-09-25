@@ -1127,7 +1127,7 @@ export function getTidy5eActorSheetQuadroneBase<
       const isBasic = themeSettings.useBasicTheme;
       const isParchment = !themeSettings.useHeaderBackground || isBasic;
       const foundryThemeIsDark = getThemeV2(this.actor) === 'dark';
-      const isDark = themeSettings.useHeaderBackground || foundryThemeIsDark;
+      const isDark = !isParchment || foundryThemeIsDark;
 
       this.element.classList.toggle('theme-parchment', isParchment);
       this.element.classList.toggle('theme-basic', isBasic);

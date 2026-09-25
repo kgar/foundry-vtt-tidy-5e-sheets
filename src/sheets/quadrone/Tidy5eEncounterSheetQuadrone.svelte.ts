@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
@@ -991,7 +992,13 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    element.querySelector('.window-header').classList.add('theme-dark');
+    // Frame renders before _renderHTML populates _context; read theme from the document.
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
+    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
+      element.querySelector('.window-header')?.classList.add('theme-dark');
+    }
 
     return element;
   }

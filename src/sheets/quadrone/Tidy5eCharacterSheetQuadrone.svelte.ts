@@ -1070,7 +1070,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const themeSettings = ThemeQuadrone.getSheetThemeSettings({
       doc: this.actor,
     });
-    if (themeSettings.useHeaderBackground) {
+    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
 
