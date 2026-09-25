@@ -116,55 +116,51 @@
   }
 
   .nav-tab {
+    /* Borderless button; the constant transparent border keeps `.active` from shifting the row. */
+    --t5e-button-background: transparent;
+    --t5e-button-border: transparent;
+    --t5e-button-border-width: var(--t5e-size-1);
+    --t5e-button-shadow: none;
+    --t5e-button-focus: none;
     --t5e-button-padding-inline-start: var(--t5e-size-2x);
-    --tab-background-color: transparent;
-    align-items: center;
-    background-color: var(--tab-background-color);
-    box-shadow: none;
-    color: inherit;
-    cursor: pointer;
+    --t5e-button-padding-inline-end: var(--t5e-size-2x);
+    justify-content: flex-start;
     font: inherit;
-    min-height: var(--t5e-field-size-default);
     padding-block: var(--t5e-size-2x);
-    padding-inline: var(--t5e-size-2x);
     text-align: start;
     width: 100%;
 
-    &:active,
-    &:focus-within,
-    &:hover {
-      --tab-background-color: var(--t5e-component-card-lighter);
-      border-color: transparent;
-      background-color: var(--tab-background-color);
+    &:hover,
+    &:focus-visible {
+      --t5e-button-background: var(--t5e-button-background);
     }
 
-    &:active:hover,
-    &:focus-within:not(:active) {
+    /* Pressing an unselected tab gets buttons.css's dark toggled background; match `.active` foregrounds. */
+    &:active:hover:not(.active) {
       --t5e-button-text: var(--t5e-theme-color-foreground);
+      --t5e-button-icon: var(--t5e-theme-color-foreground);
+      --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+      --icon-fill: var(--t5e-theme-color-foreground);
     }
 
     &.active {
-      --tab-background-color: var(--t5e-theme-color-darker);
+      --t5e-button-background: var(--t5e-theme-color-darker);
       --t5e-button-text: var(--t5e-theme-color-foreground);
-      border-color: transparent;
-      background-color: var(--tab-background-color);
+      --t5e-button-icon: var(--t5e-theme-color-foreground);
+      --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+      --icon-fill: var(--t5e-theme-color-foreground);
       font-weight: var(--font-weight-label);
 
-      &:active,
-      &:focus-within:not(:active),
-      &:hover {
-        --tab-background-color: var(--t5e-theme-color-darkest);
-        border-color: transparent;
-        background-color: var(--tab-background-color);
-      }
-
-      i {
-        --icon-fill: var(--t5e-color-icon-default);
+      &:hover,
+      &:focus-visible {
+        --t5e-button-background: var(--t5e-theme-color-darkest);
+        /* Overrides buttons.css `.active:hover` toggle background. */
+        background-color: var(--t5e-button-background);
       }
     }
 
     &.tab-hidden {
-      color: var(--t5e-color-text-lighter);
+      --t5e-button-text: var(--t5e-color-text-lighter);
       font-style: italic;
     }
 
@@ -230,10 +226,11 @@
     padding-inline: var(--t5e-size-4x);
   }
 
-  .window-header {
+  &:where(.theme-dark):where(.tidy-sheet-settings, .theme-parchment) .window-header {
     button.header-control {
       &:hover {
         --t5e-button-text: var(--t5e-color-icon-default);
+        --t5e-button-background: rgba(0, 0, 0, 1);
       }
     }
   }
@@ -253,100 +250,7 @@
       gap: var(--t5e-size-halfx);
     }
   }
-}
 
-/* Theme Settings */
-.tidy5e-sheet:where(.application.tidy-sheet-settings) {
-  --t5e-font-roboto-condensed: "Signika", "Palatino Linotype", sans-serif;
-  --t5e-font-family-default: "Signika", "Palatino Linotype", sans-serif;
-  --font-size-default: var(--font-size-14);
-
-  .settings-description {
-    color: var(--t5e-color-text-lighter);
-  }
-
-  h3 {
-    font-size: var(--font-size-20);
-  }
-
-  .setting-actions {
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-
-  .choose-specific-btn {
-    padding-block: 0;
-    padding-inline: 0;
-    align-self: flex-start;
-  }
-
-  .color-picker-container {
-    position: relative;
-  }
-
-  .color-picker-preview {
-    --size: var(--t5e-field-size-default);
-    --bg-color: var(--t5e-component-field-background);
-    flex: 0 0 var(--size);
-    width: var(--size);
-    height: var(--size);
-    background-color: var(--bg-color);
-    cursor: pointer;
-    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
-    border-radius: var(--t5e-size-halfx);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--t5e-transition-default);
-
-    i {
-      font-size: var(--font-size-12);
-      color: var(--t5e-color-icon-default);
-      transition: color var(--t5e-transition-default);
-    }
-
-    &:hover,
-    &:focus-within,
-    &:active {
-      box-shadow: var(--t5e-drop-shadow-field-hover);
-      border-color: var(--t5e-component-field-border-hover);
-      --bg-color: var(--t5e-component-field-background-hover);
-    }
-
-    &[style^="--bg-color"] {
-      i {
-        color: transparent;
-      }
-
-      &:hover {
-        i {
-          color: var(--t5e-color-palette-white);
-        }
-      }
-    }
-  }
-
-  .hidden-input {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    width: 0;
-    height: 0;
-    flex: 0;
-    padding-block: 0;
-    padding-inline: 0;
-    border: 0;
-  }
-
-  .button-bar {
-    gap: var(--t5e-size-2x);
-    padding-block: 0 var(--t5e-size-3x);
-    padding-inline: var(--t5e-size-4x);
-  }
-}
-
-/* Separate root block: nesting it would go more than four levels deep. */
-.tidy5e-sheet:where(.application) {
   .sheet-tab-configuration {
     gap: var(--t5e-size-4x);
   }
@@ -489,6 +393,96 @@
   }
 }
 
+/* Theme Settings */
+.tidy5e-sheet:where(.application.tidy-sheet-settings) {
+  --t5e-font-roboto-condensed: "Signika", "Palatino Linotype", sans-serif;
+  --t5e-font-family-default: "Signika", "Palatino Linotype", sans-serif;
+  --font-size-default: var(--font-size-14);
+
+  .settings-description {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  h3 {
+    font-size: var(--font-size-20);
+  }
+
+  .setting-actions {
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .choose-specific-btn {
+    padding-block: 0;
+    padding-inline: 0;
+    align-self: flex-start;
+  }
+
+  .color-picker-container {
+    position: relative;
+  }
+
+  .color-picker-preview {
+    --size: var(--t5e-field-size-default);
+    --bg-color: var(--t5e-component-field-background);
+    flex: 0 0 var(--size);
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+    border-radius: var(--t5e-size-halfx);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t5e-transition-default);
+
+    i {
+      font-size: var(--font-size-12);
+      color: var(--t5e-color-icon-default);
+      transition: color var(--t5e-transition-default);
+    }
+
+    &:hover,
+    &:focus-within,
+    &:active {
+      box-shadow: var(--t5e-drop-shadow-field-hover);
+      border-color: var(--t5e-component-field-border-hover);
+      --bg-color: var(--t5e-component-field-background-hover);
+    }
+
+    &[style^="--bg-color"] {
+      i {
+        color: transparent;
+      }
+
+      &:hover {
+        i {
+          color: var(--t5e-color-palette-white);
+        }
+      }
+    }
+  }
+
+  .hidden-input {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 0;
+    height: 0;
+    flex: 0;
+    padding-block: 0;
+    padding-inline: 0;
+    border: 0;
+  }
+
+  .button-bar {
+    gap: var(--t5e-size-2x);
+    padding-block: 0 var(--t5e-size-3x);
+    padding-inline: var(--t5e-size-4x);
+  }
+}
+
 @keyframes TheShining {
   0% {
     filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
@@ -504,6 +498,7 @@
 }
 
 /* Core DialogV2, outside any Tidy root. */
+/* stylelint-disable tidy/root-prefix */
 .bastion-maintain-order-dialog {
   .bastion-maintain-order-hint {
     margin-block: 0 var(--t5e-size-3x);
@@ -545,3 +540,5 @@
     font-size: var(--font-size-12);
   }
 }
+
+/* stylelint-enable tidy/root-prefix */

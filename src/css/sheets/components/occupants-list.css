@@ -41,14 +41,13 @@
 
         &:not(.empty) {
           border: var(--t5e-size-1) solid var(--t5e-color-gold);
+        }
 
-          &:hover {
-            border-color: var(--t5e-color-text-gold-emphasis);
-          }
+        &:not(.empty):hover {
+          border-color: var(--t5e-color-text-gold-emphasis);
         }
 
         a {
-          border-radius: var(--occupant-border-radius);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -56,6 +55,11 @@
           width: inherit;
           overflow: hidden;
           position: relative;
+        }
+
+        /* The empty slot's tertiary button keeps its own radius. */
+        a:where(:not(.button-tertiary)) {
+          border-radius: var(--occupant-border-radius);
         }
 
         img {
@@ -69,15 +73,15 @@
         &.unlocked:not(.empty):hover {
           background-color: var(--t5e-component-field-background);
           border-color: var(--t5e-theme-color-lighter);
+        }
 
-          img {
-            opacity: 0.32;
-          }
+        &.unlocked:not(.empty):hover img {
+          opacity: 0.32;
+        }
 
-          .occupant-menu-icon {
-            opacity: 1;
-            text-shadow: 0 0 0.5rem var(--t5e-color-icon-default);
-          }
+        &.unlocked:not(.empty):hover .occupant-menu-icon {
+          opacity: 1;
+          text-shadow: 0 0 0.5rem var(--t5e-color-icon-default);
         }
 
         .occupant-menu-icon {

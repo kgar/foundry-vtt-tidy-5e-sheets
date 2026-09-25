@@ -9,11 +9,9 @@
       .character-traits {
         padding-bottom: var(--t5e-size-4x);
 
-        .tidy-table-header-row {
-          h3 {
-            padding-block: 0 var(--t5e-size-halfx);
-            padding-inline: var(--t5e-size-2x) 0;
-          }
+        .tidy-table-header-row h3 {
+          padding-block: 0 var(--t5e-size-halfx);
+          padding-inline: var(--t5e-size-2x) 0;
         }
 
         .list-label {
@@ -32,6 +30,7 @@
     }
 
     .tidy-table-cell .meter-container {
+      display: flex;
       flex-direction: column;
       padding-block: var(--t5e-size-halfx);
     }
@@ -46,7 +45,7 @@
     }
 
     /* Vehicle Actions Tracker */
-    .npc-score-tracker.vehicle-actions-tracker {
+    :where(.npc-score-tracker).vehicle-actions-tracker {
       position: relative;
 
       &.tracker-warning {

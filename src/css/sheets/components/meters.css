@@ -71,7 +71,7 @@
         content: '';
         position: absolute;
         block-size: 100%;
-        inline-size: calc(var(--bar-percentage, 0%));
+        inline-size: var(--bar-percentage, 0%);
         transition: all 0.5s ease;
       }
     }
@@ -187,7 +187,7 @@
         background: var(--bar-adjusted-background);
         border: none;
         content: var(--bar-adjusted-content);
-        inline-size: calc(var(--bar-adjusted, 0%));
+        inline-size: var(--bar-adjusted, 0%);
         margin-left: 0.0625rem;
         min-width: 0.125rem;
         position: relative;
