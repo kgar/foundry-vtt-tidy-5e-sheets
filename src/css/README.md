@@ -25,7 +25,7 @@ Foundry v14's `@layer modules` contains Tidy's CSS above core and dnd5e. We brea
 .tidy5e-sheet {
   .pill { … }
 }
-.tidy5e-sheet:where(.npc) {
+.tidy5e-sheet:where(.application.npc) {
   .sheet-header { … }
 }
 
@@ -35,8 +35,9 @@ Foundry v14's `@layer modules` contains Tidy's CSS above core and dnd5e. We brea
 .tidy5e-sheet:is(.quadrone) { … }
 ```
 
+- Do use `.application` so that styles don't target context menus and tooltips.
 - Keep selectors as short as possible.
-- Avoid nesting deeper than 4 levels (0,4,1). Create a token or variant instead.
+- Avoid nesting deeper than 4 levels, or a specificity above (0,6,2). Create a token or variant instead.
 - Use one root block per file + a `&:where(…)` if needed.
 
 ```css
@@ -93,8 +94,8 @@ Component styles each have one file with a short list of base tokens.
   }
 }
 
-/* Bad. Just...no. Not any more. */
+/* Bad. Just...no. Not if we can at all avoid it. */
 .tidy5e-sheet {
-  .sheet-header .button-borderless:not(:disabled):hover i { color: … }
+  .sheet-header .header-control.button-borderless:not(:disabled):hover i { color: … }
 }
 ```
