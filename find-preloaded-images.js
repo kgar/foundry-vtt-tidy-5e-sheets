@@ -4,7 +4,7 @@ import path from 'path';
 // Generate a manifest of all images referenced so that we can preload them
 const SRC_FOLDER = './src';
 const OUTPUT_FILE = './src/utils/preloaded-images.generated.ts';
-const SCAN_EXTENSIONS = new Set(['.css', '.less', '.svelte', '.ts', '.hbs']);
+const SCAN_EXTENSIONS = new Set(['.css', '.svelte', '.ts', '.hbs']);
 const IMAGE_REFERENCE =
   /modules\/tidy5e-sheet\/images\/[\w\-./]+\.(?:webp|png|jpe?g|svg|gif|avif)/gi;
 

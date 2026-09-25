@@ -35,7 +35,7 @@
     name={favorite.item.name}
     {subtitle}
   />
-  <div class="">
+  <div class="flexrow">
     <span class="primary">
       {#if favorite.capacity}
         <CapacityTracker

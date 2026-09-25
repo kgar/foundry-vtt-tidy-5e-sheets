@@ -372,7 +372,7 @@ export class ThemeStylesProvider {
       ? `#${idOverride}`
       : doc
         ? `#${doc.sheet.id}`
-        : '.tidy5e-sheet.application.quadrone';
+        : '.tidy5e-sheet.application';
   }
 
   static readonly worldSettingIdentifierKey = '--tidy5e-sheet-world-setting';

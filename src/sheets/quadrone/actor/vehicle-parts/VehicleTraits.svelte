@@ -608,7 +608,7 @@
     pillClass="positive trait-resistance"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 
@@ -626,7 +626,7 @@
     pillClass="positive trait-damage-immunity"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 
@@ -658,7 +658,7 @@
     pillClass="negative trait-vulnerability"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 </div>

@@ -1,0 +1,544 @@
+.tidy5e-sheet:where(.application) {
+  /* The place for all dialogs and their specific layout styles. */
+  --t5e-settings-border-color: var(--t5e-table-row-divider);
+
+  &:where(.tidy-sheet-settings) {
+    --t5e-settings-header-border: none;
+
+    &:where(.theme-light) {
+      --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
+      --t5e-settings-header-border: var(--t5e-size-1) solid var(--t5e-settings-border-color);
+    }
+
+    .window-header {
+      border: var(--t5e-settings-header-border);
+    }
+  }
+
+  .window-content {
+    gap: 0;
+    padding-block: 0;
+    padding-inline: 0;
+
+    h2 {
+      &:not(:first-child) {
+        margin-block-start: var(--t5e-size-2x);
+      }
+    }
+
+    .dialog-content-container {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow-y: scroll;
+
+      &.flexrow {
+        align-items: flex-start;
+        gap: var(--t5e-size-6x);
+      }
+
+      &.flexcol {
+        align-content: flex-start;
+      }
+    }
+
+    .button-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--t5e-size-1x);
+      padding-block: 0 1rem;
+      padding-inline: 1rem;
+      white-space: nowrap;
+
+      > * {
+        flex: 1;
+      }
+    }
+  }
+
+  .tidy-sheet-settings {
+    border-block-start: var(--t5e-size-1) solid var(--t5e-table-row-divider);
+    flex: 1;
+    display: grid;
+    grid-template-areas:
+      'nav    body'
+      'nav    buttons';
+    grid-template-columns: 12rem 1fr;
+    grid-template-rows: 1fr auto;
+    min-height: 0;
+
+    .settings-pane .dialog-content-container {
+      padding-block: var(--t5e-size-2x) var(--t5e-size-8x);
+      padding-inline: var(--t5e-size-4x);
+    }
+  }
+
+  .settings-nav {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-block: var(--t5e-size-2x) var(--t5e-size-6x);
+    padding-inline: var(--t5e-size-2x);
+    border-inline-end: 0.0625rem solid var(--t5e-settings-border-color);
+  }
+
+  .nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .nav-tab-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+
+    .drop-line {
+      position: absolute;
+      inset-inline: 0;
+      height: 0.1875rem;
+      margin-block: 0;
+      margin-inline: 0;
+      border-radius: 0.125rem;
+      background-color: var(--t5e-theme-color-highlight);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  h3.nav-group-header {
+    font-size: var(--font-size-20);
+    padding-block: 0.25rem 0.375rem;
+    padding-inline: var(--t5e-size-2x) 0;
+  }
+
+  .nav-tab {
+    /* Borderless button; the constant transparent border keeps `.active` from shifting the row. */
+    --t5e-button-background: transparent;
+    --t5e-button-border: transparent;
+    --t5e-button-border-width: var(--t5e-size-1);
+    --t5e-button-shadow: none;
+    --t5e-button-focus: none;
+    --t5e-button-padding-inline-start: var(--t5e-size-2x);
+    --t5e-button-padding-inline-end: var(--t5e-size-2x);
+    justify-content: flex-start;
+    font: inherit;
+    padding-block: var(--t5e-size-2x);
+    text-align: start;
+    width: 100%;
+
+    &:hover,
+    &:focus-visible {
+      --t5e-button-background: var(--t5e-button-background);
+    }
+
+    /* Pressing an unselected tab gets buttons.css's dark toggled background; match `.active` foregrounds. */
+    &:active:hover:not(.active) {
+      --t5e-button-text: var(--t5e-theme-color-foreground);
+      --t5e-button-icon: var(--t5e-theme-color-foreground);
+      --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+      --icon-fill: var(--t5e-theme-color-foreground);
+    }
+
+    &.active {
+      --t5e-button-background: var(--t5e-theme-color-darker);
+      --t5e-button-text: var(--t5e-theme-color-foreground);
+      --t5e-button-icon: var(--t5e-theme-color-foreground);
+      --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+      --icon-fill: var(--t5e-theme-color-foreground);
+      font-weight: var(--font-weight-label);
+
+      &:hover,
+      &:focus-visible {
+        --t5e-button-background: var(--t5e-theme-color-darkest);
+        /* Overrides buttons.css `.active:hover` toggle background. */
+        background-color: var(--t5e-button-background);
+      }
+    }
+
+    &.tab-hidden {
+      --t5e-button-text: var(--t5e-color-text-lighter);
+      font-style: italic;
+    }
+
+    &.dragging {
+      opacity: 0.5;
+    }
+
+    .tab-icon {
+      flex-shrink: 0;
+      margin-inline-start: auto;
+      color: var(--t5e-color-text-lightest);
+      font-size: 0.75rem;
+      cursor: grab;
+    }
+
+    &:hover .tab-visibility-icon {
+      color: var(--t5e-color-text-lighter);
+    }
+  }
+
+  .nav-tab.icon-start {
+    padding-inline-start: 0.4375rem;
+  }
+
+  .nav-tab-icon {
+    width: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-tab-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-empty {
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    font-style: italic;
+  }
+
+  .settings-pane {
+    display: flex;
+    flex-direction: column;
+    grid-area: body;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .button-bar {
+    grid-area: buttons;
+    display: flex;
+    gap: var(--t5e-size-2x);
+
+    button {
+      flex: 1;
+    }
+  }
+
+  .window-content .dialog-content-container {
+    padding-inline: var(--t5e-size-4x);
+  }
+
+  &:where(.theme-dark):where(.tidy-sheet-settings, .theme-parchment) .window-header {
+    button.header-control {
+      &:hover {
+        --t5e-button-text: var(--t5e-color-icon-default);
+        --t5e-button-background: rgba(0, 0, 0, 1);
+      }
+    }
+  }
+
+  /* Section Selector Dialog */
+  &:where(.tidy-section-selector-application) {
+    .window-content .button-bar {
+      padding-inline: 0;
+    }
+
+    .existing-sections {
+      flex: 1 1 auto;
+      overflow: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-halfx);
+    }
+  }
+
+  .sheet-tab-configuration {
+    gap: var(--t5e-size-4x);
+  }
+
+  .world-settings-overview {
+    .filigree-card {
+      margin-block: var(--t5e-size-2x) var(--t5e-size-4x);
+    }
+
+    .tidy-info-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-block-start: var(--t5e-size-4x);
+      text-align: center;
+    }
+
+    .banner-text {
+      font-size: var(--font-size-16);
+      color: var(--t5e-color-text-lighter);
+      line-height: 1.25rem;
+      margin-inline: var(--t5e-size-8x);
+      margin-block-end: var(--t5e-size-6x);
+
+      span {
+        font-weight: var(--font-weight-label);
+        color: var(--t5e-color-text-default);
+      }
+    }
+
+    .settings-description {
+      margin-block-start: 0;
+    }
+
+    .settings-description-list {
+      margin-block: 0;
+      margin-inline: 0;
+    }
+
+    .logo {
+      max-width: 8.25rem;
+      animation: TheShining 6s infinite;
+    }
+  }
+
+  .sheet-preferences-table {
+    margin-block-start: var(--t5e-size-4x);
+
+    &.scrollable-table .expandable {
+      overflow-y: auto;
+    }
+
+    :is(.tidy-table-cell, .tidy-table-header-cell) {
+      align-items: center;
+      padding-block: 0.3125rem;
+      padding-inline: 0.5rem;
+    }
+  }
+
+  &:where(.tidy-sheet-settings) {
+    .header-controls-preview {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .header-controls-preview-label {
+      flex: 1;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-block-start: var(--t5e-size-2x);
+      gap: var(--t5e-size-2x);
+    }
+
+    .sheet-preferences-table {
+      :is(.tidy-table-cell, .tidy-table-header-cell) {
+        padding-block: 0.3125rem;
+        padding-inline: 0.5rem;
+      }
+
+      .header-cell-icon {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: var(--t5e-icon-size-5x);
+        height: var(--t5e-icon-size-5x);
+      }
+
+      .header-cell-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sheet-preferences-label {
+        color: var(--t5e-theme-color-foreground-darker);
+        font-size: var(--font-size-18);
+      }
+
+      .sheet-preferences-column-label {
+        text-align: center;
+      }
+
+      .radio {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .spell-source-item-assignments {
+      h3 {
+        padding-inline-start: 0.75rem;
+      }
+    }
+
+    .spell-name-button {
+      height: auto;
+      padding-block: 0.25rem;
+      justify-content: flex-start;
+    }
+
+    button.button:where(:not(.header-control)) {
+      --font-size-default: var(--font-size-14);
+    }
+
+    .form-group {
+      label {
+        color: var(--t5e-color-text-default);
+      }
+
+      p.hint {
+        font-size: var(--font-size-13);
+      }
+    }
+  }
+}
+
+/* Theme Settings */
+.tidy5e-sheet:where(.application.tidy-sheet-settings) {
+  --t5e-font-roboto-condensed: "Signika", "Palatino Linotype", sans-serif;
+  --t5e-font-family-default: "Signika", "Palatino Linotype", sans-serif;
+  --font-size-default: var(--font-size-14);
+
+  .settings-description {
+    color: var(--t5e-color-text-lighter);
+  }
+
+  h3 {
+    font-size: var(--font-size-20);
+  }
+
+  .setting-actions {
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .choose-specific-btn {
+    padding-block: 0;
+    padding-inline: 0;
+    align-self: flex-start;
+  }
+
+  .color-picker-container {
+    position: relative;
+  }
+
+  .color-picker-preview {
+    --size: var(--t5e-field-size-default);
+    --bg-color: var(--t5e-component-field-background);
+    flex: 0 0 var(--size);
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+    border-radius: var(--t5e-size-halfx);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t5e-transition-default);
+
+    i {
+      font-size: var(--font-size-12);
+      color: var(--t5e-color-icon-default);
+      transition: color var(--t5e-transition-default);
+    }
+
+    &:hover,
+    &:focus-within,
+    &:active {
+      box-shadow: var(--t5e-drop-shadow-field-hover);
+      border-color: var(--t5e-component-field-border-hover);
+      --bg-color: var(--t5e-component-field-background-hover);
+    }
+
+    &[style^="--bg-color"] {
+      i {
+        color: transparent;
+      }
+
+      &:hover {
+        i {
+          color: var(--t5e-color-palette-white);
+        }
+      }
+    }
+  }
+
+  .hidden-input {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 0;
+    height: 0;
+    flex: 0;
+    padding-block: 0;
+    padding-inline: 0;
+    border: 0;
+  }
+
+  .button-bar {
+    gap: var(--t5e-size-2x);
+    padding-block: 0 var(--t5e-size-3x);
+    padding-inline: var(--t5e-size-4x);
+  }
+}
+
+@keyframes TheShining {
+  0% {
+    filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 1.5rem var(--t5e-theme-color-default)) drop-shadow(0 0.25rem 1rem var(--t5e-theme-color-default));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 0.625rem var(--t5e-color-gold)) drop-shadow(0 0 0.625rem transparent);
+  }
+}
+
+/* Core DialogV2, outside any Tidy root. */
+/* stylelint-disable tidy/root-prefix */
+.bastion-maintain-order-dialog {
+  .bastion-maintain-order-hint {
+    margin-block: 0 var(--t5e-size-3x);
+  }
+
+  .bastion-maintain-order-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--t5e-size-1x);
+    max-height: 24rem;
+    overflow-y: auto;
+  }
+
+  .bastion-maintain-order-option-label {
+    display: flex;
+    align-items: center;
+    gap: var(--t5e-size-3x);
+    cursor: pointer;
+    margin-block-end: 0;
+  }
+
+  .bastion-maintain-order-portrait {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--t5e-size-1x);
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  .bastion-maintain-order-name {
+    font-weight: var(--font-weight-label);
+  }
+
+  .bastion-maintain-order-subtitle {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-12);
+  }
+}
+
+/* stylelint-enable tidy/root-prefix */
