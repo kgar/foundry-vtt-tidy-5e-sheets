@@ -127,21 +127,7 @@
       color: var(--t5e-color-text-lightest);
       cursor: grab;
     }
-  }
 
-  /* --------------------------------------------- */
-  /* Tab/Section Selection                         */
-  /* --------------------------------------------- */
-  .tab-configuration-tabs {
-    margin-bottom: var(--t5e-size-3x);
-    margin-top: var(--t5e-size-1x);
-
-    .golden-fade {
-      margin: 0;
-    }
-  }
-
-  .sortable-listbox {
     .sortable-listbox-header {
       .viewers-label {
         width: 7rem;
@@ -194,6 +180,16 @@
       align-items: center;
       border-left: 0.0625rem solid var(--t5e-component-field-border);
       height: var(--t5e-field-size-default);
+    }
+  }
+
+  /* Tab/Section Selection */
+  .tab-configuration-tabs {
+    margin-bottom: var(--t5e-size-3x);
+    margin-top: var(--t5e-size-1x);
+
+    .golden-fade {
+      margin: 0;
     }
   }
 }

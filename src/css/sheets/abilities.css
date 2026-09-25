@@ -1,4 +1,6 @@
 .tidy5e-sheet:where(.application) {
+  --t5e-ability-abbr-font-weight: inherit;
+
   .abilities-container {
     --ability-collapsed-bg: rgba(0, 0, 0, 0.24);
     --ability-collapsed-outline: oklch(from var(--t5e-color-gold) calc(l * 0.70) calc(c * .56) h);
@@ -143,7 +145,7 @@
 
     .ability-score {
       background: var(--t5e-score-image) top center / auto no-repeat;
-      background-size: contain;
+      background-size: var(--t5e-score-image-size, contain);
       height: 2rem;
       margin-block-start: auto;
       position: relative;
@@ -191,7 +193,7 @@
       height: 1.75rem;
       padding: 0;
       align-items: center;
-      text-shadow: var(--header-shadow);
+      text-shadow: var(--t5e-header-text-shadow, var(--header-shadow));
 
       .icon {
         margin-block-end: var(--t5e-size-halfx);
@@ -224,25 +226,27 @@
 
     .ability-score {
       background: var(--t5e-score-proficient-image) top center / auto no-repeat;
-      background-size: contain;
+      background-size: var(--t5e-score-image-size, contain);
     }
   }
 
   &:where(:not(.theme-basic)) {
-    .abilities-container:not(.abilities-size-compact) {
+    :where(.abilities-container):not(.abilities-size-compact) {
       .ability-score.modifier-swapped {
+
         &:hover,
         &:focus-within {
           background: var(--t5e-score-image-hover) top center / auto no-repeat;
-          background-size: contain;
+          background-size: var(--t5e-score-image-size, contain);
         }
       }
 
-      .ability.has-proficiency .ability-score.modifier-swapped {
+      :where(.ability).has-proficiency .ability-score.modifier-swapped {
+
         &:hover,
         &:focus-within {
           background: var(--t5e-score-proficient-image-hover) top center / auto no-repeat;
-          background-size: contain;
+          background-size: var(--t5e-score-image-size, contain);
         }
       }
     }
@@ -338,6 +342,7 @@
   }
 
   .abilities-container:not(.abilities-size-compact) .initiative-score-container.double-digit {
+
     .modifier,
     .bonus {
       font: var(--t5e-font-label-large);
@@ -412,6 +417,7 @@
 
     .ability-bonus-container,
     .initiative-bonus {
+
       .modifier,
       .bonus {
         font-size: var(--collapse-font-medium);
@@ -438,6 +444,7 @@
   /* Smallest abilities that kick in with 2+ custom abilities */
   /* ------------------------------------------------------------ */
   .abilities-container.abilities-size-compact {
+
     .ability-bonus-container,
     .ac-container .shield,
     .ability.initiative .initiative-score-container {
@@ -455,14 +462,18 @@
   &:where(.theme-basic) .abilities-container {
     --collapse-font-medium: 1.4375rem;
 
-    .abilities-container-inner > * {
-      background: var(--ability-collapsed-bg);
-      border: 0.0625rem solid var(--ability-collapsed-outline);
-      border-radius: var(--t5e-size-1x);
-      max-width: initial;
-      width: auto;
-      min-width: 2.5rem;
-      position: relative;
+    .abilities-container-inner {
+
+      .ability,
+      .ac-container {
+        background: var(--ability-collapsed-bg);
+        border: 0.0625rem solid var(--ability-collapsed-outline);
+        border-radius: var(--t5e-size-1x);
+        max-width: initial;
+        width: auto;
+        min-width: 2.5rem;
+        position: relative;
+      }
     }
 
     .ability .ability-bonus-container,
@@ -481,7 +492,7 @@
       }
     }
 
-    .ability.initiative {
+    :where(.ability).initiative {
       .initiative-score-container {
         .button-config {
           inset-block-start: auto;
@@ -515,6 +526,7 @@
 
     .ability-bonus-container,
     .initiative-bonus {
+
       .modifier,
       .bonus {
         font-size: var(--collapse-font-medium);
@@ -602,20 +614,93 @@
       color: var(--t5e-color-text-default);
     }
   }
+
+  .ability-abbr {
+    font-weight: var(--t5e-ability-abbr-font-weight);
+  }
+
+  &:where(.theme-dark) {
+    --t5e-ability-abbr-font-weight: 560;
+  }
 }
+
+/* This is only for compact abilities...😮‍💨
+/* ------------------------------------------------------------ */
+.tidy5e-sheet {
+
+  /* Everything but basic theme. */
+  &:where(:not(.theme-basic)) {
+    .abilities-container.abilities-size-compact .abilities-container-inner {
+
+      .ability,
+      .ac-container {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-darker) l c h / 0.64);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-45);
+      }
+
+      .ability:has(.proficient),
+      .ac-container,
+      .ability.initiative {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-darker) l c h / 0.80);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-62);
+      }
+    }
+  }
+
+  /* Parchment theme, light mode styles. */
+  :where(.theme-parchment) {
+    .abilities-container.abilities-size-compact .abilities-container-inner {
+
+      .ability,
+      .ac-container {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-darker) l c h / 0.32);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
+      }
+
+      .ability:has(.proficient),
+      .ac-container,
+      .ability.initiative {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.64);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-45);
+      }
+    }
+  }
+
+  /* Parchment theme, dark mode styles. */
+  :where(.theme-parchment.theme-dark) {
+    .abilities-container.abilities-size-compact .abilities-container-inner {
+
+      .ability,
+      .ac-container {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-darker) l c h / 0.32);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-45);
+      }
+
+      .ability:has(.proficient),
+      .ac-container,
+      .ability.initiative {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.64);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
+      }
+    }
+  }
+
+  /* Basic theme overrides (flattens the styling). */
+  :where(.theme-basic) {
+    .abilities-container.abilities-size-compact .abilities-container-inner {
+
+      .ability,
+      .ac-container {
+        --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.5);
+        --ability-collapsed-outline: var(--t5e-color-palette-gold-56);
+      }
+    }
+  }
+}
+
 /* Basic theme styles
 /* ------------------------------------------------------------ */
 .tidy5e-sheet:where(.application.theme-basic) {
-  &.theme-light {
-    .abilities-size-compact .abilities-container-inner > * {
-      --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
-    }
-
-    .abilities-container {
-      --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.5);
-      --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
-    }
-  }
 
   /* Overrides `.ability .ability-bonus-container`. */
   .ability .ability-bonus-container,
@@ -626,10 +711,6 @@
   }
 
   .abilities-container {
-    &.abilities-size-compact .abilities-container-inner > * {
-      --ability-collapsed-bg: var(--t5e-component-card-darker);
-    }
-
     .concentration-roll-button {
       margin-inline-start: 0.375rem;
       margin-inline-end: 0.375rem;
@@ -699,33 +780,5 @@
         max-width: 6rem;
       }
     }
-  }
-}
-
-/* Separate root block: nesting it would go more than four levels deep. */
-.tidy5e-sheet:where(.application) {
-  --t5e-ability-abbr-font-weight: inherit;
-
-  /* Everything but basic theme
-  /* ------------------------------------------------------------ */
-  &:where(:not(.theme-basic)) {
-    .sheet-header .abilities-container {
-      &.abilities-size-compact .abilities-container-inner {
-        .ability:has(.proficient),
-        .ac-container,
-        .ability.initiative {
-          --ability-collapsed-bg: oklch(from var(--t5e-component-card-default) l c h / 0.5);
-          --ability-collapsed-outline: var(--t5e-color-palette-gold-75);
-        }
-      }
-    }
-  }
-
-  .ability-abbr {
-    font-weight: var(--t5e-ability-abbr-font-weight);
-  }
-
-  &:where(.theme-dark) {
-    --t5e-ability-abbr-font-weight: 560;
   }
 }

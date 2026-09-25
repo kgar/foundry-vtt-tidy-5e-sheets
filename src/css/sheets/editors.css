@@ -124,10 +124,10 @@
         .inline-roll {
           --icon-fill: var(--t5e-theme-color-foreground-diminished);
           background: none;
+        }
 
-          &:hover {
-            --icon-fill: var(--t5e-theme-color-foreground);
-          }
+        .inline-roll:hover {
+          --icon-fill: var(--t5e-theme-color-foreground);
         }
       }
 
@@ -172,11 +172,11 @@
           padding: 0 0 var(--t5e-size-1);
           display: flex;
           margin-inline-start: calc(var(--t5e-size-1x) * -1);
+        }
 
-          &:hover {
-            --t5e-button-background: rgba(0, 0, 0, 0.5);
-            --t5e-button-borderless-hover-background: rgba(0, 0, 0, 0.5);
-          }
+        :is(button, .button):is(.fas, .icon):hover {
+          --t5e-button-background: rgba(0, 0, 0, 0.5);
+          --t5e-button-borderless-hover-background: rgba(0, 0, 0, 0.5);
         }
 
         tr:not(.drawn) > td:first-child {
@@ -185,17 +185,15 @@
         }
       }
 
-      tbody {
-        tr {
-          background: revert-layer;
+      tbody tr {
+        background: revert-layer;
 
-          &:nth-child(odd) {
-            background: var(--t5e-component-card-lighter);
-          }
+        &:nth-child(odd) {
+          background: var(--t5e-component-card-lighter);
+        }
 
-          &:nth-child(even) {
-            background: var(--t5e-component-card-darker);
-          }
+        &:nth-child(even) {
+          background: var(--t5e-component-card-darker);
         }
       }
     }
@@ -336,13 +334,13 @@
           margin-inline: 0;
           inset-inline-start: calc(var(--img-size) / -2);
           inset-block-start: calc(50% - var(--img-size) / 2);
+        }
 
-          img.round {
-            background: var(--t5e-component-card-lighter);
-            border: var(--t5e-size-1x) solid var(--t5e-color-gold);
-            border-radius: 100%;
-            box-shadow: var(--t5e-drop-shadow-card);
-          }
+        > figure img.round {
+          background: var(--t5e-component-card-lighter);
+          border: var(--t5e-size-1x) solid var(--t5e-color-gold);
+          border-radius: 100%;
+          box-shadow: var(--t5e-drop-shadow-card);
         }
       }
 

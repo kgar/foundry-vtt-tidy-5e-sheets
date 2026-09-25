@@ -63,8 +63,8 @@
     &:active:not(:disabled) {
       --icon-fill: var(--t5e-theme-color-foreground-diminished);
       color: var(--_button-text);
-      border: var(--_button-border-width) solid var(--_button-border);
-      background: var(--_button-background);
+      border: var(--t5e-button-border-width, var(--t5e-size-1)) solid var(--t5e-button-border, var(--t5e-component-field-border));
+      background: var(--t5e-button-background, var(--t5e-component-field-background));
 
       :where(i) {
         color: var(--icon-fill);
@@ -80,9 +80,9 @@
     }
 
     &:is(.button, .button-secondary) {
-      --t5e-button-background: var(--t5e-component-field-background);
-      --t5e-button-border-width: var(--t5e-size-1);
-      --t5e-button-border: var(--t5e-component-field-border);
+      --_button-background: var(--t5e-button-background, var(--t5e-component-field-background));
+      --_button-border-width: var(--t5e-button-border-width, var(--t5e-size-1));
+      --_button-border: var(--t5e-button-border, var(--t5e-component-field-border));
       color: var(--_button-text);
 
       &:hover:not(:disabled) {
@@ -103,7 +103,7 @@
 
     &.button-tertiary {
       --t5e-button-radius: 0.1875rem;
-      --t5e-button-background: transparent;
+      --_button-background: var(--t5e-button-background, transparent);
       border-style: dashed;
       box-shadow: none;
 
@@ -136,10 +136,10 @@
 
         &:hover {
           background-color: var(--t5e-component-toggle-toggled-background-hover);
+        }
 
-          :where(i) {
-            color: var(--_button-icon);
-          }
+        &:hover :where(i) {
+          color: var(--_button-icon);
         }
       }
     }
@@ -193,6 +193,7 @@
     &.button-borderless {
       --t5e-button-background: transparent;
       --t5e-button-border: transparent;
+      --t5e-button-border-hover: transparent;
       --t5e-button-shadow: none;
       box-shadow: var(--_button-shadow);
 
@@ -230,6 +231,7 @@
 
     /* More specific than `.button-toggle.active`. */
     &.button-toggle {
+
       &.disabled,
       &.exclude {
         --icon-fill: var(--t5e-color-text-lightest);
@@ -241,21 +243,19 @@
 
     &.header-control,
     &.unbutton {
-      --t5e-button-background: none;
       width: unset;
       box-shadow: none;
       border: none;
+      background: none;
       margin: 0;
       padding: 0;
       outline: none;
+    }
 
-      &:active,
-      &:focus,
-      &:hover,
-      &:active:hover {
-        outline: none;
-        border: 0;
-      }
+    &.unbutton:is(:active, :focus, :hover) {
+      outline: none;
+      border: 0;
+      background: none;
     }
 
     &.header-control {
@@ -330,16 +330,12 @@
       border-width: 0 var(--t5e-size-1) 0 0;
       outline: var(--t5e-size-1) solid transparent;
 
-      &:hover,
-      &:active,
-      &:focus-within {
-        &:not(:disabled) {
-          outline-color: var(--t5e-component-field-border-hover);
+      &:is(:hover, :active, :focus-within):not(:disabled) {
+        outline-color: var(--t5e-component-field-border-hover);
 
-          /* Overrides the `:active` border. */
-          &:not(:last-child) {
-            border-width: 0 var(--t5e-size-1) 0 0;
-          }
+        /* Overrides the `:active` border. */
+        &:not(:last-child) {
+          border-width: 0 var(--t5e-size-1) 0 0;
         }
       }
     }
@@ -464,11 +460,6 @@
     &.collapsed .expand-button-indicator {
       transform: rotate(-90deg);
     }
-
-    &.expanded i {
-      transform: rotate(90deg);
-      padding: 0 0 var(--t5e-size-halfx);
-    }
   }
 
   .button-bar {
@@ -518,9 +509,14 @@
         --t5e-button-icon: var(--t5e-color-icon-disabled);
       }
 
-      &:focus-within:not(.button-toggle):not(:disabled):not(.button-borderless) {
-        --t5e-button-border: var(--t5e-component-field-border-hover);
-        --t5e-button-background: var(--t5e-component-field-background-hover);
+      &:focus-within:not(.button-toggle, .button-borderless, .nav-tab):not(:disabled) {
+        &:not(.button-gold) {
+          --t5e-button-border: var(--t5e-component-field-border-hover);
+        }
+
+        &:not(.button-tertiary) {
+          --t5e-button-background: var(--t5e-component-field-background-hover);
+        }
       }
 
       &:focus-within:is(.button-toggle) {

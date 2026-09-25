@@ -55,6 +55,12 @@
       width: 100%;
       min-width: 0;
     }
+
+    :where(.pin-document-image) {
+      .tidy-table-row-use-button {
+        background: var(--t5e-table-item-image-svg-background);
+      }
+    }
   }
 
   &:where(.sheet-mode-play) .sheet-pin .pin-details {
@@ -96,6 +102,8 @@
 
     .pin-name-container {
       gap: 0.25rem;
+      padding-block: 0.25rem 0;
+      padding-inline: 0 0.5rem;
     }
   }
 
@@ -127,6 +135,7 @@
     }
 
     .pin-counter {
+
       input[type="text"],
       .uses-max,
       divider,

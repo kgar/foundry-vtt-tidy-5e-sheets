@@ -2,7 +2,6 @@
   /* ---------------------------------- */
   /*  All Tidy5e Apps                   */
   /* ---------------------------------- */
-
   --minimized-width: 18.75rem;
   --color-scrollbar: rgba(0, 0, 0, 0.35);
   --app-background: var(--t5e-component-card-darker);
@@ -50,6 +49,7 @@
   }
 
   &:where(.minimized) {
+
     &::before,
     &::after {
       display: none;
@@ -72,7 +72,7 @@
     padding-inline-start: var(--t5e-size-2x);
 
     h1 {
-      color: var(--t5e-color-text-lighter);
+      color: var(--t5e-app-header-title-color, var(--t5e-color-text-lighter));
       font: var(--t5e-font-label-medium);
     }
 
@@ -87,16 +87,34 @@
 
     button.header-control {
       --t5e-button-radius: 100%;
-      --t5e-button-text: var(--t5e-theme-color-foreground-diminished);
+      --t5e-button-text: var(--t5e-app-header-control-color, var(--t5e-theme-color-foreground));
 
       &:hover,
       &:focus-within,
-      &:active {
-        --t5e-button-text: var(--t5e-theme-color-foreground);
+      &:active,
+      &:active:not(:disabled) {
+        --t5e-button-text: var(--t5e-app-header-control-color-hover, var(--t5e-color-text-default));
         --t5e-button-background: rgba(0, 0, 0, 0.5);
+        background: var(--t5e-button-background);
+        border: none;
       }
 
       /* TODO: Figure out how to make the header UUID control use a copy cursor. */
+    }
+  }
+
+  /* Parchment and basic headers have no accent background, so the controls
+     use the regular icon colours. */
+  &:where(:not(.actor), .theme-parchment) .window-header button.header-control {
+    --t5e-button-text: var(--t5e-color-icon-button);
+
+    &:hover,
+    &:focus-within,
+    &:active,
+    &:active:not(:disabled) {
+      --t5e-button-text: var(--t5e-color-icon-default);
+      --t5e-button-background: rgba(0, 0, 0, 0.12);
+      background: var(--t5e-button-background);
     }
   }
 
@@ -235,71 +253,70 @@
   }
 
   /* Prose Mirror Editor Customizations */
-  .editor.prosemirror {
-    menu {
-      background: var(--t5e-component-card-lighter);
-      box-sizing: border-box;
-      gap: var(--t5e-size-halfx);
-      padding-block: 0.125rem;
-      padding-inline: 0.125rem;
+  .editor.prosemirror menu {
+    background: var(--t5e-component-card-lighter);
+    border: var(--t5e-app-editor-menu-border);
+    box-sizing: border-box;
+    gap: var(--t5e-size-halfx);
+    padding-block: 0.125rem;
+    padding-inline: 0.125rem;
 
+    .pm-dropdown {
+      justify-content: space-between;
+
+      &.format {
+        min-width: 5.25rem;
+      }
+    }
+
+    li {
       .pm-dropdown {
-        justify-content: space-between;
+        i {
+          margin-inline-start: 0.25rem;
+        }
 
-        &.format {
-          min-width: 5.25rem;
+        > span {
+          align-self: center;
+          width: auto;
         }
       }
 
-      li {
-        .pm-dropdown {
-          i {
-            margin-inline-start: 0.25rem;
-          }
-
-          > span {
-            align-self: center;
-            width: auto;
-          }
-        }
-
-        button {
-          --t5e-button-size: var(--t5e-field-size-small);
-          --t5e-button-height: var(--t5e-field-size-small);
-          --t5e-button-background: none;
-          --t5e-button-border-width: 0.0625rem;
-          --t5e-button-border: transparent;
-          --t5e-button-shadow: none;
-          --t5e-button-focus: none;
-          --t5e-button-padding-inline-start: 0.3125rem;
-          --t5e-button-padding-inline-end: 0.3125rem;
-          min-width: var(--t5e-field-size-small);
-          margin-block: 0;
-          margin-inline: 0;
-          padding-block: 0;
-
-          &.active {
-            --t5e-button-icon: var(--t5e-color-icon-button);
-          }
-
-          &:active,
-          &:focus-within {
-            --t5e-button-background: var(--t5e-component-field-background-active);
-            --t5e-button-icon: var(--t5e-color-icon-button);
-            --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
-          }
-
-          &:hover {
-            --t5e-button-background: var(--t5e-component-field-background-hover);
-            --t5e-button-border: var(--t5e-component-field-border);
-          }
-        }
+      button {
+        --t5e-button-size: var(--t5e-field-size-small);
+        --t5e-button-height: var(--t5e-field-size-small);
+        --t5e-button-background: none;
+        --t5e-button-border-width: 0.0625rem;
+        --t5e-button-border: transparent;
+        --t5e-button-shadow: none;
+        --t5e-button-focus: none;
+        --t5e-button-padding-inline-start: 0.3125rem;
+        --t5e-button-padding-inline-end: 0.3125rem;
+        min-width: var(--t5e-field-size-small);
+        margin-block: 0;
+        margin-inline: 0;
+        padding-block: 0;
 
         &.active {
-          button {
-            --t5e-button-background: var(--t5e-component-field-background-active);
-            --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
-          }
+          --t5e-button-icon: var(--t5e-color-icon-button);
+        }
+
+        &:active,
+        &:focus-within {
+          --t5e-button-background: var(--t5e-component-field-background-active);
+          --t5e-button-icon: var(--t5e-color-icon-button);
+          --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
+        }
+
+        &:hover {
+          --t5e-button-background: var(--t5e-component-field-background-hover);
+          --t5e-button-border: var(--t5e-component-field-border);
+        }
+      }
+
+      &.active {
+        button {
+          --t5e-button-background: var(--t5e-component-field-background-active);
+          --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
         }
       }
     }
@@ -411,6 +428,7 @@
 
   /* Spell Block */
   .spell-block {
+
     &,
     * {
       user-select: text;
@@ -452,14 +470,11 @@
     cursor: text;
   }
 
-  #context-menu.tidy5e-sheet {
+  &:where(.minimized) .window-header {
     background: var(--t5e-component-card-darker);
-    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
-    box-shadow: var(--t5e-drop-shadow-card);
   }
 
-  /* More specific than util.css minimized-state rules. */
-  &.theme-dark {
+  &:where(.theme-dark) {
     --t5e-app-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim065.png');
     --t5e-app-background-size: auto;
     --t5e-app-border-color: var(--t5e-color-palette-gold-45);
@@ -467,9 +482,7 @@
     --t5e-app-resize-handle-filter: invert(1);
     --t5e-app-code-background: rgba(0, 0, 0, 0.5);
 
-    &.minimized .window-header {
-      background: var(--t5e-component-card-darker);
-
+    &:where(.minimized) .window-header {
       button.header-control:hover,
       button.header-control:focus-within,
       button.header-control:active {
@@ -479,6 +492,7 @@
 
     .controls-dropdown {
       .header-control > button {
+
         &:hover,
         &:focus-within,
         &:active {
@@ -488,32 +502,20 @@
     }
   }
 
-  &.theme-light {
-    .editor.prosemirror menu {
-      border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
+  &:where(.theme-light) {
+    --t5e-app-editor-menu-border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
 
+    .editor.prosemirror menu {
       li button.active {
         --t5e-button-background: var(--t5e-component-card-darker);
         --t5e-button-border: var(--t5e-color-gold);
       }
     }
 
-    &.minimized .window-header {
-      background: var(--t5e-component-card-darker);
-
-      .window-title {
-        color: var(--t5e-color-text-default);
-      }
-
-      button.header-control {
-        --t5e-button-text: var(--t5e-color-icon-button);
-
-        &:hover,
-        &:focus-within,
-        &:active {
-          --t5e-button-text: var(--t5e-color-icon-default);
-        }
-      }
+    &:where(.minimized) .window-header {
+      --t5e-app-header-title-color: var(--t5e-color-text-default);
+      --t5e-app-header-control-color: var(--t5e-color-icon-button);
+      --t5e-app-header-control-color-hover: var(--t5e-color-icon-default);
     }
   }
 
@@ -598,20 +600,6 @@
 
     button {
       flex: 1;
-    }
-  }
-
-  /* Overrides the `.theme-light` minimized header rules above. */
-  &:where(.theme-basic).theme-light {
-    .window-header {
-      button.header-control {
-        &:hover,
-        &:focus-within,
-        &:active {
-          --t5e-button-text: var(--t5e-color-icon-default);
-          --t5e-button-background: rgba(0, 0, 0, 0.12);
-        }
-      }
     }
   }
 

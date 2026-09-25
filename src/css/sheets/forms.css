@@ -253,17 +253,15 @@
         margin-block-start: calc(var(--font-size-small) + var(--t5e-size-1x));
       }
 
-      > .form-fields {
-        .form-group {
-          flex-wrap: nowrap;
+      > .form-fields .form-group {
+        flex-wrap: nowrap;
 
-          &:not(.label-top):not(.checkbox) {
-            gap: var(--t5e-size-1x);
-          }
+        &:not(.label-top, .checkbox) {
+          gap: var(--t5e-size-1x);
+        }
 
-          > * {
-            flex: unset;
-          }
+        > * {
+          flex: unset;
         }
       }
     }

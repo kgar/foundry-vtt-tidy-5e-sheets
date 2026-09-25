@@ -4,7 +4,7 @@
       justify-content: flex-start;
     }
 
-    .tidy-table-cell[data-tidy-column-key="assignTo"] {
+    :where(.tidy-table-cell)[data-tidy-column-key="assignTo"] {
       .select-diminished {
         border: none;
         background-color: var(--t5e-component-card-darker);

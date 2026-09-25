@@ -1,6 +1,12 @@
 /* Styles common to Document sheets */
 .tidy5e-sheet:where(.application) {
   font-smooth: always;
+
+  /* Effect rider arrow, on actor and item Effects tabs. */
+  .inline-activity-arrow {
+    padding-inline: 0.25rem;
+    align-self: center;
+  }
 }
 
 .tidy5e-sheet:where(.item, .actor) {
@@ -24,15 +30,15 @@
       :where(.list-content) {
         flex: 2;
         display: flex;
+      }
 
-        .list-values {
-          flex: 1;
-          display: flex;
-          align-items: center;
+      :where(.list-content) .list-values {
+        flex: 1;
+        display: flex;
+        align-items: center;
 
-          select {
-            width: auto;
-          }
+        select {
+          width: auto;
         }
       }
     }

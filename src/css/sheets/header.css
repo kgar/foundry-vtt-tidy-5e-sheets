@@ -1,4 +1,5 @@
 @keyframes death-saves-pulse {
+
   0%,
   100% {
     opacity: 0.5;
@@ -9,10 +10,55 @@
   }
 }
 
+/* PARCHMENT HEADER STYLES
+  /* ------------------------------------------------------------ */
+.tidy5e-sheet:where(.application.actor.theme-parchment) {
+  background: var(--t5e-component-card-darker);
+  --t5e-sheet-header-bg: url('../../systems/dnd5e/ui/official/banner-npc-dark.webp');
+  --t5e-background-image: url('../../modules/tidy5e-sheet/images/denim065.png');
+  background: var(--t5e-background-image), var(--t5e-component-card-dark-darker);
+  background-position: top center, center;
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+  --t5e-header-text-shadow: none;
+
+  &::before {
+    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-1.webp');
+    content: '';
+    background-image: var(--t5e-background-image);
+    background-position: top center;
+    background-repeat: no-repeat;
+    filter: none;
+    mix-blend-mode: normal;
+    opacity: 0.24;
+  }
+
+  &::after {
+    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-2.webp');
+    content: '';
+    background-image: var(--t5e-background-image);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    mix-blend-mode: normal;
+    opacity: 0.12;
+  }
+
+  .sheet-body {
+    background: none;
+  }
+
+  .window-content .sheet-body::before {
+    content: none;
+  }
+
+  .ability-save,
+  .ability-roll-button {
+    box-shadow: none;
+  }
+}
+
 .tidy5e-sheet:where(.application.actor) {
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-character.webp');
-  --ability-collapsed-bg: rgba(0, 0, 0, 0.24);
-  --ability-collapsed-outline: oklch(from var(--t5e-color-gold) calc(l * 0.70) calc(c * .56) h);
   --input-background: rgba(0, 0, 0, 0.2);
   --input-background-hover: rgba(0, 0, 0, 0.4);
 
@@ -39,6 +85,7 @@
     /* These headers use var(--t5e-background-image).
     /* ------------------------------------------------------------ */
   &:where(:not(.theme-parchment)) {
+    --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-character.webp');
     background: var(--t5e-theme-color-header, var(--t5e-theme-color-default));
 
     /* Background image */
@@ -75,133 +122,7 @@
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     }
   }
-}
-/* PARCHMENT HEADER STYLES
-  /* ------------------------------------------------------------ */
-.tidy5e-sheet:where(.application.actor.theme-parchment) {
-  background: var(--t5e-component-card-darker);
-  --t5e-sheet-header-bg: url('../../systems/dnd5e/ui/official/banner-npc-dark.webp');
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/denim065.png');
-  background: var(--t5e-background-image), var(--t5e-component-card-dark-darker);
-  background-position: top center, center;
-  background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
 
-  &::before {
-    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-1.webp');
-    content: '';
-    background-image: var(--t5e-background-image);
-    background-position: top center;
-    background-repeat: no-repeat;
-    filter: none;
-    mix-blend-mode: normal;
-    opacity: 0.24;
-  }
-
-  &::after {
-    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-2.webp');
-    content: '';
-    background-image: var(--t5e-background-image);
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    mix-blend-mode: normal;
-    opacity: 0.12;
-  }
-
-  .sheet-body {
-    background: none;
-  }
-
-  .window-content .sheet-body::before {
-    content: none;
-  }
-
-  /* Overrides abilities.css `.ability .ability-save` and `.actor-subtitle` below. */
-  &.actor {
-    .actor-name,
-    .actor-subtitle,
-    .ability .ability-save {
-      text-shadow: none;
-    }
-  }
-
-  .ability-save,
-  .ability-roll-button {
-    box-shadow: none;
-  }
-
-  &.theme-light {
-    --input-background: rgba(255, 255, 255, 0.2);
-    --input-background-hover: rgba(255, 255, 255, 0.4);
-
-    .sheet-header {
-      --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
-      --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
-      --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
-      --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
-      --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_hover.webp');
-      --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
-      --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_prof_hover.webp');
-      --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
-      --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_light.webp');
-      --header-shadow: none;
-    }
-
-    --color-text-selection: var(--t5e-theme-color-foreground);
-    --color-text-selection-bg: var(--t5e-theme-color-default);
-
-    /* More specific than abilities.css `.ability-labels .label` and buttons.css icon colours. */
-    .color-text-gold.color-text-gold {
-      color: var(--t5e-color-text-gold-emphasis);
-    }
-
-    /* More specific than abilities.css proficient `.ability-score`. */
-    .ability {
-      .ability-score.ability-score.ability-score {
-        background-position: top center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
-
-    .sheet-header-actions {
-      .button-gold {
-        --t5e-button-text: var(--t5e-color-palette-gold-62);
-        --t5e-button-icon: var(--t5e-color-palette-gold-56);
-        --t5e-button-border: var(--t5e-color-palette-gold-62);
-        --t5e-button-shadow: var(--t5e-drop-shadow-field);
-
-        &:hover,
-        &:active,
-        &:focus {
-          --t5e-button-icon: var(--t5e-color-palette-gold-56);
-          --t5e-button-border: var(--t5e-color-palette-gold-56);
-          --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
-          --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
-        }
-
-        &:active:not(:disabled) {
-          --t5e-button-text: var(--t5e-color-palette-gold-62);
-        }
-
-        &:disabled {
-          --t5e-button-disabled-text-color: var(--t5e-color-palette-gold-62);
-          --t5e-button-disabled-icon-color: var(--t5e-color-palette-gold-56);
-          --t5e-button-disabled-border-color: var(--t5e-color-palette-gold-62);
-          --t5e-button-shadow: var(--t5e-drop-shadow-field);
-        }
-      }
-    }
-
-    .concentration .concentration-roll-button .label {
-      color: var(--t5e-color-text-gold-emphasis);
-    }
-  }
-}
-
-/* Separate root block: nesting it would go more than four levels deep. */
-.tidy5e-sheet:where(.application.actor) {
   /* SHEET HEADER STYLES
   /* Overrides exist for NPCs and Vehicles.
   /* ------------------------------------------------------------ */
@@ -233,14 +154,15 @@
     .button-config {
       color: var(--t5e-color-icon-button);
 
-      &.button-icon-only.button-borderless:not(:disabled):hover {
-        --t5e-button-borderless-hover-background: transparent;
+      &.button-icon-only.button-borderless:where(:not(:disabled)):hover {
+        background-color: transparent;
       }
     }
 
     /* Header input styles */
     input[type="text"]:not(:disabled):not(.uninput) {
-      border: var(--t5e-size-1) solid transparent;
+      --t5e-component-field-border-color: transparent;
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border-color);
       background-color: transparent;
 
       &.actor-name {
@@ -260,6 +182,8 @@
       &:hover,
       &:focus,
       &:active {
+        --t5e-component-field-border-color: var(--t5e-theme-color-default);
+        border-color: var(--t5e-component-field-border-color);
         --t5e-field-background-color: var(--input-background-hover);
         background-color: var(--t5e-field-background-color);
       }
@@ -290,7 +214,7 @@
       flex-grow: 1;
       margin-block: 0;
       margin-inline-start: var(--header-padding);
-      text-shadow: var(--header-shadow);
+      text-shadow: var(--t5e-header-text-shadow, var(--header-shadow));
       line-height: 100%;
       text-wrap: nowrap;
       overflow: hidden;
@@ -300,7 +224,7 @@
   .actor-subtitle {
     margin-inline-start: var(--header-padding);
     flex: 1;
-    text-shadow: var(--header-shadow);
+    text-shadow: var(--t5e-header-text-shadow, var(--header-shadow));
     container-type: inline-size;
     container-name: subtitle;
 
@@ -332,8 +256,14 @@
     }
 
     input[type="text"] {
+      font-family: var(--t5e-font-roboto-condensed);
       max-width: 5rem;
+      padding-block: 0;
       width: fit-content;
+
+      &:hover {
+        border-color: var(--t5e-theme-color-default);
+      }
     }
 
     .xp-bar {
@@ -420,8 +350,8 @@
         filter: drop-shadow(0 0 0.325rem var(--t5e-theme-color-default));
       }
 
-      /* TODO: Deal with specificity issues that are requiring this extra arbitrary specificity */
-      &.single.single.single {
+      /* More specific than buttons.css variant backgrounds. */
+      &.single.single {
         background: var(--t5e-inspiration-image-single) center / contain no-repeat;
 
         &::before {
@@ -460,8 +390,8 @@
         }
       }
 
-      /* TODO: Deal with specificity issues that are requiring this extra arbitrary specificity */
-      &.stacked.stacked.stacked {
+      /* More specific than buttons.css variant backgrounds. */
+      &.stacked.stacked {
         background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
         width: 2.75rem;
         height: 2.75rem;
@@ -484,7 +414,7 @@
           font-size: var(--font-size-16);
         }
 
-        &.inspired .inspiration-level {
+        &.inspired :where(.inspiration-level) {
           box-shadow: 0 0 var(--t5e-size-2x) 0.1875rem var(--t5e-inspiration-highlight-color);
           content: '';
           background-color: var(--t5e-color-palette-white);
@@ -504,43 +434,41 @@
       display: none;
     }
 
-    &:hover {
-      .inspiration-controls {
-        position: absolute;
-        inset-inline-start: 0;
-        inset-block-end: var(--t5e-size-1x);
-        gap: var(--t5e-size-1x);
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &:hover .inspiration-controls {
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-end: var(--t5e-size-1x);
+      gap: var(--t5e-size-1x);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        .inspiration-control {
-          --t5e-button-radius: 100%;
-          --t5e-button-icon-size: var(--font-size-13);
-          --t5e-button-borderless-hover-background: transparent;
-          min-width: var(--size);
+      .inspiration-control {
+        --t5e-button-radius: 100%;
+        --t5e-button-icon-size: var(--font-size-13);
+        --t5e-button-borderless-hover-background: transparent;
+        min-width: var(--size);
+        position: relative;
+
+        i {
           position: relative;
+        }
 
-          i {
-            position: relative;
-          }
+        &::before {
+          content: '';
+          position: absolute;
+          inset-block-start: 50%;
+          inset-inline-start: 50%;
+          transform: translateY(-50%) translateX(-50%);
+          background: rgba(0, 0, 0, 0.32);
+          width: var(--t5e-size-5x);
+          height: var(--t5e-size-5x);
+          border-radius: 100%;
+        }
 
-          &::before {
-            content: '';
-            position: absolute;
-            inset-block-start: 50%;
-            inset-inline-start: 50%;
-            transform: translateY(-50%) translateX(-50%);
-            background: rgba(0, 0, 0, 0.32);
-            width: var(--t5e-size-5x);
-            height: var(--t5e-size-5x);
-            border-radius: 100%;
-          }
-
-          &:not(:disabled):hover::before {
-            background: rgba(0, 0, 0, 0.64);
-          }
+        &:where(:not(:disabled)):hover::before {
+          background: rgba(0, 0, 0, 0.64);
         }
       }
     }
@@ -552,7 +480,8 @@
     margin-inline-start: var(--t5e-size-2x);
     margin-block-end: auto;
     position: relative;
-    padding-block: var(--t5e-size-1x) var(--t5e-size-8x);
+    /* padding-block: var(--t5e-size-1x) var(--t5e-size-8x); */
+    padding-block: 0 var(--t5e-size-8x);
     max-width: var(--vitals-width);
 
     .actor-image {
@@ -635,80 +564,76 @@
         }
       }
 
-      &.dead {
-        &:not(.transparent, .token) {
-          background-color: var(--t5e-component-card-dark-darker);
-
-          .dead-overlay {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: var(--t5e-color-palette-red-100);
-            opacity: 0.6;
-            mix-blend-mode: multiply;
-
-            &::after {
-              content: '';
-              position: absolute;
-              inset: 0;
-              background-color: var(--t5e-color-gold);
-              opacity: 0.2;
-              mix-blend-mode: lighten;
-            }
-          }
-        }
+      &.dead:not(.transparent, .token) {
+        background-color: var(--t5e-component-card-dark-darker);
 
         .dead-overlay {
-          pointer-events: none;
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-color: var(--t5e-color-palette-red-100);
+          opacity: 0.6;
+          mix-blend-mode: multiply;
         }
 
-        img {
-          z-index: -1;
-        }
-
-        &.transparent,
-        &.token {
-          img {
-            filter: grayscale(1);
-            opacity: 0.75;
-          }
-
-          &::before {
-            border-color: var(--t5e-color-palette-red-60);
-          }
-        }
-
-        &.round {
-          .dead-overlay {
-            border-radius: 100%;
-          }
+        .dead-overlay::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-color: var(--t5e-color-gold);
+          opacity: 0.2;
+          mix-blend-mode: lighten;
         }
       }
 
-      &.death-saves-open {
-        &:not(.transparent, .token) {
-          background-color: var(--t5e-component-card-dark-darker);
+      &.dead .dead-overlay {
+        pointer-events: none;
+      }
 
-          &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: var(--t5e-color-palette-red-100);
-            opacity: 0.6;
-            mix-blend-mode: multiply;
-            animation: death-saves-pulse 2.5s ease-in-out infinite;
-          }
+      &.dead img {
+        z-index: -1;
+      }
+
+      &.dead.transparent,
+      &.dead.token {
+        img {
+          filter: grayscale(1);
+          opacity: 0.75;
         }
 
-        &.transparent {
-          img {
-            filter: grayscale(1);
-            opacity: 0.75;
-          }
+        &::before {
+          border-color: var(--t5e-color-palette-red-60);
+        }
+      }
 
-          &::before {
-            border-color: var(--t5e-color-palette-red-60);
-          }
+      &.dead.round {
+        .dead-overlay {
+          border-radius: 100%;
+        }
+      }
+
+      &.death-saves-open:not(.transparent, .token) {
+        background-color: var(--t5e-component-card-dark-darker);
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-color: var(--t5e-color-palette-red-100);
+          opacity: 0.6;
+          mix-blend-mode: multiply;
+          animation: death-saves-pulse 2.5s ease-in-out infinite;
+        }
+      }
+
+      &.death-saves-open.transparent {
+        img {
+          filter: grayscale(1);
+          opacity: 0.75;
+        }
+
+        &::before {
+          border-color: var(--t5e-color-palette-red-60);
         }
       }
     }
@@ -740,6 +665,7 @@
 
         i {
           font-weight: 500;
+          transition: all var(--t5e-transition-default);
         }
 
         &.checked i {
@@ -811,25 +737,24 @@
         .checked {
           border-color: var(--t5e-color-palette-gold-62);
           background-color: var(--t5e-color-palette-gold-45);
-
           --t5e-button-icon: var(--t5e-color-text-default);
           --t5e-button-disabled-icon-color: var(--t5e-color-text-default);
           --icon-fill: var(--t5e-color-text-default);
+        }
 
-          i {
-            text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
-          }
+        .checked i {
+          text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
+        }
 
-          &:active,
-          &:focus-within {
-            background-color: var(--t5e-color-palette-gold-56);
-            border-color: var(--t5e-color-palette-gold-89);
-          }
+        .checked:active,
+        .checked:focus-within {
+          background-color: var(--t5e-color-palette-gold-56);
+          border-color: var(--t5e-color-palette-gold-89);
+        }
 
-          &:hover {
-            background-color: var(--t5e-death-save-checked-hover-background);
-            border-color: var(--t5e-color-palette-gold-89);
-          }
+        .checked:hover {
+          background-color: var(--t5e-death-save-checked-hover-background);
+          border-color: var(--t5e-color-palette-gold-89);
         }
       }
 
@@ -848,33 +773,32 @@
         .checked {
           border-color: var(--t5e-color-palette-gold-62);
           background-color: var(--t5e-color-palette-red-60);
-
           --t5e-button-icon: var(--t5e-color-text-default);
           --t5e-button-disabled-icon-color: var(--t5e-color-text-default);
           --icon-fill: var(--t5e-color-text-default);
+        }
 
-          i {
-            text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
-          }
+        .checked i {
+          text-shadow: 0 0 var(--t5e-size-2x) rgba(0, 0, 0, 0.24);
+        }
 
-          &:active,
-          &:focus-within {
-            background-color: var(--t5e-color-palette-red-60);
-            border-color: var(--t5e-color-palette-gold-89);
+        .checked:active,
+        .checked:focus-within {
+          background-color: var(--t5e-color-palette-red-60);
+          border-color: var(--t5e-color-palette-gold-89);
+        }
 
-            i {
-              color: var(--t5e-color-text-default);
-            }
-          }
+        :is(.checked:active, .checked:focus-within) i {
+          color: var(--t5e-color-text-default);
+        }
 
-          &:hover {
-            background-color: var(--t5e-death-save-checked-hover-background);
-            border-color: var(--t5e-color-palette-gold-89);
+        .checked:hover {
+          background-color: var(--t5e-death-save-checked-hover-background);
+          border-color: var(--t5e-color-palette-gold-89);
+        }
 
-            i {
-              color: var(--t5e-color-text-default);
-            }
-          }
+        .checked:hover i {
+          color: var(--t5e-color-text-default);
         }
       }
     }
@@ -926,6 +850,11 @@
         background-color: var(--t5e-color-hp-dark);
         border: var(--t5e-size-halfx) solid var(--t5e-color-hp-medium);
         caret-color: #ffffff;
+
+        &:disabled {
+          background-color: var(--t5e-component-field-background-disabled);
+          border-color: transparent;
+        }
       }
 
       .label {
@@ -976,7 +905,6 @@
         flex: 0 1 auto;
         position: absolute;
         inset-inline-end: 0;
-
         --t5e-button-icon-size: var(--font-size-14);
 
         i {
@@ -984,7 +912,7 @@
           margin-inline-start: var(--t5e-size-1);
         }
 
-        &.temp-hp {
+        &:where(.temp-hp) {
           --t5e-button-background: none;
           --t5e-button-borderless-hover-background: none;
         }
@@ -1100,69 +1028,68 @@
 
         &.exhausted {
           background-color: var(--t5e-color-palette-orange-40);
+        }
 
-          i,
-          .value {
-            color: var(--t5e-color-icon-default);
-            text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
-          }
+        &.exhausted i,
+        &.exhausted .value {
+          color: var(--t5e-color-icon-default);
+          text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
+        }
 
-          .button {
-            --t5e-button-padding-inline-start: var(--t5e-size-2x);
-            --t5e-button-padding-inline-end: var(--t5e-size-1x);
-            --t5e-button-width: auto;
-            padding-block: 0 var(--t5e-size-1);
-          }
+        &.exhausted .button {
+          --t5e-button-padding-inline-start: var(--t5e-size-2x);
+          --t5e-button-padding-inline-end: var(--t5e-size-1x);
+          --t5e-button-width: auto;
+          padding-block: 0 var(--t5e-size-1);
+        }
 
-          .value {
-            display: initial;
-          }
+        &.exhausted .value {
+          display: initial;
         }
       }
 
       .exhaustion.exhausted,
       .exhaustion-bar {
-        :not(:first-child):is(:hover, :focus, :active) {
+
+        /* stylelint-disable-next-line selector-max-specificity -- must beat the borderless hover wash and the active segment in every state */
+        button.button-icon-only.button-borderless:not(:first-child):is(:hover, :focus, :active) {
           background-color: var(--t5e-color-palette-orange-55);
         }
       }
 
-      .death-saves {
-        .button-death-saves i {
-          color: var(--t5e-vitals-button-icon-color);
+      .death-saves .button-death-saves i {
+        color: var(--t5e-vitals-button-icon-color);
+      }
+
+      .death-saves .button-death-saves.dead {
+        --icon-fill: var(--t5e-color-palette-red-100);
+        background-color: var(--t5e-color-palette-red-27);
+
+        i {
+          color: var(--t5e-color-palette-red-100);
+          text-shadow: none;
         }
 
-        .button-death-saves.dead {
-          --icon-fill: var(--t5e-color-palette-red-100);
+        &:where(:hover) {
+          --t5e-button-background: var(--t5e-color-palette-red-60);
+          --t5e-button-borderless-hover-background: var(--t5e-color-palette-red-60);
+        }
+
+        &:where(:hover) i {
+          color: var(--t5e-color-palette-white);
+        }
+      }
+
+      .death-saves.dying {
+        background-color: var(--t5e-color-palette-red-45);
+
+        i {
+          color: var(--t5e-color-icon-default);
+          text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-red-100);
+        }
+
+        :where(.button):hover {
           background-color: var(--t5e-color-palette-red-27);
-
-          i {
-            color: var(--t5e-color-palette-red-100);
-            text-shadow: none;
-          }
-
-          &:hover {
-            --t5e-button-background: var(--t5e-color-palette-red-60);
-            --t5e-button-borderless-hover-background: var(--t5e-color-palette-red-60);
-
-            i {
-              color: var(--t5e-color-palette-white);
-            }
-          }
-        }
-
-        &.dying {
-          background-color: var(--t5e-color-palette-red-45);
-
-          i {
-            color: var(--t5e-color-icon-default);
-            text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-red-100);
-          }
-
-          .button:hover {
-            --t5e-button-background: var(--t5e-color-palette-red-27);
-            --t5e-button-borderless-hover-background: var(--t5e-color-palette-red-27);
-          }
         }
       }
 
@@ -1179,7 +1106,6 @@
         &:hover {
           --t5e-button-background: black;
           --t5e-button-background-hover: black;
-          --t5e-button-borderless-hover-background: black;
           --t5e-button-icon-hover: var(--t5e-color-text-default);
         }
       }
@@ -1285,6 +1211,10 @@
           color: var(--t5e-color-icon-default);
           text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
         }
+
+        &.active:hover {
+          text-shadow: var(--t5e-exhaustion-active-hover-text-shadow, 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100));
+        }
       }
     }
 
@@ -1346,271 +1276,265 @@
     }
   }
 
-  &:where(.theme-dark) .actor-vitals .exhaustion-bar .button.active:hover {
-    text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+  &:where(.theme-dark) {
+    --t5e-exhaustion-active-hover-text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
   }
 
   &:where(.theme-dark) .actor-vitals-container .death-saves-overlay :is(.successes, .failures) {
     --t5e-death-save-checked-hover-background: rgba(0, 0, 0, 1);
   }
 
-  .limited-sheet {
-    &.sheet-header {
-      .actor-vitals-container {
-        max-width: 10rem;
-      }
-
-      .actor-image {
-        max-height: 10rem;
-        max-width: 10rem;
-        position: relative;
-
-        &.square {
-          img {
-            height: 9.5rem;
-            width: 9.5rem;
-          }
-        }
-      }
-
-      .actor-name {
-        margin-block-end: 1.5rem;
-      }
-    }
-
-    &.sheet-body {
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .editor-rendered-content {
-      border: none;
-      margin-block: var(--t5e-size-4x);
-      margin-inline: 0;
-      padding-block: 0;
-      padding-inline: var(--t5e-size-4x);
-    }
-  }
-}
-/* NPC AND VEHICLE SHEET HEADER STYLES
-  /* Overrides for headers
-  /* ------------------------------------------------------------ */
-.tidy5e-sheet:where(.application.actor:is(.npc, .vehicle)) {
-  .sheet-header {
-    .npc-vitals {
-      --t5e-npc-vitals-offset: 1.75rem;
-      margin-inline-start: var(--t5e-npc-vitals-offset);
-      width: calc(100% - var(--t5e-npc-vitals-offset));
-      padding: 0;
-
-      .roll-hp i,
-      .death-saves i {
-        color: var(--t5e-vitals-button-icon-color);
-      }
-
-      .max-hp {
-        flex: 1;
-        color: var(--t5e-vitals-button-icon-color);
-
-        &:hover {
-          color: var(--t5e-color-text-default);
-        }
-      }
-
-      .actor-vitals-row {
-        padding-inline-start: 1rem;
-      }
-
-      .hp-row {
-        padding-inline-start: .5rem;
-
-        .meter .label {
-          gap: var(--t5e-size-halfx);
-          padding-inline-end: var(--t5e-size-1x);
-        }
-
-        .meter .label,
-        input[type="text"] {
-          padding-inline-start: 1rem;
-        }
-
-        .temp-hp {
-          padding-block: 0;
-          padding-inline: var(--t5e-size-1x);
-        }
-
-        input[type="text"].hp-temp-input {
-          padding-inline-start: var(--t5e-size-1x);
-          max-width: 3.5rem;
-        }
-
-        .hit-points {
-          position: relative;
-        }
-      }
-
-      .exhaustion {
-        transition: all var(--t5e-transition-default);
-      }
-
-      .exhaustion.exhausted {
-        margin-inline-start: -1rem;
-        padding-inline-start: 0.75rem;
-      }
-
-      .exhaustion-bar {
-        z-index: auto;
-        inset-inline-start: 0;
-        padding-inline-start: 1rem;
-      }
-
-      &.view-only {
-        margin-block-end: 0.75rem;
-      }
-    }
-
+  .limited-sheet.sheet-header {
     .actor-vitals-container {
-      padding-block-end: 1.75rem;
-      max-width: 10.5rem;
+      max-width: 10rem;
+    }
 
-      .actor-image {
-        max-width: 10.5rem;
-        max-height: 10.5rem;
-      }
+    .actor-image {
+      max-height: 10rem;
+      max-width: 10rem;
+      position: relative;
 
-      .shield {
-        position: absolute;
-        height: 4.25rem;
-        width: 3.5rem;
-        inset-inline-start: calc(-1 * var(--t5e-size-2x));
-        inset-block-end: -0.375rem;
-        text-align: center;
-        align-items: center;
-        background-image: var(--t5e-shield-image);
-        z-index: 1;
-
-        .button-config {
-          position: absolute;
-          inset-block-start: var(--t5e-size-halfx);
-          inset-inline-start: -0.1875rem;
+      &.square {
+        img {
+          height: 9.5rem;
+          width: 9.5rem;
         }
-      }
-
-      .hp-overlay-bar {
-        padding-inline-start: 1.5rem;
-        inset-inline-end: -3rem;
-      }
-
-      .ac-label {
-        display: inherit;
-        margin: 0;
-      }
-
-      .ac-value {
-        margin-block: calc(-1 * var(--t5e-size-halfx)) 0.1875rem;
-        margin-inline: calc(-1 * var(--t5e-size-halfx)) 0;
       }
     }
 
     .actor-name {
-      margin-block-start: calc(-1 * var(--t5e-size-1x));
+      margin-block-end: 1.5rem;
     }
+  }
 
-    .actor-details-subtitle-row {
-      align-items: center;
-    }
+  .limited-sheet.sheet-body {
+    flex-direction: column;
+    overflow-y: auto;
+  }
 
-    input[type="text"]:not(:disabled):not(.uninput).h2.actor-name {
-      font-size: var(--font-size-46);
-      max-height: var(--font-size-46);
-      margin-inline-start: var(--t5e-size-2x);
-    }
-
-    input[type="text"]:not(:disabled):not(.uninput) {
-      &.actor-name {
-        margin-block-start: calc(-1 * var(--t5e-size-1x));
-      }
-
-      &.xp-value,
-      &.actor-name {
-        --t5e-field-background-color: var(--input-background);
-      }
-
-      &.xp-value {
-        text-align: left;
-        padding-block-end: 0;
-        padding-inline-start: var(--t5e-size-1x);
-
-        &:not(:focus, :active) {
-          background-color: transparent;
-          box-shadow: none;
-        }
-      }
-    }
-
-    .actor-context-row {
-      align-items: flex-start;
-    }
-
-    .sheet-header-actions {
-      margin-block-start: 0;
-      margin-inline-end: var(--t5e-size-2x);
-    }
-
-    .actor-subtitle {
-      > *:not(.divider-dot) {
-        height: 1rem;
-      }
-
-      .xp-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        flex: 0 1 fit-content;
-        flex-wrap: nowrap;
-        max-height: 1rem;
-        flex-direction: row;
-
-        .label {
-          margin: 0;
-        }
-      }
-
-      .concentration {
-        flex: 0 0 auto;
-        height: var(--font-size-15);
-        align-content: center;
-
-        .concentration-roll-button {
-          min-width: unset;
-
-          > * {
-            flex-wrap: nowrap;
-          }
-        }
-      }
-    }
-
-    .proficiency-bonus {
-      height: 1rem;
-      margin-block: 0;
-      margin-inline: var(--t5e-size-1x) var(--t5e-size-2x);
-      align-self: flex-start;
-
-      > * {
-        line-height: 1rem;
-      }
-
-      .label {
-        margin-inline-end: var(--t5e-size-1x);
-      }
-    }
+  .limited-sheet .editor-rendered-content {
+    border: none;
+    margin-block: var(--t5e-size-4x);
+    margin-inline: 0;
+    padding-block: 0;
+    padding-inline: var(--t5e-size-4x);
   }
 }
 
-/* Separate root block: nesting it would go more than four levels deep. */
-.tidy5e-sheet:where(.application.actor) {
+/* NPC AND VEHICLE SHEET HEADER STYLES
+  /* Overrides for headers
+  /* ------------------------------------------------------------ */
+.tidy5e-sheet:where(.application.actor:is(.npc, .vehicle)) {
+  .sheet-header .npc-vitals {
+    --t5e-npc-vitals-offset: 1.75rem;
+    margin-inline-start: var(--t5e-npc-vitals-offset);
+    width: calc(100% - var(--t5e-npc-vitals-offset));
+    padding: 0;
+
+    .roll-hp i,
+    .death-saves i {
+      color: var(--t5e-vitals-button-icon-color);
+    }
+
+    .max-hp {
+      flex: 1;
+      color: var(--t5e-vitals-button-icon-color);
+
+      &:hover {
+        color: var(--t5e-color-text-default);
+      }
+    }
+
+    .actor-vitals-row {
+      padding-inline-start: 1rem;
+    }
+
+    .hp-row {
+      padding-inline-start: .5rem;
+
+      .meter .label {
+        gap: var(--t5e-size-halfx);
+        padding-inline-end: var(--t5e-size-1x);
+      }
+
+      .meter .label,
+      input[type="text"] {
+        padding-inline-start: 1rem;
+      }
+
+      .temp-hp {
+        padding-block: 0;
+        padding-inline: var(--t5e-size-1x);
+      }
+
+      input[type="text"].hp-temp-input {
+        padding-inline-start: var(--t5e-size-1x);
+        max-width: 3.5rem;
+      }
+
+      .hit-points {
+        position: relative;
+      }
+    }
+
+    .exhaustion {
+      transition: all var(--t5e-transition-default);
+    }
+
+    .exhaustion.exhausted {
+      margin-inline-start: -1rem;
+      padding-inline-start: 0.75rem;
+    }
+
+    .exhaustion-bar {
+      z-index: auto;
+      inset-inline-start: 0;
+      padding-inline-start: 1rem;
+    }
+
+    &.view-only {
+      margin-block-end: 0.75rem;
+    }
+  }
+
+  .sheet-header .actor-vitals-container {
+    padding-block-end: 1.75rem;
+    max-width: 10.5rem;
+
+    .actor-image {
+      max-width: 10.5rem;
+      max-height: 10.5rem;
+    }
+
+    .shield {
+      position: absolute;
+      height: 4.25rem;
+      width: 3.5rem;
+      inset-inline-start: calc(-1 * var(--t5e-size-2x));
+      inset-block-end: -0.375rem;
+      text-align: center;
+      align-items: center;
+      background-image: var(--t5e-shield-image);
+      z-index: 1;
+
+      .button-config {
+        position: absolute;
+        inset-block-start: var(--t5e-size-halfx);
+        inset-inline-start: -0.1875rem;
+      }
+    }
+
+    .hp-overlay-bar {
+      padding-inline-start: 1.5rem;
+      inset-inline-end: -3rem;
+    }
+
+    .ac-label {
+      display: inherit;
+      margin: 0;
+    }
+
+    .ac-value {
+      margin-block: calc(-1 * var(--t5e-size-halfx)) 0.1875rem;
+      margin-inline: calc(-1 * var(--t5e-size-halfx)) 0;
+    }
+  }
+
+  .sheet-header .actor-name {
+    margin-block-start: calc(-1 * var(--t5e-size-1x));
+  }
+
+  .sheet-header .actor-details-subtitle-row {
+    align-items: center;
+  }
+
+  .sheet-header input[type="text"]:not(:disabled, .uninput).h2.actor-name {
+    font-size: var(--font-size-46);
+    max-height: var(--font-size-46);
+    margin-inline-start: var(--t5e-size-2x);
+  }
+
+  .sheet-header input[type="text"]:not(:disabled, .uninput) {
+    &.actor-name {
+      margin-block-start: calc(-1 * var(--t5e-size-1x));
+    }
+
+    &.xp-value,
+    &.actor-name {
+      --t5e-field-background-color: var(--input-background);
+    }
+
+    &.xp-value {
+      text-align: left;
+      padding-block-end: 0;
+      padding-inline-start: var(--t5e-size-1x);
+
+      &:not(:focus, :active) {
+        background-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .sheet-header .actor-context-row {
+    align-items: flex-start;
+  }
+
+  .sheet-header .sheet-header-actions {
+    margin-block-start: 0;
+    margin-inline-end: var(--t5e-size-2x);
+  }
+
+  .sheet-header .actor-subtitle {
+    > *:not(.divider-dot) {
+      height: 1rem;
+    }
+
+    .xp-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      flex: 0 1 fit-content;
+      flex-wrap: nowrap;
+      max-height: 1rem;
+      flex-direction: row;
+
+      .label {
+        margin: 0;
+      }
+    }
+
+    .concentration {
+      flex: 0 0 auto;
+      height: var(--font-size-15);
+      align-content: center;
+
+      .concentration-roll-button {
+        min-width: unset;
+
+        > * {
+          flex-wrap: nowrap;
+        }
+      }
+    }
+  }
+
+  .sheet-header .proficiency-bonus {
+    height: 1rem;
+    margin-block: 0;
+    margin-inline: var(--t5e-size-1x) var(--t5e-size-2x);
+    align-self: flex-start;
+
+    > * {
+      line-height: 1rem;
+    }
+
+    .label {
+      margin-inline-end: var(--t5e-size-1x);
+    }
+  }
+
   &:where(.npc) {
     .sheet-header {
       padding-inline-end: var(--t5e-size-3x);
@@ -1620,4 +1544,66 @@
       max-width: 80rem;
     }
   }
+}
+
+/* Parchment light header. After the actor root so its tokens win by order. */
+.tidy5e-sheet:where(.application.actor.theme-parchment.theme-light) {
+  --input-background: rgba(255, 255, 255, 0.2);
+  --input-background-hover: rgba(255, 255, 255, 0.4);
+
+  .sheet-header {
+    --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+    --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+    --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+    --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
+    --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_hover.webp');
+    --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
+    --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_prof_hover.webp');
+    --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
+    --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_light.webp');
+    --header-shadow: none;
+    --t5e-score-image-size: cover;
+  }
+
+  --t5e-concentration-label-color: var(--t5e-color-text-gold-emphasis);
+  --color-text-selection: var(--t5e-theme-color-foreground);
+  --color-text-selection-bg: var(--t5e-theme-color-default);
+
+  .sheet-header-actions {
+    .button-gold {
+      --t5e-button-text: var(--t5e-color-palette-gold-62);
+      --t5e-button-icon: var(--t5e-color-palette-gold-56);
+      --t5e-button-border: var(--t5e-color-palette-gold-62);
+      --t5e-button-border-hover: var(--t5e-color-palette-gold-56);
+      --t5e-button-shadow: var(--t5e-drop-shadow-field);
+
+      /* Overrides buttons.css `.button-gold:hover` text. */
+      &:hover,
+      &:active,
+      &:focus {
+        --t5e-button-text: var(--t5e-color-palette-gold-62);
+        --t5e-button-icon: var(--t5e-color-palette-gold-56);
+        --t5e-button-border: var(--t5e-color-palette-gold-56);
+        --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
+        --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
+      }
+
+      &:active:not(:disabled) {
+        --t5e-button-text: var(--t5e-color-palette-gold-62);
+      }
+
+      &:disabled {
+        --t5e-button-disabled-text-color: var(--t5e-color-palette-gold-62);
+        --t5e-button-disabled-icon-color: var(--t5e-color-palette-gold-56);
+        --t5e-button-disabled-border-color: var(--t5e-color-palette-gold-62);
+        --t5e-button-shadow: var(--t5e-drop-shadow-field);
+      }
+    }
+  }
+}
+
+/* stylelint-disable-next-line tidy/root-prefix -- must beat abilities.css `.ability-labels .label` and buttons.css icon colours */
+.tidy5e-sheet:where(.application.actor.theme-parchment).theme-light .color-text-gold.color-text-gold {
+  /* stylelint-disable-next-line tidy/theme-tokens-only -- see above */
+  color: var(--t5e-color-text-gold-emphasis);
 }

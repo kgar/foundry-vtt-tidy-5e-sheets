@@ -37,7 +37,6 @@
         align-self: center;
         inset-inline-start: 0.125rem;
 
-        /* transition: all var(--t5e-transition-default); */
         &:before {
           margin-block-start: 0.5px;
         }
@@ -54,10 +53,6 @@
 
         &:hover {
           background-color: var(--t5e-theme-color-lighter);
-
-          .thumb-icon {
-            color: var(--t5e-color-palette-black);
-          }
         }
       }
 
@@ -67,7 +62,6 @@
 
         .thumb-icon {
           background-color: var(--t5e-switch-thumb-background-hover);
-          color: var(--t5e-color-palette-black);
         }
       }
     }
