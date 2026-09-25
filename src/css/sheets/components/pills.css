@@ -1,6 +1,10 @@
 .tidy5e-sheet:where(.application) {
-  --t5e-pill-negative-border-color: var(--t5e-color-palette-red-27);
+  --t5e-pill-negative-border-color: var(--t5e-color-palette-red-45);
   --t5e-pill-positive-border-color: var(--t5e-color-palette-green-29);
+  --t5e-pill-warning-border-color: var(--t5e-color-palette-orange-40);
+  --t5e-pill-negative-background: var(--t5e-color-palette-red-60);
+  --t5e-pill-positive-background: var(--t5e-color-palette-green-43);
+  --t5e-pill-warning-background: var(--t5e-color-palette-orange-55);
 
   .pills {
     list-style: none;
@@ -25,6 +29,8 @@
   }
 
   .pill {
+    --icon-fill: var(--t5e-color-icon-diminished);
+    --text-color: var(--t5e-color-text-default);
     align-items: center;
     background: var(--t5e-component-pill-background);
     border-radius: var(--radius-card, 0.1875rem);
@@ -39,8 +45,7 @@
     margin: 0;
     min-height: 1.5rem;
     padding: 0.125rem 0.5rem 0.125rem;
-    color: var(--t5e-color-text-default);
-    --icon-fill: var(--t5e-color-icon-diminished);
+    color: var(--text-color);
     word-break: break-word;
     flex-wrap: wrap;
 
@@ -103,21 +108,26 @@
 
     &.negative {
       border-color: var(--t5e-pill-negative-border-color);
-      background: var(--t5e-color-palette-red-31);
+      background: var(--t5e-pill-negative-background);
     }
 
     &.positive {
       border-color: var(--t5e-pill-positive-border-color);
-      background: var(--t5e-color-palette-green-43);
+      background: var(--t5e-pill-positive-background);
+    }
+
+    &.warning {
+      border-color: var(--t5e-pill-warning-border-color);
+      background: var(--t5e-pill-warning-background);
     }
 
     &.positive,
     &.negative {
-      color: var(--t5e-color-text-oninverse-default);
       --t5e-color-text-lighter: var(--t5e-color-palette-grey-85);
+      color: var(--t5e-color-palette-white);
 
       i {
-        color: var(--t5e-color-text-oninverse-default);
+        color: var(--t5e-color-palette-white);
       }
     }
   }
@@ -232,17 +242,22 @@
     white-space: nowrap;
   }
 
-  /* More specific than buttons.css `:disabled`/`.exclude`. */
-  &.theme-dark,
-  .theme-dark {
-    --t5e-pill-negative-border-color: var(--t5e-color-palette-red-45);
-    --t5e-pill-positive-border-color: var(--t5e-color-palette-green-65);
+  &:where(.theme-dark),
+  :where(.theme-dark) {
+    --t5e-pill-negative-border-color: var(--t5e-color-palette-red-60);
+    --t5e-pill-positive-border-color: var(--t5e-color-palette-green-43);
+    --t5e-pill-warning-border-color: var(--t5e-color-palette-orange-55);
+    --t5e-pill-negative-background: var(--t5e-color-palette-red-45);
+    --t5e-pill-positive-background: var(--t5e-color-palette-green-29);
+    --t5e-pill-warning-background: var(--t5e-color-palette-orange-40);
     --t5e-pill-switch-border-color-hover: var(--t5e-component-field-border-hover);
     --t5e-pill-switch-icon-color: var(--t5e-color-icon-disabled);
     --t5e-pill-switch-icon-color-checked: var(--t5e-color-icon-default);
 
-    .pill {
-      color: var(--t5e-color-text-default);
+    /* Pill buttons keep full-strength text when disabled or excluded. */
+    :is(button, .button).pill {
+      --t5e-button-disabled-text-color: var(--t5e-color-text-default);
+      --t5e-button-excluded-text-color: var(--t5e-color-text-default);
     }
   }
 }
