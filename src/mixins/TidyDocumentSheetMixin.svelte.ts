@@ -96,6 +96,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       actions: {
         'activity-use': TidyDocumentSheet.#useActivity,
         configureTab: TidyDocumentSheet.#configureTab,
+        copyData: TidyDocumentSheet.#copyData,
         copyInnerText: TidyDocumentSheet.#copyInnerText,
         copyValue: TidyDocumentSheet.#copyValue,
         currency: TidyDocumentSheet.#currency,
@@ -1138,7 +1139,7 @@ export function getTidyExtensibleDocumentSheetMixin<
       const { itemId } =
         target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
 
-      // Special Case - Compendium Containers 
+      // Special Case - Compendium Containers
       // getContainedItem is only a Promise from a compendium, use await
       if (
         this.document.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
@@ -1313,19 +1314,50 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     /* -------------------------------------------- */
 
+    static async #copyData(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      const { prop } =
+        target.closest<HTMLElement>('[data-prop]')?.dataset ?? {};
+
+      if (!prop) {
+        return;
+      }
+
+      const value = FoundryAdapter.getProperty<string>(
+        this.document,
+        prop,
+      )?.toString();
+
+      this._copyValue(
+        value,
+        game.i18n.format('TIDY5E.COMMON.CopiedData', {
+          prop: `<b>${prop}</b>`,
+        }),
+      );
+    }
+
+    _copyValue(value: string | undefined, customMessage?: string) {
+      game.clipboard.copyPlainText(value);
+
+      const message =
+        customMessage ?? game.i18n.format('DND5E.Copied', { value });
+
+      ui.notifications.info(message, {
+        console: false,
+      });
+    }
+
+    /* -------------------------------------------- */
+
     static async #copyInnerText(
       this: TidyDocumentSheet,
       event: Event,
       target: HTMLElement,
     ) {
       this._copyValue(target.innerText);
-    }
-
-    _copyValue(value: string | undefined) {
-      game.clipboard.copyPlainText(value);
-      ui.notifications.info(game.i18n.format('DND5E.Copied', { value }), {
-        console: false,
-      });
     }
 
     /* -------------------------------------------- */
