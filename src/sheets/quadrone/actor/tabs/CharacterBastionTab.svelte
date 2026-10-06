@@ -36,20 +36,20 @@
   );
 
   let hasDefenders = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.defenders.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.defenders.some((d) => !!d.uuid),
     ),
   );
 
   let hasHirelings = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.hirelings.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.hirelings.some((d) => !!d.uuid),
     ),
   );
 
   let hasCreatures = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.creatures.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.creatures.some((d) => !!d.uuid),
     ),
   );
 
@@ -516,16 +516,51 @@
       </section>
     {/if}
 
-    <section class="description">
+    <section
+      class="description"
+      data-prop="system.bastion.description"
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       <div class="bastion-header">
         <h3 class="font-title-small flexrow">
           <i class="fa-solid fa-books flexshrink"></i>
           <span class="flex1">
             {localize('DND5E.ACTIVITY.FIELDS.description.label')}
           </span>
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'menu',
+            ]}
+            aria-label={localize('DND5E.AdditionalControls')}
+            role="button"
+            tabindex="0"
+            data-action="showContextMenu"
+            data-target-selector="[data-context-menu]"
+            {@attach InputAttachments.triggerClickOnKeydown}
+          >
+            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+          </a>
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'copy',
+            ]}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+            data-tooltip=""
+            role="button"
+            tabindex="0"
+            data-action="copyData"
+            {@attach InputAttachments.triggerClickOnKeydown}
+          >
+            <i class="fa-solid fa-copy fa-fw"></i>
+          </a>
           {#if context.editable}
             <a
-              class="button button-borderless button-icon-only flexshrink"
+              class={[
+                'button button-borderless button-icon-only flexshrink',
+                'edit',
+              ]}
               onclick={() => (editing = context.editable)}
             >
               <i class="fa-solid fa-feather"></i>

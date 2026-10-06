@@ -12,6 +12,7 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import { watch } from 'src/utils/reactivity.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -156,22 +157,59 @@
         </div>
       {/if}
     </div>
-    <div class={['journal-entry-viewer']}>
+    <div
+      class={['journal-entry-viewer']}
+      data-prop="{TidyFlags.documentJournal.prop}.{selected?.id}.value"
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       {#if selected}
-        {const title = $derived(coalesce(
-          selected.title,
-          getFallbackTitle(selectedIndex),
-        ))}
+        {const title = $derived(
+          coalesce(selected.title, getFallbackTitle(selectedIndex)),
+        )}
 
         <div class="title-container">
           <h2 class="title flexrow">
             <span class="flex1">{title}</span>
+            <a
+              class={[
+                'button button-borderless button-icon-only flexshrink',
+                'menu',
+              ]}
+              aria-label={localize('DND5E.AdditionalControls')}
+              role="button"
+              tabindex="0"
+              data-action="showContextMenu"
+              data-target-selector="[data-context-menu]"
+              {@attach InputAttachments.triggerClickOnKeydown}
+            >
+              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+            </a>
+            <a
+              class={[
+                'button button-borderless button-icon-only flexshrink',
+                'copy',
+              ]}
+              aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+              data-tooltip=""
+              role="button"
+              tabindex="0"
+              data-action="copyData"
+              {@attach InputAttachments.triggerClickOnKeydown}
+            >
+              <i class="fa-solid fa-copy fa-fw"></i>
+            </a>
             {#if context.editable}
               <a
-                class="button button-borderless button-icon-only edit flexshrink"
+                class={[
+                  'button button-borderless button-icon-only flexshrink',
+                  'edit',
+                ]}
+                role="button"
+                tabindex="0"
                 onclick={() => edit(selected.id)}
-                ><i class="fa-solid fa-feather"></i></a
               >
+                <i class="fa-solid fa-feather"></i>
+              </a>
             {/if}
           </h2>
           <tidy-gold-header-underline></tidy-gold-header-underline>

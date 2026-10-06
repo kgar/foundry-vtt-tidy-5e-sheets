@@ -18,11 +18,9 @@
       flex-wrap: wrap;
       margin-bottom: var(--t5e-size-1x);
 
-      &:hover {
-        .edit i {
-          color: var(--t5e-color-icon-default);
-          text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
-        }
+      .control:hover i {
+        color: var(--t5e-color-icon-default);
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
       }
     }
 
@@ -57,7 +55,7 @@
       }
     }
 
-    .edit {
+    .control {
       display: flex;
       width: var(--font-font-size-24, 1.5rem);
       height: var(--font-font-size-24, 1.5rem);

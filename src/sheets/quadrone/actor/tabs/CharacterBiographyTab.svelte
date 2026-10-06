@@ -7,6 +7,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -185,7 +186,8 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.ACTOR.Characteristics.Title')}</span
+            <span class="flex1"
+              >{localize('TIDY5E.ACTOR.Characteristics.Title')}</span
             >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -225,8 +227,14 @@
   field: string,
 )}
   {#if enriched !== '' || context.unlocked}
-    {const expanded = $derived(expansionTracker.isExpanded(field, tabId, location))}
-    <article class="biography-editor-container collapsible-editor">
+    {const expanded = $derived(
+      expansionTracker.isExpanded(field, tabId, location),
+    )}
+    <article
+      class="biography-editor-container collapsible-editor"
+      data-prop={field}
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       <div class="biography-editor-title">
         <h3 class="font-title-small flexrow">
           <a
@@ -242,10 +250,47 @@
               ></i>
             {/if}
           </a>
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'menu',
+            ]}
+            aria-label={localize('DND5E.AdditionalControls')}
+            role="button"
+            tabindex="0"
+            data-action="showContextMenu"
+            data-target-selector="[data-context-menu]"
+            {@attach InputAttachments.triggerClickOnKeydown}
+          >
+            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+          </a>
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'copy',
+            ]}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+            data-tooltip=""
+            role="button"
+            tabindex="0"
+            data-action="copyData"
+            {@attach InputAttachments.triggerClickOnKeydown}
+          >
+            <i class="fa-solid fa-copy fa-fw"></i>
+          </a>
           {#if context.editable}
             <a
-              class={['button button-borderless button-icon-only flexshrink']}
+              class={[
+                'button button-borderless button-icon-only flexshrink',
+                'edit',
+              ]}
+              role="button"
+              tabindex="0"
+              aria-label={localize('DND5E.DescriptionEdit', {
+                description: localize('DND5E.Description'),
+              })}
               onclick={() => edit(value, enriched, field)}
+              {@attach InputAttachments.triggerClickOnKeydown}
             >
               <i class="fa-solid fa-feather"></i>
             </a>
