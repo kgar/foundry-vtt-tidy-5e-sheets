@@ -76,6 +76,15 @@
             >
               <i class="fa-solid fa-edit"></i>
             </button>
+            <button
+              aria-label={localize('Tidy5E.ContextMenu')}
+              type="button"
+              class="button button-borderless button-icon-only"
+              data-action="showContextMenu"
+              data-target-selector="[data-item-id]"
+            >
+              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+            </button>
           </div>
         {/if}
       {:else}

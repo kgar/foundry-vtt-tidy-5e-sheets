@@ -1403,11 +1403,13 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data, uuid }: any,
+    data: any,
   ) {
-    const { _id: id, type } = data;
-    const source = this.item.system.activities.get(id);
-    const config = CONFIG.DND5E.activityTypes[type] ?? {};
+    const activity =
+      await dnd5e.documents.activity.UtilityActivity.fromDropData(data);
+
+    const source = this.item.system.activities.get(activity.id);
+    const config = CONFIG.DND5E.activityTypes[activity.type] ?? {};
 
     // Reordering
     if (source) {
@@ -1422,7 +1424,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       }
 
       const siblings = this.item.system.activities.filter(
-        (a: any) => a._id !== id,
+        (a: any) => a._id !== activity.id,
       );
 
       const sortUpdates = foundry.utils.performIntegerSort(source, {
@@ -1442,7 +1444,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       config.documentClass.availableForItem(this.item)
     ) {
       delete data._id;
-      this.item.createActivity(type, data, { renderSheet: false });
+      this.item.createActivity(activity.type, data, { renderSheet: false });
     }
   }
 
