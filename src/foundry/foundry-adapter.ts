@@ -84,11 +84,7 @@ export const FoundryAdapter = {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },
   localize(value: string, options?: Record<string, unknown>) {
-    if (options) {
-      return game.i18n.format(value, options);
-    }
-
-    return game.i18n.localize(value);
+    return game.i18n.localize(value, options);
   },
   // TODO: Extract a dedicated ActiveEffectManager or the like
   addEffect(effectType: string, parent: any) {
