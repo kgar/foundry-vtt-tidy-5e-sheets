@@ -9,6 +9,7 @@
   import ItemName from './parts/header/ItemName.svelte';
   import { isNil } from 'src/utils/data';
   import SpellcastingSidebarPills from './parts/SpellcastingSidebarPills.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -135,7 +136,47 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      {#if selectedTabId === CONSTANTS.TAB_DESCRIPTION && !context.unlocked}
+        <span
+          style="margin-inline-start: auto;"
+          data-prop="system.description.value"
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+          data-description-selector="[data-tab-contents-for='description'] [data-target]"
+        >
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'menu',
+            ]}
+            aria-label={localize('DND5E.AdditionalControls')}
+            role="button"
+            tabindex="0"
+            {@attach InputAttachments.triggerClickOnKeydown}
+            data-action="showContextMenu"
+            data-target-selector="[data-context-menu]"
+          >
+            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+          </a>
+          <a
+            class={[
+              'button button-borderless button-icon-only flexshrink',
+              'copy',
+            ]}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+            data-tooltip=""
+            role="button"
+            tabindex="0"
+            {@attach InputAttachments.triggerClickOnKeydown}
+            data-action="copyData"
+          >
+            <i class="fa-solid fa-copy fa-fw"></i>
+          </a>
+        </span>
+      {/if}
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 
