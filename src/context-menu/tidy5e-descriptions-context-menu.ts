@@ -41,7 +41,7 @@ function getDescriptionsContextOptions(
       visible: (target) =>
         !!target
           .closest<HTMLElement>('[data-prop]')
-          ?.querySelector<HTMLElement>('.edit'),
+          ?.querySelector<HTMLElement>('.edit') && app.isEditable,
       onClick: (event, target) => {
         // TODO: Find a less volatile way to do this. Perhaps leveraging messaging to the target sheet which can propagate to the relevant component?
         target
