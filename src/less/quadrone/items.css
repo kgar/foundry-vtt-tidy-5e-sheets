@@ -338,8 +338,18 @@
       }
 
       .common-fields .level-badge {
+        display: grid;
+        place-content: center;
+        width: 4.25rem;
+        height: 4.25rem;
         margin-inline-end: calc(var(--t5e-size-2x) * -1);
         margin-block-end: calc(var(--t5e-size-4x) * -1);
+        background: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp') no-repeat center / contain;
+        color: var(--t5e-color-text-default);
+        font-family: var(--t5e-font-roboto-condensed);
+        font-size: var(--font-size-32);
+        font-weight: bold;
+        text-align: center;
       }
 
       .school {
