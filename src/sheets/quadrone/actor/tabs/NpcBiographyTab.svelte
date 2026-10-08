@@ -1,5 +1,6 @@
 <script lang="ts">
   import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -246,9 +247,13 @@
       >
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
+            <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
             <a
               class="title"
+              role="button"
+              tabindex="0"
               onclick={() => expansionTracker.toggle(field, tabId, location)}
+              {@attach InputAttachments.triggerClickOnKeydown}
             >
               <i class="fa-solid {icon} flexshrink"></i>
               <span class="flex1">{localize(label)}</span>

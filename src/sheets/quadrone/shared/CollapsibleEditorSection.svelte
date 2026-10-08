@@ -3,6 +3,7 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import DescriptionControls from './DescriptionControls.svelte';
   import { CONSTANTS } from 'src/constants';
 
@@ -35,17 +36,13 @@
 >
   <!-- Header -->
   <header>
-    <!-- svelte-ignore a11y_missing_attribute -->
+    <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
     <a
       class="title"
       onclick={() => (expanded = !expanded)}
       role="button"
       tabindex="0"
-      onkeydown={(ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          expanded = !expanded;
-        }
-      }}
+      {@attach InputAttachments.triggerClickOnKeydown}
     >
       <!-- Title -->
       {itemDescription.label}
