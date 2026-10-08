@@ -3,11 +3,8 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import DescriptionControls from './DescriptionControls.svelte';
   import { CONSTANTS } from 'src/constants';
-
-  const localize = FoundryAdapter.localize;
 
   interface Props {
     expanded: boolean;
@@ -58,53 +55,12 @@
         ></i>
       {/if}
     </a>
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      class={['menu', 'control', 'button-icon-only']}
-      aria-label={localize('DND5E.AdditionalControls')}
-      data-tooltip=""
-      role="button"
-      tabindex="0"
-      data-action="showContextMenu"
-      data-target-selector="[data-context-menu]"
-      {@attach InputAttachments.triggerClickOnKeydown}
-    >
-      <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-    </a>
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      class={['copy', 'control', 'button-icon-only']}
-      aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-      data-tooltip=""
-      role="button"
-      tabindex="0"
-      data-action="copyData"
-      {@attach InputAttachments.triggerClickOnKeydown}
-    >
-      <i class="fa-solid fa-copy fa-fw"></i>
-    </a>
-    {#if !disabled}
-      <!-- Journal Edit Button -->
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        class={['edit', 'control', 'button-icon-only']}
-        aria-label={localize('DND5E.DescriptionEdit', {
-          description: localize('DND5E.Description'),
-        })}
-        data-tooltip=""
-        onclick={() => onEdit?.({ document, itemDescription })}
-        onkeydown={(ev) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            onEdit?.({ document, itemDescription });
-          }
-        }}
-        role="button"
-        tabindex="0"
-        {@attach InputAttachments.triggerClickOnKeydown}
-      >
-        <i class="fas fa-feather fa-fw"></i>
-      </a>
-    {/if}
+    <DescriptionControls
+      buttonClass={['control', 'button-icon-only']}
+      onEdit={!disabled
+        ? () => onEdit?.({ document, itemDescription })
+        : undefined}
+    />
     <GoldHeaderUnderline />
   </header>
 

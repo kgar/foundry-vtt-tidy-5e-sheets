@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -527,60 +528,12 @@
           <span class="flex1">
             {localize('DND5E.ACTIVITY.FIELDS.description.label')}
           </span>
-          <!-- svelte-ignore a11y_missing_attribute -->
-          <a
-            class={[
-              'button button-borderless button-icon-only flexshrink',
-              'menu',
-            ]}
-            aria-label={localize('DND5E.AdditionalControls')}
-            data-tooltip=""
-            role="button"
-            tabindex="0"
-            data-action="showContextMenu"
-            data-target-selector="[data-context-menu]"
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-          </a>
-          <!-- svelte-ignore a11y_missing_attribute -->
-          <a
-            class={[
-              'button button-borderless button-icon-only flexshrink',
-              'copy',
-            ]}
-            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-            data-tooltip=""
-            role="button"
-            tabindex="0"
-            data-action="copyData"
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <i class="fa-solid fa-copy fa-fw"></i>
-          </a>
-          {#if context.editable}
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              aria-label={localize('DND5E.DescriptionEdit', {
-                description: localize('DND5E.TABLEOFCONTENTS.Description'),
-              })}
-              data-tooltip=""
-              role="button"
-              tabindex="0"
-              class={[
-                'button button-borderless button-icon-only flexshrink',
-                'edit',
-              ]}
-              onclick={() => (editing = context.editable)}
-              onkeydown={(ev) => {
-                if (ev.key === 'Enter' || ev.key === ' ') {
-                  editing = context.editable;
-                }
-              }}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          {/if}
+          <DescriptionControls
+            editLabel={localize('DND5E.DescriptionEdit', {
+              description: localize('DND5E.TABLEOFCONTENTS.Description'),
+            })}
+            onEdit={context.editable ? () => (editing = true) : undefined}
+          />
         </h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>

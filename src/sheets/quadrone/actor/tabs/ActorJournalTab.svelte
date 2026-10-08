@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import { type DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
@@ -12,7 +13,6 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import { watch } from 'src/utils/reactivity.svelte';
-  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -170,60 +170,12 @@
         <div class="title-container">
           <h2 class="title flexrow">
             <span class="flex1">{title}</span>
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              class={[
-                'button button-borderless button-icon-only flexshrink',
-                'menu',
-              ]}
-              aria-label={localize('DND5E.AdditionalControls')}
-              data-tooltip=""
-              role="button"
-              tabindex="0"
-              data-action="showContextMenu"
-              data-target-selector="[data-context-menu]"
-              {@attach InputAttachments.triggerClickOnKeydown}
-            >
-              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-            </a>
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              class={[
-                'button button-borderless button-icon-only flexshrink',
-                'copy',
-              ]}
-              aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-              data-tooltip=""
-              role="button"
-              tabindex="0"
-              data-action="copyData"
-              {@attach InputAttachments.triggerClickOnKeydown}
-            >
-              <i class="fa-solid fa-copy fa-fw"></i>
-            </a>
-            {#if context.editable}
-              <!-- svelte-ignore a11y_missing_attribute -->
-              <a
-                class={[
-                  'button button-borderless button-icon-only flexshrink',
-                  'edit',
-                ]}
-                aria-label={localize('DND5E.DescriptionEdit', {
-                  description: localize('DND5E.TABLEOFCONTENTS.JournalEntry'),
-                })}
-                data-tooltip=""
-                role="button"
-                tabindex="0"
-                onclick={() => edit(selected.id)}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    edit(selected.id);
-                  }
-                }}
-              >
-                <i class="fa-solid fa-feather"></i>
-              </a>
-            {/if}
+            <DescriptionControls
+              editLabel={localize('DND5E.DescriptionEdit', {
+                description: localize('DND5E.TABLEOFCONTENTS.JournalEntry'),
+              })}
+              onEdit={context.editable ? () => edit(selected.id) : undefined}
+            />
           </h2>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -8,7 +9,6 @@
   import { getContext } from 'svelte';
   import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -259,51 +259,14 @@
                 ></i>
               {/if}
             </a>
-            <button
-              class={[
-                'button button-borderless button-icon-only flexshrink',
-                'menu',
-              ]}
-              aria-label={localize('DND5E.AdditionalControls')}
-              data-tooltip=""
-              role="button"
-              tabindex="0"
-              data-action="showContextMenu"
-              data-target-selector="[data-context-menu]"
-            >
-              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-            </button>
-            <button
-              class={[
-                'button button-borderless button-icon-only flexshrink',
-                'copy',
-              ]}
-              aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-              data-tooltip=""
-              tabindex="0"
-              data-action="copyData"
-            >
-              <i class="fa-solid fa-copy fa-fw"></i>
-            </button>
-            {#if context.editable}
-              <button
-                type="button"
-                class={[
-                  'button button-borderless button-icon-only flexshrink',
-                  'edit',
-                ]}
-                aria-label={localize('TIDY5E.CONTEXTMENU.Action.Edit')}
-                data-tooltip=""
-                onclick={() => edit(value, enriched, field)}
-                onkeydown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    edit(value, enriched, field);
-                  }
-                }}
-              >
-                <i class="fa-solid fa-feather"></i>
-              </button>
-            {/if}
+            <DescriptionControls
+              editLabel={localize('DND5E.DescriptionEdit', {
+                description: localize(label),
+              })}
+              onEdit={context.editable
+                ? () => edit(value, enriched, field)
+                : undefined}
+            />
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
