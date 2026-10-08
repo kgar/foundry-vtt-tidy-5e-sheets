@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import ItemDescriptionTabControls from './parts/ItemDescriptionTabControls.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import SpellcastingSidebarPills from './parts/SpellcastingSidebarPills.svelte';
@@ -80,7 +81,11 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      <ItemDescriptionTabControls {selectedTabId} />
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 

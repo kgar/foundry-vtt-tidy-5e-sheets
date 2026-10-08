@@ -1,4 +1,6 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -116,8 +118,9 @@
       field: 'system.details.flaw',
     },
   ]);
-  let hasPersonalityEntries = $derived(personalityEntries.some(entry => entry.enriched !== ''))
-
+  let hasPersonalityEntries = $derived(
+    personalityEntries.some((entry) => entry.enriched !== ''),
+  );
 
   let editing = $state(false);
   let contentToEdit: string = $state('');
@@ -194,7 +197,9 @@
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
             <i class="fa-solid fa-address-card flexshrink"></i>
-            <span class="flex1">{localize('TIDY5E.ACTOR.Characteristics.Title')}</span>
+            <span class="flex1"
+              >{localize('TIDY5E.ACTOR.Characteristics.Title')}</span
+            >
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
@@ -232,13 +237,23 @@
     field: string,
   )}
     {#if enriched !== '' || context.unlocked}
-      {const expanded = $derived(expansionTracker.isExpanded(field, tabId, location))}
-      <article class="biography-editor-container collapsible-editor">
+      {const expanded = $derived(
+        expansionTracker.isExpanded(field, tabId, location),
+      )}
+      <article
+        class="biography-editor-container collapsible-editor"
+        data-prop={field}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+      >
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
+            <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
             <a
               class="title"
+              role="button"
+              tabindex="0"
               onclick={() => expansionTracker.toggle(field, tabId, location)}
+              {@attach InputAttachments.triggerClickOnKeydown}
             >
               <i class="fa-solid {icon} flexshrink"></i>
               <span class="flex1">{localize(label)}</span>
@@ -249,16 +264,14 @@
                 ></i>
               {/if}
             </a>
-            {#if context.editable}
-              <button
-                type="button"
-                class="button button-borderless button-icon-only flexshrink"
-                aria-label={localize('TIDY5E.CONTEXTMENU.Action.Edit')}
-                onclick={() => edit(value, enriched, field)}
-              >
-                <i class="fa-solid fa-feather"></i>
-              </button>
-            {/if}
+            <DescriptionControls
+              editLabel={localize('DND5E.DescriptionEdit', {
+                description: localize(label),
+              })}
+              onEdit={context.editable
+                ? () => edit(value, enriched, field)
+                : undefined}
+            />
           </h3>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>

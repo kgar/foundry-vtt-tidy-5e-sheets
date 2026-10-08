@@ -101,6 +101,7 @@
       "AddFromCompendium": "Add {name} from Compendium",
       "AddNamed": "Add {name}",
       "CopyToClipboard": "Copy to Clipboard",
+      "CopyWithoutFormatting": "Copy Without Formatting",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
       "Hide": "Hide",
@@ -116,6 +117,8 @@
       "ViewDescription": "View {description}"
     },
     "BrokenLink": "Broken Link",
+    "CopiedData": "Copied data from {prop}",
+    "CopiedWithoutFormatting": "Copied text without formatting",
     "GMOnly": {
       "Message": "GM Only: {message}",
       "Title": "GM Only"

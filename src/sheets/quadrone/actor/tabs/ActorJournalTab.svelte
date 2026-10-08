@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import { type DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
@@ -156,23 +157,25 @@
         </div>
       {/if}
     </div>
-    <div class={['journal-entry-viewer']}>
+    <div
+      class={['journal-entry-viewer']}
+      data-prop="{TidyFlags.documentJournal.prop}.{selected?.id}.value"
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       {#if selected}
-        {const title = $derived(coalesce(
-          selected.title,
-          getFallbackTitle(selectedIndex),
-        ))}
+        {const title = $derived(
+          coalesce(selected.title, getFallbackTitle(selectedIndex)),
+        )}
 
         <div class="title-container">
           <h2 class="title flexrow">
             <span class="flex1">{title}</span>
-            {#if context.editable}
-              <a
-                class="button button-borderless button-icon-only edit flexshrink"
-                onclick={() => edit(selected.id)}
-                ><i class="fa-solid fa-feather"></i></a
-              >
-            {/if}
+            <DescriptionControls
+              editLabel={localize('DND5E.DescriptionEdit', {
+                description: localize('DND5E.TABLEOFCONTENTS.JournalEntry'),
+              })}
+              onEdit={context.editable ? () => edit(selected.id) : undefined}
+            />
           </h2>
           <tidy-gold-header-underline></tidy-gold-header-underline>
         </div>
