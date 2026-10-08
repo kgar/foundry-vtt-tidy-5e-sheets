@@ -265,6 +265,7 @@
                 'menu',
               ]}
               aria-label={localize('DND5E.AdditionalControls')}
+              data-tooltip=""
               role="button"
               tabindex="0"
               data-action="showContextMenu"
@@ -279,7 +280,6 @@
               ]}
               aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
               data-tooltip=""
-              role="button"
               tabindex="0"
               data-action="copyData"
             >
@@ -293,7 +293,13 @@
                   'edit',
                 ]}
                 aria-label={localize('TIDY5E.CONTEXTMENU.Action.Edit')}
+                data-tooltip=""
                 onclick={() => edit(value, enriched, field)}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    edit(value, enriched, field);
+                  }
+                }}
               >
                 <i class="fa-solid fa-feather"></i>
               </button>

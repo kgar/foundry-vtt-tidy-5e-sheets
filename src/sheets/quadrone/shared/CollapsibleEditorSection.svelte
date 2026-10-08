@@ -58,9 +58,11 @@
         ></i>
       {/if}
     </a>
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
       class={['menu', 'control', 'button-icon-only']}
       aria-label={localize('DND5E.AdditionalControls')}
+      data-tooltip=""
       role="button"
       tabindex="0"
       data-action="showContextMenu"
@@ -69,6 +71,7 @@
     >
       <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
     </a>
+    <!-- svelte-ignore a11y_missing_attribute -->
     <a
       class={['copy', 'control', 'button-icon-only']}
       aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
@@ -88,7 +91,13 @@
         aria-label={localize('DND5E.DescriptionEdit', {
           description: localize('DND5E.Description'),
         })}
+        data-tooltip=""
         onclick={() => onEdit?.({ document, itemDescription })}
+        onkeydown={(ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            onEdit?.({ document, itemDescription });
+          }
+        }}
         role="button"
         tabindex="0"
         {@attach InputAttachments.triggerClickOnKeydown}

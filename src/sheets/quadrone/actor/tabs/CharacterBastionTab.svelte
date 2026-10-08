@@ -527,12 +527,14 @@
           <span class="flex1">
             {localize('DND5E.ACTIVITY.FIELDS.description.label')}
           </span>
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
               'menu',
             ]}
             aria-label={localize('DND5E.AdditionalControls')}
+            data-tooltip=""
             role="button"
             tabindex="0"
             data-action="showContextMenu"
@@ -541,6 +543,7 @@
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </a>
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
@@ -556,12 +559,24 @@
             <i class="fa-solid fa-copy fa-fw"></i>
           </a>
           {#if context.editable}
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
+              aria-label={localize('DND5E.DescriptionEdit', {
+                description: localize('DND5E.TABLEOFCONTENTS.Description'),
+              })}
+              data-tooltip=""
+              role="button"
+              tabindex="0"
               class={[
                 'button button-borderless button-icon-only flexshrink',
                 'edit',
               ]}
               onclick={() => (editing = context.editable)}
+              onkeydown={(ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                  editing = context.editable;
+                }
+              }}
             >
               <i class="fa-solid fa-feather"></i>
             </a>

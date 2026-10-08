@@ -57,12 +57,14 @@
       <h3 class="font-title-small flexrow">
         <i class="fa-solid fa-notebook flexshrink"></i>
         <span class="flex1">{localize('DND5E.Description')}</span>
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
           class={[
             'button button-borderless button-icon-only flexshrink',
             'menu',
           ]}
           aria-label={localize('DND5E.AdditionalControls')}
+          data-tooltip=""
           role="button"
           tabindex="0"
           {@attach InputAttachments.triggerClickOnKeydown}
@@ -71,6 +73,7 @@
         >
           <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
         </a>
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
           class={[
             'button button-borderless button-icon-only flexshrink',
@@ -86,11 +89,16 @@
           <i class="fa-solid fa-copy fa-fw"></i>
         </a>
         {#if context.editable}
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
               'edit',
             ]}
+            aria-label={localize('DND5E.DescriptionEdit', {
+              description: localize('DND5E.Description'),
+            })}
+            data-tooltip=""
             role="button"
             tabindex="0"
             {@attach InputAttachments.triggerClickOnKeydown}
@@ -100,6 +108,15 @@
                 context.enriched.biography,
                 'system.details.biography.value',
               )}
+            onkeydown={(ev) => {
+              if (ev.key === 'Enter' || ev.key === ' ') {
+                edit(
+                  context.actor.system.details.biography.value,
+                  context.enriched.biography,
+                  'system.details.biography.value',
+                );
+              }
+            }}
           >
             <i class="fa-solid fa-feather"></i>
           </a>

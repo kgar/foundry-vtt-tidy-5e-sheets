@@ -250,12 +250,14 @@
               ></i>
             {/if}
           </a>
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
               'menu',
             ]}
             aria-label={localize('DND5E.AdditionalControls')}
+            data-tooltip=""
             role="button"
             tabindex="0"
             data-action="showContextMenu"
@@ -264,6 +266,7 @@
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </a>
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
@@ -279,17 +282,22 @@
             <i class="fa-solid fa-copy fa-fw"></i>
           </a>
           {#if context.editable}
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class={[
                 'button button-borderless button-icon-only flexshrink',
                 'edit',
               ]}
+              aria-label={localize('DND5E.BiographyPublicEdit')}
+              data-tooltip=""
               role="button"
               tabindex="0"
-              aria-label={localize('DND5E.DescriptionEdit', {
-                description: localize('DND5E.Description'),
-              })}
               onclick={() => edit(value, enriched, field)}
+              onkeydown={(ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                  edit(value, enriched, field);
+                }
+              }}
               {@attach InputAttachments.triggerClickOnKeydown}
             >
               <i class="fa-solid fa-feather"></i>

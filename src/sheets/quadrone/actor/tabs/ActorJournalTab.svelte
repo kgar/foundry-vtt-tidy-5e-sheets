@@ -170,12 +170,14 @@
         <div class="title-container">
           <h2 class="title flexrow">
             <span class="flex1">{title}</span>
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class={[
                 'button button-borderless button-icon-only flexshrink',
                 'menu',
               ]}
               aria-label={localize('DND5E.AdditionalControls')}
+              data-tooltip=""
               role="button"
               tabindex="0"
               data-action="showContextMenu"
@@ -184,6 +186,7 @@
             >
               <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
             </a>
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class={[
                 'button button-borderless button-icon-only flexshrink',
@@ -199,14 +202,24 @@
               <i class="fa-solid fa-copy fa-fw"></i>
             </a>
             {#if context.editable}
+              <!-- svelte-ignore a11y_missing_attribute -->
               <a
                 class={[
                   'button button-borderless button-icon-only flexshrink',
                   'edit',
                 ]}
+                aria-label={localize('DND5E.DescriptionEdit', {
+                  description: localize('DND5E.TABLEOFCONTENTS.JournalEntry'),
+                })}
+                data-tooltip=""
                 role="button"
                 tabindex="0"
                 onclick={() => edit(selected.id)}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    edit(selected.id);
+                  }
+                }}
               >
                 <i class="fa-solid fa-feather"></i>
               </a>

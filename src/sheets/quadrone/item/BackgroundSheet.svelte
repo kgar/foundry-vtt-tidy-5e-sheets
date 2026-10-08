@@ -75,12 +75,14 @@
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
           data-description-selector="[data-tab-contents-for='description'] [data-target]"
         >
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
               'menu',
             ]}
             aria-label={localize('DND5E.AdditionalControls')}
+            data-tooltip=""
             role="button"
             tabindex="0"
             {@attach InputAttachments.triggerClickOnKeydown}
@@ -89,6 +91,7 @@
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </a>
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
             class={[
               'button button-borderless button-icon-only flexshrink',
