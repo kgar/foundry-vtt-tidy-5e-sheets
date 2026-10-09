@@ -5,6 +5,7 @@ import type { SvelteTab } from './tab/SvelteTab';
 import type { HtmlContent } from './content/HtmlContent';
 import type { HandlebarsContent } from './content/HandlebarsContent';
 import type { Actor5e } from 'src/types/types';
+import type { Item5e } from 'src/types/item.types';
 
 /**
  * Data provided after custom content has been prepared for rendering.
@@ -359,6 +360,30 @@ export type EquipmentTypeGroup = {
    * Localization keys also work.
    */
   types: Record<string, string>;
+};
+
+// TODO: Document!
+export type ItemDescriptionConfig = {
+  id: string;
+  itemTypes?: string[];
+  label: string;
+  visible?: (item: Item5e) => boolean;
+  field: string;
+  onChange?: (item: Item5e, description: string) => Promise<any>;
+  editable?: (item: Item5e) => boolean;
+};
+
+// TODO: Document!
+export type ItemToggleConfig = {
+  id: string;
+  itemTypes?: string[];
+  label: string;
+  icon?: string;
+  active?: (item: Item5e) => boolean;
+  editable?: (item: Item5e) => boolean;
+  onChange?: (item: Item5e) => boolean;
+  field?: string;
+  visible?: (item: Item5e) => boolean;
 };
 
 /**

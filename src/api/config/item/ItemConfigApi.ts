@@ -1,4 +1,8 @@
-import type { EquipmentTypeGroup } from 'src/api/api.types';
+import type {
+  EquipmentTypeGroup,
+  ItemDescriptionConfig,
+  ItemToggleConfig,
+} from 'src/api/api.types';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 
 /**
@@ -27,5 +31,41 @@ export class ItemConfigApi {
    */
   registerCustomEquipmentTypeGroup(group: EquipmentTypeGroup) {
     ItemSheetQuadroneRuntime.registerCustomEquipmentTypeGroup(group);
+  }
+
+  // TODO: Document!
+  registerDescription(description: ItemDescriptionConfig) {
+    let { itemTypes = [], id, ...rest } = description;
+
+    if (!itemTypes.length) {
+      // TODO: Consider using a symbol for all item types
+      itemTypes = Item.TYPES;
+    }
+
+    for (const type of itemTypes) {
+      CONFIG.TIDY5E.item.descriptions[type] ??= {};
+      CONFIG.TIDY5E.item.descriptions[type][id] = {
+        ...rest,
+      };
+    }
+  }
+
+  // TODO: Document!
+  registerToggle(toggle: ItemToggleConfig) {
+    // TODO: Add the data to CONFIG.TIDY5E.item.toggles
+
+    let { itemTypes = [], id, ...rest } = toggle;
+
+    if (!itemTypes.length) {
+      // TODO: Consider using a symbol for all item types
+      itemTypes = Item.TYPES;
+    }
+
+    for (const type of itemTypes) {
+      CONFIG.TIDY5E.item.toggles[type] ??= {};
+      CONFIG.TIDY5E.item.toggles[type][id] = {
+        ...rest,
+      };
+    }
   }
 }

@@ -50,6 +50,10 @@ Hooks.once('init', () => {
       columns: registry.getColumnsRegistry(),
       rowActions: registry.getRowActionsRegistry(),
     },
+    item: {
+      toggles: {},
+      descriptions: {},
+    },
     partitions: {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
@@ -179,6 +183,40 @@ Hooks.once('ready', async () => {
     // but if Tidy is being used, we need to prevent these errors from occurring because of Tidy's tokenless/actorless combatants.
     if (!combatant.actor) {
       return false;
+    }
+  });
+
+  const concealmentDescriptionFlag = 'flags.kgar.concealmentTestDescription';
+  const concealmentTestToggle = 'flags.kgar.concealmentTestToggle';
+
+  api.config.item.registerDescription({
+    id: 'kgar-test-description',
+    label: 'Test Concealment Description',
+    itemTypes: ['container'],
+    visible: () => game.user.isGM,
+    field: concealmentDescriptionFlag,
+    editable: () => game.user.isGM,
+  });
+
+  api.config.item.registerToggle({
+    id: 'kgar-test-toggle',
+    label: 'Conceal!',
+    icon: 'fa-solid fa-poo-storm',
+    itemTypes: ['container'],
+    editable: () => game.user.isGM,
+    field: concealmentTestToggle,
+    visible: (item) => item.system.identified !== false && game.user.isGM,
+  });
+
+  Hooks.on('tidy5e-sheet.contentsConcealedConfig', (container, data) => {
+    const toggled = foundry.utils.getProperty(container, concealmentTestToggle);
+    if (!game.user.isGM && toggled && container.system.identified !== false) {
+      data.notice = 'This Container is Concealed.';
+      data.description = foundry.utils.getProperty(
+        container,
+        concealmentDescriptionFlag,
+      );
+      data.editable = false;
     }
   });
 });

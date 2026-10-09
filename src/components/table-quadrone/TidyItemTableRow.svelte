@@ -93,7 +93,7 @@
       : undefined,
   );
 
-  const diminished = $derived(item.system.identified === false);
+  const diminished = $derived(item.system.canViewContents === false);
 
   const itemColorClasses = $derived<ClassValue>([
     !isNil(ctx.rarity, '') ? 'rarity' : undefined,

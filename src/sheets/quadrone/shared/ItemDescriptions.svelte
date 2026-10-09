@@ -52,7 +52,7 @@
         bind:expanded={sectionItemOpenStates[i]}
         {itemDescription}
         onEdit={(detail) => handleEdit(detail)}
-        disabled={!document.isOwner}
+        disabled={!itemDescription.editable}
       />
     {/each}
   </section>

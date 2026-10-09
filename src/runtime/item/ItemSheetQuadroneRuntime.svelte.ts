@@ -58,6 +58,7 @@ import type {
   TabEnabledCallbackFunctionOverrideOptions,
 } from 'src/api/api.types';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
+import { Container } from 'src/features/containers/Container';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -435,6 +436,10 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
           context as unknown as ContainerSheetQuadroneContext,
           tabId,
         ),
+      enabled: (context) =>
+        Container.getContentsVisibility(context.document, {
+          unlocked: context.unlocked,
+        }) == 'visible',
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {
@@ -459,8 +464,9 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         type: 'svelte',
       },
       enabled: (context) =>
-        context.document.system.identified !== false ||
-        FoundryAdapter.isInGmEditMode(context.document),
+        Container.getContentsVisibility(context.document, {
+          unlocked: context.unlocked,
+        }) == 'visible',
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {

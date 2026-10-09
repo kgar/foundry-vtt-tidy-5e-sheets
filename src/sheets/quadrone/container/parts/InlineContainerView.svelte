@@ -17,6 +17,7 @@
   import { Container } from 'src/features/containers/Container';
   import { tryGetSheetContext } from 'src/sheets/sheet-context.svelte';
   import { onDropToContainer } from 'src/features/containers/attachments';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   interface Props {
     container: Item5e;
@@ -43,6 +44,23 @@
       unlocked: sheetContext?.unlocked === true,
     }),
   );
+
+  const contentsConcealedNotice = $derived.by(() => {
+    if (contentsVisibility === 'visible') {
+      return '';
+    }
+
+    const data = {
+      notice: 'DND5E.Unidentified.Notice',
+      description: 'unused',
+      path: 'unused',
+      editable: false,
+    };
+
+    TidyHooks.tidy5eSheetsContentsConcealedConfig(container, data);
+
+    return data.notice;
+  });
 
   let currencies = $derived(containerContents.currencies);
 
@@ -163,7 +181,7 @@
       data-tidy-container-id={container.id}
       {@attach onDropToContainer(container)}
     >
-      <p>{localize('DND5E.Unidentified.Notice')}</p>
+      <p>{localize(contentsConcealedNotice)}</p>
     </div>
   {/if}
 </ExpandableContainer>

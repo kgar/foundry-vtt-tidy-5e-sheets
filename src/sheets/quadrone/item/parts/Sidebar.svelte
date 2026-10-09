@@ -365,6 +365,31 @@
         </PillSwitch>
       </li>
     {/if}
+    {#each context.toggles as toggle}
+      {const checked = $derived(
+        toggle.active ||
+          (!!toggle.field &&
+            !!foundry.utils.getProperty(context.document, toggle.field)),
+      )}
+      <li>
+        <PillSwitch
+          {checked}
+          checkedIconClass={toggle.icon}
+          uncheckedIconClass={toggle.icon}
+          onchange={(ev) => {
+            if (toggle.field) {
+              context.item.update({
+                [toggle.field]: ev.currentTarget?.checked,
+              });
+            }
+
+            toggle.onChange?.(context.document);
+          }}
+        >
+          {localize(toggle.label)}
+        </PillSwitch>
+      </li>
+    {/each}
     {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
       {const spellIconClasses = $derived(
         FoundryAdapter.getSpellIcon(context.item),
@@ -393,6 +418,14 @@
         </PillSwitch>
       </li>
     {/if}
+
+    <!-- TODO: 
+      - add types for custom toggles: API and runtime variants
+      - answer: do we put these toggles in a runtime, or in CONFIG.TIDY5E?
+      - add API to add custom toggles
+      - add visible, configured custom toggles to context
+      - add custom toggles from context to here
+    -->
   </ul>
 
   {#if belowStateSwitches}
@@ -513,9 +546,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize(
-            'TIDY5E.SECTION.Selector.Choose',
-          )}
+          aria-label={localize('TIDY5E.SECTION.Selector.Choose')}
           data-tooltip=""
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}

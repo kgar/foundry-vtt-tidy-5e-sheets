@@ -7,13 +7,14 @@
     itemDescription: ItemDescription;
     document: any;
     unlocked: boolean;
+    disabled?: boolean;
   }
 
-  let { itemDescription, document, unlocked }: Props = $props();
+  let { itemDescription, document, unlocked, disabled }: Props = $props();
 </script>
 
 {#key itemDescription.enriched}
-  {#if unlocked}
+  {#if unlocked && !disabled}
     <SheetEditorV2
       documentUuid={document.uuid}
       content={itemDescription.content}
