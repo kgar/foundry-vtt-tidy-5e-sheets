@@ -307,7 +307,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     // TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?
     // definitely don't duplicate it.
     const customDescriptions =
-      Object.values(CONFIG.TIDY5E.item.descriptions[this.document.type]) ?? [];
+      Object.values(CONFIG.TIDY5E.item.descriptions[this.document.type] ?? {}) ?? [];
 
     for (const description of customDescriptions) {
       const visible = description.visible?.(this.document) ?? true;
@@ -337,7 +337,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     }
 
     const customToggles =
-      Object.values(CONFIG.TIDY5E.item.toggles[this.document.type]) ?? [];
+      Object.values(CONFIG.TIDY5E.item.toggles[this.document.type] ?? {}) ?? [];
 
     const itemToggles: ItemToggle[] = [];
 
