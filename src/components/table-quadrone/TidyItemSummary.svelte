@@ -50,12 +50,13 @@
   let context = $derived(getSheetContext());
 
   let canViewContents = $derived(
-    item.system.canViewContents !== false &&
-      /* DEBUG: REMOVE BEFORE COMMITTING */
-      (item.type !== CONSTANTS.ITEM_TYPE_CONTAINER ||
+    (item.type !== CONSTANTS.ITEM_TYPE_CONTAINER &&
+      item.system.identified !== false) ||
+      (item.system.canViewContents &&
+        /* DEBUG: REMOVE BEFORE MERGING */
         Container.getContentsVisibility(item, {
           unlocked: context.unlocked,
-        })) === 'visible',
+        }) === 'visible'),
   );
 
   let concealmentData = $derived.by(() => {
@@ -66,7 +67,6 @@
       path: 'unused',
     };
 
-    debugger;
     TidyHooks.tidy5eSheetsContentsConcealedConfig(item, data);
 
     return data;
@@ -87,6 +87,10 @@
     rollData: item.getRollData(),
     secrets: item.isOwner,
   });
+
+  const showConcealedDescriptionOnly = $derived(
+    item.type === CONSTANTS.ITEM_TYPE_CONTAINER && !canViewContents && !isGm,
+  );
 </script>
 
 {#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
@@ -138,7 +142,14 @@
             )}
           </div>
         {/if}
-        {@html chatData.description}
+
+        {#if showConcealedDescriptionOnly}
+          {#await FoundryAdapter.enrichHtml(concealedDescription, enrichmentOptions) then enriched}
+            {@html enriched}
+          {/await}
+        {:else}
+          {@html chatData.description}
+        {/if}
       </div>
     </div>
   {/if}

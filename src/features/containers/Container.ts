@@ -216,7 +216,7 @@ export class Container {
   ): ContainerContentsVisibility {
     if (
       container.system.canViewContents &&
-      /* DEBUG: Remove before committing */ !foundry.utils.getProperty(
+      /* DEBUG: REMOVE BEFORE MERGING */ !foundry.utils.getProperty(
         container,
         'flags.kgar.concealmentTestToggle',
       )
