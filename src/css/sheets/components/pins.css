@@ -92,8 +92,27 @@
       justify-content: center;
     }
 
-    .pin-details button.edit-name-button {
-      margin: 0 -0.5rem 0 0;
+    /* Name and edit icon sit together as a centered group; the name shrinks
+       (and truncates) before the icon gives up any space. */
+    .pin-name-container:has(.edit-name-button) {
+      justify-content: center;
+      padding-inline-end: 0.125rem;
+      flex-wrap: nowrap;
+
+      .pin-name {
+        --t5e-button-padding-inline-end: 0;
+        flex: 0 1 auto;
+      }
+
+      .edit-name-button {
+        flex: none;
+        margin: 0;
+        margin-inline: -0.25rem -0.5rem;
+
+        i {
+          font-size: var(--font-size-11);
+        }
+      }
     }
   }
 
