@@ -1683,9 +1683,13 @@ export function getTidy5eActorSheetQuadroneBase<
       const behavior = (event as any)._behavior;
 
       const sortKeyOverride =
-        (event.target as HTMLElement)
-          ?.closest<HTMLElement>('[data-sort-key]')
-          ?.getAttribute('data-sort-key') ?? undefined;
+        // ... sometimes, the caller's `event.target` is pretending to be an HTMLElement but lacks the full API. 
+        // Skip entirely when not an actual HTMLElement
+        event.target instanceof HTMLElement
+          ? ((event.target as HTMLElement)
+              ?.closest<HTMLElement>('[data-sort-key]')
+              ?.getAttribute('data-sort-key') ?? undefined)
+          : undefined;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
