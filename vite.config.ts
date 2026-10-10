@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   ];
 
   if (mode === 'development') {
-    plugins.push(getViteCssLayerInjectorPlugin(), getViewLessLayerWrapper());
+    plugins.push(getViteCssLayerInjectorPlugin());
   }
 
   return {
@@ -128,27 +128,6 @@ function getViteCssLayerInjectorPlugin(): PluginOption {
 
       return {
         code: rewrittenImports.join('\n') + '\n' + effectiveRemainder,
-        map: null,
-      };
-    },
-  };
-}
-
-/**
- * @returns A vite plugin that wrapps LESS files with no specified `@layer` with
- *          the Foundry modules layer.
- */
-function getViewLessLayerWrapper(): PluginOption {
-  return {
-    name: 'vite-less-layer-wrapper',
-    enforce: 'pre',
-    transform(code, id) {
-      if (!id.endsWith('.less') || code.includes('@layer')) {
-        return;
-      }
-
-      return {
-        code: `@layer modules {\n${code}\n}`,
         map: null,
       };
     },

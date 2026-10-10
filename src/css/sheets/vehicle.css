@@ -1,0 +1,194 @@
+.tidy5e-sheet:where(.application.vehicle) {
+  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-vehicle.webp');
+  --t5e-text-warning: var(--t5e-color-palette-orange-70);
+
+  .dr-container {
+    flex: 1;
+    align-items: center;
+    padding-left: 0.5rem;
+  }
+
+  .window-content {
+    margin-top: -0.25rem;
+  }
+
+  /* VEHICLE SIDEBAR
+  /* ------------------------------------------------------------ */
+  .sidebar {
+    h4 {
+      i {
+        margin-right: 0.1875rem;
+      }
+    }
+
+    .trait-editable {
+      flex-direction: row;
+      align-items: center;
+      max-height: 1.25rem;
+
+      .list-label {
+        flex: 2;
+      }
+
+      .trait-values {
+        display: flex;
+        flex: 3;
+        gap: 0.25rem;
+        justify-content: flex-end;
+      }
+
+      input {
+        flex: 2;
+      }
+
+      select {
+        flex: 1 0 fit-content;
+      }
+    }
+
+    .trait-horizontal {
+      flex-direction: row;
+      align-items: center;
+
+      .trait-values {
+        --t5e-icon-size-6x: var(--t5e-field-size-default);
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .trait-actions {
+      .trait-values {
+        flex: 1;
+      }
+    }
+
+    .trait-thresholds .threshold-values {
+      gap: 0.25rem;
+    }
+
+    .tidy-table-toggle {
+      font-size: var(--font-size-16);
+
+      i.enabled {
+        color: var(--t5e-theme-color-highlight);
+      }
+    }
+  }
+
+  .trait-icon-keel {
+    transform: rotate(90deg) translateY(1px);
+  }
+
+  /* HEADER OVERRIDES
+  /* ------------------------------------------------------------ */
+  .abilities-container {
+    margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
+  }
+
+  .abilities-container-inner {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* Basic theme overrides
+  /* ------------------------------------------------------------ */
+  &:where(.theme-basic) .abilities-container,
+  & .abilities-container.abilities-size-small {
+    .initiative-score-container {
+      height: 3.75rem;
+    }
+  }
+
+  &:where(.theme-basic) .abilities-container,
+  & .abilities-container.abilities-size-compact {
+    .initiative-score-container {
+      margin-top: 0;
+      padding-top: 0;
+
+      .ability-roll-button {
+        gap: 0.125rem;
+      }
+    }
+  }
+
+  /* TABS
+  /* ------------------------------------------------------------ */
+  .crew-and-passengers {
+    .sheet-pin {
+      padding-block: var(--t5e-size-1x);
+
+      .inline-uses {
+        display: flex;
+        flex-direction: row;
+
+        .uses-value {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: end;
+        }
+
+        .separator {
+          font-size: var(--font-size-18);
+          flex: 0;
+        }
+
+        input.uses-max {
+          font: var(--t5e-font-label-large);
+          flex: 1;
+          text-align: start;
+        }
+      }
+
+      .remove-broken-links-button {
+        padding-block-end: var(--t5e-size-1x);
+        color: var(--t5e-color-text-lighter);
+
+        i {
+          color: var(--t5e-warning-accent-color);
+        }
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+        }
+
+        &:hover i {
+          color: oklch(from var(--t5e-warning-accent-color) calc(l * 1.2) calc(c * 1.15) h);
+        }
+      }
+    }
+  }
+
+  .crew-and-passengers-wrapper {
+    padding-inline-start: var(--t5e-size-2x);
+    padding-block-start: var(--t5e-size-1x);
+
+    + .editor-rendered-content {
+      margin: 0;
+    }
+  }
+
+  .crew-and-passengers-table {
+    margin-block-start: var(--t5e-size-1x);
+  }
+
+  .button-reset-actions {
+    position: absolute;
+    top: calc(50% - 0.9375rem);
+    right: 0;
+  }
+
+  /* Light theme styles
+  /* ------------------------------------------------------------ */
+  &:where(.theme-light) {
+    .crew-warning {
+      .uses-value {
+        --t5e-text-warning: var(--t5e-color-palette-orange-55);
+      }
+    }
+
+    .npc-score-tracker.tracker-warning {
+      --t5e-text-warning: var(--t5e-color-palette-orange-55);
+    }
+  }
+}

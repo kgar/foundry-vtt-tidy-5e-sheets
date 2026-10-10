@@ -1,7 +1,6 @@
 // 💡 Order of imports is important
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import './less/shared/dnd5e2-ports.less';
-import './less/tidy5e.css';
+import './css/tidy5e.css';
 import { initSettings } from './settings/settings.svelte';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';

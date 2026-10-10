@@ -50,12 +50,12 @@
   let defaultMethodColors = $state<Record<string, string>>({});
 
   onMount(() => {
-    let target = document.querySelector<HTMLElement>('.tidy5e-sheet.quadrone');
+    let target = document.querySelector<HTMLElement>('.tidy5e-sheet');
     // imps are so back, gimme those styles
     let imp: HTMLElement | undefined;
     if (!target) {
       imp = document.createElement('div');
-      imp.classList.add('tidy5e-sheet', 'quadrone');
+      imp.classList.add('tidy5e-sheet');
       imp.style.display = 'none';
       document.body.appendChild(imp);
       target = imp;

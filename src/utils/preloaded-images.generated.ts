@@ -34,7 +34,6 @@ export const PRELOADED_IMAGE_PATHS: readonly string[] = [
   'modules/tidy5e-sheet/images/banner-npc.jpg',
   'modules/tidy5e-sheet/images/banner-vehicle.webp',
   'modules/tidy5e-sheet/images/denim065.png',
-  'modules/tidy5e-sheet/images/denim075.png',
   'modules/tidy5e-sheet/images/facility-default-background.webp',
   'modules/tidy5e-sheet/images/notable-left-corner.svg',
   'modules/tidy5e-sheet/images/notable-right-corner.svg',
