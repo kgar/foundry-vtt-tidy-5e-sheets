@@ -52,8 +52,6 @@ export class ItemConfigApi {
 
   // TODO: Document!
   registerToggle(toggle: ItemToggleConfig) {
-    // TODO: Add the data to CONFIG.TIDY5E.item.toggles
-
     let { itemTypes = [], id, ...rest } = toggle;
 
     if (!itemTypes.length) {

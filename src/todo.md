@@ -2,11 +2,12 @@
 
 - [x] Propagate custom itemDescriptions to the item sheet context prep
 - [x] Propagate custom item toggles to the item sheet context prep
-- [ ] When `canViewContents === false`, then show the concealment description in the item summary when viewed in an item table
+- [x] When `canViewContents === false`, then show the concealment description in the item summary when viewed in an item table
   - Discuss with hightouch: src\components\table-quadrone\TidyItemSummary.svelte - we should be showing the unidentified description to people when the item is unidentified. The regular description can be a GM secret, but the unidentified text is specifically for the user to read when viewing this unidentified item.
-- [ ] Show to hightouch and Larkinabout
 - [ ] Resolve TODOs, clean up, extract and share
   - [ ] "// TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?" - what have you done, kgar? It's in more than one place. What the hell?
+  - [ ] // TODO: Document!
+- [ ] Show to hightouch and Larkinabout
 
 ## dnd5e 6.0 todos
 
