@@ -30,6 +30,8 @@ import type {
   ItemAdvancementColumnSpec,
   SectionColumnSpecifications,
 } from './columns.types';
+import type { ContainerContentsVisibility } from 'src/features/containers/Container';
+import type { RegisteredItemToggle } from './registry.types';
 
 export type PropertyContext = {
   active: string[];
@@ -166,6 +168,7 @@ export type ItemSheetQuadroneContext = {
   subtitle?: string;
   system: any;
   title: string;
+  toggles: ItemToggle[];
   unitsOptions: { value: string; label: string }[];
   unlocked: boolean;
   user: any;
@@ -223,6 +226,7 @@ export type ItemDescription = {
   content: string;
   enriched: string;
   label: string;
+  editable: boolean;
 };
 
 export type Item5e = any;
@@ -255,6 +259,8 @@ export type ContainerSheetQuadroneContext = {
   actionSectionEnabled: boolean;
   capacity: ContainerCapacityContext;
   canIdentify: boolean;
+  contentsConcealedNotice: string;
+  contentsVisibility: ContainerContentsVisibility;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   containerContents: ContainerContents;
@@ -291,6 +297,7 @@ export type ContainerSheetQuadroneContext = {
   source: any;
   system: any;
   tabs: Tab[];
+  toggles: ItemToggle[];
   unlocked: boolean;
   userPreferences: UserPreferences;
 } & DocumentSheetV2Context;
@@ -359,3 +366,12 @@ export type MovementInfo = {
   unit: string;
 };
 export type SenseInfo = { label: string; value: number | string; unit: string };
+
+export type ItemToggle = {
+  label: string;
+  icon?: string;
+  active?: boolean;
+  editable: boolean;
+  onChange?: (item: Item5e) => boolean;
+  field?: string;
+};

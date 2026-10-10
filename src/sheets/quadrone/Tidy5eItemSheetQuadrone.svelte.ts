@@ -13,6 +13,7 @@ import type {
   ItemDescription,
   ItemFacilityOrdersContext,
   ItemSheetQuadroneContext,
+  ItemToggle,
   UsesRecoveryData,
 } from 'src/types/item.types';
 import { mount } from 'svelte';
@@ -273,6 +274,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.description.value,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
+        editable: this.document.isOwner,
       });
     }
 
@@ -282,6 +284,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.unidentified?.description ?? '',
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
+        editable: this.document.isOwner,
       });
     }
 
@@ -297,11 +300,60 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.description.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+        editable: this.document.isOwner,
+      });
+    }
+
+    // TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?
+    // definitely don't duplicate it.
+    const customDescriptions =
+      Object.values(CONFIG.TIDY5E.item.descriptions[this.document.type] ?? {}) ?? [];
+
+    for (const description of customDescriptions) {
+      const visible = description.visible?.(this.document) ?? true;
+
+      if (!visible) {
+        continue;
+      }
+
+      const content =
+        FoundryAdapter.getProperty<string>(this.document, description.field) ??
+        '';
+
+      itemDescriptions.push({
+        enriched: await foundry.applications.ux.TextEditor.enrichHTML(
+          content,
+          enrichmentOptions,
+        ),
+        content,
+        editable: description.editable?.(this.document) ?? true,
+        field: description.field,
+        label: description.label,
       });
     }
 
     if (!this.item.isOwner) {
       itemDescriptions = itemDescriptions.slice(0, 1);
+    }
+
+    const customToggles =
+      Object.values(CONFIG.TIDY5E.item.toggles[this.document.type] ?? {}) ?? [];
+
+    const itemToggles: ItemToggle[] = [];
+
+    for (const toggle of customToggles) {
+      const visible = toggle.visible?.(this.document) ?? true;
+
+      if (!visible) {
+        continue;
+      }
+
+      itemToggles.push({
+        label: toggle.label,
+        field: toggle.field,
+        icon: toggle.icon,
+        editable: toggle.editable?.(this.document) ?? true,
+      });
     }
 
     const systemSource = !documentSheetContext.unlocked
@@ -495,6 +547,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
         { value: 'formula', label: 'DND5E.USES.Recovery.Type.Formula' },
       ],
+
+      toggles: itemToggles,
 
       usesRecovery: (this.document.system.uses?.recovery ?? []).map(
         (data: UsesRecoveryData, index: number) => ({
