@@ -1,5 +1,6 @@
 /* Module-wide utilities */
 .tidy5e-sheet {
+
   /* TODO: Find the right home for the equip-icon */
   .equip-icon {
     transform: rotate(-90deg) scaleX(-1);
@@ -28,8 +29,8 @@
   }
 
   &:where(.application) {
-    /* Quadrone utilities */
 
+    /* Quadrone utilities */
     /* Visibility */
     .invisible {
       visibility: hidden;
@@ -41,7 +42,6 @@
     }
 
     /* Typography utilities */
-
     /* TEXT COLORS
     ------------------------------------------------------------ */
     .color-text-default {
@@ -54,6 +54,11 @@
 
     .color-text-gold {
       color: var(--t5e-color-text-gold);
+    }
+
+    /* Light parchment actor sheets use the darker gold for contrast. */
+    &:where(.actor.theme-parchment.theme-light) .color-text-gold {
+      color: var(--t5e-color-text-gold-emphasis);
     }
 
     .color-text-gold-emphasis {
@@ -226,7 +231,6 @@
     }
 
     /* Flex helpers */
-
     .flexshrink {
       flex: 0 1 auto;
     }
@@ -275,7 +279,6 @@
     }
 
     /* Container Queries */
-
     /* TODO: Discuss with hightouch the best way to deal with these utility classes. */
     @container (width < 3.125rem) {
       .hide-under-50 {
