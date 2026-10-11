@@ -713,8 +713,7 @@
     }
   }
 
-  /* More specific than apps.css `a[href]`. */
-  .tidy-table-button.tidy-table-button {
+  .tidy-table-button {
     align-items: center;
     align-self: center;
     color: var(--t5e-color-icon-button);
