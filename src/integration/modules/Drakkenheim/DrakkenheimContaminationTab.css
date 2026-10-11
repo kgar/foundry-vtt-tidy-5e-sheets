@@ -89,6 +89,7 @@
 
     .contamination-levels .symptom {
       --t5e-enricher-background: rgba(255, 255, 255, 0.12);
+      --t5e-color-text-default: var(--dod-color-symptom-text);
       align-items: center;
       background-color: transparent;
       background: var(--dod-color-symptom-background);
@@ -99,6 +100,7 @@
       border-image: linear-gradient(to right, transparent 0%, var(--dod-color-symptom-border) 25%, transparent) 1;
       border-radius: var(--t5e-component-card-radius);
       box-shadow: none;
+      cursor: pointer;
       display: flex;
       flex-direction: row;
       gap: var(--t5e-size-2x);
@@ -109,7 +111,6 @@
       position: relative;
       text-align: left;
       font-weight: var(--font-weight-default);
-      color: var(--dod-color-symptom-text);
 
       &.level-0 .level-label {
         flex: 1;
@@ -122,6 +123,10 @@
 
       &.level-0:not(.active) {
         color: var(--dod-color-symptom-text-inactive);
+      }
+
+      i {
+        --icon-fill: var(--dod-color-symptom-text);
       }
 
       .level-icon {
