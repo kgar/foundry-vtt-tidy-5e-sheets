@@ -51,7 +51,9 @@
     flex: 1;
 
     :where(.button) {
-      padding: var(--t5e-size-6x) var(--t5e-size-12x);
+      --t5e-button-padding-inline-start: var(--t5e-size-12x);
+      --t5e-button-padding-inline-end: var(--t5e-size-12x);
+      padding-block: var(--t5e-size-6x);
     }
 
     &.empty-state-description {

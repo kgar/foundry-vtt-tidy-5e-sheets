@@ -172,7 +172,6 @@
       }
 
       h3 {
-        /* color: var(--t5e-theme-color-foreground-darker); */
         /* (l / threshold - 1) is positive above the threshold and negative below it. Multiplying by -infinity snaps to 0 (black) or 1 (white). */
         color: var(--row-foreground-color);
       }
@@ -192,7 +191,6 @@
       }
 
       .table-header-count {
-        /* color: var(--t5e-theme-color-foreground-darker-diminished); */
         margin-inline-start: var(--t5e-size-1x);
         color: var(--row-foreground-color-diminished);
       }

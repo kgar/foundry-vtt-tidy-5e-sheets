@@ -487,7 +487,7 @@
   }
 
   &:where(.theme-dark) {
-    --t5e-app-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim065.png');
+    --t5e-app-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim075.png');
     --t5e-app-background-size: auto;
     --t5e-app-border-color: var(--t5e-color-palette-gold-45);
     --t5e-app-decor-content: none;
@@ -604,16 +604,6 @@
     inset-inline-end: 0;
     inset-block-end: 0;
     filter: var(--t5e-app-resize-handle-filter);
-  }
-
-  .button-bar {
-    flex: 0;
-    display: flex;
-    gap: var(--t5e-size-1x);
-
-    button {
-      flex: 1;
-    }
   }
 
   &:where(.disable-transitions) {

@@ -8,7 +8,7 @@
     gap: 0.25rem;
     flex: 1 0 0;
     align-self: stretch;
-    border-radius: var(--radius-card, 0.1875rem);
+    border-radius: var(--t5e-component-card-radius);
     border: 0.0625rem solid var(--t5e-component-field-border);
     background: var(--t5e-color-palette-grey-34);
     /* pill-shadow */

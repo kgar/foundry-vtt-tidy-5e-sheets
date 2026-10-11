@@ -1,8 +1,14 @@
-.tidy5e-sheet:where(.application.character) {
+.tidy5e-sheet:where(.application.character, .application.npc) {
+
   /* More specific than `.empty-state-container`. */
   .empty-state-container.empty-state-description {
+    align-items: flex-start;
     min-height: unset;
     text-align: left;
+
+    > * {
+      width: inherit;
+    }
   }
 
   .sheet-tab-footer {

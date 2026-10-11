@@ -66,7 +66,7 @@
       color: var(--t5e-color-text-default, #000);
       text-align: center;
       font-family: 'Modesto Condensed';
-      font-size: var(--font-font-size-18, 1.125rem);
+      font-size: var(--font-size-18);
       margin-bottom: 0.125rem;
     }
 
@@ -93,7 +93,7 @@
       flex: 1;
       color: var(--t5e-color-text-lighter);
       font-family: 'Modesto Condensed';
-      font-size: var(--font-font-size-18, 1.125rem);
+      font-size: var(--font-size-18);
       font-style: normal;
       line-height: normal;
     }
@@ -121,7 +121,7 @@
 
   .header-control {
     --t5e-button-text: var(--t5e-color-text-lighter);
-    font-size: var(--font-font-size-14, 0.875rem);
+    font-size: var(--font-size-14);
     font-weight: 900;
   }
 
@@ -154,7 +154,7 @@
     h4 {
       color: var(--t5e-color-text-gold-light, #f0f0e1);
       font-family: var(--t5e-font-roboto-condensed);
-      font-size: var(--font-font-size-14, 0.875rem);
+      font-size: var(--font-size-14);
       font-style: normal;
       font-weight: var(--font-weight-label);
       line-height: var(--t5e-lineheight-longform);
