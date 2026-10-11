@@ -129,9 +129,14 @@
     --t5e-actor-parchment-after-opacity: 1;
     --t5e-actor-parchment-body-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-2.webp');
     --t5e-actor-parchment-body-background-color: var(--t5e-component-card-default);
+    /* Fix for dark parchment texture overlays */
+    --t5e-app-decor-content: '';
+    --t5e-header-text-shadow: none;
 
     &::before {
       background-image: url('../../modules/tidy5e-sheet/images/texture-gray-1.webp');
+      background-position: top center;
+      background-repeat: no-repeat;
       filter: none;
       opacity: var(--t5e-actor-parchment-before-opacity);
       mix-blend-mode: normal;
@@ -149,6 +154,7 @@
       background-position: var(--t5e-actor-parchment-after-background-position);
       background-repeat: var(--t5e-actor-parchment-after-background-repeat);
       background-size: var(--t5e-actor-parchment-after-background-size);
+      mix-blend-mode: normal;
       opacity: var(--t5e-actor-parchment-after-opacity);
     }
 
