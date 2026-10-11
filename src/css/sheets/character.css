@@ -197,6 +197,7 @@
     .modifier,
     .value {
       font-size: var(--font-size-14);
+      line-height: inherit;
     }
 
     .config-container {

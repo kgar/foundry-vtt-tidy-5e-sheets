@@ -1,19 +1,6 @@
+/* The place for all dialogs and their specific layout styles. */
 .tidy5e-sheet:where(.application) {
-  /* The place for all dialogs and their specific layout styles. */
   --t5e-settings-border-color: var(--t5e-table-row-divider);
-
-  &:where(.tidy-sheet-settings) {
-    --t5e-settings-header-border: none;
-
-    &:where(.theme-light) {
-      --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
-      --t5e-settings-header-border: var(--t5e-size-1) solid var(--t5e-settings-border-color);
-    }
-
-    .window-header {
-      border: var(--t5e-settings-header-border);
-    }
-  }
 
   .window-content {
     .dialog-content-container {
@@ -21,6 +8,7 @@
       flex: 1;
       min-height: 0;
       overflow-y: auto;
+      padding-inline: var(--t5e-size-4x);
 
       &.flexrow {
         align-items: flex-start;
@@ -33,8 +21,12 @@
     }
 
     .button-bar {
+      grid-area: buttons;
+      flex: 0;
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
+      align-items: center;
       gap: var(--t5e-size-1x);
       padding-block: 0 1rem;
       padding-inline: 1rem;
@@ -202,20 +194,6 @@
     overflow-y: auto;
   }
 
-  .button-bar {
-    grid-area: buttons;
-    display: flex;
-    gap: var(--t5e-size-2x);
-
-    button {
-      flex: 1;
-    }
-  }
-
-  .window-content .dialog-content-container {
-    padding-inline: var(--t5e-size-4x);
-  }
-
   &:where(.theme-dark):where(.tidy-sheet-settings, .theme-parchment) .window-header {
     button.header-control {
       &:hover {
@@ -301,7 +279,21 @@
     }
   }
 
+  /* Sheet and world settings */
   &:where(.tidy-sheet-settings) {
+    --t5e-font-family-default: var(--t5e-font-family-forms);
+    --font-size-default: var(--font-size-14);
+    --t5e-settings-header-border: none;
+
+    &:where(.theme-light) {
+      --t5e-settings-border-color: var(--t5e-color-palette-gold-75);
+      --t5e-settings-header-border: var(--t5e-size-1) solid var(--t5e-settings-border-color);
+    }
+
+    .window-header {
+      border: var(--t5e-settings-header-border);
+    }
+
     .header-controls-preview {
       display: flex;
       justify-content: flex-end;
@@ -380,96 +372,83 @@
         font-size: var(--font-size-13);
       }
     }
-  }
-}
 
-/* Theme Settings */
-.tidy5e-sheet:where(.application.tidy-sheet-settings) {
-  --t5e-font-roboto-condensed: "Signika", "Palatino Linotype", sans-serif;
-  --t5e-font-family-default: "Signika", "Palatino Linotype", sans-serif;
-  --font-size-default: var(--font-size-14);
-
-  .settings-description {
-    color: var(--t5e-color-text-lighter);
-  }
-
-  h3 {
-    font-size: var(--font-size-20);
-  }
-
-  .setting-actions {
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-
-  .choose-specific-btn {
-    padding-block: 0;
-    padding-inline: 0;
-    align-self: flex-start;
-  }
-
-  .color-picker-container {
-    position: relative;
-  }
-
-  .color-picker-preview {
-    --size: var(--t5e-field-size-default);
-    --bg-color: var(--t5e-component-field-background);
-    flex: 0 0 var(--size);
-    width: var(--size);
-    height: var(--size);
-    background-color: var(--bg-color);
-    cursor: pointer;
-    border: var(--t5e-size-1) solid var(--t5e-component-field-border);
-    border-radius: var(--t5e-size-halfx);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--t5e-transition-default);
-
-    i {
-      font-size: var(--font-size-12);
-      color: var(--t5e-color-icon-default);
-      transition: color var(--t5e-transition-default);
+    .settings-description {
+      color: var(--t5e-color-text-lighter);
     }
 
-    &:hover,
-    &:focus-within,
-    &:active {
-      box-shadow: var(--t5e-drop-shadow-field-hover);
-      border-color: var(--t5e-component-field-border-hover);
-      --bg-color: var(--t5e-component-field-background-hover);
+    h3 {
+      font-size: var(--font-size-20);
     }
 
-    &[style^="--bg-color"] {
+    .setting-actions {
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .choose-specific-btn {
+      padding-block: 0;
+      padding-inline: 0;
+      align-self: flex-start;
+    }
+
+    .color-picker-container {
+      position: relative;
+    }
+
+    .color-picker-preview {
+      --size: var(--t5e-field-size-default);
+      --bg-color: var(--t5e-component-field-background);
+      flex: 0 0 var(--size);
+      width: var(--size);
+      height: var(--size);
+      background-color: var(--bg-color);
+      cursor: pointer;
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border);
+      border-radius: var(--t5e-size-halfx);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--t5e-transition-default);
+
       i {
-        color: transparent;
+        font-size: var(--font-size-12);
+        color: var(--t5e-color-icon-default);
+        transition: color var(--t5e-transition-default);
       }
 
-      &:hover {
+      &:hover,
+      &:focus-within,
+      &:active {
+        box-shadow: var(--t5e-drop-shadow-field-hover);
+        border-color: var(--t5e-component-field-border-hover);
+        --bg-color: var(--t5e-component-field-background-hover);
+      }
+
+      &[style^="--bg-color"] {
         i {
-          color: var(--t5e-color-palette-white);
+          color: transparent;
+        }
+
+        &:hover {
+          i {
+            color: var(--t5e-color-palette-white);
+          }
         }
       }
     }
-  }
 
-  .hidden-input {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    width: 0;
-    height: 0;
-    flex: 0;
-    padding-block: 0;
-    padding-inline: 0;
-    border: 0;
-  }
-
-  .button-bar {
-    gap: var(--t5e-size-2x);
-    padding-block: 0 var(--t5e-size-3x);
-    padding-inline: var(--t5e-size-4x);
+    .hidden-input {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      width: 0;
+      height: 0;
+      flex: 0;
+      padding-block: 0;
+      padding-inline: 0;
+      border: 0;
+    }
   }
 }
 
@@ -488,7 +467,6 @@
 }
 
 /* Core DialogV2, outside any Tidy root. */
-/* stylelint-disable tidy/root-prefix */
 .bastion-maintain-order-dialog {
   .bastion-maintain-order-hint {
     margin-block: 0 var(--t5e-size-3x);
@@ -530,5 +508,3 @@
     font-size: var(--font-size-12);
   }
 }
-
-/* stylelint-enable tidy/root-prefix */
