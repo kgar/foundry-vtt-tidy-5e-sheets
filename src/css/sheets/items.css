@@ -255,10 +255,6 @@
   }
 
   .item-rarity-container {
-    .item-rarity-text.diminished {
-      --t5e-item-color: var(--t5e-color-text-default);
-    }
-
     .item-rarity-text {
       color: oklch(from var(--t5e-item-color) calc(l + 0.2) calc(c - 0.08) h);
       font: var(--t5e-font-title-small);
