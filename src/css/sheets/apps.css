@@ -157,7 +157,9 @@
   }
 
   .window-content {
-    padding-block-start: 0;
+    gap: 0;
+    padding-block: 0;
+    padding-inline: 0;
 
     h1,
     h2,
@@ -216,6 +218,12 @@
     :where(h6) {
       font-size: var(--font-size-11);
       line-height: var(--font-size-14);
+    }
+
+    h2 {
+      &:not(:first-child) {
+        margin-block-start: var(--t5e-size-2x);
+      }
     }
   }
 

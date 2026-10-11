@@ -2,8 +2,8 @@
   .window-content {
     /* Force overlap for image shadows in the header.
      * Content scrolling handled in individual components. */
-    padding-block-start: var(--t5e-size-2x);
-    margin-block-start: calc(-1 * var(--t5e-size-3x));
+    padding-block-start: var(--t5e-size-3x);
+    margin-block-start: calc(-1 * var(--t5e-size-5x));
   }
 
   /* HEADER STYLES */
