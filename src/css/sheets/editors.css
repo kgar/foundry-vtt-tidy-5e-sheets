@@ -252,7 +252,7 @@
           0 30%);
       position: relative;
       display: grid;
-      justify-content: center;
+      justify-content: stretch;
       align-content: center;
       justify-self: center;
       inline-size: var(--size);
