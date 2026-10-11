@@ -748,8 +748,9 @@ export class Tidy5eNpcSheetQuadrone extends getTidy5eActorSheetQuadroneBase<NpcS
     if (
       isUpdate &&
       hp === 0 &&
-      this.attributes.hp.max > 0 &&
-      (!('isAdvancement' in options) || !options.isAdvancement)
+      this.document.system.attributes.hp.max > 0 &&
+      (!('isAdvancement' in options) || !options.isAdvancement) &&
+      Tidy5eNpcSheetQuadrone.isImportantNpc(this.document)
     ) {
       this._deathTrayOpen = context.showDeathSaves = true;
     }
