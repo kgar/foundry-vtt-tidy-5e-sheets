@@ -465,6 +465,49 @@
     padding-block: 0 var(--t5e-size-8x);
     max-width: var(--vitals-width);
 
+    .portrait-shape-config {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      border-radius: calc(var(--t5e-field-size-default) / 2);
+      transition: background-color var(--t5e-transition-default);
+
+      .button-config {
+        border: none;
+        font-size: 0.875rem;
+
+        i {
+          color: var(--t5e-color-icon-button);
+        }
+      }
+
+      .portrait-shape-options {
+        display: none;
+
+        .button-config.active {
+          background: var(--t5e-color-palette-black);
+
+          i {
+            color: var(--t5e-color-icon-default);
+            text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+          }
+        }
+      }
+
+      &:hover,
+      &:focus-within {
+        background-color: rgba(0, 0, 0, 0.64);
+
+        .portrait-shape-options {
+          display: flex;
+        }
+      }
+    }
+
     .actor-image {
       --inset: 0.3125rem;
       min-width: 10rem;

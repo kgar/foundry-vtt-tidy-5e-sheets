@@ -3,6 +3,7 @@
   import DeathSavesOverlay from 'src/sheets/quadrone/actor/character-parts/DeathSavesOverlay.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import type { PortraitShape } from 'src/theme/theme-quadrone.types';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
@@ -29,13 +30,12 @@
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
-  function cycleShape() {
-    const currentIndex = availableShapes.indexOf(currentPortraitShape);
-    const nextIndex = (currentIndex + 1) % availableShapes.length;
-    let newShape = availableShapes[nextIndex];
-
-    ThemeQuadrone.updatePortraitShape(context.actor, newShape);
-  }
+  const shapeIcons: Record<PortraitShape, string> = {
+    transparent: 'fa-user',
+    round: 'fa-circle-user',
+    square: 'fa-square-user',
+    token: 'fa-circle',
+  };
 
   const localize = FoundryAdapter.localize;
 
@@ -47,7 +47,7 @@
 
   let action = $derived(context.unlocked ? editAction : 'showArtwork');
 
-  let cyclerTooltip = $derived(
+  let shapeConfigTooltip = $derived(
     localize('TIDY5E.SETTINGS.Theme.PortraitShape.Title', {
       type: localize(
         `TIDY5E.SETTINGS.Theme.PortraitShape.option.${currentPortraitShape}`,
@@ -63,23 +63,36 @@
 </script>
 
 {#if context.unlocked}
-  <button
-    type="button"
-    class="button button-borderless button-icon-only button-config"
-    style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
-    onclick={cycleShape}
-    data-tooltip={cyclerTooltip}
-  >
-    {#if currentPortraitShape === 'round'}
-      <i class="fas fa-circle-user"></i>
-    {:else if currentPortraitShape === 'square'}
-      <i class="fas fa-square-user"></i>
-    {:else if currentPortraitShape === 'token'}
-      <i class="fas fa-circle"></i>
-    {:else}
-      <i class="fas fa-user"></i>
-    {/if}
-  </button>
+  <div class="portrait-shape-config">
+    <button
+      type="button"
+      class="button button-borderless button-icon-only button-config"
+      data-tooltip={shapeConfigTooltip}
+      aria-label={shapeConfigTooltip}
+    >
+      <i class="fas fa-gear"></i>
+    </button>
+    <div class="portrait-shape-options" role="group">
+      {#each availableShapes as shape (shape)}
+        {@const label = localize(
+          `TIDY5E.SETTINGS.Theme.PortraitShape.option.${shape}`,
+        )}
+        <button
+          type="button"
+          class={[
+            'button button-borderless button-icon-only button-config',
+            { active: shape === currentPortraitShape },
+          ]}
+          aria-pressed={shape === currentPortraitShape}
+          aria-label={label}
+          data-tooltip={label}
+          onclick={() => ThemeQuadrone.updatePortraitShape(context.actor, shape)}
+        >
+          <i class={['fas', shapeIcons[shape]]}></i>
+        </button>
+      {/each}
+    </div>
+  </div>
 {/if}
 <div
   class={[
