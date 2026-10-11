@@ -909,11 +909,16 @@
         opacity: 50%;
       }
 
+      /* Paint after the meter bars. A z-index here would also cover the settings button. */
+      button,
+      input {
+        order: 1;
+      }
+
       button {
         --t5e-button-shadow: none;
         --t5e-button-focus: none;
         --t5e-button-width: calc(100% - var(--t5e-field-size-default));
-        z-index: 1;
       }
     }
 
@@ -928,6 +933,8 @@
         flex: 0 1 auto;
         position: absolute;
         inset-inline-end: 0;
+        /* Paint after the HP meter so the settings button sits above the field. */
+        order: 1;
         --t5e-button-icon-size: var(--font-size-14);
 
         i {
