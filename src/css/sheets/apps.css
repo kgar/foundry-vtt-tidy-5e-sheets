@@ -22,7 +22,7 @@
   background-size: var(--t5e-app-background-size);
   color: var(--t5e-color-text-default);
   /* Sheet Body Typography */
-  font-family: var(--t5e-font-family-default, var(--t5e-font-roboto-condensed));
+  font-family: var(--t5e-font-family-default);
   font-size: var(--font-size-default, 0.8125rem);
   font-style: normal;
   font-weight: var(--font-weight-default);
@@ -179,7 +179,7 @@
     }
 
     :where(h4, h5, h6) {
-      font-family: var(--t5e-font-roboto-condensed);
+      font-family: var(--t5e-font-family-default);
       font-size: var(--font-size-13);
       font-style: normal;
       line-height: var(--font-size-16);
@@ -292,6 +292,7 @@
       button {
         --t5e-button-size: var(--t5e-field-size-small);
         --t5e-button-height: var(--t5e-field-size-small);
+        --t5e-button-width: auto;
         --t5e-button-background: none;
         --t5e-button-border-width: 0.0625rem;
         --t5e-button-border: transparent;
@@ -306,12 +307,14 @@
 
         &.active {
           --t5e-button-icon: var(--t5e-color-icon-button);
+          --icon-fill: var(--t5e-color-icon-button);
         }
 
         &:active,
         &:focus-within {
           --t5e-button-background: var(--t5e-component-field-background-active);
           --t5e-button-icon: var(--t5e-color-icon-button);
+          --icon-fill: var(--t5e-color-icon-button);
           --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
         }
 
@@ -319,13 +322,17 @@
           --t5e-button-background: var(--t5e-component-field-background-hover);
           --t5e-button-border: var(--t5e-component-field-border);
         }
+
+        &.active:hover,
+        &:active:hover {
+          background-color: var(--t5e-button-background);
+          --icon-fill: var(--t5e-theme-color-foreground);
+        }
       }
 
-      &.active {
-        button {
-          --t5e-button-background: var(--t5e-component-field-background-active);
-          --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
-        }
+      &.active button {
+        --t5e-button-background: var(--t5e-component-field-background-active);
+        --t5e-button-icon-hover: var(--t5e-theme-color-foreground);
       }
     }
   }
@@ -518,11 +525,10 @@
   &:where(.theme-light) {
     --t5e-app-editor-menu-border: var(--t5e-size-1) solid var(--t5e-color-palette-gold-89);
 
-    .editor.prosemirror menu {
-      li button.active {
-        --t5e-button-background: var(--t5e-component-card-darker);
-        --t5e-button-border: var(--t5e-color-gold);
-      }
+    .editor.prosemirror menu li button.active {
+      --t5e-button-background: var(--t5e-component-card-darker);
+      --t5e-button-border: var(--t5e-color-gold);
+      --icon-fill: var(--t5e-color-icon-button);
     }
 
     &:where(.minimized) .window-header {

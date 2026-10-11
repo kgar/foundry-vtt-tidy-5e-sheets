@@ -473,8 +473,8 @@
   button.icon,
   a.button.icon {
     font-family: var(--font-awesome);
-    flex: 0 0 var(--button-size);
-    width: var(--button-size);
+    flex: 0 0 var(--t5e-button-width, var(--button-size));
+    width: var(--t5e-button-width, var(--button-size));
     font-weight: var(--icon-weight-bold);
 
     &:is(.fab, .fa-brands) {
@@ -498,12 +498,13 @@
         --t5e-button-icon: var(--t5e-color-icon-disabled);
       }
 
-      &:focus-within:not(.button-toggle, .button-borderless, .nav-tab):not(:disabled) {
-        &:not(.button-gold) {
+      /* Use :where() to avoid specificity battles */
+      &:focus-within:where(:not(.button-toggle, .button-borderless, .nav-tab)):where(:not(:disabled)) {
+        &:where(:not(.button-gold)) {
           --t5e-button-border: var(--t5e-component-field-border-hover);
         }
 
-        &:not(.button-tertiary) {
+        &:where(:not(.button-tertiary)) {
           --t5e-button-background: var(--t5e-component-field-background-hover);
         }
       }
