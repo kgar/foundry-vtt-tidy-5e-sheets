@@ -62,38 +62,6 @@
   });
 </script>
 
-{#if context.unlocked}
-  <div class="portrait-shape-config">
-    <button
-      type="button"
-      class="button button-borderless button-icon-only button-config"
-      data-tooltip={shapeConfigTooltip}
-      aria-label={shapeConfigTooltip}
-    >
-      <i class="fas fa-gear"></i>
-    </button>
-    <div class="portrait-shape-options" role="group">
-      {#each availableShapes as shape (shape)}
-        {@const label = localize(
-          `TIDY5E.SETTINGS.Theme.PortraitShape.option.${shape}`,
-        )}
-        <button
-          type="button"
-          class={[
-            'button button-borderless button-icon-only button-config',
-            { active: shape === currentPortraitShape },
-          ]}
-          aria-pressed={shape === currentPortraitShape}
-          aria-label={label}
-          data-tooltip={label}
-          onclick={() => ThemeQuadrone.updatePortraitShape(context.actor, shape)}
-        >
-          <i class={['fas', shapeIcons[shape]]}></i>
-        </button>
-      {/each}
-    </div>
-  </div>
-{/if}
 <div
   class={[
     'actor-image',
@@ -132,4 +100,36 @@
 </div>
 {#if context.showDeathSaves}
   <DeathSavesOverlay />
+{/if}
+{#if context.unlocked}
+  <div class="portrait-shape-config">
+    <button
+      type="button"
+      class="button button-borderless button-icon-only button-config"
+      data-tooltip={shapeConfigTooltip}
+      aria-label={shapeConfigTooltip}
+    >
+      <i class="fas fa-gear"></i>
+    </button>
+    <div class="portrait-shape-options" role="group">
+      {#each availableShapes as shape (shape)}
+        {@const label = localize(
+          `TIDY5E.SETTINGS.Theme.PortraitShape.option.${shape}`,
+        )}
+        <button
+          type="button"
+          class={[
+            'button button-borderless button-icon-only button-config',
+            { active: shape === currentPortraitShape },
+          ]}
+          aria-pressed={shape === currentPortraitShape}
+          aria-label={label}
+          data-tooltip={label}
+          onclick={() => ThemeQuadrone.updatePortraitShape(context.actor, shape)}
+        >
+          <i class={['fas', shapeIcons[shape]]}></i>
+        </button>
+      {/each}
+    </div>
+  </div>
 {/if}
