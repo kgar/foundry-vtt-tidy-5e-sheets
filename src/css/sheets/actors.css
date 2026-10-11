@@ -19,7 +19,8 @@
     display: flex;
     flex-direction: column;
     margin-block-start: -0.5rem;
-    overflow: hidden;
+    overflow: clip;
+    overflow-clip-margin: var(--t5e-size-3x);
 
     .tabs-row {
       container-name: sheet-tabs;
@@ -1429,6 +1430,7 @@
       &:hover,
       &:focus,
       &:active {
+
         i,
         &[data-proficiency='0'] i {
           --_fill: var(--t5e-theme-color-lightest);
