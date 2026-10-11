@@ -68,7 +68,8 @@
           rgba(248, 244, 241, 0.85) 10%,
           rgba(248, 244, 241, 0.1) 160%);
       border-radius: var(--t5e-component-card-radius);
-      padding: 0.75rem 0.5rem;
+      padding-block: var(--t5e-size-3x);
+      padding-inline: var(--t5e-size-2x);
       background: var(--t5e-bastion-facility-background);
       box-shadow: var(--t5e-drop-shadow-pill);
       display: flex;
@@ -149,7 +150,6 @@
     .facility-header {
       display: flex;
       gap: 0.125rem;
-      margin-block-end: var(--t5e-size-1x);
 
       .facility-image,
       .facility-image svg {

@@ -11,7 +11,7 @@
       flex-direction: row;
       position: relative;
       gap: var(--t5e-size-1x);
-      margin-block: var(--t5e-size-1x) var(--t5e-size-1x);
+      margin-block: var(--t5e-size-1x) 0;
       margin-inline: 0 var(--t5e-size-1x);
       padding-block: 0;
       padding-inline: 0;
