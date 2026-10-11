@@ -143,7 +143,9 @@
     }
 
     .facility-menu {
+      display: flex;
       transition: all var(--t5e-transition-default);
+      align-items: center;
       padding: 0.5rem 0.75rem;
     }
 
