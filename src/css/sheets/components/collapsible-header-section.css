@@ -1,22 +1,22 @@
-.tidy5e-sheet:where(.application.theme-basic) {
-  --t5e-collapsible-editor-header-border-hover: var(--t5e-theme-color-lighter);
+.tidy5e-sheet:where(.application) {
+  &:where(.theme-basic) {
+    --t5e-collapsible-editor-header-border-hover: var(--t5e-theme-color-lighter);
 
-  .collapsible-editor {
-    header {
-      padding-bottom: var(--t5e-size-halfx);
+    .collapsible-editor {
+      header {
+        padding-bottom: var(--t5e-size-halfx);
 
-      &:hover {
-        border-bottom-color: var(--t5e-collapsible-editor-header-border-hover);
+        &:hover {
+          border-bottom-color: var(--t5e-collapsible-editor-header-border-hover);
+        }
       }
     }
   }
-}
 
-.tidy5e-sheet:where(.application.theme-basic.theme-light) {
-  --t5e-collapsible-editor-header-border-hover: var(--t5e-filigree-underline-border-color);
-}
+  &:where(.theme-basic.theme-light) {
+    --t5e-collapsible-editor-header-border-hover: var(--t5e-filigree-underline-border-color);
+  }
 
-.tidy5e-sheet:where(.application) {
   .collapsible-editor {
     header {
       display: flex;

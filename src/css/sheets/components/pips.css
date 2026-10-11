@@ -43,13 +43,16 @@
   .pips .pip-end {
     display: none;
   }
-}
 
-/* stylelint-disable-next-line tidy/root-prefix -- must beat pins.css `.sheet-pin .pips.spell-pips` */
-.tidy5e-sheet:where(.application.theme-basic).theme-light .pips.spell-pips {
-  --pip-border-color: var(--t5e-theme-color-default);
-  --pip-hover-color: var(--t5e-theme-color-highlight);
-  --pip-border-hover-color: var(--t5e-theme-color-lighter);
-  --pip-active-color: var(--t5e-theme-color-default);
-  --pip-active-hover-color: var(--t5e-theme-color-lightest);
+  /* Pin pips are listed too, to override their gold colours from pins.css. */
+  &:where(.theme-basic.theme-light) {
+    .pips.spell-pips,
+    .sheet-pin .pips.spell-pips {
+      --pip-border-color: var(--t5e-theme-color-default);
+      --pip-hover-color: var(--t5e-theme-color-highlight);
+      --pip-border-hover-color: var(--t5e-theme-color-lighter);
+      --pip-active-color: var(--t5e-theme-color-default);
+      --pip-active-hover-color: var(--t5e-theme-color-lightest);
+    }
+  }
 }

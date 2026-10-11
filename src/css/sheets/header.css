@@ -10,57 +10,17 @@
   }
 }
 
-/* PARCHMENT HEADER STYLES
-  /* ------------------------------------------------------------ */
-.tidy5e-sheet:where(.application.actor.theme-parchment) {
-  background: var(--t5e-component-card-darker);
-  --t5e-sheet-header-bg: url('../../systems/dnd5e/ui/official/banner-npc-dark.webp');
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/denim065.png');
-  background: var(--t5e-background-image), var(--t5e-component-card-dark-darker);
-  background-position: top center, center;
-  background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
-  --t5e-header-text-shadow: none;
-
-  &::before {
-    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-1.webp');
-    content: '';
-    background-image: var(--t5e-background-image);
-    background-position: top center;
-    background-repeat: no-repeat;
-    filter: none;
-    mix-blend-mode: normal;
-    opacity: 0.24;
-  }
-
-  &::after {
-    --t5e-background-image: url('../../modules/tidy5e-sheet/images/texture-gray-2.webp');
-    content: '';
-    background-image: var(--t5e-background-image);
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    mix-blend-mode: normal;
-    opacity: 0.12;
-  }
-
-  .sheet-body {
-    background: none;
-  }
-
-  .window-content .sheet-body::before {
-    content: none;
-  }
-
-  .ability-save,
-  .ability-roll-button {
-    box-shadow: none;
-  }
-}
-
 .tidy5e-sheet:where(.application.actor) {
   --input-background: rgba(0, 0, 0, 0.2);
   --input-background-hover: rgba(0, 0, 0, 0.4);
+
+  &:where(.theme-parchment) {
+
+    .ability-save,
+    .ability-roll-button {
+      box-shadow: none;
+    }
+  }
 
   .sheet-header {
     --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_dark.webp');
@@ -169,7 +129,6 @@
         flex: 1;
         margin-block: 0 var(--t5e-size-halfx);
         margin-inline: var(--t5e-size-2x);
-        /* padding-block: 0.5rem; */
         height: 2.75rem;
       }
 
@@ -317,23 +276,15 @@
         &:not(.inspired) .level {
           color: var(--t5e-color-text-lighter);
         }
-
-        &:hover,
-        &:focus,
-        &:active {
-          --t5e-button-background: var(--t5e-inspiration-highlight-color);
-          --t5e-button-background-hover: var(--t5e-inspiration-highlight-color);
-          --t5e-button-borderless-hover-background: var(--t5e-inspiration-highlight-color);
-        }
       }
 
       &.inspired {
         filter: drop-shadow(0 0 0.325rem var(--t5e-theme-color-default));
       }
 
-      /* More specific than buttons.css variant backgrounds. */
-      &.single.single {
-        background: var(--t5e-inspiration-image-single) center / contain no-repeat;
+      &.single {
+        --t5e-button-background: var(--t5e-inspiration-image-single) center / contain no-repeat;
+        --t5e-button-borderless-hover-background: var(--t5e-button-background);
 
         &::before {
           transition: all var(--t5e-transition-default);
@@ -355,7 +306,6 @@
         &:hover,
         &:focus,
         &:active {
-          background: var(--t5e-inspiration-image-single) center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-inspiration-highlight-color));
         }
 
@@ -371,9 +321,9 @@
         }
       }
 
-      /* More specific than buttons.css variant backgrounds. */
-      &.stacked.stacked {
-        background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
+      &.stacked {
+        --t5e-button-background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
+        --t5e-button-borderless-hover-background: var(--t5e-button-background);
         width: 2.75rem;
         height: 2.75rem;
 
@@ -405,7 +355,6 @@
         &:hover,
         &:focus,
         &:active {
-          background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-inspiration-highlight-color));
         }
       }
@@ -461,7 +410,6 @@
     margin-inline-start: var(--t5e-size-2x);
     margin-block-end: auto;
     position: relative;
-    /* padding-block: var(--t5e-size-1x) var(--t5e-size-8x); */
     padding-block: 0 var(--t5e-size-8x);
     max-width: var(--vitals-width);
 
@@ -1080,10 +1028,9 @@
 
       .exhaustion.exhausted,
       .exhaustion-bar {
-
-        /* stylelint-disable-next-line selector-max-specificity -- must beat the borderless hover wash and the active segment in every state */
-        button.button-icon-only.button-borderless:not(:first-child):is(:hover, :focus, :active) {
-          background-color: var(--t5e-color-palette-orange-55);
+        .button:not(:first-child):is(:hover, :focus, :active) {
+          --t5e-button-background: var(--t5e-color-palette-orange-55);
+          --t5e-button-borderless-hover-background: var(--t5e-color-palette-orange-55);
         }
       }
 
@@ -1236,8 +1183,8 @@
         --t5e-button-radius: 0;
 
         &.active {
+          --t5e-button-background: var(--t5e-color-palette-orange-40);
           font-weight: var(--font-weight-bold);
-          background-color: var(--t5e-color-palette-orange-40);
           color: var(--t5e-color-icon-default);
           text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
         }
@@ -1349,291 +1296,288 @@
     padding-block: 0;
     padding-inline: var(--t5e-size-4x);
   }
-}
 
-/* NPC AND VEHICLE SHEET HEADER STYLES
-  /* Overrides for headers
+  /* NPC AND VEHICLE SHEET HEADER STYLES
   /* ------------------------------------------------------------ */
-.tidy5e-sheet:where(.application.actor:is(.npc, .vehicle)) {
-  .sheet-header .npc-vitals {
-    --t5e-npc-vitals-offset: 1.75rem;
-    margin-inline-start: var(--t5e-npc-vitals-offset);
-    width: calc(100% - var(--t5e-npc-vitals-offset));
-    padding: 0;
+  &:where(.npc, .vehicle) {
+    .sheet-header .npc-vitals {
+      --t5e-npc-vitals-offset: 1.75rem;
+      margin-inline-start: var(--t5e-npc-vitals-offset);
+      width: calc(100% - var(--t5e-npc-vitals-offset));
+      padding: 0;
 
-    .roll-hp i,
-    .death-saves i {
-      color: var(--t5e-vitals-button-icon-color);
-    }
-
-    .max-hp {
-      flex: 1;
-      color: var(--t5e-vitals-button-icon-color);
-
-      &:hover {
-        color: var(--t5e-color-text-default);
-      }
-    }
-
-    .actor-vitals-row {
-      padding-inline-start: 1rem;
-    }
-
-    .hp-row {
-      padding-inline-start: .5rem;
-
-      .meter .label {
-        gap: var(--t5e-size-halfx);
-        padding-inline-end: var(--t5e-size-1x);
+      .roll-hp i,
+      .death-saves i {
+        color: var(--t5e-vitals-button-icon-color);
       }
 
-      .meter .label,
-      input[type="text"] {
+      .max-hp {
+        flex: 1;
+        color: var(--t5e-vitals-button-icon-color);
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+        }
+      }
+
+      .actor-vitals-row {
         padding-inline-start: 1rem;
       }
 
-      .temp-hp {
-        padding-block: 0;
-        padding-inline: var(--t5e-size-1x);
+      .hp-row {
+        padding-inline-start: .5rem;
+
+        .meter .label {
+          gap: var(--t5e-size-halfx);
+          padding-inline-end: var(--t5e-size-1x);
+        }
+
+        .meter .label,
+        input[type="text"] {
+          padding-inline-start: 1rem;
+        }
+
+        .temp-hp {
+          padding-block: 0;
+          padding-inline: var(--t5e-size-1x);
+        }
+
+        input[type="text"].hp-temp-input {
+          padding-inline-start: var(--t5e-size-1x);
+          max-width: 3.5rem;
+        }
+
+        .hit-points {
+          position: relative;
+        }
       }
 
-      input[type="text"].hp-temp-input {
-        padding-inline-start: var(--t5e-size-1x);
-        max-width: 3.5rem;
+      .exhaustion {
+        transition: all var(--t5e-transition-default);
       }
 
-      .hit-points {
-        position: relative;
+      .exhaustion.exhausted {
+        margin-inline-start: -1rem;
+        padding-inline-start: 0.75rem;
+      }
+
+      .exhaustion-bar {
+        z-index: auto;
+        inset-inline-start: 0;
+        padding-inline-start: 1rem;
+      }
+
+      &.view-only {
+        margin-block-end: 0.75rem;
       }
     }
 
-    .exhaustion {
-      transition: all var(--t5e-transition-default);
-    }
-
-    .exhaustion.exhausted {
-      margin-inline-start: -1rem;
-      padding-inline-start: 0.75rem;
-    }
-
-    .exhaustion-bar {
-      z-index: auto;
-      inset-inline-start: 0;
-      padding-inline-start: 1rem;
-    }
-
-    &.view-only {
-      margin-block-end: 0.75rem;
-    }
-  }
-
-  .sheet-header .actor-vitals-container {
-    padding-block-end: 1.75rem;
-    max-width: 10.5rem;
-
-    .actor-image {
+    .sheet-header .actor-vitals-container {
+      padding-block-end: 1.75rem;
       max-width: 10.5rem;
-      max-height: 10.5rem;
-    }
 
-    .shield {
-      position: absolute;
-      height: 4.25rem;
-      width: 3.5rem;
-      inset-inline-start: calc(-1 * var(--t5e-size-2x));
-      inset-block-end: -0.375rem;
-      text-align: center;
-      align-items: center;
-      background-image: var(--t5e-shield-image);
-      z-index: 1;
+      .actor-image {
+        max-width: 10.5rem;
+        max-height: 10.5rem;
+      }
 
-      .button-config {
+      .shield {
         position: absolute;
-        inset-block-start: var(--t5e-size-halfx);
-        inset-inline-start: -0.1875rem;
+        height: 4.25rem;
+        width: 3.5rem;
+        inset-inline-start: calc(-1 * var(--t5e-size-2x));
+        inset-block-end: -0.375rem;
+        text-align: center;
+        align-items: center;
+        background-image: var(--t5e-shield-image);
+        z-index: 1;
+
+        .button-config {
+          position: absolute;
+          inset-block-start: var(--t5e-size-halfx);
+          inset-inline-start: -0.1875rem;
+        }
+      }
+
+      .hp-overlay-bar {
+        padding-inline-start: 1.5rem;
+        inset-inline-end: -3rem;
+      }
+
+      .ac-label {
+        display: inherit;
+        margin: 0;
+      }
+
+      .ac-value {
+        margin-block: calc(-1 * var(--t5e-size-halfx)) 0.1875rem;
+        margin-inline: calc(-1 * var(--t5e-size-halfx)) 0;
       }
     }
 
-    .hp-overlay-bar {
-      padding-inline-start: 1.5rem;
-      inset-inline-end: -3rem;
-    }
-
-    .ac-label {
-      display: inherit;
-      margin: 0;
-    }
-
-    .ac-value {
-      margin-block: calc(-1 * var(--t5e-size-halfx)) 0.1875rem;
-      margin-inline: calc(-1 * var(--t5e-size-halfx)) 0;
-    }
-  }
-
-  .sheet-header .actor-name {
-    margin-block-start: calc(-1 * var(--t5e-size-1x));
-  }
-
-  .sheet-header .actor-details-subtitle-row {
-    align-items: center;
-  }
-
-  .sheet-header input[type="text"]:not(:disabled, .uninput).h2.actor-name {
-    font-size: var(--font-size-46);
-    max-height: var(--font-size-46);
-    margin-inline-start: var(--t5e-size-2x);
-  }
-
-  .sheet-header input[type="text"]:not(:disabled, .uninput) {
-    &.actor-name {
+    .sheet-header .actor-name {
       margin-block-start: calc(-1 * var(--t5e-size-1x));
     }
 
-    &.xp-value,
-    &.actor-name {
-      --t5e-field-background-color: var(--input-background);
-    }
-
-    &.xp-value {
-      text-align: left;
-      padding-block-end: 0;
-      padding-inline-start: var(--t5e-size-1x);
-
-      &:not(:focus, :active) {
-        background-color: transparent;
-        box-shadow: none;
-      }
-    }
-  }
-
-  .sheet-header .actor-context-row {
-    align-items: flex-start;
-  }
-
-  .sheet-header .sheet-header-actions {
-    margin-block-start: 0;
-    margin-inline-end: var(--t5e-size-2x);
-  }
-
-  .sheet-header .actor-subtitle {
-    > *:not(.divider-dot) {
-      height: 1rem;
-    }
-
-    .xp-container {
-      display: flex;
+    .sheet-header .actor-details-subtitle-row {
       align-items: center;
-      justify-content: center;
-      margin: 0;
-      flex: 0 1 fit-content;
-      flex-wrap: nowrap;
-      max-height: 1rem;
-      flex-direction: row;
-
-      .label {
-        margin: 0;
-      }
     }
 
-    .concentration {
-      flex: 0 0 auto;
-      height: var(--font-size-15);
-      align-content: center;
+    .sheet-header input[type="text"]:not(:disabled, .uninput).h2.actor-name {
+      font-size: var(--font-size-46);
+      max-height: var(--font-size-46);
+      margin-inline-start: var(--t5e-size-2x);
+    }
 
-      .concentration-roll-button {
-        min-width: unset;
+    .sheet-header input[type="text"]:not(:disabled, .uninput) {
+      &.actor-name {
+        margin-block-start: calc(-1 * var(--t5e-size-1x));
+      }
 
-        > * {
-          flex-wrap: nowrap;
+      &.xp-value,
+      &.actor-name {
+        --t5e-field-background-color: var(--input-background);
+      }
+
+      &.xp-value {
+        text-align: left;
+        padding-block-end: 0;
+        padding-inline-start: var(--t5e-size-1x);
+
+        &:not(:focus, :active) {
+          background-color: transparent;
+          box-shadow: none;
         }
       }
     }
-  }
 
-  .sheet-header .proficiency-bonus {
-    height: 1rem;
-    margin-block: 0;
-    margin-inline: var(--t5e-size-1x) var(--t5e-size-2x);
-    align-self: flex-start;
-
-    > * {
-      line-height: 1rem;
+    .sheet-header .actor-context-row {
+      align-items: flex-start;
     }
 
-    .label {
-      margin-inline-end: var(--t5e-size-1x);
+    .sheet-header .sheet-header-actions {
+      margin-block-start: 0;
+      margin-inline-end: var(--t5e-size-2x);
+    }
+
+    .sheet-header .actor-subtitle {
+      > *:not(.divider-dot) {
+        height: 1rem;
+      }
+
+      .xp-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        flex: 0 1 fit-content;
+        flex-wrap: nowrap;
+        max-height: 1rem;
+        flex-direction: row;
+
+        .label {
+          margin: 0;
+        }
+      }
+
+      .concentration {
+        flex: 0 0 auto;
+        height: var(--font-size-15);
+        align-content: center;
+
+        .concentration-roll-button {
+          min-width: unset;
+
+          > * {
+            flex-wrap: nowrap;
+          }
+        }
+      }
+    }
+
+    .sheet-header .proficiency-bonus {
+      height: 1rem;
+      margin-block: 0;
+      margin-inline: var(--t5e-size-1x) var(--t5e-size-2x);
+      align-self: flex-start;
+
+      > * {
+        line-height: 1rem;
+      }
+
+      .label {
+        margin-inline-end: var(--t5e-size-1x);
+      }
+    }
+
+    &:where(.npc) {
+      .sheet-header {
+        padding-inline-end: var(--t5e-size-3x);
+      }
+
+      .abilities-container-inner {
+        max-width: 80rem;
+      }
     }
   }
 
-  &:where(.npc) {
+  /* Parchment light header. After the rest of the actor rules so its tokens win by order. */
+  &:where(.theme-parchment.theme-light) {
+    --input-background: rgba(255, 255, 255, 0.2);
+    --input-background-hover: rgba(255, 255, 255, 0.4);
+    --t5e-concentration-label-color: var(--t5e-color-text-gold-emphasis);
+    --color-text-selection: var(--t5e-theme-color-foreground);
+    --color-text-selection-bg: var(--t5e-theme-color-default);
+
     .sheet-header {
-      padding-inline-end: var(--t5e-size-3x);
+      --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+      --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+      --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+      --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
+      --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_hover.webp');
+      --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
+      --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_prof_hover.webp');
+      --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
+      --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_light.webp');
+      --header-shadow: none;
+      --t5e-score-image-size: cover;
     }
 
-    .abilities-container-inner {
-      max-width: 80rem;
-    }
-  }
-}
-
-/* Parchment light header. After the actor root so its tokens win by order. */
-.tidy5e-sheet:where(.application.actor.theme-parchment.theme-light) {
-  --input-background: rgba(255, 255, 255, 0.2);
-  --input-background-hover: rgba(255, 255, 255, 0.4);
-
-  .sheet-header {
-    --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
-    --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
-    --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
-    --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
-    --t5e-score-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_hover.webp');
-    --t5e-score-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
-    --t5e-score-proficient-image-hover: url('../../modules/tidy5e-sheet/images/badge_score_light_prof_hover.webp');
-    --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
-    --t5e-loyalty-image: url('../../modules/tidy5e-sheet/images/badge_loyalty_light.webp');
-    --header-shadow: none;
-    --t5e-score-image-size: cover;
-  }
-
-  --t5e-concentration-label-color: var(--t5e-color-text-gold-emphasis);
-  --color-text-selection: var(--t5e-theme-color-foreground);
-  --color-text-selection-bg: var(--t5e-theme-color-default);
-
-  .sheet-header-actions {
-    .button-gold {
-      --t5e-button-text: var(--t5e-color-palette-gold-62);
-      --t5e-button-icon: var(--t5e-color-palette-gold-56);
-      --t5e-button-border: var(--t5e-color-palette-gold-62);
-      --t5e-button-border-hover: var(--t5e-color-palette-gold-56);
-      --t5e-button-shadow: var(--t5e-drop-shadow-field);
-
-      /* Overrides buttons.css `.button-gold:hover` text. */
-      &:hover,
-      &:active,
-      &:focus {
+    .sheet-header-actions {
+      .button-gold {
         --t5e-button-text: var(--t5e-color-palette-gold-62);
         --t5e-button-icon: var(--t5e-color-palette-gold-56);
-        --t5e-button-border: var(--t5e-color-palette-gold-56);
-        --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
-        --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
-      }
-
-      &:active:not(:disabled) {
-        --t5e-button-text: var(--t5e-color-palette-gold-62);
-      }
-
-      &:disabled {
-        --t5e-button-disabled-text-color: var(--t5e-color-palette-gold-62);
-        --t5e-button-disabled-icon-color: var(--t5e-color-palette-gold-56);
-        --t5e-button-disabled-border-color: var(--t5e-color-palette-gold-62);
+        --t5e-button-border: var(--t5e-color-palette-gold-62);
+        --t5e-button-border-hover: var(--t5e-color-palette-gold-56);
         --t5e-button-shadow: var(--t5e-drop-shadow-field);
+
+        /* Overrides buttons.css `.button-gold:hover` text. */
+        &:hover,
+        &:active,
+        &:focus {
+          --t5e-button-text: var(--t5e-color-palette-gold-62);
+          --t5e-button-icon: var(--t5e-color-palette-gold-56);
+          --t5e-button-border: var(--t5e-color-palette-gold-56);
+          --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
+          --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
+        }
+
+        &:active:not(:disabled) {
+          --t5e-button-text: var(--t5e-color-palette-gold-62);
+        }
+
+        &:disabled {
+          --t5e-button-disabled-text-color: var(--t5e-color-palette-gold-62);
+          --t5e-button-disabled-icon-color: var(--t5e-color-palette-gold-56);
+          --t5e-button-disabled-border-color: var(--t5e-color-palette-gold-62);
+          --t5e-button-shadow: var(--t5e-drop-shadow-field);
+        }
       }
     }
-  }
-}
 
-/* stylelint-disable-next-line tidy/root-prefix -- must beat abilities.css `.ability-labels .label` and buttons.css icon colours */
-.tidy5e-sheet:where(.application.actor.theme-parchment).theme-light .color-text-gold.color-text-gold {
-  /* stylelint-disable-next-line tidy/theme-tokens-only -- see above */
-  color: var(--t5e-color-text-gold-emphasis);
+    /* `.color-text-gold` reads this token in util.css. */
+    .color-text-gold {
+      --t5e-color-text-gold: var(--t5e-color-text-gold-emphasis);
+    }
+  }
 }

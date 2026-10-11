@@ -333,20 +333,20 @@
   .limited-sheet.sheet-header .actor-vitals-container {
     padding-bottom: 1.5rem;
   }
-}
 
-/* Parchment theme styles */
-/* ------------------------------------------------------------ */
-.tidy5e-sheet:where(.application.character.theme-parchment) {
-  &:where(.theme-light) {
-    .sheet-header {
-      .level-block {
-        --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_light.webp');
-      }
+  /* Parchment theme styles */
+  /* ------------------------------------------------------------ */
+  &:where(.theme-parchment) {
+    &:where(.theme-light) {
+      .sheet-header {
+        .level-block {
+          --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_light.webp');
+        }
 
-      .ac-container {
-        .shield {
-          --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_light.webp');
+        .ac-container {
+          .shield {
+            --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_light.webp');
+          }
         }
       }
     }

@@ -95,8 +95,8 @@
       order: 3;
     }
   }
-}
 
-.tidy5e-sheet:where(.application.actor.theme-dark) {
-  --t5e-attunement-tracker-background-hover: var(--t5e-component-field-background-hover);
+  &:where(.theme-dark) {
+    --t5e-attunement-tracker-background-hover: var(--t5e-component-field-background-hover);
+  }
 }

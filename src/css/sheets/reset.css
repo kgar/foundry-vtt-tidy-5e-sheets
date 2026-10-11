@@ -47,21 +47,21 @@
   .tidy-tab .tab {
     display: unset;
   }
-}
 
-/* Form Resets */
-:where(.tidy5e-sheet):where(form.application),
-:where(.tidy5e-sheet):where(.application) form {
-  .form-group {
-    .form-fields {
-      input[type='checkbox'] {
-        flex-basis: var(--checkbox-size);
+  /* Form Resets */
+  &:where(form),
+  form {
+    .form-group {
+      .form-fields {
+        input[type='checkbox'] {
+          flex-basis: var(--checkbox-size);
+        }
       }
     }
   }
-}
 
-:where(.tidy5e-sheet):where(.application.themed) .window-content {
-  -webkit-backdrop-filter: unset;
-  backdrop-filter: unset;
+  &:where(.themed) .window-content {
+    -webkit-backdrop-filter: unset;
+    backdrop-filter: unset;
+  }
 }

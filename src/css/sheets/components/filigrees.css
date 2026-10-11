@@ -1,48 +1,48 @@
-.tidy5e-sheet:where(.application:not(.theme-basic)) .gold-header-underline {
-  --line-color: var(--t5e-color-gold);
-  display: flex;
-  align-items: center;
-  flex-basis: 100%;
-  height: var(--t5e-size-1x);
-
-  svg {
-    flex: 0 0 auto;
-    /* Prevents SVG parts from stretching */
-    stroke: var(--line-color);
-  }
-
-  .middle {
-    flex-grow: 1;
-    /* Allows the middle section to stretch */
-  }
-}
-
-.tidy5e-sheet:where(.application.theme-basic) {
-  --t5e-filigree-underline-border-color: var(--t5e-component-card-default);
-
-  .gold-header-underline {
-    border-bottom: 0.0625rem solid var(--t5e-filigree-underline-border-color);
+.tidy5e-sheet:where(.application) {
+  &:where(:not(.theme-basic)) .gold-header-underline {
+    --line-color: var(--t5e-color-gold);
+    display: flex;
+    align-items: center;
+    flex-basis: 100%;
+    height: var(--t5e-size-1x);
 
     svg {
-      display: none;
+      flex: 0 0 auto;
+      /* Prevents SVG parts from stretching */
+      stroke: var(--line-color);
+    }
+
+    .middle {
+      flex-grow: 1;
+      /* Allows the middle section to stretch */
     }
   }
 
-  header:has(.gold-header-underline) {
-    border-bottom: 0.0625rem solid var(--t5e-filigree-header-border-color, var(--t5e-filigree-underline-border-color));
+  &:where(.theme-basic) {
+    --t5e-filigree-underline-border-color: var(--t5e-component-card-default);
+
+    .gold-header-underline {
+      border-bottom: 0.0625rem solid var(--t5e-filigree-underline-border-color);
+
+      svg {
+        display: none;
+      }
+    }
+
+    header:has(.gold-header-underline) {
+      border-bottom: 0.0625rem solid var(--t5e-filigree-header-border-color, var(--t5e-filigree-underline-border-color));
+    }
   }
-}
 
-.tidy5e-sheet:where(.application.theme-basic.theme-light) {
-  --t5e-filigree-underline-border-color: rgba(0, 0, 0, 0.16);
+  &:where(.theme-basic.theme-light) {
+    --t5e-filigree-underline-border-color: rgba(0, 0, 0, 0.16);
 
-  /* Underlined table headers keep this border on hover. */
-  header:has(.gold-header-underline) {
-    --t5e-table-header-row-hover-border-color: rgba(0, 0, 0, 0.16);
+    /* Underlined table headers keep this border on hover. */
+    header:has(.gold-header-underline) {
+      --t5e-table-header-row-hover-border-color: rgba(0, 0, 0, 0.16);
+    }
   }
-}
 
-.tidy5e-sheet:where(.application) {
   .filigree-card {
     background: var(--t5e-component-card-default);
     border-radius: var(--t5e-size-5x);
