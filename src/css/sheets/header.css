@@ -227,7 +227,7 @@
 
     .xp-bar {
       --meter-height: 0.625rem;
-      background-color: var(--t5e-component-card-dark-darker);
+      background-color: rgba(0, 0, 0, 0.56);
       border-radius: 0.375rem;
       flex: auto;
       min-width: 7rem;
@@ -235,6 +235,12 @@
       &:before {
         border-right: none;
       }
+    }
+  }
+
+  &:where(.theme-dark) {
+    .xp-container .xp-bar {
+      background-color: var(--t5e-component-card-dark-darker);
     }
   }
 
@@ -1028,6 +1034,7 @@
 
       .exhaustion.exhausted,
       .exhaustion-bar {
+
         /* Beats `.sheet-header .button-config:hover` and the active segment. */
         .button:not(:first-child):is(:hover, :focus, :active) {
           background-color: var(--t5e-color-palette-orange-55);
