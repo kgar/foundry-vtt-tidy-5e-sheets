@@ -1028,9 +1028,9 @@
 
       .exhaustion.exhausted,
       .exhaustion-bar {
+        /* Beats `.sheet-header .button-config:hover` and the active segment. */
         .button:not(:first-child):is(:hover, :focus, :active) {
-          --t5e-button-background: var(--t5e-color-palette-orange-55);
-          --t5e-button-borderless-hover-background: var(--t5e-color-palette-orange-55);
+          background-color: var(--t5e-color-palette-orange-55);
         }
       }
 
@@ -1183,8 +1183,8 @@
         --t5e-button-radius: 0;
 
         &.active {
-          --t5e-button-background: var(--t5e-color-palette-orange-40);
           font-weight: var(--font-weight-bold);
+          background-color: var(--t5e-color-palette-orange-40);
           color: var(--t5e-color-icon-default);
           text-shadow: 0 0 var(--t5e-size-2x) var(--t5e-color-palette-orange-100);
         }
@@ -1573,11 +1573,6 @@
           --t5e-button-shadow: var(--t5e-drop-shadow-field);
         }
       }
-    }
-
-    /* `.color-text-gold` reads this token in util.css. */
-    .color-text-gold {
-      --t5e-color-text-gold: var(--t5e-color-text-gold-emphasis);
     }
   }
 }
