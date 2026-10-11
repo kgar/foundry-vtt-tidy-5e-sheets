@@ -30,7 +30,9 @@
     config={{
       id: `${appId}-identifier`,
       placeholder: context.item.identifier,
-      value: context.source.identifier,
+      value: context.unlocked
+        ? context.source.identifier
+        : context.item.identifier,
     }}
     hint="{localize('DND5E.ClassIdentifierHint', {
       identifier: context.item.identifier,

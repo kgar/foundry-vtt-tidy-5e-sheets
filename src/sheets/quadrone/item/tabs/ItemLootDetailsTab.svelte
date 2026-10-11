@@ -30,7 +30,9 @@
     document={context.document}
     field={context.fields.identifier}
     config={{
-      value: context.source.identifier,
+      value: context.unlocked
+        ? context.source.identifier
+        : context.item.identifier,
       placeholder: context.item.identifier,
       id: `${appId}-identifier`,
     }}

@@ -465,9 +465,13 @@
   input[type="time"]:disabled,
   input[type="search"]:disabled,
   input[type="file"]:disabled,
-  select:disabled,
   textarea:disabled {
     cursor: text;
+  }
+
+  /* A disabled select's text can't be selected, so don't offer a text caret. */
+  select:disabled {
+    cursor: default;
   }
 
   &:where(.minimized) .window-header {
@@ -483,6 +487,7 @@
     --t5e-app-code-background: rgba(0, 0, 0, 0.5);
 
     &:where(.minimized) .window-header {
+
       button.header-control:hover,
       button.header-control:focus-within,
       button.header-control:active {
