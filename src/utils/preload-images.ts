@@ -1,4 +1,4 @@
-import { PRELOADED_IMAGE_PATHS } from './preloaded-images.generated';
+import { PRELOADED_IMAGE_PATHS } from 'virtual:preloaded-images';
 
 // Foundry uses `Cache-Control: no-cache` for static images. Hopefully
 // this keeps them in memory, but this might use too much memory with

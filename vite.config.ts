@@ -1,6 +1,7 @@
 import { defineConfig, PluginOption } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import path, { resolve } from 'path';
+import * as fs from 'fs';
 
 const s_PACKAGE_ID = 'modules/tidy5e-sheet';
 
@@ -8,6 +9,7 @@ const s_PACKAGE_ID = 'modules/tidy5e-sheet';
 export default defineConfig(({ mode }) => {
   const plugins: PluginOption[] = [
     svelte({ configFile: '../svelte.config.js' }),
+    getVitePreloadedImagesPlugin(),
   ];
 
   if (mode === 'development') {
@@ -71,7 +73,53 @@ export default defineConfig(({ mode }) => {
 });
 
 /**
- * @returns A vite plugin that ensures CSS `@imports` with no specified layer 
+ * @returns `virtual:preloaded-images` - Preloads a list of every image path
+ *          referenced in src in the Vite build so the sheet can preload them.
+ */
+function getVitePreloadedImagesPlugin(): PluginOption {
+  const moduleId = 'virtual:preloaded-images';
+  const resolvedModuleId = '\0' + moduleId;
+  const scanExtensions = new Set(['.css', '.svelte', '.ts', '.hbs']);
+  const imageReference =
+    /modules\/tidy5e-sheet\/images\/[\w\-./]+\.(?:webp|png|jpe?g|svg|gif|avif)/gi;
+
+  function collectFiles(dir: string, files: string[] = []) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        collectFiles(fullPath, files);
+      } else if (scanExtensions.has(path.extname(entry.name))) {
+        files.push(fullPath);
+      }
+    }
+    return files;
+  }
+
+  return {
+    name: 'vite-preloaded-images',
+    resolveId(id) {
+      if (id === moduleId) {
+        return resolvedModuleId;
+      }
+    },
+    load(id) {
+      if (id !== resolvedModuleId) {
+        return;
+      }
+
+      const images = new Set<string>();
+      for (const file of collectFiles(path.resolve(__dirname, 'src'))) {
+        const matches = fs.readFileSync(file, 'utf-8').match(imageReference);
+        matches?.forEach((match) => images.add(match));
+      }
+
+      return `export const PRELOADED_IMAGE_PATHS = ${JSON.stringify([...images].sort())};`;
+    },
+  };
+}
+
+/**
+ * @returns A vite plugin that ensures CSS `@imports` with no specified layer
  *          are given the "modules" layer, and the remainder (when it doesn't have any layer
  *          specifications) is wrapped with the modules layer.
  */
