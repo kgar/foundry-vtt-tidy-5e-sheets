@@ -113,9 +113,7 @@
     </button>
     <div class="portrait-shape-options" role="group">
       {#each availableShapes as shape (shape)}
-        {@const label = localize(
-          `TIDY5E.SETTINGS.Theme.PortraitShape.option.${shape}`,
-        )}
+        {@const label = localize('TIDY5E.SETTINGS.Theme.PortraitShape.Title', { type: localize('TIDY5E.SETTINGS.Theme.PortraitShape.option.' + shape) })}
         <button
           type="button"
           class={[
