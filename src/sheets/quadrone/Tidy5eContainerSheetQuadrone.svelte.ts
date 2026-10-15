@@ -573,7 +573,7 @@ export class Tidy5eContainerSheetQuadrone
         }
 
         return itemData.type === 'spell'
-          ? dnd5e.documents.Item5e.createScrollFromSpell(itemData, options)
+          ? Item.implementation.createScrollFromSpell(itemData, options)
           : itemData;
       },
     });
@@ -684,8 +684,7 @@ export class Tidy5eContainerSheetQuadrone
         itemData.flags = itemData.flags;
       }
 
-      const scroll =
-        await dnd5e.documents.Item5e.createScrollFromSpell(itemData);
+      const scroll = await Item.implementation.createScrollFromSpell(itemData);
 
       return scroll?.toObject?.() ?? false;
     }
