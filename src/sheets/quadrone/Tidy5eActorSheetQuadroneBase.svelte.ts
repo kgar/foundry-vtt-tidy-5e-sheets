@@ -1157,7 +1157,6 @@ export function getTidy5eActorSheetQuadroneBase<
      * @protected
      */
     _applyTooltips(element: HTMLElement) {
-      if ('tooltip' in element.dataset) return;
       const uuid = element.dataset.referenceTooltip ?? this.actor.uuid;
       element.dataset.tooltip = `
           <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
