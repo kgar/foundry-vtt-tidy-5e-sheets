@@ -6,9 +6,7 @@ import type {
   TidyItemSectionBase,
   CharacterFeatureSection,
   CharacterItemPartitions,
-  FavoriteSection,
   FeatureSection,
-  EffectFavoriteSection,
   CharacterSheetQuadroneContext,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -315,83 +313,5 @@ export class CharacterSheetSections {
     } else if (SheetSections.showInFeatures(item)) {
       partitions.feats.push(item);
     }
-  }
-
-  // TODO: Figure out how to handle effects with section names that collide with items
-  static mergeDuplicateFavoriteSections(
-    actor: Actor5e,
-    tabId: string,
-    sections: FavoriteSection[],
-  ) {
-    let sectionsMap: Record<
-      string,
-      Exclude<FavoriteSection, EffectFavoriteSection | ActivitySectionQuadrone>
-    > = {};
-    for (let section of sections) {
-      if (
-        section.type === CONSTANTS.SECTION_TYPE_EFFECT ||
-        section.type === CONSTANTS.SECTION_TYPE_ACTIVITY
-      ) {
-        continue;
-      }
-
-      const mappedSection = sectionsMap[section.key];
-
-      if (!mappedSection) {
-        sectionsMap[section.key] = section;
-        continue;
-      }
-
-      const incomingItems = section.items;
-
-      if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
-        const mappedItems = mappedSection.items;
-
-        sectionsMap[section.key] =
-          CharacterSheetSections.createGenericFavoriteSection(
-            actor,
-            tabId,
-            section.key,
-            [...incomingItems, ...mappedItems],
-          );
-
-        continue;
-      }
-
-      mappedSection.items.push(...incomingItems);
-    }
-
-    return Object.values(sectionsMap);
-  }
-
-  static createGenericFavoriteSection(
-    context: CharacterSheetQuadroneContext,
-    tabId: string,
-    key: string,
-    items: Item5e[],
-  ): CharacterFeatureSection {
-    return {
-      type: 'feature',
-      canCreate: false,
-      dataset: [],
-      items: items,
-      key: key,
-      label: FoundryAdapter.localize(key),
-      custom: {
-        creationItemTypes: [],
-        section: key,
-      },
-      isExternal: false,
-      show: true,
-      sectionActions: [], // for the UI Overhaul
-      columns: FeatureColumnRuntime.getColumnSpecifications({
-        sheetDocument: context.actor,
-        tabId,
-        sectionKey: key,
-        editable: context.editable,
-        owner: context.owner,
-        unlocked: context.unlocked,
-      }),
-    };
   }
 }
