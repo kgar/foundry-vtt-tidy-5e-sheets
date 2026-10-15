@@ -58,7 +58,7 @@
   pillClass="positive"
   aggregateIcons={{
     iconClass: 'fa-solid fa-shield-exclamation',
-    pillClass: 'physical-bypass',
+    pillClass: 'warning',
   }}
 />
 
@@ -75,7 +75,7 @@
   pillClass="positive"
   aggregateIcons={{
     iconClass: 'fa-solid fa-shield-exclamation',
-    pillClass: 'physical-bypass',
+    pillClass: 'warning',
   }}
 />
 
@@ -105,7 +105,7 @@
   pillClass="negative"
   aggregateIcons={{
     iconClass: 'fa-solid fa-shield-exclamation',
-    pillClass: 'physical-bypass',
+    pillClass: 'warning',
   }}
 />
 
@@ -121,7 +121,7 @@
   icon="fa-solid fa-heart-circle-plus"
   aggregateIcons={{
     iconClass: 'fa-solid fa-shield-exclamation',
-    pillClass: 'physical-bypass',
+    pillClass: 'warning',
   }}
 />
 

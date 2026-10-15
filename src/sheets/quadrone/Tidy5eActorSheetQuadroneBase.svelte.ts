@@ -1127,7 +1127,7 @@ export function getTidy5eActorSheetQuadroneBase<
       const isBasic = themeSettings.useBasicTheme;
       const isParchment = !themeSettings.useHeaderBackground || isBasic;
       const foundryThemeIsDark = getThemeV2(this.actor) === 'dark';
-      const isDark = themeSettings.useHeaderBackground || foundryThemeIsDark;
+      const isDark = !isParchment || foundryThemeIsDark;
 
       this.element.classList.toggle('theme-parchment', isParchment);
       this.element.classList.toggle('theme-basic', isBasic);
@@ -1683,9 +1683,13 @@ export function getTidy5eActorSheetQuadroneBase<
       const behavior = (event as any)._behavior;
 
       const sortKeyOverride =
-        (event.target as HTMLElement)
-          ?.closest<HTMLElement>('[data-sort-key]')
-          ?.getAttribute('data-sort-key') ?? undefined;
+        // ... sometimes, the caller's `event.target` is pretending to be an HTMLElement but lacks the full API. 
+        // Skip entirely when not an actual HTMLElement
+        event.target instanceof HTMLElement
+          ? ((event.target as HTMLElement)
+              ?.closest<HTMLElement>('[data-sort-key]')
+              ?.getAttribute('data-sort-key') ?? undefined)
+          : undefined;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1764,8 +1768,19 @@ export function getTidy5eActorSheetQuadroneBase<
 
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
-        transformFirst: (item: Item5e) =>
-          this._onDropSingleItem(item.toObject?.() ?? item, event),
+        transformFirst: (item: Item5e) => {
+          const options: Record<string, any> = {};
+
+          if (item.pack) {
+            options.compendiumUuid = item.uuid;
+          }
+
+          if (item instanceof foundry.abstract.Document) {
+            item = item.toObject();
+          }
+
+          return this._onDropSingleItem(item, event, options);
+        },
       });
 
       const created = await dnd5e.documents.Item5e.createDocuments(toCreate, {
@@ -1786,6 +1801,7 @@ export function getTidy5eActorSheetQuadroneBase<
     async _onDropSingleItem(
       itemData: any,
       event: Event,
+      options: { compendiumUuid?: string } = {},
     ): Promise<object | boolean> {
       const unsupportedItemTypes: Set<string> =
         //@ts-expect-error
@@ -1818,16 +1834,21 @@ export function getTidy5eActorSheetQuadroneBase<
           this.actor.system.isVehicle ||
           this.actor.system.isGroup)
       ) {
-        const options: Record<string, unknown> = {};
+        const creationOptions: Record<string, unknown> = {};
 
         if (settings.value.includeFlagsInSpellScrollCreation) {
-          options.flags = itemData.flags;
+          creationOptions.flags = itemData.flags;
         }
 
-        const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-          itemData,
-          options,
-        );
+        const scroll = options.compendiumUuid
+          ? await Item.implementation.createScrollFromCompendiumSpell(
+              options.compendiumUuid,
+              creationOptions,
+            )
+          : await Item.implementation.createScrollFromSpell(
+              itemData,
+              creationOptions,
+            );
 
         return scroll?.toObject?.() ?? false;
       }

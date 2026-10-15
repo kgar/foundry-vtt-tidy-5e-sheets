@@ -197,11 +197,3 @@
     {/snippet}
   </TidyEffectTableRow>
 {/snippet}
-
-<!-- TODO: hightouch, remove these temp styles whenever you apply the official ones -->
-<style lang="less">
-  .inline-activity-arrow {
-    padding-inline: 0.25rem;
-    align-self: center;
-  }
-</style>

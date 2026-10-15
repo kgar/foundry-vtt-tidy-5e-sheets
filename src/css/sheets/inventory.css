@@ -1,0 +1,42 @@
+.tidy5e-sheet {
+  .tidy-table {
+    .item-price {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .item-price-denomination {
+        text-transform: uppercase;
+      }
+    }
+
+    .inline-container-capacity-tracker {
+      align-self: flex-end;
+
+      .label {
+        display: flex;
+        column-gap: 0.25rem;
+      }
+    }
+
+    .inline-container-capacity-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-inline: 0.375rem;
+      align-self: normal;
+
+      .meter.progress {
+        --meter-height: 0.75rem;
+        flex: 1 0 0;
+        border-radius: 0.0625rem;
+        border: 0.0625rem solid var(--t5e-component-field-border);
+        background: var(--t5e-component-field-background-disabled);
+        align-self: center;
+      }
+    }
+  }
+}

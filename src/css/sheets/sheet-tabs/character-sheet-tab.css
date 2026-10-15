@@ -1,0 +1,31 @@
+.tidy5e-sheet:where(.application.character, .application.npc) {
+
+  /* More specific than `.empty-state-container`. */
+  .empty-state-container.empty-state-description {
+    align-items: flex-start;
+    min-height: unset;
+    text-align: left;
+
+    > * {
+      width: inherit;
+    }
+  }
+
+  .sheet-tab-footer {
+    padding: var(--t5e-size-3x) 0 0 0;
+
+    .button-borderless:not(:hover) {
+      --t5e-button-text: var(--t5e-color-text-lightest);
+      --t5e-button-icon: var(--t5e-color-text-lightest);
+    }
+
+    .sheet-footer-left > *,
+    .sheet-footer-right > * {
+      flex: 0 1 auto;
+    }
+
+    .button-borderless:first-child {
+      --t5e-button-padding-inline-start: 0;
+    }
+  }
+}

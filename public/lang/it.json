@@ -113,7 +113,8 @@
             "DecreaseNamed": "Diminuisci {name}",
             "Increase": "Aumenta",
             "IncreaseNamed": "Aumenta {name}",
-            "ViewDescription": "Vedi {description}"
+            "ViewDescription": "Vedi {description}",
+            "CopyWithoutFormatting": "Copia Senza Formattazione"
         },
         "BrokenLink": "Link non funzionante",
         "GMOnly": {
@@ -138,7 +139,9 @@
         },
         "Warning": {
             "ActiveEffectOverride": "Questo valore è modificato da un Effetto Attivo e non può essere modificato."
-        }
+        },
+        "CopiedData": "Dati copiati da {prop}",
+        "CopiedWithoutFormatting": "Testo copiato senza formattazione"
     },
     "TIDY5E.CONTAINER": {
         "Action": {
