@@ -28,14 +28,7 @@
   </legend>
 
   <!-- Identifier -->
-  <FieldIdentifier
-    document={context.document}
-    field={context.fields.identifier}
-    id="{appId}-identifier"
-    value={context.source.identifier}
-    identifier={context.item.identifier}
-    unlocked={context.unlocked}
-  />
+  <FieldIdentifier />
 
   <!-- Equipment Type -->
   <FormGroup
