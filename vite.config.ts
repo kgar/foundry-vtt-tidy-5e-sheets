@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
   return {
     root: 'src/',
     base: `/${s_PACKAGE_ID}/`,
-    publicDir: path.resolve(__dirname, 'public'),
+    publicDir: path.resolve(import.meta.dirname, 'public'),
     esbuild: {
       target: ['es2022'],
       minifyIdentifiers: false,
@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => {
     plugins,
     build: {
       cssCodeSplit: true,
-      outDir: path.resolve(__dirname, 'dist'),
+      outDir: path.resolve(import.meta.dirname, 'dist'),
       emptyOutDir: true,
       target: ['es2022'],
       lib: {
@@ -108,7 +108,7 @@ function getVitePreloadedImagesPlugin(): PluginOption {
       }
 
       const images = new Set<string>();
-      for (const file of collectFiles(path.resolve(__dirname, 'src'))) {
+      for (const file of collectFiles(path.resolve(import.meta.dirname, 'src'))) {
         const matches = fs.readFileSync(file, 'utf-8').match(imageReference);
         matches?.forEach((match) => images.add(match));
       }
