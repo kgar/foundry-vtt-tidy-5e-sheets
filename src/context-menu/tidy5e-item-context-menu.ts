@@ -242,12 +242,12 @@ export function getItemContextOptions(
         options.flags = item.flags;
       }
 
-      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+      const scroll = await Item.implementation.createScrollFromSpell(
         item,
         options,
       );
       if (scroll) {
-        dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
+        Item.implementation.create(scroll, { parent: itemParent });
       }
     },
   });
