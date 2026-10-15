@@ -66,7 +66,6 @@
   });
 
   let hpValueInputFocused = $state(false);
-  let hpTempInputFocused = $state(false);
   let hpOverlayOpen = $state(false);
   let hpOverlayFocusTarget = $state<'temp' | 'tempmax'>('temp');
   let hpOverlayCloseOnBlur = $state(false);
@@ -373,7 +372,6 @@
       </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">
-      <!-- TODO: Add switch for size -->
       <ActorPortrait />
       <div class="actor-vitals theme-dark">
         <div class="hp-row flexrow">

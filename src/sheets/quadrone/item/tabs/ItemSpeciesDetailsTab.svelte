@@ -21,7 +21,9 @@
     field={context.fields.identifier}
     config={{
       id: `${appId}-identifier`,
-      value: context.source.identifier,
+      value: context.unlocked
+        ? context.source.identifier
+        : context.item.identifier,
       placeholder: context.item.identifier,
     }}
     hint="DND5E.IdentifierError"

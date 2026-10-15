@@ -30,7 +30,7 @@ export class ThemeQuadrone {
 
         stylesheet.insertRule(
           `@layer modules { 
-            .tidy5e-sheet.quadrone .rarity.${rarityIdentifier} { 
+            .tidy5e-sheet .rarity.${rarityIdentifier} {
               --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier}) 
             }
           }`,
@@ -42,7 +42,7 @@ export class ThemeQuadrone {
 
         stylesheet.insertRule(
           `@layer modules {
-            .tidy5e-sheet.quadrone .method-${methodIdentifier} { --t5e-method-color: var(--t5e-color-spellcasting-${methodIdentifier}) }
+            .tidy5e-sheet .method-${methodIdentifier} { --t5e-method-color: var(--t5e-color-spellcasting-${methodIdentifier}) }
           }`,
         );
       });

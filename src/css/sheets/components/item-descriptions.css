@@ -1,0 +1,7 @@
+.tidy5e-sheet:where(.application) {
+  .item-descriptions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
