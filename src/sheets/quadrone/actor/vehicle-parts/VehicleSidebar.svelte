@@ -1,7 +1,7 @@
 <script lang="ts">
-  import VehicleTraitsQuadrone from './VehicleTraits.svelte';
+  import VehicleTraits from './VehicleTraits.svelte';
 </script>
 
 <div class="vehicle-sidebar flexcol">
-  <VehicleTraitsQuadrone />
+  <VehicleTraits />
 </div>

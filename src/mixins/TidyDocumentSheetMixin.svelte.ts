@@ -147,6 +147,13 @@ export function getTidyExtensibleDocumentSheetMixin<
           spentProp: 'system.resources.legres.spent',
         },
       ],
+      [
+        'system.attributes.actions.value',
+        {
+          maxProp: 'system.attributes.actions.max',
+          spentProp: 'system.attributes.actions.spent',
+        },
+      ],
     ]);
 
     _tryGetValueSpentUpdate(
