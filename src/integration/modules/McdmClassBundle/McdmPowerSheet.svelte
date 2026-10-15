@@ -18,10 +18,10 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let itemNameEl: HTMLElement | undefined = $state();
-
-  let powerSpecialtiesConfig = $derived(
-    CONFIG.MCDM.specialties[context.system.specialty],
-  );
+  
+    let powerSpecialtiesConfig = $derived(
+      CONFIG.MCDM.specialties[context.system.specialty],
+    );
 
   let subtitle = $derived(
     [context.labels.level, context.labels.school]
@@ -51,28 +51,6 @@
       <h4>
         {localize('TYPES.Item.mcdm-class-bundle.power')}
       </h4>
-      {#if 'identifier' in context.system}
-        <ul class="pills stacked">
-          <li>
-            <!--svelte-ignore a11y_missing_attribute-->
-            <a
-              role="button"
-              tabindex="0"
-              class="pill interactive centered wrapped copy-to-clipboard"
-              data-action="copyValue"
-              data-value={context.item.system.identifier}
-              aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-            >
-              <span class="text-normal">
-                {localize('DND5E.Identifier')}
-              </span>
-              <span class="hyphens-auto">
-                {context.item.system.identifier}
-              </span>
-            </a>
-          </li>
-        </ul>
-      {/if}
     </div>
   {/snippet}
 </Sidebar>

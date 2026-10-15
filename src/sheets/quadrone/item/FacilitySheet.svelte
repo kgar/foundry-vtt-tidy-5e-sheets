@@ -98,33 +98,6 @@
 
 <Sidebar>
   {#snippet belowStateSwitches()}
-    <div>
-      <h4>{localize('TYPES.Item.facility')}</h4>
-      <ul class="pills stacked">
-        <li>
-          <!--svelte-ignore a11y_missing_attribute-->
-          <a
-            role="button"
-            tabindex="0"
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.identifier}
-            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-          >
-            <span class="text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
-        {#each facilitySidebarPills as pill}
-          {@render pill()}
-        {/each}
-      </ul>
-    </div>
-
     {#if !isNil(context.system.progress?.order, '') && effectiveOrderMax > 0}
       {const pct = $derived((effectiveOrderValue / effectiveOrderMax) * 100)}
       <div>
@@ -192,6 +165,18 @@
               </a>
             </li>
           {/if}
+        </ul>
+      </div>
+    {/if}
+    {#if facilitySidebarPills.length}
+      <div>
+        <h4>
+          {localize('TYPES.Item.facility')}
+        </h4>
+        <ul class="pills stacked">
+          {#each facilitySidebarPills as pill}
+            {@render pill()}
+          {/each}
         </ul>
       </div>
     {/if}
