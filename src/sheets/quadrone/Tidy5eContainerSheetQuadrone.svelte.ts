@@ -13,6 +13,7 @@ import type {
   Item5e,
   ItemChatData,
   ItemDescription,
+  ItemToggle,
 } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
@@ -203,13 +204,25 @@ export class Tidy5eContainerSheetQuadrone
       rollData: rollData,
     };
 
+    const concealmentData = {
+      notice: 'DND5E.Unidentified.Notice',
+      description: this.item.system.unidentified?.description,
+      path: 'system.unidentified.description',
+      editable: this.document.isOwner,
+    };
+
+    TidyHooks.tidy5eSheetsContentsConcealedConfig(
+      this.document,
+      concealmentData,
+    );
+
     const enriched = {
       description: await foundry.applications.ux.TextEditor.enrichHTML(
         this.item.system.description.value,
         enrichmentOptions,
       ),
       unidentified: await foundry.applications.ux.TextEditor.enrichHTML(
-        this.item.system.unidentified?.description,
+        concealmentData.description,
         enrichmentOptions,
       ),
       chat: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -219,9 +232,10 @@ export class Tidy5eContainerSheetQuadrone
     };
 
     const isIdentifiable = 'identified' in this.document.system;
-    const unidentified = this.item.system.identified === false;
     const showOnlyUnidentified =
-      unidentified && !FoundryAdapter.isInGmEditMode(this.item);
+      Container.getContentsVisibility(this.document, {
+        unlocked: documentSheetContext.unlocked,
+      }) !== 'visible';
 
     documentSheetContext.source = this.document.toObject().system;
 
@@ -233,15 +247,17 @@ export class Tidy5eContainerSheetQuadrone
         content: documentSheetContext.source.description.value,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
+        editable: this.document.isOwner,
       });
     }
 
     if (isIdentifiable) {
       itemDescriptions.push({
         enriched: enriched.unidentified,
-        content: documentSheetContext.source.unidentified?.description ?? '',
-        field: 'system.unidentified.description',
+        content: concealmentData.description,
+        field: concealmentData.path,
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
+        editable: concealmentData.editable,
       });
     }
 
@@ -251,11 +267,62 @@ export class Tidy5eContainerSheetQuadrone
         content: documentSheetContext.source.description.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+        editable: this.document.isOwner,
+      });
+    }
+
+    // TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?
+    // definitely don't duplicate it.
+    const customDescriptions =
+      Object.values(
+        CONFIG.TIDY5E.item.descriptions[this.document.type] ?? {},
+      ) ?? [];
+
+    for (const description of customDescriptions) {
+      const visible = description.visible?.(this.document) ?? true;
+
+      if (!visible) {
+        continue;
+      }
+
+      const content =
+        FoundryAdapter.getProperty<string>(this.document, description.field) ??
+        '';
+
+      itemDescriptions.push({
+        enriched: await foundry.applications.ux.TextEditor.enrichHTML(
+          content,
+          enrichmentOptions,
+        ),
+        content,
+        editable: description.editable?.(this.document) ?? true,
+        field: description.field,
+        label: description.label,
       });
     }
 
     if (!this.item.isOwner) {
       itemDescriptions = itemDescriptions.slice(0, 1);
+    }
+
+    const customToggles =
+      Object.values(CONFIG.TIDY5E.item.toggles[this.document.type] ?? {}) ?? [];
+
+    const itemToggles: ItemToggle[] = [];
+
+    for (const toggle of customToggles) {
+      const visible = toggle.visible?.(this.document) ?? true;
+
+      if (!visible) {
+        continue;
+      }
+
+      itemToggles.push({
+        label: toggle.label,
+        field: toggle.field,
+        icon: toggle.icon,
+        editable: toggle.editable?.(this.document) ?? true,
+      });
     }
 
     const currencies: CurrencyContext[] = [];
@@ -280,6 +347,10 @@ export class Tidy5eContainerSheetQuadrone
       ),
       canIdentify: FoundryAdapter.canIdentify(this.document),
       capacity: capacityContext,
+      contentsConcealedNotice: concealmentData.notice,
+      contentsVisibility: Container.getContentsVisibility(this.document, {
+        unlocked: documentSheetContext.unlocked,
+      }),
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       containerContents: await Container.getContainerContents(this, this.item, {
@@ -324,6 +395,7 @@ export class Tidy5eContainerSheetQuadrone
       rollData: rollData,
       system: this.document.system,
       tabs: [],
+      toggles: itemToggles,
       userPreferences: UserPreferencesService.get(),
       ...documentSheetContext,
 

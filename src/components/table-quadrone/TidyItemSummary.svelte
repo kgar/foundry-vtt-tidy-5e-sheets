@@ -13,6 +13,8 @@
   import PropertyTag from '../properties/PropertyTag.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Snippet } from 'svelte';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { Container } from 'src/features/containers/Container';
 
   interface Props {
     chatData: ItemChatData;
@@ -33,38 +35,62 @@
 
   let activities = $derived.by(() => {
     return item
-      ? Activities.getVisibleActivities(
-          item,
-        ).map<ActivityItemContext>((activity) =>
-          Activities.getActivityItemContext(
-            context.sheet,
-            activity,
-            context.unlocked,
-            context.editable,
-          ),
+      ? Activities.getVisibleActivities(item).map<ActivityItemContext>(
+          (activity) =>
+            Activities.getActivityItemContext(
+              context.sheet,
+              activity,
+              context.unlocked,
+              context.editable,
+            ),
         )
       : [];
   });
 
-  let identified = $derived(item.system.identified !== false);
-
   let context = $derived(getSheetContext());
+
+  let canViewContents = $derived(
+    (item.type !== CONSTANTS.ITEM_TYPE_CONTAINER &&
+      item.system.identified !== false) ||
+      (item.system.canViewContents &&
+        /* DEBUG: REMOVE BEFORE MERGING */
+        Container.getContentsVisibility(item, {
+          unlocked: context.unlocked,
+        }) === 'visible'),
+  );
+
+  let concealmentData = $derived.by(() => {
+    const data = {
+      description: item.system.unidentified?.description,
+      editable: false,
+      notice: 'DND5E.Unidentified.Notice',
+      path: 'unused',
+    };
+
+    TidyHooks.tidy5eSheetsContentsConcealedConfig(item, data);
+
+    return data;
+  });
 
   let isGm = $derived(FoundryAdapter.userIsGm());
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
-  let showGmOnlyUi = $derived(!identified && gmEditMode);
-  let unidentifiedDescription = $derived(item.system.unidentified?.description);
+  let showGmOnlyUi = $derived(!canViewContents && gmEditMode);
+  let concealedDescription = $derived(concealmentData.description);
   let showGmUnidentifiedDescription = $derived(
-    isGm && !identified && !!unidentifiedDescription,
+    isGm && !canViewContents && !!concealedDescription,
   );
   let showGmSecretDescription = $derived(
-    isGm && !identified && !gmEditMode,
+    isGm && !canViewContents && !gmEditMode,
   );
   let enrichmentOptions = $derived({
     relativeTo: item,
     rollData: item.getRollData(),
     secrets: item.isOwner,
   });
+
+  const showConcealedDescriptionOnly = $derived(
+    item.type === CONSTANTS.ITEM_TYPE_CONTAINER && !canViewContents && !isGm,
+  );
 </script>
 
 {#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
@@ -88,21 +114,27 @@
     {/await}
   {/if}
 
-  {#if !identified || showGmUnidentifiedDescription || showGmSecretDescription || chatData.description}
+  {#if !canViewContents || showGmUnidentifiedDescription || showGmSecretDescription || chatData.description}
     <div class={['user-select-text', { callout: showGmOnlyUi }]}>
-      {#if !identified}
-        <span class="color-text-lightest font-default-longform unidentified-notice">
-          {localize('DND5E.Unidentified.Notice')}
+      {#if !canViewContents}
+        <span
+          class="color-text-lightest font-default-longform unidentified-notice"
+        >
+          {localize(concealmentData.notice)}
         </span>
       {/if}
       {#if showGmUnidentifiedDescription}
         <div class={['item-summary-unidentified', { callout: showGmOnlyUi }]}>
-          {#await FoundryAdapter.enrichHtml(unidentifiedDescription, enrichmentOptions) then enriched}
-              {@html enriched}
+          {#await FoundryAdapter.enrichHtml(concealedDescription, enrichmentOptions) then enriched}
+            {@html enriched}
           {/await}
         </div>
       {/if}
-      <div data-target="system.description.value" data-uuid={item.uuid} class={{ 'secret-block': showGmSecretDescription }}>
+      <div
+        data-target="system.description.value"
+        data-uuid={item.uuid}
+        class={{ 'secret-block': showGmSecretDescription }}
+      >
         {#if showGmSecretDescription}
           <div class="gm-only">
             {localize(
@@ -110,11 +142,18 @@
             )}
           </div>
         {/if}
-        {@html chatData.description}
+
+        {#if showConcealedDescriptionOnly}
+          {#await FoundryAdapter.enrichHtml(concealedDescription, enrichmentOptions) then enriched}
+            {@html enriched}
+          {/await}
+        {:else}
+          {@html chatData.description}
+        {/if}
       </div>
     </div>
   {/if}
-  
+
   <TidyInlineEffectsList {item} />
 
   <div
@@ -122,7 +161,7 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
-      {#if chatData.properties && (gmEditMode || identified)}
+      {#if chatData.properties && (gmEditMode || canViewContents)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
               {prop.capitalize()}

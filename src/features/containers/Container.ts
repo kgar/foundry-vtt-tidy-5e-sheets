@@ -18,7 +18,7 @@ import { ContainerContentsRowActionRuntime } from 'src/runtime/table-row-actions
 
 /**
  * How container contents should be shown to the current user.
- * 
+ *
  * `hidden`: follows system behavior and always shows to GMs (core behavior)
  * `gmSecret`: show to GMs behind a secret block (Tidy behavior)
  * `concealed`: only shows to GMs in edit mode (Tidy behavior)
@@ -84,7 +84,10 @@ export class Container {
       ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
       if (favorites) {
-        const relativeUuid = foundry.utils.buildRelativeUuid(item, container.actor);
+        const relativeUuid = foundry.utils.buildRelativeUuid(
+          item,
+          container.actor,
+        );
         // TODO: Determine if this looped array traversal is going to be an issue; if so, consider passing in a context object with a favorites map.
         ctx.favoriteId = item.actor.system.favorites?.find(
           (f: CharacterFavorite) => f.id === relativeUuid,
@@ -99,9 +102,7 @@ export class Container {
         );
       }
 
-      ctx.activities = Activities.getVisibleActivities(
-        item,
-      )?.map((activity) =>
+      ctx.activities = Activities.getVisibleActivities(item)?.map((activity) =>
         Activities.getActivityItemContext(
           sheet,
           activity,
@@ -203,25 +204,8 @@ export class Container {
   }
 
   /**
-   * Does the container have unidentified contents that should be hidden from
-   * players due to the item setting?
-   */
-  static hasUnidentifiedContents(container: Item5e): boolean {
-    if (container.system.canViewContents === undefined) {
-      return false;
-    }
-
-    return (
-      container.system.identified === false &&
-      container.system.properties.has(
-        CONSTANTS.ITEM_PROPERTY_UNIDENTIFIED_CONTENTS,
-      )
-    );
-  }
-
-  /**
    * Determine if the container's contents are visible to the current user.
-   * 
+   *
    * `hidden`: follows system behavior and always shows to GMs (core behavior)
    * `gmSecret`: show to GMs behind a secret block (Tidy behavior)
    * `concealed`: only shows to GMs in edit mode (Tidy behavior)
@@ -230,7 +214,13 @@ export class Container {
     container: Item5e,
     options: { unlocked: boolean },
   ): ContainerContentsVisibility {
-    if (!Container.hasUnidentifiedContents(container)) {
+    if (
+      container.system.canViewContents &&
+      /* DEBUG: REMOVE BEFORE MERGING */ !foundry.utils.getProperty(
+        container,
+        'flags.kgar.concealmentTestToggle',
+      )
+    ) {
       return 'visible';
     }
 
@@ -240,7 +230,7 @@ export class Container {
 
     return options.unlocked ? 'visible' : 'gmSecret';
   }
-  
+
   static async canDropContents(container: Item5e): Promise<boolean> {
     return (await container.system.canDropContents?.()) ?? true;
   }
