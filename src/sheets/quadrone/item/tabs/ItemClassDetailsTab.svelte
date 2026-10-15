@@ -25,12 +25,6 @@
   </legend>
 
   <FieldIdentifier
-    document={context.item}
-    field={context.fields.identifier}
-    id="{appId}-identifier"
-    value={context.source.identifier}
-    identifier={context.item.identifier}
-    unlocked={context.unlocked}
     hint="{localize('DND5E.ClassIdentifierHint', {
       identifier: context.item.identifier,
     })} {localize('DND5E.IdentifierError')}"
