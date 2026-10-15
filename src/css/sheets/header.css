@@ -445,7 +445,7 @@
           background: var(--t5e-color-palette-black);
 
           i {
-            color: var(--t5e-color-icon-default);
+            color: var(--t5e-color-icon-light);
             text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
           }
         }
@@ -454,6 +454,10 @@
       &:hover,
       &:focus-within {
         background-color: rgba(0, 0, 0, 0.64);
+
+        .button-config i {
+          color: var(--t5e-color-icon-lighter);
+        }
 
         .portrait-shape-options {
           display: flex;

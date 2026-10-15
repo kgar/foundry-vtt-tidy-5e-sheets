@@ -3,6 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import FieldIdentifier from '../parts/FieldIdentifier.svelte';
   import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -19,18 +20,13 @@
   </legend>
 
   <!-- Identifier -->
-  <FormGroup
-    labelFor="{appId}-identifier"
+  <FieldIdentifier
     document={context.document}
     field={context.fields.identifier}
-    config={{
-      value: context.unlocked
-        ? context.source.identifier
-        : context.item.identifier,
-      placeholder: context.item.identifier,
-      id: `${appId}-identifier`,
-    }}
-    hint="DND5E.IdentifierError"
+    id="{appId}-identifier"
+    value={context.source.identifier}
+    identifier={context.item.identifier}
+    unlocked={context.unlocked}
   />
 
   <!-- Type -->

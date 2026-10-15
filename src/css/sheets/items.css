@@ -108,6 +108,7 @@
 
   /* Overrides `.header-over-sidebar` above. */
   &:where(:is(.minimized, .minimizing)) {
+
     .header-over-sidebar,
     .configurable-source,
     .item-header-start-document-name {
@@ -515,6 +516,26 @@
   .tidy-table-row {
     padding-inline-start: 0.1875rem;
     padding-block: var(--t5e-size-halfx);
+  }
+
+  .identifier-field.copy-to-clipboard {
+    display: flex;
+    flex: 1;
+    border-radius: var(--t5e-size-halfx);
+    cursor: copy;
+
+    &:focus-visible {
+      outline: var(--t5e-outline-field-focus);
+    }
+
+    input {
+      flex: 1;
+      pointer-events: none;
+
+      &::placeholder {
+        color: var(--t5e-color-text-default);
+      }
+    }
   }
 
   &:where(.container) {
