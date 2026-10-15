@@ -29,13 +29,15 @@
   data-tidy-draggable
   data-favorite-id={favorite.id}
   data-tidy-sheet-part="favorite-entry"
+  data-reference-tooltip={favorite.reference}
 >
   <FavoriteRollButton
     img={favorite.item.img}
-    title={favorite.item.name}
+    title={!favorite.reference ? favorite.item.name : undefined}
     data-action="use"
     name={favorite.item.name}
     {subtitle}
+    useTooltip={!favorite.reference}
   />
   {#if value}
     <div class="">

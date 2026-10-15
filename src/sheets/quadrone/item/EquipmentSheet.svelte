@@ -17,15 +17,14 @@
   import OccupantSlot from 'src/sheets/quadrone/shared/OccupantSlot.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
 
-  let localize = FoundryAdapter.localize;
+  const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $derived(context.currentTabId);
-
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [
       context.item.system.type?.label,
       context.sheet._shouldShowAc() ? context.labels.armor : null,
@@ -34,12 +33,12 @@
       .join(', '),
   );
 
-  let armorPills = $derived.by(() => {
+  const armorPills = $derived.by(() => {
     if (!context.sheet._shouldShowAc()) {
       return [];
     }
 
-    let result: Snippet[] = [];
+    const result: Snippet[] = [];
 
     result.push(acPill);
 

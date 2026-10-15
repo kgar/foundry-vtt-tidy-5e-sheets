@@ -8,7 +8,6 @@ import type {
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
   VehicleDraftAnimalSection,
-  FavoriteSection,
   FeatureSection,
   GroupMemberSection,
   InventorySection,
@@ -600,107 +599,6 @@ export class SheetSections {
     }
 
     return sections;
-  }
-
-  static configureFavorites(
-    favoriteSections: FavoriteSection[],
-    actor: Actor5e,
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>,
-  ) {
-    let configuredFavorites: FavoriteSection[] = [];
-
-    try {
-      configuredFavorites = SheetSections.sortKeyedSections(
-        favoriteSections,
-        sectionConfig,
-      );
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      const favoritesIdMap = actor.system.favorites.reduce(
-        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
-          map.set(f.id, f);
-          return map;
-        },
-        new Map<string, CharacterFavorite>(),
-      );
-
-      return (configuredFavorites as FavoriteSection[]).map(
-        ({ ...section }) => {
-          if ('effects' in section) {
-            let effectContexts = section.effects;
-
-            // Sort Favorite Effects
-            if (sortMode === 'm') {
-              const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(
-                  foundry.utils.buildRelativeUuid(effects, actor),
-                )?.sort ?? Number.MAX_SAFE_INTEGER;
-
-              effectContexts = effectContexts.toSorted(
-                (a, b) => getSort(a.effect) - getSort(b.effect),
-              );
-            } else {
-              effectContexts = effectContexts.toSorted((a, b) =>
-                a.effect.name.localeCompare(b.effect.name, game.i18n.lang),
-              );
-            }
-
-            // TODO: Filter Favorite Effects ?
-          } else if ('activities' in section) {
-            let activities = section.activities;
-
-            // Sort Favorite Activities
-            if (sortMode === 'm') {
-              const getSort = (activity: Activity5e) =>
-                favoritesIdMap.get(activity.relativeUUID)?.sort ??
-                Number.MAX_SAFE_INTEGER;
-
-              activities = activities.toSorted(
-                (a, b) => getSort(a) - getSort(b),
-              );
-            } else {
-              activities = activities.toSorted((a, b) =>
-                a.name.localeCompare(b.name, game.i18n.lang),
-              );
-            }
-
-            // TODO: Filter Favorite Activities?
-          } else {
-            let items = section.items;
-            // Sort Favorites Items
-            if (sortMode === 'm') {
-              const getSort = (item: Item5e) =>
-                favoritesIdMap.get(foundry.utils.buildRelativeUuid(item, actor))
-                  ?.sort ?? Number.MAX_SAFE_INTEGER;
-
-              items = items.toSorted((a, b) => getSort(a) - getSort(b));
-            } else {
-              items = ItemUtils.getSortedItems(items, sortMode);
-            }
-
-            // TODO: Collocate Favorite Sub Items
-
-            if ('spells' in section) {
-              section.items = items;
-            } else {
-              section.items = items;
-            }
-          }
-
-          // Apply visibility from configuration
-          section.show = sectionConfig?.[section.key]?.show !== false;
-
-          return section;
-        },
-      );
-    } catch (e) {
-      error('An error occurred while configuring favorites', false, e);
-    }
-
-    return configuredFavorites;
   }
 
   static configureStatblock<TSection extends FeatureSection | SpellbookSection>(

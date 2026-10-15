@@ -26,39 +26,28 @@
     <div>
       <h4>{localize('TYPES.Item.subclass')}</h4>
       <ul class="pills stacked">
-        <li>
-          <a
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.identifier}
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <span class="text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
-        <li>
-          <a
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.classIdentifier}
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <span class="text-normal">
-              {localize('DND5E.ClassIdentifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.classIdentifier}
-            </span>
-          </a>
-        </li>
         <SpellcastingSidebarPills />
       </ul>
     </div>
+  {/snippet}
+
+  {#snippet identifierPills(identifierPill)}
+    <li>
+      <a
+        class="pill interactive centered wrapped copy-to-clipboard"
+        data-action="copyValue"
+        data-value={context.item.system.classIdentifier}
+        {@attach InputAttachments.triggerClickOnKeydown}
+      >
+        <span class="text-normal">
+          {localize('TYPES.Item.class')}
+        </span>
+        <span class="hyphens-auto">
+          {context.item.system.classIdentifier}
+        </span>
+      </a>
+    </li>
+    {@render identifierPill()}
   {/snippet}
 </Sidebar>
 

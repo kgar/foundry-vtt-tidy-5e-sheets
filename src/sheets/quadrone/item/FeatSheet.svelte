@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -15,16 +14,15 @@
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import { isNil } from 'src/utils/data';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
 
   const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $derived(context.currentTabId);
-
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let summarySections = $derived.by(() => {
-    let result: ComponentWithProps<any>[] = [];
+  const summarySections = $derived.by(() => {
+    const result: ComponentWithProps<any>[] = [];
 
     if (context.item.hasLimitedUses) {
       result.push(componentWithProps(ItemChargesSummary, {}));
@@ -37,8 +35,8 @@
     return result;
   });
 
-  let subtitle = $derived.by(() => {
-    let segments: string[] = [
+  const subtitle = $derived.by(() => {
+    const segments: string[] = [
       context.system.type.label,
       context.labels.featType,
       context.system.requirements,

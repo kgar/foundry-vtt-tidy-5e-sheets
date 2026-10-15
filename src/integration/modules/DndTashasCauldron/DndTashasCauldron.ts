@@ -3,8 +3,8 @@ import { CONSTANTS } from 'src/constants';
 import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
-import TattooSheetQuadrone from './TattooSheetQuadrone.svelte';
-import ItemTattooDetailsQuadroneTab from './ItemTattooDetailsQuadroneTab.svelte';
+import TattooSheet from './TattooSheet.svelte';
+import ItemTattooDetailsTab from './ItemTattooDetailsTab.svelte';
 import type { CONFIG as OriginalConfig } from 'src/foundry/config.types';
 
 declare global {
@@ -63,7 +63,7 @@ export class DndTashasCauldronModuleIntegration
     ItemSheetQuadroneRuntime.registerItemSheet(
       DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO,
       {
-        component: TattooSheetQuadrone,
+        component: TattooSheet,
         defaultTabs: [
           CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
@@ -82,7 +82,7 @@ export class DndTashasCauldronModuleIntegration
       id: CONSTANTS.TAB_ITEM_DETAILS,
       title: 'DND5E.Details',
       content: {
-        component: ItemTattooDetailsQuadroneTab,
+        component: ItemTattooDetailsTab,
         type: 'svelte',
       },
       layout: 'quadrone',
