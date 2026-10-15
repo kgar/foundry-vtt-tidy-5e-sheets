@@ -77,4 +77,23 @@
       <span class="value">{context.labels.materials}</span>
     </li>
   {/if}
+
+  <li>
+    <!--svelte-ignore a11y_missing_attribute-->
+    <a
+      role="button"
+      tabindex="0"
+      class="pill interactive centered wrapped copy-to-clipboard"
+      data-action="copyValue"
+      data-value={context.item.system.identifier}
+      aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+    >
+      <span class="text-normal">
+        {localize('DND5E.Identifier')}
+      </span>
+      <span class="hyphens-auto">
+        {context.item.system.identifier}
+      </span>
+    </a>
+  </li>
 </ul>

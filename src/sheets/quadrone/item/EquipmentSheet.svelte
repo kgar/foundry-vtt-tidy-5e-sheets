@@ -17,15 +17,14 @@
   import OccupantSlot from 'src/sheets/quadrone/shared/OccupantSlot.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
 
-  let localize = FoundryAdapter.localize;
+  const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $derived(context.currentTabId);
-
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [
       context.item.system.type?.label,
       context.sheet._shouldShowAc() ? context.labels.armor : null,
@@ -34,12 +33,12 @@
       .join(', '),
   );
 
-  let armorPills = $derived.by(() => {
+  const armorPills = $derived.by(() => {
     if (!context.sheet._shouldShowAc()) {
       return [];
     }
 
-    let result: Snippet[] = [];
+    const result: Snippet[] = [];
 
     result.push(acPill);
 
@@ -57,6 +56,30 @@
 
 <Sidebar>
   {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.equipment')}</h4>
+      <ul class="pills stacked">
+        <li>
+          <!--svelte-ignore a11y_missing_attribute-->
+          <a
+            role="button"
+            tabindex="0"
+            class="pill interactive centered wrapped copy-to-clipboard"
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+          >
+            <span class="text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
     {#if armorPills.length}
       <div>
         <h4>{localize('DND5E.Armor')}</h4>

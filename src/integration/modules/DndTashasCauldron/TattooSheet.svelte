@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from '../../../sheets/quadrone/item/parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from '../../../sheets/quadrone/item/parts/Sidebar.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
@@ -40,7 +39,33 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar includeSidebarProperties={false} />
+<Sidebar includeSidebarProperties={false}>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.dnd-tashas-cauldron.tattoo')}</h4>
+      <ul class="pills stacked">
+        <li>
+          <!--svelte-ignore a11y_missing_attribute-->
+          <a
+            role="button"
+            tabindex="0"
+            class="pill interactive centered wrapped copy-to-clipboard"
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+          >
+            <span class="text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
   <div class="sheet-header">

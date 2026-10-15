@@ -12,34 +12,62 @@
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import { isNil } from 'src/utils/data';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
+
+  const localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $derived(context.currentTabId);
-
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let consumableTypeConfig = $derived(
+  const consumableTypeConfig = $derived(
     CONFIG.DND5E.consumableTypes[context.system.type.value],
   );
 
-  let typeLabel = $derived(
+  const typeLabel = $derived(
     consumableTypeConfig?.label ?? context.system.type.value,
   );
 
-  let subtypeLabel = $derived(
+  const subtypeLabel = $derived(
     consumableTypeConfig?.subtypes?.[context.system.type.subtype] ??
       context.system.type.subtype,
   );
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [typeLabel, subtypeLabel].filter((x) => !isNil(x, '')).join(', '),
   );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar />
+<Sidebar>
+  {#snippet belowStateSwitches()}
+    <div>
+      <h4>{localize('TYPES.Item.consumable')}</h4>
+      <ul class="pills stacked">
+        <li>
+          <!--svelte-ignore a11y_missing_attribute-->
+          <a
+            role="button"
+            tabindex="0"
+            class="pill interactive centered wrapped copy-to-clipboard"
+            data-action="copyValue"
+            data-value={context.item.system.identifier}
+            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+          >
+            <span class="text-normal">
+              {localize('DND5E.Identifier')}
+            </span>
+            <span class="hyphens-auto">
+              {context.item.system.identifier}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  {/snippet}
+</Sidebar>
 
 <main class="item-content">
   <div class="sheet-header">
