@@ -931,18 +931,21 @@ export type ItemFavoriteContextEntry = {
   type: 'item';
   item: Item5e;
   capacity?: ContainerCapacityContext;
+  reference?: string;
 };
 
 export type EffectFavoriteContextEntry = {
   id: string;
   type: 'effect';
   effect: ActiveEffect5e;
+  reference?: string;
 };
 
 export type ActivityFavoriteContextEntry = {
   id: string;
   type: 'activity';
   activity: Activity5e;
+  reference?: string;
 };
 
 export type SlotsFavoriteContextEntry = {

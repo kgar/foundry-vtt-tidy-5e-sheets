@@ -37,7 +37,9 @@
   let theSubtitle = $state<HTMLElement>();
 
   let tooltip = $derived(
-    `${favorite.effect.name} <br /> ${theSubtitle?.innerText.replaceAll('\n', ' • ')}`,
+    !favorite.reference
+      ? `${favorite.effect.name} <br /> ${theSubtitle?.innerText.replaceAll('\n', ' • ')}`
+      : undefined,
   );
 </script>
 
@@ -59,6 +61,7 @@
   data-favorite-id={favorite.id}
   data-tooltip={tooltip}
   data-tidy-sheet-part="favorite-entry"
+  data-reference-tooltip={favorite.reference}
 >
   <button
     type="button"

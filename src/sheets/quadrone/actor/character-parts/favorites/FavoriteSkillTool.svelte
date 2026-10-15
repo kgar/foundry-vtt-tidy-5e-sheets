@@ -51,7 +51,7 @@
     data-key={favorite.key}
     name={favorite.name}
     {subtitle}
-    useTooltip={false}
+    useTooltip={!favorite.reference}
   />
   <div class="">
     <span class="modifier">

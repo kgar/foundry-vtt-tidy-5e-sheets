@@ -53,13 +53,15 @@
   data-favorite-id={favorite.id}
   data-tidy-draggable
   data-tidy-sheet-part="favorite-entry"
+  data-reference-tooltip={favorite.reference}
 >
   <FavoriteRollButton
     data-action="use"
     img={favorite.item.img}
-    title={favorite.item.name}
+    title={!favorite.reference ? favorite.item?.name : undefined}
     name={favorite.item.name}
     {subtitle}
+    useTooltip={!favorite.reference}
   />
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
     <div class="favorite-context stacked">
