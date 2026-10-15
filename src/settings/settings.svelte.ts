@@ -705,6 +705,20 @@ export function createSettings() {
           );
         },
       },
+      referenceTooltipFavorite: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Favorite.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipFavorite',
+          );
+        },
+      },
       referenceTooltipSkill: {
         options: {
           name: 'TIDY5E.SETTINGS.Option.Tooltip.Skill.name',

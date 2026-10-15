@@ -504,6 +504,9 @@
         "CreatureType": {
           "name": "Show system Creature Type tooltips"
         },
+        "Favorite": {
+          "name": "Show system Favorite tooltips"
+        },
         "Mastery": {
           "name": "Show system Weapon Mastery tooltips"
         },

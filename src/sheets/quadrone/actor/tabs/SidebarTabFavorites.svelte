@@ -14,7 +14,7 @@
 
 {#if context.favorites.length}
   <div class="favorites list">
-    {#each context.favorites as favorite}
+    {#each context.favorites as favorite (favorite.type + favorite.id)}
       <svelte:boundary
         onerror={(e) =>
           error(
