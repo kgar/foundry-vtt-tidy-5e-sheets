@@ -6,7 +6,8 @@
   import FieldUses from 'src/sheets/quadrone/item/parts/FieldUses.svelte';
   import QuantityWeightPriceFormGroups from 'src/sheets/quadrone/item/parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
-    import ItemRarities from 'src/sheets/quadrone/item/parts/ItemRarities.svelte';
+  import ItemRarities from 'src/sheets/quadrone/item/parts/ItemRarities.svelte';
+  import FieldIdentifier from 'src/sheets/quadrone/item/parts/FieldIdentifier.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -39,6 +40,8 @@
     {localize('TCOE.Tattoo.Details')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
+
+  <FieldIdentifier />
 
   <FormGroup
     document={context.document}

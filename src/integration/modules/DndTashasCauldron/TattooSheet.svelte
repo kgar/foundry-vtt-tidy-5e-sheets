@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from '../../../sheets/quadrone/item/parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from '../../../sheets/quadrone/item/parts/Sidebar.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';

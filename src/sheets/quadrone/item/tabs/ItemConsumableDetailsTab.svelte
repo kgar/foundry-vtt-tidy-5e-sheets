@@ -28,14 +28,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <FieldIdentifier
-    document={context.document}
-    field={context.fields.identifier}
-    id="{appId}-identifier"
-    value={context.source.identifier}
-    identifier={context.item.identifier}
-    unlocked={context.unlocked}
-  />
+  <FieldIdentifier />
 
   <FormGroup
     label="DND5E.ItemConsumableType"
