@@ -52,11 +52,7 @@
   let canViewContents = $derived(
     (item.type !== CONSTANTS.ITEM_TYPE_CONTAINER &&
       item.system.identified !== false) ||
-      (item.system.canViewContents &&
-        /* DEBUG: REMOVE BEFORE MERGING */
-        Container.getContentsVisibility(item, {
-          unlocked: context.unlocked,
-        }) === 'visible'),
+      item.system.canViewContents,
   );
 
   let concealmentData = $derived.by(() => {

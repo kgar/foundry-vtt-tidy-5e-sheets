@@ -214,13 +214,7 @@ export class Container {
     container: Item5e,
     options: { unlocked: boolean },
   ): ContainerContentsVisibility {
-    if (
-      container.system.canViewContents &&
-      /* DEBUG: REMOVE BEFORE MERGING */ !foundry.utils.getProperty(
-        container,
-        'flags.kgar.concealmentTestToggle',
-      )
-    ) {
+    if (container.system.canViewContents) {
       return 'visible';
     }
 
