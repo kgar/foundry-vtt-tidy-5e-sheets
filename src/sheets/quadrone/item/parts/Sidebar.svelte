@@ -420,14 +420,6 @@
         </PillSwitch>
       </li>
     {/if}
-
-    <!-- TODO: 
-      - add types for custom toggles: API and runtime variants
-      - answer: do we put these toggles in a runtime, or in CONFIG.TIDY5E?
-      - add API to add custom toggles
-      - add visible, configured custom toggles to context
-      - add custom toggles from context to here
-    -->
   </ul>
 
   {#if belowStateSwitches}
