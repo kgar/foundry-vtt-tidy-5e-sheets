@@ -61,6 +61,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
     value: undefined,
   });
+  /** Get the new placeholder for editing in View Mode */
+  focusedPlaceholderId: string | undefined = $state();
   aggregatePinTab = {
     tabId: CONSTANTS.TAB_MEMBERS,
     tabName: 'DND5E.ENCOUNTER.Tab.Members',
@@ -570,7 +572,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       this.addNewPlaceholder(
         {
           name: FoundryAdapter.localize(
-            'TIDY5E.ENCOUNTER.Initiative.Action.AddCount',
+            'TIDY5E.ENCOUNTER.Placeholder.Title',
             {
               count: initiativeNumber,
             },
@@ -592,10 +594,12 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
       {
         id: foundry.utils.randomID(),
         img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-        name: FoundryAdapter.localize('DND5E.ItemNew', { type: 'TIDY5E.ENCOUNTER.Placeholder.Title' }),
+        name: FoundryAdapter.localize('DND5E.ItemNew', { type: 'DND5E.Initiative' }),
       },
       data,
     );
+
+    this.focusedPlaceholderId = newPlaceholder.id;
 
     const result = await TidyFlags.placeholders.insertOrUpdateEntry(
       this.actor,
