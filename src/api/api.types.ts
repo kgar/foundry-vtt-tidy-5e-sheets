@@ -415,6 +415,13 @@ export type ItemToggleConfig = {
   label: string;
   /** The FontAwesome icon to show for this toggle. */
   icon?: string;
+  /**
+   * Optional callback that denotes whether the toggle switch is currently toggle on.
+   * Use this in combination with `onChange`. 
+   * Otherwise, this is handled automatically with the `field` property.
+   * 
+   * @returns `true` for toggled on, `false` for toggled off
+   */
   active?: (item: Item5e) => boolean;
   /**
    * A callback to determine if the toggle is editable by the current user.
