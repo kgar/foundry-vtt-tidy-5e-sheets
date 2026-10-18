@@ -1949,8 +1949,11 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      currentDragData: Record<string, any> | undefined,
     ): Promise<any> {
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const data =
+        currentDragData ??
+        foundry.applications.ux.TextEditor.getDragEventData(event);
 
       // Dropped Documents
       const documentClass = foundry.utils.getDocumentClass(data.type);
@@ -1959,7 +1962,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         return await this._onDropDocument(event, document);
       }
 
-      return await super._onDrop(event);
+      return await super._onDrop(event, data ?? currentDragData);
     }
 
     async _onDropDocument(

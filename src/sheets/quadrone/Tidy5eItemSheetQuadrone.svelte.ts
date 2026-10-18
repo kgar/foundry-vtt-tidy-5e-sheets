@@ -1303,8 +1303,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ) {
-    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+    const data =
+      currentDragData ??
+      foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
@@ -1322,7 +1325,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         return this._onDropItem(event, data);
     }
 
-    return super._onDrop(event);
+    return super._onDrop(event, data ?? currentDragData);
   }
 
   /* -------------------------------------------- */

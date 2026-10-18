@@ -381,15 +381,14 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       if (item.system.activities) {
-        ctx.activities = Activities.getVisibleActivities(
-          item,
-        )?.map((activity) =>
-          Activities.getActivityItemContext(
-            this,
-            activity,
-            context.unlocked,
-            context.editable,
-          ),
+        ctx.activities = Activities.getVisibleActivities(item)?.map(
+          (activity) =>
+            Activities.getActivityItemContext(
+              this,
+              activity,
+              context.unlocked,
+              context.editable,
+            ),
         );
       }
 
@@ -1455,11 +1454,14 @@ export function getTidy5eActorSheetQuadroneBase<
 
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      currentDragData: Record<string, any> | undefined,
     ): Promise<any> {
       (event as any)._behavior = this._dropBehavior(event);
 
       this._currentDragEvent = event;
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const data =
+        currentDragData ??
+        foundry.applications.ux.TextEditor.getDragEventData(event);
       const actor = this.actor;
       const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
       if (allowed === false) return;
@@ -1487,7 +1489,7 @@ export function getTidy5eActorSheetQuadroneBase<
           return await this._onDropActivity(event, document);
       }
 
-      return await super._onDrop(event);
+      return await super._onDrop(event, data ?? currentDragData);
     }
 
     async _onDropPin(
@@ -1682,7 +1684,7 @@ export function getTidy5eActorSheetQuadroneBase<
       const behavior = (event as any)._behavior;
 
       const sortKeyOverride =
-        // ... sometimes, the caller's `event.target` is pretending to be an HTMLElement but lacks the full API. 
+        // ... sometimes, the caller's `event.target` is pretending to be an HTMLElement but lacks the full API.
         // Skip entirely when not an actual HTMLElement
         event.target instanceof HTMLElement
           ? ((event.target as HTMLElement)

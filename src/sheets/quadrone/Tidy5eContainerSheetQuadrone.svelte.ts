@@ -494,13 +494,16 @@ export class Tidy5eContainerSheetQuadrone
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ): Promise<unknown> {
     this.#dropBehavior = this._dropBehavior(event);
 
     try {
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const data =
+        currentDragData ??
+        foundry.applications.ux.TextEditor.getDragEventData(event);
       if (!['Item', 'Folder'].includes(data.type)) {
-        return await super._onDrop(event);
+        return await super._onDrop(event, data ?? currentDragData);
       }
 
       if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
