@@ -26,7 +26,7 @@
   let value = $derived(
     FoundryAdapter.formatNumber((capacity.value ?? 0).toNearest(0.01)),
   );
-  
+
   let max = $derived(
     capacity.max === Infinity
       ? '∞'
@@ -36,10 +36,10 @@
 
 {#if contentsVisibility === 'visible'}
 <div class="label">
+  {#if showIcon}
+    <i class="fas fa-weight-hanging text-label-icon"></i>
+  {/if}
   <span class="row">
-    {#if showIcon}
-      <i class="fas fa-weight-hanging text-label-icon"></i>
-    {/if}
     <span class="value font-weight-label">{value}</span>
     <span class="separator">/</span>
     <span class="max color-text-default">{max}</span>

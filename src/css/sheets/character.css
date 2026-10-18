@@ -34,6 +34,10 @@
     }
   }
 
+  .actor-vitals-container {
+    --vitals-width: 11.25rem;
+  }
+
   .inspiration-badge {
     position: absolute;
     left: 0;

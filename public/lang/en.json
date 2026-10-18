@@ -209,8 +209,8 @@
     },
     "Placeholder": {
       "Action": {
-        "Add": "Create Combat Placeholder",
         "AddAll": "Add All as Placeholders",
+        "AddAtInitiative": "Create Placeholder at Initiative",
         "AddToTracker": "Add to Current Encounter as Placeholder",
         "Delete": "Delete Placeholder"
       },
@@ -218,7 +218,11 @@
         "Name": "Placeholder Name",
         "Notes": "Notes"
       },
-      "Title": "Placeholder"
+      "Title": "Placeholder",
+      "TitlePlural": "Placeholders"
+    },
+    "Placement": {
+      "WorldDefault": "World Default ({value})"
     }
   },
   "TIDY5E.FACILITY": {
