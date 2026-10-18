@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ClassValue } from 'svelte/elements';
 
   interface Props {
@@ -21,12 +22,16 @@
     iconOnly = false,
   }: Props = $props();
 
+  let context = $derived(getSheetContext());
+
   let types = $derived<string[]>(
     sheetDocument.sheet._browseAddDocumentItemTypes(tabId, data?.type),
   );
 
-  // Hide the button if users don't have any compendiums with the browsable item types.
-  let canBrowse = $derived(ItemCompendiumBrowse.canBrowse(types));
+  // Hide the button if not editable, or if users don't have any compendiums with the browsable item types.
+  let canBrowse = $derived(
+    context.editable && ItemCompendiumBrowse.canBrowse(types),
+  );
 
   let label = $derived(ItemCompendiumBrowse.getLabel(types));
 </script>
@@ -40,7 +45,7 @@
     onclick={(event) =>
       sheetDocument.sheet._browseAddDocument({ event, tabId, data })}
   >
-    <i class="fas fa-book-atlas"></i>
+    <i class="fa-solid fa-book-atlas"></i>
     {#if !iconOnly}
       {label}
     {/if}
