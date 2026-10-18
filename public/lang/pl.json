@@ -778,5 +778,13 @@
         "Weapons": {
             "Empty": "Przeciągnij i upuść bronie tutaj albo kliknij, aby dodać."
         }
+    },
+    "TIDY5E.BASTION": {
+        "Group": {
+            "Action": {
+                "CancelOrder": "Anuluj polecenie",
+                "CompleteOrder": "Zakończ polecenie"
+            }
+        }
     }
 }
