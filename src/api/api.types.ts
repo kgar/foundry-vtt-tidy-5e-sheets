@@ -381,7 +381,7 @@ export type ItemToggleConfig = {
   icon?: string;
   active?: (item: Item5e) => boolean;
   editable?: (item: Item5e) => boolean;
-  onChange?: (item: Item5e) => boolean;
+  onChange?: (item: Item5e) => Promise<any>;
   field?: string;
   visible?: (item: Item5e) => boolean;
 };

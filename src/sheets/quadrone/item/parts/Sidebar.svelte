@@ -378,14 +378,14 @@
           {checked}
           checkedIconClass={toggle.icon}
           uncheckedIconClass={toggle.icon}
-          onchange={(ev) => {
+          onchange={async (ev) => {
             if (toggle.field) {
               context.item.update({
                 [toggle.field]: ev.currentTarget?.checked,
               });
             }
 
-            toggle.onChange?.(context.document);
+            await toggle.onChange?.(context.document);
           }}
         >
           {localize(toggle.label)}
