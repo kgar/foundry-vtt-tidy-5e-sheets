@@ -21,7 +21,6 @@
 
   $effect(() => {
     if (sectionItemOpenStates.length !== itemDescriptions.length) {
-      ui.notifications.info('getting open states');
       sectionItemOpenStates = getOpenStates();
     }
   });
