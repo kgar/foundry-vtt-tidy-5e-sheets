@@ -17,7 +17,7 @@ export function configureSectionContextMenu(
   const sectionActions: SectionCommand[] = section.sectionActions ?? [];
 
   ui.context.menuItems = sectionActions.map<ContextMenuEntry>((action) => ({
-    visible: () => {
+    onClick: () => {
       try {
         action.execute?.({
           document: app.document,
