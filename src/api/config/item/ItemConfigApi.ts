@@ -33,7 +33,25 @@ export class ItemConfigApi {
     ItemSheetQuadroneRuntime.registerCustomEquipmentTypeGroup(group);
   }
 
-  // TODO: Document!
+  /**
+   * Registers a custom description, to be rendered on the item sheet.
+   *
+   * @param description the description to add
+   *
+   * @example Registering a custom description
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.config.item.registerDescription({
+   *     id: 'my-curse-description',
+   *     label: 'Curse Details',
+   *     itemTypes: ['weapon', 'equipment', 'tool', 'loot'],
+   *     visible: (item) => game.user.isGM && foundry.utils.getProperty(item, 'flags.is-cursed'),
+   *     field: 'flags.my-curse-description',
+   *     editable: (item) => game.user.isGM,
+   *   });
+   * });
+   * ```
+   */
   registerDescription(description: ItemDescriptionConfig) {
     let { itemTypes = [], id, ...rest } = description;
 
@@ -50,7 +68,27 @@ export class ItemConfigApi {
     }
   }
 
-  // TODO: Document!
+  /**
+   * Registers a custom toggle switch to appear in the item sheet sidebar, 
+   * where other toggles like "Identified," "Equipped," and "Attuned."
+   * 
+   * @param toggle the toggle to add
+   * 
+   * @example Registering a custom toggle
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.config.item.registerToggle?.({
+   *     id: 'cursed-toggle',
+   *     label: 'Cursed',
+   *     icon: 'fa-solid fa-book-skull',
+   *     itemTypes: ['weapon', 'equipment', 'tool', 'loot'],
+   *     editable: () => game.user.isGM,
+   *     field: 'flags.my-example.is-cursed',
+   *     visible: (item) => game.user.isGM,
+   *   });
+   * });
+   * ```
+   */
   registerToggle(toggle: ItemToggleConfig) {
     let { itemTypes = [], id, ...rest } = toggle;
 
