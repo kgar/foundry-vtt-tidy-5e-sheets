@@ -1,9 +1,3 @@
-## c5e container API upgrades TODOs
-
-- [ ] Resolve TODOs, clean up, extract and share
-  - [ ] // TODO: Document!
-
-
 ## dnd5e 6.0 todos
 
 - [ ] Go through the types files and find/delete unused types
