@@ -98,7 +98,7 @@
     {/each}
 
     {#if context.unlocked && context.editable}
-      <div class="spellbook-add-row empty-state-container">
+      <div class="spellbook-add-row">
         {@render addSpellButtons()}
       </div>
     {/if}

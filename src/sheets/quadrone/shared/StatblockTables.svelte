@@ -72,13 +72,11 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.FeatureAdd')}
       </button>
-      {#if context.editable}
-        <CompendiumBrowseButton
-          class="button-tertiary"
-          {sheetDocument}
-          {tabId}
-        />
-      {/if}
+      <CompendiumBrowseButton
+        class="button-tertiary"
+        {sheetDocument}
+        {tabId}
+      />
     </div>
   {:else}
     {#each sections as section (section.key)}

@@ -69,14 +69,12 @@
   <footer bind:this={footerEl} class="contents-footer">
     <!-- Capacity Bar -->
     <CapacityBar container={context.item} capacity={context.capacity} />
-    {#if context.editable}
-      <CompendiumBrowseButton
-        class="button-primary"
-        sheetDocument={context.item}
-        {tabId}
-        iconOnly
-      />
-    {/if}
+    <CompendiumBrowseButton
+      class="button-primary"
+      sheetDocument={context.item}
+      {tabId}
+      iconOnly
+    />
     <!-- svelte-ignore a11y_missing_attribute -->
     <a
       aria-label={localize('DND5E.ItemCreate')}

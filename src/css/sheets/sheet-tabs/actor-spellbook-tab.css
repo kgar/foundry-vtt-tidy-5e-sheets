@@ -4,13 +4,16 @@
       padding-bottom: var(--t5e-size-2x);
     }
 
+    /* Buttns beneath other spells in edit mode */
     .spellbook-add-row {
-      flex: none;
-      flex-direction: row;
+      display: flex;
       gap: var(--t5e-size-2x);
 
-      > * {
+      > :where(.button) {
+        --t5e-button-padding-inline-start: var(--t5e-size-12x);
+        --t5e-button-padding-inline-end: var(--t5e-size-12x);
         flex: 1;
+        padding-block: var(--t5e-size-6x);
       }
     }
   }

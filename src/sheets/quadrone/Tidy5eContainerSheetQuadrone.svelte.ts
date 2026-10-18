@@ -674,7 +674,7 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   async _browseAddDocument(args: { event: Event; tabId: string }) {
-    if (!this.item.isOwner) {
+    if (!this.isEditable) {
       return;
     }
 
@@ -683,8 +683,10 @@ export class Tidy5eContainerSheetQuadrone
       this._detachOptions(),
     );
 
-    if (result) {
-      return this._createContents(await fromUuid(result), args.event);
+    const item = result ? await fromUuid(result) : null;
+
+    if (item) {
+      return this._createContents(item, args.event);
     }
   }
 

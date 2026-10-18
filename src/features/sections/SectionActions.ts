@@ -299,7 +299,11 @@ class SectionActions {
     };
   }
 
-  /** Search compendiums, hiding the button when there's nothing available. */
+  /**
+   * Search compendiums, hiding the button when there's nothing available.
+   * Only the section's `flags.*` data is applied to the new item to avoid
+   * any extra baggage on create.
+   */
   getBrowseItemHeaderSectionAction(
     actor: Actor5e,
     tabId: string,
