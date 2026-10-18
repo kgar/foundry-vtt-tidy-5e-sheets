@@ -411,7 +411,6 @@
   }
 
   .actor-vitals-container {
-    --vitals-width: 11.25rem;
     display: block;
     margin-inline-start: var(--t5e-size-2x);
     margin-block-end: auto;

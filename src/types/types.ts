@@ -1434,9 +1434,16 @@ export type EncounterDifficultyContext = {
   targetId: string | null | undefined;
 };
 
+export type EncounterPlacementContext = {
+  value: string;
+  currentLabel: string;
+  options: { value: string; label: string }[];
+};
+
 export type EncounterSheetQuadroneContext = {
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: EncounterDifficultyContext;
+  placement: EncounterPlacementContext;
   enriched: {
     description: {
       full: string;

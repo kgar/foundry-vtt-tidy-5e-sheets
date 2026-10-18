@@ -180,6 +180,35 @@
         color: var(--t5e-color-text-disabled);
       }
     }
+
+    /* Sidebar groups: placement, initiative, placeholders. */
+    .combat-sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+    }
+
+    .encounter-placement-behavior-select {
+      overflow: hidden;
+      inline-size: 100%;
+      text-overflow: ellipsis;
+    }
+
+    .initiative-count-picker {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-1x);
+
+      .initiative-count-label {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      /* Equal-width segments across the sidebar. */
+      .initiative-count-buttons .button {
+        flex: 1;
+        justify-content: center;
+      }
+    }
   }
 
   /* Overrides sheets.css `.list-values select`. */

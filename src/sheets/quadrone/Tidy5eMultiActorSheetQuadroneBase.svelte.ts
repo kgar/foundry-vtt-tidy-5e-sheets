@@ -646,7 +646,11 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       _event: Event,
       _target: HTMLElement,
     ): Promise<void> {
-      this.document.system.placeMembers();
+      this._placeMembers();
+    }
+
+    async _placeMembers() {
+      return this.document.system.placeMembers();
     }
 
     /* -------------------------------------------- */
