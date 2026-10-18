@@ -183,6 +183,12 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
     const xp = await this.actor.system.getXPValue();
 
+    const placementChoices = this._getPlacementBehaviorChoices();
+    const worldPlacement = game.settings.get(
+      'dnd5e',
+      'encounterPlacementBehavior',
+    );
+
     const context: EncounterSheetQuadroneContext = {
       difficulty: {
         label: difficulty
@@ -199,6 +205,24 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
           a.name.localeCompare(b.name, game.i18n.lang),
         ),
         targetId: difficultyTargetId,
+      },
+      placement: {
+        value: this._getPlacementBehaviorOverride() ?? '',
+        currentLabel:
+          placementChoices[this._getEffectivePlacementBehavior()] ?? '',
+        options: [
+          {
+            value: '',
+            label: FoundryAdapter.localize(
+              'TIDY5E.ENCOUNTER.Placement.WorldDefault',
+              { value: placementChoices[worldPlacement] ?? worldPlacement },
+            ),
+          },
+          ...Object.entries(placementChoices).map(([value, label]) => ({
+            value,
+            label,
+          })),
+        ],
       },
       enriched: {
         description: {
@@ -673,6 +697,46 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     }
 
     return game.combat.createEmbeddedDocuments('Combatant', combatants);
+  }
+
+  /* -------------------------------------------- */
+
+  /** System placement choices */
+  _getPlacementBehaviorChoices(): Record<string, string> {
+    const choices: Record<string, string> =
+      game.settings.settings.get('dnd5e.encounterPlacementBehavior')
+        ?.choices ?? {};
+
+    return Object.fromEntries(
+      Object.entries(choices).map(([value, label]) => [
+        value,
+        FoundryAdapter.localize(label),
+      ]),
+    );
+  }
+
+  _getPlacementBehaviorOverride(): string | undefined {
+    const behavior = TidyFlags.encounterPlacementBehavior.get(game.user);
+
+    return behavior && behavior in this._getPlacementBehaviorChoices()
+      ? behavior
+      : undefined;
+  }
+
+  _getEffectivePlacementBehavior(): string {
+    return (
+      this._getPlacementBehaviorOverride() ??
+      game.settings.get('dnd5e', 'encounterPlacementBehavior')
+    );
+  }
+
+  async _placeMembers() {
+    // If no override use the world setting.
+    const combatBehavior = this._getPlacementBehaviorOverride();
+
+    return this.actor.system.placeMembers(
+      combatBehavior ? { combatBehavior } : undefined,
+    );
   }
 
   /* -------------------------------------------- */

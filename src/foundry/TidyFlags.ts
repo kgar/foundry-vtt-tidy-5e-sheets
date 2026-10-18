@@ -151,6 +151,30 @@ export class TidyFlags {
   };
 
   /**
+   * What happens in the combat tracker when encounter 
+   * members are placed. Empty = world default.
+   */
+  static encounterPlacementBehavior = {
+    key: 'encounterPlacementBehavior' as const,
+    prop: TidyFlags.getFlagPropertyPath('encounterPlacementBehavior'),
+    /** Gets the placement behavior override. */
+    get(user: any): string | null | undefined {
+      return TidyFlags.tryGetFlag<string>(
+        user,
+        TidyFlags.encounterPlacementBehavior.key,
+      );
+    },
+    /** Sets the placement behavior override. */
+    async set(user: any, behavior: string) {
+      return TidyFlags.setFlag(
+        user,
+        TidyFlags.encounterPlacementBehavior.key,
+        behavior,
+      );
+    },
+  };
+
+  /**
    * An array of journal entries with an optional title
    * and an HTML-based journal.
    */
