@@ -127,8 +127,8 @@
           type="button"
           class="button button-add-placeholder"
           data-action="addNewPlaceholder"
-          data-tooltip="TIDY5E.ENCOUNTER.Placeholder.Action.Add"
-          aria-label={localize('TIDY5E.ENCOUNTER.Placeholder.Action.Add')}
+          data-tooltip="TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative"
+          aria-label={localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative')}
         >
           {localize('DND5E.None')}
         </button>
