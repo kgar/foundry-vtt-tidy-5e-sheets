@@ -376,8 +376,8 @@
       <li>
         <PillSwitch
           {checked}
-          checkedIconClass={toggle.icon}
-          uncheckedIconClass={toggle.icon}
+          checkedIconClass="{toggle.icon} fa-fw"
+          uncheckedIconClass="{toggle.icon} fa-fw"
           onchange={async (ev) => {
             if (toggle.field) {
               context.item.update({
