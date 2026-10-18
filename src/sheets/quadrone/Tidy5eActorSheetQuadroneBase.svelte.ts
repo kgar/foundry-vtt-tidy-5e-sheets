@@ -2170,11 +2170,26 @@ export function getTidy5eActorSheetQuadroneBase<
       }
     }
 
+    /** Singleton types the actor already has (class/background) can't be browsed for. */
+    _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+      return super
+        ._browseAddDocumentItemTypes(tabId, datasetType)
+        .filter(
+          (type) =>
+            !CONFIG.Item.dataModels[type].metadata?.singleton ||
+            !this.actor.itemTypes[type].length,
+        );
+    }
+
     async _browseAddDocument(args: {
       event: Event;
       tabId: string;
       data?: Record<string, any>;
     }) {
+      if (!this.isEditable) {
+        return;
+      }
+
       const { type: datasetType, ...restDataSet } = args.data ?? {};
 
       const result = await ItemCompendiumBrowse.selectOne(
@@ -2182,16 +2197,26 @@ export function getTidy5eActorSheetQuadroneBase<
         this._detachOptions(),
       );
 
-      if (!result) {
+      const item = result ? await fromUuid(result) : null;
+
+      if (!item) {
         return;
       }
 
-      const itemData = game.items.fromCompendium(await fromUuid(result), {
-        keepId: true,
-      });
+      // Only section flags (custom section, advancement origin) are applied.
+      // Otherwise section data like a spell section's level would overwrite 
+      // the new item's data
+      const sectionFlags = Object.fromEntries(
+        Object.entries(restDataSet).filter(([key]) => key.startsWith('flags.')),
+      );
 
-      // Apply the section's creation data so the item lands in the section it was browsed from.
-      foundry.utils.mergeObject(itemData, foundry.utils.expandObject(restDataSet));
+      // Pass the document so that container contents aren't missing
+      const itemData = foundry.utils.isEmpty(sectionFlags)
+        ? item
+        : foundry.utils.mergeObject(
+            game.items.fromCompendium(item, { keepId: true }),
+            foundry.utils.expandObject(sectionFlags),
+          );
 
       return this._onDropItemCreate(itemData, args.event, 'copy');
     }
