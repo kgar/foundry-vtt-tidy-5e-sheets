@@ -45,8 +45,8 @@ export class ItemConfigApi {
    *     id: 'my-curse-description',
    *     label: 'Curse Details',
    *     itemTypes: ['weapon', 'equipment', 'tool', 'loot'],
-   *     visible: (item) => game.user.isGM && foundry.utils.getProperty(item, 'flags.is-cursed'),
-   *     field: 'flags.my-curse-description',
+   *     visible: (item) => game.user.isGM && foundry.utils.getProperty(item, 'flags.my-example.is-cursed'),
+   *     field: 'flags.my-example.my-curse-description',
    *     editable: (item) => game.user.isGM,
    *   });
    * });
