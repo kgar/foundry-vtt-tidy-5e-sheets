@@ -43,6 +43,8 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { Rarity } from 'src/features/rarity/Rarity';
+import type { EnrichmentOptions } from 'src/foundry/foundry.types';
+import { Description } from 'src/features/description/Description';
 
 export class Tidy5eContainerSheetQuadrone
   extends getTidyExtensibleDocumentSheetMixin<
@@ -198,7 +200,7 @@ export class Tidy5eContainerSheetQuadrone
 
     const rollData = this.item.getRollData();
 
-    const enrichmentOptions = {
+    const enrichmentOptions: EnrichmentOptions = {
       secrets: this.item.isOwner,
       relativeTo: this.item,
       rollData: rollData,
@@ -271,34 +273,13 @@ export class Tidy5eContainerSheetQuadrone
       });
     }
 
-    // TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?
-    // definitely don't duplicate it.
-    const customDescriptions =
-      Object.values(
-        CONFIG.TIDY5E.item.descriptions[this.document.type] ?? {},
-      ) ?? [];
+    const customDescriptions = Description.getCustomItemDescriptions(
+      this.document,
+      enrichmentOptions,
+    );
 
-    for (const description of customDescriptions) {
-      const visible = description.visible?.(this.document) ?? true;
-
-      if (!visible) {
-        continue;
-      }
-
-      const content =
-        FoundryAdapter.getProperty<string>(this.document, description.field) ??
-        '';
-
-      itemDescriptions.push({
-        enriched: await foundry.applications.ux.TextEditor.enrichHTML(
-          content,
-          enrichmentOptions,
-        ),
-        content,
-        editable: description.editable?.(this.document) ?? true,
-        field: description.field,
-        label: description.label,
-      });
+    for await (const description of customDescriptions) {
+      itemDescriptions.push(description);
     }
 
     if (!this.item.isOwner) {

@@ -52,8 +52,9 @@ import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-act
 import * as Bastions from 'src/features/facility/Bastion';
 import * as VehicleCrew from 'src/features/vehicle/VehicleCrew';
 import { error } from 'src/utils/logging';
-import { firstOfSet } from 'src/utils/set';
 import { Rarity } from 'src/features/rarity/Rarity';
+import { Description } from 'src/features/description/Description';
+import type { EnrichmentOptions } from 'src/foundry/foundry.types';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -230,7 +231,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
-    const enrichmentOptions = {
+    const enrichmentOptions: EnrichmentOptions = {
       secrets: this.document.isOwner,
       relativeTo: this.item,
       rollData: rollData,
@@ -296,32 +297,13 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       });
     }
 
-    // TODO: Consider the best place to put this unpacking and applying of CONFIG.TIDY5E custom descriptions. Perhaps we have a util for it in CONFIG.TIDY5E?
-    // definitely don't duplicate it.
-    const customDescriptions =
-      Object.values(CONFIG.TIDY5E.item.descriptions[this.document.type] ?? {}) ?? [];
+    const customDescriptions = Description.getCustomItemDescriptions(
+      this.document,
+      enrichmentOptions,
+    );
 
-    for (const description of customDescriptions) {
-      const visible = description.visible?.(this.document) ?? true;
-
-      if (!visible) {
-        continue;
-      }
-
-      const content =
-        FoundryAdapter.getProperty<string>(this.document, description.field) ??
-        '';
-
-      itemDescriptions.push({
-        enriched: await foundry.applications.ux.TextEditor.enrichHTML(
-          content,
-          enrichmentOptions,
-        ),
-        content,
-        editable: description.editable?.(this.document) ?? true,
-        field: description.field,
-        label: description.label,
-      });
+    for await (const description of customDescriptions) {
+      itemDescriptions.push(description);
     }
 
     if (!this.item.isOwner) {

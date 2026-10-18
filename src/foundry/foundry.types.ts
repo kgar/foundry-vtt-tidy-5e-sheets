@@ -1,6 +1,9 @@
 import type { CONSTANTS } from 'src/constants';
 
-export type ContextMenuEntryCallback = (event: PointerEvent, target: HTMLElement) => void;
+export type ContextMenuEntryCallback = (
+  event: PointerEvent,
+  target: HTMLElement,
+) => void;
 
 export type ContextMenuEntry = {
   label?: string;
@@ -68,7 +71,7 @@ export type D20Roll = {
   build(
     config: BasicRollProcessConfiguration,
     dialog: BasicRollDialogConfiguration,
-    message: BasicRollMessageConfiguration
+    message: BasicRollMessageConfiguration,
   ): D20Roll;
 };
 
@@ -79,3 +82,14 @@ export type CrewArea5e =
   | [typeof CONSTANTS.SECTION_TYPE_CREW]
   | [typeof CONSTANTS.SECTION_TYPE_PASSENGERS]
   | (string & {});
+
+export type EnrichmentOptions = {
+  secrets?: boolean;
+  documents?: boolean;
+  links?: boolean;
+  rolls?: boolean;
+  embeds?: boolean;
+  custom?: boolean;
+  rollData?: object | Function;
+  relativeTo?: any;
+};
