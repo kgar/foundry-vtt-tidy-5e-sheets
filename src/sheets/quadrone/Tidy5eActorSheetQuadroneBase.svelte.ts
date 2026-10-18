@@ -65,6 +65,7 @@ import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
+import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
@@ -2167,6 +2168,32 @@ export function getTidy5eActorSheetQuadroneBase<
           'copy',
         );
       }
+    }
+
+    async _browseAddDocument(args: {
+      event: Event;
+      tabId: string;
+      data?: Record<string, any>;
+    }) {
+      const { type: datasetType, ...restDataSet } = args.data ?? {};
+
+      const result = await ItemCompendiumBrowse.selectOne(
+        this._browseAddDocumentItemTypes(args.tabId, datasetType),
+        this._detachOptions(),
+      );
+
+      if (!result) {
+        return;
+      }
+
+      const itemData = game.items.fromCompendium(await fromUuid(result), {
+        keepId: true,
+      });
+
+      // Apply the section's creation data so the item lands in the section it was browsed from.
+      foundry.utils.mergeObject(itemData, foundry.utils.expandObject(restDataSet));
+
+      return this._onDropItemCreate(itemData, args.event, 'copy');
     }
 
     async tryUseItem(item: Item5e, event: Event) {

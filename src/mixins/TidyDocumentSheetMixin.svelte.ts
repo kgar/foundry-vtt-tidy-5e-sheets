@@ -1943,6 +1943,33 @@ export function getTidyExtensibleDocumentSheetMixin<
       data?: Record<string, any>;
     }): Promise<any> {}
 
+    /**
+     * Determine item types that can be added based on the current tab.
+     * @param _tab Sheet's current tab.
+     */
+    _addDocumentItemTypes(_tab: string): string[] {
+      return [];
+    }
+
+    /**
+     * The item types to display in the compendium browser for a tab.
+     * Some sections customize. Not available for effects.
+     */
+    _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+      const types = this._addDocumentItemTypes(tabId);
+      return datasetType && types.includes(datasetType) ? [datasetType] : types;
+    }
+
+    /**
+     * Adds the chosen item from the compendium browser. The compendium counterpart to `_addDocument`.
+     * @param _args The triggering event, the tab where this happened, and section creation data.
+     */
+    async _browseAddDocument(_args: {
+      event: Event;
+      tabId: string;
+      data?: Record<string, any>;
+    }): Promise<any> {}
+
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */

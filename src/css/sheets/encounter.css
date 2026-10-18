@@ -67,6 +67,11 @@
       gap: var(--t5e-size-1x);
     }
 
+    .sidebar .traits .list-entry,
+    .sidebar .traits .list-entry .list-label {
+      margin-block-end: 0.25rem;
+    }
+
     .xp-budget {
       position: relative;
       flex: 1 1 auto;

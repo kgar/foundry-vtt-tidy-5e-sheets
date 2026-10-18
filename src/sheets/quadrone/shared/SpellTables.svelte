@@ -17,6 +17,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import SpellTable from './SpellTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   interface Props {
     sections: SpellbookSection[];
@@ -68,19 +69,7 @@
 <div class="tidy-table-container" {@attach observeResize(onResize)}>
   {#if totalSpellCount === 0 && context.editable && !hasSlots}
     <div class="spellbook-empty empty-state-container">
-      <button
-        type="button"
-        class="button button-tertiary"
-        title={localize('DND5E.SpellAdd')}
-        aria-label={localize('DND5E.SpellAdd')}
-        onclick={() =>
-          sheetDocument.sheet._addDocument({
-            tabId,
-          })}
-      >
-        <i class="fas fa-plus"></i>
-        {localize('DND5E.SpellAdd')}
-      </button>
+      {@render addSpellButtons()}
     </div>
   {:else}
     {#each sections as section (section.key)}
@@ -107,5 +96,28 @@
         />
       {/if}
     {/each}
+
+    {#if context.unlocked && context.editable}
+      <div class="spellbook-add-row empty-state-container">
+        {@render addSpellButtons()}
+      </div>
+    {/if}
   {/if}
 </div>
+
+{#snippet addSpellButtons()}
+  <button
+    type="button"
+    class="button button-tertiary"
+    title={localize('DND5E.SpellAdd')}
+    aria-label={localize('DND5E.SpellAdd')}
+    onclick={() =>
+      sheetDocument.sheet._addDocument({
+        tabId,
+      })}
+  >
+    <i class="fas fa-plus"></i>
+    {localize('DND5E.SpellAdd')}
+  </button>
+  <CompendiumBrowseButton class="button-tertiary" {sheetDocument} {tabId} />
+{/snippet}

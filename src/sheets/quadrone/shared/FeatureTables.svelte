@@ -17,6 +17,7 @@
   import { getContext } from 'svelte';
   import FeatureTable from './FeatureTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   interface Props {
     sections: FeatureSection[];
@@ -80,6 +81,13 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.FeatureAdd')}
       </button>
+      {#if context.editable}
+        <CompendiumBrowseButton
+          class="button-tertiary"
+          {sheetDocument}
+          {tabId}
+        />
+      {/if}
     </div>
   {:else}
     {#each sections as section (section.key)}

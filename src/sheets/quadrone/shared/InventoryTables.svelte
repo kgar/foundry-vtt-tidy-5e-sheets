@@ -16,6 +16,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import InventoryTable from './InventoryTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   interface Props {
     sections: InventorySection[];
@@ -90,6 +91,11 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.ItemCreate')}
       </button>
+      <CompendiumBrowseButton
+        class="button-tertiary"
+        {sheetDocument}
+        {tabId}
+      />
     </div>
   {:else}
     {#each sections as section (section.key)}

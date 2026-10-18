@@ -37,6 +37,9 @@
       </svelte:boundary>
     {/each}
   </div>
+  <div class="empty-state-container empty-state-description">
+    {localize('DND5E.FavoriteDrop')}
+  </div>
 {:else}
   <div class="favorites list">
     <div class="empty-state-container empty-state-description">
