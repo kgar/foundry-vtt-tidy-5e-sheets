@@ -1206,6 +1206,18 @@ export function getTidyExtensibleDocumentSheetMixin<
         return this._renderChild(this.document.advancement?.byId[id]?.sheet);
       }
 
+      // Special Case - Config Button Container
+
+      const configButton = target
+        .closest('.aux-config')
+        ?.querySelector<HTMLElement>('.button-config');
+
+      if (configButton) {
+        event.preventDefault();
+        configButton.click();
+        return;
+      }
+
       // Direct UUID reference
 
       const { uuid } =
