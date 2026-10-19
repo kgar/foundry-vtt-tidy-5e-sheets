@@ -207,7 +207,7 @@
         {/if}
       </div>
       <div
-        class="shield"
+        class="shield aux-config"
         data-attribution="attributes.ac"
         data-attribution-caption="DND5E.ArmorClass"
         data-tooltip-direction="DOWN"
@@ -218,18 +218,21 @@
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
-        {#if context.unlocked}
-          <button
-            aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
-            data-tooltip="DND5E.ARMORCLASS.Action.Configure"
-            type="button"
-            class="button button-borderless button-icon-only button-config"
-            data-action="showConfiguration"
-            data-config="armorClass"
-          >
-            <i class="fas fa-cog"></i>
-          </button>
-        {/if}
+        <button
+          aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+          data-tooltip="DND5E.ARMORCLASS.Action.Configure"
+          type="button"
+          class={[
+            'button button-borderless button-icon-only button-config',
+            {
+              hidden: !context.unlocked,
+            },
+          ]}
+          data-action="showConfiguration"
+          data-config="armorClass"
+        >
+          <i class="fas fa-cog"></i>
+        </button>
       </div>
     </div>
   </div>

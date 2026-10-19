@@ -155,8 +155,8 @@
                 data-tooltip={context.actor.name}
               >
                 <!-- svelte-ignore a11y_missing_attribute -->
-                <a 
-                  data-action="copyInnerText" 
+                <a
+                  data-action="copyInnerText"
                   class="cursor highlight-on-hover"
                   role="button"
                   tabindex="0"
@@ -227,7 +227,7 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="ac-container flexcol">
+        <div class="ac-container flexcol aux-config">
           <div
             class="shield"
             data-attribution="attributes.ac"
@@ -238,18 +238,21 @@
               {context.system.attributes.ac.value}
             </span>
             <span class="ac-label font-label-medium color-text-gold">AC</span>
-            {#if context.unlocked}
-              <button
-                aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
-                data-tooltip="DND5E.ARMORCLASS.Action.Configure"
-                type="button"
-                class="button button-borderless button-icon-only button-config"
-                data-action="showConfiguration"
-                data-config="armorClass"
-              >
-                <i class="fas fa-cog"></i>
-              </button>
-            {/if}
+            <button
+              aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+              data-tooltip="DND5E.ARMORCLASS.Action.Configure"
+              type="button"
+              class={[
+                'button button-borderless button-icon-only button-config',
+                {
+                  hidden: !context.unlocked,
+                },
+              ]}
+              data-action="showConfiguration"
+              data-config="armorClass"
+            >
+              <i class="fas fa-cog"></i>
+            </button>
           </div>
           <div class="ability-labels flexcol">
             {#if swapAbilityScoreAndBonusEnabled}
@@ -447,8 +450,8 @@
                 }}
                 onkeydown={(ev) => {
                   if (ev.key === 'Enter' || ev.key === ' ') {
-                  hpOverlayFocusTarget = 'temp';
-                  hpOverlayOpen = true;
+                    hpOverlayFocusTarget = 'temp';
+                    hpOverlayOpen = true;
                   }
                 }}
                 oncontextmenu={(ev) => {
