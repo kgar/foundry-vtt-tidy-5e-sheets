@@ -250,22 +250,24 @@
       </span>
     {/if}
 
-    <button
-      aria-label={configButtonTooltip}
-      type="button"
-      class={[
-        'button button-borderless button-icon-only button-config aux-config-target',
-        { invisible: editingScore },
-        { hidden: !unlocked },
-      ]}
-      data-tooltip
-      data-action="showConfiguration"
-      data-config="ability"
-      data-ability={ability.key}
-      data-tidy-sheet-part="ability-configuration-control"
-    >
-      <i class="fas fa-cog"></i>
-    </button>
+    {#if !disabled}
+      <button
+        aria-label={configButtonTooltip}
+        type="button"
+        class={[
+          'button button-borderless button-icon-only button-config aux-config-target',
+          { invisible: editingScore },
+          { hidden: !unlocked },
+        ]}
+        data-tooltip
+        data-action="showConfiguration"
+        data-config="ability"
+        data-ability={ability.key}
+        data-tidy-sheet-part="ability-configuration-control"
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+    {/if}
   </div>
   <div class="ability-save-container">
     <button
