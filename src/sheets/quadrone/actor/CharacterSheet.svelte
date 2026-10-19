@@ -319,7 +319,7 @@
           </div>
           {#if context.saves.concentration}
             {const save = $derived(context.saves.concentration)}
-            <div class="concentration flexcol">
+            <div class="concentration flexcol aux-config">
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
@@ -336,18 +336,22 @@
                   <span class="value font-data-medium color-text-default">
                     {save.mod}
                   </span>
-                {:else}
+                {/if}
+
+                {#if context.editable}
                   {const tooltip = $derived(
                     localize('DND5E.AbilityConfigure', {
                       ability: context.saves.concentration.label,
                     }),
                   )}
-                  <div class="config-container">
+                  <div
+                    class={['config-container', { hidden: !context.unlocked }]}
+                  >
                     <button
                       aria-label={tooltip}
                       data-tooltip
                       type="button"
-                      class="button button-borderless button-icon-only button-config"
+                      class="button button-borderless button-icon-only button-config aux-config-target"
                       data-action="showConfiguration"
                       data-config="ability"
                       data-ability="concentration"
