@@ -1,7 +1,7 @@
 .tidy5e-sheet:where(.application.character, .application.npc) {
 
-  /* More specific than `.empty-state-container`. */
-  .empty-state-container.empty-state-description {
+  /* More specific than `.empty-state-container`. Only for the longform new sheet states. */
+  .tidy-tab:is(.actions, .statblock) .empty-state-container.empty-state-description {
     align-items: flex-start;
     min-height: unset;
     text-align: left;

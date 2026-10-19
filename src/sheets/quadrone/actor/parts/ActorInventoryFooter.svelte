@@ -13,6 +13,7 @@
   import type { Item5e } from 'src/types/item.types';
   import type { ClassValue } from 'svelte/elements';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   interface Props {
     class?: ClassValue;
@@ -143,6 +144,12 @@
       >
         <i class="fas fa-database"></i>
       </a>
+      <CompendiumBrowseButton
+        class="button-primary flexshrink"
+        sheetDocument={context.actor}
+        tabId={CONSTANTS.TAB_ACTOR_INVENTORY}
+        iconOnly
+      />
       <a
         data-tooltip="DND5E.ItemCreate"
         class="button button-icon-only button-primary item-create flexshrink"

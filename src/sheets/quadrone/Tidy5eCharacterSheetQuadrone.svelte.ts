@@ -965,7 +965,15 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     });
 
     context.features = Object.values(features);
-    context.features.forEach(applyStandardItemHeaderActions);
+    context.features.forEach((section) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section,
+        { browseTabId: CONSTANTS.TAB_CHARACTER_FEATURES },
+      );
+    });
   }
 
   /**

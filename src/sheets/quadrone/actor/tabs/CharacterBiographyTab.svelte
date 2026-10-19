@@ -111,6 +111,25 @@
     personalityEntries.some((entry) => entry.enriched !== ''),
   );
 
+  let hasBioFieldValues = $derived(
+    bioFields.some(
+      (bioField) => bioField.value != null && bioField.value !== '',
+    ),
+  );
+
+  let hasDescriptions = $derived(
+    context.enriched.biography !== '' || context.enriched.appearance !== '',
+  );
+
+  let isEmpty = $derived(
+    !hasDescriptions && !hasPersonalityEntries && !hasBioFieldValues,
+  );
+
+  // Edit mode shows every biography field, and the sheet stays on this tab.
+  function unlockSheet() {
+    context.actor.sheet.changeSheetMode(CONSTANTS.SHEET_MODE_EDIT);
+  }
+
   let editing = $state(false);
   let contentToEdit: string = $state('');
   let enrichedText: string = $state('');
@@ -147,7 +166,20 @@
     {/key}
   {/if}
 
-  {#if context.enriched.biography !== '' || context.enriched.appearance !== '' || context.unlocked}
+  {#if isEmpty && !context.unlocked && context.editable}
+    <div class="biography-empty empty-state-container">
+      <button
+        type="button"
+        class="button button-tertiary"
+        onclick={unlockSheet}
+      >
+        <i class="fas fa-feather"></i>
+        {localize('TIDY5E.SHEET.Mode.Play')}
+      </button>
+    </div>
+  {/if}
+
+  {#if hasDescriptions || context.unlocked}
     <div class="tidy-tab-column flexcol" class:hidden={editing}>
       {@render bioEditorEntry(
         'fa-image-portrait',
@@ -182,7 +214,7 @@
       </div>
     {/if}
 
-    {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
+    {#if hasBioFieldValues || context.unlocked}
       <div class="tidy-tab-column flexcol">
         <div class="biography-editor-title title-underlined">
           <h3 class="font-title-small flexrow">
@@ -218,6 +250,24 @@
       </div>
     {/if}
   </div>
+
+  {#if context.editable && !context.unlocked}
+    <div class="sheet-footer flexrow biography-footer">
+      <div class="footer-content-right flexrow">
+        <button
+          type="button"
+          class="button button-icon-only button-primary flexshrink"
+          aria-label={localize('DND5E.DescriptionEdit', {
+            description: localize('DND5E.Biography'),
+          })}
+          data-tooltip=""
+          onclick={unlockSheet}
+        >
+          <i class="fas fa-feather"></i>
+        </button>
+      </div>
+    </div>
+  {/if}
 </div>
 
 {#snippet bioEditorEntry(

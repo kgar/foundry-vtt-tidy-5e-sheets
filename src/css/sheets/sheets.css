@@ -47,6 +47,7 @@
       flex-direction: column;
       align-items: stretch;
       flex: 1;
+      gap: var(--t5e-size-2x);
 
       :where(.button) {
         --t5e-button-padding-inline-start: var(--t5e-size-12x);
@@ -65,7 +66,8 @@
         justify-content: center;
         line-height: 1.125rem;
         min-height: 3rem;
-        padding: var(--t5e-size-3x);
+        padding-block: calc(var(--t5e-size-3x) - var(--t5e-size-halfx)) var(--t5e-size-3x);
+        padding-inline: var(--t5e-size-3x);
         text-align: center;
         transition: color var(--t5e-transition-default);
 

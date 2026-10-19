@@ -65,6 +65,7 @@ import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
+import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { getThemeV2 } from 'src/theme/theme';
 import type { AnySheetPinFlagData } from 'src/foundry/TidyFlags.types';
 import { delay } from 'src/utils/asynchrony';
@@ -2169,6 +2170,57 @@ export function getTidy5eActorSheetQuadroneBase<
           'copy',
         );
       }
+    }
+
+    /** Singleton types the actor already has (background/species) can't be browsed for. */
+    _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+      return super
+        ._browseAddDocumentItemTypes(tabId, datasetType)
+        .filter(
+          (type) =>
+            !CONFIG.Item.dataModels[type].metadata?.singleton ||
+            !this.actor.itemTypes[type].length,
+        );
+    }
+
+    async _browseAddDocument(args: {
+      event: Event;
+      tabId: string;
+      data?: Record<string, any>;
+    }) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const { type: datasetType, ...restDataSet } = args.data ?? {};
+
+      const result = await ItemCompendiumBrowse.selectOne(
+        this._browseAddDocumentItemTypes(args.tabId, datasetType),
+        this._detachOptions(),
+      );
+
+      const item = result ? await fromUuid(result) : null;
+
+      if (!item) {
+        return;
+      }
+
+      // Only section flags (custom section, advancement origin) are applied.
+      // Otherwise section data like a spell section's level would overwrite 
+      // the new item's data
+      const sectionFlags = Object.fromEntries(
+        Object.entries(restDataSet).filter(([key]) => key.startsWith('flags.')),
+      );
+
+      // Pass the document so that container contents aren't missing
+      const itemData = foundry.utils.isEmpty(sectionFlags)
+        ? item
+        : foundry.utils.mergeObject(
+            game.items.fromCompendium(item, { keepId: true }),
+            foundry.utils.expandObject(sectionFlags),
+          );
+
+      return this._onDropItemCreate(itemData, args.event, 'copy');
     }
 
     async tryUseItem(item: Item5e, event: Event) {

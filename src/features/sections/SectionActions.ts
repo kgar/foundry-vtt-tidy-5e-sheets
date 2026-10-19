@@ -14,6 +14,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { EventHelper } from 'src/utils/events';
 import type { AdvancementSection, Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
+import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 
 class SectionActions {
   getSheetTabHeaderActions(
@@ -109,6 +110,10 @@ class SectionActions {
     owner: boolean,
     unlocked: boolean,
     section: TidyItemSectionBase,
+    options?: {
+      /** Browse compendium in this tab when adding. */
+      browseTabId?: string;
+    },
   ): SectionCommand[] {
     const renameControl = this.getActorItemSectionRenameCommand(
       actor,
@@ -127,6 +132,18 @@ class SectionActions {
 
     if (canCreate(section, owner)) {
       controls.push(this.getCreateItemHeaderSectionAction());
+
+      const browseCommand = options?.browseTabId
+        ? this.getBrowseItemHeaderSectionAction(
+            actor,
+            options.browseTabId,
+            section,
+          )
+        : undefined;
+
+      if (browseCommand) {
+        controls.push(browseCommand);
+      }
     }
 
     controls.push(...runtimeCommands);
@@ -279,6 +296,38 @@ class SectionActions {
       },
       label: 'DND5E.ItemCreate',
       iconClass: 'fa-solid fa-plus',
+    };
+  }
+
+  /**
+   * Search compendiums, hiding the button when there's nothing available.
+   * Only the section's `flags.*` data is applied to the new item to avoid
+   * any extra baggage on create.
+   */
+  getBrowseItemHeaderSectionAction(
+    actor: Actor5e,
+    tabId: string,
+    section: TidyItemSectionBase,
+  ): SectionCommand | undefined {
+    const data = { type: section.key, ...section.dataset };
+    const types = actor.sheet._browseAddDocumentItemTypes(tabId, data.type);
+
+    if (!ItemCompendiumBrowse.canBrowse(types)) {
+      return undefined;
+    }
+
+    const label = ItemCompendiumBrowse.getLabel(types);
+
+    return {
+      execute({ document, event }) {
+        document.sheet._browseAddDocument({ event, tabId, data });
+      },
+      label,
+      iconClass: 'fa-solid fa-book-atlas',
+      attributes: {
+        'aria-label': label,
+        'data-tooltip': '',
+      },
     };
   }
 
