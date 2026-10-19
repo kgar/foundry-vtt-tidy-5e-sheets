@@ -77,7 +77,7 @@
       {#each skills as skill (skill.key)}
         {const modifier = $derived(getModifierData(skill.total))}
         <li
-          class="skill-list-item"
+          class="skill-list-item aux-config"
           data-reference-tooltip={references[skill.key]}
           data-tooltip-direction={tooltipDirection}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
@@ -141,18 +141,25 @@
               {modifier.value}
             </span>
           </span>
-          {#if context.unlocked}
+          {#if context.editable}
             <button
               aria-label={localize('DND5E.SkillConfigure')}
               type="button"
-              class="button button-borderless button-icon-only"
+              class={[
+                'button button-borderless button-icon-only aux-config-target',
+                {
+                  hidden: !context.unlocked,
+                },
+              ]}
               data-action="showConfiguration"
               data-config="skill"
               data-key={skill.key}
             >
               <i class="fa-solid fa-cog"></i>
             </button>
-          {:else}
+          {/if}
+
+          {#if !context.unlocked}
             <span class="passive color-text-lighter">
               {skill.passive}
             </span>

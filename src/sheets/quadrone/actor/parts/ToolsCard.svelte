@@ -87,6 +87,7 @@
         <li
           data-reference-tooltip={references[tool.key]}
           data-tooltip-direction={tooltipDirection}
+          class="aux-config"
         >
           {#if showProficiency}
             <ProficiencyCycle
@@ -140,10 +141,15 @@
               {modTotal.value}
             </span>
           </span>
-          {#if context.unlocked}
+          {#if context.editable}
             <button
               type="button"
-              class="button button-borderless button-icon-only"
+              class={[
+                'button button-borderless button-icon-only aux-config-target',
+                {
+                  hidden: !context.unlocked,
+                },
+              ]}
               data-action="showConfiguration"
               data-config="tool"
               data-key={tool.key}
