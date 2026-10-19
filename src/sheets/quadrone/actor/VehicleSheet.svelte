@@ -113,7 +113,7 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="ability initiative flexcol">
+        <div class="ability initiative flexcol aux-config">
           <div
             class="initiative-score-container"
             data-tooltip="DND5E.Initiative"
@@ -137,12 +137,15 @@
                 </span>
               </span>
             </button>
-            {#if context.unlocked}
+            {#if context.editable}
               <button
                 aria-label={localize('DND5E.InitiativeConfig')}
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  { hidden: !context.unlocked },
+                ]}
                 data-action="showConfiguration"
                 data-config="initiative"
               >
