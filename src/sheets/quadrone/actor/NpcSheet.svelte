@@ -422,21 +422,23 @@
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
-        <button
-          aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
-          data-tooltip="DND5E.ARMORCLASS.Action.Configure"
-          type="button"
-          class={[
-            'button button-borderless button-icon-only button-config',
-            {
-              hidden: !context.unlocked,
-            },
-          ]}
-          data-action="showConfiguration"
-          data-config="armorClass"
-        >
-          <i class="fas fa-cog"></i>
-        </button>
+        {#if context.editable}
+          <button
+            aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+            data-tooltip="DND5E.ARMORCLASS.Action.Configure"
+            type="button"
+            class={[
+              'button button-borderless button-icon-only button-config aux-config-target',
+              {
+                hidden: !context.unlocked,
+              },
+            ]}
+            data-action="showConfiguration"
+            data-config="armorClass"
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+        {/if}
       </div>
     </div>
   </div>

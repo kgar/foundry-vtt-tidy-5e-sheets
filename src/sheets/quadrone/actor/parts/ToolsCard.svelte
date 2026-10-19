@@ -141,20 +141,22 @@
               {modTotal.value}
             </span>
           </span>
-          <button
-            type="button"
-            class={[
-              'button button-borderless button-icon-only button-config',
-              {
-                hidden: !context.unlocked,
-              },
-            ]}
-            data-action="showConfiguration"
-            data-config="tool"
-            data-key={tool.key}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
+          {#if context.editable}
+            <button
+              type="button"
+              class={[
+                'button button-borderless button-icon-only aux-config-target',
+                {
+                  hidden: !context.unlocked,
+                },
+              ]}
+              data-action="showConfiguration"
+              data-config="tool"
+              data-key={tool.key}
+            >
+              <i class="fa-solid fa-cog"></i>
+            </button>
+          {/if}
         </li>
       {/each}
     </ul>

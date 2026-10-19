@@ -238,21 +238,23 @@
               {context.system.attributes.ac.value}
             </span>
             <span class="ac-label font-label-medium color-text-gold">AC</span>
-            <button
-              aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
-              data-tooltip="DND5E.ARMORCLASS.Action.Configure"
-              type="button"
-              class={[
-                'button button-borderless button-icon-only button-config',
-                {
-                  hidden: !context.unlocked,
-                },
-              ]}
-              data-action="showConfiguration"
-              data-config="armorClass"
-            >
-              <i class="fas fa-cog"></i>
-            </button>
+            {#if context.editable}
+              <button
+                aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
+                data-tooltip="DND5E.ARMORCLASS.Action.Configure"
+                type="button"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  {
+                    hidden: !context.unlocked,
+                  },
+                ]}
+                data-action="showConfiguration"
+                data-config="armorClass"
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            {/if}
           </div>
           <div class="ability-labels flexcol">
             {#if swapAbilityScoreAndBonusEnabled}
@@ -515,6 +517,7 @@
                 'button-borderless',
                 'button-icon-only',
                 'button-config',
+                'aux-config-target',
                 { editMode: context.unlocked, hidden: !context.unlocked },
               ]}
             >
@@ -606,11 +609,11 @@
               }}
             />
           {:else}
-            <div class="hd-row-container">
+            <div class="hd-row-container aux-config">
               <button
                 aria-label={localize('DND5E.HitDiceConfig')}
                 type="button"
-                class="unbutton hd-row"
+                class="unbutton hd-row aux-config-target"
                 data-action="showConfiguration"
                 data-config="hitDice"
                 data-tooltip="DND5E.HitDiceConfig"

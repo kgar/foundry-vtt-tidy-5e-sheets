@@ -141,21 +141,23 @@
               {modifier.value}
             </span>
           </span>
-          <button
-            aria-label={localize('DND5E.SkillConfigure')}
-            type="button"
-            class={[
-              'button button-borderless button-icon-only button-config',
-              {
-                hidden: !context.unlocked,
-              },
-            ]}
-            data-action="showConfiguration"
-            data-config="skill"
-            data-key={skill.key}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
+          {#if context.editable}
+            <button
+              aria-label={localize('DND5E.SkillConfigure')}
+              type="button"
+              class={[
+                'button button-borderless button-icon-only aux-config-target',
+                {
+                  hidden: !context.unlocked,
+                },
+              ]}
+              data-action="showConfiguration"
+              data-config="skill"
+              data-key={skill.key}
+            >
+              <i class="fa-solid fa-cog"></i>
+            </button>
+          {/if}
 
           {#if !context.unlocked}
             <span class="passive color-text-lighter">

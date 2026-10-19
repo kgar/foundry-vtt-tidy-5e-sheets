@@ -254,7 +254,7 @@
       aria-label={configButtonTooltip}
       type="button"
       class={[
-        'button button-borderless button-icon-only button-config',
+        'button button-borderless button-icon-only button-config aux-config-target',
         { invisible: editingScore },
         { hidden: !unlocked },
       ]}

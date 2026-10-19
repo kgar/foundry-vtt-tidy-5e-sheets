@@ -110,7 +110,7 @@
       aria-label={configurationLabel}
       type="button"
       class={[
-        'button button-borderless button-icon-only button-config flexshrink',
+        'button button-borderless button-icon-only button-config flexshrink aux-config-target',
         {
           hidden: visible === false,
         },

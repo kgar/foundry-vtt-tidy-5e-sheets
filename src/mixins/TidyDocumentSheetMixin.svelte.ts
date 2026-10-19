@@ -1210,7 +1210,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
       const configButton = target
         .closest('.aux-config')
-        ?.querySelector<HTMLElement>('.button-config');
+        ?.querySelector<HTMLElement>('.aux-config-target');
 
       if (configButton) {
         event.preventDefault();
