@@ -377,7 +377,7 @@
     <div class="actor-vitals-container">
       <ActorPortrait />
       <div class="actor-vitals theme-dark">
-        <div class="hp-row flexrow">
+        <div class="hp-row flexrow aux-config">
           <div
             class="meter progress hit-points"
             style={effectiveMaxHp < hpMax
@@ -502,7 +502,8 @@
               blurAfterChange={true}
               hidden={!hpTempInputFocused}
             /> -->
-          {:else if context.editable}
+          {/if}
+          {#if context.editable}
             <button
               data-action="showConfiguration"
               data-config="hitPoints"
@@ -514,7 +515,7 @@
                 'button-borderless',
                 'button-icon-only',
                 'button-config',
-                { editMode: context.unlocked },
+                { editMode: context.unlocked, hidden: !context.unlocked },
               ]}
             >
               <i class="fas fa-cog"></i>
