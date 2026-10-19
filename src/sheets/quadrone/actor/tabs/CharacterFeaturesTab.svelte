@@ -14,6 +14,9 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -45,6 +48,19 @@
       tabId: tabId,
     });
   });
+
+  const localize = FoundryAdapter.localize;
+
+  // Modules can register more item types for this tab; only say "Feature" when feats are all it holds.
+  let itemTypes = $derived<string[]>(
+    context.actor.sheet._addDocumentItemTypes(tabId),
+  );
+
+  let createLabel = $derived(
+    itemTypes.length === 1 && itemTypes[0] === CONSTANTS.ITEM_TYPE_FEAT
+      ? localize('DND5E.FeatureAdd')
+      : localize('DND5E.ItemCreate'),
+  );
 </script>
 
 <ItemsActionBar bind:searchCriteria sections={features} {tabId} />
@@ -59,4 +75,29 @@
     {searchCriteria}
     sheetDocument={context.actor}
   />
+
+  {#if context.editable}
+    <div class="sheet-footer flexrow features-footer">
+      <div class="footer-content-right flexrow">
+        <CompendiumBrowseButton
+          class="button-primary flexshrink"
+          sheetDocument={context.actor}
+          {tabId}
+          iconOnly
+        />
+        <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
+        <a
+          aria-label={createLabel}
+          role="button"
+          tabindex="0"
+          data-tooltip={createLabel}
+          class="button button-icon-only button-primary item-create flexshrink"
+          onclick={() => context.actor.sheet._addDocument({ tabId })}
+          {@attach InputAttachments.triggerClickOnKeydown}
+        >
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+    </div>
+  {/if}
 </div>
