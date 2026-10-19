@@ -89,6 +89,7 @@
 <div
   class={[
     'ability',
+    'aux-config',
     ability.key,
     {
       'has-proficiency':
@@ -248,23 +249,23 @@
         {/if}
       </span>
     {/if}
-    {#if unlocked}
-      <button
-        aria-label={configButtonTooltip}
-        type="button"
-        class={[
-          'button button-borderless button-icon-only button-config',
-          { invisible: editingScore },
-        ]}
-        data-tooltip
-        data-action="showConfiguration"
-        data-config="ability"
-        data-ability={ability.key}
-        data-tidy-sheet-part="ability-configuration-control"
-      >
-        <i class="fas fa-cog"></i>
-      </button>
-    {/if}
+
+    <button
+      aria-label={configButtonTooltip}
+      type="button"
+      class={[
+        'button button-borderless button-icon-only button-config',
+        { invisible: editingScore },
+        { hidden: !unlocked },
+      ]}
+      data-tooltip
+      data-action="showConfiguration"
+      data-config="ability"
+      data-ability={ability.key}
+      data-tidy-sheet-part="ability-configuration-control"
+    >
+      <i class="fas fa-cog"></i>
+    </button>
   </div>
   <div class="ability-save-container">
     <button
