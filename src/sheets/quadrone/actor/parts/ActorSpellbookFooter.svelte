@@ -109,10 +109,10 @@
         />
         <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
         <a
-          aria-label={localize('DND5E.ItemCreate')}
+          aria-label={localize('DND5E.SpellCreate')}
           role="button"
           tabindex="0"
-          data-tooltip="DND5E.ItemCreate"
+          data-tooltip="DND5E.SpellCreate"
           class={[
             'button button-icon-only button-primary item-create',
             { disabled: !context.editable },

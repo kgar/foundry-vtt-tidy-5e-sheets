@@ -109,15 +109,15 @@
   <button
     type="button"
     class="button button-tertiary"
-    title={localize('DND5E.SpellAdd')}
-    aria-label={localize('DND5E.SpellAdd')}
+    title={localize('DND5E.SpellCreate')}
+    aria-label={localize('DND5E.SpellCreate')}
     onclick={() =>
       sheetDocument.sheet._addDocument({
         tabId,
       })}
   >
     <i class="fas fa-plus"></i>
-    {localize('DND5E.SpellAdd')}
+    {localize('DND5E.SpellCreate')}
   </button>
   <CompendiumBrowseButton class="button-tertiary" {sheetDocument} {tabId} />
 {/snippet}
