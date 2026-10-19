@@ -1206,7 +1206,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         return this._renderChild(this.document.advancement?.byId[id]?.sheet);
       }
 
-      // Special Case - Config Button Container
+      // Special Case - Aux Config Button Container
 
       const configButton = target
         .closest('.aux-config')
