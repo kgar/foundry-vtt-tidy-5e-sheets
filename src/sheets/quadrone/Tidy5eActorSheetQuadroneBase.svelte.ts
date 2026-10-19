@@ -2170,7 +2170,7 @@ export function getTidy5eActorSheetQuadroneBase<
       }
     }
 
-    /** Singleton types the actor already has (class/background) can't be browsed for. */
+    /** Singleton types the actor already has (background/species) can't be browsed for. */
     _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
       return super
         ._browseAddDocumentItemTypes(tabId, datasetType)
