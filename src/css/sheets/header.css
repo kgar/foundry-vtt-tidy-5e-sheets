@@ -478,6 +478,9 @@
         width: var(--vitals-width);
         object-fit: cover;
         object-position: top center;
+        inline-size: 100%;
+        block-size: auto;
+        aspect-ratio: 1;
       }
 
       &::before {
@@ -1383,6 +1386,7 @@
     }
 
     .sheet-header .actor-vitals-container {
+      --vitals-width: 10.5rem;
       padding-block-end: 1.75rem;
       max-width: 10.5rem;
 
