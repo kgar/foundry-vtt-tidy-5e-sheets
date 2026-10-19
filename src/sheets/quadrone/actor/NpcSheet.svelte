@@ -371,19 +371,29 @@
                 <i class="fas fa-dice"></i>
               </button>
 
-              <div class={['death-saves', { dying: context.showDeathSaves }]}>
-                {#if context.unlocked}
+              <div
+                class={[
+                  'death-saves',
+                  'aux-config',
+                  { dying: context.showDeathSaves },
+                ]}
+              >
+                {#if context.editable}
                   <button
                     aria-label={localize('DND5E.DeathSaveConfigure')}
                     data-tooltip="DND5E.DeathSaveConfigure"
                     type="button"
-                    class="button button-borderless button-icon-only button-config"
+                    class={[
+                      'button button-borderless button-icon-only button-config aux-config-target',
+                      { hidden: !context.unlocked },
+                    ]}
                     data-action="showConfiguration"
                     data-config="death"
                   >
                     <i class="fas fa-cog"></i>
                   </button>
-                {:else}
+                {/if}
+                {#if !context.unlocked}
                   <button
                     type="button"
                     class="button button-borderless button-icon-only"
