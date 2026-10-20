@@ -14,7 +14,7 @@
 
 {#if context.favorites.length}
   <div class="favorites list">
-    {#each context.favorites as favorite}
+    {#each context.favorites as favorite (favorite.type + favorite.id)}
       <svelte:boundary
         onerror={(e) =>
           error(
@@ -36,6 +36,9 @@
         {/if}
       </svelte:boundary>
     {/each}
+  </div>
+  <div class="empty-state-container empty-state-description">
+    {localize('DND5E.FavoriteDrop')}
   </div>
 {:else}
   <div class="favorites list">

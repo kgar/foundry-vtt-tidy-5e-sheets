@@ -1,7 +1,9 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -24,7 +26,9 @@
   }
 </script>
 
-<div class="tab-content vehicle-tab-content vehicle-description-content flexcol">
+<div
+  class="tab-content vehicle-tab-content vehicle-description-content flexcol"
+>
   {#if editing}
     {#key contentToEdit}
       <article class="flexible-editor-container singleton">
@@ -43,24 +47,26 @@
     {/key}
   {/if}
 
-  <article class="description-editor-container" class:hidden={editing}>
+  <article
+    class="description-editor-container"
+    class:hidden={editing}
+    data-prop="system.details.biography.value"
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+  >
     <div class="description-editor-title">
       <h3 class="font-title-small flexrow">
         <i class="fa-solid fa-notebook flexshrink"></i>
         <span class="flex1">{localize('DND5E.Description')}</span>
-        {#if context.editable}
-          <a
-            class={['button button-borderless button-icon-only flexshrink']}
-            onclick={() =>
-              edit(
-                context.actor.system.details.biography.value,
-                context.enriched.biography,
-                'system.details.biography.value',
-              )}
-          >
-            <i class="fa-solid fa-feather"></i>
-          </a>
-        {/if}
+        <DescriptionControls
+          onEdit={context.editable
+            ? () =>
+                edit(
+                  context.actor.system.details.biography.value,
+                  context.enriched.biography,
+                  'system.details.biography.value',
+                )
+            : undefined}
+        />
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>

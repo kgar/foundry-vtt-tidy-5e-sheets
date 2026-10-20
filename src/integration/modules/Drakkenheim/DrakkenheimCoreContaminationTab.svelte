@@ -4,6 +4,7 @@
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getContext, tick } from 'svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   const context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -28,7 +29,7 @@
     DRAKKENHEIM_CORE_CONSTANTS.MAX_CONTAMINATION_LEVEL,
     1,
   );
-  let levelButtons = $state<(HTMLButtonElement | undefined)[]>([]);
+  let levelButtons = $state<(HTMLElement | undefined)[]>([]);
   let flashLevel = $state<number | null>(null);
 
   let enrichedPromises = levels.map((level) =>
@@ -98,6 +99,15 @@
     flashLevel = null;
   }
 
+  /** Have to allow enrichers to click in */
+  function onSymptomClick(ev: MouseEvent, level: number): void {
+    const target = ev.target as HTMLElement;
+    if (target.closest('a, button, [role="button"]') !== ev.currentTarget) {
+      return;
+    }
+    onContaminationLevelChanged(level);
+  }
+
   async function clearContamination(): Promise<void> {
     await context.actor.update({
       [DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP]: 0,
@@ -162,17 +172,14 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </div>
   <div class="contamination-levels flexcol">
-    <button
-      type="button"
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <div
+      role="button"
       tabindex={0}
       class:active={0 === contaminationLevel}
       class="symptom level-0"
-      onclick={() => clearContamination()}
-      onkeydown={(ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          clearContamination();
-        }
-      }}
+      onclick={(ev) => onSymptomClick(ev, 0)}
+      {@attach InputAttachments.triggerClickOnKeydown}
     >
       <span class="level-icon">
         <i class="fa-solid fa-heart"></i>
@@ -181,34 +188,29 @@
         {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Empty')}
       </span>
       {#if contaminationLevel > 0}
-        <div
+        <button
+          type="button"
           onclick={() => clearContamination()}
-          tabindex={0}
-          role="button"
-          onkeydown={(ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-              clearContamination();
-            }
-          }}
           class="button button-secondary clear-contamination"
         >
           <i class="fa-solid fa-syringe"></i>
           {localize('TIDY5E.INTEGRATION.Drakkenheim.Contamination.Action.Clear')}
-        </div>
+        </button>
       {/if}
-    </button>
+    </div>
     {#each enrichedPromises as promise, i}
       {const level = $derived(i + 1)}
-      <button
-        type="button"
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <div
+        role="button"
         tabindex={0}
         bind:this={levelButtons[i]}
         class:active={level <= contaminationLevel}
         class:contamination-level-gained={flashLevel === level}
         class="symptom"
-        onclick={() => onContaminationLevelChanged(level)}
-        onkeydown={(ev) => onContaminationLevelChanged(level)}
+        onclick={(ev) => onSymptomClick(ev, level)}
         onanimationend={onContaminationFlashEnd}
+        {@attach InputAttachments.triggerClickOnKeydown}
       >
         <span class="level-icon">
           <i class="fa-solid fa-meteor"></i>
@@ -217,7 +219,7 @@
         {#await promise then text}
           {@html text}
         {/await}
-      </button>
+      </div>
     {/each}
   </div>
 </div>

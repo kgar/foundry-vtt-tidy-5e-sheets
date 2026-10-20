@@ -49,6 +49,7 @@
   data-tidy-draggable
   data-favorite-id={favorite.id}
   data-tidy-sheet-part="favorite-entry"
+  data-reference-tooltip={favorite.reference}
 >
   <FavoriteRollButton
     data-action="activity-use"
@@ -56,6 +57,7 @@
     title={favorite.activity.name}
     name={favorite.activity.name}
     {subtitle}
+    useTooltip={!favorite.reference}
   />
   <div class="favorite-context stacked">
     <span class="primary">

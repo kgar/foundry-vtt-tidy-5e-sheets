@@ -3,6 +3,7 @@
   import ItemProperties from 'src/sheets/quadrone/item/parts/ItemProperties.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import FieldIdentifier from 'src/sheets/quadrone/item/parts/FieldIdentifier.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -74,17 +75,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <FormGroup
-    labelFor="{appId}-identifier"
-    document={context.document}
-    field={context.fields.identifier}
-    config={{
-      value: context.source.identifier,
-      placeholder: context.item.identifier,
-      id: `${appId}-identifier`,
-    }}
-    hint="DND5E.IdentifierError"
-  />
+  <FieldIdentifier />
 
   <div class="form-group stacked container-properties checkbox-grid">
     <label>{localize('DND5E.CONTAINER.FIELDS.properties.label')}</label>

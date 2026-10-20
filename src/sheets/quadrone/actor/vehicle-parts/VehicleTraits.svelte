@@ -8,7 +8,7 @@
   import ActorTraitPills from '../parts/ActorTraitPills.svelte';
   import VehicleTrait from './VehicleTrait.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let appId = $derived(context.document.id);
@@ -517,15 +517,15 @@
         unlocked={context.unlocked}
       >
         {#snippet editableValues()}
-          <NumberInputQuadrone
+          <input
+            type="number"
             id="{appId}-sidebar-actions-value"
-            document={context.actor}
-            field="system.attributes.actions.value"
+            data-name="system.attributes.actions.value"
             value={context.system.attributes.actions.value}
             min="0"
             max="3"
             placeholder="—"
-            selectOnFocus={true}
+            {@attach InputAttachments.selectOnFocus}
             disabled={!context.editable}
           />
         {/snippet}
@@ -608,7 +608,7 @@
     pillClass="positive trait-resistance"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 
@@ -626,7 +626,7 @@
     pillClass="positive trait-damage-immunity"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 
@@ -658,7 +658,7 @@
     pillClass="negative trait-vulnerability"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
-      pillClass: 'physical-bypass',
+      pillClass: 'warning',
     }}
   />
 </div>

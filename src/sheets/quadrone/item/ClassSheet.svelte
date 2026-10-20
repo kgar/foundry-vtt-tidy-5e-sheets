@@ -5,6 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import ItemDescriptionTabControls from './parts/ItemDescriptionTabControls.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import { isNil } from 'src/utils/data';
@@ -73,24 +74,6 @@
             </span>
           </li>
         {/if}
-        <li>
-          <!--svelte-ignore a11y_missing_attribute-->
-          <a
-            role="button"
-            tabindex="0"
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.identifier}
-            aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
-          >
-            <span class="text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
       </ul>
     </div>
   {/snippet}
@@ -135,7 +118,11 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      <ItemDescriptionTabControls {selectedTabId} />
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 

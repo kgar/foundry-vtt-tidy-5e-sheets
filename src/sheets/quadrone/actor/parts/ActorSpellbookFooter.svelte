@@ -12,6 +12,8 @@
   import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
   import SpellcastingNpcSummaryCard from './SpellcastingNpcSummaryCard.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   interface Props {
     class?: ClassValue;
@@ -98,23 +100,29 @@
           ></i>
         </button>
       {/if}
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        aria-label={localize('DND5E.ItemCreate')}
-        role="button"
-        tabindex="0"
-        data-tooltip="DND5E.ItemCreate"
-        class="button button-icon-only button-primary item-create"
-        class:disabled={!context.editable}
-        onclick={onAddClicked}
-        onkeydown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            onAddClicked();
-          }
-        }}
-      >
-        <i class="fas fa-plus"></i>
-      </a>
+      <div class="spellbook-footer-actions">
+        <CompendiumBrowseButton
+          class="button-primary"
+          sheetDocument={context.actor}
+          tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+          iconOnly
+        />
+        <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
+        <a
+          aria-label={localize('DND5E.SpellCreate')}
+          role="button"
+          tabindex="0"
+          data-tooltip="DND5E.SpellCreate"
+          class={[
+            'button button-icon-only button-primary item-create',
+            { disabled: !context.editable },
+          ]}
+          onclick={onAddClicked}
+          {@attach InputAttachments.triggerClickOnKeydown}
+        >
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
     </div>
   {/if}
 </div>

@@ -19,6 +19,26 @@
 
   const localize = FoundryAdapter.localize;
 
+  let isNew = $derived(context.sheet.focusedPlaceholderId === placeholder.id);
+
+  // Give focus to the placeholder name immediately
+  let editable = $derived(context.unlocked || isNew);
+
+  function focusIfNew(input: HTMLInputElement) {
+    if (isNew) {
+      input.focus();
+    }
+  }
+
+  function onNameLoseFocus(event: FocusEvent & { currentTarget: HTMLElement }) {
+    if (
+      isNew &&
+      !event.currentTarget.contains(event.relatedTarget as Node | null)
+    ) {
+      context.sheet.focusedPlaceholderId = undefined;
+    }
+  }
+
   // TODO: Support video portraits even when not dealing with an actor.
 </script>
 
@@ -37,14 +57,15 @@
   </a>
 </div>
 <div class="tidy-table-cell text-cell primary item-label flexcol">
-  <div class="actor-name">
-    {#if context.unlocked}
+  <div class="actor-name" onfocusout={onNameLoseFocus}>
+    {#if editable}
       <input
         class="placeholder-name"
         type="text"
         data-name="placeholder:name"
         value={placeholder.name}
         {@attach InputAttachments.selectOnFocus}
+        {@attach focusIfNew}
         placeholder={localize(
           'TIDY5E.ENCOUNTER.Placeholder.Field.Name',
         )}

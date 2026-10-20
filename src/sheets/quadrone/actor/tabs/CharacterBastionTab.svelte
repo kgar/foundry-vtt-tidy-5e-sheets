@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DescriptionControls from 'src/sheets/quadrone/shared/DescriptionControls.svelte';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -36,20 +37,20 @@
   );
 
   let hasDefenders = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.defenders.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.defenders.some((d) => !!d.uuid),
     ),
   );
 
   let hasHirelings = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.hirelings.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.hirelings.some((d) => !!d.uuid),
     ),
   );
 
   let hasCreatures = $derived(
-    context.facilities.special.builtFacilities.some((c: ChosenFacilityContext) =>
-      c.creatures.some((d) => !!d.uuid),
+    context.facilities.special.builtFacilities.some(
+      (c: ChosenFacilityContext) => c.creatures.some((d) => !!d.uuid),
     ),
   );
 
@@ -516,21 +517,23 @@
       </section>
     {/if}
 
-    <section class="description">
+    <section
+      class="description"
+      data-prop="system.bastion.description"
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       <div class="bastion-header">
         <h3 class="font-title-small flexrow">
           <i class="fa-solid fa-books flexshrink"></i>
           <span class="flex1">
             {localize('DND5E.ACTIVITY.FIELDS.description.label')}
           </span>
-          {#if context.editable}
-            <a
-              class="button button-borderless button-icon-only flexshrink"
-              onclick={() => (editing = context.editable)}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </a>
-          {/if}
+          <DescriptionControls
+            editLabel={localize('DND5E.DescriptionEdit', {
+              description: localize('DND5E.TABLEOFCONTENTS.Description'),
+            })}
+            onEdit={context.editable ? () => (editing = true) : undefined}
+          />
         </h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>

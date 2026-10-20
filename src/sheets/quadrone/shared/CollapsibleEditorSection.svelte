@@ -3,9 +3,9 @@
   import { isNil } from 'src/utils/data';
   import GoldHeaderUnderline from './GoldHeaderUnderline.svelte';
   import type { ItemDescription } from 'src/types/item.types';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
-  const localize = FoundryAdapter.localize;
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import DescriptionControls from './DescriptionControls.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   interface Props {
     expanded: boolean;
@@ -29,19 +29,20 @@
   let hasContent = $derived(!isNil(itemDescription.content, ''));
 </script>
 
-<section class={['collapsible-editor', hasContent ? undefined : 'no-content']}>
+<section
+  class={['collapsible-editor', hasContent ? undefined : 'no-content']}
+  data-prop={itemDescription.field}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+>
   <!-- Header -->
   <header>
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a class="title" 
+    <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
+    <a
+      class="title"
       onclick={() => (expanded = !expanded)}
       role="button"
       tabindex="0"
-      onkeydown={(ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          expanded = !expanded;
-        }
-      }}
+      {@attach InputAttachments.triggerClickOnKeydown}
     >
       <!-- Title -->
       {itemDescription.label}
@@ -51,24 +52,12 @@
         ></i>
       {/if}
     </a>
-    {#if !disabled}
-      <!-- Journal Edit Button -->
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        class={['edit', 'button-icon-only']}
-        aria-label={localize('EDITOR.DND5E.DescriptionEdit', { description: localize('DND5E.Description') })}
-        onclick={() => onEdit?.({ document, itemDescription })}
-        role="button"
-        tabindex="0"
-        onkeydown={(ev) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            onEdit?.({ document, itemDescription });
-          }
-        }}
-      >
-        <i class="fas fa-feather fa-fw"></i>
-      </a>
-    {/if}
+    <DescriptionControls
+      buttonClass={['control', 'button-icon-only']}
+      onEdit={!disabled
+        ? () => onEdit?.({ document, itemDescription })
+        : undefined}
+    />
     <GoldHeaderUnderline />
   </header>
 

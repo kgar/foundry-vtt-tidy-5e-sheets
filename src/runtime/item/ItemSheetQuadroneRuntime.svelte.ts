@@ -6,25 +6,25 @@ import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { CustomContent, Tab } from 'src/types/types';
-import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
-import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
-import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemBackgroundDetailsTab.svelte';
-import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
-import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
-import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
+import ItemActivitiesTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
+import ItemAdvancementTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackgroundDetailsTab from 'src/sheets/quadrone/item/tabs/ItemBackgroundDetailsTab.svelte';
+import ItemClassDetailsTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
+import ItemConsumableDetailsTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemContainerContentsTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
 import { buildContainerContentsSettingsTab } from 'src/sheets/quadrone/container/settings/ContainerContentsSettingsTab';
-import ItemContainerDetailsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
-import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
-import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
-import ItemEquipmentDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEquipmentDetailsTab.svelte';
-import ItemFacilityDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemFacilityDetailsTab.svelte';
-import ItemFeatDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemFeatDetailsTab.svelte';
-import ItemLootDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemLootDetailsTab.svelte';
-import ItemSpeciesDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpeciesDetailsTab.svelte';
-import ItemSpellDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSpellDetailsTab.svelte';
-import ItemSubclassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSubclassDetailsTab.svelte';
-import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
-import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemContainerDetailsTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
+import ItemDescriptionsTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
+import ItemEffectsTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
+import ItemEquipmentDetailsTab from 'src/sheets/quadrone/item/tabs/ItemEquipmentDetailsTab.svelte';
+import ItemFacilityDetailsTab from 'src/sheets/quadrone/item/tabs/ItemFacilityDetailsTab.svelte';
+import ItemFeatDetailsTab from 'src/sheets/quadrone/item/tabs/ItemFeatDetailsTab.svelte';
+import ItemLootDetailsTab from 'src/sheets/quadrone/item/tabs/ItemLootDetailsTab.svelte';
+import ItemSpeciesDetailsTab from 'src/sheets/quadrone/item/tabs/ItemSpeciesDetailsTab.svelte';
+import ItemSpellDetailsTab from 'src/sheets/quadrone/item/tabs/ItemSpellDetailsTab.svelte';
+import ItemSubclassDetailsTab from 'src/sheets/quadrone/item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemToolDetailsTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
+import ItemWeaponDetailsTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
 import { CustomContentManager } from '../content/CustomContentManager';
 import { TabManager } from '../tab/TabManager';
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
@@ -364,7 +364,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
-        component: ItemActivitiesQuadroneTab,
+        component: ItemActivitiesTab,
         type: 'svelte',
       },
       enabled: (context: ItemSheetQuadroneContext) =>
@@ -388,7 +388,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.ADVANCEMENT.Label',
       content: {
-        component: ItemAdvancementQuadroneTab,
+        component: ItemAdvancementTab,
         type: 'svelte',
       },
       types: new Set<string>([
@@ -404,7 +404,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemClassDetailsQuadroneTab,
+        component: ItemClassDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CLASS]),
@@ -414,7 +414,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemConsumableDetailsQuadroneTab,
+        component: ItemConsumableDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -427,7 +427,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Contents',
       content: {
-        component: ItemContainerContentsQuadroneTab,
+        component: ItemContainerContentsTab,
         type: 'svelte',
       },
       tabOptionsBuilder: (context, tabId) =>
@@ -442,7 +442,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemBackgroundDetailsQuadroneTab,
+        component: ItemBackgroundDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_BACKGROUND]),
@@ -455,7 +455,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemContainerDetailsQuadroneTab,
+        component: ItemContainerDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -468,7 +468,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemEquipmentDetailsQuadroneTab,
+        component: ItemEquipmentDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -481,7 +481,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemFacilityDetailsQuadroneTab,
+        component: ItemFacilityDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_FACILITY]),
@@ -491,7 +491,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemFeatDetailsQuadroneTab,
+        component: ItemFeatDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_FEAT]),
@@ -501,7 +501,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemLootDetailsQuadroneTab,
+        component: ItemLootDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -514,7 +514,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemSpellDetailsQuadroneTab,
+        component: ItemSpellDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_SPELL]),
@@ -524,7 +524,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemSubclassDetailsQuadroneTab,
+        component: ItemSubclassDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_SUBCLASS]),
@@ -534,7 +534,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemToolDetailsQuadroneTab,
+        component: ItemToolDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -547,7 +547,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemWeaponDetailsQuadroneTab,
+        component: ItemWeaponDetailsTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -560,7 +560,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemSpeciesDetailsQuadroneTab,
+        component: ItemSpeciesDetailsTab,
         type: 'svelte',
       },
       types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
@@ -570,7 +570,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Description',
       content: {
-        component: ItemDescriptionsQuadroneTab,
+        component: ItemDescriptionsTab,
         type: 'svelte',
       },
       types: new Set<string>([
@@ -596,7 +596,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.EFFECT.Tab',
       content: {
-        component: ItemEffectsQuadroneTab,
+        component: ItemEffectsTab,
         type: 'svelte',
       },
       enabled: (context) =>

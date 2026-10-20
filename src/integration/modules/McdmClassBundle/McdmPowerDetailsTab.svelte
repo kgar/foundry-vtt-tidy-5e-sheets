@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FieldActivation from 'src/sheets/quadrone/item/parts/FieldActivation.svelte';
   import FieldDuration from 'src/sheets/quadrone/item/parts/FieldDuration.svelte';
+  import FieldIdentifier from 'src/sheets/quadrone/item/parts/FieldIdentifier.svelte';
   import FieldRange from 'src/sheets/quadrone/item/parts/FieldRange.svelte';
   import FieldTargets from 'src/sheets/quadrone/item/parts/FieldTargets.svelte';
   import FieldUses from 'src/sheets/quadrone/item/parts/FieldUses.svelte';
@@ -22,6 +23,10 @@
     {localize('MCDMCB.TALENT.POWERS.SHEET.Details')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
+
+  {#if 'identifier' in context.system}
+    <FieldIdentifier />
+  {/if}
 
   <!-- Power Order -->
   <div class="form-group">

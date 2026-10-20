@@ -56,11 +56,11 @@ export function getDragAndDropMixin(BaseApplication: any) {
     }
 
     _onDragStart(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     ) {}
 
     _onDragOver(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     ) {
       const data =
         foundry.applications.ux.DragDrop.implementation.getPayload(event);
@@ -76,7 +76,16 @@ export function getDragAndDropMixin(BaseApplication: any) {
     }
 
     _onDrop(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+      /** The triggering event. */
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      /**
+       * Whenever an async operation occurs, the data transfer content can get emptied out.
+       * When that occurs in a child class, the parent class will pull undefined transfer data
+       * and fail to handle the drop.
+       * Instead, we can pass down any drag data that was parsed by a child class
+       * so that the base class can continue the work.
+       */
+      currentDragData: Record<string, any> | undefined,
     ): Promise<any> | undefined {
       return undefined;
     }
@@ -100,7 +109,7 @@ export function getDragAndDropMixin(BaseApplication: any) {
      */
     _dropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data?: { uuid?: string }
+      data?: { uuid?: string },
     ): DropEffectValue {
       data ??= CONFIG.ux.DragDrop.getPayload(event);
       const allowed = this._allowedDropBehaviors(event, data);
@@ -140,7 +149,7 @@ export function getDragAndDropMixin(BaseApplication: any) {
      */
     _defaultDropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: any
+      data: any,
     ): DropEffectValue {
       return 'copy';
     }

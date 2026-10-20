@@ -6,6 +6,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import FieldIdentifier from '../parts/FieldIdentifier.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -23,15 +24,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <FormGroup
-    labelFor="{appId}-identifier"
-    field={context.fields.identifier}
-    document={context.item}
-    config={{
-      id: `${appId}-identifier`,
-      placeholder: context.item.identifier,
-      value: context.source.identifier,
-    }}
+  <FieldIdentifier
     hint="{localize('DND5E.ClassIdentifierHint', {
       identifier: context.item.identifier,
     })} {localize('DND5E.IdentifierError')}"

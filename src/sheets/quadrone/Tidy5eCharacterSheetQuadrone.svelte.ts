@@ -56,6 +56,7 @@ import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/Invento
 import { FeatureRowActionRuntime } from 'src/runtime/table-row-actions/FeatureRowActionRuntime.svelte';
 import { SpellRowActionRuntime } from 'src/runtime/table-row-actions/SpellRowActionRuntime.svelte';
 import { FeatureColumnRuntime } from 'src/runtime/table-columns/FeatureColumnRuntime';
+import { Tooltip } from 'src/tooltips/Tooltip';
 
 export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -571,13 +572,15 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
    * Prepare favorites for display.
    */
   async _prepareFavorites() {
-    let entries: FavoriteContextEntry[] = [];
+    const entries: Map<string, FavoriteContextEntry> = new Map();
+    const showFavoriteReferenceTooltips =
+      SettingsProvider.settings.referenceTooltipFavorite.get();
 
-    let favorites = this.actor.system.favorites.sort(
+    const favorites = this.actor.system.favorites.sort(
       (a: CharacterFavorite, b: CharacterFavorite) => a.sort - b.sort,
     ) as CharacterFavorite[];
 
-    for (let { id, type } of favorites) {
+    for (const { id, type } of favorites) {
       const favorite = await fromUuid(id, { relative: this.actor });
       if (
         !favorite &&
@@ -589,7 +592,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       if (type === 'item') {
         // Only include a supposed "item" type if the actor owns it
         this.actor.items.get(favorite.id) &&
-          entries.push({
+          entries.set(id, {
             id,
             type: 'item',
             item: favorite,
@@ -597,25 +600,34 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
               favorite.type === CONSTANTS.SHEET_TYPE_CONTAINER
                 ? await favorite.system.computeCapacity()
                 : null,
+            reference: showFavoriteReferenceTooltips
+              ? Tooltip.getItemReference(favorite)
+              : undefined,
           });
         continue;
       } else if (type === 'effect') {
         // Only include a supposed "effect" type if its document name matches
         // TODO: Find a performant way to tell if this actor should be able to see this effect
         favorite.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT &&
-          entries.push({
+          entries.set(id, {
             id,
             type: 'effect',
             effect: favorite,
+            reference: showFavoriteReferenceTooltips
+              ? Tooltip.getEffectReference(favorite)
+              : undefined,
           });
         continue;
       } else if (type === 'activity') {
         // Only include a supposed "activity" type the actor owns it
         this.actor.items.get(favorite.item.id) &&
-          entries.push({
+          entries.set(id, {
             id,
             type: 'activity',
             activity: favorite,
+            reference: showFavoriteReferenceTooltips
+              ? Tooltip.getActivityReference(favorite)
+              : undefined,
           });
         continue;
       } else if (type === 'slots') {
@@ -635,17 +647,17 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
         const hasNoModelOrIsSingleLevel = !model || model.isSingleLevel;
 
-        let name = hasNoModelOrIsSingleLevel
+        const name = hasNoModelOrIsSingleLevel
           ? game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`)
           : game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
               n: level,
             });
 
-        let img = hasNoModelOrIsSingleLevel
+        const img = hasNoModelOrIsSingleLevel
           ? model?.img || CONFIG.DND5E.spellcasting.pact.img
           : model.img.replace('{id}', id);
 
-        entries.push({
+        entries.set(id, {
           type: 'slots',
           id,
           uses,
@@ -665,35 +677,27 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
         let reference;
 
         if (type === 'tool') {
-          if (SettingsProvider.settings.referenceTooltipTool.get()) {
-            reference = dnd5e.documents.Trait.getBaseItemUUID(
-              CONFIG.DND5E.tools[id]?.id ?? '',
-            );
-          }
-
+          reference = Tooltip.getToolReference(id);
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
           }));
         } else if (type === 'skill') {
-          if (SettingsProvider.settings.referenceTooltipSkill.get()) {
-            reference = CONFIG.DND5E.skills[id]?.reference;
-          }
-
+          reference = Tooltip.getSkillReference(id);
           ({ icon: img, label: name } = CONFIG.DND5E.skills[id]);
         }
 
-        entries.push({
+        entries.set(id, {
           type,
           id,
           key: id,
           img: img,
           name,
-          reference,
+          reference: showFavoriteReferenceTooltips ? reference : undefined,
         });
       }
     }
 
-    return entries;
+    return [...entries.values()];
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext, usesSheetTab: boolean) {
@@ -961,7 +965,15 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     });
 
     context.features = Object.values(features);
-    context.features.forEach(applyStandardItemHeaderActions);
+    context.features.forEach((section) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section,
+        { browseTabId: CONSTANTS.TAB_CHARACTER_FEATURES },
+      );
+    });
   }
 
   /**
@@ -1070,7 +1082,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const themeSettings = ThemeQuadrone.getSheetThemeSettings({
       doc: this.actor,
     });
-    if (themeSettings.useHeaderBackground) {
+    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
 
@@ -1258,26 +1270,27 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ) {
     const dragData =
       event.dataTransfer!.getData('application/json') ||
       event.dataTransfer!.getData('text/plain');
 
     if (!dragData) {
-      return await super._onDrop(event);
+      return await super._onDrop(event, currentDragData);
     }
 
     let data;
 
     try {
-      data = JSON.parse(dragData);
+      data = currentDragData ?? JSON.parse(dragData);
     } catch (e) {
       error(
         `An error occurred while handling a drop to character ${this.document.name} - ${this.document.uuid}`,
         false,
         e,
       );
-      return await super._onDrop(event);
+      return await super._onDrop(event, data ?? currentDragData);
     }
 
     if (event.target.closest('.favorites')) {
@@ -1301,7 +1314,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       return this._onDropOccupant(event, data);
     }
 
-    return await super._onDrop(event);
+    return await super._onDrop(event, data ?? currentDragData);
   }
 
   /**

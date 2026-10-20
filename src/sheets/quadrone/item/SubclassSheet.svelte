@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import ItemDescriptionTabControls from './parts/ItemDescriptionTabControls.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import SpellcastingSidebarPills from './parts/SpellcastingSidebarPills.svelte';
@@ -25,39 +26,28 @@
     <div>
       <h4>{localize('TYPES.Item.subclass')}</h4>
       <ul class="pills stacked">
-        <li>
-          <a
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.identifier}
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <span class="text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
-        <li>
-          <a
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.classIdentifier}
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <span class="text-normal">
-              {localize('DND5E.ClassIdentifier')}
-            </span>
-            <span class="hyphens-auto">
-              {context.item.system.classIdentifier}
-            </span>
-          </a>
-        </li>
         <SpellcastingSidebarPills />
       </ul>
     </div>
+  {/snippet}
+
+  {#snippet identifierPills(identifierPill)}
+    <li>
+      <a
+        class="pill interactive centered wrapped copy-to-clipboard"
+        data-action="copyValue"
+        data-value={context.item.system.classIdentifier}
+        {@attach InputAttachments.triggerClickOnKeydown}
+      >
+        <span class="text-normal">
+          {localize('TYPES.Item.class')}
+        </span>
+        <span class="hyphens-auto">
+          {context.item.system.classIdentifier}
+        </span>
+      </a>
+    </li>
+    {@render identifierPill()}
   {/snippet}
 </Sidebar>
 
@@ -80,7 +70,11 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      <ItemDescriptionTabControls {selectedTabId} />
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 

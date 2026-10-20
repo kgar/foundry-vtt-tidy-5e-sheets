@@ -12,27 +12,27 @@
   import ItemChargesSummary from './parts/header/ItemChargesSummary.svelte';
   import ItemRechargeSummary from './parts/header/ItemRechargeSummary.svelte';
   import { isNil } from 'src/utils/data';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
 
   let selectedTabId: string = $derived(context.currentTabId);
-
   let itemNameEl: HTMLElement | undefined = $state();
 
-  let consumableTypeConfig = $derived(
+  const consumableTypeConfig = $derived(
     CONFIG.DND5E.consumableTypes[context.system.type.value],
   );
 
-  let typeLabel = $derived(
+  const typeLabel = $derived(
     consumableTypeConfig?.label ?? context.system.type.value,
   );
 
-  let subtypeLabel = $derived(
+  const subtypeLabel = $derived(
     consumableTypeConfig?.subtypes?.[context.system.type.subtype] ??
       context.system.type.subtype,
   );
 
-  let subtitle = $derived(
+  const subtitle = $derived(
     [typeLabel, subtypeLabel].filter((x) => !isNil(x, '')).join(', '),
   );
 </script>

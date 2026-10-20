@@ -59,7 +59,7 @@ export interface Encounter5eSystem {
   description: Group5eDescription;
   details: Group5eDetails;
   members: Encounter5eMember[];
-  placeMembers(): Promise<void>;
+  placeMembers(config?: { combatBehavior?: string }): Promise<void>;
   removeMember(id: string): Promise<Actor5e>;
   rollQuantities(): Promise<Actor5e>;
 }

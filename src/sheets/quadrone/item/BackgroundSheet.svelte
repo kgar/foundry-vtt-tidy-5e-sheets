@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import ItemDescriptionTabControls from './parts/ItemDescriptionTabControls.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
-  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -20,32 +19,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar>
-  {#snippet belowStateSwitches()}
-    <div>
-      <h4>{localize('TYPES.Item.background')}</h4>
-      <ul class="pills stacked">
-        <li>
-          <a
-            role="button"
-            tabindex="0"
-            class="pill interactive centered wrapped copy-to-clipboard"
-            data-action="copyValue"
-            data-value={context.item.system.identifier}
-            {@attach InputAttachments.triggerClickOnKeydown}
-          >
-            <span class="centered text-normal">
-              {localize('DND5E.Identifier')}
-            </span>
-            <span class="hyphens-auto centered">
-              {context.item.system.identifier}
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  {/snippet}
-</Sidebar>
+<Sidebar />
 
 <main class="item-content">
   <div class="sheet-header">
@@ -66,7 +40,11 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      <ItemDescriptionTabControls {selectedTabId} />
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 

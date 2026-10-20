@@ -101,6 +101,7 @@
       "AddFromCompendium": "Add {name} from Compendium",
       "AddNamed": "Add {name}",
       "CopyToClipboard": "Copy to Clipboard",
+      "CopyWithoutFormatting": "Copy Without Formatting",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
       "Hide": "Hide",
@@ -116,6 +117,8 @@
       "ViewDescription": "View {description}"
     },
     "BrokenLink": "Broken Link",
+    "CopiedData": "Copied data from {prop}",
+    "CopiedWithoutFormatting": "Copied text without formatting",
     "GMOnly": {
       "Message": "GM Only: {message}",
       "Title": "GM Only"
@@ -206,8 +209,8 @@
     },
     "Placeholder": {
       "Action": {
-        "Add": "Create Combat Placeholder",
         "AddAll": "Add All as Placeholders",
+        "AddAtInitiative": "Create Placeholder at Initiative",
         "AddToTracker": "Add to Current Encounter as Placeholder",
         "Delete": "Delete Placeholder"
       },
@@ -215,7 +218,11 @@
         "Name": "Placeholder Name",
         "Notes": "Notes"
       },
-      "Title": "Placeholder"
+      "Title": "Placeholder",
+      "TitlePlural": "Placeholders"
+    },
+    "Placement": {
+      "WorldDefault": "World Default ({value})"
     }
   },
   "TIDY5E.FACILITY": {
@@ -500,6 +507,9 @@
         },
         "CreatureType": {
           "name": "Show system Creature Type tooltips"
+        },
+        "Favorite": {
+          "name": "Show system Favorite tooltips"
         },
         "Mastery": {
           "name": "Show system Weapon Mastery tooltips"

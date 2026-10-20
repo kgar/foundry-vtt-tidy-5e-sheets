@@ -15,6 +15,7 @@ export function onDropToContainer(container: Item5e): Attachment<HTMLElement> {
             currentTarget: EventTarget & HTMLElement;
             target: HTMLElement;
           },
+          undefined,
         );
 
         event.preventDefault();

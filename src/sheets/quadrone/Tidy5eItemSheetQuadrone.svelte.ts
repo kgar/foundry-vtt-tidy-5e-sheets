@@ -41,7 +41,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-import { getThemeV2 } from 'src/theme/theme';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -150,16 +149,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
     const isBasic = themeSettings.useBasicTheme;
-    const foundryThemeIsDark = getThemeV2(this.document) === 'dark';
 
     this.element.classList.toggle('theme-parchment', isBasic);
     this.element.classList.toggle('theme-basic', isBasic);
-
-    for (const node of this.element.querySelectorAll(
-      '.window-header, .sheet-header',
-    )) {
-      node.classList.toggle('theme-dark', foundryThemeIsDark);
-    }
   }
 
   onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
@@ -1311,8 +1303,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ) {
-    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+    const data =
+      currentDragData ??
+      foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
@@ -1330,7 +1325,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         return this._onDropItem(event, data);
     }
 
-    return super._onDrop(event);
+    return super._onDrop(event, data ?? currentDragData);
   }
 
   /* -------------------------------------------- */
@@ -1403,11 +1398,13 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data, uuid }: any,
+    data: any,
   ) {
-    const { _id: id, type } = data;
-    const source = this.item.system.activities.get(id);
-    const config = CONFIG.DND5E.activityTypes[type] ?? {};
+    const activity =
+      await dnd5e.documents.activity.UtilityActivity.fromDropData(data);
+
+    const source = this.item.system.activities.get(activity.id);
+    const config = CONFIG.DND5E.activityTypes[activity.type] ?? {};
 
     // Reordering
     if (source) {
@@ -1422,7 +1419,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       }
 
       const siblings = this.item.system.activities.filter(
-        (a: any) => a._id !== id,
+        (a: any) => a._id !== activity.id,
       );
 
       const sortUpdates = foundry.utils.performIntegerSort(source, {
@@ -1442,7 +1439,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       config.documentClass.availableForItem(this.item)
     ) {
       delete data._id;
-      this.item.createActivity(type, data, { renderSheet: false });
+      this.item.createActivity(activity.type, data, { renderSheet: false });
     }
   }
 

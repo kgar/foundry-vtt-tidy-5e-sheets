@@ -1,5 +1,6 @@
 <script lang="ts">
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
+  import { CONSTANTS } from 'src/constants';
   import type { ItemDescription } from 'src/types/item.types';
 
   interface Props {
@@ -21,7 +22,11 @@
       enriched={itemDescription.enriched}
     ></SheetEditorV2>
   {:else}
-    <div class="editor">
+    <div
+      class="editor"
+      data-prop={itemDescription.field}
+      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS}
+    >
       <div data-target={itemDescription.field} class="user-select-text">
         {@html itemDescription.enriched}
       </div>

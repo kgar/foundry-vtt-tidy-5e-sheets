@@ -23,6 +23,7 @@
   interface Props {
     belowStateSwitches?: Snippet;
     aboveCustomSections?: Snippet;
+    identifierPills?: Snippet<[Snippet]>;
     /** Include the item properties list above the custom sections controls. Default: true */
     includeSidebarProperties?: boolean;
   }
@@ -30,6 +31,7 @@
   let {
     belowStateSwitches,
     aboveCustomSections,
+    identifierPills = defaultIdentifierPills,
     includeSidebarProperties = true,
   }: Props = $props();
 
@@ -513,9 +515,7 @@
         <a
           role="button"
           tabindex="0"
-          aria-label={localize(
-            'TIDY5E.SECTION.Selector.Choose',
-          )}
+          aria-label={localize('TIDY5E.SECTION.Selector.Choose')}
           data-tooltip=""
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
@@ -596,7 +596,47 @@
       </div>
     </div>
   {/if}
+
+  {#if 'identifier' in context.system || identifierPills}
+    <div>
+      <h4>{localize('DND5E.Identifier')}</h4>
+      <ul class="pills stacked">
+        {@render identifierPills(itemIdentifierPill)}
+      </ul>
+    </div>
+  {/if}
 </aside>
+
+{#snippet defaultIdentifierPills(itemIdentifierPill: Snippet)}
+  {@render itemIdentifierPill()}
+{/snippet}
+
+{#snippet itemIdentifierPill()}
+  {#if 'identifier' in context.system}
+    {const itemTypeLabel = $derived(
+      CONFIG.Item.typeLabels[context.document.type],
+    )}
+
+    <li>
+      <!--svelte-ignore a11y_missing_attribute-->
+      <a
+        role="button"
+        tabindex="0"
+        class="pill interactive centered wrapped copy-to-clipboard"
+        data-action="copyValue"
+        data-value={context.item.system.identifier}
+        aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
+      >
+        <span class="text-normal">
+          {localize(itemTypeLabel)}
+        </span>
+        <span class="hyphens-auto">
+          {context.item.system.identifier}
+        </span>
+      </a>
+    </li>
+  {/if}
+{/snippet}
 
 {#snippet savePill()}
   <li class="pill centered">

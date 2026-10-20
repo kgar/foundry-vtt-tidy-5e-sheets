@@ -4,6 +4,7 @@
   import Sidebar from './parts/Sidebar.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import ItemDescriptionTabControls from './parts/ItemDescriptionTabControls.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import { isNil } from 'src/utils/data';
@@ -254,7 +255,10 @@
         <h4>
           {localize('TIDY5E.FACILITY.Creatures.Label')}
         </h4>
-        <ul class="occupants creatures unlist" data-prop="system.trade.creatures">
+        <ul
+          class="occupants creatures unlist"
+          data-prop="system.trade.creatures"
+        >
           {#each context.facilityContext.creatures as { actor, uuid }, index}
             <FacilityOccupantQuadrone
               occupant={actor}
@@ -370,7 +374,11 @@
     cssClass="item-tabs"
     sheet={context.sheet}
     tabContext={{ context, item: context.item }}
-  />
+  >
+    {#snippet tabEnd()}
+      <ItemDescriptionTabControls {selectedTabId} />
+    {/snippet}
+  </Tabs>
 
   <hr class="golden-fade" />
 

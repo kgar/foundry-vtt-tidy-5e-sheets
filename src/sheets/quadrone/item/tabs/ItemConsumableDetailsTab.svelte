@@ -7,6 +7,7 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import FieldIdentifier from '../parts/FieldIdentifier.svelte';
   import ItemRarities from '../parts/ItemRarities.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -27,17 +28,7 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <FormGroup
-    labelFor="{appId}-identifier"
-    document={context.document}
-    field={context.fields.identifier}
-    config={{
-      value: context.source.identifier,
-      placeholder: context.item.identifier,
-      id: `${appId}-identifier`,
-    }}
-    hint="DND5E.IdentifierError"
-  />
+  <FieldIdentifier />
 
   <FormGroup
     label="DND5E.ItemConsumableType"

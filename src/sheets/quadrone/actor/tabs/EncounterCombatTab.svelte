@@ -15,6 +15,7 @@
   import { EncounterCombatantColumnRuntime } from 'src/runtime/table-columns/EncounterCombatantColumnRuntime';
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let isBasicTheme = $derived(
@@ -32,67 +33,108 @@
 </script>
 
 <aside class="sidebar expanded flexcol">
-  <button
-    type="button"
-    class="button button-primary button-preroll-initiative"
-    data-action="prerollAllInitiatives"
-    data-has-roll-modes
-  >
-    <i class="fas fa-dice-d20"></i>
-    {localize('TIDY5E.ENCOUNTER.Initiative.Action.Preroll')}
-  </button>
-  <button
-    type="button"
-    class="button button-add-all-placeholders"
-    data-action="addAllAsPlaceholders"
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAll')}
-  </button>
-  <hr />
-  <button
-    type="button"
-    class="button button-add-placeholder"
-    data-action="addNewPlaceholder"
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.ENCOUNTER.Placeholder.Action.Add')}
-  </button>
-  <button
-    type="button"
-    class="button button-add-lair"
-    data-action="addNewLairPlaceholder"
-  >
-    <i class="fas fa-eye-evil"></i>
-    {localize('DND5E.LAIR.Action.Label')}
-  </button>
-  <button
-    type="button"
-    class="button button-add-init-20"
-    data-action="addNewPlaceholder"
-    data-initiative="20"
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 20 })}
-  </button>
-  <button
-    type="button"
-    class="button button-add-init-15"
-    data-action="addNewPlaceholder"
-    data-initiative="15"
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 15 })}
-  </button>
-  <button
-    type="button"
-    class="button button-add-init-10"
-    data-action="addNewPlaceholder"
-    data-initiative="10"
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count: 10 })}
-  </button>
+  <!-- Placement -->
+  {#if context.editable}
+    <section class="combat-sidebar-section combat-placement">
+      <h4
+        class="font-label-medium bordered"
+      >
+        <i class="fa-solid fa-street-view"></i>
+        {localize('SETTINGS.DND5E.ENCOUNTERS.EncounterPlacementBehavior.Name')}
+      </h4>
+      <select
+        class="encounter-placement-behavior-select"
+        data-name="currentUser:{TidyFlags.encounterPlacementBehavior.prop}"
+        value={context.placement.value}
+        aria-label={localize(
+          'SETTINGS.DND5E.ENCOUNTERS.EncounterPlacementBehavior.Name',
+        )}
+      >
+        {#each context.placement.options as option}
+          <option value={option.value}>{option.label}</option>
+        {/each}
+      </select>
+      <button
+        type="button"
+        class="button button-place-members"
+        data-action="placeMembers"
+      >
+        <i class="fas fa-street-view"></i>
+        {localize('DND5E.Group.PlaceMembers')}
+      </button>
+    </section>
+  {/if}
+
+  <!-- Initiative -->
+  <section class="combat-sidebar-section combat-initiative">
+    <h4 class="font-label-medium bordered">
+      <i class="fa-solid fa-dice-d20"></i>
+      {localize('DND5E.Initiative')}
+    </h4>
+    <button
+      type="button"
+      class="button button-primary button-preroll-initiative"
+      data-action="prerollAllInitiatives"
+      data-has-roll-modes
+    >
+      {localize('TIDY5E.ENCOUNTER.Initiative.Action.Preroll')}
+    </button>
+  </section>
+
+  <!-- Placeholders -->
+  <section class="combat-sidebar-section combat-placeholders">
+    <h4 class="font-label-medium bordered">
+      <i class="fa-solid fa-circle-dashed"></i>
+      {localize('TIDY5E.ENCOUNTER.Placeholder.TitlePlural')}
+    </h4>
+    <button
+      type="button"
+      class="button button-add-all-placeholders"
+      data-action="addAllAsPlaceholders"
+    >
+      <i class="fas fa-circle-dashed"></i>
+      {localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAll')}
+    </button>
+    <button
+      type="button"
+      class="button button-add-lair"
+      data-action="addNewLairPlaceholder"
+    >
+      <i class="fas fa-eye-evil"></i>
+      {localize('DND5E.LAIR.Action.Label')}
+    </button>
+    <div class="initiative-count-picker">
+      <span class="initiative-count-label font-label-medium">
+        {localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative')}
+      </span>
+      <div class="button-group initiative-count-buttons">
+        {#each [20, 15, 10] as count}
+          {const label = $derived(
+            localize('TIDY5E.ENCOUNTER.Initiative.Action.AddCount', { count }),
+          )}
+          <button
+            type="button"
+            class="button button-add-init-{count}"
+            data-action="addNewPlaceholder"
+            data-initiative={count}
+            data-tooltip={label}
+            aria-label={label}
+          >
+            {count}
+          </button>
+        {/each}
+        <button
+          type="button"
+          class="button button-add-placeholder"
+          data-action="addNewPlaceholder"
+          data-tooltip="TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative"
+          aria-label={localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative')}
+        >
+          {localize('DND5E.None')}
+        </button>
+      </div>
+    </div>
+  </section>
 </aside>
 
 <div class="tab-right-column">

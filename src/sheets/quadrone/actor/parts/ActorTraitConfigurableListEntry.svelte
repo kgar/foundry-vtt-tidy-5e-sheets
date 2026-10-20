@@ -62,15 +62,20 @@
 </script>
 
 {#if context.unlocked || entries.length || !!alwaysShow}
-  <div class={['list-entry', { empty: empty && !isCustomTrait }, traitClass]}>
+  <div
+    class={['list-entry aux-config', { empty: empty && !isCustomTrait }, traitClass]}
+  >
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class={icon}></i>
         {label}
       </h4>
-      {#if context.unlocked && configButtonLocation == 'label'}
-        {@render configButton(onconfig, configAttributes)}
-      {/if}
+
+      {@render configButton(
+        onconfig,
+        configAttributes,
+        context.unlocked && configButtonLocation == 'label',
+      )}
     </div>
     <div class="list-content">
       <div class="list-values">
@@ -78,9 +83,11 @@
           <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
         {/if}
       </div>
-      {#if context.unlocked && configButtonLocation == 'end'}
-        {@render configButton(onconfig, configAttributes)}
-      {/if}
+      {@render configButton(
+        onconfig,
+        configAttributes,
+        context.unlocked && configButtonLocation == 'end',
+      )}
     </div>
   </div>
   {@html contentHtml}
@@ -89,17 +96,25 @@
 {#snippet configButton(
   configFn?: OnConfigFn,
   attributes?: HTMLButtonAttributes,
+  visible?: boolean,
 )}
-  {const onclick = $derived(configFn
-    ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
-        configFn(ev)
-    : undefined)}
-    
+  {const onclick = $derived(
+    configFn
+      ? (ev: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) =>
+          configFn(ev)
+      : undefined,
+  )}
+
   {#if onclick || attributes}
     <button
       aria-label={configurationLabel}
       type="button"
-      class="button button-borderless button-icon-only button-config flexshrink"
+      class={[
+        'button button-borderless button-icon-only button-config flexshrink aux-config-target',
+        {
+          hidden: visible === false,
+        },
+      ]}
       data-tooltip={configurationTooltip ?? configurationLabel}
       {onclick}
       {...attributes}

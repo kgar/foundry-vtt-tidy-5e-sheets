@@ -46,12 +46,12 @@
 
   <ul class="saving-throws-ability-column unlist use-ability-list">
     {#each leftAbilities as ability, index}
-      <li style="order: {2 * index + 1}">
+      <li style="order: {2 * index + 1}" class="aux-config">
         {@render savingThrowRow(ability)}
       </li>
     {/each}
     {#each rightAbilities as ability, index}
-      <li style="order: {2 * index + 2}">
+      <li style="order: {2 * index + 2}" class="aux-config">
         {@render savingThrowRow(ability)}
       </li>
     {/each}
@@ -59,11 +59,13 @@
     <!-- Concentration here -->
     {#if 'spellcasting' in context && context.spellcasting?.length > 0 && context.saves.concentration}
       {const conc = $derived(context.saves.concentration)}
-      {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
-        ability: context.saves.concentration.label,
-      }))}
+      {const tooltip = $derived(
+        localize('DND5E.AbilityConfigure', {
+          ability: context.saves.concentration.label,
+        }),
+      )}
       <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
-      <li style="order: 50">
+      <li style="order: 50" class="aux-config">
         {#if context.isConcentrating}
           <i
             class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
@@ -94,10 +96,13 @@
             {conc.mod}
           </span>
         </span>
-        {#if context.unlocked}
+        {#if context.editable}
           <button
             type="button"
-            class="button button-borderless button-icon-only"
+            class={[
+              'button button-borderless button-icon-only aux-config-target',
+              { hidden: !context.unlocked },
+            ]}
             data-tooltip={tooltip}
             data-action="showConfiguration"
             data-config="ability"
@@ -113,9 +118,11 @@
 
 {#snippet savingThrowRow(ability: ActorAbilityContextEntry)}
   {const modifier = $derived(getModifierData(ability.save.value))}
-  {const tooltip = $derived(localize('DND5E.AbilityConfigure', {
-    ability: ability.label,
-  }))}
+  {const tooltip = $derived(
+    localize('DND5E.AbilityConfigure', {
+      ability: ability.label,
+    }),
+  )}
   <ProficiencyCycle
     actor={context.actor}
     aria-label={localize(ability.hover)}
@@ -146,10 +153,15 @@
       {modifier.value}
     </span>
   </span>
-  {#if context.unlocked}
+  {#if context.editable}
     <button
       type="button"
-      class="button button-borderless button-icon-only"
+      class={[
+        'button button-borderless button-icon-only aux-config-target',
+        {
+          hidden: !context.unlocked,
+        },
+      ]}
       data-tooltip={tooltip}
       data-action="showConfiguration"
       data-config="ability"

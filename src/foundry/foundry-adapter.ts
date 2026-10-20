@@ -84,11 +84,7 @@ export const FoundryAdapter = {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },
   localize(value: string, options?: Record<string, unknown>) {
-    if (options) {
-      return game.i18n.format(value, options);
-    }
-
-    return game.i18n.localize(value);
+    return game.i18n.localize(value, options);
   },
   // TODO: Extract a dedicated ActiveEffectManager or the like
   addEffect(effectType: string, parent: any) {
@@ -1622,10 +1618,10 @@ export const FoundryAdapter = {
    * @returns the relative UUID of a document, or the UUID minus the leading prefix which denotes the top-level document ancestor
    */
   buildRelativeUuid(doc: any) {
-    if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY) {
-      return `${foundry.utils.buildRelativeUuid(doc.item, doc.actor)}.Activity.${doc.id}`;
-    }
-
-    return foundry.utils.buildRelativeUuid(doc, doc.actor) ?? doc.relativeUUID;
+    return doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY && doc.actor
+      ? `${foundry.utils.buildRelativeUuid(doc.item, doc.actor)}.Activity.${doc.id}`
+      : doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY && !doc.actor
+        ? doc.relativeUUID
+        : (foundry.utils.buildRelativeUuid(doc, doc.actor) ?? doc.relativeUUID);
   },
 };

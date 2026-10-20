@@ -66,7 +66,6 @@
   });
 
   let hpValueInputFocused = $state(false);
-  let hpTempInputFocused = $state(false);
   let hpOverlayOpen = $state(false);
   let hpOverlayFocusTarget = $state<'temp' | 'tempmax'>('temp');
   let hpOverlayCloseOnBlur = $state(false);
@@ -156,8 +155,8 @@
                 data-tooltip={context.actor.name}
               >
                 <!-- svelte-ignore a11y_missing_attribute -->
-                <a 
-                  data-action="copyInnerText" 
+                <a
+                  data-action="copyInnerText"
                   class="cursor highlight-on-hover"
                   role="button"
                   tabindex="0"
@@ -228,7 +227,7 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="ac-container flexcol">
+        <div class="ac-container flexcol aux-config">
           <div
             class="shield"
             data-attribution="attributes.ac"
@@ -239,12 +238,17 @@
               {context.system.attributes.ac.value}
             </span>
             <span class="ac-label font-label-medium color-text-gold">AC</span>
-            {#if context.unlocked}
+            {#if context.editable}
               <button
                 aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
                 data-tooltip="DND5E.ARMORCLASS.Action.Configure"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  {
+                    hidden: !context.unlocked,
+                  },
+                ]}
                 data-action="showConfiguration"
                 data-config="armorClass"
               >
@@ -279,7 +283,7 @@
             disabled={!context.owner}
           />
         {/each}
-        <div class="ability initiative flexcol">
+        <div class="ability initiative flexcol aux-config">
           <div
             class="initiative-score-container"
             data-tooltip="DND5E.Initiative"
@@ -300,12 +304,15 @@
                 ><span class="bonus color-text-default">{ini.value}</span>
               </span>
             </button>
-            {#if context.unlocked}
+            {#if context.editable}
               <button
                 aria-label={localize('DND5E.InitiativeConfig')}
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  { hidden: !context.unlocked },
+                ]}
                 data-action="showConfiguration"
                 data-config="initiative"
               >
@@ -315,7 +322,7 @@
           </div>
           {#if context.saves.concentration}
             {const save = $derived(context.saves.concentration)}
-            <div class="concentration flexcol">
+            <div class="concentration flexcol aux-config">
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
@@ -332,18 +339,22 @@
                   <span class="value font-data-medium color-text-default">
                     {save.mod}
                   </span>
-                {:else}
+                {/if}
+
+                {#if context.editable}
                   {const tooltip = $derived(
                     localize('DND5E.AbilityConfigure', {
                       ability: context.saves.concentration.label,
                     }),
                   )}
-                  <div class="config-container">
+                  <div
+                    class={['config-container', { hidden: !context.unlocked }]}
+                  >
                     <button
                       aria-label={tooltip}
                       data-tooltip
                       type="button"
-                      class="button button-borderless button-icon-only button-config"
+                      class="button button-borderless button-icon-only button-config aux-config-target"
                       data-action="showConfiguration"
                       data-config="ability"
                       data-ability="concentration"
@@ -373,10 +384,9 @@
       </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">
-      <!-- TODO: Add switch for size -->
       <ActorPortrait />
       <div class="actor-vitals theme-dark">
-        <div class="hp-row flexrow">
+        <div class="hp-row flexrow aux-config">
           <div
             class="meter progress hit-points"
             style={effectiveMaxHp < hpMax
@@ -449,8 +459,8 @@
                 }}
                 onkeydown={(ev) => {
                   if (ev.key === 'Enter' || ev.key === ' ') {
-                  hpOverlayFocusTarget = 'temp';
-                  hpOverlayOpen = true;
+                    hpOverlayFocusTarget = 'temp';
+                    hpOverlayOpen = true;
                   }
                 }}
                 oncontextmenu={(ev) => {
@@ -501,7 +511,8 @@
               blurAfterChange={true}
               hidden={!hpTempInputFocused}
             /> -->
-          {:else if context.editable}
+          {/if}
+          {#if context.editable}
             <button
               data-action="showConfiguration"
               data-config="hitPoints"
@@ -513,7 +524,8 @@
                 'button-borderless',
                 'button-icon-only',
                 'button-config',
-                { editMode: context.unlocked },
+                'aux-config-target',
+                { editMode: context.unlocked, hidden: !context.unlocked },
               ]}
             >
               <i class="fas fa-cog"></i>
@@ -604,11 +616,11 @@
               }}
             />
           {:else}
-            <div class="hd-row-container">
+            <div class="hd-row-container aux-config">
               <button
                 aria-label={localize('DND5E.HitDiceConfig')}
                 type="button"
-                class="unbutton hd-row"
+                class="unbutton hd-row aux-config-target"
                 data-action="showConfiguration"
                 data-config="hitDice"
                 data-tooltip="DND5E.HitDiceConfig"
@@ -667,19 +679,29 @@
               </div>
             {/if}
             {#if context.editable || context.unlocked}
-              <div class={['death-saves', { dying: context.showDeathSaves }]}>
-                {#if context.unlocked}
+              <div
+                class={[
+                  'death-saves',
+                  'aux-config',
+                  { dying: context.showDeathSaves },
+                ]}
+              >
+                {#if context.editable}
                   <button
                     aria-label={localize('DND5E.DeathSaveConfigure')}
                     data-tooltip="DND5E.DeathSaveConfigure"
                     type="button"
-                    class="button button-borderless button-icon-only button-config"
+                    class={[
+                      'button button-borderless button-icon-only button-config aux-config-target',
+                      { hidden: !context.unlocked },
+                    ]}
                     data-action="showConfiguration"
                     data-config="death"
                   >
                     <i class="fas fa-cog"></i>
                   </button>
-                {:else if context.editable}
+                {/if}
+                {#if !context.unlocked}
                   <button
                     type="button"
                     class={[

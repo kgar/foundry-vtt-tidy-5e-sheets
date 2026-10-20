@@ -27,15 +27,17 @@
   data-favorite-id={favorite.id}
   data-tidy-draggable
   data-tidy-sheet-part="favorite-entry"
+  data-reference-tooltip={favorite.reference}
 >
   <FavoriteRollButton
     data-action="use"
     img={favorite.item.img}
-    title={favorite.item.name}
+    title={!favorite.reference ? favorite.item?.name : undefined}
     name={favorite.item.name}
     {subtitle}
+    useTooltip={!favorite.reference}
   />
-  <div class="">
+  <div class="flexrow">
     <span class="primary">
       {#if favorite.capacity}
         <CapacityTracker

@@ -113,7 +113,7 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="ability initiative flexcol">
+        <div class="ability initiative flexcol aux-config">
           <div
             class="initiative-score-container"
             data-tooltip="DND5E.Initiative"
@@ -137,12 +137,15 @@
                 </span>
               </span>
             </button>
-            {#if context.unlocked}
+            {#if context.editable}
               <button
                 aria-label={localize('DND5E.InitiativeConfig')}
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  { hidden: !context.unlocked },
+                ]}
                 data-action="showConfiguration"
                 data-config="initiative"
               >
@@ -207,7 +210,7 @@
         {/if}
       </div>
       <div
-        class="shield"
+        class="shield aux-config"
         data-attribution="attributes.ac"
         data-attribution-caption="DND5E.ArmorClass"
         data-tooltip-direction="DOWN"
@@ -218,12 +221,17 @@
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
-        {#if context.unlocked}
+        {#if context.editable}
           <button
             aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
             data-tooltip="DND5E.ARMORCLASS.Action.Configure"
             type="button"
-            class="button button-borderless button-icon-only button-config"
+            class={[
+              'button button-borderless button-icon-only button-config aux-config-target',
+              {
+                hidden: !context.unlocked,
+              },
+            ]}
             data-action="showConfiguration"
             data-config="armorClass"
           >
