@@ -58,10 +58,8 @@
   <InventoryTables
     sections={configuredContents}
     container={context.item}
-    editable={context.editable}
     itemContext={context.containerContents.itemContext}
     {inlineToggleService}
-    {searchCriteria}
     sheetDocument={context.item}
     root={true}
   />
@@ -85,7 +83,11 @@
       class:disabled={!context.editable}
       onclick={() => Container.promptCreateInventoryItem(context.item)}
       onkeydown={(event) => {
-        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        if (
+          event.key === 'Enter' ||
+          event.key === ' ' ||
+          event.key === 'Spacebar'
+        ) {
           event.preventDefault();
           Container.promptCreateInventoryItem(context.item);
         }

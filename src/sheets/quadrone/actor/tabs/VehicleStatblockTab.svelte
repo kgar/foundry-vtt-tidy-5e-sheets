@@ -333,23 +333,18 @@
                 {/if}
               {/if}
             {/snippet}
- 
+
             {#snippet afterInlineActivities(item, ctx)}
               {#if ctx.crew?.length}
                 <div class="crew-and-passengers-wrapper">
-                <VehicleItemCrewAssignments {ctx} {item} />
+                  <VehicleItemCrewAssignments {ctx} {item} />
                 </div>
               {/if}
             {/snippet}
           </TidyItemTable>
         {/if}
       {:else if section.type === 'feature'}
-        <FeatureTable
-          {itemToggleMap}
-          {section}
-          {sectionsInlineWidth}
-          sheetDocument={context.document}
-        >
+        <FeatureTable {itemToggleMap} {section} {sectionsInlineWidth}>
           {#snippet bodyNoEntries()}
             {#if !hideEmptyStates}
               <div class="inventory-empty empty-state-container">
@@ -449,9 +444,7 @@
                       type="button"
                       class="button button-tertiary"
                       title={localize('TIDY5E.VEHICLE.DraftAnimals.Empty')}
-                      aria-label={localize(
-                        'TIDY5E.VEHICLE.DraftAnimals.Empty',
-                      )}
+                      aria-label={localize('TIDY5E.VEHICLE.DraftAnimals.Empty')}
                     >
                       <i class="fas fa-plus"></i>
                       {localize('TIDY5E.VEHICLE.DraftAnimals.Empty')}

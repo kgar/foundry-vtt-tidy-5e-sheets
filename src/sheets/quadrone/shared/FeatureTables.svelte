@@ -102,12 +102,7 @@
           }),
       )}
       {#if showSection}
-        <FeatureTable
-          {itemToggleMap}
-          {section}
-          {sectionsInlineWidth}
-          {sheetDocument}
-        />
+        <FeatureTable {itemToggleMap} {section} {sectionsInlineWidth} />
       {/if}
     {/each}
   {/if}
