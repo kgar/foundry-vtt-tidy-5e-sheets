@@ -299,7 +299,7 @@
         },
         "Weapon": {
             "Mastery": {
-                "Label": "Weapon Mastery: {mastery}"
+                "Label": "Maestria em Arma: {mastery}"
             }
         },
         "Rarity": {
