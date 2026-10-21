@@ -113,7 +113,8 @@
             "DecreaseNamed": "Diminuir {name}",
             "Increase": "Aumentar",
             "IncreaseNamed": "Aumentar {name}",
-            "ViewDescription": "Visualizar {description}"
+            "ViewDescription": "Visualizar {description}",
+            "CopyWithoutFormatting": "Copiar Sem Formatação"
         },
         "BrokenLink": "Link Quebrado",
         "GMOnly": {
@@ -138,7 +139,9 @@
         },
         "Warning": {
             "ActiveEffectOverride": "Este valor está sendo modificado por um Efeito Ativo e não pode ser editado."
-        }
+        },
+        "CopiedData": "Dados copiados de {prop}",
+        "CopiedWithoutFormatting": "Texto copiado sem formatação"
     },
     "TIDY5E.CONTAINER": {
         "Action": {
@@ -209,13 +212,18 @@
                 "Add": "Criar Reserva para Combate",
                 "AddAll": "Adicionar Todos como Reservas",
                 "AddToTracker": "Adicionar ao Encontro Atual como Reserva",
-                "Delete": "Excluir Reserva"
+                "Delete": "Excluir Reserva",
+                "AddAtInitiative": "Criar Reserva na Iniciativa"
             },
             "Field": {
                 "Name": "Nome da Reserva",
                 "Notes": "Notas"
             },
-            "Title": "Reserva"
+            "Title": "Reserva",
+            "TitlePlural": "Reservas"
+        },
+        "Placement": {
+            "WorldDefault": "Padrão do Mundo ({value})"
         }
     },
     "TIDY5E.FACILITY": {
@@ -509,6 +517,9 @@
                 },
                 "Tool": {
                     "name": "Mostrar Dicas Ferramentas do Sistema"
+                },
+                "Favorite": {
+                    "name": "Exibir Dicas dos Favoritos do Sistema"
                 }
             }
         },
