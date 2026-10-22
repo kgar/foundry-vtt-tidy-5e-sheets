@@ -1,11 +1,16 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import { getThemeV2 } from 'src/theme/theme';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type {
+  ThemeFilterData,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
 import type { TidyConfig, TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 
 const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
   element,
@@ -92,14 +97,79 @@ const initWorldThemes = () => {
     return;
   }
 
-  // const worldThemes = SettingsProvider.
-  // TODO: Load up CONFIG.TIDY5E.worldThemes with what is stored in settings
-  // TODO: call the Tidy hook `tidy5e-sheet.worldThemesConfig` before applying the end result
-  throw Error('not implemented');
+  // Reset worldThemes every time.
+  CONFIG.TIDY5E.worldThemes = {};
+
+  const allSymbol = CONFIG.TIDY5E.symbols.all;
+
+  const worldThemes = Object.values(
+    SettingsProvider.settings.worldThemes.get() ?? {},
+  ).sort((a, b) => a.sort - b.sort);
+
+  for (const theme of worldThemes) {
+    const documentNameAreas = (CONFIG.TIDY5E.worldThemes[
+      theme.documentName ?? allSymbol
+    ] ??= {});
+
+    const entries = (documentNameAreas[theme.type ?? allSymbol] ??= []);
+
+    entries.push(theme);
+  }
+
+  // TODO: Extract to TidyHooks
+  Hooks.callAll(
+    'tidy5e-sheet.worldThemesConfigChanged',
+    CONFIG.TIDY5E.worldThemes,
+  );
 };
 
 const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
-  throw Error('not implemented');
+  const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
+
+  const allSymbol = CONFIG.TIDY5E.symbols.all;
+
+  const areasToCheck = [
+    [doc.documentName, doc.type],
+    [doc.documentName, allSymbol],
+    [allSymbol, allSymbol],
+  ];
+
+  for (const [documentName, documentType] of areasToCheck) {
+    const values = Object.values(
+      CONFIG.TIDY5E.worldThemes[documentName]?.[documentType] ?? {},
+    );
+
+    for (const entry of values) {
+      if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
+        return entry.settings;
+      }
+    }
+  }
+
+  return ThemeQuadrone.getDefaultThemeSettings(
+    /* TODO: Determine if we need to supply alternateDefaults */
+  );
+};
+
+const prepareThemeFilterData = (doc: Actor5e | Item5e): ThemeFilterData => {
+  const themeMode = getThemeV2(doc);
+
+  const folder = doc.folder
+    ? [doc.folder, ...doc.folder.ancestors]
+        .reverse()
+        .map((f) => f.name)
+        .join('/')
+    : '';
+
+  const data = {
+    document: doc,
+    folder,
+    themeMode,
+  };
+
+  debug(`${prepareThemeFilterData.name} result`, data);
+
+  return data;
 };
 
 export function getUtils(): TidyPublicUtils {
@@ -112,6 +182,7 @@ export function getUtils(): TidyPublicUtils {
     theme: {
       getWorldTheme,
       initWorldThemes,
+      prepareThemeFilterData,
     },
   };
 }

@@ -56,7 +56,7 @@ Hooks.once('init', () => {
     symbols: {
       all: Symbol('all'),
     },
-    theme: {},
+    worldThemes: {},
     utils: registry.getUtils(),
   };
 

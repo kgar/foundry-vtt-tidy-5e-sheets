@@ -65,8 +65,10 @@ export type ThemeSettingsConfigurationOptions = {
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';
 
 export type ThemeFilterData = {
-  /** The current effective theme mode for the target document. */
-  themeMode: 'light' | 'dark';
+  /**
+   * The current effective theme mode for the target document.
+   */
+  themeMode: 'light' | 'dark' | string;
   /** The folder of the target document. An empty string means the top-level. */
   folder: string;
   /** The target document to consider, whether an Actor or Item. */

@@ -34,11 +34,10 @@ Any theme options that are specific to a particular document type/subtype will s
   - Record of documentName to
     - Record of type to
       - Array of `WorldThemeSetting`
-- [ ] Implement `CONFIG.TIDY5E.utils.getWorldTheme(doc)` and `CONFIG.TIDY5E.utils.initWorldThemes()`
-- [ ] Implement setting wire-up that permutes the world theme data onReady and thereafter onChange into `CONFIG.TIDY5E.worldThemes` via `CONFIG.TIDY5E.utils.initWorldThemes()`
-- [ ] Provide hook `tidy5e-sheet.worldThemesConfig` to allow mutating world themes config
+- [x] Implement `CONFIG.TIDY5E.utils.getWorldTheme(doc)` and `CONFIG.TIDY5E.utils.initWorldThemes()`
+- [x] Implement setting wire-up that permutes the world theme data onReady and thereafter onChange into `CONFIG.TIDY5E.worldThemes` via `CONFIG.TIDY5E.utils.initWorldThemes()`
+- [x] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
 - [ ] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
-- [ ] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
 - [ ] Create temporary setting menu to house the settings until it gains enough traction
 - [ ] Implement the theme list / management UI
 - [ ] Lay out the content
@@ -64,6 +63,11 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Implement new config scaffolding to manage world themes and to load/save all the data as a whole
 - [ ] Wire into World Settings
 - [ ] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
+- [ ] /* TODO: Determine if we need to supply alternateDefaults */
+- [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
+- [ ] Set up hook subscriber for `tidy5e-sheet.worldThemesConfigChanged` on all sheets to refresh their individual themes accordingly.
+- [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
+- [ ] // TODO: Extract to TidyHooks
 
 
 ### Filter Notes

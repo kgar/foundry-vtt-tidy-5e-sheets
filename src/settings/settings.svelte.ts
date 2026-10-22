@@ -538,20 +538,18 @@ export function createSettings() {
           hint: 'TIDY5E.SETTINGS.Theme.Hint',
           scope: 'world',
           type: Object,
-          default: undefined,
+          default: {},
           config: false,
           onChange: (settings: WorldThemesSetting) => {
-            CONFIG.TIDY5E.utils.theme.initWorldThemes();
-            
-            // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
-            // The goal is to have all sheets refresh their styles when the whole world theme setting changes.
+            CONFIG.TIDY5E.utils.theme.initWorldThemes(
+              /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
+            );
           },
         },
         get() {
           return (
-            FoundryAdapter.getTidySetting<WorldThemesSetting>(
-              'worldThemeSettings',
-            ) ?? {}
+            FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
+            {}
           );
         },
       },

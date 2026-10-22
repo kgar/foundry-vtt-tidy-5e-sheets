@@ -36,7 +36,10 @@ import type {
 } from './columns.types';
 import type { Actor5e, InspirationSource } from './types';
 import type { Item5e } from './item.types';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type {
+  ThemeFilterData,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
 import type { WorldThemeSetting } from 'src/settings/settings.types';
 
 /**
@@ -68,7 +71,7 @@ export type TidyConfig = {
   features: TidyFeatureRegistry;
   partitions: TidyPartitionRegistry;
   symbols: TidySymbolRegistry;
-  theme: TidyThemeRegistry;
+  worldThemes: TidyThemeRegistry;
   utils: TidyPublicUtils;
 };
 
@@ -300,6 +303,7 @@ export type TidyPublicUtils = {
   theme: {
     getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettingsV3;
     initWorldThemes: () => void;
+    prepareThemeFilterData: (doc: Actor5e | Item5e) => ThemeFilterData;
   };
 };
 
