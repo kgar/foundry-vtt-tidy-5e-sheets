@@ -53,6 +53,10 @@ Hooks.once('init', () => {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
     },
+    symbols: {
+      all: Symbol('all'),
+    },
+    theme: {},
     utils: registry.getUtils(),
   };
 
@@ -156,6 +160,8 @@ Hooks.once('ready', async () => {
   tidy5eModule.api = api;
 
   initRuntimeOnReady();
+
+  CONFIG.TIDY5E.utils.theme.initWorldThemes();
 
   TidyHooks.tidy5eSheetsReady(api);
 

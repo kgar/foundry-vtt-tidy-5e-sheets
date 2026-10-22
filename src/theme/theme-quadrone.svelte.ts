@@ -103,6 +103,7 @@ export class ThemeQuadrone {
     options.applyWorldThemeSetting ??= true;
 
     let defaultSettings = options.applyWorldThemeSetting
+      // TODO: derive the actual effective theme from CONFIG.TIDY5E.worldThemes using CONFIG.TIDY5E.utils.getWorldTheme(doc?)
       ? this.getWorldThemeSettings()
       : this.getDefaultThemeSettings(options.alternateDefaults);
 
@@ -140,6 +141,8 @@ export class ThemeQuadrone {
     ) {
       preferences.portraitShape = 'token';
     }
+
+    // TODO: hook `tidy5e-sheet.getSheetThemeSettings` with `(preferences, document, options)` called here to allow for override.
 
     return preferences;
   }

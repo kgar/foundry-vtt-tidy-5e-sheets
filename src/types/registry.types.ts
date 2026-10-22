@@ -35,6 +35,9 @@ import type {
   VehiclePassengerColumnSpec,
 } from './columns.types';
 import type { Actor5e, InspirationSource } from './types';
+import type { Item5e } from './item.types';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { WorldThemeSetting } from 'src/settings/settings.types';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -64,6 +67,8 @@ export type TidyConfig = {
   description: string;
   features: TidyFeatureRegistry;
   partitions: TidyPartitionRegistry;
+  symbols: TidySymbolRegistry;
+  theme: TidyThemeRegistry;
   utils: TidyPublicUtils;
 };
 
@@ -292,4 +297,21 @@ export type TidyPublicUtils = {
     element: HTMLElement | null | undefined,
   ) => string | null;
   getTabIdFromEvent: (event: Event) => string | null;
+  theme: {
+    getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettingsV3;
+    initWorldThemes: () => void;
+  };
 };
+
+export type TidySymbolRegistry = {
+  /** A symbol to represent all types or entities in a given mapping, such as "all actor types" or "all item subtypes" */
+  all: symbol;
+};
+
+type DocumentName = string;
+type DocumentType = string;
+
+export type TidyThemeRegistry = Record<
+  DocumentName | symbol,
+  Record<DocumentType | symbol, WorldThemeSetting[]>
+>;

@@ -1,3 +1,6 @@
+import type { Item5e } from 'src/types/item.types';
+import type { Actor5e } from 'src/types/types';
+
 export type ThemeColorSetting = {
   /** The key of the configurable entity as found in CONFIG.DND5E. For example, `veryrare` for the "Very Rare" item rarity */
   key: string;
@@ -60,3 +63,12 @@ export type ThemeSettingsConfigurationOptions = {
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';
+
+export type ThemeFilterData = {
+  /** The current effective theme mode for the target document. */
+  themeMode: 'light' | 'dark';
+  /** The folder of the target document. An empty string means the top-level. */
+  folder: string;
+  /** The target document to consider, whether an Actor or Item. */
+  document: Actor5e | Item5e;
+};

@@ -5,6 +5,7 @@ import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
   TabConfiguration,
+  WorldThemesSetting,
 } from './settings.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -527,6 +528,30 @@ export function createSettings() {
             FoundryAdapter.getTidySetting<ThemeSettingsV3>(
               'worldThemeSettings',
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
+          );
+        },
+      },
+
+      worldThemes: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.Hint',
+          scope: 'world',
+          type: Object,
+          default: undefined,
+          config: false,
+          onChange: (settings: WorldThemesSetting) => {
+            CONFIG.TIDY5E.utils.theme.initWorldThemes();
+            
+            // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
+            // The goal is to have all sheets refresh their styles when the whole world theme setting changes.
+          },
+        },
+        get() {
+          return (
+            FoundryAdapter.getTidySetting<WorldThemesSetting>(
+              'worldThemeSettings',
+            ) ?? {}
           );
         },
       },
