@@ -1,4 +1,5 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { getThemeV2 } from 'src/theme/theme';
@@ -8,7 +9,7 @@ import type {
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
-import type { TidyConfig, TidyPublicUtils } from 'src/types/registry.types';
+import type { TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
 import { debug, error } from 'src/utils/logging';
 
@@ -87,6 +88,7 @@ const tryGetInspirationSource = async (
   return inspirationSource;
 };
 
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
 const initWorldThemes = () => {
   if (!CONFIG.TIDY5E) {
     error(
@@ -121,8 +123,11 @@ const initWorldThemes = () => {
     'tidy5e-sheet.worldThemesConfigChanged',
     CONFIG.TIDY5E.worldThemes,
   );
+
+  TidyHooks.tidy5eSheetsThemeSettingsChanged();
 };
 
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
 const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
   const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
 
@@ -134,6 +139,11 @@ const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
     [allSymbol, allSymbol],
   ];
 
+  const defaultSettings =
+    ThemeQuadrone.getDefaultThemeSettings(
+      /* TODO: Determine if we need to supply alternateDefaults */
+    );
+
   for (const [documentName, documentType] of areasToCheck) {
     const values = Object.values(
       CONFIG.TIDY5E.worldThemes[documentName]?.[documentType] ?? {},
@@ -141,16 +151,15 @@ const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
 
     for (const entry of values) {
       if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
-        return entry.settings;
+        return foundry.utils.mergeObject(defaultSettings, entry.settings);
       }
     }
   }
 
-  return ThemeQuadrone.getDefaultThemeSettings(
-    /* TODO: Determine if we need to supply alternateDefaults */
-  );
+  return defaultSettings;
 };
 
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
 const prepareThemeFilterData = (doc: Actor5e | Item5e): ThemeFilterData => {
   const themeMode = getThemeV2(doc);
 

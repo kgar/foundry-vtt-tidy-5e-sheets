@@ -37,7 +37,8 @@ Any theme options that are specific to a particular document type/subtype will s
 - [x] Implement `CONFIG.TIDY5E.utils.getWorldTheme(doc)` and `CONFIG.TIDY5E.utils.initWorldThemes()`
 - [x] Implement setting wire-up that permutes the world theme data onReady and thereafter onChange into `CONFIG.TIDY5E.worldThemes` via `CONFIG.TIDY5E.utils.initWorldThemes()`
 - [x] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
-- [ ] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
+- [x] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
+- [x] Adjust subscribeAndReactToThemeSettingsChanges to subscribe to the hook `tidy5e-sheet.worldThemesConfigChanged` and derive a new configuration every time.
 - [ ] Create temporary setting menu to house the settings until it gains enough traction
 - [ ] Implement the theme list / management UI
 - [ ] Lay out the content
@@ -68,6 +69,7 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Set up hook subscriber for `tidy5e-sheet.worldThemesConfigChanged` on all sheets to refresh their individual themes accordingly.
 - [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
 - [ ] // TODO: Extract to TidyHooks
+- [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
 
 
 ### Filter Notes

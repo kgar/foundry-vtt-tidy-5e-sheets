@@ -952,7 +952,6 @@ export function initSettings() {
   _settings = getCurrentSettings();
 
   ThemeQuadrone.insertTidyThemeStyleTag();
-  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
