@@ -96,3 +96,7 @@ const filter = [
 ];
 dnd5e.Filter.performCheck(data, filter)
 ```
+
+### Links
+
+- dnd5e wiki filter examples - https://github.com/foundryvtt/dnd5e/wiki/Active-Effect-Rules
