@@ -1438,8 +1438,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       config?.configurable !== false &&
       config.documentClass.availableForItem(this.item)
     ) {
-      delete data._id;
-      this.item.createActivity(activity.type, data, { renderSheet: false });
+      const activity = await fromUuid(data.uuid);
+      const createData = activity.toObject();
+      delete createData._id;
+      this.item.createActivity(activity.type, createData, { renderSheet: false });
     }
   }
 
