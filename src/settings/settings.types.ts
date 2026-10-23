@@ -68,7 +68,7 @@ export type WorldThemeSetting = {
   /** The intended priority order of this theme setting. The UI reflects this sort order during settings management. */
   sort: number;
   /** The actual theme settings. */
-  settings: ThemeSettingsV3;
+  settings: Partial<ThemeSettingsV3>;
   /** An optional filter description to be evaluated when determining which theme should apply. */
   filter?: FilterDescription | FilterDescription[];
   /** 

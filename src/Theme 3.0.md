@@ -39,8 +39,9 @@ Any theme options that are specific to a particular document type/subtype will s
 - [x] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
 - [x] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
 - [x] Adjust subscribeAndReactToThemeSettingsChanges to subscribe to the hook `tidy5e-sheet.worldThemesConfigChanged` and derive a new configuration every time.
-- [ ] Create temporary setting menu to house the settings until it gains enough traction
-- [ ] Implement the theme list / management UI
+- [x] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
+- [x] Create temporary setting menu to house the settings until it gains enough traction
+- [x] Implement the theme list / management UI
 - [ ] Lay out the content
   - Management column
     - List of current themes (drag/drop to sort | click up/down arrows to move in sort)
@@ -61,18 +62,16 @@ Any theme options that are specific to a particular document type/subtype will s
   - Folder (enter multiple with semi-colons)
   - Document Location - Anywhere (Default), Sidebar, or Compendium
 - [ ] Implement "Advanced" filter options, which is a formula editor that allows full control
-- [ ] Implement new config scaffolding to manage world themes and to load/save all the data as a whole
+- [ ] Implement new settings editor to manage world themes and to load/save all the data as a whole and be able to undo / reset to default
 - [ ] Wire into World Settings
-- [ ] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
-- [ ] /* TODO: Determine if we need to supply alternateDefaults */
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
-- [ ] Set up hook subscriber for `tidy5e-sheet.worldThemesConfigChanged` on all sheets to refresh their individual themes accordingly.
 - [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
 - [ ] Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
-- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change
+- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
+- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 
 
 ### Filter Notes

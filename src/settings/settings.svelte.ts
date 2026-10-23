@@ -17,6 +17,7 @@ import {
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
 import { SettingsShims } from './settings-shims';
+import { TempWorldThemesApplication } from 'src/applications/settings/world/TempWorldThemesApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -168,6 +169,16 @@ export function createSettings() {
           type: WorldSettingsQuadroneApplication,
           restricted: true,
         },
+      },
+      tempDevWorldThemes: {
+        options: {
+          name: "Delete Me - World Themes",
+          label: "Delete Me - World Themes",
+          hint: "Test harness for playing with World Themes",
+          icon: 'fa-solid fa-swatchbook',
+          type: TempWorldThemesApplication,
+          restricted: true,
+        }
       },
       makeAllSheetsTidy: {
         options: {
