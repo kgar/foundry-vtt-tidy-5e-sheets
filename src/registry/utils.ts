@@ -134,8 +134,8 @@ const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
   const allSymbol = CONFIG.TIDY5E.symbols.all;
 
   const areasToCheck = [
-    [doc.documentName, doc.type],
-    [doc.documentName, allSymbol],
+    [doc?.documentName, doc?.type],
+    [doc?.documentName, allSymbol],
     [allSymbol, allSymbol],
   ];
 
@@ -160,10 +160,12 @@ const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
 };
 
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
-const prepareThemeFilterData = (doc: Actor5e | Item5e): ThemeFilterData => {
+const prepareThemeFilterData = (
+  doc: Actor5e | Item5e | undefined,
+): ThemeFilterData => {
   const themeMode = getThemeV2(doc);
 
-  const folder = doc.folder
+  const folder = doc?.folder
     ? [doc.folder, ...doc.folder.ancestors]
         .reverse()
         .map((f) => f.name)
