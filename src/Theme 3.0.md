@@ -70,6 +70,9 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
+- [ ] Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
+- [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
+- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change
 
 
 ### Filter Notes
@@ -95,6 +98,75 @@ const filter = [
     }
 ];
 dnd5e.Filter.performCheck(data, filter)
+```
+
+### Sample Code
+
+
+Sample theme 1:
+
+```json
+{
+    "accentColor": "rgb(31, 76, 145)",
+    "actorHeaderBackground": "assets/map-faerun.webp",
+    "useBasicTheme": false,
+    "useHeaderBackground": true
+}
+```
+
+Sample theme 2:
+
+```json
+{
+    "accentColor": "rgb(55, 109, 71)",
+    "useBasicTheme": true,
+    "useHeaderBackground": false
+}
+```
+
+Settings:
+
+
+```js
+
+game.settings.set('tidy5e-sheet', 'worldThemes', {
+    '1234567': {
+        id: '1234567',
+        name: 'Lich Gang Theme',
+        documentName: 'Actor',
+        sort: 1,
+        settings: {
+            "accentColor": "rgb(55, 109, 71)",
+            "useBasicTheme": true,
+            "useHeaderBackground": false
+        },
+        filter: {
+            k: 'folder',
+            v: 'A Folder/Faction - Buttercream Gang'
+        },
+        filterMode: 'basic'
+    },
+    '7654321': {
+        id: '7654321',
+        name: 'Vorpal Weapons',
+        documentName: 'Item',
+        type: 'weapon',
+        sort: 2,
+        settings: {
+            "accentColor": "rgb(31, 76, 145)",
+            "actorHeaderBackground": "assets/map-faerun.webp",
+            "useBasicTheme": false,
+            "useHeaderBackground": true
+        },
+        filter: {
+            k: 'document.name',
+            o: 'icontains',
+            v: 'vorpal'
+        },
+        filterMode: 'advanced'
+    }
+});
+
 ```
 
 ### Links
