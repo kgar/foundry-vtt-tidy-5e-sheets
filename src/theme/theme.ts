@@ -2,6 +2,14 @@ import { CONSTANTS } from 'src/constants';
 import { coalesce } from 'src/utils/formatting';
 import chroma from 'chroma-js';
 
+// TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
+export class Theme {
+  static supportedDocumentNames: ReadonlySet<string> = new Set<string>([
+    CONSTANTS.DOCUMENT_NAME_ACTOR,
+    CONSTANTS.DOCUMENT_NAME_ITEM,
+  ]);
+}
+
 export function getThemeV2(doc?: any) {
   let theme: string | undefined = undefined;
   if (doc) {

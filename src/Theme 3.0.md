@@ -45,8 +45,8 @@ Any theme options that are specific to a particular document type/subtype will s
 - [x] Refactor: Replace the `all` symbol with permuting a config across all relevant object locations, spreading the data to ensure post-processing changes to one location by a script caller doesn't affect all locations.
   - array of supported document names, since we will control that.
   - foundry.documents[documentName].TYPES for each document type
-- [ ] Refactor: documentName -> documentNames, type -> types, store as arrays. Empty array means ALL.
-- [ ] Lay out the content
+- [x] Refactor: documentName -> documentNames, type -> types, store as arrays. Empty array means ALL.
+- [x] Prototype the form with a basic layout
   - Management column
     - List of current themes (drag/drop to sort | click up/down arrows to move in sort)
     - Add Button at bottom, like in journals
@@ -77,6 +77,7 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
+- [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
 
 
 ### Filter Notes
@@ -137,7 +138,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
     '1234567': {
         id: '1234567',
         name: 'Lich Gang Theme',
-        documentName: 'Actor',
+        documentName: ['Actor'],
         sort: 1,
         settings: {
             "accentColor": "rgb(55, 109, 71)",
@@ -153,8 +154,8 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
     '7654321': {
         id: '7654321',
         name: 'Vorpal Weapons',
-        documentName: 'Item',
-        type: 'weapon',
+        documentName: ['Item'],
+        type: ['weapon'],
         sort: 2,
         settings: {
             "accentColor": "rgb(31, 76, 145)",

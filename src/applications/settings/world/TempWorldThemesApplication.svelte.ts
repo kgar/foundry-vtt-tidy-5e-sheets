@@ -129,9 +129,9 @@ export class TempWorldThemesApplication extends getSvelteApplicationMixin<
       name: 'TODO: New Name Here',
       settings: {},
       sort: maxSort + 1,
-      documentName: undefined,
+      documentNames: [],
       filter: undefined,
-      type: undefined,
+      types: [],
     });
   }
 

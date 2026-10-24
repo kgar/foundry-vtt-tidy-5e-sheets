@@ -62,9 +62,9 @@ export type WorldThemeSetting = {
   /** A display name for the world theme. */
   name: string;
   /** An optional filter for document name, e.g. "Actor" or "Item" */
-  documentName?: string;
+  documentNames?: string[];
   /** An optional filter for document type, e.g. "weapon", "equipment", "character", "npc", "loot", etc. */
-  type?: string;
+  types?: string[];
   /** The intended priority order of this theme setting. The UI reflects this sort order during settings management. */
   sort: number;
   /** The actual theme settings. */

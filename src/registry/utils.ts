@@ -115,8 +115,9 @@ const initWorldThemes = () => {
 
   for (const theme of prioritizedWorldThemes) {
     const targetDocumentNames =
-      theme.documentName && supportedDocumentNames.has(theme.documentName)
-        ? [theme.documentName]
+      !!theme.documentNames?.length &&
+      theme.documentNames.filter(supportedDocumentNames.has)
+        ? theme.documentNames
         : [...supportedDocumentNames];
 
     for (const targetDocumentName of targetDocumentNames) {
@@ -125,14 +126,17 @@ const initWorldThemes = () => {
       ] ??= {});
 
       const targetTypes: string[] =
-        theme.type && foundry.documents[targetDocumentName]?.TYPES?.[theme.type]
-          ? [theme.type]
+        !!theme.types?.length &&
+        theme.types.some(
+          (t) => !!foundry.documents[targetDocumentName]?.TYPES[t],
+        )
+          ? theme.types
           : (foundry.documents[targetDocumentName]?.TYPES ?? []);
 
       for (const targetType of targetTypes) {
         const themes = (configDocumentNames[targetType] ??= []);
 
-        // Copy the theme here to prevent post-processing changes 
+        // Copy the theme here to prevent post-processing changes
         // from affecting all scoped locations at once, to give the least surprise.
         themes.push({ ...theme });
       }

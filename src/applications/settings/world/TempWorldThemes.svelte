@@ -7,6 +7,9 @@
   } from './TempWorldThemesApplication.svelte';
   import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
   import { error } from 'src/utils/logging';
+  import { Theme } from 'src/theme/theme';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { FilterDescription } from 'src/foundry/dnd5e.types';
 
   type Props = {
     app: TempWorldThemesApplication;
@@ -15,9 +18,41 @@
 
   const { app, config }: Props = $props();
 
+  const compendia = $derived<{ text: string; value: string }[]>([]);
+
+  let folder = $state('');
+  let themeMode = $state<string | undefined>(undefined);
+  let compendium = $state<string | undefined>(undefined);
+
   let selectedTheme = $derived(config.themes[0]);
+
   const orderedThemes = $derived(
     config.themes.toSorted((a, b) => a.sort - b.sort),
+  );
+
+  const localize = FoundryAdapter.localize;
+
+  const supportedDocuments = [...Theme.supportedDocumentNames]
+    .map((s) => ({
+      text: localize(`DOCUMENT.${s}`),
+      value: s,
+    }))
+    .sort((a, b) => a.text.localeCompare(b.text));
+
+  const availableTypes = $derived(
+    supportedDocuments
+      .flatMap(
+        (doc) =>
+          foundry.documents[doc.value]?.TYPES.map((t: string) => ({
+            text: localize(CONFIG.Item.typeLabels[t]),
+            value: t,
+          })) ?? [],
+      )
+      .sort((a, b) => a.text.localeCompare(b.text)),
+  );
+
+  const availableTypeKeys = $derived(
+    new Set<string>(availableTypes.map((t) => t.value)),
   );
 
   const actorHeaderBackgroundSupportedActorTypes = new Set<string>([
@@ -48,11 +83,48 @@
   ): Promise<void> {
     error("It ain't implemented yet.", true);
   }
+
+  function onDocumentNamesChanged(
+    _event: Event & { currentTarget: EventTarget & HTMLInputElement },
+  ) {
+    selectedTheme.types = availableTypes.filter(availableTypeKeys.has);
+  }
+
+  function clearFilter() {
+    selectedTheme.filter = undefined;
+  }
+
+  function refreshFilter() {
+    const filter: FilterDescription[] = [];
+
+    if (folder.trim() !== '') {
+      filter.push({
+        k: 'folder',
+        v: folder,
+      });
+    }
+
+    if (themeMode) {
+      filter.push({
+        k: 'themeMode',
+        v: themeMode,
+      });
+    }
+
+    if (compendium) {
+      filter.push({
+        k: 'document.pack',
+        v: compendium,
+      });
+    }
+
+    selectedTheme.filter = filter;
+  }
 </script>
 
 <div>
   <div>
-    {#each config.themes as theme}
+    {#each orderedThemes as theme}
       <button
         onclick={() => selectTheme(theme.id)}
         class={[
@@ -81,13 +153,107 @@
           <i class="fa-solid fa-trash"></i> TODO Delete
         </button>
       </p>
-      <p>TODO: Document Name Select here</p>
-      <p>TODO: Document Type Select here</p>
-      <p>TODO: Filter Mode Toggle</p>
+      <div>
+        <label>TOOD: Documents</label>
+        <ul>
+          {#each supportedDocuments as supportedDocument}
+            <li>
+              <input
+                type="checkbox"
+                bind:group={selectedTheme.documentNames}
+                value={supportedDocument.value}
+                onchange={onDocumentNamesChanged}
+              />
+              {supportedDocument.text}
+            </li>
+          {/each}
+        </ul>
+      </div>
+      {#if availableTypes.length}
+        <div>
+          <label>TODO: Document Types</label>
+          {#each availableTypes as type}
+            <li>
+              <input
+                type="checkbox"
+                bind:group={selectedTheme.types}
+                value={type.value}
+              />
+              {type.text}
+            </li>
+          {/each}
+        </div>
+      {/if}
+      <div>
+        <label>TODO: Filter Mode</label>
+        <label>
+          <input
+            type="radio"
+            bind:group={selectedTheme.filterMode}
+            value="basic"
+            onclick={clearFilter}
+          />
+          TODO: Basic
+        </label>
+        <label>
+          <input
+            type="radio"
+            bind:group={selectedTheme.filterMode}
+            value="advanced"
+          />
+          TODO: Advanced
+        </label>
+      </div>
       {#if selectedTheme.filterMode === 'basic'}
-        <p>TODO: Folder filter</p>
-        <p>TODO: Light/Dark/Both filter</p>
-        <p>TODO: Compendium Select filter</p>
+        <div>
+          <label>TODO: Folder</label>
+          <input type="text" value={folder} />
+        </div>
+        <div>
+          <label>TODO: Theme Mode</label>
+          <label>
+            <input
+              type="radio"
+              onchange={refreshFilter}
+              bind:group={themeMode}
+              value={undefined}
+            />
+            TODO: Any
+          </label>
+          <label>
+            <input
+              type="radio"
+              onchange={refreshFilter}
+              bind:group={themeMode}
+              value="light"
+            />
+            TODO: Light
+          </label>
+          <label>
+            <input
+              type="radio"
+              onchange={refreshFilter}
+              bind:group={themeMode}
+              value="dark"
+            />
+            TODO: Dark
+          </label>
+        </div>
+        <div>
+          <label>TODO: Compendium</label>
+          <select bind:value={compendium} onchange={refreshFilter}>
+            <option>TODO: Select an option</option>
+            {#each compendia as c}
+              <option value={c.value}>
+                {c.text}
+              </option>
+            {/each}
+          </select>
+          <p>
+            TODO: hint - No selection indicates targeting the sidebar and any
+            compendium.
+          </p>
+        </div>
       {:else}
         <p>TODO: Filter Input with visualizer</p>
       {/if}
@@ -96,13 +262,16 @@
         rarities={config.rarityColors}
         spellPreparationMethodColors={config.spellPreparationMethodColors}
         placeholders={undefined}
-        showActorPortraitShape={selectedTheme.documentName ===
-          CONSTANTS.DOCUMENT_NAME_ACTOR || !selectedTheme.documentName}
-        showActorHeaderBackground={!selectedTheme.documentName ||
-          (!!selectedTheme.type &&
-            actorHeaderBackgroundSupportedActorTypes.has(selectedTheme.type))}
-        showItemSidebarBackground={!selectedTheme.documentName ||
-          selectedTheme.documentName === CONSTANTS.DOCUMENT_NAME_ITEM}
+        showActorPortraitShape={!!selectedTheme.documentNames?.includes(
+          CONSTANTS.DOCUMENT_NAME_ACTOR,
+        ) || !selectedTheme.documentNames?.length}
+        showActorHeaderBackground={!selectedTheme.documentNames?.length ||
+          (!!selectedTheme.types?.length &&
+            selectedTheme.types.some(
+              actorHeaderBackgroundSupportedActorTypes.has,
+            ))}
+        showItemSidebarBackground={!selectedTheme.documentNames?.length ||
+          selectedTheme.documentNames.includes(CONSTANTS.DOCUMENT_NAME_ITEM)}
         {onExportRequested}
         {onLiveUpdateRequested}
         {onThemeImportRequested}
