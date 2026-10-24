@@ -40,6 +40,11 @@ import type {
   ItemToggleConfig,
 } from 'src/api/api.types';
 import type { Item5e } from './item.types';
+import type {
+  ThemeFilterData,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
+import type { WorldThemeSetting } from 'src/settings/settings.types';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -73,6 +78,8 @@ export type TidyConfig = {
     toggles: TidyItemToggleRegistry;
   };
   partitions: TidyPartitionRegistry;
+  symbols: TidySymbolRegistry;
+  worldThemes: TidyThemeRegistry;
   utils: TidyPublicUtils;
 };
 
@@ -301,7 +308,29 @@ export type TidyPublicUtils = {
     element: HTMLElement | null | undefined,
   ) => string | null;
   getTabIdFromEvent: (event: Event) => string | null;
+  theme: {
+    getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettingsV3;
+    initWorldThemes: () => void;
+    prepareThemeFilterData: (doc: Actor5e | Item5e) => ThemeFilterData;
+  };
 };
+
+export type TidySymbolRegistry = {
+  /** A symbol to represent all types or entities in a given mapping, such as "all actor types" or "all item subtypes" */
+  all: symbol;
+  /** A symbol to represent readme materials for a given config object. */
+  readme: symbol;
+  /** A symbol to denot that a config object is generated and should be updated through hooks or other API means, as specified by the symbol's object value. */
+  generated: symbol;
+};
+
+type DocumentName = string;
+type DocumentType = string;
+
+export type TidyThemeRegistry = Record<
+  DocumentName | symbol,
+  Record<DocumentType | symbol, WorldThemeSetting[]>
+>;
 
 type ItemType = string;
 type DescriptionId = string;

@@ -1,9 +1,18 @@
+import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { getThemeV2 } from 'src/theme/theme';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type {
+  ThemeFilterData,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
+import type { Item5e } from 'src/types/item.types';
 import type { TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 
 const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
   element,
@@ -80,12 +89,119 @@ const tryGetInspirationSource = async (
   return inspirationSource;
 };
 
+// TODO: to theme.ts
+const supportedDocumentNames = new Set<string>([
+  CONSTANTS.DOCUMENT_NAME_ACTOR,
+  CONSTANTS.DOCUMENT_NAME_ITEM,
+]);
+
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
+const initWorldThemes = () => {
+  if (!CONFIG.TIDY5E) {
+    error(
+      `Invalid setup. CONFIG.TIDY5E must be initialized before calling ${initWorldThemes.name}`,
+      true,
+    );
+
+    return;
+  }
+
+  // Reset worldThemes every time.
+  CONFIG.TIDY5E.worldThemes = {};
+
+  const prioritizedWorldThemes = Object.values(
+    SettingsProvider.settings.worldThemes.get() ?? {},
+  ).sort((a, b) => a.sort - b.sort);
+
+  for (const theme of prioritizedWorldThemes) {
+    const targetDocumentNames =
+      theme.documentName && supportedDocumentNames.has(theme.documentName)
+        ? [theme.documentName]
+        : [...supportedDocumentNames];
+
+    for (const targetDocumentName of targetDocumentNames) {
+      const configDocumentNames = (CONFIG.TIDY5E.worldThemes[
+        targetDocumentName
+      ] ??= {});
+
+      const targetTypes: string[] =
+        theme.type && foundry.documents[targetDocumentName]?.TYPES?.[theme.type]
+          ? [theme.type]
+          : (foundry.documents[targetDocumentName]?.TYPES ?? []);
+
+      for (const targetType of targetTypes) {
+        const themes = (configDocumentNames[targetType] ??= []);
+
+        // Copy the theme here to prevent post-processing changes 
+        // from affecting all scoped locations at once, to give the least surprise.
+        themes.push({ ...theme });
+      }
+    }
+  }
+
+  // TODO: Extract to TidyHooks
+  Hooks.callAll(
+    'tidy5e-sheet.worldThemesConfigChanged',
+    CONFIG.TIDY5E.worldThemes,
+  );
+
+  TidyHooks.tidy5eSheetsThemeSettingsChanged();
+};
+
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
+const getWorldTheme = (doc: Actor5e | Item5e): ThemeSettingsV3 => {
+  const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
+
+  const defaultSettings = ThemeQuadrone.getDefaultThemeSettings();
+
+  const values = Object.values(
+    CONFIG.TIDY5E.worldThemes[doc.documentName]?.[doc.type] ?? [],
+  );
+
+  for (const entry of values) {
+    if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
+      return foundry.utils.mergeObject(defaultSettings, entry.settings);
+    }
+  }
+
+  return defaultSettings;
+};
+
+// TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
+const prepareThemeFilterData = (
+  doc: Actor5e | Item5e | undefined,
+): ThemeFilterData => {
+  const themeMode = getThemeV2(doc);
+
+  const folder = doc?.folder
+    ? [doc.folder, ...doc.folder.ancestors]
+        .reverse()
+        .map((f) => f.name)
+        .join('/')
+    : '';
+
+  const data = {
+    document: doc,
+    folder,
+    themeMode,
+  };
+
+  debug(`${prepareThemeFilterData.name} result`, data);
+
+  return data;
+};
+
 export function getUtils(): TidyPublicUtils {
   return {
+    actorInspiration: {
+      tryGetInspirationSource,
+    },
     getTabIdFromElement,
     getTabIdFromEvent,
-    actorInspiration: {
-      tryGetInspirationSource
-    }
+    theme: {
+      getWorldTheme,
+      initWorldThemes,
+      prepareThemeFilterData,
+    },
   };
 }

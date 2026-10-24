@@ -68,18 +68,6 @@ export class ThemeQuadrone {
     return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
-  static getWorldThemeSettings(): ThemeSettingsV3 {
-    // SettingsProvider is assigned in initSettings(); optional chaining covers
-    // circular-import / ordering edge cases. Fall back to raw game setting.
-    const stored =
-      SettingsProvider.settings.worldThemeSettings.get() ??
-      FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
-        'worldThemeSettings',
-      ) ??
-      this.getDefaultThemeSettings();
-    return foundry.utils.mergeObject(this.getDefaultThemeSettings(), stored);
-  }
-
   /** Get any settings that have been changed, or null  */
   static getChangedWorldThemeSettingsForForm(): Partial<ThemeSettingsV3> {
     return SettingsProvider.settings.worldThemeSettings.get() ?? {};
@@ -103,7 +91,7 @@ export class ThemeQuadrone {
     options.applyWorldThemeSetting ??= true;
 
     let defaultSettings = options.applyWorldThemeSetting
-      ? this.getWorldThemeSettings()
+      ? CONFIG.TIDY5E.utils.theme.getWorldTheme(options.doc)
       : this.getDefaultThemeSettings(options.alternateDefaults);
 
     if (options.doc?.parent) {
@@ -140,6 +128,14 @@ export class ThemeQuadrone {
     ) {
       preferences.portraitShape = 'token';
     }
+
+    // TODO: Extract to TidyHooks
+    Hooks.callAll(
+      'tidy5e-sheet.getSheetThemeSettings',
+      preferences,
+      document,
+      options,
+    );
 
     return preferences;
   }
@@ -215,7 +211,7 @@ export class ThemeQuadrone {
       options.settingsOverride ??
       (options.doc
         ? this.getSheetThemeSettings(options)
-        : this.getWorldThemeSettings());
+        : CONFIG.TIDY5E.utils.theme.getWorldTheme(options.doc));
     const declarations = ThemeStylesProvider.create(themeSettings, options);
     this.applyStyleDeclarations(declarations, options.doc, options.idOverride);
   }
@@ -226,12 +222,13 @@ export class ThemeQuadrone {
     const hookId = TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe(
       (doc?: any, liveThemeOverride?: ThemeSettingsV3) => {
         const appliesToThisSheet =
-          !!doc &&
-          options.doc &&
-          (doc.uuid === options.doc.uuid ||
-            doc.uuid === options.doc.parent?.uuid);
+          // We interpret changes to world themes as affecting all sheets.
+          !doc ||
+          (options.doc &&
+            (doc.uuid === options.doc.uuid ||
+              doc.uuid === options.doc.parent?.uuid));
 
-        if (appliesToThisSheet) {
+        if (appliesToThisSheet && options.doc) {
           ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
             ...options,
             settingsOverride: liveThemeOverride,
