@@ -1976,12 +1976,15 @@ export function getTidy5eActorSheetQuadroneBase<
       }
       // Copying/Moving
       else if (targetItem) {
-        const data = activity.toObject();
-        delete data._id;
         const behavior = this._dropBehavior(event, activity.toDragData());
-        await targetItem.createActivity(data.type, data, {
+
+        const createData = activity.toObject();
+        delete createData._id;
+
+        await targetItem.createActivity(createData.type, createData, {
           renderSheet: false,
         });
+
         if (behavior === 'move') {
           await activity.delete();
         }
@@ -2206,7 +2209,7 @@ export function getTidy5eActorSheetQuadroneBase<
       }
 
       // Only section flags (custom section, advancement origin) are applied.
-      // Otherwise section data like a spell section's level would overwrite 
+      // Otherwise section data like a spell section's level would overwrite
       // the new item's data
       const sectionFlags = Object.fromEntries(
         Object.entries(restDataSet).filter(([key]) => key.startsWith('flags.')),

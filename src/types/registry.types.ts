@@ -35,6 +35,10 @@ import type {
   VehiclePassengerColumnSpec,
 } from './columns.types';
 import type { Actor5e, InspirationSource } from './types';
+import type {
+  ItemDescriptionConfig,
+  ItemToggleConfig,
+} from 'src/api/api.types';
 import type { Item5e } from './item.types';
 import type {
   ThemeFilterData,
@@ -69,6 +73,10 @@ export type TidyConfig = {
   components: TidyComponentRegistry;
   description: string;
   features: TidyFeatureRegistry;
+  item: {
+    descriptions: TidyItemDescriptionRegistry;
+    toggles: TidyItemToggleRegistry;
+  };
   partitions: TidyPartitionRegistry;
   symbols: TidySymbolRegistry;
   worldThemes: TidyThemeRegistry;
@@ -318,4 +326,37 @@ type DocumentType = string;
 export type TidyThemeRegistry = Record<
   DocumentName | symbol,
   Record<DocumentType | symbol, WorldThemeSetting[]>
+>;
+
+type ItemType = string;
+type DescriptionId = string;
+
+export type RegisteredItemDescription = {
+  label: string;
+  visible?: (item: Item5e) => boolean;
+  field: string;
+  onChange?: (item: Item5e, description: string) => Promise<any>;
+  editable?: (item: Item5e) => boolean;
+};
+
+export type TidyItemDescriptionRegistry = Record<
+  ItemType,
+  Record<DescriptionId, RegisteredItemDescription>
+>;
+
+type ToggleId = string;
+
+export type RegisteredItemToggle = {
+  label: string;
+  icon?: string;
+  active?: (item: Item5e) => boolean;
+  editable?: (item: Item5e) => boolean;
+  onChange?: (item: Item5e) => Promise<any>;
+  field?: string;
+  visible?: (item: Item5e) => boolean;
+};
+
+export type TidyItemToggleRegistry = Record<
+  ItemType,
+  Record<ToggleId, RegisteredItemToggle>
 >;

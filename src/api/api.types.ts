@@ -5,6 +5,7 @@ import type { SvelteTab } from './tab/SvelteTab';
 import type { HtmlContent } from './content/HtmlContent';
 import type { HandlebarsContent } from './content/HandlebarsContent';
 import type { Actor5e } from 'src/types/types';
+import type { Item5e } from 'src/types/item.types';
 
 /**
  * Data provided after custom content has been prepared for rendering.
@@ -359,6 +360,92 @@ export type EquipmentTypeGroup = {
    * Localization keys also work.
    */
   types: Record<string, string>;
+};
+
+/**
+ * A custom item description.
+ */
+export type ItemDescriptionConfig = {
+  /** A unique ID for this description. */
+  id: string;
+  /**
+   * The item types which should show this description.
+   * Excluding this property indicates item types.
+   */
+  itemTypes?: string[];
+  /** The title of the description. */
+  label: string;
+  /**
+   * A callback to determine whether the description should be visible, based on the item document.
+   *
+   * @returns `true` for editable, `false` for read-only
+   */
+  visible?: (item: Item5e) => boolean;
+  /**
+   * Optional property path for where to save the data.
+   * Typically, this is a flag path, like `flags.my-example.curse-description`.
+   */
+  field: string;
+  /**
+   * Optional callback to allow handling a change to the description value.
+   * If a property path is not available, or saving changes requires more work,
+   * use this callback.
+   */
+  onChange?: (item: Item5e, description: string) => Promise<any>;
+  /**
+   * A callback to determine if the description is editable by the current user.
+   *
+   * @returns `true` for editable, `false` for read-only
+   */
+  editable?: (item: Item5e) => boolean;
+};
+
+/**
+ * A custom toggle switch.
+ */
+export type ItemToggleConfig = {
+  /** A unique ID for this toggle. */
+  id: string;
+  /**
+   * The item types which should show this toggle.
+   * Excluding this property indicates item types.
+   */
+  itemTypes?: string[];
+  /** The label text to show for this toggle. Supports localization keys. */
+  label: string;
+  /** The FontAwesome icon to show for this toggle. */
+  icon?: string;
+  /**
+   * Optional callback that denotes whether the toggle switch is currently toggle on.
+   * Use this in combination with `onChange`. 
+   * Otherwise, this is handled automatically with the `field` property.
+   * 
+   * @returns `true` for toggled on, `false` for toggled off
+   */
+  active?: (item: Item5e) => boolean;
+  /**
+   * A callback to determine if the toggle is editable by the current user.
+   *
+   * @returns `true` for editable, `false` for read-only
+   */
+  editable?: (item: Item5e) => boolean;
+  /**
+   * Optional callback to allow handling a change to the toggle value.
+   * If a property path is not available, or saving changes requires more work,
+   * use this callback.
+   */
+  onChange?: (item: Item5e) => Promise<any>;
+  /**
+   * Optional property path for where to save the data.
+   * Typically, this is a flag path, like `flags.my-example.is-cursed`.
+   */
+  field?: string;
+  /**
+   * A callback to determine whether the toggle should be visible, based on the item document.
+   *
+   * @returns `true` for editable, `false` for read-only
+   */
+  visible?: (item: Item5e) => boolean;
 };
 
 /**

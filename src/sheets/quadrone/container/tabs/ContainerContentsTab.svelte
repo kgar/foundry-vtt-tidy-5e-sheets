@@ -21,12 +21,6 @@
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const contentsVisibility = $derived(
-    Container.getContentsVisibility(context.item, {
-      unlocked: context.unlocked,
-    }),
-  );
-
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
@@ -51,7 +45,7 @@
   let footerEl: HTMLElement | undefined = $state();
 </script>
 
-{#if contentsVisibility === 'visible'}
+{#if context.contentsVisibility === 'visible'}
   <ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
 
   <!-- Tables -->
@@ -98,6 +92,6 @@
   </footer>
 {:else}
   <div class="inventory-empty empty-state-container color-text-lightest">
-    <p>{localize('DND5E.Unidentified.Notice')}</p>
+    <p>{localize(context.contentsConcealedNotice)}</p>
   </div>
 {/if}
