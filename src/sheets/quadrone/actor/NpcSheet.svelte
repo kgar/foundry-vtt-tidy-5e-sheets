@@ -195,7 +195,7 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-        <div class="ability initiative flexcol">
+        <div class="ability initiative flexcol aux-config">
           <div
             class={[
               'initiative-score-container',
@@ -222,12 +222,15 @@
                 </span>
               </span>
             </button>
-            {#if context.unlocked}
+            {#if context.editable}
               <button
                 aria-label={localize('DND5E.InitiativeConfig')}
                 data-tooltip="DND5E.InitiativeConfig"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
+                class={[
+                  'button button-borderless button-icon-only button-config aux-config-target',
+                  { hidden: !context.unlocked },
+                ]}
                 data-action="showConfiguration"
                 data-config="initiative"
               >
@@ -266,7 +269,9 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
-                  aria-label={localize('TIDY5E.COMMON.Action.DecreaseNamed', { name: localize('DND5E.Loyalty') })}
+                  aria-label={localize('TIDY5E.COMMON.Action.DecreaseNamed', {
+                    name: localize('DND5E.Loyalty'),
+                  })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -278,7 +283,9 @@
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
-                  aria-label={localize('TIDY5E.COMMON.Action.IncreaseNamed', { name: localize('DND5E.Loyalty') })}
+                  aria-label={localize('TIDY5E.COMMON.Action.IncreaseNamed', {
+                    name: localize('DND5E.Loyalty'),
+                  })}
                   onclick={async () =>
                     await context.actor.update({
                       'system.attributes.loyalty.value':
@@ -364,19 +371,29 @@
                 <i class="fas fa-dice"></i>
               </button>
 
-              <div class={['death-saves', { dying: context.showDeathSaves }]}>
-                {#if context.unlocked}
+              <div
+                class={[
+                  'death-saves',
+                  'aux-config',
+                  { dying: context.showDeathSaves },
+                ]}
+              >
+                {#if context.editable}
                   <button
                     aria-label={localize('DND5E.DeathSaveConfigure')}
                     data-tooltip="DND5E.DeathSaveConfigure"
                     type="button"
-                    class="button button-borderless button-icon-only button-config"
+                    class={[
+                      'button button-borderless button-icon-only button-config aux-config-target',
+                      { hidden: !context.unlocked },
+                    ]}
                     data-action="showConfiguration"
                     data-config="death"
                   >
                     <i class="fas fa-cog"></i>
                   </button>
-                {:else}
+                {/if}
+                {#if !context.unlocked}
                   <button
                     type="button"
                     class="button button-borderless button-icon-only"
@@ -407,7 +424,7 @@
         {/if}
       </div>
       <div
-        class="shield"
+        class="shield aux-config"
         data-attribution="attributes.ac"
         data-attribution-caption="DND5E.ArmorClass"
         data-tooltip-direction="DOWN"
@@ -418,12 +435,17 @@
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
-        {#if context.unlocked}
+        {#if context.editable}
           <button
             aria-label={localize('DND5E.ARMORCLASS.Action.Configure')}
             data-tooltip="DND5E.ARMORCLASS.Action.Configure"
             type="button"
-            class="button button-borderless button-icon-only button-config"
+            class={[
+              'button button-borderless button-icon-only button-config aux-config-target',
+              {
+                hidden: !context.unlocked,
+              },
+            ]}
             data-action="showConfiguration"
             data-config="armorClass"
           >

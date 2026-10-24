@@ -89,6 +89,7 @@
 <div
   class={[
     'ability',
+    'aux-config',
     ability.key,
     {
       'has-proficiency':
@@ -248,13 +249,15 @@
         {/if}
       </span>
     {/if}
-    {#if unlocked}
+
+    {#if !disabled}
       <button
         aria-label={configButtonTooltip}
         type="button"
         class={[
-          'button button-borderless button-icon-only button-config',
+          'button button-borderless button-icon-only button-config aux-config-target',
           { invisible: editingScore },
+          { hidden: !unlocked },
         ]}
         data-tooltip
         data-action="showConfiguration"

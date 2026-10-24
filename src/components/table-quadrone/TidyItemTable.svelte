@@ -15,13 +15,14 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorItemQuadroneContext,
+    CharacterItemQuadroneContext,
     CharacterSheetQuadroneContext,
     FeatureSection,
     InventorySection,
     NpcSheetQuadroneContext,
     SpellbookSection,
   } from 'src/types/types';
-  import { type Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
   import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
   import type { ClassValue, HTMLAttributes } from 'svelte/elements';
@@ -31,6 +32,10 @@
   import RowActionsColumn from 'src/sheets/quadrone/item/columns/RowActionsColumn.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { isNil } from 'src/utils/data';
+  import InlineContainerView from 'src/sheets/quadrone/container/parts/InlineContainerView.svelte';
 
   interface Props {
     section: TSection;
@@ -39,7 +44,10 @@
       typeof RowActionRuntimeBase.getRowActionWidthInfo
     >;
     entries: Item5e[];
-    entryContext: Record<string, ActorItemQuadroneContext>;
+    entryContext: Record<
+      string,
+      ActorItemQuadroneContext | CharacterItemQuadroneContext
+    >;
     entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
     headerRowClasses?: ClassValue;
@@ -78,14 +86,26 @@
     root = true,
   }: Props = $props();
 
-  let searchResults = getSearchResultsContext();
+  const searchResults = getSearchResultsContext();
 
-  let context =
+  const inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
+
+  const containerToggleMap = $derived(inlineToggleService.map);
+
+  const context =
     $derived(
       getSheetContext<
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+
+  const actor = $derived(
+    context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
+      ? context.document
+      : context.document.actor,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -189,7 +209,11 @@
           {ctx}
         >
           {#snippet children({ toggleSummary, expanded })}
-            {@render beforeImage?.(entry, ctx)}
+            {#if beforeImage}
+              {@render beforeImage?.(entry, ctx)}
+            {:else}
+              <div class="highlight"></div>
+            {/if}
             <!--svelte-ignore a11y_missing_attribute-->
             <a
               class={[
@@ -210,7 +234,32 @@
               </span>
             </a>
 
-            {@render afterImage?.(entry, ctx)}
+            {#if afterImage}
+              {@render afterImage?.(entry, ctx)}
+            {:else}
+              {#if 'containerContents' in ctx && !!ctx.containerContents}
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <a
+                  class="container-expander"
+                  onclick={() => inlineToggleService.toggle(tabId, entry.id)}
+                  role="button"
+                  tabindex="0"
+                  aria-label={localize('DND5E.ToggleDescription')}
+                  onkeydown={(ev) =>
+                    ev.key === 'Enter' ||
+                    (ev.key === ' ' &&
+                      inlineToggleService.toggle(tabId, entry.id))}
+                >
+                  <i
+                    class="fa-solid fa-angle-right expand-indicator"
+                    class:expanded={containerToggleMap
+                      .get(tabId)
+                      ?.has(entry.id)}
+                  >
+                  </i>
+                </a>
+              {/if}
+            {/if}
             <TidyTableCell primary={true} class="item-label text-cell">
               <!--svelte-ignore a11y_missing_attribute-->
               <a
@@ -227,6 +276,10 @@
 
                   {#if subtitle}
                     {@render subtitle(entry, ctx)}
+                  {:else if root && ctx.containerName}
+                    <TidyTableSubtitle>
+                      {@html ctx.containerName}
+                    </TidyTableSubtitle>
                   {:else if ctx.subtitle}
                     <TidyTableSubtitle>
                       {@html ctx.subtitle}
@@ -244,7 +297,73 @@
               </a>
             </TidyTableCell>
 
-            {@render afterFirstCell?.(entry, ctx)}
+            {#if afterFirstCell}
+              {@render afterFirstCell?.(entry, ctx)}
+            {:else}
+              {#if 'inspirationSource' in context && context.inspirationSource?.itemId === entry.id}
+                <i
+                  class={[
+                    'fa-solid',
+                    'fa-sparkles',
+                    'item-state-indicator',
+                    'color-text-gold-emphasis',
+                  ]}
+                  data-tooltip="TIDY5E.ACTOR.Inspiration.Source.Tooltip"
+                ></i>
+              {/if}
+
+              {const mastered = $derived(
+                actor?.system.traits?.weaponProf?.mastery?.value?.has(
+                  entry.system.type?.baseItem ?? '',
+                ),
+              )}
+
+              {#if mastered}
+                {const mastery = $derived(
+                  CONFIG.DND5E.weaponMasteries[entry.system.mastery],
+                )}
+                {const reference = $derived(
+                  SettingsProvider.settings.referenceTooltipMastery.get()
+                    ? mastery?.reference
+                    : undefined,
+                )}
+                {const tooltip = $derived(
+                  !isNil(mastery?.label, '')
+                    ? FoundryAdapter.localize(
+                        'TIDY5E.ITEM.Weapon.Mastery.Label',
+                        {
+                          mastery: mastery.label,
+                        },
+                      )
+                    : game.i18n.format('DND5E.WEAPON.Mastery.Label'),
+                )}
+
+                <i
+                  class="fa-solid fa-circle-star color-icon-theme-highlight highlighted mastery item-state-indicator"
+                  data-tooltip={!reference ? tooltip : null}
+                  data-reference-tooltip={reference}
+                ></i>
+              {/if}
+
+              {#if 'attunement' in ctx && ctx.attunement}
+                {const iconClass = $derived(
+                  entry.system.attuned
+                    ? 'fa-solid fa-sun color-icon-theme-highlight highlighted'
+                    : 'fa-regular fa-sun color-text-lightest',
+                )}
+
+                {const title = $derived(localize(ctx.attunement.title))}
+                <i
+                  class={[iconClass, 'item-state-indicator']}
+                  data-tooltip={title}
+                ></i>
+              {:else if entry.system.equipped}
+                <i
+                  class="fa-solid fa-hand-fist equip-icon color-text-lightest item-state-indicator"
+                  data-tooltip={localize('DND5E.Equipped')}
+                ></i>
+              {/if}
+            {/if}
 
             <TidyTableCustomCells
               {hiddenColumns}
@@ -265,7 +384,20 @@
           {/snippet}
         </TidyItemTableRow>
 
-        {@render afterEntryRow?.(entry, ctx)}
+        {#if afterEntryRow}
+          {@render afterEntryRow?.(entry, ctx)}
+        {:else}
+          {#if 'containerContents' in ctx && !!ctx.containerContents}
+            <InlineContainerView
+              container={entry}
+              containerContents={ctx.containerContents}
+              editable={context.editable}
+              {inlineToggleService}
+              searchCriteria={searchResults.criteria}
+              sheetDocument={context.document}
+            />
+          {/if}
+        {/if}
       {/each}
     {:else}
       {@render bodyNoEntries?.()}

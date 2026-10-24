@@ -212,13 +212,18 @@
                 "Add": "Crea Segnaposto Combattimento",
                 "AddAll": "Aggiungi Tutti come Segnaposto",
                 "AddToTracker": "Aggiungi all'Incontro Corrente come Segnaposto",
-                "Delete": "Elimina Segnaposto"
+                "Delete": "Elimina Segnaposto",
+                "AddAtInitiative": "Creare Segnaposto Iniziativa"
             },
             "Field": {
                 "Name": "Nome Segnaposto",
                 "Notes": "Note"
             },
-            "Title": "Segnaposto"
+            "Title": "Segnaposto",
+            "TitlePlural": "Segnaposti"
+        },
+        "Placement": {
+            "WorldDefault": "Mondo Predefinito ({value})"
         }
     },
     "TIDY5E.FACILITY": {
@@ -512,6 +517,9 @@
                 },
                 "Tool": {
                     "name": "Visualizza suggerimenti di sistema sugli Strumenti"
+                },
+                "Favorite": {
+                    "name": "Mostra suggerimenti Preferiti sistema"
                 }
             }
         },

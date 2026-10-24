@@ -965,7 +965,15 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     });
 
     context.features = Object.values(features);
-    context.features.forEach(applyStandardItemHeaderActions);
+    context.features.forEach((section) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section,
+        { browseTabId: CONSTANTS.TAB_CHARACTER_FEATURES },
+      );
+    });
   }
 
   /**
@@ -1262,26 +1270,27 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ) {
     const dragData =
       event.dataTransfer!.getData('application/json') ||
       event.dataTransfer!.getData('text/plain');
 
     if (!dragData) {
-      return await super._onDrop(event);
+      return await super._onDrop(event, currentDragData);
     }
 
     let data;
 
     try {
-      data = JSON.parse(dragData);
+      data = currentDragData ?? JSON.parse(dragData);
     } catch (e) {
       error(
         `An error occurred while handling a drop to character ${this.document.name} - ${this.document.uuid}`,
         false,
         e,
       );
-      return await super._onDrop(event);
+      return await super._onDrop(event, data ?? currentDragData);
     }
 
     if (event.target.closest('.favorites')) {
@@ -1305,7 +1314,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
       return this._onDropOccupant(event, data);
     }
 
-    return await super._onDrop(event);
+    return await super._onDrop(event, data ?? currentDragData);
   }
 
   /**

@@ -38,6 +38,7 @@ import UserPreferencesService from 'src/features/user-preferences/UserPreference
 import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
+import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -547,13 +548,16 @@ export class Tidy5eContainerSheetQuadrone
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ): Promise<unknown> {
     this.#dropBehavior = this._dropBehavior(event);
 
     try {
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const data =
+        currentDragData ??
+        foundry.applications.ux.TextEditor.getDragEventData(event);
       if (!['Item', 'Folder'].includes(data.type)) {
-        return await super._onDrop(event);
+        return await super._onDrop(event, data ?? currentDragData);
       }
 
       if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
@@ -695,6 +699,17 @@ export class Tidy5eContainerSheetQuadrone
     }
 
     // Otherwise, create a new item & contents in this context
+    const created = await this._createContents(document, event);
+
+    if (behavior === 'move') {
+      document.delete({ deleteContents: true });
+    }
+
+    return created;
+  }
+
+  /** Create an item and its contents inside this container. */
+  async _createContents(document: Item5e, event: Event) {
     const toCreate = await dnd5e.documents.Item5e.createWithContents(
       [document],
       {
@@ -707,17 +722,28 @@ export class Tidy5eContainerSheetQuadrone
       toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
     }
 
-    const created = dnd5e.documents.Item5e.createDocuments(toCreate, {
+    return dnd5e.documents.Item5e.createDocuments(toCreate, {
       pack: this.item.pack,
       parent: this.item.actor,
       keepId: true,
     });
+  }
 
-    if (behavior === 'move') {
-      document.delete({ deleteContents: true });
+  async _browseAddDocument(args: { event: Event; tabId: string }) {
+    if (!this.isEditable) {
+      return;
     }
 
-    return created;
+    const result = await ItemCompendiumBrowse.selectOne(
+      this._browseAddDocumentItemTypes(args.tabId),
+      this._detachOptions(),
+    );
+
+    const item = result ? await fromUuid(result) : null;
+
+    if (item) {
+      return this._createContents(item, args.event);
+    }
   }
 
   /**

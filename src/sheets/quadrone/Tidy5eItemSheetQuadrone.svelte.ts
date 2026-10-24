@@ -1339,8 +1339,11 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    currentDragData: Record<string, any> | undefined,
   ) {
-    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+    const data =
+      currentDragData ??
+      foundry.applications.ux.TextEditor.getDragEventData(event);
     const item = this.item;
 
     const allowed = TidyHooks.dnd5eDropItemSheetData(item, this, data);
@@ -1358,7 +1361,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         return this._onDropItem(event, data);
     }
 
-    return super._onDrop(event);
+    return super._onDrop(event, data ?? currentDragData);
   }
 
   /* -------------------------------------------- */
@@ -1471,8 +1474,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       config?.configurable !== false &&
       config.documentClass.availableForItem(this.item)
     ) {
-      delete data._id;
-      this.item.createActivity(activity.type, data, { renderSheet: false });
+      const activity = await fromUuid(data.uuid);
+      const createData = activity.toObject();
+      delete createData._id;
+      this.item.createActivity(activity.type, createData, { renderSheet: false });
     }
   }
 

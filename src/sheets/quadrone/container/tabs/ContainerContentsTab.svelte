@@ -14,6 +14,7 @@
   import { Container } from 'src/features/containers/Container';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import { buildContainerContentsSections } from '../settings/ContainerContentsSettingsTab';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -51,10 +52,8 @@
   <InventoryTables
     sections={configuredContents}
     container={context.item}
-    editable={context.editable}
     itemContext={context.containerContents.itemContext}
     {inlineToggleService}
-    {searchCriteria}
     sheetDocument={context.item}
     root={true}
   />
@@ -62,6 +61,12 @@
   <footer bind:this={footerEl} class="contents-footer">
     <!-- Capacity Bar -->
     <CapacityBar container={context.item} capacity={context.capacity} />
+    <CompendiumBrowseButton
+      class="button-primary"
+      sheetDocument={context.item}
+      {tabId}
+      iconOnly
+    />
     <!-- svelte-ignore a11y_missing_attribute -->
     <a
       aria-label={localize('DND5E.ItemCreate')}
@@ -72,7 +77,11 @@
       class:disabled={!context.editable}
       onclick={() => Container.promptCreateInventoryItem(context.item)}
       onkeydown={(event) => {
-        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        if (
+          event.key === 'Enter' ||
+          event.key === ' ' ||
+          event.key === 'Spacebar'
+        ) {
           event.preventDefault();
           Container.promptCreateInventoryItem(context.item);
         }

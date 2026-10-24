@@ -131,10 +131,8 @@
         <InventoryTables
           sections={inventory}
           {container}
-          {editable}
           itemContext={containerContents.itemContext}
           {inlineToggleService}
-          {searchCriteria}
           {sheetDocument}
         />
         {#if !containerContents.contents.some((c) => c.items.length > 0)}

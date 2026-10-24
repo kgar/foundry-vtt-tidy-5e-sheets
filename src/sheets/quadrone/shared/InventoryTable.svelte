@@ -1,25 +1,19 @@
 <script lang="ts">
-  import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import type {
     Actor5e,
     CharacterItemQuadroneContext,
     InventorySection,
     NpcItemQuadroneContext,
   } from 'src/types/types';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
-  import { isNil } from 'src/utils/data';
-  import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings.svelte';
   import { InventoryColumnRuntime } from 'src/runtime/table-columns/InventoryColumnRuntime';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   type Props = {
     containingDocument: any;
-    editable: boolean;
     inlineToggleService: InlineToggleService;
     itemContext: Record<
       string,
@@ -29,38 +23,25 @@
     >;
     /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
     root?: boolean;
-    searchCriteria: string;
     section: InventorySection;
     sectionsInlineWidth: number;
     /** The sheet which is rendering this recursive set of container contents. */
-    sheetDocument: Actor5e | Item5e;
     tabId: string;
     columnsEffectiveTabId?: string;
   };
 
   let {
-    editable,
     inlineToggleService,
     itemContext,
     root,
-    searchCriteria,
     section,
     sectionsInlineWidth,
-    sheetDocument,
     tabId,
   }: Props = $props();
-
-  const localize = FoundryAdapter.localize;
 
   let context = $derived(getSheetContext());
 
   let containerToggleMap = $derived(inlineToggleService.map);
-
-  let actor = $derived(
-    sheetDocument.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
-      ? sheetDocument
-      : sheetDocument.actor,
-  );
 
   const rowActionInfo = $derived(
     RowActionRuntimeBase.getRowActionWidthInfo(
@@ -87,99 +68,4 @@
   entryToggleMap={containerToggleMap}
   {tabId}
   {root}
->
-  {#snippet subtitle(_item, ctx)}
-    {#if root && ctx.containerName}
-      <span class="cell-context">{@html ctx.containerName}</span>
-    {:else if ctx.subtitle}
-      <span class="cell-context">{@html ctx.subtitle}</span>
-    {/if}
-  {/snippet}
-
-  {#snippet beforeImage(entry)}
-    <div class="highlight"></div>
-  {/snippet}
-
-  {#snippet afterImage(entry, ctx)}
-    {#if 'containerContents' in ctx && !!ctx.containerContents}
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        class="container-expander"
-        onclick={() => inlineToggleService.toggle(tabId, entry.id)}
-        role="button"
-        tabindex="0"
-        aria-label={localize('DND5E.ToggleDescription')}
-        onkeydown={(ev) =>
-          ev.key === 'Enter' ||
-          (ev.key === ' ' && inlineToggleService.toggle(tabId, entry.id))}
-      >
-        <i
-          class="fa-solid fa-angle-right expand-indicator"
-          class:expanded={containerToggleMap.get(tabId)?.has(entry.id)}
-        >
-        </i>
-      </a>
-    {/if}
-  {/snippet}
-
-  {#snippet afterFirstCell(entry, ctx)}
-    {const mastered = $derived(
-      actor?.system.traits?.weaponProf?.mastery?.value?.has(
-        entry.system.type?.baseItem ?? '',
-      ),
-    )}
-
-    {#if mastered}
-      {const mastery = $derived(
-        CONFIG.DND5E.weaponMasteries[entry.system.mastery],
-      )}
-      {const reference = $derived(
-        SettingsProvider.settings.referenceTooltipMastery.get()
-          ? mastery?.reference
-          : undefined,
-      )}
-      {const tooltip = $derived(
-        !isNil(mastery?.label, '')
-          ? FoundryAdapter.localize('TIDY5E.ITEM.Weapon.Mastery.Label', {
-              mastery: mastery.label,
-            })
-          : game.i18n.format('DND5E.WEAPON.Mastery.Label'),
-      )}
-
-      <i
-        class="fa-solid fa-circle-star color-icon-theme-highlight highlighted mastery item-state-indicator"
-        data-tooltip={!reference ? tooltip : null}
-        data-reference-tooltip={reference}
-      ></i>
-    {/if}
-
-    {#if ctx.attunement}
-      {const iconClass = $derived(
-        entry.system.attuned
-          ? 'fa-solid fa-sun color-icon-theme-highlight highlighted'
-          : 'fa-regular fa-sun color-text-lightest',
-      )}
-
-      {const title = $derived(localize(ctx.attunement.title))}
-      <i class={[iconClass, 'item-state-indicator']} data-tooltip={title}></i>
-    {:else if entry.system.equipped}
-      <i
-        class="fa-solid fa-hand-fist equip-icon color-text-lightest item-state-indicator"
-        data-tooltip={localize('DND5E.Equipped')}
-      ></i>
-    {/if}
-  {/snippet}
-
-  {#snippet afterEntryRow(entry, ctx)}
-    {#if 'containerContents' in ctx && !!ctx.containerContents}
-      <InlineContainerView
-        container={entry}
-        containerContents={ctx.containerContents}
-        {editable}
-        {inlineToggleService}
-        {searchCriteria}
-        {sheetDocument}
-      />
-    {/if}
-  {/snippet}
-</TidyItemTable>
+></TidyItemTable>

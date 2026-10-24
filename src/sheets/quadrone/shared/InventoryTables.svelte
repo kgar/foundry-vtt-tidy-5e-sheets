@@ -6,7 +6,6 @@
     CharacterItemQuadroneContext,
     InventorySection,
     NpcItemQuadroneContext,
-    TidySectionBase,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -16,11 +15,11 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import InventoryTable from './InventoryTable.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
+  import CompendiumBrowseButton from 'src/components/buttons/CompendiumBrowseButton.svelte';
 
   interface Props {
     sections: InventorySection[];
     container?: Item5e;
-    editable: boolean;
     itemContext: Record<
       string,
       | ContainerItemContext
@@ -28,7 +27,6 @@
       | NpcItemQuadroneContext
     >;
     inlineToggleService: InlineToggleService;
-    searchCriteria: string;
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
@@ -38,10 +36,8 @@
   let {
     sections,
     container,
-    editable,
     itemContext,
     inlineToggleService,
-    searchCriteria,
     sheetDocument,
     root,
   }: Props = $props();
@@ -90,6 +86,11 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.ItemCreate')}
       </button>
+      <CompendiumBrowseButton
+        class="button-tertiary"
+        {sheetDocument}
+        {tabId}
+      />
     </div>
   {:else}
     {#each sections as section (section.key)}
@@ -106,13 +107,10 @@
       {#if showSection}
         <InventoryTable
           {containingDocument}
-          {editable}
           {inlineToggleService}
           {itemContext}
-          {searchCriteria}
           {section}
           {sectionsInlineWidth}
-          {sheetDocument}
           {tabId}
           {columnsEffectiveTabId}
           {root}

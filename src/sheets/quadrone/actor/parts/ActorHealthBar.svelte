@@ -62,7 +62,7 @@
   });
 </script>
 
-<div class="hp-row flexrow">
+<div class="hp-row flexrow aux-config">
   <div
     class="meter progress hit-points"
     style={effectiveMaxHp < hpMax
@@ -155,7 +155,8 @@
         <i class="fas fa-hand-holding-heart"></i>
       </button>
     {/if}
-  {:else if context.editable}
+  {/if}
+  {#if context.editable}
     <button
       data-action="showConfiguration"
       data-config="hitPoints"
@@ -167,7 +168,8 @@
         'button-borderless',
         'button-icon-only',
         'button-config',
-        { editMode: context.unlocked },
+        'aux-config-target',
+        { editMode: context.unlocked, hidden: !context.unlocked },
       ]}
     >
       <i class="fas fa-cog"></i>

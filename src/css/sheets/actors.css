@@ -432,6 +432,16 @@
       padding-inline: 0;
     }
 
+    &:is(.biography-footer, .features-footer) {
+      align-items: end;
+      bottom: 0;
+      flex: 0 0 fit-content;
+      min-height: 2.25rem;
+      padding-block: var(--t5e-size-2x) 0;
+      padding-inline: 0;
+      position: sticky;
+    }
+
     .sheet-footer-left {
       gap: var(--t5e-size-2x);
     }
