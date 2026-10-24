@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
@@ -88,6 +89,12 @@ const tryGetInspirationSource = async (
   return inspirationSource;
 };
 
+// TODO: to theme.ts
+const supportedDocumentNames = new Set<string>([
+  CONSTANTS.DOCUMENT_NAME_ACTOR,
+  CONSTANTS.DOCUMENT_NAME_ITEM,
+]);
+
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
 const initWorldThemes = () => {
   if (!CONFIG.TIDY5E) {
@@ -102,20 +109,34 @@ const initWorldThemes = () => {
   // Reset worldThemes every time.
   CONFIG.TIDY5E.worldThemes = {};
 
-  const allSymbol = CONFIG.TIDY5E.symbols.all;
-
-  const worldThemes = Object.values(
+  const prioritizedWorldThemes = Object.values(
     SettingsProvider.settings.worldThemes.get() ?? {},
   ).sort((a, b) => a.sort - b.sort);
 
-  for (const theme of worldThemes) {
-    const documentNameAreas = (CONFIG.TIDY5E.worldThemes[
-      theme.documentName ?? allSymbol
-    ] ??= {});
+  for (const theme of prioritizedWorldThemes) {
+    const targetDocumentNames =
+      theme.documentName && supportedDocumentNames.has(theme.documentName)
+        ? [theme.documentName]
+        : [...supportedDocumentNames];
 
-    const entries = (documentNameAreas[theme.type ?? allSymbol] ??= []);
+    for (const targetDocumentName of targetDocumentNames) {
+      const configDocumentNames = (CONFIG.TIDY5E.worldThemes[
+        targetDocumentName
+      ] ??= {});
 
-    entries.push(theme);
+      const targetTypes: string[] =
+        theme.type && foundry.documents[targetDocumentName]?.TYPES?.[theme.type]
+          ? [theme.type]
+          : (foundry.documents[targetDocumentName]?.TYPES ?? []);
+
+      for (const targetType of targetTypes) {
+        const themes = (configDocumentNames[targetType] ??= []);
+
+        // Copy the theme here to prevent post-processing changes 
+        // from affecting all scoped locations at once, to give the least surprise.
+        themes.push({ ...theme });
+      }
+    }
   }
 
   // TODO: Extract to TidyHooks
@@ -128,31 +149,18 @@ const initWorldThemes = () => {
 };
 
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
-const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
+const getWorldTheme = (doc: Actor5e | Item5e): ThemeSettingsV3 => {
   const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
 
-  const allSymbol = CONFIG.TIDY5E.symbols.all;
+  const defaultSettings = ThemeQuadrone.getDefaultThemeSettings();
 
-  const areasToCheck = [
-    [doc?.documentName, doc?.type],
-    [doc?.documentName, allSymbol],
-    [allSymbol, allSymbol],
-  ];
+  const values = Object.values(
+    CONFIG.TIDY5E.worldThemes[doc.documentName]?.[doc.type] ?? [],
+  );
 
-  const defaultSettings =
-    ThemeQuadrone.getDefaultThemeSettings(
-      /* TODO: Determine if we need to supply alternateDefaults */
-    );
-
-  for (const [documentName, documentType] of areasToCheck) {
-    const values = Object.values(
-      CONFIG.TIDY5E.worldThemes[documentName]?.[documentType] ?? {},
-    );
-
-    for (const entry of values) {
-      if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
-        return foundry.utils.mergeObject(defaultSettings, entry.settings);
-      }
+  for (const entry of values) {
+    if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
+      return foundry.utils.mergeObject(defaultSettings, entry.settings);
     }
   }
 

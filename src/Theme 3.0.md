@@ -42,6 +42,10 @@ Any theme options that are specific to a particular document type/subtype will s
 - [x] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
 - [x] Create temporary setting menu to house the settings until it gains enough traction
 - [x] Implement the theme list / management UI
+- [x] Refactor: Replace the `all` symbol with permuting a config across all relevant object locations, spreading the data to ensure post-processing changes to one location by a script caller doesn't affect all locations.
+  - array of supported document names, since we will control that.
+  - foundry.documents[documentName].TYPES for each document type
+- [ ] Refactor: documentName -> documentNames, type -> types, store as arrays. Empty array means ALL.
 - [ ] Lay out the content
   - Management column
     - List of current themes (drag/drop to sort | click up/down arrows to move in sort)
@@ -72,6 +76,7 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
+- [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
 
 
 ### Filter Notes

@@ -318,6 +318,10 @@ export type TidyPublicUtils = {
 export type TidySymbolRegistry = {
   /** A symbol to represent all types or entities in a given mapping, such as "all actor types" or "all item subtypes" */
   all: symbol;
+  /** A symbol to represent readme materials for a given config object. */
+  readme: symbol;
+  /** A symbol to denot that a config object is generated and should be updated through hooks or other API means, as specified by the symbol's object value. */
+  generated: symbol;
 };
 
 type DocumentName = string;
