@@ -4,6 +4,8 @@
   import SoloItemDescription from '../../shared/SoloItemDescription.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { Container } from 'src/features/containers/Container';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -12,17 +14,24 @@
   const localize = FoundryAdapter.localize;
 
   // If the item isn't identified and you're not GM editing, show unidentified notice.
-  let conceal = $derived(
-    context.system.identified === false
-  );
+  let unidentified = $derived(context.system.identified === false);
 
   let editing = $state(false);
   let gmEditMode = $derived(FoundryAdapter.isInGmEditMode(context.document));
-  let playerEditMode = $derived(context.sheet.isEditMode && !FoundryAdapter.userIsGm());
+  let playerEditMode = $derived(
+    context.sheet.isEditMode && !FoundryAdapter.userIsGm(),
+  );
+
+  let concealedContainerContents = $derived(
+    context.document.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
+      Container.getContentsVisibility(context.document, {
+        unlocked: context.unlocked,
+      }) !== 'visible',
+  );
 </script>
 
 {#snippet unidentifiedNotice()}
-  {#if conceal}
+  {#if unidentified}
     {#if FoundryAdapter.userIsGm() && gmEditMode}
       <FormGroup
         label="DND5E.NameUnidentified"
@@ -35,8 +44,10 @@
         }}
       />
     {/if}
+  {/if}
+  {#if unidentified || concealedContainerContents}
     <span class="color-text-lightest font-default-longform unidentified-notice">
-      {localize('DND5E.Unidentified.Notice')}
+      {localize(context.contentsConcealedNotice ?? 'DND5E.Unidentified.Notice')}
     </span>
   {/if}
 {/snippet}
@@ -50,6 +61,7 @@
     document={context.document}
     itemDescription={context.itemDescriptions[0]}
     unlocked={context.unlocked}
+    disabled={concealedContainerContents}
   />
 {:else}
   <ItemDescriptions

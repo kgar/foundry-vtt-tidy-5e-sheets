@@ -13,6 +13,7 @@ import type {
   ItemDescription,
   ItemFacilityOrdersContext,
   ItemSheetQuadroneContext,
+  ItemToggle,
   UsesRecoveryData,
 } from 'src/types/item.types';
 import { mount } from 'svelte';
@@ -51,8 +52,9 @@ import { ItemAdvancementMemberRowActionRuntime } from 'src/runtime/table-row-act
 import * as Bastions from 'src/features/facility/Bastion';
 import * as VehicleCrew from 'src/features/vehicle/VehicleCrew';
 import { error } from 'src/utils/logging';
-import { firstOfSet } from 'src/utils/set';
 import { Rarity } from 'src/features/rarity/Rarity';
+import { Description } from 'src/features/description/Description';
+import type { EnrichmentOptions } from 'src/foundry/foundry.types';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -229,7 +231,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
-    const enrichmentOptions = {
+    const enrichmentOptions: EnrichmentOptions = {
       secrets: this.document.isOwner,
       relativeTo: this.item,
       rollData: rollData,
@@ -265,6 +267,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.description.value,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
+        editable: this.document.isOwner,
       });
     }
 
@@ -274,6 +277,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.unidentified?.description ?? '',
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
+        editable: this.document.isOwner,
       });
     }
 
@@ -289,11 +293,41 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         content: systemObject.description.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+        editable: this.document.isOwner,
       });
+    }
+
+    const customDescriptions = Description.getCustomItemDescriptions(
+      this.document,
+      enrichmentOptions,
+    );
+
+    for await (const description of customDescriptions) {
+      itemDescriptions.push(description);
     }
 
     if (!this.item.isOwner) {
       itemDescriptions = itemDescriptions.slice(0, 1);
+    }
+
+    const customToggles =
+      Object.values(CONFIG.TIDY5E.item.toggles[this.document.type] ?? {}) ?? [];
+
+    const itemToggles: ItemToggle[] = [];
+
+    for (const toggle of customToggles) {
+      const visible = toggle.visible?.(this.document) ?? true;
+
+      if (!visible) {
+        continue;
+      }
+
+      itemToggles.push({
+        label: toggle.label,
+        field: toggle.field,
+        icon: toggle.icon,
+        editable: toggle.editable?.(this.document) ?? true,
+      });
     }
 
     const systemSource = !documentSheetContext.unlocked
@@ -487,6 +521,8 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
         { value: 'formula', label: 'DND5E.USES.Recovery.Type.Formula' },
       ],
+
+      toggles: itemToggles,
 
       usesRecovery: (this.document.system.uses?.recovery ?? []).map(
         (data: UsesRecoveryData, index: number) => ({

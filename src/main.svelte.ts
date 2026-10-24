@@ -49,6 +49,10 @@ Hooks.once('init', () => {
       columns: registry.getColumnsRegistry(),
       rowActions: registry.getRowActionsRegistry(),
     },
+    item: {
+      toggles: {},
+      descriptions: {},
+    },
     partitions: {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),

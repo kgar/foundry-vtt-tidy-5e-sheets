@@ -182,6 +182,39 @@ export class TidyHooks {
   }
 
   /**
+   * A container's content concealment notice and description are being prepared.
+   * This is related to when `container.system.canViewContents` is false.
+   * Hook into this to change the data based on the affected
+   * container document by setting the properties in the data parameter.
+   * The last subscriber to make a change to a field is the winner.
+   * @param container           The affected container.
+   * @param data.notice         The generic label to use when indicating that container contents cannot be presently viewed.
+   *                            Localization keys are permitted.
+   * @param data.description    Un-enriched HTML or plain text to use in the item summary area and the container sheet description tab.
+   *                            Localization keys are permitted.
+   *                            Default: the value in the container's "system.unidentified.description" field.
+   * @param data.path           The property path to the concealed notice.
+   *                            Default: "system.unidentified.description"
+   * @param data.editable       Denotes whether the description is editable on the container sheet.
+   *                            Default: value of `container.isOwner`
+   */
+  static tidy5eSheetsContentsConcealedConfig(
+    container: Item5e,
+    data: {
+      notice: string;
+      description: string;
+      path: string;
+      editable: boolean;
+    },
+  ): boolean {
+    return Hooks.callAll(
+      'tidy5e-sheet.contentsConcealedConfig',
+      container,
+      data,
+    );
+  }
+
+  /**
    * An empty slot on a facility was clicked. Normally, this opens the Compendium Browser, scoped to actors of any type.
    * @param event The inciting click event
    * @param item The affected facility

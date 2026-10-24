@@ -21,7 +21,6 @@
 
   $effect(() => {
     if (sectionItemOpenStates.length !== itemDescriptions.length) {
-      ui.notifications.info('getting open states');
       sectionItemOpenStates = getOpenStates();
     }
   });
@@ -52,7 +51,7 @@
         bind:expanded={sectionItemOpenStates[i]}
         {itemDescription}
         onEdit={(detail) => handleEdit(detail)}
-        disabled={!document.isOwner}
+        disabled={!itemDescription.editable}
       />
     {/each}
   </section>

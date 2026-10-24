@@ -367,6 +367,31 @@
         </PillSwitch>
       </li>
     {/if}
+    {#each context.toggles as toggle}
+      {const checked = $derived(
+        toggle.active ||
+          (!!toggle.field &&
+            !!foundry.utils.getProperty(context.document, toggle.field)),
+      )}
+      <li>
+        <PillSwitch
+          {checked}
+          checkedIconClass="{toggle.icon} fa-fw"
+          uncheckedIconClass="{toggle.icon} fa-fw"
+          onchange={async (ev) => {
+            if (toggle.field) {
+              context.item.update({
+                [toggle.field]: ev.currentTarget?.checked,
+              });
+            }
+
+            await toggle.onChange?.(context.document);
+          }}
+        >
+          {localize(toggle.label)}
+        </PillSwitch>
+      </li>
+    {/each}
     {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
       {const spellIconClasses = $derived(
         FoundryAdapter.getSpellIcon(context.item),
