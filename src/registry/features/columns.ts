@@ -64,6 +64,8 @@ import VehicleMemberQuantityColumn from 'src/sheets/quadrone/item/columns/Vehicl
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
 import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleDtColumn.svelte';
+import { systemSettings } from 'src/settings/settings.svelte';
+import { CONSTANTS } from 'src/constants';
 
 export function getColumnsRegistry(): TidyColumnRegistry {
   return {
@@ -154,15 +156,13 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: FoundryAdapter.localize(
-              'DND5E.FACILITY.Progress',
-            ),
+            html: FoundryAdapter.localize('DND5E.FACILITY.Progress'),
           }),
         },
         cell: {
           component: BastionProgressColumn,
-          props: (args) => ({ 
-            progress: args.rowContext.progress 
+          props: (args) => ({
+            progress: args.rowContext.progress,
           }),
         },
         widthRems: 10,
@@ -216,9 +216,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: FoundryAdapter.localize(
-              'TIDY5E.FACILITY.Progress.Label',
-            ),
+            html: FoundryAdapter.localize('TIDY5E.FACILITY.Progress.Label'),
           }),
         },
         cell: {
@@ -234,9 +232,7 @@ export function getColumnsRegistry(): TidyColumnRegistry {
         header: {
           component: HtmlColumn,
           props: () => ({
-            html: FoundryAdapter.localize(
-              'TYPES.Item.facility',
-            ),
+            html: FoundryAdapter.localize('TYPES.Item.facility'),
           }),
         },
         cell: {
@@ -577,6 +573,9 @@ export function getColumnsRegistry(): TidyColumnRegistry {
           }),
         },
         widthRems: 4,
+        condition: () =>
+          systemSettings.value.levelingMode !==
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       } satisfies EncounterMemberColumnSpec<
         typeof HtmlColumn,
         typeof GroupXpColumn
@@ -850,6 +849,9 @@ export function getColumnsRegistry(): TidyColumnRegistry {
             rowDocument: args.rowDocument,
           }),
         },
+        condition: () =>
+          systemSettings.value.levelingMode !==
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         widthRems: 3.75,
       } satisfies GroupMemberColumnSpec<
         typeof HtmlColumn,
