@@ -10,7 +10,7 @@ import type {
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
-import type { TidyPublicUtils } from 'src/types/registry.types';
+import { SYMBOLS, type TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
 import { debug, error, warn } from 'src/utils/logging';
 
@@ -107,7 +107,12 @@ const initWorldThemes = () => {
   }
 
   // Reset worldThemes every time.
-  CONFIG.TIDY5E.worldThemes = {};
+  CONFIG.TIDY5E.worldThemes = {
+    [SYMBOLS.generated]:
+      'This code is generated. To ensure external changes are included every time this is generated, use the hook "tidy5e-sheet.worldThemesConfigChanged"',
+    [SYMBOLS.readme]:
+      'Partitioned, priority-ordered, optionally filtered world theme settings used for determining the appropriate theme to use for a given document sheet.',
+  };
 
   const prioritizedWorldThemes = Object.values(
     SettingsProvider.settings.worldThemes.get() ?? {},
@@ -145,10 +150,14 @@ const initWorldThemes = () => {
             filter: theme.filter ? JSON.parse(theme.filter) : undefined,
           });
         } catch (e) {
-          warn(`Unable to parse filter for theme ${theme.name}. It has been excluded.`, false, {
-            error: e,
-            ...theme,
-          });
+          warn(
+            `Unable to parse filter for theme ${theme.name}. It has been excluded.`,
+            false,
+            {
+              error: e,
+              ...theme,
+            },
+          );
         }
       }
     }
@@ -191,7 +200,8 @@ const prepareThemeFilterData = (
   const themeMode = getThemeV2(doc);
 
   const folder = doc?.folder
-    ? '/' + [doc.folder, ...doc.folder.ancestors]
+    ? '/' +
+      [doc.folder, ...doc.folder.ancestors]
         .reverse()
         .map((f) => f.name)
         .join('/')

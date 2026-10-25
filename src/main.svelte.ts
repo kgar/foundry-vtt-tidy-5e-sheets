@@ -23,6 +23,7 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import * as registry from './registry';
+import { SYMBOLS } from './types/registry.types';
 
 Hooks.once('init', () => {
   initSettings();
@@ -57,12 +58,10 @@ Hooks.once('init', () => {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
     },
-    symbols: {
-      all: Symbol('all'),
-      generated: Symbol('generated'),
-      readme: Symbol('readme'),
+    symbols: SYMBOLS,
+    worldThemes: {
+      
     },
-    worldThemes: {},
     utils: registry.getUtils(),
   };
 

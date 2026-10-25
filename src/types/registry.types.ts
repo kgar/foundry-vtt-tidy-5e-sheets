@@ -35,17 +35,18 @@ import type {
   VehiclePassengerColumnSpec,
 } from './columns.types';
 import type { Actor5e, InspirationSource } from './types';
-import type {
-  ItemDescriptionConfig,
-  ItemToggleConfig,
-} from 'src/api/api.types';
 import type { Item5e } from './item.types';
 import type {
   ThemeFilterData,
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
-import type { WorldThemeSetting } from 'src/settings/settings.types';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
+
+export const SYMBOLS = {
+  all: Symbol('all'),
+  generated: Symbol('generated'),
+  readme: Symbol('readme'),
+};
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -329,8 +330,8 @@ type DocumentName = string;
 type DocumentType = string;
 
 export type TidyThemeRegistry = Record<
-  DocumentName | symbol,
-  Record<DocumentType | symbol, WorldThemeSettingConfig[]>
+  DocumentName,
+  Record<DocumentType, WorldThemeSettingConfig[]>
 >;
 
 export type WorldThemeSettingConfig = {
