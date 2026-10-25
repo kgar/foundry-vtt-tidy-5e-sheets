@@ -28,9 +28,6 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] fix: save and load the filter as a string. Try parse into CONFIG.TIDY5E. On a parse failure, log a warning and exclude the entry 💪
-- [ ] Implement the theme filter UI which appears only in World Theme mode
-  - research: filters-input
 - [ ] Populate compendium dropdown
 - [ ] Implement theme show/hide logic based on document type
 - [ ] Implement "Basic" filter options, which is a UI that builds up the advanced filter
@@ -118,10 +115,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
             "useBasicTheme": true,
             "useHeaderBackground": false
         },
-        filter: {
-            k: 'folder',
-            v: 'A Folder/Faction - Buttercream Gang'
-        },
+        filter: '{\n  "k": "folder",\n  "v": "A Folder/Faction - Buttercream Gang"\n}',
         filterMode: 'basic'
     },
     '7654321': {
@@ -136,11 +130,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
             "useBasicTheme": false,
             "useHeaderBackground": true
         },
-        filter: {
-            k: 'document.name',
-            o: 'icontains',
-            v: 'vorpal'
-        },
+        filter: '{\n  "k": "document.name",\n  "o": "icontains",\n  "v": "vorpal"\n}',
         filterMode: 'advanced'
     }
 });

@@ -125,7 +125,7 @@
       });
     }
 
-    selectedTheme.filter = filter;
+    selectedTheme.filter = JSON.stringify(filter, null, '  ');
   }
 </script>
 
@@ -135,12 +135,7 @@
       <button
         onclick={() => selectTheme(theme.id)}
         disabled={selectedTheme?.id === theme.id}
-        class={[
-          'button',
-          {
-            active: selectedTheme?.id === theme.id,
-          },
-        ]}>{theme.name}</button
+        class="button">{theme.name}</button
       >
     {/each}
 
@@ -269,12 +264,9 @@
           <label>TODO: Filter</label>
           {#key selectedTheme.filter}
             <filters-input
-              context="default"
-              placeholder="TODO: Placeholder"
               onchange={(e: any) => {
-                selectedTheme.filter = JSON.parse(e.target.value);
-              }}
-              >{JSON.stringify(selectedTheme.filter, null, '  ')}</filters-input
+                selectedTheme.filter = e.target.value;
+              }}>{selectedTheme.filter}</filters-input
             >
           {/key}
         </div>

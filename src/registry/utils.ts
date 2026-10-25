@@ -12,7 +12,7 @@ import type {
 import type { Item5e } from 'src/types/item.types';
 import type { TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 
 const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
   element,
@@ -136,9 +136,20 @@ const initWorldThemes = () => {
       for (const targetType of targetTypes) {
         const themes = (configDocumentNames[targetType] ??= []);
 
-        // Copy the theme here to prevent post-processing changes
-        // from affecting all scoped locations at once, to give the least surprise.
-        themes.push({ ...theme });
+        try {
+          themes.push({
+            id: theme.id,
+            name: theme.name,
+            settings: theme.settings,
+            sort: theme.sort,
+            filter: theme.filter ? JSON.parse(theme.filter) : undefined,
+          });
+        } catch (e) {
+          warn(`Unable to parse filter for theme ${theme.name}. It has been excluded.`, false, {
+            error: e,
+            ...theme,
+          });
+        }
       }
     }
   }

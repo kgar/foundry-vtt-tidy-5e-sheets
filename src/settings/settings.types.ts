@@ -69,9 +69,12 @@ export type WorldThemeSetting = {
   sort: number;
   /** The actual theme settings. */
   settings: Partial<ThemeSettingsV3>;
-  /** An optional filter description to be evaluated when determining which theme should apply. */
-  filter?: FilterDescription | FilterDescription[];
-  /** 
+  /**
+   * An optional filter to be evaluated when determining which theme should apply.
+   * It is meant to be structured like the a dnd5e system FilterDescription or a FilterDescription array.
+   */
+  filter?: string;
+  /**
    * Denotes whether this theme's filters were configured in basic or advanced mode.
    */
   filterMode: 'basic' | 'advanced';
