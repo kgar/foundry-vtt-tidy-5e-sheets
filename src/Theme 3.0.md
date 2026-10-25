@@ -28,39 +28,10 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [x] Model the new world theme setting
-  - record of id to - `{ id: string, name: string, documentName: string | undefined, type: string | undefined, sort: number, settings: ThemeSettings, filter: FilterDescription|FilterDescription[], filterMode: 'basic'|'advanced' }`
-- [x] Model `CONFIG.TIDY5E.worldThemes`
-  - Record of documentName to
-    - Record of type to
-      - Array of `WorldThemeSetting`
-- [x] Implement `CONFIG.TIDY5E.utils.getWorldTheme(doc)` and `CONFIG.TIDY5E.utils.initWorldThemes()`
-- [x] Implement setting wire-up that permutes the world theme data onReady and thereafter onChange into `CONFIG.TIDY5E.worldThemes` via `CONFIG.TIDY5E.utils.initWorldThemes()`
-- [x] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
-- [x] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
-- [x] Adjust subscribeAndReactToThemeSettingsChanges to subscribe to the hook `tidy5e-sheet.worldThemesConfigChanged` and derive a new configuration every time.
-- [x] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
-- [x] Create temporary setting menu to house the settings until it gains enough traction
-- [x] Implement the theme list / management UI
-- [x] Refactor: Replace the `all` symbol with permuting a config across all relevant object locations, spreading the data to ensure post-processing changes to one location by a script caller doesn't affect all locations.
-  - array of supported document names, since we will control that.
-  - foundry.documents[documentName].TYPES for each document type
-- [x] Refactor: documentName -> documentNames, type -> types, store as arrays. Empty array means ALL.
-- [x] Prototype the form with a basic layout
-  - Management column
-    - List of current themes (drag/drop to sort | click up/down arrows to move in sort)
-    - Add Button at bottom, like in journals
-  - Edit column
-    - Name
-      - default: New World Theme
-    - Target
-      - Document - Actor, Item
-      - Type - enumerate the subtypes of the chosen document
-    - Theme Settings
-    - Filters
-      - Basic view
-      - Advanced view
+- [ ] fix: save and load the filter as a string. Try parse into CONFIG.TIDY5E. On a parse failure, log a warning and exclude the entry 💪
 - [ ] Implement the theme filter UI which appears only in World Theme mode
+  - research: filters-input
+- [ ] Populate compendium dropdown
 - [ ] Implement theme show/hide logic based on document type
 - [ ] Implement "Basic" filter options, which is a UI that builds up the advanced filter
   - Folder (enter multiple with semi-colons)
@@ -78,6 +49,8 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
 - [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
+- [ ] Reimplement import and export
+  - This will need some planning. It would be nice to be able to bulk import world themes, as well as import individual theme settings. Import/export may mean something different for a sheet theme setting and a world theme setting. Or both types may be present for world theme settings.
 
 
 ### Filter Notes
@@ -177,3 +150,38 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
 ### Links
 
 - dnd5e wiki filter examples - https://github.com/foundryvtt/dnd5e/wiki/Active-Effect-Rules
+
+### TODO Graveyard
+
+- [x] Model the new world theme setting
+  - record of id to - `{ id: string, name: string, documentName: string | undefined, type: string | undefined, sort: number, settings: ThemeSettings, filter: FilterDescription|FilterDescription[], filterMode: 'basic'|'advanced' }`
+- [x] Model `CONFIG.TIDY5E.worldThemes`
+  - Record of documentName to
+    - Record of type to
+      - Array of `WorldThemeSetting`
+- [x] Implement `CONFIG.TIDY5E.utils.getWorldTheme(doc)` and `CONFIG.TIDY5E.utils.initWorldThemes()`
+- [x] Implement setting wire-up that permutes the world theme data onReady and thereafter onChange into `CONFIG.TIDY5E.worldThemes` via `CONFIG.TIDY5E.utils.initWorldThemes()`
+- [x] Provide hook `tidy5e-sheet.getSheetThemeSettings` to allow mutating/replacing sheet themes
+- [x] Set up `ThemeQuadrone.getSheetThemeSettings` to pull the most appropriate setting from `CONFIG.TIDY5E.worldThemes`
+- [x] Adjust subscribeAndReactToThemeSettingsChanges to subscribe to the hook `tidy5e-sheet.worldThemesConfigChanged` and derive a new configuration every time.
+- [x] // TODO: Figure out how worldThemes onChange should work. Perhaps a hook callAll so any Tidy document can refresh itself?
+- [x] Create temporary setting menu to house the settings until it gains enough traction
+- [x] Implement the theme list / management UI
+- [x] Refactor: Replace the `all` symbol with permuting a config across all relevant object locations, spreading the data to ensure post-processing changes to one location by a script caller doesn't affect all locations.
+  - array of supported document names, since we will control that.
+  - foundry.documents[documentName].TYPES for each document type
+- [x] Refactor: documentName -> documentNames, type -> types, store as arrays. Empty array means ALL.
+- [x] Prototype the form with a basic layout
+  - Management column
+    - List of current themes (drag/drop to sort | click up/down arrows to move in sort)
+    - Add Button at bottom, like in journals
+  - Edit column
+    - Name
+      - default: New World Theme
+    - Target
+      - Document - Actor, Item
+      - Type - enumerate the subtypes of the chosen document
+    - Theme Settings
+    - Filters
+      - Basic view
+      - Advanced view

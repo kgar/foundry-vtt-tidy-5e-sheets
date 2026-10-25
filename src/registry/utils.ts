@@ -153,14 +153,16 @@ const initWorldThemes = () => {
 };
 
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
-const getWorldTheme = (doc: Actor5e | Item5e): ThemeSettingsV3 => {
+const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
   const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
 
   const defaultSettings = ThemeQuadrone.getDefaultThemeSettings();
 
-  const values = Object.values(
-    CONFIG.TIDY5E.worldThemes[doc.documentName]?.[doc.type] ?? [],
-  );
+  const values = doc
+    ? Object.values(
+        CONFIG.TIDY5E.worldThemes[doc.documentName]?.[doc.type] ?? [],
+      )
+    : [];
 
   for (const entry of values) {
     if (dnd5e.Filter.performCheck(filterData, entry.filter)) {

@@ -19,6 +19,7 @@
   const { app, config }: Props = $props();
 
   const compendia = $derived<{ text: string; value: string }[]>([]);
+  const typeDenylist = new Set(['base', 'backpack']);
 
   let folder = $state('');
   let themeMode = $state<string | undefined>(undefined);
@@ -40,11 +41,17 @@
     .sort((a, b) => a.text.localeCompare(b.text));
 
   const availableTypes = $derived(
-    supportedDocuments
+    (selectedTheme.documentNames ?? [])
       .flatMap(
-        (doc) =>
-          foundry.documents[doc.value]?.TYPES.map((t: string) => ({
-            text: localize(CONFIG.Item.typeLabels[t]),
+        (docName: any) =>
+          foundry.documents[docName]?.TYPES.filter(
+            (t: string) =>
+              !!CONFIG[docName as keyof typeof CONFIG]?.typeLabels[t] &&
+              !typeDenylist.has(t),
+          ).map((t: string) => ({
+            text: localize(
+              CONFIG[docName as keyof typeof CONFIG].typeLabels[t],
+            ),
             value: t,
           })) ?? [],
       )
@@ -87,7 +94,7 @@
   function onDocumentNamesChanged(
     _event: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
-    selectedTheme.types = availableTypes.filter(availableTypeKeys.has);
+    selectedTheme.types = selectedTheme.types?.filter(availableTypeKeys.has);
   }
 
   function clearFilter() {
@@ -122,11 +129,12 @@
   }
 </script>
 
-<div>
-  <div>
+<div class="tidy-sheet-settings">
+  <div class="nav-group">
     {#each orderedThemes as theme}
       <button
         onclick={() => selectTheme(theme.id)}
+        disabled={selectedTheme?.id === theme.id}
         class={[
           'button',
           {
@@ -140,7 +148,7 @@
       <i class="fa-solid fa-plus"></i> TODO Add
     </button>
   </div>
-  <div>
+  <section class="settings-pane" role="tabpanel">
     {#if selectedTheme}
       <p>TODO: Sort Up/Down here for testing</p>
       <p>
@@ -153,11 +161,11 @@
           <i class="fa-solid fa-trash"></i> TODO Delete
         </button>
       </p>
-      <div>
+      <div class="form-group stacked checkbox-grid">
         <label>TOOD: Documents</label>
-        <ul>
+        <div class="form-fields">
           {#each supportedDocuments as supportedDocument}
-            <li>
+            <label class="checkbox">
               <input
                 type="checkbox"
                 bind:group={selectedTheme.documentNames}
@@ -165,23 +173,25 @@
                 onchange={onDocumentNamesChanged}
               />
               {supportedDocument.text}
-            </li>
+            </label>
           {/each}
-        </ul>
+        </div>
       </div>
       {#if availableTypes.length}
-        <div>
+        <div class="form-group stacked checkbox-grid">
           <label>TODO: Document Types</label>
-          {#each availableTypes as type}
-            <li>
-              <input
-                type="checkbox"
-                bind:group={selectedTheme.types}
-                value={type.value}
-              />
-              {type.text}
-            </li>
-          {/each}
+          <div class="form-fields">
+            {#each availableTypes as type}
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  bind:group={selectedTheme.types}
+                  value={type.value}
+                />
+                {type.text}
+              </label>
+            {/each}
+          </div>
         </div>
       {/if}
       <div>
@@ -255,10 +265,22 @@
           </p>
         </div>
       {:else}
-        <p>TODO: Filter Input with visualizer</p>
+        <div>
+          <label>TODO: Filter</label>
+          {#key selectedTheme.filter}
+            <filters-input
+              context="default"
+              placeholder="TODO: Placeholder"
+              onchange={(e: any) => {
+                selectedTheme.filter = JSON.parse(e.target.value);
+              }}
+              >{JSON.stringify(selectedTheme.filter, null, '  ')}</filters-input
+            >
+          {/key}
+        </div>
       {/if}
       <ThemeSettings3
-        settings={selectedTheme.settings}
+        bind:settings={selectedTheme.settings}
         rarities={config.rarityColors}
         spellPreparationMethodColors={config.spellPreparationMethodColors}
         placeholders={undefined}
@@ -277,8 +299,10 @@
         {onThemeImportRequested}
       />
     {/if}
-  </div>
-  <div>
-    <button type="button" class="button" data-action="save"> TODO Save </button>
-  </div>
+    <div>
+      <button type="button" class="button" data-action="save">
+        TODO Save
+      </button>
+    </div>
+  </section>
 </div>
