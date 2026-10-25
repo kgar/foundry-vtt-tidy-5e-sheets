@@ -109,6 +109,9 @@
 
   function clearFilter() {
     selectedTheme.filter = undefined;
+    themeMode = undefined;
+    compendium = undefined;
+    folder = '';
   }
 
   function refreshFilter() {
@@ -222,7 +225,11 @@
       {#if selectedTheme.filterMode === 'basic'}
         <div>
           <label>TODO: Folder</label>
-          <input type="text" value={folder} />
+          <input type="text" bind:value={folder} onchange={refreshFilter} />
+          <p class="hint">
+            Folder paths must start with a slash "/". For example, "/My Folder
+            Path/My Subfolder".
+          </p>
         </div>
         <div>
           <label>TODO: Theme Mode</label>

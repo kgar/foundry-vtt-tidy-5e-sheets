@@ -28,15 +28,14 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Implement (implemented; verify) theme show/hide logic based on document type
-- [ ] Implement "Basic" filter options, which is a UI that builds up the advanced filter
-  - Folder (enter multiple with semi-colons)
-  - Document Location - Anywhere (Default), Sidebar, or Compendium
-- [ ] Implement "Advanced" filter options, which is a formula editor that allows full control
+
+- [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
 - [ ] Implement new settings editor to manage world themes and to load/save all the data as a whole and be able to undo / reset to default
+  - No Reset World Default option
+  - Undo Changes works on the currently selected theme
+  - Save saves the whole thing
 - [ ] Wire into World Settings
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
-- [ ] Somehow delineate in an obvious way that there are configs that are generated rather than updated directly. They should possibly be located in a specific place in CONFIG.TIDY5E that is roped off.
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
 - [ ] Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
