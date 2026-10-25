@@ -18,7 +18,17 @@
 
   const { app, config }: Props = $props();
 
-  const compendia = $derived<{ text: string; value: string }[]>([]);
+  const compendia = [...game.packs.values()]
+    .map((c) => ({
+      // TODO: need a util for getting full folder path
+      text: `${[c.folder, ...c.folder.ancestors]
+        .reverse()
+        .map((f) => f.name)
+        .join('/')}/${c.metadata.label}`,
+      value: c.metadata.id,
+    }))
+    .sort((a, b) => a.text.localeCompare(b.text));
+
   const typeDenylist = new Set(['base', 'backpack']);
 
   let folder = $state('');

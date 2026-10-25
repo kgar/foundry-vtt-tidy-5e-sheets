@@ -191,7 +191,7 @@ const prepareThemeFilterData = (
   const themeMode = getThemeV2(doc);
 
   const folder = doc?.folder
-    ? [doc.folder, ...doc.folder.ancestors]
+    ? '/' + [doc.folder, ...doc.folder.ancestors]
         .reverse()
         .map((f) => f.name)
         .join('/')

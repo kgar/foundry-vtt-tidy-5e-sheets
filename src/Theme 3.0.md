@@ -28,8 +28,7 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Populate compendium dropdown
-- [ ] Implement theme show/hide logic based on document type
+- [ ] Implement (implemented; verify) theme show/hide logic based on document type
 - [ ] Implement "Basic" filter options, which is a UI that builds up the advanced filter
   - Folder (enter multiple with semi-colons)
   - Document Location - Anywhere (Default), Sidebar, or Compendium
@@ -48,6 +47,7 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
 - [ ] Reimplement import and export
   - This will need some planning. It would be nice to be able to bulk import world themes, as well as import individual theme settings. Import/export may mean something different for a sheet theme setting and a world theme setting. Or both types may be present for world theme settings.
+- [ ] // TODO: need a util for getting full folder path
 
 
 ### Filter Notes
@@ -115,7 +115,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
             "useBasicTheme": true,
             "useHeaderBackground": false
         },
-        filter: '{\n  "k": "folder",\n  "v": "A Folder/Faction - Buttercream Gang"\n}',
+        filter: '{\n  "k": "folder",\n  "v": "/A Folder/Faction - Buttercream Gang"\n}',
         filterMode: 'basic'
     },
     '7654321': {
