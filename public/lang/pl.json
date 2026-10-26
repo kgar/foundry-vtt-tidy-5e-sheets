@@ -76,7 +76,9 @@
             "Show": "Pokaż",
             "UndoChanges": "Cofnij zmiany",
             "UseDefault": "Użyj domyślnych",
-            "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych"
+            "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
+            "CopyToClipboard": "Kopiuj do schowka",
+            "CopyWithoutFormatting": "Kopiuj bez formatowania"
         },
         "BrokenLink": "Uszkodzone połączenie",
         "GMOnly": {
@@ -95,6 +97,14 @@
         "UseDefaultDialog": {
             "Text": "Czy na pewno chcesz użyć ustawień domyślnych?",
             "Title": "Potwierdź: Użyj domyślnych"
+        },
+        "CopiedData": "Skopiowano dane z {prop}",
+        "CopiedWithoutFormatting": "Skopiowano tekst bez formatowania",
+        "Unidentified": {
+            "Placeholder": "?"
+        },
+        "Warning": {
+            "ActiveEffectOverride": "Ta wartość jest modyfikowana przez aktywny efekt i nie można jej edytować."
         }
     },
     "TIDY5E.CONTAINER": {
@@ -796,8 +806,13 @@
             },
             "MaintainOrder": {
                 "Dialog": {
-                    "Hint": "Rozkazy bastionu zostaną wykonane dla wszystkich wybranych postaci. Odznacz postacie, które nie mogą wydawać rozkazów. Ich bastiony otrzymają rozkaz Utrzymanie, a realizacja trwających rozkazów dotyczących struktur nie będzie kontynuowana."
-                }
+                    "Hint": "Rozkazy bastionu zostaną wykonane dla wszystkich wybranych postaci. Odznacz postacie, które nie mogą wydawać rozkazów. Ich bastiony otrzymają rozkaz Utrzymanie, a realizacja trwających rozkazów dotyczących struktur nie będzie kontynuowana.",
+                    "Title": "Postacie mogące wydawać rozkazy bastionu"
+                },
+                "Label": "Rozkaz utrzymania"
+            },
+            "Orders": {
+                "Empty": "Żaden członek drużyny nie ma rozkazu w trakcie realizacji."
             }
         }
     }
