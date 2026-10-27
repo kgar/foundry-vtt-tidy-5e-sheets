@@ -76,7 +76,9 @@
             "Show": "Pokaż",
             "UndoChanges": "Cofnij zmiany",
             "UseDefault": "Użyj domyślnych",
-            "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych"
+            "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
+            "CopyToClipboard": "Kopiuj do schowka",
+            "CopyWithoutFormatting": "Kopiuj bez formatowania"
         },
         "BrokenLink": "Uszkodzone połączenie",
         "GMOnly": {
@@ -95,6 +97,14 @@
         "UseDefaultDialog": {
             "Text": "Czy na pewno chcesz użyć ustawień domyślnych?",
             "Title": "Potwierdź: Użyj domyślnych"
+        },
+        "CopiedData": "Skopiowano dane z {prop}",
+        "CopiedWithoutFormatting": "Skopiowano tekst bez formatowania",
+        "Unidentified": {
+            "Placeholder": "?"
+        },
+        "Warning": {
+            "ActiveEffectOverride": "Ta wartość jest modyfikowana przez aktywny efekt i nie można jej edytować."
         }
     },
     "TIDY5E.CONTAINER": {
@@ -782,8 +792,27 @@
     "TIDY5E.BASTION": {
         "Group": {
             "Action": {
-                "CancelOrder": "Anuluj polecenie",
-                "CompleteOrder": "Zakończ polecenie"
+                "CancelOrder": "Anuluj rozkaz",
+                "CompleteOrder": "Zakończ rozkaz",
+                "RollEvent": "Wydarzenie bastionu"
+            },
+            "Confirm": {
+                "CompleteOrder": "Ukończyć ten rozkaz teraz? Pozostałe dni zostaną pominięte, a nagrody zostaną przyznane.",
+                "TakeTurn": "Rozegrać jedną turę bastionu dla postaci w tej grupie?"
+            },
+            "Empty": "Brak członków grupy posiadających bastiony. Dodaj postacie graczy, aby móc śledzić tutaj ich bastiony.",
+            "Facilities": {
+                "Empty": "Ta postać nie wybudowała jeszcze żadnych obiektów bastionu."
+            },
+            "MaintainOrder": {
+                "Dialog": {
+                    "Hint": "Rozkazy bastionu zostaną wykonane dla wszystkich wybranych postaci. Odznacz postacie, które nie mogą wydawać rozkazów. Ich bastiony otrzymają rozkaz Utrzymanie, a realizacja trwających rozkazów dotyczących struktur nie będzie kontynuowana.",
+                    "Title": "Postacie mogące wydawać rozkazy bastionu"
+                },
+                "Label": "Rozkaz utrzymania"
+            },
+            "Orders": {
+                "Empty": "Żaden członek drużyny nie ma rozkazu w trakcie realizacji."
             }
         }
     }
