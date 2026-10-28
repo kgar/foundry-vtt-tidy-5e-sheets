@@ -23,98 +23,99 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if context.unlocked || background}
-  <div
-    class="list-entry"
-    role="listitem"
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-    data-item-id={background?.id}
-    data-tidy-draggable
-  >
-    <div class="list-label">
-      <h4 class="font-weight-label">
-        {localize('TYPES.Item.background')}
-      </h4>
-    </div>
-    <div class="list-content">
-      {#if background}
+<div
+  class="list-entry"
+  role="listitem"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+  data-item-id={background?.id}
+  data-tidy-draggable
+>
+  <div class="list-label">
+    <h4 class="font-weight-label">
+      {localize('TYPES.Item.background')}
+    </h4>
+  </div>
+  <div class="list-content">
+    {#if background}
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a
+        role="button"
+        tabindex="0"
+        aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
+          description: localize('TYPES.Item.background'),
+        })}
+        data-keyboard-focus
+        class="list-values trait-item"
+        data-action="showDocument"
+        data-uuid={backgroundItem?.uuid}
+      >
         <!-- svelte-ignore a11y_missing_attribute -->
-        <a
-          role="button"
-          tabindex="0"
-          aria-label={localize('TIDY5E.COMMON.Action.ViewDescription', {
-            description: localize('TYPES.Item.background'),
-          })}
-          data-keyboard-focus
-          class="list-values trait-item"
-          data-action="showDocument"
-          data-uuid={backgroundItem?.uuid}
-        >
-          <!-- svelte-ignore a11y_missing_attribute -->
-          <span class="item-image-link">
-            <img
-              src={background.img}
-              alt={background.name}
-              class="item-image flex0"
-            />
-          </span>
-          <span class="font-weight-label">
-            {background.name}
-          </span>
-        </a>
-        {#if context.unlocked}
-          <div class="list-controls">
-            <button
-              aria-label={localize('DND5E.DescriptionEdit', {
-                description: localize('TYPES.Item.background'),
-              })}
-              type="button"
-              class="button button-borderless button-icon-only"
-              data-tooltip
-              data-action="editDocument"
-              data-uuid={backgroundItem?.uuid}
-            >
-              <i class="fa-solid fa-edit"></i>
-            </button>
-            <button
-              aria-label={localize('Tidy5E.ContextMenu')}
-              type="button"
-              class="button button-borderless button-icon-only"
-              data-action="showContextMenu"
-              data-target-selector="[data-item-id]"
-            >
-              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-            </button>
-          </div>
-        {/if}
-      {:else}
-        <button
-          aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
-            name: localize('TYPES.Item.background'),
-          })}
-          type="button"
-          class="button button-primary"
-          data-tooltip
-          data-action="findItem"
-          data-item-type="background"
-        >
-          <i class="fa-solid fa-book-atlas"></i>
-          {localize('DND5E.BackgroundAdd')}
-        </button>
-        <button
-          aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
-            name: localize('TYPES.Item.background'),
-          })}
-          type="button"
-          class="button button-secondary"
-          onclick={(ev) =>
-            FoundryAdapter.createItem({ type: 'background' }, context.actor)}
-        >
+        <span class="item-image-link">
+          <img
+            src={background.img}
+            alt={background.name}
+            class="item-image flex0"
+          />
+        </span>
+        <span class="font-weight-label">
+          {background.name}
+        </span>
+      </a>
+      {#if context.unlocked}
+        <div class="list-controls">
+          <button
+            aria-label={localize('DND5E.DescriptionEdit', {
+              description: localize('TYPES.Item.background'),
+            })}
+            type="button"
+            class="button button-borderless button-icon-only"
+            data-tooltip
+            data-action="editDocument"
+            data-uuid={backgroundItem?.uuid}
+          >
+            <i class="fa-solid fa-edit"></i>
+          </button>
+          <button
+            aria-label={localize('Tidy5E.ContextMenu')}
+            type="button"
+            class="button button-borderless button-icon-only"
+            data-action="showContextMenu"
+            data-target-selector="[data-item-id]"
+          >
+            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+          </button>
+        </div>
+      {/if}
+    {:else}
+      <button
+        aria-label={localize('TIDY5E.COMMON.Action.AddFromCompendium', {
+          name: localize('TYPES.Item.background'),
+        })}
+        type="button"
+        class="button button-primary"
+        data-tooltip
+        data-action="findItem"
+        data-item-type="background"
+      >
+        <i class="fa-solid fa-book-atlas"></i>
+        {localize('DND5E.BackgroundAdd')}
+      </button>
+      <button
+        aria-label={localize('TIDY5E.COMMON.Action.AddCustomNamed', {
+          name: localize('TYPES.Item.background'),
+        })}
+        type="button"
+        class="button button-secondary"
+        data-tooltip
+        onclick={(ev) =>
+          FoundryAdapter.createItem({ type: 'background' }, context.actor)}
+      >
+        <span class="truncate">
           {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
             name: localize('TYPES.Item.background'),
           })}
-        </button>
-      {/if}
-    </div>
+        </span>
+      </button>
+    {/if}
   </div>
-{/if}
+</div>

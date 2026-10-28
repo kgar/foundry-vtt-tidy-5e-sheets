@@ -55,12 +55,15 @@
         })}
         type="button"
         class="button button-secondary"
+        data-tooltip
         onclick={(ev) =>
           FoundryAdapter.createItem({ type: 'class' }, context.actor)}
       >
-        {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
-          name: localize('TYPES.Item.class'),
-        })}
+        <span class="truncate">
+          {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
+            name: localize('TYPES.Item.class'),
+          })}
+        </span>
       </button>
     </div>
   </div>
@@ -133,13 +136,16 @@
             class="button {context.classes.length > 0
               ? 'button-secondary'
               : 'button-primary'}"
+            data-tooltip
             onclick={(ev) =>
               FoundryAdapter.createItem({ type: 'class' }, context.actor)}
           >
             <i class="fa-solid fa-plus"></i>
-            {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
-              name: localize('TYPES.Item.class'),
-            })}
+            <span class="truncate">
+              {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
+                name: localize('TYPES.Item.class'),
+              })}
+            </span>
           </button>
         </div>
       </div>
@@ -382,9 +388,11 @@
               context.actor,
             )}
         >
-          {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
-            name: localize('TYPES.Item.subclass'),
-          })}
+          <span class="truncate">
+            {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
+              name: localize('TYPES.Item.subclass'),
+            })}
+          </span>
         </button>
       </div>
     </div>

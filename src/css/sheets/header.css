@@ -1559,17 +1559,17 @@
 
     .sheet-header-actions {
       .button-gold {
-        --t5e-button-text: var(--t5e-color-palette-gold-62);
+        --t5e-button-text: var(--t5e-color-text-gold-35);
         --t5e-button-icon: var(--t5e-color-palette-gold-56);
         --t5e-button-border: var(--t5e-color-palette-gold-62);
         --t5e-button-border-hover: var(--t5e-color-palette-gold-56);
-        --t5e-button-shadow: var(--t5e-drop-shadow-field);
+        --t5e-button-shadow: none;
 
         /* Overrides buttons.css `.button-gold:hover` text. */
         &:hover,
         &:active,
         &:focus {
-          --t5e-button-text: var(--t5e-color-palette-gold-62);
+          --t5e-button-text: var(--t5e-color-text-gold-35);
           --t5e-button-icon: var(--t5e-color-palette-gold-56);
           --t5e-button-border: var(--t5e-color-palette-gold-56);
           --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
@@ -1577,7 +1577,7 @@
         }
 
         &:active:not(:disabled) {
-          --t5e-button-text: var(--t5e-color-palette-gold-62);
+          --t5e-button-text: var(--t5e-color-text-gold-emphasis);
         }
 
         &:disabled {
