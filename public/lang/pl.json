@@ -78,7 +78,8 @@
             "UseDefault": "Użyj domyślnych",
             "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
             "CopyToClipboard": "Kopiuj do schowka",
-            "CopyWithoutFormatting": "Kopiuj bez formatowania"
+            "CopyWithoutFormatting": "Kopiuj bez formatowania",
+            "ViewDescription": "Wyświetl {description}"
         },
         "BrokenLink": "Uszkodzone połączenie",
         "GMOnly": {
@@ -809,10 +810,14 @@
                     "Hint": "Rozkazy bastionu zostaną wykonane dla wszystkich wybranych postaci. Odznacz postacie, które nie mogą wydawać rozkazów. Ich bastiony otrzymają rozkaz Utrzymanie, a realizacja trwających rozkazów dotyczących struktur nie będzie kontynuowana.",
                     "Title": "Postacie mogące wydawać rozkazy bastionu"
                 },
-                "Label": "Rozkaz utrzymania"
+                "Label": "Rozkaz utrzymania",
+                "Chat": "Wydano rozkaz utrzymania dla bastionu, {bastionName}."
             },
             "Orders": {
                 "Empty": "Żaden członek drużyny nie ma rozkazu w trakcie realizacji."
+            },
+            "ChooseFacility": {
+                "Title": "Wybierz strukturę"
             }
         }
     }
