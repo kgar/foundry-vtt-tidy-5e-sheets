@@ -96,7 +96,12 @@
 
       /* Sidebar skills */
       .use-ability-header .skill-expand-button {
-        gap: 0.1875rem;
+        gap: 0.25rem;
+
+        i {
+          width: var(--t5e-size-4x);
+          height: var(--t5e-size-4x);
+        }
 
         h3 {
           color: var(--t5e-color-text-lighter);

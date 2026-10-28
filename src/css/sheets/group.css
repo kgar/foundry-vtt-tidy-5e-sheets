@@ -419,6 +419,44 @@
       --t5e-button-padding-inline-end: 0;
     }
 
+    .ability-view-header {
+      align-items: center;
+      gap: var(--t5e-size-1x);
+
+      i {
+        flex: 0 1 auto;
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .modifier-label {
+        flex: 0;
+      }
+
+      .ability-view-tabs {
+        align-items: center;
+        gap: var(--t5e-size-halfx);
+        min-inline-size: 0;
+      }
+
+      /* Block display so long labels truncate instead of running into the legend */
+      .ability-view-tab {
+        --t5e-button-size: auto;
+        display: block;
+        flex-shrink: 1;
+        min-inline-size: 0;
+        padding-inline: 0;
+        white-space: nowrap;
+
+        &:not([aria-pressed='true']) {
+          --t5e-button-text: var(--t5e-color-text-lightest);
+          font-style: italic;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
     .skill-measure,
     .skill-measure-header,
     .ability-measure,
