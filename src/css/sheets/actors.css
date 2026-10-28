@@ -719,8 +719,19 @@
     .list-content {
       flex: 2;
       min-width: 0;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: var(--t5e-size-1x);
+    }
+
+    .button:has(> .truncate),
+    .list-values:has(> .button > .truncate) {
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .button > .truncate {
+      /* Taller than button line-height to avoid  */
+      line-height: 1.25rem;
     }
 
     .trait-item:where(:has(.item-image-link)):hover {
