@@ -81,3 +81,11 @@ export function settingValueToHexaString(value: string): ProcessedColor {
 export function validateImportFile(theme: Record<string, any>) {
   return theme.version === 1 && typeof theme.variables === 'object';
 }
+
+export const actorHeaderBackgroundSupportedActorTypes = new Set<string>([
+  CONSTANTS.SHEET_TYPE_CHARACTER,
+  CONSTANTS.SHEET_TYPE_NPC,
+  CONSTANTS.SHEET_TYPE_VEHICLE,
+  CONSTANTS.SHEET_TYPE_GROUP,
+  CONSTANTS.SHEET_TYPE_ENCOUNTER,
+]);

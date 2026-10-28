@@ -68,11 +68,6 @@ export class ThemeQuadrone {
     return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
-  /** Get any settings that have been changed, or null  */
-  static getChangedWorldThemeSettingsForForm(): Partial<ThemeSettingsV3> {
-    return SettingsProvider.settings.worldThemeSettings.get() ?? {};
-  }
-
   static saveWorldThemeSettings(settings: ThemeSettingsV3) {
     const toSave = { ...settings };
 

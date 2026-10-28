@@ -24,24 +24,26 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-
+- [ ] <!-- TODO: Drop a WorldThemesSettings component here --> | implement the ugly version first and get it functional. Then test / refine the setting editor.
 - [ ] Implement new settings editor to manage world themes and to load/save all the data as a whole and be able to undo / reset to default
   - No Reset World Default option
-  - Undo Changes works on the currently selected theme
+  - Undo Changes works on the currently selected theme?
   - Save saves the whole thing
 - [ ] Wire into World Settings
+- [ ] Finish making the origin theme-settings-editor fully require a document and solely support sheet theme editing.
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
 - [ ] Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
-- [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
-- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
-- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
-- [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
-- [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
 - [ ] Reimplement import and export
   - This will need some planning. It would be nice to be able to bulk import world themes, as well as import individual theme settings. Import/export may mean something different for a sheet theme setting and a world theme setting. Or both types may be present for world theme settings.
+- [ ] When the world settings are empty and there's a legacy world theme in the previous setting slot, add it as the only entry, with no types or doc name selected. On first save of settings, clear the legacy world theme from the data.
 - [ ] // TODO: need a util for getting full folder path
+- [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
+- [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
+- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
+- [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
+- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 
 
 ### Filter Notes

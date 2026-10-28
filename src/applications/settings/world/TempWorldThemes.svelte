@@ -7,7 +7,10 @@
   } from './TempWorldThemesApplication.svelte';
   import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
   import { error } from 'src/utils/logging';
-  import { Theme } from 'src/theme/theme';
+  import {
+    actorHeaderBackgroundSupportedActorTypes,
+    Theme,
+  } from 'src/theme/theme';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { FilterDescription } from 'src/foundry/dnd5e.types';
 
@@ -71,14 +74,6 @@
   const availableTypeKeys = $derived(
     new Set<string>(availableTypes.map((t) => t.value)),
   );
-
-  const actorHeaderBackgroundSupportedActorTypes = new Set<string>([
-    CONSTANTS.SHEET_TYPE_CHARACTER,
-    CONSTANTS.SHEET_TYPE_NPC,
-    CONSTANTS.SHEET_TYPE_VEHICLE,
-    CONSTANTS.SHEET_TYPE_GROUP,
-    CONSTANTS.SHEET_TYPE_ENCOUNTER,
-  ]);
 
   function selectTheme(id: string) {
     const themeOfId = config.themes.find((t) => t.id === id);

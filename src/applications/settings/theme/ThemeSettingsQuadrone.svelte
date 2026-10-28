@@ -17,6 +17,7 @@
     ThemeSettingsContext,
     ThemeSettingsEditor,
   } from 'src/settings/editors/theme-settings-editor.svelte';
+  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
 
   interface Props {
     app: ThemeSettingsEditor;
@@ -241,7 +242,7 @@
         </div>
       {/if}
 
-      {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
+      {#if !app.document || actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
         <div class="form-group">
           <label for="{idPrefix}-use-header-background">
             {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
@@ -311,7 +312,9 @@
           <ThemeSettingColorFormGroupQuadrone
             key="sheet-accent-color"
             bind:value={context.headerBackgroundColor}
-            label={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Title')}
+            label={localize(
+              'TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Title',
+            )}
             placeholder={placeholders?.headerBackgroundColor}
             hint={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Hint')}
           />

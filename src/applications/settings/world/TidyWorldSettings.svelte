@@ -55,7 +55,7 @@
       id: WorldSettingsTabIds.theme,
       title: localize('TIDY5E.SETTINGS.World.Tab.Theme'),
       iconClass: 'fa-solid fa-swatchbook',
-      hasChanges: app.editors.themeSettingsTab.hasChanges,
+      hasChanges: app.editors.themesSettingsTab.hasChanges,
     },
     {
       id: WorldSettingsTabIds.homebrew,
@@ -182,10 +182,7 @@
     {#if activeSelectedId === WorldSettingsTabIds.defaults}
       <WorldSettingsOverview {app} />
     {:else if activeSelectedId === WorldSettingsTabIds.theme}
-      <ThemeSettingsQuadrone
-        app={app.editors.themeSettingsTab}
-        placeholders={undefined}
-      />
+      <!-- TODO: Drop a WorldThemesSettings component here -->
     {:else if activeSelectedId === WorldSettingsTabIds.homebrew}
       <HomebrewSettings app={app.editors.homebrewTab} />
     {:else if activeSelectedId === WorldSettingsTabIds.sheetPreferences}
