@@ -55,15 +55,15 @@ export type ToolData = {
 };
 
 export type Proficiency = {
-    deterministic: boolean;
-    multiplier: number;
-    rounding: string;
-    _baseProficiency: number;
-    dice: string;
-    flat: number;
-    hasProficiency: boolean;
-    term: string;
-  }
+  deterministic: boolean;
+  multiplier: number;
+  rounding: string;
+  _baseProficiency: number;
+  dice: string;
+  flat: number;
+  hasProficiency: boolean;
+  term: string;
+};
 
 export type AbilityData = {
   attack: number;
@@ -108,12 +108,7 @@ export type SkillData = {
 };
 
 export type CharacterFavoriteType =
-  | 'activity'
-  | 'effect'
-  | 'item'
-  | 'skill'
-  | 'slots'
-  | 'tool';
+  'activity' | 'effect' | 'item' | 'skill' | 'slots' | 'tool';
 
 export type CharacterFavorite = {
   type: CharacterFavoriteType;
@@ -191,4 +186,13 @@ export type ActivityUses = {
 export type ActivitySave = {
   dc: number;
   ability: string;
+};
+
+/**
+ * A filter description.
+ */
+export type FilterDescription = {
+  k: string;
+  v: any;
+  o?: string;
 };

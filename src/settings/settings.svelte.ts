@@ -5,6 +5,7 @@ import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
   TabConfiguration,
+  WorldThemesSetting,
 } from './settings.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -16,6 +17,7 @@ import {
 import { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
 import { MakeAllSheetsTidyDialog } from './MakeAllSheetsTidyDialog';
 import { SettingsShims } from './settings-shims';
+import { TempWorldThemesApplication } from 'src/applications/settings/world/TempWorldThemesApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -167,6 +169,16 @@ export function createSettings() {
           type: WorldSettingsQuadroneApplication,
           restricted: true,
         },
+      },
+      tempDevWorldThemes: {
+        options: {
+          name: "Delete Me - World Themes",
+          label: "Delete Me - World Themes",
+          hint: "Test harness for playing with World Themes",
+          icon: 'fa-solid fa-swatchbook',
+          type: TempWorldThemesApplication,
+          restricted: true,
+        }
       },
       makeAllSheetsTidy: {
         options: {
@@ -527,6 +539,28 @@ export function createSettings() {
             FoundryAdapter.getTidySetting<ThemeSettingsV3>(
               'worldThemeSettings',
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
+          );
+        },
+      },
+
+      worldThemes: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.Hint',
+          scope: 'world',
+          type: Object,
+          default: {},
+          config: false,
+          onChange: (settings: WorldThemesSetting) => {
+            CONFIG.TIDY5E.utils.theme.initWorldThemes(
+              /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
+            );
+          },
+        },
+        get() {
+          return (
+            FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
+            {}
           );
         },
       },
@@ -929,7 +963,6 @@ export function initSettings() {
   _settings = getCurrentSettings();
 
   ThemeQuadrone.insertTidyThemeStyleTag();
-  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();

@@ -23,6 +23,7 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import * as registry from './registry';
+import { SYMBOLS } from './types/registry.types';
 
 Hooks.once('init', () => {
   initSettings();
@@ -56,6 +57,10 @@ Hooks.once('init', () => {
     partitions: {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
+    },
+    symbols: SYMBOLS,
+    worldThemes: {
+      
     },
     utils: registry.getUtils(),
   };
@@ -160,6 +165,8 @@ Hooks.once('ready', async () => {
   tidy5eModule.api = api;
 
   initRuntimeOnReady();
+
+  CONFIG.TIDY5E.utils.theme.initWorldThemes();
 
   TidyHooks.tidy5eSheetsReady(api);
 

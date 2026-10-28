@@ -9,7 +9,6 @@ import { mount } from 'svelte';
 import TidyWorldSettings from './TidyWorldSettings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import { getThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
 import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/world-tab-configuration-settings-editor.svelte';
 import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
 import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
@@ -23,6 +22,7 @@ import {
   getWorldSheetConfigurationSettingsEditor,
   type WorldSheetConfigurationSettingsEditor,
 } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
+import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -91,7 +91,7 @@ export class WorldSettingsQuadroneApplication
 
     // Create base editors
     this.editors = {
-      themeSettingsTab: getThemeSettingsEditor(),
+      themesSettingsTab: getWorldThemesSettingsEditor(),
       tabConfigTab: getWorldTabConfigurationSettingsEditor(),
       headerControlsTab: getWorldHeaderControlConfigurationSettingsEditor(),
       homebrewTab: getHomebrewSettingsEditor(),
@@ -142,7 +142,7 @@ export class WorldSettingsQuadroneApplication
     const currentTabId = this.currentTabId;
     switch (currentTabId) {
       case WorldSettingsTabIds.theme:
-        return this.editors.themeSettingsTab;
+        return this.editors.themesSettingsTab;
       case WorldSettingsTabIds.sheetPreferences:
         return this.editors.sheetPreferencesTab;
       case WorldSettingsTabIds.homebrew:

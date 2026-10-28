@@ -9,7 +9,10 @@ import type {
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
@@ -17,10 +20,8 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 };
 
 export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
-  actorHeaderBackgroundSupportedActorTypes: Set<string>;
-
-  /** The optional document for sheet-specific theming. */
-  document?: Actor5e | Item5e;
+  /** The document for sheet-specific theming. */
+  document: Actor5e | Item5e;
 
   /**
    * Maps the editor context data to a partial representation of the
@@ -50,7 +51,7 @@ export type ThemeSettingsContext = {
   spellPreparationMethodColors: ThemeColorSettingConfigEntry[];
 };
 
-export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
+export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
   const current = $state<ThemeSettingsContext>(getSettings());
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
@@ -96,9 +97,7 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   }
 
   function getSettings(): ThemeSettingsContext {
-    const source = document
-      ? (TidyFlags.sheetThemeSettings.get(document) ?? {})
-      : ThemeQuadrone.getChangedWorldThemeSettingsForForm();
+    const source = TidyFlags.sheetThemeSettings.get(document) ?? {};
 
     return mapFromSettings(source);
   }
@@ -155,14 +154,6 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   }
 
   return {
-    actorHeaderBackgroundSupportedActorTypes: new Set<string>([
-      CONSTANTS.SHEET_TYPE_CHARACTER,
-      CONSTANTS.SHEET_TYPE_NPC,
-      CONSTANTS.SHEET_TYPE_VEHICLE,
-      CONSTANTS.SHEET_TYPE_GROUP,
-      CONSTANTS.SHEET_TYPE_ENCOUNTER,
-    ]),
-
     document: document,
 
     get hasChanges() {
