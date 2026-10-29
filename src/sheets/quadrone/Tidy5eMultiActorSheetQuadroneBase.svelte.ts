@@ -253,8 +253,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 actorLanguageTrait.value,
                 actorLanguageTrait.unitsKey,
-                'ft',
-              )
+                { to: 'ft', legacy: false },
+              ).value
             : undefined;
 
         const groupLanguageUniversalValue =
@@ -263,8 +263,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 groupLanguage.value,
                 groupLanguage.unitsKey,
-                'ft',
-              )
+                { to: 'ft', legacy: false },
+              ).value
             : undefined;
 
         if (
@@ -335,17 +335,16 @@ export function getTidy5eMultiActorSheetQuadroneBase<
             ? dnd5e.utils.convertLength(
                 actorSpeedTrait.value,
                 actorSpeedTrait.unitsKey,
-                'ft',
-              )
+                { to: 'ft', legacy: false },
+              ).value
             : undefined;
 
         const groupSpeedUniversalValue =
           groupSpeed.value !== undefined && !isNil(groupSpeed.unitsKey, '')
-            ? dnd5e.utils.convertLength(
-                groupSpeed.value,
-                groupSpeed.unitsKey,
-                'ft',
-              )
+            ? dnd5e.utils.convertLength(groupSpeed.value, groupSpeed.unitsKey, {
+                to: 'ft',
+                legacy: false,
+              }).value
             : undefined;
 
         if (
@@ -394,8 +393,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
               ? dnd5e.utils.convertLength(
                   actorSenseTrait.value,
                   actorSenseTrait.unitsKey,
-                  'ft',
-                )
+                  { to: 'ft', legacy: false },
+                ).value
               : undefined;
 
           const groupSenseUniversalValue =
@@ -403,8 +402,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
               ? dnd5e.utils.convertLength(
                   groupSense.value,
                   groupSense.unitsKey,
-                  'ft',
-                )
+                  { to: 'ft', legacy: false },
+                ).value
               : undefined;
 
           if (
