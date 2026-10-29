@@ -1769,7 +1769,9 @@ export function getTidy5eActorSheetQuadroneBase<
 
       // Filter out items already in containers to avoid creating duplicates
       const containers = new Set(
-        items.filter((i) => i.type === 'container').map((i) => i._id),
+        items
+          .filter((i) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER && i._id)
+          .map((i) => i._id),
       );
       items = items.filter((i) => !containers.has(i.system.container));
 
