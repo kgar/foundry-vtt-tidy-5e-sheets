@@ -724,7 +724,7 @@ export function getTidy5eActorSheetQuadroneBase<
               value: string;
               sign: string;
             } = {
-              label: `${CONFIG.DND5E.damageTypes[k]?.label ?? k}`,
+              label: `${dnd5e.documents.Trait.keyLabel(k, { trait: 'dm' })}`,
               sign: mod.sign,
               value: mod.value,
               cssClass: total > 0 ? 'negative' : 'positive',
