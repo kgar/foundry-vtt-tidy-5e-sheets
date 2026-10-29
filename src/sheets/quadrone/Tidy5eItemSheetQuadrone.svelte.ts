@@ -443,7 +443,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
       baseItems: {},
-      isPhysical: this.document.system.hasOwnProperty('quantity'),
+      isPhysical: this.document.system.isPhysical,
 
       // Identified state
       isIdentifiable: isIdentifiable,
