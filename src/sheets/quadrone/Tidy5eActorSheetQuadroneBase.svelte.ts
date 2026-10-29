@@ -1729,24 +1729,38 @@ export function getTidy5eActorSheetQuadroneBase<
       behavior?: DropEffectValue | null,
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
-      return await this._onDropCreateItems(event, items, behavior);
+      return await this._onDropCreateItems(event, items, { behavior });
     }
 
     async _onDropCreateItems(
       event: Event,
       items: any[],
-      behavior?: DropEffectValue | null,
+      options: { behavior?: DropEffectValue | null } & Record<string, any> = {},
     ) {
-      behavior ??= (event as any)._behavior;
+      options.behavior ??= (event as any)._behavior;
+      options.event ??= event;
+
+      // TODO: Extract to TidyHooks
+      /**
+       * A hook event that fires when items are dropped onto the actor sheet to be created.
+       * @function dnd5e.dropCreateItems
+       * @memberof hookEvents
+       * @param {BaseActorSheet} sheet                The sheet.
+       * @param {Item5e[]} items                      The items being dropped.
+       * @param {object} options
+       * @param {DropEffectValue} [options.behavior]  The drag behavior.
+       * @param {Event} options.event                 The event which triggered the item creation.
+       */
+      if (Hooks.call('dnd5e.dropCreateItems', this, items, options) === false) {
+        return [];
+      }
+
       const itemsWithoutAdvancement = items.filter(
         (i) => !i.system.advancement?.size,
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
-      if (
-        multipleAdvancements &&
-        !game.settings.get('dnd5e', 'disableAdvancements')
-      ) {
+      if (multipleAdvancements && !dnd5e.settings.disableAdvancements) {
         ui.notifications.warn(
           game.i18n.format('DND5E.WarnCantAddMultipleAdvancements'),
         );
@@ -1791,7 +1805,7 @@ export function getTidy5eActorSheetQuadroneBase<
         keepId: true,
       });
 
-      if (behavior === 'move') {
+      if (options.behavior === 'move') {
         items.forEach((i) => i?.delete({ deleteContents: true }));
       }
       return created;

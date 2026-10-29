@@ -817,7 +817,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     async _onDropCreateItems(
       event: DragEvent,
       items: Item5e[],
-      behavior?: DropEffectValue | null,
+      options: { behavior?: DropEffectValue | null } & Record<string, any> = {},
     ) {
       let foundNonPhysical = false;
       items = items.filter((item) => {
@@ -835,7 +835,7 @@ export function getTidy5eMultiActorSheetQuadroneBase<
         ui.notifications.warn('DND5E.Group.Warning.PhysicalItemOnly', {
           localize: true,
         });
-      return super._onDropCreateItems(event, items, behavior);
+      return super._onDropCreateItems(event, items, options);
     }
   }
 
