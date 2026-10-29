@@ -746,9 +746,8 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           ctx.hasRecharge = item.hasRecharge && !unidentified;
 
           // Item grouping
-          const originId = FoundryAdapter.getAdvancementOriginId(item);
-          const originItem = this.actor.items.get(originId);
-          switch (originItem?.type) {
+          const group = item.system.advancementRootItem;
+          switch (group?.type) {
             case CONSTANTS.ITEM_TYPE_RACE:
               ctx.group = 'species';
               break;
@@ -756,10 +755,10 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
               ctx.group = CONSTANTS.ITEM_TYPE_BACKGROUND;
               break;
             case CONSTANTS.ITEM_TYPE_CLASS:
-              ctx.group = originItem.identifier;
+              ctx.group = group.identifier;
               break;
             case CONSTANTS.ITEM_TYPE_SUBCLASS:
-              ctx.group = originItem.class?.identifier ?? 'other';
+              ctx.group = group.class?.identifier ?? 'other';
               break;
             default:
               ctx.group = 'other';
