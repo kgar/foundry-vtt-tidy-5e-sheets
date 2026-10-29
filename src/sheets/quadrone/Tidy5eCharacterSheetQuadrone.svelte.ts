@@ -265,12 +265,11 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     };
 
     if (context.system.details.xp.boonsEarned !== undefined) {
-      const pluralRules = new Intl.PluralRules(game.i18n.lang);
-
       context.epicBoonsEarned = FoundryAdapter.localize(
-        `DND5E.ExperiencePoints.Boons.${pluralRules.select(
-          this.actor.system.details.xp.boonsEarned ?? 0,
-        )}`,
+        dnd5e.utils.getPluralLocalizationKey(
+          context.system.details.xp.boonsEarned,
+          (pr: string) => `DND5E.ExperiencePoints.Boons.${pr}`,
+        ),
         {
           number: dnd5e.utils.formatNumber(
             this.actor.system.details.xp.boonsEarned ?? 0,
@@ -641,17 +640,18 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
 
         const model = CONFIG.DND5E.spellcasting[method];
 
-        const plurals = new Intl.PluralRules(game.i18n.lang, {
-          type: 'ordinal',
-        });
-
         const hasNoModelOrIsSingleLevel = !model || model.isSingleLevel;
 
         const name = hasNoModelOrIsSingleLevel
-          ? game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`)
-          : game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
-              n: level,
-            });
+          ? FoundryAdapter.localize(`DND5E.SpellSlots${id.capitalize()}`)
+          : FoundryAdapter.localize(
+              dnd5e.utils.getPluralLocalizationKey(
+                level,
+                (pr: string) => `DND5E.SpellSlotsN.${pr}`,
+                { type: 'ordinal' },
+              ),
+              { n: level },
+            );
 
         const img = hasNoModelOrIsSingleLevel
           ? model?.img || CONFIG.DND5E.spellcasting.pact.img
