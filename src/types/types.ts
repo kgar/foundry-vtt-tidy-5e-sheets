@@ -1344,7 +1344,7 @@ export type GroupSheetQuadroneContext = {
 
 export type FactionMemberQuadroneContext = {
   // TODO
-}
+};
 
 export type FactionMemberSection = {
   members: FactionMemberQuadroneContext[];
@@ -1353,8 +1353,14 @@ export type FactionMemberSection = {
   >;
 } & TidySectionBase;
 
-export type FactionSheetQuadroneContext = {
+export type FactionSheetContext = {
   members: FactionMemberSection[];
+  enriched: {
+    description: {
+      full: string;
+      summary: string;
+    };
+  };
   // TODO
 } & MultiActorQuadroneContext<Tidy5eFactionSheetQuadrone>;
 

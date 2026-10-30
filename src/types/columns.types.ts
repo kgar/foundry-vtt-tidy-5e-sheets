@@ -12,7 +12,7 @@ import type {
   EncounterPlaceholderQuadroneContext,
   EncounterSheetQuadroneContext,
   FactionMemberQuadroneContext,
-  FactionSheetQuadroneContext,
+  FactionSheetContext,
   GroupMemberQuadroneContext,
   GroupSheetQuadroneContext,
   VehicleCrewMemberContext,
@@ -205,7 +205,7 @@ export type FactionMemberColumnSpec<
   TColumnCellContent extends Component<any> = Component<any>,
 > = ColumnSpecification<
   Actor5e,
-  FactionSheetQuadroneContext,
+  FactionSheetContext,
   Actor5e,
   FactionMemberQuadroneContext,
   TColumnHeaderContent,
