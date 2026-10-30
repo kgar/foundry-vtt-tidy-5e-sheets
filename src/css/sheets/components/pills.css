@@ -169,7 +169,7 @@
       }
     }
 
-    &:has(.toggle:checked) {
+    &.switch-on {
       & > :first-child {
         --icon-fill: var(--t5e-color-text-gold);
         transition: --icon-fill 0.15s ease-in-out;
@@ -180,7 +180,7 @@
       }
     }
 
-    &:not(:has(.toggle:checked)) i {
+    &:not(.switch-on) i {
       font-weight: var(--font-weight-default);
     }
 
@@ -188,7 +188,7 @@
       color: var(--t5e-pill-switch-icon-color, var(--icon-fill));
     }
 
-    &:has(.toggle:checked) i:not(.effect-pill-image) {
+    &.switch-on i:not(.effect-pill-image) {
       color: var(--t5e-pill-switch-icon-color-checked, var(--icon-fill));
     }
 
