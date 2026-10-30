@@ -36,9 +36,24 @@
 </script>
 
 {#if !disabled}
-  <label class="pill pill-switch interactive" class:disabled>
+  <label
+    class={[
+      'pill pill-switch interactive',
+      {
+        disabled,
+        'switch-on': checked,
+      },
+    ]}
+  >
     <span class="icon-and-label-container">
-      <span class="pill-switch-icon-container" class:hidden={!checked}>
+      <span
+        class={[
+          'pill-switch-icon-container',
+          {
+            hidden: !checked,
+          },
+        ]}
+      >
         {#if checkedIconClass || iconClass}
           <i class={[checkedIconClass, iconClass]}></i>
         {/if}
@@ -46,7 +61,14 @@
           <Dnd5eIcon class="fa-fw" src={checkedSvgSrc} />
         {/if}
       </span>
-      <span class="pill-switch-icon-container" class:hidden={checked}>
+      <span
+        class={[
+          'pill-switch-icon-container',
+          {
+            hidden: checked,
+          },
+        ]}
+      >
         {#if uncheckedIconClass || iconClass}
           <i class={[uncheckedIconClass, iconClass]}></i>
         {/if}
