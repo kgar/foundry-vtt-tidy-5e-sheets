@@ -63,6 +63,7 @@ import type {
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
   EncounterMemberColumnSpec,
+  FactionMemberColumnSpec,
   GroupMemberColumnSpec,
   ItemColumnSpec,
   SectionColumnSpecifications,
@@ -70,6 +71,7 @@ import type {
   VehicleDraftAnimalColumnSpec,
   VehiclePassengerColumnSpec,
 } from './columns.types';
+import type { Tidy5eFactionSheetQuadrone } from 'src/sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1339,6 +1341,22 @@ export type GroupSheetQuadroneContext = {
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
+
+export type FactionMemberQuadroneContext = {
+  // TODO
+}
+
+export type FactionMemberSection = {
+  members: FactionMemberQuadroneContext[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<FactionMemberColumnSpec>
+  >;
+} & TidySectionBase;
+
+export type FactionSheetQuadroneContext = {
+  members: FactionMemberSection[];
+  // TODO
+} & MultiActorQuadroneContext<Tidy5eFactionSheetQuadrone>;
 
 export type EncounterCreatureTypeContext = {
   type: string;

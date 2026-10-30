@@ -11,6 +11,8 @@ import type {
   EncounterMemberQuadroneContext,
   EncounterPlaceholderQuadroneContext,
   EncounterSheetQuadroneContext,
+  FactionMemberQuadroneContext,
+  FactionSheetQuadroneContext,
   GroupMemberQuadroneContext,
   GroupSheetQuadroneContext,
   VehicleCrewMemberContext,
@@ -194,6 +196,18 @@ export type GroupMemberColumnSpec<
   GroupSheetQuadroneContext,
   Actor5e,
   GroupMemberQuadroneContext,
+  TColumnHeaderContent,
+  TColumnCellContent
+>;
+
+export type FactionMemberColumnSpec<
+  TColumnHeaderContent extends Component<any> = Component<any>,
+  TColumnCellContent extends Component<any> = Component<any>,
+> = ColumnSpecification<
+  Actor5e,
+  FactionSheetQuadroneContext,
+  Actor5e,
+  FactionMemberQuadroneContext,
   TColumnHeaderContent,
   TColumnCellContent
 >;
