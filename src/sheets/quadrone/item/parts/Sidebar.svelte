@@ -649,14 +649,14 @@
         tabindex="0"
         class="pill interactive centered wrapped copy-to-clipboard"
         data-action="copyValue"
-        data-value={context.item.system.identifier}
+        data-value={context.item.identifier}
         aria-label={localize('TIDY5E.COMMON.Action.CopyToClipboard')}
       >
         <span class="text-normal">
           {localize(itemTypeLabel)}
         </span>
         <span class="hyphens-auto">
-          {context.item.system.identifier}
+          {context.item.identifier}
         </span>
       </a>
     </li>
