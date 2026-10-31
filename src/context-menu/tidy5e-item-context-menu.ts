@@ -185,7 +185,7 @@ export function getItemContextOptions(
       !!itemParent?.system.isNPC &&
       item.isOwner &&
       !compendiumLocked &&
-      !!CONFIG.Item.dataModels[item.type]?.schema.has('quantity'),
+      !!CONFIG.Item.dataModels[item.type]?.isPhysical,
     onClick: () => {
       const properties = item.system.toObject().properties;
       item.update({

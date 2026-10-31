@@ -9,6 +9,7 @@ import type {
   CharacterSheetQuadroneContext,
   DocumentSheetV2Context,
   EncounterSheetQuadroneContext,
+  FactionSheetContext,
   GroupSheetQuadroneContext,
   NpcSheetQuadroneContext,
   VehicleSheetQuadroneContext,
@@ -51,6 +52,10 @@ export function getGroupSheetQuadroneContext(): GroupSheetQuadroneContext {
 
 export function getEncounterSheetQuadroneContext(): EncounterSheetQuadroneContext {
   return getSheetContext<EncounterSheetQuadroneContext>();
+}
+
+export function getFactionSheetQuadroneContext(): FactionSheetContext {
+  return getSheetContext<FactionSheetContext>();
 }
 
 export function getContainerSheetQuadroneContext(): ContainerSheetQuadroneContext {

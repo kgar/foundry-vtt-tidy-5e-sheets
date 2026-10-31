@@ -4,6 +4,7 @@ import type { ActiveEffect5e, EffectPill } from 'src/types/types';
 import { isNil } from './data';
 import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 /**
  * Icons to make the effect changes clearer.
@@ -63,8 +64,9 @@ export class ActiveEffectsHelper {
     const result: Record<string, string[]> = {};
 
     const enchantmentEffects =
-      item.system?.activities
-        ?.getByType('enchant')
+      (item.system?.activities ?? [])
+        .values()
+        .filter((a: Activity5e) => a.metadata.hasRiders)
         ?.flatMap((activity: any) => activity.effects) ?? [];
 
     for (const enchantmentEffect of enchantmentEffects) {
@@ -156,7 +158,6 @@ export class ActiveEffectsHelper {
     if (!change.type) {
       return fallback;
     }
-
 
     // First look for system rule change types (e.g. `dnd5e.advantage`), otherwise
     // look for the Foundry standard change types (e.g. `add`).
