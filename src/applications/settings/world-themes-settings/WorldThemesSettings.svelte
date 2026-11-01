@@ -1,12 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import type { FilterDescription } from 'src/foundry/dnd5e.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
-  import {
-    actorHeaderBackgroundSupportedActorTypes,
-    Theme,
-  } from 'src/theme/theme';
+  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
   import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
@@ -26,13 +22,6 @@
     config.settings.toSorted((a, b) => a.sort - b.sort),
   );
 
-  const supportedDocuments = [...Theme.supportedDocumentNames]
-    .map((s) => ({
-      text: localize(`DOCUMENT.${s}`),
-      value: s,
-    }))
-    .sort((a, b) => a.text.localeCompare(b.text));
-
   const availableTypeKeys = $derived(
     new Set<string>(app.availableTypes.map((t) => t.value)),
   );
@@ -45,48 +34,6 @@
     }
 
     selectedTheme.types = selectedTheme.types?.filter(availableTypeKeys.has);
-  }
-
-  function clearFilter() {
-    if (!selectedTheme) {
-      return;
-    }
-
-    selectedTheme.filter = undefined;
-    selectedTheme.themeMode = undefined;
-    selectedTheme.compendium = undefined;
-    selectedTheme.folder = '';
-  }
-
-  function refreshFilter() {
-    if (!selectedTheme) {
-      return;
-    }
-
-    const filter: FilterDescription[] = [];
-
-    if (selectedTheme.folder.trim() !== '') {
-      filter.push({
-        k: 'folder',
-        v: selectedTheme.folder,
-      });
-    }
-
-    if (selectedTheme.themeMode) {
-      filter.push({
-        k: 'themeMode',
-        v: selectedTheme.themeMode,
-      });
-    }
-
-    if (selectedTheme.compendium) {
-      filter.push({
-        k: 'document.pack',
-        v: selectedTheme.compendium,
-      });
-    }
-
-    selectedTheme.filter = JSON.stringify(filter, null, '  ');
   }
 </script>
 
@@ -135,7 +82,7 @@
         <div class="form-group stacked checkbox-grid">
           <label>TOOD: Documents</label>
           <div class="form-fields">
-            {#each supportedDocuments as supportedDocument}
+            {#each app.supportedDocuments as supportedDocument}
               <label class="checkbox">
                 <input
                   type="checkbox"
@@ -172,7 +119,7 @@
               type="radio"
               bind:group={selectedTheme.filterMode}
               value="basic"
-              onclick={clearFilter}
+              onclick={app.clearFilter}
             />
             TODO: Basic
           </label>
@@ -191,7 +138,7 @@
             <input
               type="text"
               bind:value={selectedTheme.folder}
-              onchange={refreshFilter}
+              onchange={app.applyBasicFilters}
             />
             <p class="hint">
               Folder paths must start with a slash "/". For example, "/My Folder
@@ -203,7 +150,7 @@
             <label>
               <input
                 type="radio"
-                onchange={refreshFilter}
+                onchange={app.applyBasicFilters}
                 bind:group={selectedTheme.themeMode}
                 value={undefined}
               />
@@ -212,7 +159,7 @@
             <label>
               <input
                 type="radio"
-                onchange={refreshFilter}
+                onchange={app.applyBasicFilters}
                 bind:group={selectedTheme.themeMode}
                 value="light"
               />
@@ -221,7 +168,7 @@
             <label>
               <input
                 type="radio"
-                onchange={refreshFilter}
+                onchange={app.applyBasicFilters}
                 bind:group={selectedTheme.themeMode}
                 value="dark"
               />
@@ -232,7 +179,7 @@
             <label>TODO: Compendium</label>
             <select
               bind:value={selectedTheme.compendium}
-              onchange={refreshFilter}
+              onchange={app.applyBasicFilters}
             >
               <option value={undefined}>TODO: Select an option</option>
               {#each app.compendia as c}

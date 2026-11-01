@@ -8,6 +8,7 @@ import {
   getCompendia,
   getRarities,
   getSpellMethods,
+  getSupportedDocuments,
 } from './shared/theme-setting-functions';
 import { SettingsProvider } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
@@ -32,6 +33,9 @@ export type WorldThemesSettingsEditor =
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
+    supportedDocuments: { text: string; value: string }[];
+    applyBasicFilters(): void;
+    clearFilter(): void;
     selectTheme(id: string | undefined): void;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
     get availableTypes(): { text: string; value: string }[];
@@ -197,6 +201,48 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       this.selectTheme(settingId);
     },
 
+    applyBasicFilters() {
+      if (!selectedTheme) {
+        return;
+      }
+
+      const filter: FilterDescription[] = [];
+
+      if (selectedTheme.folder.trim() !== '') {
+        filter.push({
+          k: 'folder',
+          v: selectedTheme.folder,
+        });
+      }
+
+      if (selectedTheme.themeMode) {
+        filter.push({
+          k: 'themeMode',
+          v: selectedTheme.themeMode,
+        });
+      }
+
+      if (selectedTheme.compendium) {
+        filter.push({
+          k: 'document.pack',
+          v: selectedTheme.compendium,
+        });
+      }
+
+      selectedTheme.filter = JSON.stringify(filter, null, '  ');
+    },
+
+    clearFilter() {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.filter = undefined;
+      selectedTheme.themeMode = undefined;
+      selectedTheme.compendium = undefined;
+      selectedTheme.folder = '';
+    },
+
     deleteTheme(id: string): any {
       const selectedId = this.selectedTheme?.id;
 
@@ -250,6 +296,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
     },
+
+    supportedDocuments: getSupportedDocuments(),
 
     undoChanges() {
       if (!selectedTheme) {
