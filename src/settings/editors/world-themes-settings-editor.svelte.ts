@@ -15,23 +15,25 @@ import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-type WorldThemeSettingForm = WorldThemeSetting & {
+type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
   compendium?: string;
   themeMode?: string;
 };
 
 export type WorldThemesSettingsContext = {
-  rarities: ThemeColorSettingOption[];
-  spellMethods: ThemeColorSettingOption[];
-  compendia: { text: string; value: string }[];
-  settings: WorldThemeSettingForm[];
+  settings: WorldThemeSettingEntry[];
 };
 
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
-    selectTheme(id: string): void;
-    get selectedTheme(): WorldThemeSettingForm | undefined;
+    addTheme(): any;
+    deleteTheme(id: string): any;
+    rarities: ThemeColorSettingOption[];
+    spellMethods: ThemeColorSettingOption[];
+    compendia: { text: string; value: string }[];
+    selectTheme(id: string | undefined): void;
+    get selectedTheme(): WorldThemeSettingEntry | undefined;
     get availableTypes(): { text: string; value: string }[];
     get updateSignal(): string;
   };
@@ -41,7 +43,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
-  let selectedTheme = $state<WorldThemeSettingForm | undefined>(
+  let selectedTheme = $state<WorldThemeSettingEntry | undefined>(
     current.settings[0],
   );
 
@@ -79,7 +81,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     source: WorldThemesSetting,
   ): WorldThemesSettingsContext {
     const settings = Object.values(source ?? {}).map((setting) => {
-      const formData: WorldThemeSettingForm = {
+      const formData: WorldThemeSettingEntry = {
         ...setting,
         folder: '',
         compendium: undefined,
@@ -92,10 +94,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     });
 
     const context: WorldThemesSettingsContext = {
-      rarities: getRarities(),
-      spellMethods: getSpellMethods(),
       settings: settings,
-      compendia: getCompendia(),
     };
 
     return context;
@@ -130,7 +129,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     }, {});
   }
 
-  function refreshBasicFilterFields(selectedTheme: WorldThemeSettingForm) {
+  function refreshBasicFilterFields(selectedTheme: WorldThemeSettingEntry) {
     if (selectedTheme.filterMode === 'basic' && !!selectedTheme.filter) {
       let filter: FilterDescription | FilterDescription[] | undefined =
         undefined;
@@ -173,6 +172,51 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
+    addTheme(): any {
+      const maxSort = this.value.settings.reduce(
+        (prev, curr) => Math.max(prev, curr.sort),
+        0,
+      );
+
+      const settingId = foundry.utils.randomID();
+
+      this.value.settings.push({
+        filterMode: 'basic',
+        id: settingId,
+        name: 'TODO: New Name Here',
+        settings: {},
+        sort: maxSort + 1,
+        documentNames: [],
+        filter: undefined,
+        types: [],
+        folder: '',
+        compendium: undefined,
+        themeMode: undefined,
+      });
+
+      this.selectTheme(settingId);
+    },
+
+    deleteTheme(id: string): any {
+      const selectedId = this.selectedTheme?.id;
+
+      this.value.settings = this.value.settings
+        .filter((t) => t.id !== id)
+        .sort((a, b) => a.sort - b.sort);
+
+      for (let i = 0; i < this.value.settings.length; i++) {
+        this.value.settings[i].sort = i + 1;
+      }
+
+      this.selectTheme(selectedId);
+    },
+
+    rarities: getRarities(),
+
+    spellMethods: getSpellMethods(),
+
+    compendia: getCompendia(),
+
     get availableTypes() {
       return availableTypes;
     },
@@ -189,9 +233,16 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       return selectedTheme;
     },
 
-    selectTheme(id: string) {
+    selectTheme(id: string | undefined) {
       const themeOfId = this.value.settings.find((t) => t.id === id);
-      selectedTheme = themeOfId ?? this.selectedTheme;
+
+      const fallback = this.value.settings.some(
+        (theme) => theme.id === this.selectedTheme?.id,
+      )
+        ? this.selectedTheme
+        : this.value.settings[0];
+
+      selectedTheme = themeOfId ?? fallback;
     },
 
     async save() {

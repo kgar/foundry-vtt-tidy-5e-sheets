@@ -88,37 +88,6 @@
 
     selectedTheme.filter = JSON.stringify(filter, null, '  ');
   }
-
-  function addTheme(): any {
-    const maxSort = app.value.settings.reduce(
-      (prev, curr) => Math.max(prev, curr.sort),
-      0,
-    );
-
-    app.value.settings.push({
-      filterMode: 'basic',
-      id: foundry.utils.randomID(),
-      name: 'TODO: New Name Here',
-      settings: {},
-      sort: maxSort + 1,
-      documentNames: [],
-      filter: undefined,
-      types: [],
-      folder: '',
-      compendium: undefined,
-      themeMode: undefined,
-    });
-  }
-
-  function deleteTheme(id: string): any {
-    app.value.settings = app.value.settings
-      .filter((t) => t.id !== id)
-      .sort((a, b) => a.sort - b.sort);
-
-    for (let i = 0; i < app.value.settings.length; i++) {
-      app.value.settings[i].sort = i + 1;
-    }
-  }
 </script>
 
 {#key app.updateSignal}
@@ -132,7 +101,7 @@
         >
       {/each}
 
-      <button type="button" class="button" onclick={() => addTheme()}>
+      <button type="button" class="button" onclick={() => app.addTheme()}>
         <i class="fa-solid fa-plus"></i> TODO Add
       </button>
     </div>
@@ -145,7 +114,7 @@
             class="button"
             onclick={() => {
               if (selectedTheme) {
-                deleteTheme(selectedTheme.id);
+                app.deleteTheme(selectedTheme.id);
               }
             }}
           >
@@ -266,7 +235,7 @@
               onchange={refreshFilter}
             >
               <option value={undefined}>TODO: Select an option</option>
-              {#each config.compendia as c}
+              {#each app.compendia as c}
                 <option value={c.value}>
                   {c.text}
                 </option>
@@ -293,8 +262,8 @@
         {/if}
         <ThemeSettings3
           bind:settings={selectedTheme.settings}
-          rarities={config.rarities}
-          spellPreparationMethodColors={config.spellMethods}
+          rarities={app.rarities}
+          spellPreparationMethodColors={app.spellMethods}
           placeholders={undefined}
           showActorPortraitShape={!!selectedTheme.documentNames?.includes(
             CONSTANTS.DOCUMENT_NAME_ACTOR,

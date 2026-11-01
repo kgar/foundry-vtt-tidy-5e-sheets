@@ -26,6 +26,3 @@ export function getCompendia(): { text: string; value: string }[] {
     }))
     .sort((a, b) => a.text.localeCompare(b.text));
 }
-
-const typeDenylist = new Set(['base', 'backpack']);
-
