@@ -13,3 +13,19 @@ export function getSpellMethods(): ThemeColorSettingOption[] {
     key,
   }));
 }
+
+export function getCompendia(): { text: string; value: string }[] {
+  return [...game.packs.values()]
+    .map((c) => ({
+      // TODO: need a util for getting full folder path
+      text: `${[c.folder, ...c.folder.ancestors]
+        .reverse()
+        .map((f) => f.name)
+        .join('/')}/${c.metadata.label}`,
+      value: c.metadata.id,
+    }))
+    .sort((a, b) => a.text.localeCompare(b.text));
+}
+
+const typeDenylist = new Set(['base', 'backpack']);
+

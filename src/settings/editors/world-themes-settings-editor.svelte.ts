@@ -4,11 +4,16 @@ import type {
   WorldThemesSetting,
 } from '../settings.types';
 import type { SettingsEditor } from './settings-editors.svelte';
-import { getRarities, getSpellMethods } from './shared/theme-setting-functions';
+import {
+  getCompendia,
+  getRarities,
+  getSpellMethods,
+} from './shared/theme-setting-functions';
 import { SettingsProvider } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 type WorldThemeSettingForm = WorldThemeSetting & {
   folder: string;
@@ -19,6 +24,7 @@ type WorldThemeSettingForm = WorldThemeSetting & {
 export type WorldThemesSettingsContext = {
   rarities: ThemeColorSettingOption[];
   spellMethods: ThemeColorSettingOption[];
+  compendia: { text: string; value: string }[];
   settings: WorldThemeSettingForm[];
 };
 
@@ -26,6 +32,7 @@ export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     selectTheme(id: string): void;
     get selectedTheme(): WorldThemeSettingForm | undefined;
+    get availableTypes(): { text: string; value: string }[];
     get updateSignal(): string;
   };
 
@@ -36,6 +43,26 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
   let selectedTheme = $state<WorldThemeSettingForm | undefined>(
     current.settings[0],
+  );
+
+  const typeDenylist = new Set(['base', 'backpack']);
+
+  const availableTypes = $derived(
+    (selectedTheme?.documentNames ?? [])
+      .flatMap(
+        (docName: any) =>
+          foundry.documents[docName]?.TYPES.filter(
+            (t: string) =>
+              !!CONFIG[docName as keyof typeof CONFIG]?.typeLabels[t] &&
+              !typeDenylist.has(t),
+          ).map((t: string) => ({
+            text: FoundryAdapter.localize(
+              CONFIG[docName as keyof typeof CONFIG].typeLabels[t],
+            ),
+            value: t,
+          })) ?? [],
+      )
+      .sort((a, b) => a.text.localeCompare(b.text)),
   );
 
   let updateSignal = $state(foundry.utils.randomID());
@@ -68,6 +95,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       rarities: getRarities(),
       spellMethods: getSpellMethods(),
       settings: settings,
+      compendia: getCompendia(),
     };
 
     return context;
@@ -145,6 +173,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
+    get availableTypes() {
+      return availableTypes;
+    },
+
     get hasChanges() {
       return hasChanges;
     },

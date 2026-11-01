@@ -8,6 +8,7 @@
     Theme,
   } from 'src/theme/theme';
   import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -17,20 +18,9 @@
 
   const config = $derived(app.value);
   const selectedTheme = $derived(app.selectedTheme);
+  const appId = foundry.utils.randomID();
 
   const localize = FoundryAdapter.localize;
-
-  const compendia = [...game.packs.values()]
-    .map((c) => ({
-      // TODO: need a util for getting full folder path
-      text: `${[c.folder, ...c.folder.ancestors]
-        .reverse()
-        .map((f) => f.name)
-        .join('/')}/${c.metadata.label}`,
-      value: c.metadata.id,
-    }))
-    .sort((a, b) => a.text.localeCompare(b.text));
-  const typeDenylist = new Set(['base', 'backpack']);
 
   const orderedThemes = $derived(
     config.settings.toSorted((a, b) => a.sort - b.sort),
@@ -43,26 +33,8 @@
     }))
     .sort((a, b) => a.text.localeCompare(b.text));
 
-  const availableTypes = $derived(
-    (selectedTheme?.documentNames ?? [])
-      .flatMap(
-        (docName: any) =>
-          foundry.documents[docName]?.TYPES.filter(
-            (t: string) =>
-              !!CONFIG[docName as keyof typeof CONFIG]?.typeLabels[t] &&
-              !typeDenylist.has(t),
-          ).map((t: string) => ({
-            text: localize(
-              CONFIG[docName as keyof typeof CONFIG].typeLabels[t],
-            ),
-            value: t,
-          })) ?? [],
-      )
-      .sort((a, b) => a.text.localeCompare(b.text)),
-  );
-
   const availableTypeKeys = $derived(
-    new Set<string>(availableTypes.map((t) => t.value)),
+    new Set<string>(app.availableTypes.map((t) => t.value)),
   );
 
   function onDocumentNamesChanged(
@@ -180,6 +152,17 @@
             <i class="fa-solid fa-trash"></i> TODO Delete
           </button>
         </p>
+        <div class="form-group stacked">
+          <label for="{appId}-theme-name">TODO: Theme Name</label>
+          <div class="form-fields">
+            <input
+              id="{appId}-theme-name"
+              type="text"
+              bind:value={selectedTheme.name}
+              {@attach InputAttachments.selectOnFocus}
+            />
+          </div>
+        </div>
         <div class="form-group stacked checkbox-grid">
           <label>TOOD: Documents</label>
           <div class="form-fields">
@@ -196,11 +179,11 @@
             {/each}
           </div>
         </div>
-        {#if availableTypes.length}
+        {#if app.availableTypes.length}
           <div class="form-group stacked checkbox-grid">
             <label>TODO: Document Types</label>
             <div class="form-fields">
-              {#each availableTypes as type}
+              {#each app.availableTypes as type}
                 <label class="checkbox">
                   <input
                     type="checkbox"
@@ -283,7 +266,7 @@
               onchange={refreshFilter}
             >
               <option value={undefined}>TODO: Select an option</option>
-              {#each compendia as c}
+              {#each config.compendia as c}
                 <option value={c.value}>
                   {c.text}
                 </option>
