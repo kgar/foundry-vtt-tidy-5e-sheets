@@ -56,7 +56,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
-      const changed: WorldThemeSetting = foundry.settings.duplicate(curr);
+      const changed: WorldThemeSetting = foundry.utils.duplicate(curr);
       changed.filter = nilToUndefined(changed.filter);
       changed.types =
         changed.types && changed.types.length > 0 ? changed.types : undefined;
@@ -78,18 +78,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     async save() {
-      const toSave = this.value.settings.reduce<
-        Record<string, WorldThemeSetting>
-      >((prev, curr) => {
-        prev[curr.id] = curr;
-        return prev;
-      }, {});
+      const toSave = mapContextToChangedSettings(this.value);
 
       game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
     },
 
     undoChanges() {
-      this.value = { ...initialSnapshot };
+      this.value = foundry.utils.duplicate(initialSnapshot);
     },
 
     get canUndo() {

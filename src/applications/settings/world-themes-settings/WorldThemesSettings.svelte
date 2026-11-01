@@ -8,6 +8,8 @@
     Theme,
   } from 'src/theme/theme';
   import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
+  import { onMount } from 'svelte';
+  import type { WorldThemeSetting } from 'src/settings/settings.types';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -35,7 +37,13 @@
   let themeMode = $state<string | undefined>(undefined);
   let compendium = $state<string | undefined>(undefined);
 
-  let selectedTheme = $derived(config.settings[0]);
+  let selectedTheme = $state<WorldThemeSetting | undefined>();
+
+  onMount(() => {
+    if (config.settings.length) {
+      selectTheme(config.settings[0].id);
+    }
+  });
 
   const orderedThemes = $derived(
     config.settings.toSorted((a, b) => a.sort - b.sort),
@@ -49,7 +57,7 @@
     .sort((a, b) => a.text.localeCompare(b.text));
 
   const availableTypes = $derived(
-    (selectedTheme.documentNames ?? [])
+    (selectedTheme?.documentNames ?? [])
       .flatMap(
         (docName: any) =>
           foundry.documents[docName]?.TYPES.filter(
@@ -73,22 +81,74 @@
   function selectTheme(id: string) {
     const themeOfId = config.settings.find((t) => t.id === id);
     selectedTheme = themeOfId ?? selectedTheme;
+
+    if (selectedTheme?.filterMode === 'basic' && !!selectedTheme.filter) {
+      let filter: FilterDescription | FilterDescription[] | undefined =
+        undefined;
+      try {
+        filter = JSON.parse(selectedTheme.filter);
+      } catch {
+        // Failure is an option. Ignore.
+      }
+
+      // TODO: Somehow clean this up and streamline the code
+      // so it's easy to maintain and expand.
+
+      // Populate Folder input as facade over filter
+      folder =
+        filter && Array.isArray(filter)
+          ? (filter.find((f) => f.k === 'folder')?.v ?? '')
+          : typeof filter === 'object' && filter.k === 'folder'
+            ? (filter.v ?? '')
+            : '';
+
+      // Populate Theme Mode input as facade over filter
+      themeMode =
+        filter && Array.isArray(filter)
+          ? filter.find((f) => f.k === 'themeMode')?.v
+          : typeof filter === 'object' && filter.k === 'themeMode'
+            ? filter.v
+            : undefined;
+
+      // Populate Compendium input as facade over filter
+      compendium =
+        filter && Array.isArray(filter)
+          ? filter.find((f) => f.k === 'document.pack')?.v
+          : typeof filter === 'object' && filter.k === 'document.pack'
+            ? filter.v
+            : undefined;
+    } else {
+      folder = '';
+      themeMode = undefined;
+      compendium = undefined;
+    }
   }
 
   function onDocumentNamesChanged(
     _event: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
+    if (!selectedTheme) {
+      return;
+    }
+
     selectedTheme.types = selectedTheme.types?.filter(availableTypeKeys.has);
   }
 
   function clearFilter() {
-    selectedTheme.filter = undefined;
+    if (selectedTheme) {
+      selectedTheme.filter = undefined;
+    }
+
     themeMode = undefined;
     compendium = undefined;
     folder = '';
   }
 
   function refreshFilter() {
+    if (!selectedTheme) {
+      return;
+    }
+
     const filter: FilterDescription[] = [];
 
     if (folder.trim() !== '') {
@@ -165,7 +225,11 @@
         <button
           type="button"
           class="button"
-          onclick={() => deleteTheme(selectedTheme.id)}
+          onclick={() => {
+            if (selectedTheme) {
+              deleteTheme(selectedTheme.id);
+            }
+          }}
         >
           <i class="fa-solid fa-trash"></i> TODO Delete
         </button>
@@ -265,7 +329,7 @@
         <div>
           <label>TODO: Compendium</label>
           <select bind:value={compendium} onchange={refreshFilter}>
-            <option>TODO: Select an option</option>
+            <option value={undefined}>TODO: Select an option</option>
             {#each compendia as c}
               <option value={c.value}>
                 {c.text}
@@ -283,7 +347,9 @@
           {#key selectedTheme.filter}
             <filters-input
               onchange={(e: any) => {
-                selectedTheme.filter = e.target.value;
+                if (selectedTheme) {
+                  selectedTheme.filter = e.target.value;
+                }
               }}>{selectedTheme.filter}</filters-input
             >
           {/key}

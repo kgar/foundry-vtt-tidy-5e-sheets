@@ -24,7 +24,6 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] <!-- TODO: Drop a WorldThemesSettings component here --> | implement the ugly version first and get it functional. Then test / refine the setting editor.
 - [ ] Implement new settings editor to manage world themes and to load/save all the data as a whole and be able to undo / reset to default
   - No Reset World Default option
   - Undo Changes works on the currently selected theme?
@@ -44,6 +43,7 @@ Any theme options that are specific to a particular document type/subtype will s
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
+- [ ] // TODO: Somehow clean this up and streamline the code
 
 
 ### Filter Notes
