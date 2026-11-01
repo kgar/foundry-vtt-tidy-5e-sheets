@@ -24,12 +24,13 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Implement new settings editor to manage world themes and to load/save all the data as a whole and be able to undo / reset to default
-  - No Reset World Default option
-  - Undo Changes works on the currently selected theme?
-  - Save saves the whole thing
-- [ ] Wire into World Settings
+- [ ] Pull back as much functionality as possible related to selected theme themeMode / compendium / folder management. Use effects, even, to synchronize a basic filter to its complex filter counterpart.
+- [ ] Upgrade the tab strip to a proper tab strip
+- [ ] Separate visibility and theme settings into sub-tabs
+- [ ] Implement drag/drop sorting for themes
+- [ ] Review WorldThemesSettings and finish pulling back the remainder of unnecessarily embedded functionality so that the editor can stand alone.
 - [ ] Finish making the origin theme-settings-editor fully require a document and solely support sheet theme editing.
+- [ ] Ensure both world and sheet theme editors are using the same core sheet theme setting component. Strip away any other header content so that it's fully shareable.
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document

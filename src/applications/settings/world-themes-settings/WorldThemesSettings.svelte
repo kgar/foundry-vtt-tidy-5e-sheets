@@ -8,8 +8,6 @@
     Theme,
   } from 'src/theme/theme';
   import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
-  import { onMount } from 'svelte';
-  import type { WorldThemeSetting } from 'src/settings/settings.types';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -18,6 +16,7 @@
   let { app }: Props = $props();
 
   const config = $derived(app.value);
+  const selectedTheme = $derived(app.selectedTheme);
 
   const localize = FoundryAdapter.localize;
 
@@ -32,18 +31,6 @@
     }))
     .sort((a, b) => a.text.localeCompare(b.text));
   const typeDenylist = new Set(['base', 'backpack']);
-
-  let folder = $state('');
-  let themeMode = $state<string | undefined>(undefined);
-  let compendium = $state<string | undefined>(undefined);
-
-  let selectedTheme = $state<WorldThemeSetting | undefined>();
-
-  onMount(() => {
-    if (config.settings.length) {
-      selectTheme(config.settings[0].id);
-    }
-  });
 
   const orderedThemes = $derived(
     config.settings.toSorted((a, b) => a.sort - b.sort),
@@ -78,52 +65,6 @@
     new Set<string>(availableTypes.map((t) => t.value)),
   );
 
-  function selectTheme(id: string) {
-    const themeOfId = config.settings.find((t) => t.id === id);
-    selectedTheme = themeOfId ?? selectedTheme;
-
-    if (selectedTheme?.filterMode === 'basic' && !!selectedTheme.filter) {
-      let filter: FilterDescription | FilterDescription[] | undefined =
-        undefined;
-      try {
-        filter = JSON.parse(selectedTheme.filter);
-      } catch {
-        // Failure is an option. Ignore.
-      }
-
-      // TODO: Somehow clean this up and streamline the code
-      // so it's easy to maintain and expand.
-
-      // Populate Folder input as facade over filter
-      folder =
-        filter && Array.isArray(filter)
-          ? (filter.find((f) => f.k === 'folder')?.v ?? '')
-          : typeof filter === 'object' && filter.k === 'folder'
-            ? (filter.v ?? '')
-            : '';
-
-      // Populate Theme Mode input as facade over filter
-      themeMode =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'themeMode')?.v
-          : typeof filter === 'object' && filter.k === 'themeMode'
-            ? filter.v
-            : undefined;
-
-      // Populate Compendium input as facade over filter
-      compendium =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'document.pack')?.v
-          : typeof filter === 'object' && filter.k === 'document.pack'
-            ? filter.v
-            : undefined;
-    } else {
-      folder = '';
-      themeMode = undefined;
-      compendium = undefined;
-    }
-  }
-
   function onDocumentNamesChanged(
     _event: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
@@ -135,13 +76,14 @@
   }
 
   function clearFilter() {
-    if (selectedTheme) {
-      selectedTheme.filter = undefined;
+    if (!selectedTheme) {
+      return;
     }
 
-    themeMode = undefined;
-    compendium = undefined;
-    folder = '';
+    selectedTheme.filter = undefined;
+    selectedTheme.themeMode = undefined;
+    selectedTheme.compendium = undefined;
+    selectedTheme.folder = '';
   }
 
   function refreshFilter() {
@@ -151,24 +93,24 @@
 
     const filter: FilterDescription[] = [];
 
-    if (folder.trim() !== '') {
+    if (selectedTheme.folder.trim() !== '') {
       filter.push({
         k: 'folder',
-        v: folder,
+        v: selectedTheme.folder,
       });
     }
 
-    if (themeMode) {
+    if (selectedTheme.themeMode) {
       filter.push({
         k: 'themeMode',
-        v: themeMode,
+        v: selectedTheme.themeMode,
       });
     }
 
-    if (compendium) {
+    if (selectedTheme.compendium) {
       filter.push({
         k: 'document.pack',
-        v: compendium,
+        v: selectedTheme.compendium,
       });
     }
 
@@ -190,6 +132,9 @@
       documentNames: [],
       filter: undefined,
       types: [],
+      folder: '',
+      compendium: undefined,
+      themeMode: undefined,
     });
   }
 
@@ -204,173 +149,182 @@
   }
 </script>
 
-<div class="tidy-sheet-settings">
-  <div class="nav-group">
-    {#each orderedThemes as theme}
-      <button
-        onclick={() => selectTheme(theme.id)}
-        disabled={selectedTheme?.id === theme.id}
-        class="button">{theme.name}</button
-      >
-    {/each}
-
-    <button type="button" class="button" onclick={() => addTheme()}>
-      <i class="fa-solid fa-plus"></i> TODO Add
-    </button>
-  </div>
-  <section class="settings-pane" role="tabpanel">
-    {#if selectedTheme}
-      <p>TODO: Sort Up/Down here for testing</p>
-      <p>
+{#key app.updateSignal}
+  <div class="tidy-sheet-settings">
+    <div class="nav-group">
+      {#each orderedThemes as theme}
         <button
-          type="button"
-          class="button"
-          onclick={() => {
-            if (selectedTheme) {
-              deleteTheme(selectedTheme.id);
-            }
-          }}
+          onclick={() => app.selectTheme(theme.id)}
+          disabled={selectedTheme?.id === theme.id}
+          class="button">{theme.name}</button
         >
-          <i class="fa-solid fa-trash"></i> TODO Delete
-        </button>
-      </p>
-      <div class="form-group stacked checkbox-grid">
-        <label>TOOD: Documents</label>
-        <div class="form-fields">
-          {#each supportedDocuments as supportedDocument}
-            <label class="checkbox">
-              <input
-                type="checkbox"
-                bind:group={selectedTheme.documentNames}
-                value={supportedDocument.value}
-                onchange={onDocumentNamesChanged}
-              />
-              {supportedDocument.text}
-            </label>
-          {/each}
-        </div>
-      </div>
-      {#if availableTypes.length}
+      {/each}
+
+      <button type="button" class="button" onclick={() => addTheme()}>
+        <i class="fa-solid fa-plus"></i> TODO Add
+      </button>
+    </div>
+    <section class="settings-pane" role="tabpanel">
+      {#if selectedTheme}
+        <p>TODO: Sort Up/Down here for testing</p>
+        <p>
+          <button
+            type="button"
+            class="button"
+            onclick={() => {
+              if (selectedTheme) {
+                deleteTheme(selectedTheme.id);
+              }
+            }}
+          >
+            <i class="fa-solid fa-trash"></i> TODO Delete
+          </button>
+        </p>
         <div class="form-group stacked checkbox-grid">
-          <label>TODO: Document Types</label>
+          <label>TOOD: Documents</label>
           <div class="form-fields">
-            {#each availableTypes as type}
+            {#each supportedDocuments as supportedDocument}
               <label class="checkbox">
                 <input
                   type="checkbox"
-                  bind:group={selectedTheme.types}
-                  value={type.value}
+                  bind:group={selectedTheme.documentNames}
+                  value={supportedDocument.value}
+                  onchange={onDocumentNamesChanged}
                 />
-                {type.text}
+                {supportedDocument.text}
               </label>
             {/each}
           </div>
         </div>
-      {/if}
-      <div>
-        <label>TODO: Filter Mode</label>
-        <label>
-          <input
-            type="radio"
-            bind:group={selectedTheme.filterMode}
-            value="basic"
-            onclick={clearFilter}
-          />
-          TODO: Basic
-        </label>
-        <label>
-          <input
-            type="radio"
-            bind:group={selectedTheme.filterMode}
-            value="advanced"
-          />
-          TODO: Advanced
-        </label>
-      </div>
-      {#if selectedTheme.filterMode === 'basic'}
+        {#if availableTypes.length}
+          <div class="form-group stacked checkbox-grid">
+            <label>TODO: Document Types</label>
+            <div class="form-fields">
+              {#each availableTypes as type}
+                <label class="checkbox">
+                  <input
+                    type="checkbox"
+                    bind:group={selectedTheme.types}
+                    value={type.value}
+                  />
+                  {type.text}
+                </label>
+              {/each}
+            </div>
+          </div>
+        {/if}
         <div>
-          <label>TODO: Folder</label>
-          <input type="text" bind:value={folder} onchange={refreshFilter} />
-          <p class="hint">
-            Folder paths must start with a slash "/". For example, "/My Folder
-            Path/My Subfolder".
-          </p>
-        </div>
-        <div>
-          <label>TODO: Theme Mode</label>
+          <label>TODO: Filter Mode</label>
           <label>
             <input
               type="radio"
-              onchange={refreshFilter}
-              bind:group={themeMode}
-              value={undefined}
+              bind:group={selectedTheme.filterMode}
+              value="basic"
+              onclick={clearFilter}
             />
-            TODO: Any
+            TODO: Basic
           </label>
           <label>
             <input
               type="radio"
-              onchange={refreshFilter}
-              bind:group={themeMode}
-              value="light"
+              bind:group={selectedTheme.filterMode}
+              value="advanced"
             />
-            TODO: Light
+            TODO: Advanced
           </label>
-          <label>
+        </div>
+        {#if selectedTheme.filterMode === 'basic'}
+          <div>
+            <label>TODO: Folder</label>
             <input
-              type="radio"
+              type="text"
+              bind:value={selectedTheme.folder}
               onchange={refreshFilter}
-              bind:group={themeMode}
-              value="dark"
             />
-            TODO: Dark
-          </label>
-        </div>
-        <div>
-          <label>TODO: Compendium</label>
-          <select bind:value={compendium} onchange={refreshFilter}>
-            <option value={undefined}>TODO: Select an option</option>
-            {#each compendia as c}
-              <option value={c.value}>
-                {c.text}
-              </option>
-            {/each}
-          </select>
-          <p>
-            TODO: hint - No selection indicates targeting the sidebar and any
-            compendium.
-          </p>
-        </div>
-      {:else}
-        <div>
-          <label>TODO: Filter</label>
-          {#key selectedTheme.filter}
-            <filters-input
-              onchange={(e: any) => {
-                if (selectedTheme) {
-                  selectedTheme.filter = e.target.value;
-                }
-              }}>{selectedTheme.filter}</filters-input
+            <p class="hint">
+              Folder paths must start with a slash "/". For example, "/My Folder
+              Path/My Subfolder".
+            </p>
+          </div>
+          <div>
+            <label>TODO: Theme Mode</label>
+            <label>
+              <input
+                type="radio"
+                onchange={refreshFilter}
+                bind:group={selectedTheme.themeMode}
+                value={undefined}
+              />
+              TODO: Any
+            </label>
+            <label>
+              <input
+                type="radio"
+                onchange={refreshFilter}
+                bind:group={selectedTheme.themeMode}
+                value="light"
+              />
+              TODO: Light
+            </label>
+            <label>
+              <input
+                type="radio"
+                onchange={refreshFilter}
+                bind:group={selectedTheme.themeMode}
+                value="dark"
+              />
+              TODO: Dark
+            </label>
+          </div>
+          <div>
+            <label>TODO: Compendium</label>
+            <select
+              bind:value={selectedTheme.compendium}
+              onchange={refreshFilter}
             >
-          {/key}
-        </div>
+              <option value={undefined}>TODO: Select an option</option>
+              {#each compendia as c}
+                <option value={c.value}>
+                  {c.text}
+                </option>
+              {/each}
+            </select>
+            <p>
+              TODO: hint - No selection indicates targeting the sidebar and any
+              compendium.
+            </p>
+          </div>
+        {:else}
+          <div>
+            <label>TODO: Filter</label>
+            {#key selectedTheme.filter}
+              <filters-input
+                onchange={(e: any) => {
+                  if (selectedTheme) {
+                    selectedTheme.filter = e.target.value;
+                  }
+                }}>{selectedTheme.filter}</filters-input
+              >
+            {/key}
+          </div>
+        {/if}
+        <ThemeSettings3
+          bind:settings={selectedTheme.settings}
+          rarities={config.rarities}
+          spellPreparationMethodColors={config.spellMethods}
+          placeholders={undefined}
+          showActorPortraitShape={!!selectedTheme.documentNames?.includes(
+            CONSTANTS.DOCUMENT_NAME_ACTOR,
+          ) || !selectedTheme.documentNames?.length}
+          showActorHeaderBackground={!selectedTheme.documentNames?.length ||
+            (!!selectedTheme.types?.length &&
+              selectedTheme.types.some(
+                actorHeaderBackgroundSupportedActorTypes.has,
+              ))}
+          showItemSidebarBackground={!selectedTheme.documentNames?.length ||
+            selectedTheme.documentNames.includes(CONSTANTS.DOCUMENT_NAME_ITEM)}
+        />
       {/if}
-      <ThemeSettings3
-        bind:settings={selectedTheme.settings}
-        rarities={config.rarities}
-        spellPreparationMethodColors={config.spellMethods}
-        placeholders={undefined}
-        showActorPortraitShape={!!selectedTheme.documentNames?.includes(
-          CONSTANTS.DOCUMENT_NAME_ACTOR,
-        ) || !selectedTheme.documentNames?.length}
-        showActorHeaderBackground={!selectedTheme.documentNames?.length ||
-          (!!selectedTheme.types?.length &&
-            selectedTheme.types.some(
-              actorHeaderBackgroundSupportedActorTypes.has,
-            ))}
-        showItemSidebarBackground={!selectedTheme.documentNames?.length ||
-          selectedTheme.documentNames.includes(CONSTANTS.DOCUMENT_NAME_ITEM)}
-      />
-    {/if}
-  </section>
-</div>
+    </section>
+  </div>
+{/key}
