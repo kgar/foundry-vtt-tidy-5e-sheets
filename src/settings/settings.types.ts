@@ -82,3 +82,9 @@ export type WorldThemeSetting = {
 
 /** All of the user-configured world themes. */
 export type WorldThemesSetting = Record<string, WorldThemeSetting>;
+
+// TODO: Find a better home for this.
+export type ThemeColorSettingOption = {
+  label: string;
+  key: string;
+};

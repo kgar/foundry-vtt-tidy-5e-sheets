@@ -1,25 +1,23 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
-  import type {
-    TempWorldThemesApplication,
-    TempWorldThemesContext,
-  } from './TempWorldThemesApplication.svelte';
-  import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-  import { error } from 'src/utils/logging';
+  import type { FilterDescription } from 'src/foundry/dnd5e.types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import {
     actorHeaderBackgroundSupportedActorTypes,
     Theme,
   } from 'src/theme/theme';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { FilterDescription } from 'src/foundry/dnd5e.types';
+  import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
 
   type Props = {
-    app: TempWorldThemesApplication;
-    config: TempWorldThemesContext;
+    app: WorldThemesSettingsEditor;
   };
 
-  const { app, config }: Props = $props();
+  let { app }: Props = $props();
+
+  const config = $derived(app.value);
+
+  const localize = FoundryAdapter.localize;
 
   const compendia = [...game.packs.values()]
     .map((c) => ({
@@ -31,20 +29,17 @@
       value: c.metadata.id,
     }))
     .sort((a, b) => a.text.localeCompare(b.text));
-
   const typeDenylist = new Set(['base', 'backpack']);
 
   let folder = $state('');
   let themeMode = $state<string | undefined>(undefined);
   let compendium = $state<string | undefined>(undefined);
 
-  let selectedTheme = $derived(config.themes[0]);
+  let selectedTheme = $derived(config.settings[0]);
 
   const orderedThemes = $derived(
-    config.themes.toSorted((a, b) => a.sort - b.sort),
+    config.settings.toSorted((a, b) => a.sort - b.sort),
   );
-
-  const localize = FoundryAdapter.localize;
 
   const supportedDocuments = [...Theme.supportedDocumentNames]
     .map((s) => ({
@@ -76,24 +71,8 @@
   );
 
   function selectTheme(id: string) {
-    const themeOfId = config.themes.find((t) => t.id === id);
+    const themeOfId = config.settings.find((t) => t.id === id);
     selectedTheme = themeOfId ?? selectedTheme;
-  }
-
-  async function onExportRequested(
-    exported: Partial<ThemeSettingsV3>,
-  ): Promise<void> {
-    error("It ain't implemented yet.", true);
-  }
-
-  function onLiveUpdateRequested(): void {
-    error("It ain't implemented yet.", true);
-  }
-
-  async function onThemeImportRequested(
-    imported: Partial<ThemeSettingsV3> | undefined,
-  ): Promise<void> {
-    error("It ain't implemented yet.", true);
   }
 
   function onDocumentNamesChanged(
@@ -135,6 +114,34 @@
 
     selectedTheme.filter = JSON.stringify(filter, null, '  ');
   }
+
+  function addTheme(): any {
+    const maxSort = app.value.settings.reduce(
+      (prev, curr) => Math.max(prev, curr.sort),
+      0,
+    );
+
+    app.value.settings.push({
+      filterMode: 'basic',
+      id: foundry.utils.randomID(),
+      name: 'TODO: New Name Here',
+      settings: {},
+      sort: maxSort + 1,
+      documentNames: [],
+      filter: undefined,
+      types: [],
+    });
+  }
+
+  function deleteTheme(id: string): any {
+    app.value.settings = app.value.settings
+      .filter((t) => t.id !== id)
+      .sort((a, b) => a.sort - b.sort);
+
+    for (let i = 0; i < app.value.settings.length; i++) {
+      app.value.settings[i].sort = i + 1;
+    }
+  }
 </script>
 
 <div class="tidy-sheet-settings">
@@ -147,7 +154,7 @@
       >
     {/each}
 
-    <button type="button" class="button" data-action="addTheme">
+    <button type="button" class="button" onclick={() => addTheme()}>
       <i class="fa-solid fa-plus"></i> TODO Add
     </button>
   </div>
@@ -158,8 +165,7 @@
         <button
           type="button"
           class="button"
-          data-action="deleteTheme"
-          data-id={selectedTheme.id}
+          onclick={() => deleteTheme(selectedTheme.id)}
         >
           <i class="fa-solid fa-trash"></i> TODO Delete
         </button>
@@ -285,8 +291,8 @@
       {/if}
       <ThemeSettings3
         bind:settings={selectedTheme.settings}
-        rarities={config.rarityColors}
-        spellPreparationMethodColors={config.spellPreparationMethodColors}
+        rarities={config.rarities}
+        spellPreparationMethodColors={config.spellMethods}
         placeholders={undefined}
         showActorPortraitShape={!!selectedTheme.documentNames?.includes(
           CONSTANTS.DOCUMENT_NAME_ACTOR,
@@ -298,15 +304,7 @@
             ))}
         showItemSidebarBackground={!selectedTheme.documentNames?.length ||
           selectedTheme.documentNames.includes(CONSTANTS.DOCUMENT_NAME_ITEM)}
-        {onExportRequested}
-        {onLiveUpdateRequested}
-        {onThemeImportRequested}
       />
     {/if}
-    <div>
-      <button type="button" class="button" data-action="save">
-        TODO Save
-      </button>
-    </div>
   </section>
 </div>

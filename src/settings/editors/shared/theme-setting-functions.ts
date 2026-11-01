@@ -1,4 +1,4 @@
-import type { ThemeColorSettingOption } from 'src/applications/settings/world/TempWorldThemesApplication.svelte';
+import type { ThemeColorSettingOption } from 'src/settings/settings.types';
 
 export function getRarities(): ThemeColorSettingOption[] {
   return Object.entries(CONFIG.DND5E.itemRarity).map(([key, label]) => ({

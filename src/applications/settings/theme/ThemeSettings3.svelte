@@ -5,9 +5,6 @@
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
-  import { getSingleFileFromDropEvent } from 'src/utils/file';
-  import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
-  import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
@@ -16,7 +13,7 @@
     ThemeSettingsContext,
   } from 'src/settings/editors/theme-settings-editor.svelte';
   import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-  import type { ThemeColorSettingOption } from '../world/TempWorldThemesApplication.svelte';
+  import type { ThemeColorSettingOption } from 'src/settings/settings.types';
 
   interface Props {
     settings: Partial<ThemeSettingsV3>;

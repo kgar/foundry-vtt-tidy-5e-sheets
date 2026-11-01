@@ -11,6 +11,7 @@
   import ApplyTidySheetPreferences from 'src/applications/settings/default-sheet-preferences/DefaultSheetPreferences.svelte';
   import WorldSheetSettings from './WorldSheetSettings.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
+  import WorldThemesSettings from '../world-themes-settings/WorldThemesSettings.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -182,7 +183,7 @@
     {#if activeSelectedId === WorldSettingsTabIds.defaults}
       <WorldSettingsOverview {app} />
     {:else if activeSelectedId === WorldSettingsTabIds.theme}
-      <!-- TODO: Drop a WorldThemesSettings component here -->
+      <WorldThemesSettings app={app.editors.themesSettingsTab} />
     {:else if activeSelectedId === WorldSettingsTabIds.homebrew}
       <HomebrewSettings app={app.editors.homebrewTab} />
     {:else if activeSelectedId === WorldSettingsTabIds.sheetPreferences}

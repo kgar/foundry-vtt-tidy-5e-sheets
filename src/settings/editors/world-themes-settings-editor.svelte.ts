@@ -1,34 +1,37 @@
-import type { ThemeColorSettingOption } from 'src/applications/settings/world/TempWorldThemesApplication.svelte';
-import type { WorldThemeSetting, WorldThemesSetting } from '../settings.types';
+import type {
+  ThemeColorSettingOption,
+  WorldThemeSetting,
+  WorldThemesSetting,
+} from '../settings.types';
 import type { SettingsEditor } from './settings-editors.svelte';
 import { getRarities, getSpellMethods } from './shared/theme-setting-functions';
 import { SettingsProvider } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 
-export type WorldThemeSettingsContext = {
+export type WorldThemesSettingsContext = {
   rarities: ThemeColorSettingOption[];
   spellMethods: ThemeColorSettingOption[];
   settings: WorldThemeSetting[];
 };
 
-export type WorldThemeSettingsEditor =
-  SettingsEditor<WorldThemeSettingsContext> & {
+export type WorldThemesSettingsEditor =
+  SettingsEditor<WorldThemesSettingsContext> & {
     // TODO
   };
 
-export function getWorldThemesSettingsEditor(): WorldThemeSettingsEditor {
-  const current = $state<WorldThemeSettingsContext>(getSettings());
+export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
+  const current = $state<WorldThemesSettingsContext>(getSettings());
 
-  let initialSnapshot = $state<WorldThemeSettingsContext>(
-    foundry.helpers.duplicate(current),
+  let initialSnapshot = $state<WorldThemesSettingsContext>(
+    foundry.utils.duplicate(current),
   );
 
-  const hasChanges = $derived(foundry.helpers.equals(current, initialSnapshot));
+  const hasChanges = $derived(foundry.utils.equals(current, initialSnapshot));
 
   function mapFromSettings(
     source: WorldThemesSetting,
-  ): WorldThemeSettingsContext {
+  ): WorldThemesSettingsContext {
     return {
       rarities: getRarities(),
       spellMethods: getSpellMethods(),
@@ -36,14 +39,21 @@ export function getWorldThemesSettingsEditor(): WorldThemeSettingsEditor {
     };
   }
 
-  function getSettings(): WorldThemeSettingsContext {
+  function getSettings(): WorldThemesSettingsContext {
     const source = SettingsProvider.settings.worldThemes.get() ?? {};
+
+    // TODO: When empty and there's a legacy world theme setting still stored, add it here.
+
+    Object.values(source).forEach((s) => {
+      s.settings.rarityColors ??= {};
+      s.settings.spellPreparationMethodColors ??= {};
+    });
 
     return mapFromSettings(source);
   }
 
   function mapContextToChangedSettings(
-    context: WorldThemeSettingsContext,
+    context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const changed: WorldThemeSetting = foundry.settings.duplicate(curr);
@@ -67,7 +77,16 @@ export function getWorldThemesSettingsEditor(): WorldThemeSettingsEditor {
       this.value = mapFromSettings({});
     },
 
-    async save() {},
+    async save() {
+      const toSave = this.value.settings.reduce<
+        Record<string, WorldThemeSetting>
+      >((prev, curr) => {
+        prev[curr.id] = curr;
+        return prev;
+      }, {});
+
+      game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
+    },
 
     undoChanges() {
       this.value = { ...initialSnapshot };
@@ -88,7 +107,7 @@ export function getWorldThemesSettingsEditor(): WorldThemeSettingsEditor {
     set value(value) {
       const keys = Object.keys(
         current.settings,
-      ) as (keyof WorldThemeSettingsContext['settings'])[];
+      ) as (keyof WorldThemesSettingsContext['settings'])[];
 
       for (const key of keys) {
         delete current.settings[key];
