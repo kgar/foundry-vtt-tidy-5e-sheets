@@ -256,6 +256,8 @@ export function getSheetTabsConfigurationSettingsEditor(
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },

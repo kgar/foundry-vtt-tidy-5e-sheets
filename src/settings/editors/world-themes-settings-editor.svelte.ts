@@ -176,6 +176,11 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
+    dispose() {
+      // TODO: Dispose of effects related to managing automatic filter value management.
+      ui.notifications.info('disposed!');
+    },
+
     addTheme(): any {
       const maxSort = this.value.settings.reduce(
         (prev, curr) => Math.max(prev, curr.sort),

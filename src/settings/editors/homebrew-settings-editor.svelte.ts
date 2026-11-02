@@ -30,6 +30,8 @@ export function getHomebrewSettingsEditor(): HomebrewSettingsEditor {
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },

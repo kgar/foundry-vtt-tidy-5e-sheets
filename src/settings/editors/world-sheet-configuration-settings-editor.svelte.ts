@@ -90,6 +90,8 @@ export function getWorldSheetConfigurationSettingsEditor(
   }
 
   return {
+    dispose() {},
+    
     get canUndo() {
       return this.hasChanges;
     },

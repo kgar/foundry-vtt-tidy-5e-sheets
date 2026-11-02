@@ -124,6 +124,8 @@ export function getWorldHeaderControlConfigurationSettingsEditor(
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },

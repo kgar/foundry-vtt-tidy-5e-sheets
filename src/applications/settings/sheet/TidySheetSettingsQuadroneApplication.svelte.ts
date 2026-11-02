@@ -507,6 +507,21 @@ export class TidySheetSettingsQuadroneApplication
       TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
     }
 
+    this._disposeAllEditors();
+
     await super.close(options);
+  }
+
+  _disposeAllEditors() {
+    this.themeSettingsTab?.dispose();
+    this.sheetTabsConfigurationSettingsTab?.dispose();
+    this.headerControlsTab?.dispose();
+    this.sidebarTabDisplaySettingsTab?.dispose();
+    this.specialTraitsChildApp?.dispose();
+    this.spellSourceItemAssignmentsChildApp?.dispose();
+
+    for (const helper of this.sheetTabOptionsEditorByTabId.values()) {
+      helper.dispose();
+    }
   }
 }

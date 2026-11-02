@@ -90,6 +90,8 @@ export function getDefaultSheetPreferencesSettingsEditor(): DefaultSheetPreferen
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },

@@ -154,6 +154,8 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
   }
 
   return {
+    dispose() {},
+    
     document: document,
 
     get hasChanges() {

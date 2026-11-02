@@ -174,6 +174,8 @@ export function getSpecialTraitsSettingsEditor(
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },

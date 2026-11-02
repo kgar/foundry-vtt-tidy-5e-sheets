@@ -165,6 +165,8 @@ export function getWorldTabConfigurationSettingsEditor(): WorldTabConfigurationS
   }
 
   return {
+    dispose() {},
+    
     get hasChanges() {
       return hasChanges;
     },
