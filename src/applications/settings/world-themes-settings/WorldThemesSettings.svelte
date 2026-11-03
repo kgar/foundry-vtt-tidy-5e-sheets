@@ -8,7 +8,7 @@
   import Tabs, { type TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
   import ImportButton from '../theme/parts/ImportButton.svelte';
-  import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
+  import { ThemeImportService } from 'src/theme/theme-import-service';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   type Props = {
@@ -209,7 +209,7 @@
                   onfilechanged={async (file) => {
                     if (file) {
                       const imported =
-                        await ThemeQuadroneImportService.import(file);
+                        await ThemeImportService.import(file);
 
                       if (imported) {
                         const indexOfSelectedTheme =
@@ -229,7 +229,7 @@
                   type="button"
                   class="button"
                   onclick={() => {
-                    ThemeQuadroneImportService.export({
+                    ThemeImportService.export({
                       ...ThemeQuadrone.getDefaultThemeSettings(),
                       ...selectedTheme,
                     });

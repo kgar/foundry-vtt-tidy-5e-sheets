@@ -5,7 +5,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 
-export class ThemeQuadroneImportService {
+export class ThemeImportService {
   static readonly CURRENT_THEME_VERSION = 3;
   static readonly COMPATIBLE_RANGE = {
     min: 2,

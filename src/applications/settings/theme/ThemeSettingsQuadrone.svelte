@@ -6,7 +6,7 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
-  import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
+  import { ThemeImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -169,7 +169,7 @@
 
   async function processImportFile(file: File | null | undefined) {
     if (file) {
-      const imported = await ThemeQuadroneImportService.import(file);
+      const imported = await ThemeImportService.import(file);
 
       if (imported) {
         app.resetToDefault();
@@ -189,7 +189,7 @@
       type="button"
       class="button flexshrink"
       onclick={() =>
-        ThemeQuadroneImportService.export({
+        ThemeImportService.export({
           ...ThemeQuadrone.getDefaultThemeSettings(),
           ...app.mapContextToChangedSettings(context),
         })}
