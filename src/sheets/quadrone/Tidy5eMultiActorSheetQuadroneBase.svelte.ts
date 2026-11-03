@@ -32,7 +32,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
-import { DisposablesRegistry } from 'src/mixins/DisposablesRegistry';
+import { DisposablesRegistry } from 'src/features/resource-disposal/DisposablesRegistry';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>,

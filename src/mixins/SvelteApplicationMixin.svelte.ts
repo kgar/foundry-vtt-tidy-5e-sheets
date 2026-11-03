@@ -20,7 +20,7 @@ import { EventHelper } from 'src/utils/events';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getTidyPerformanceSettings } from 'src/settings/settings.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
-import { DisposablesRegistry } from './DisposablesRegistry';
+import { DisposablesRegistry } from '../features/resource-disposal/DisposablesRegistry';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
