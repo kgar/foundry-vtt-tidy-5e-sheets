@@ -16,7 +16,7 @@ import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-type WorldThemeSettingEntry = WorldThemeSetting & {
+export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
   compendium?: string;
   themeMode?: string;

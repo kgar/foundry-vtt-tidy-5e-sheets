@@ -5,225 +5,139 @@
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
   import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import Tabs, { type TabStripInfo } from 'src/components/tabs/Tabs.svelte';
+  import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
 
   type Props = {
     app: WorldThemesSettingsEditor;
   };
+
+  type SubTabId = 'theme' | 'filter';
 
   let { app }: Props = $props();
 
   const config = $derived(app.value);
   const selectedTheme = $derived(app.selectedTheme);
   const appId = foundry.utils.randomID();
+  let currentSubTabId: SubTabId = $state('theme');
+
+  const tabs: TabStripInfo[] = [
+    {
+      id: 'theme',
+      title: 'TIDY5E.COMMON.Theme.Configure',
+    },
+    {
+      id: 'filter',
+      title: 'TIDY5E.COMMON.Theme.ConfigureFilters',
+    },
+  ];
 
   const localize = FoundryAdapter.localize;
 
   const orderedThemes = $derived(
     config.settings.toSorted((a, b) => a.sort - b.sort),
   );
-
-  const availableTypeKeys = $derived(
-    new Set<string>(app.availableTypes.map((t) => t.value)),
-  );
-
-  function onDocumentNamesChanged(
-    _event: Event & { currentTarget: EventTarget & HTMLInputElement },
-  ) {
-    if (!selectedTheme) {
-      return;
-    }
-
-    selectedTheme.types = selectedTheme.types?.filter(availableTypeKeys.has);
-  }
 </script>
 
-{#key app.updateSignal}
-  <div class="tidy-sheet-settings">
+<div class="tidy-sheet-settings">
+  <div class="settings-nav" role="tablist" aria-orientation="vertical">
     <div class="nav-group">
+      <h3 class="nav-group-header">
+        {localize('TIDY5E.COMMON.Theme.LabelPl')}
+      </h3>
       {#each orderedThemes as theme}
         <button
           onclick={() => app.selectTheme(theme.id)}
-          disabled={selectedTheme?.id === theme.id}
-          class="button">{theme.name}</button
+          class={[
+            'nav-tab',
+            {
+              active: selectedTheme?.id === theme.id,
+            },
+          ]}>{theme.name}</button
         >
       {/each}
-
-      <button type="button" class="button" onclick={() => app.addTheme()}>
-        <i class="fa-solid fa-plus"></i> TODO Add
-      </button>
     </div>
-    <section class="settings-pane" role="tabpanel">
-      {#if selectedTheme}
-        <p>TODO: Sort Up/Down here for testing</p>
-        <p>
-          <button
-            type="button"
-            class="button"
-            onclick={() => {
-              if (selectedTheme) {
-                app.deleteTheme(selectedTheme.id);
-              }
-            }}
-          >
-            <i class="fa-solid fa-trash"></i> TODO Delete
-          </button>
-        </p>
-        <div class="form-group stacked">
-          <label for="{appId}-theme-name">TODO: Theme Name</label>
-          <div class="form-fields">
-            <input
-              id="{appId}-theme-name"
-              type="text"
-              bind:value={selectedTheme.name}
-              {@attach InputAttachments.selectOnFocus}
-            />
-          </div>
-        </div>
-        <div class="form-group stacked checkbox-grid">
-          <label>TOOD: Documents</label>
-          <div class="form-fields">
-            {#each app.supportedDocuments as supportedDocument}
-              <label class="checkbox">
-                <input
-                  type="checkbox"
-                  bind:group={selectedTheme.documentNames}
-                  value={supportedDocument.value}
-                  onchange={onDocumentNamesChanged}
-                />
-                {supportedDocument.text}
-              </label>
-            {/each}
-          </div>
-        </div>
-        {#if app.availableTypes.length}
-          <div class="form-group stacked checkbox-grid">
-            <label>TODO: Document Types</label>
+
+    <button
+      type="button"
+      class="button button-primary"
+      onclick={() => app.addTheme()}
+    >
+      <i class="fa-solid fa-plus"></i>
+      {localize('TIDY5E.COMMON.Theme.Add')}
+    </button>
+  </div>
+  <section class="settings-pane" role="tabpanel">
+    {#key app.updateSignal}
+      <div class="dialog-content-container flexcol">
+        {#if selectedTheme}
+          <div class="form-group stacked">
+            <label for="{appId}-theme-name">
+              {localize('TIDY5E.COMMON.Theme.Name')}
+            </label>
             <div class="form-fields">
-              {#each app.availableTypes as type}
-                <label class="checkbox">
-                  <input
-                    type="checkbox"
-                    bind:group={selectedTheme.types}
-                    value={type.value}
-                  />
-                  {type.text}
-                </label>
-              {/each}
+              <input
+                id="{appId}-theme-name"
+                type="text"
+                bind:value={selectedTheme.name}
+                {@attach InputAttachments.selectOnFocus}
+              />
+              <button
+                type="button"
+                class="button"
+                data-tooltip=""
+                aria-label={localize('TIDY5E.COMMON.Theme.Delete')}
+                onclick={() => {
+                  if (selectedTheme) {
+                    app.deleteTheme(selectedTheme.id);
+                  }
+                }}
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
             </div>
           </div>
+          <div class="tabs-row tab-configuration-tabs">
+            <Tabs
+              bind:selectedTabId={currentSubTabId}
+              {tabs}
+              cssClass="item-tabs"
+            />
+            <hr class="golden-fade" />
+          </div>
+
+          {#if currentSubTabId === 'theme'}
+            <div class="flex1">
+              <ThemeSettings3
+                bind:settings={selectedTheme.settings}
+                rarities={app.rarities}
+                spellPreparationMethodColors={app.spellMethods}
+                placeholders={undefined}
+                showActorPortraitShape={!!selectedTheme.documentNames?.includes(
+                  CONSTANTS.DOCUMENT_NAME_ACTOR,
+                ) || !selectedTheme.documentNames?.length}
+                showActorHeaderBackground={!selectedTheme.documentNames
+                  ?.length ||
+                  (!!selectedTheme.types?.length &&
+                    selectedTheme.types.some(
+                      actorHeaderBackgroundSupportedActorTypes.has,
+                    ))}
+                showItemSidebarBackground={!selectedTheme.documentNames
+                  ?.length ||
+                  selectedTheme.documentNames.includes(
+                    CONSTANTS.DOCUMENT_NAME_ITEM,
+                  )}
+              />
+            </div>
+          {/if}
+
+          {#if currentSubTabId === 'filter'}
+            <div class="flex1">
+              <WorldThemeSettingFilters {app} {selectedTheme} />
+            </div>
+          {/if}
         {/if}
-        <div>
-          <label>TODO: Filter Mode</label>
-          <label>
-            <input
-              type="radio"
-              bind:group={selectedTheme.filterMode}
-              value="basic"
-              onclick={app.clearFilter}
-            />
-            TODO: Basic
-          </label>
-          <label>
-            <input
-              type="radio"
-              bind:group={selectedTheme.filterMode}
-              value="advanced"
-            />
-            TODO: Advanced
-          </label>
-        </div>
-        {#if selectedTheme.filterMode === 'basic'}
-          <div>
-            <label>TODO: Folder</label>
-            <input
-              type="text"
-              bind:value={selectedTheme.folder}
-              onchange={app.applyBasicFilters}
-            />
-            <p class="hint">
-              Folder paths must start with a slash "/". For example, "/My Folder
-              Path/My Subfolder".
-            </p>
-          </div>
-          <div>
-            <label>TODO: Theme Mode</label>
-            <label>
-              <input
-                type="radio"
-                onchange={app.applyBasicFilters}
-                bind:group={selectedTheme.themeMode}
-                value={undefined}
-              />
-              TODO: Any
-            </label>
-            <label>
-              <input
-                type="radio"
-                onchange={app.applyBasicFilters}
-                bind:group={selectedTheme.themeMode}
-                value="light"
-              />
-              TODO: Light
-            </label>
-            <label>
-              <input
-                type="radio"
-                onchange={app.applyBasicFilters}
-                bind:group={selectedTheme.themeMode}
-                value="dark"
-              />
-              TODO: Dark
-            </label>
-          </div>
-          <div>
-            <label>TODO: Compendium</label>
-            <select
-              bind:value={selectedTheme.compendium}
-              onchange={app.applyBasicFilters}
-            >
-              <option value={undefined}>TODO: Select an option</option>
-              {#each app.compendia as c}
-                <option value={c.value}>
-                  {c.text}
-                </option>
-              {/each}
-            </select>
-            <p>
-              TODO: hint - No selection indicates targeting the sidebar and any
-              compendium.
-            </p>
-          </div>
-        {:else}
-          <div>
-            <label>TODO: Filter</label>
-            {#key selectedTheme.filter}
-              <filters-input
-                onchange={(e: any) => {
-                  if (selectedTheme) {
-                    selectedTheme.filter = e.target.value;
-                  }
-                }}>{selectedTheme.filter}</filters-input
-              >
-            {/key}
-          </div>
-        {/if}
-        <ThemeSettings3
-          bind:settings={selectedTheme.settings}
-          rarities={app.rarities}
-          spellPreparationMethodColors={app.spellMethods}
-          placeholders={undefined}
-          showActorPortraitShape={!!selectedTheme.documentNames?.includes(
-            CONSTANTS.DOCUMENT_NAME_ACTOR,
-          ) || !selectedTheme.documentNames?.length}
-          showActorHeaderBackground={!selectedTheme.documentNames?.length ||
-            (!!selectedTheme.types?.length &&
-              selectedTheme.types.some(
-                actorHeaderBackgroundSupportedActorTypes.has,
-              ))}
-          showItemSidebarBackground={!selectedTheme.documentNames?.length ||
-            selectedTheme.documentNames.includes(CONSTANTS.DOCUMENT_NAME_ITEM)}
-        />
-      {/if}
-    </section>
-  </div>
-{/key}
+      </div>
+    {/key}
+  </section>
+</div>
