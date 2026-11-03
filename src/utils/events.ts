@@ -3,7 +3,7 @@ export class EventHelper {
     event: (MouseEvent | PointerEvent | KeyboardEvent | Event) & {
       currentTarget: HTMLElement;
     },
-    targetSelector?: string
+    targetSelector?: string,
   ) {
     event.preventDefault();
     event.stopPropagation();
@@ -31,20 +31,23 @@ export class EventHelper {
         cancelable: true,
         clientX,
         clientY,
-      })
+      }),
     );
   }
 
   static triggerDynamicContentRenderedEvent(el: HTMLElement) {
     el.dispatchEvent(
-      new CustomEvent('tidy5eDynamicContentRendered', { bubbles: true })
+      new CustomEvent('tidy5eDynamicContentRendered', { bubbles: true }),
     );
   }
 
   static subscribeToDynamicContentRenderEvents(
     el: HTMLElement,
-    listener: EventListenerOrEventListenerObject
+    listener: EventListenerOrEventListenerObject,
+    signal: AbortSignal,
   ) {
-    el.addEventListener('tidy5eDynamicContentRendered', listener);
+    el.addEventListener('tidy5eDynamicContentRendered', listener, {
+      signal: signal,
+    });
   }
 }
