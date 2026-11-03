@@ -72,8 +72,6 @@ export function getSpellSourceItemAssignmentsSettingsEditor(
   }
 
   return {
-    dispose() {},
-    
     get hasChanges() {
       return hasChanges;
     },

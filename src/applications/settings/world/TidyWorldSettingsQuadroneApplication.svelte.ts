@@ -54,11 +54,6 @@ export class WorldSettingsQuadroneApplication
   initialTabId?: string;
   currentTabId = $state<string | undefined>(undefined);
 
-  /**
-   * The settings dialog can be
-   */
-  static lastEditors: SettingsEditor<unknown>[] = [];
-
   /** All settings editors */
   editors;
   sheetConfigEditors;
@@ -95,9 +90,6 @@ export class WorldSettingsQuadroneApplication
     this.initialTabId = options.initialTabId;
     this.currentTabId = this.initialTabId;
 
-    // Dispose of past editors when the dialog is simply reinvoked instead of closed.
-    this._disposeAllEditors();
-
     // Create base editors
     this.editors = {
       themesSettingsTab: getWorldThemesSettingsEditor(),
@@ -132,11 +124,6 @@ export class WorldSettingsQuadroneApplication
       Object.values(this.editors).some((e) => e.hasChanges) ||
         Object.values(this.sheetConfigEditors).some((e) => e.hasChanges),
     );
-
-    WorldSettingsQuadroneApplication.lastEditors = [
-      ...Object.values(this.editors),
-      ...Object.values(this.sheetConfigEditors),
-    ];
   }
 
   resetToDefault(): Promise<void> | void {
@@ -208,18 +195,6 @@ export class WorldSettingsQuadroneApplication
 
   async cancel() {
     await this.close();
-  }
-
-  async close(options: ApplicationClosingOptions = {}) {
-    this._disposeAllEditors();
-    await super.close(options);
-  }
-
-  _disposeAllEditors() {
-    WorldSettingsQuadroneApplication.lastEditors.forEach((editor) =>
-      editor.dispose(),
-    );
-    WorldSettingsQuadroneApplication.lastEditors = [];
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {

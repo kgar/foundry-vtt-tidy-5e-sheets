@@ -6,12 +6,6 @@ export type SettingsEditor<T> = SettingsEditorController & {
 
   /** Set the current staged value. */
   set value(v: T);
-
-  /**
-   * Release any resources related to the setting editor.
-   * Always dispose of editor resources when finished.
-   */
-  dispose(): void;
 };
 
 export type SettingsEditorController = {
