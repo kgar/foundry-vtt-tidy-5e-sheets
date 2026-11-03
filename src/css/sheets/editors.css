@@ -119,6 +119,15 @@
           line-height: 1.25;
           padding: var(--t5e-size-halfx) var(--t5e-size-2x);
           color: var(--t5e-theme-color-foreground);
+
+          > * {
+            margin: 0;
+          }
+
+          /* Headings (e.g. roll table titles) take the header foreground, not the sheet's heading color. */
+          :is(h1, h2, h3, h4, h5, h6) {
+            color: inherit;
+          }
         }
 
         .inline-roll {
@@ -450,6 +459,11 @@
       .embed-caption {
         color: var(--t5e-color-text-gold-emphasis);
         font: var(--t5e-font-label-medium);
+
+        /* Core renders this even with no caption text; drop it so the gap doesn't apply. */
+        &:empty {
+          display: none;
+        }
       }
     }
   }

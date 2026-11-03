@@ -101,12 +101,15 @@
         })}
         type="button"
         class="button button-secondary"
+        data-tooltip
         onclick={(ev) =>
           FoundryAdapter.createItem({ type: 'race' }, context.actor)}
       >
-        {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
-          name: localize('TYPES.Item.race'),
-        })}
+        <span class="truncate">
+          {localize('TIDY5E.COMMON.Action.AddCustomNamed', {
+            name: localize('TYPES.Item.race'),
+          })}
+        </span>
       </button>
     {/if}
   </div>

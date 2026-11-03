@@ -29,7 +29,7 @@
     ...rest
   }: Props = $props();
 
-  let { class: cssClass, ...attributes } = rest;
+  let { class: cssClass, ...attributes } = $derived(rest);
 
   let datasetAttributes = $derived(buildDataset(dataset));
 

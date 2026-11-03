@@ -683,9 +683,9 @@
     }
   }
 
-  /* Basic theme overrides (flattens the styling). */
+  /* Basic theme overrides (flattens the styling. */
   &:where(.theme-basic) {
-    .abilities-container.abilities-size-compact .abilities-container-inner {
+    .abilities-container .abilities-container-inner {
 
       .ability,
       .ac-container {
@@ -735,7 +735,10 @@
 
       .ability .ability-roll-button {
         gap: 0;
+        display: flex;
+        flex: 1;
         margin-block-start: 0.125rem;
+        width: 100%;
       }
 
       .abilities-container-inner {

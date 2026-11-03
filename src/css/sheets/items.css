@@ -416,6 +416,12 @@
     }
   }
 
+  .currency-container {
+    box-shadow: none;
+    margin-block-start: var(--t5e-size-1x);
+    gap: var(--t5e-size-1x);
+  }
+
   .spell-classes {
     margin-block-start: var(--t5e-size-2x);
     color: var(--t5e-color-text-lighter);

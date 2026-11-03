@@ -1188,6 +1188,9 @@
   &:where(.theme-light) {
     .inline-content-view {
       --t5e-table-header-border-style: none;
+      /* Inline headers swap in a light background; feed it to the header contrast formula so text goes dark. */
+      --t5e-table-header-background-left: var(--t5e-table-inline-header-background);
+      --t5e-table-header-background-right: var(--t5e-table-inline-header-background);
     }
   }
 

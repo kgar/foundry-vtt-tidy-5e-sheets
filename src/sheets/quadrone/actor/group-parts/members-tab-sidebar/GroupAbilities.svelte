@@ -27,26 +27,37 @@
   const localize = FoundryAdapter.localize;
 
   let view: 'abilities' | 'saves' = $state('abilities');
-
-  function toggleView() {
-    view = view === 'abilities' ? 'saves' : 'abilities';
-  }
 </script>
 
 <GroupAbilityTooltip bind:this={tooltip} sheetDocument={context.document} />
 
 <div class="abilities card">
-  <div class="use-ability-header flexrow">
-    <button type="button" class="button button-borderless" onclick={toggleView}>
-      <h3 class="font-label-medium">
-        {#if view === 'abilities'}
-          {localize('DND5E.Abilities')}
-        {:else if view === 'saves'}
-          {localize('DND5E.ClassSaves')}
-        {/if}
-        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-      </h3>
-    </button>
+  <div class="use-ability-header ability-view-header flexrow">
+    <i
+      class={[
+        'fa-solid color-icon-button',
+        view === 'abilities' ? 'fa-dice-d20' : 'fa-shield-heart',
+      ]}
+    ></i>
+    <h3 class="font-label-medium ability-view-tabs">
+      <button
+        type="button"
+        class="button button-borderless ability-view-tab"
+        aria-pressed={view === 'abilities'}
+        onclick={() => (view = 'abilities')}
+      >
+        {localize('DND5E.Abilities')}
+      </button>
+      <span class="color-text-lightest">/</span>
+      <button
+        type="button"
+        class="button button-borderless ability-view-tab"
+        aria-pressed={view === 'saves'}
+        onclick={() => (view = 'saves')}
+      >
+        {localize('DND5E.ClassSaves')}
+      </button>
+    </h3>
     <span class="modifier-label color-text-lightest font-default-medium">
       <!-- TODO: Make some snippets and colocate relevant headers / rows to make this read cleaner -->
       {#if showSpecificMemberValues && view === 'abilities'}

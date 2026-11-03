@@ -96,7 +96,12 @@
 
       /* Sidebar skills */
       .use-ability-header .skill-expand-button {
-        gap: 0.1875rem;
+        gap: 0.25rem;
+
+        i {
+          width: var(--t5e-size-4x);
+          height: var(--t5e-size-4x);
+        }
 
         h3 {
           color: var(--t5e-color-text-lighter);
@@ -719,8 +724,19 @@
     .list-content {
       flex: 2;
       min-width: 0;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: var(--t5e-size-1x);
+    }
+
+    .button:has(> .truncate),
+    .list-values:has(> .button > .truncate) {
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .button > .truncate {
+      /* Taller than button line-height to avoid  */
+      line-height: 1.25rem;
     }
 
     .trait-item:where(:has(.item-image-link)):hover {
