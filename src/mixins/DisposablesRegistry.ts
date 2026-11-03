@@ -40,10 +40,8 @@ export const DisposablesRegistry = {
     hookId: string,
     event: DisposableLifetimeEvent,
   ) {
-    getMap(event)
-      ?.getOrInsertComputed(id, () => [])
-      .push(() => {
-        Hooks.off(hookName, hookId);
-      });
+    this.register(id, event, () => {
+      Hooks.off(hookName, hookId);
+    });
   },
 };
