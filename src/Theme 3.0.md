@@ -24,10 +24,9 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Pull back as much functionality as possible related to selected theme themeMode / compendium / folder management. Use effects, even, to synchronize a basic filter to its complex filter counterpart.
-  - [x] Pull back almost everything
-  - [ ] Introduce the ability to use effects. Setting editors would have to implement (or stub) a dispose() function. However, this would open doors for greater self-sufficiency.
+- [ ] Ensure "basic filter" <-> filter code works as intended from the component directly.
 - [ ] Upgrade the tab strip to a proper tab strip
+- [ ] Add localization keys and plug in
 - [ ] Separate visibility and theme settings into sub-tabs
 - [ ] Implement drag/drop sorting for themes
 - [ ] Review WorldThemesSettings and finish pulling back the remainder of unnecessarily embedded functionality so that the editor can stand alone.
