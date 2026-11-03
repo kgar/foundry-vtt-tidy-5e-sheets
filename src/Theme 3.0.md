@@ -24,7 +24,6 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Ensure "basic filter" <-> filter code works as intended from the component directly.
 - [ ] Upgrade the tab strip to a proper tab strip
 - [ ] Add localization keys and plug in
 - [ ] Separate visibility and theme settings into sub-tabs
