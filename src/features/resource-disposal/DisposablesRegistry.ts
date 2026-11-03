@@ -1,3 +1,5 @@
+import { error } from 'src/utils/logging';
+
 export type Disposable = () => void;
 export type DisposableLifetimeEvent = 'close' | 'render';
 
@@ -39,13 +41,26 @@ export const DisposablesRegistry = {
    * @param event   the lifetime event which represents the collection of dispose functions.
    */
   dispose(id: string, event: DisposableLifetimeEvent) {
-    const disposables = getMap(event)?.getOrInsertComputed(id, () => []) ?? [];
+    const map = getMap(event);
+    const disposables = map?.get(id);
 
-    for (const disposable of disposables) {
-      disposable();
+    if (!disposables) {
+      return;
     }
 
-    disposables.length = 0;
+    for (const disposable of disposables) {
+      try {
+        disposable();
+      } catch (e) {
+        error('An error occurred while disposing of a resource', false, {
+          id,
+          event,
+          error: e,
+        });
+      }
+    }
+
+    map.delete(id);
   },
 
   /**
