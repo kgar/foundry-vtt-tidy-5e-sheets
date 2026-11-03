@@ -32,6 +32,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { InventoryRowActionRuntime } from 'src/runtime/table-row-actions/InventoryRowActionRuntime.svelte';
+import { DisposablesRegistry } from 'src/mixins/DisposablesRegistry';
 
 export function getTidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>,
@@ -53,14 +54,18 @@ export function getTidy5eMultiActorSheetQuadroneBase<
     async _renderFrame(options: ApplicationRenderOptions) {
       const result = await super._renderFrame(options);
 
-      this._hookSubscriptions.push({
-        name: 'updateSetting',
-        id: Hooks.on('updateSetting', (setting: any) => {
-          if (setting?.key === 'dnd5e.primaryParty') {
-            this.render();
-          }
-        }),
+      const hookId = Hooks.on('updateSetting', (setting: any) => {
+        if (setting?.key === 'dnd5e.primaryParty') {
+          this.render();
+        }
       });
+
+      DisposablesRegistry.registerHook(
+        this.id,
+        'updateSetting',
+        hookId,
+        'close',
+      );
 
       return result;
     }
