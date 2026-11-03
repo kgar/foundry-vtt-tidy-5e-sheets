@@ -170,11 +170,10 @@
   async function processImportFile(file: File | null | undefined) {
     if (file) {
       const imported = await ThemeQuadroneImportService.import(file);
+
       if (imported) {
         app.resetToDefault();
-        if (imported) {
-          app.value = app.mapFromSettings(imported);
-        }
+        app.value = app.mapFromSettings(imported);
       }
     }
   }

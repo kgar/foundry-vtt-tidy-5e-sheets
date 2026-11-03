@@ -10,7 +10,7 @@
     selectedTheme: WorldThemeSettingEntry;
   };
 
-  const { app, selectedTheme }: Props = $props();
+  const { app, selectedTheme = $bindable() }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 

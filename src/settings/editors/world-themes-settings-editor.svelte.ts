@@ -15,6 +15,8 @@ import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { DialogService } from 'src/features/dialog/DialogService';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -29,6 +31,7 @@ export type WorldThemesSettingsContext = {
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
+    applyPreset(): Promise<void>;
     deleteTheme(id: string): any;
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
@@ -47,8 +50,12 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
 
+  function getFirstItemBySort(settings: WorldThemeSettingEntry[]) {
+    return settings.toSorted((a, b) => a.sort - b.sort)[0];
+  }
+
   let selectedTheme = $state<WorldThemeSettingEntry | undefined>(
-    current.settings[0],
+    getFirstItemBySort(current.settings),
   );
 
   const typeDenylist = new Set(['base', 'backpack']);
@@ -176,6 +183,32 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
+    async applyPreset(): Promise<void> {
+      if (!selectedTheme?.settings) {
+        return;
+      }
+
+      const options = current.settings
+        .map((s) => ({ id: s.id, label: s.name }))
+        .toSorted((a, b) => a.label.localeCompare(b.label));
+
+      const selectedId = await DialogService.chooseFromOptions({
+        title: 'TIDY5E.COMMON.Theme.ChooseAPreset.Title',
+        message: 'TIDY5E.COMMON.Theme.ChooseAPreset.Content',
+        options,
+      });
+
+      const preset = this.value.settings.find((s) => s.id === selectedId);
+
+      if (!preset) {
+        return;
+      }
+
+      const snapshot = $state.snapshot(preset.settings);
+
+      selectedTheme.settings = snapshot;
+    },
+
     addTheme(): any {
       const maxSort = this.value.settings.reduce(
         (prev, curr) => Math.max(prev, curr.sort),
@@ -188,7 +221,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filterMode: 'basic',
         id: settingId,
         name: 'TODO: New Name Here',
-        settings: {},
+        settings: ThemeQuadrone.getDefaultThemeSettings(),
         sort: maxSort + 1,
         documentNames: [],
         filter: undefined,
@@ -286,7 +319,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         (theme) => theme.id === this.selectedTheme?.id,
       )
         ? this.selectedTheme
-        : this.value.settings[0];
+        : getFirstItemBySort(this.value.settings);
 
       selectedTheme = themeOfId ?? fallback;
     },

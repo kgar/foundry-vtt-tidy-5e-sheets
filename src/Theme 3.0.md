@@ -24,13 +24,13 @@ Any theme options that are specific to a particular document type/subtype will s
 
 ### TODO
 
-- [ ] Upgrade the tab strip to a proper tab strip
-- [ ] Add localization keys and plug in
-- [ ] Separate visibility and theme settings into sub-tabs
-- [ ] Implement drag/drop sorting for themes
+- [ ] Add context menu to theme tabs (Duplicate, Apply Preset, Import, Export, Delete)
+- [ ] Restore file drop to import a theme
+- [ ] Add rolling migration for existing world theme to the new world themes setup
 - [ ] Review WorldThemesSettings and finish pulling back the remainder of unnecessarily embedded functionality so that the editor can stand alone.
 - [ ] Finish making the origin theme-settings-editor fully require a document and solely support sheet theme editing.
 - [ ] Ensure both world and sheet theme editors are using the same core sheet theme setting component. Strip away any other header content so that it's fully shareable.
+- [ ] Add Apply Preset button to Sheet Theme Settings
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document

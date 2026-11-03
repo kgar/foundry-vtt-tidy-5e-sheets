@@ -156,7 +156,9 @@
       "ThemeMode": "Theme Mode",
       "ThemeModeAll": "All",
       "ThemeModeLight": "Light",
-      "ThemeModeDark": "Dark"
+      "ThemeModeDark": "Dark",
+      "ChooseAPreset.Title": "Choose a Preset",
+      "ChooseAPreset.Content": "Select a preset to apply to the current theme."
     },
     "Unidentified": {
       "Placeholder": "?"
@@ -638,6 +640,7 @@
         "Title": "Accent Color"
       },
       "Action": {
+        "ApplyPreset": "Apply Preset",
         "Export": "Export",
         "Import": "Import"
       },
