@@ -195,7 +195,7 @@ export function getSvelteApplicationMixin<
         let dragging = false;
 
         const startDrag = (ev: PointerEvent) => {
-          if ((ev.target as HTMLElement)?.closest('[data-action]')) {
+          if ((ev.target as HTMLElement)?.closest('.header-control')) {
             return;
           }
 
