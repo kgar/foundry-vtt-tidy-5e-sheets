@@ -23,10 +23,10 @@ export function configureDescriptionsContextMenu(
 }
 
 /**
- * Prepare an array of context entries for group skills rolls.
- * @param app         The calling application.
- * @param skillKey    The skill key that corresponds to CONFIG.DND5E.skills.
- * @returns           Context menu options.
+ * Prepare an array of context entries for descriptions.
+ * @param app     The calling application.
+ * @param prop    The related property path that corresponds to the description's data location.
+ * @returns       Context menu options.
  */
 function getDescriptionsContextOptions(
   app: TidyExtensibleDocumentSheetMixinInstance,

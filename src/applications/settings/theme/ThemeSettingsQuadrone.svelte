@@ -6,7 +6,7 @@
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
-  import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
+  import { ThemeImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -17,6 +17,7 @@
     ThemeSettingsContext,
     ThemeSettingsEditor,
   } from 'src/settings/editors/theme-settings-editor.svelte';
+  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
 
   interface Props {
     app: ThemeSettingsEditor;
@@ -168,12 +169,11 @@
 
   async function processImportFile(file: File | null | undefined) {
     if (file) {
-      const imported = await ThemeQuadroneImportService.import(file);
+      const imported = await ThemeImportService.import(file);
+
       if (imported) {
         app.resetToDefault();
-        if (imported) {
-          app.value = app.mapFromSettings(imported);
-        }
+        app.value = app.mapFromSettings(imported);
       }
     }
   }
@@ -189,7 +189,7 @@
       type="button"
       class="button flexshrink"
       onclick={() =>
-        ThemeQuadroneImportService.export({
+        ThemeImportService.export({
           ...ThemeQuadrone.getDefaultThemeSettings(),
           ...app.mapContextToChangedSettings(context),
         })}
@@ -241,7 +241,7 @@
         </div>
       {/if}
 
-      {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
+      {#if !app.document || actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
         <div class="form-group">
           <label for="{idPrefix}-use-header-background">
             {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
@@ -311,7 +311,9 @@
           <ThemeSettingColorFormGroupQuadrone
             key="sheet-accent-color"
             bind:value={context.headerBackgroundColor}
-            label={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Title')}
+            label={localize(
+              'TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Title',
+            )}
             placeholder={placeholders?.headerBackgroundColor}
             hint={localize('TIDY5E.SETTINGS.Theme.HeaderBackgroundColor.Hint')}
           />

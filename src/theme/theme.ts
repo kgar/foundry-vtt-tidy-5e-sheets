@@ -2,6 +2,14 @@ import { CONSTANTS } from 'src/constants';
 import { coalesce } from 'src/utils/formatting';
 import chroma from 'chroma-js';
 
+// TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
+export class Theme {
+  static supportedDocumentNames: ReadonlySet<string> = new Set<string>([
+    CONSTANTS.DOCUMENT_NAME_ACTOR,
+    CONSTANTS.DOCUMENT_NAME_ITEM,
+  ]);
+}
+
 export function getThemeV2(doc?: any) {
   let theme: string | undefined = undefined;
   if (doc) {
@@ -73,3 +81,11 @@ export function settingValueToHexaString(value: string): ProcessedColor {
 export function validateImportFile(theme: Record<string, any>) {
   return theme.version === 1 && typeof theme.variables === 'object';
 }
+
+export const actorHeaderBackgroundSupportedActorTypes = new Set<string>([
+  CONSTANTS.SHEET_TYPE_CHARACTER,
+  CONSTANTS.SHEET_TYPE_NPC,
+  CONSTANTS.SHEET_TYPE_VEHICLE,
+  CONSTANTS.SHEET_TYPE_GROUP,
+  CONSTANTS.SHEET_TYPE_ENCOUNTER,
+]);

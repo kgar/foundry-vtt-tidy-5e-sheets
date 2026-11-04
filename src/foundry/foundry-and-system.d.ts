@@ -54,6 +54,7 @@ import {
 } from 'dnd5e.dataModels.fields';
 
 import type { CONFIG } from './config.types';
+import type { FilterDescription } from './dnd5e.types';
 
 declare global {
   var $: any;
@@ -82,6 +83,62 @@ declare global {
       };
       item: any;
       spellcasting: any;
+    };
+    Filter: {
+      performCheck(
+        data: any,
+        filter: FilterDescription | FilterDescription[] | undefined,
+      ): boolean;
+      OPERATOR_FUNCTIONS: {
+        AND(data: any, filter: FilterDescription[]): boolean;
+        NAND(data: any, filter: FilterDescription[]): boolean;
+        OR(data: any, filter: FilterDescription[]): boolean;
+        NOR(data: any, filter: FilterDescription[]): boolean;
+        XOR(data: any, filter: FilterDescription[]): boolean;
+        NOT(data: any, filter: FilterDescription[]): boolean;
+      };
+      AND(data: any, filter: FilterDescription[]): boolean;
+      NAND(data: any, filter: FilterDescription[]): boolean;
+      OR(data: any, filter: FilterDescription[]): boolean;
+      NOR(data: any, filter: FilterDescription[]): boolean;
+      XOR(data: any, filter: FilterDescription[]): boolean;
+      NOT(data: any, filter: FilterDescription[]): boolean;
+      COMPARISON_FUNCTIONS: {
+        exact(data: any, value: any): boolean;
+        contains(data: any, value: any): boolean;
+        icontains(data: any, value: any): boolean;
+        startswith(data: any, value: any): boolean;
+        istartswith(data: any, value: any): boolean;
+        endswith(data: any, value: any): boolean;
+        iendswith(data: any, value: any): boolean;
+        empty(data: any, value: any): boolean;
+        has(data: any, value: any): boolean;
+        hasany(data: any, value: any): boolean;
+        hasall(data: any, value: any): boolean;
+        subsetof(data: any, value: any): boolean;
+        in_(data: any, value: any): boolean;
+        gt(data: any, value: any): boolean;
+        gte(data: any, value: any): boolean;
+        lt(data: any, value: any): boolean;
+        lte(data: any, value: any): boolean;
+      };
+      exact(data: any, value: any): boolean;
+      contains(data: any, value: any): boolean;
+      icontains(data: any, value: any): boolean;
+      startswith(data: any, value: any): boolean;
+      istartswith(data: any, value: any): boolean;
+      endswith(data: any, value: any): boolean;
+      iendswith(data: any, value: any): boolean;
+      empty(data: any, value: any): boolean;
+      has(data: any, value: any): boolean;
+      hasany(data: any, value: any): boolean;
+      hasall(data: any, value: any): boolean;
+      subsetof(data: any, value: any): boolean;
+      in_(data: any, value: any): boolean;
+      gt(data: any, value: any): boolean;
+      gte(data: any, value: any): boolean;
+      lt(data: any, value: any): boolean;
+      lte(data: any, value: any): boolean;
     };
   } & Record<string, any>;
   var Folder: any;
@@ -174,7 +231,7 @@ declare global {
   interface Number {
     toNearest: <T extends keyof Math>(
       interval: number,
-      method: T = 'round'
+      method: T = 'round',
     ) => number;
   }
 
@@ -206,7 +263,7 @@ declare global {
     createDragImage(
       img: HTMLImageElement,
       width: number,
-      height: number
+      height: number,
     ): HTMLElement;
   }
 

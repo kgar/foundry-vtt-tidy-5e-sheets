@@ -16,7 +16,9 @@ export function formatAsModifier(value: string | number): string {
  * @param values maybe string values that can be coalesced to fallbacks
  * @returns the first truthy, non-empty string value
  */
-export function coalesce(...values: (string | null | undefined)[]) {
+export function coalesce<T extends string = string>(
+  ...values: (T | null | undefined)[]
+) {
   for (let value of values) {
     if (!isNil(value?.trim(), '')) {
       return value;
@@ -24,6 +26,16 @@ export function coalesce(...values: (string | null | undefined)[]) {
   }
 
   return '';
+}
+
+export function nilToUndefined<T extends string = string>(
+  value: T | null | undefined,
+) {
+  if (isNil(value?.trim(), '')) {
+    return undefined;
+  }
+
+  return value;
 }
 
 export function getModifierData(value: string | number): {
