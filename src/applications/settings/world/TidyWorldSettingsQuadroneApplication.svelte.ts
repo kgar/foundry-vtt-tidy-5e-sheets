@@ -24,6 +24,7 @@ import {
   type WorldSheetConfigurationSettingsEditor,
 } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -198,13 +199,17 @@ export class WorldSettingsQuadroneApplication
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    return mount(TidyWorldSettings, {
+    const component = mount(TidyWorldSettings, {
       target: node,
       props: {
         app: this,
         config: this._config,
       },
     });
+
+    initTidy5eContextMenu(this, this.element);
+
+    return component;
   }
 
   async _prepareContext(

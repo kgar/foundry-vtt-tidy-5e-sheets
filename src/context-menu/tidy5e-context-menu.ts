@@ -19,6 +19,7 @@ import { configureVehicleMemberContextMenu } from './tidy5e-vehicle-member-conte
 import { configureGroupSkillRollContextMenu } from './tidy5e-group-skill-roll-context-menu';
 import { configureSkillRollContextMenu } from './tidy5e-skill-roll-context-menu';
 import { configureDescriptionsContextMenu } from './tidy5e-descriptions-context-menu';
+import { configureWorldThemeContextMenu } from './tidy5e-world-theme-context-menu';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -92,6 +93,9 @@ function onDocumentContextOpened(this: any, target: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_DESCRIPTIONS:
       configureDescriptionsContextMenu(target, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME:
+      configureWorldThemeContextMenu(target, app);
       break;
     default:
       warn(

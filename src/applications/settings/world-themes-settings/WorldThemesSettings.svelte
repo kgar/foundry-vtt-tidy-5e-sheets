@@ -132,6 +132,8 @@
           ondrop={onThemeDrop}
           ondragover={onDragOver}
           ondragend={onDragEnd}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
+          data-theme-id={theme.id}
         >
           <span class="nav-tab-title">
             {theme.name}
@@ -208,8 +210,7 @@
                 <ImportButton
                   onfilechanged={async (file) => {
                     if (file) {
-                      const imported =
-                        await ThemeImportService.import(file);
+                      const imported = await ThemeImportService.import(file);
 
                       if (imported) {
                         const indexOfSelectedTheme =

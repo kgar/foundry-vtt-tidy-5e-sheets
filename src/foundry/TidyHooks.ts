@@ -15,6 +15,7 @@ import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
+import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -412,6 +413,35 @@ export class TidyHooks {
       memberUuid,
       vehicleItemId,
       area,
+      contextOptions,
+    );
+  }
+
+  /**
+   * The world theme context menu has established its options and is about to show.
+   * This fires for world theme entries in world settings.
+   * @param app              The World Settings application.
+   * @param theme            The related theme settings.
+   * @param contextOptions    The menu items for this theme.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getWorldThemeContextOptions', (app, theme, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetWorldThemeContextOptions(
+    app: any,
+    theme: WorldThemeSettingEntry,
+    contextOptions: ContextMenuEntry[],
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getWorldThemeContextOptions',
+      app,
+      theme,
       contextOptions,
     );
   }
