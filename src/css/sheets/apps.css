@@ -6,8 +6,8 @@
   --color-scrollbar: rgba(0, 0, 0, 0.35);
   --app-background: var(--t5e-component-card-darker);
   --t5e-app-border-color: var(--t5e-color-gold);
-  --t5e-app-background: var(--app-background);
-  --t5e-app-background-size: cover;
+  --t5e-sheet-background: var(--app-background);
+  --t5e-sheet-background-size: cover;
   --t5e-app-decor-content: '';
   --t5e-app-decor-before-background: none;
   --t5e-app-decor-after-background: none;
@@ -17,9 +17,11 @@
   /* Application window */
   border-radius: 0.3125rem;
   border: 0.0625rem solid var(--t5e-app-border-color);
-  background: var(--t5e-app-background);
+  background: var(--t5e-sheet-background);
+  background-position: var(--t5e-sheet-background-position, 0% 0%);
+  background-repeat: var(--t5e-sheet-background-repeat, repeat);
+  background-size: var(--t5e-sheet-background-size);
   box-shadow: var(--t5e-drop-shadow-sheet);
-  background-size: var(--t5e-app-background-size);
   color: var(--t5e-color-text-default);
   /* Sheet Body Typography */
   font-family: var(--t5e-font-family-default);
@@ -494,8 +496,8 @@
   }
 
   &:where(.theme-dark) {
-    --t5e-app-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim075.png');
-    --t5e-app-background-size: auto;
+    --t5e-sheet-background: var(--app-background) url('../../modules/tidy5e-sheet/images/denim075.png');
+    --t5e-sheet-background-size: auto;
     --t5e-app-border-color: var(--t5e-color-palette-gold-45);
     --t5e-app-decor-content: none;
     --t5e-app-resize-handle-filter: invert(1);
