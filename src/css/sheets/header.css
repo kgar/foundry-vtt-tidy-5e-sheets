@@ -46,7 +46,6 @@
     /* ------------------------------------------------------------ */
   &:where(:not(.theme-parchment)) {
     --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-character.webp');
-    background: var(--t5e-theme-color-header, var(--t5e-theme-color-default));
 
     /* Background image */
     &::before {
