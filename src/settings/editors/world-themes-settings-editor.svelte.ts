@@ -40,6 +40,8 @@ export type WorldThemesSettingsEditor =
     applyBasicFilters(): void;
     clearFilter(): void;
     selectTheme(id: string | undefined): void;
+    /** Returns to the theme list. */
+    closeTheme(): void;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
     get availableTypes(): { text: string; value: string }[];
     get updateSignal(): string;
@@ -54,9 +56,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return settings.toSorted((a, b) => a.sort - b.sort)[0];
   }
 
-  let selectedTheme = $state<WorldThemeSettingEntry | undefined>(
-    getFirstItemBySort(current.settings),
-  );
+  let selectedTheme = $state<WorldThemeSettingEntry | undefined>();
 
   const typeDenylist = new Set(['base', 'backpack']);
 
@@ -287,7 +287,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         this.value.settings[i].sort = i + 1;
       }
 
-      this.selectTheme(selectedId);
+      // Go back to the theme list after deleting.
+      selectedTheme = this.value.settings.find((t) => t.id === selectedId);
     },
 
     rarities: getRarities(),
@@ -322,6 +323,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         : getFirstItemBySort(this.value.settings);
 
       selectedTheme = themeOfId ?? fallback;
+    },
+
+    closeTheme() {
+      selectedTheme = undefined;
     },
 
     async save() {

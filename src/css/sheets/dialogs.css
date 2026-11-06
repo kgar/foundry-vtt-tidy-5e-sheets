@@ -377,6 +377,59 @@
       color: var(--t5e-color-text-lighter);
     }
 
+    .world-theme-settings {
+      gap: var(--t5e-size-1x);
+    }
+
+    .world-theme-list-header {
+      font-size: var(--font-size-20);
+      margin: 0;
+    }
+
+    .world-theme-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+      margin-block: 0 var(--t5e-size-2x);
+      padding: 0;
+      list-style: none;
+    }
+
+    .world-theme-card {
+      --t5e-button-background: var(--t5e-component-field-background);
+      --t5e-button-border: var(--t5e-component-field-border);
+      --t5e-button-border-width: var(--t5e-size-1);
+      --t5e-button-radius: var(--t5e-size-halfx);
+      --t5e-button-padding-inline-start: var(--t5e-size-3x);
+      --t5e-button-padding-inline-end: var(--t5e-size-3x);
+      width: 100%;
+      justify-content: space-between;
+      gap: var(--t5e-size-3x);
+      padding-block: var(--t5e-size-2x);
+      text-align: start;
+
+      &:hover {
+        --t5e-button-border: var(--t5e-component-field-border-hover);
+      }
+    }
+
+    .world-theme-card-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .world-theme-card-drag-icon {
+      flex-shrink: 0;
+      cursor: grab;
+    }
+
+    .world-theme-detail-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--t5e-size-2x);
+    }
+
     h3 {
       font-size: var(--font-size-20);
     }

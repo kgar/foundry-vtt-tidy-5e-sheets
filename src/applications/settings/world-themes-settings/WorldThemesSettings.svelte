@@ -20,7 +20,7 @@
   let { app }: Props = $props();
 
   const config = $derived(app.value);
-  let selectedTheme = $derived(app.selectedTheme);
+  const selectedTheme = $derived(app.selectedTheme);
   const appId = foundry.utils.randomID();
   let currentSubTabId: SubTabId = $state('theme');
 
@@ -110,166 +110,157 @@
   }
 </script>
 
-<div class="tidy-sheet-settings">
-  <div class="settings-nav" role="tablist" aria-orientation="vertical">
-    <div class="nav-group">
-      <h3 class="nav-group-header">
-        {localize('TIDY5E.COMMON.Theme.LabelPl')}
-      </h3>
-      {#each orderedThemes as theme, i (theme.id)}
+{#key app.updateSignal}
+  <div class="dialog-content-container flexcol world-theme-settings">
+    {#if selectedTheme}
+      <div class="world-theme-detail-actions">
+        <button type="button" class="button" onclick={() => app.closeTheme()}>
+          <i class="fa-solid fa-arrow-left"></i>
+          {localize('SETUP.GoBack')}
+        </button>
         <button
           type="button"
-          draggable="true"
-          data-index={i}
-          onclick={() => app.selectTheme(theme.id)}
-          class={[
-            'nav-tab',
-            {
-              active: selectedTheme?.id === theme.id,
-            },
-          ]}
-          ondrag={onThemeDrag}
-          ondrop={onThemeDrop}
-          ondragover={onDragOver}
-          ondragend={onDragEnd}
-          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
-          data-theme-id={theme.id}
+          class="button"
+          onclick={() => {
+            if (selectedTheme) {
+              app.deleteTheme(selectedTheme.id);
+            }
+          }}
         >
-          <span class="nav-tab-title">
-            {theme.name}
-          </span>
-
-          <i
-            class="tab-icon tab-drag-icon fa-solid fa-grip-lines fa-fw"
-            aria-hidden="true"
-          ></i>
+          <i class="fa-solid fa-trash"></i>
+          {localize('TIDY5E.COMMON.Theme.Delete')}
         </button>
-      {/each}
-    </div>
+      </div>
+      <div class="form-group">
+        <label for="{appId}-theme-name">
+          {localize('TIDY5E.COMMON.Theme.Name')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{appId}-theme-name"
+            type="text"
+            bind:value={selectedTheme.name}
+            {@attach InputAttachments.selectOnFocus}
+          />
+        </div>
+      </div>
+      <div class="tabs-row tab-configuration-tabs">
+        <Tabs
+          bind:selectedTabId={currentSubTabId}
+          {tabs}
+          cssClass="item-tabs"
+        />
+        <hr class="golden-fade" />
+      </div>
 
-    <button
-      type="button"
-      class="button button-primary"
-      onclick={() => app.addTheme()}
-    >
-      <i class="fa-solid fa-plus"></i>
-      {localize('TIDY5E.COMMON.Theme.Add')}
-    </button>
-  </div>
-  <section class="settings-pane" role="tabpanel">
-    {#key app.updateSignal}
-      <div class="dialog-content-container flexcol">
-        {#if selectedTheme}
+      {#if currentSubTabId === 'theme'}
+        <div class="flex1">
           <div>
             <button
               type="button"
               class="button"
-              onclick={() => {
-                if (selectedTheme) {
-                  app.deleteTheme(selectedTheme.id);
+              onclick={() => app.applyPreset()}
+            >
+              <i class="fa-solid fa-sliders"></i>
+              {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
+            </button>
+            <ImportButton
+              onfilechanged={async (file) => {
+                if (file) {
+                  const imported = await ThemeImportService.import(file);
+
+                  if (imported) {
+                    const indexOfSelectedTheme = app.value.settings.findIndex(
+                      (s) => s.id === selectedTheme?.id,
+                    );
+
+                    if (indexOfSelectedTheme >= 0) {
+                      app.value.settings[indexOfSelectedTheme].settings =
+                        imported;
+                    }
+                  }
                 }
               }}
+            />
+            <button
+              type="button"
+              class="button"
+              onclick={() => {
+                ThemeImportService.export({
+                  ...ThemeQuadrone.getDefaultThemeSettings(),
+                  ...selectedTheme?.settings,
+                });
+              }}
             >
-              <i class="fa-solid fa-trash"></i>
-              {localize('TIDY5E.COMMON.Theme.Delete')}
+              <i class="fa-solid fa-file-export"></i>
+              {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
             </button>
           </div>
-          <div class="form-group stacked">
-            <label for="{appId}-theme-name">
-              {localize('TIDY5E.COMMON.Theme.Name')}
-            </label>
-            <div class="form-fields">
-              <input
-                id="{appId}-theme-name"
-                type="text"
-                bind:value={selectedTheme.name}
-                {@attach InputAttachments.selectOnFocus}
-              />
-            </div>
-          </div>
-          <div class="tabs-row tab-configuration-tabs">
-            <Tabs
-              bind:selectedTabId={currentSubTabId}
-              {tabs}
-              cssClass="item-tabs"
-            />
-            <hr class="golden-fade" />
-          </div>
+          <ThemeSettings3
+            bind:settings={selectedTheme.settings}
+            rarities={app.rarities}
+            spellPreparationMethodColors={app.spellMethods}
+            placeholders={undefined}
+            showActorPortraitShape={!!selectedTheme.documentNames?.includes(
+              CONSTANTS.DOCUMENT_NAME_ACTOR,
+            ) || !selectedTheme.documentNames?.length}
+            showActorHeaderBackground={!selectedTheme.documentNames?.length ||
+              (!!selectedTheme.types?.length &&
+                selectedTheme.types.some(
+                  actorHeaderBackgroundSupportedActorTypes.has,
+                ))}
+            showItemSidebarBackground={!selectedTheme.documentNames?.length ||
+              selectedTheme.documentNames.includes(
+                CONSTANTS.DOCUMENT_NAME_ITEM,
+              )}
+          />
+        </div>
+      {/if}
 
-          {#if currentSubTabId === 'theme'}
-            <div class="flex1">
-              <div>
-                <button
-                  type="button"
-                  class="button"
-                  onclick={() => app.applyPreset()}
-                >
-                  <i class="fa-solid fa-sliders"></i>
-                  {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
-                </button>
-                <ImportButton
-                  onfilechanged={async (file) => {
-                    if (file) {
-                      const imported = await ThemeImportService.import(file);
-
-                      if (imported) {
-                        const indexOfSelectedTheme =
-                          app.value.settings.findIndex(
-                            (s) => s.id === selectedTheme?.id,
-                          );
-
-                        if (indexOfSelectedTheme >= 0) {
-                          app.value.settings[indexOfSelectedTheme].settings =
-                            imported;
-                        }
-                      }
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  class="button"
-                  onclick={() => {
-                    ThemeImportService.export({
-                      ...ThemeQuadrone.getDefaultThemeSettings(),
-                      ...selectedTheme,
-                    });
-                  }}
-                >
-                  <i class="fa-solid fa-file-export"></i>
-                  {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
-                </button>
-              </div>
-              <ThemeSettings3
-                bind:settings={selectedTheme.settings}
-                rarities={app.rarities}
-                spellPreparationMethodColors={app.spellMethods}
-                placeholders={undefined}
-                showActorPortraitShape={!!selectedTheme.documentNames?.includes(
-                  CONSTANTS.DOCUMENT_NAME_ACTOR,
-                ) || !selectedTheme.documentNames?.length}
-                showActorHeaderBackground={!selectedTheme.documentNames
-                  ?.length ||
-                  (!!selectedTheme.types?.length &&
-                    selectedTheme.types.some(
-                      actorHeaderBackgroundSupportedActorTypes.has,
-                    ))}
-                showItemSidebarBackground={!selectedTheme.documentNames
-                  ?.length ||
-                  selectedTheme.documentNames.includes(
-                    CONSTANTS.DOCUMENT_NAME_ITEM,
-                  )}
-              />
-            </div>
-          {/if}
-
-          {#if currentSubTabId === 'filter'}
-            <div class="flex1">
-              <WorldThemeSettingFilters {app} bind:selectedTheme />
-            </div>
-          {/if}
-        {/if}
+      {#if currentSubTabId === 'filter'}
+        <div class="flex1">
+          <WorldThemeSettingFilters {app} {selectedTheme} />
+        </div>
+      {/if}
+    {:else}
+      <h2 class="world-theme-list-header">
+        {localize('TIDY5E.COMMON.Theme.LabelPl')}
+      </h2>
+      <ol class="world-theme-list">
+        {#each orderedThemes as theme, i (theme.id)}
+          <li>
+            <button
+              type="button"
+              class="world-theme-card"
+              draggable="true"
+              data-index={i}
+              onclick={() => app.selectTheme(theme.id)}
+              ondragstart={onThemeDrag}
+              ondrop={onThemeDrop}
+              ondragover={onDragOver}
+              ondragend={onDragEnd}
+              data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
+              data-theme-id={theme.id}
+            >
+              <span class="world-theme-card-name">{theme.name}</span>
+              <i
+                class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </li>
+        {/each}
+      </ol>
+      <div>
+        <button
+          type="button"
+          class="button button-primary"
+          onclick={() => app.addTheme()}
+        >
+          <i class="fa-solid fa-plus"></i>
+          {localize('TIDY5E.COMMON.Theme.Add')}
+        </button>
       </div>
-    {/key}
-  </section>
-</div>
+    {/if}
+  </div>
+{/key}
