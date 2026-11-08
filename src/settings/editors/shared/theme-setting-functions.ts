@@ -115,6 +115,49 @@ export function setEffectiveTypeSelection(
   return result;
 }
 
+/** Summarizes which sheet types a theme applies to, e.g. "All Actor (5), Item (14) Sheets". */
+export function getAppliesToSummary(
+  tree: ThemeDocumentTypeNode[],
+  selection: ThemeDocumentTypeSelection,
+): string {
+  const full: string[] = [];
+  const segments: string[] = [];
+
+  for (const node of tree) {
+    const selected = getEffectiveTypeSelection(node, selection);
+
+    if (!selected.length) {
+      continue;
+    }
+
+    if (selected.length === node.types.length) {
+      full.push(`${node.label} (${node.types.length})`);
+      continue;
+    }
+
+    segments.push(
+      FoundryAdapter.localize('TIDY5E.COMMON.Theme.AppliesToSome', {
+        document: node.label,
+        types: node.types
+          .filter((t) => selected.includes(t.value))
+          .map((t) => t.text)
+          .join(', '),
+        count: String(selected.length),
+      }),
+    );
+  }
+
+  if (full.length) {
+    segments.unshift(
+      FoundryAdapter.localize('TIDY5E.COMMON.Theme.AppliesToAll', {
+        types: full.join(', '),
+      }),
+    );
+  }
+
+  return segments.join('; ');
+}
+
 export function getSupportedDocuments() {
   return [...Theme.supportedDocumentNames]
     .map((s) => ({

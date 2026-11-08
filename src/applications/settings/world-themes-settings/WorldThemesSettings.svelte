@@ -10,7 +10,10 @@
   import ImportButton from '../theme/parts/ImportButton.svelte';
   import { ThemeImportService } from 'src/theme/theme-import-service';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import { getEffectiveTypeSelection } from 'src/settings/editors/shared/theme-setting-functions';
+  import {
+    getAppliesToSummary,
+    getEffectiveTypeSelection,
+  } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -37,6 +40,12 @@
   ];
 
   const localize = FoundryAdapter.localize;
+
+  const appliesToSummary = $derived(
+    selectedTheme
+      ? getAppliesToSummary(app.documentTypeTree, selectedTheme)
+      : '',
+  );
 
   function getSelectedTypes(documentName: string) {
     const node = app.documentTypeTree.find(
@@ -149,17 +158,27 @@
           {localize('TIDY5E.COMMON.Theme.Delete')}
         </button>
       </div>
-      <div class="form-group">
-        <label for="{appId}-theme-name">
-          {localize('TIDY5E.COMMON.Theme.Name')}
-        </label>
-        <div class="form-fields">
-          <input
-            id="{appId}-theme-name"
-            type="text"
-            bind:value={selectedTheme.name}
-            {@attach InputAttachments.selectOnFocus}
-          />
+      <div class="theme-identity-fields">
+        <div class="form-group">
+          <label for="{appId}-theme-name">
+            {localize('TIDY5E.COMMON.Theme.Name')}
+          </label>
+          <div class="form-fields">
+            <input
+              id="{appId}-theme-name"
+              type="text"
+              bind:value={selectedTheme.name}
+              {@attach InputAttachments.selectOnFocus}
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{localize('TIDY5E.COMMON.Theme.AppliesTo')}</label>
+          <div class="form-fields">
+            <span class="theme-applies-to-summary">
+              {appliesToSummary}
+            </span>
+          </div>
         </div>
       </div>
       <div class="tabs-row tab-configuration-tabs">
@@ -253,7 +272,13 @@
               data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
               data-theme-id={theme.id}
             >
-              <span class="world-theme-card-name">{theme.name}</span>
+              <span class="world-theme-card-text">
+                <span class="world-theme-card-name">{theme.name}</span>
+                <span class="world-theme-card-applies-to">
+                  {localize('TIDY5E.COMMON.Theme.AppliesTo')}:
+                  {getAppliesToSummary(app.documentTypeTree, theme)}
+                </span>
+              </span>
               <i
                 class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
                 aria-hidden="true"

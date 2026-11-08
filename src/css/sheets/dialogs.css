@@ -377,6 +377,19 @@
       color: var(--t5e-color-text-lighter);
     }
 
+    .theme-identity-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+      margin-block: var(--t5e-size-2x);
+    }
+
+    .theme-applies-to-summary {
+      align-content: center;
+      min-height: var(--t5e-field-size-default);
+      color: var(--t5e-color-text-default);
+    }
+
     .world-theme-settings {
       gap: var(--t5e-size-1x);
     }
@@ -413,10 +426,22 @@
       }
     }
 
+    .world-theme-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-1x);
+      min-inline-size: 0;
+    }
+
     .world-theme-card-name {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .world-theme-card-applies-to {
+      color: var(--t5e-color-text-lighter);
+      font: var(--t5e-font-default-small);
     }
 
     .world-theme-card-drag-icon {
