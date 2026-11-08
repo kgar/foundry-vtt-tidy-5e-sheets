@@ -10,6 +10,7 @@
   import ImportButton from '../theme/parts/ImportButton.svelte';
   import { ThemeImportService } from 'src/theme/theme-import-service';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { getEffectiveTypeSelection } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -36,6 +37,23 @@
   ];
 
   const localize = FoundryAdapter.localize;
+
+  function getSelectedTypes(documentName: string) {
+    const node = app.documentTypeTree.find(
+      (n) => n.documentName === documentName,
+    );
+    return node && selectedTheme
+      ? getEffectiveTypeSelection(node, selectedTheme)
+      : [];
+  }
+
+  const selectedActorTypes = $derived(
+    getSelectedTypes(CONSTANTS.DOCUMENT_NAME_ACTOR),
+  );
+
+  const selectedItemTypes = $derived(
+    getSelectedTypes(CONSTANTS.DOCUMENT_NAME_ITEM),
+  );
 
   const orderedThemes = $derived(
     config.settings.toSorted((a, b) => a.sort - b.sort),
@@ -201,18 +219,11 @@
             rarities={app.rarities}
             spellPreparationMethodColors={app.spellMethods}
             placeholders={undefined}
-            showActorPortraitShape={!!selectedTheme.documentNames?.includes(
-              CONSTANTS.DOCUMENT_NAME_ACTOR,
-            ) || !selectedTheme.documentNames?.length}
-            showActorHeaderBackground={!selectedTheme.documentNames?.length ||
-              (!!selectedTheme.types?.length &&
-                selectedTheme.types.some(
-                  actorHeaderBackgroundSupportedActorTypes.has,
-                ))}
-            showItemSidebarBackground={!selectedTheme.documentNames?.length ||
-              selectedTheme.documentNames.includes(
-                CONSTANTS.DOCUMENT_NAME_ITEM,
-              )}
+            showActorPortraitShape={selectedActorTypes.length > 0}
+            showActorHeaderBackground={selectedActorTypes.some((type) =>
+              actorHeaderBackgroundSupportedActorTypes.has(type),
+            )}
+            showItemSidebarBackground={selectedItemTypes.length > 0}
           />
         </div>
       {/if}

@@ -6,15 +6,15 @@ import type {
 import type { SettingsEditor } from './settings-editors.svelte';
 import {
   getCompendia,
+  getDocumentTypeTree,
   getRarities,
   getSpellMethods,
-  getSupportedDocuments,
+  type ThemeDocumentTypeNode,
 } from './shared/theme-setting-functions';
 import { SettingsProvider } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
@@ -36,14 +36,13 @@ export type WorldThemesSettingsEditor =
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
-    supportedDocuments: { text: string; value: string }[];
+    documentTypeTree: ThemeDocumentTypeNode[];
     applyBasicFilters(): void;
     clearFilter(): void;
     selectTheme(id: string | undefined): void;
     /** Returns to the theme list. */
     closeTheme(): void;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
-    get availableTypes(): { text: string; value: string }[];
     get updateSignal(): string;
   };
 
@@ -57,26 +56,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   let selectedTheme = $state<WorldThemeSettingEntry | undefined>();
-
-  const typeDenylist = new Set(['base', 'backpack']);
-
-  const availableTypes = $derived(
-    (selectedTheme?.documentNames ?? [])
-      .flatMap(
-        (docName: any) =>
-          foundry.documents[docName]?.TYPES.filter(
-            (t: string) =>
-              !!CONFIG[docName as keyof typeof CONFIG]?.typeLabels[t] &&
-              !typeDenylist.has(t),
-          ).map((t: string) => ({
-            text: FoundryAdapter.localize(
-              CONFIG[docName as keyof typeof CONFIG].typeLabels[t],
-            ),
-            value: t,
-          })) ?? [],
-      )
-      .sort((a, b) => a.text.localeCompare(b.text)),
-  );
 
   let updateSignal = $state(foundry.utils.randomID());
 
@@ -130,8 +109,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const changed: WorldThemeSetting = foundry.utils.duplicate(curr);
       changed.filter = nilToUndefined(changed.filter);
-      changed.types =
-        changed.types && changed.types.length > 0 ? changed.types : undefined;
+      changed.documentNames = changed.documentNames?.length
+        ? changed.documentNames
+        : undefined;
+      changed.types = changed.types?.length ? changed.types : undefined;
       changed.settings = removeEmptyProperties(changed.settings);
 
       prev[curr.id] = changed;
@@ -297,10 +278,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
     compendia: getCompendia(),
 
-    get availableTypes() {
-      return availableTypes;
-    },
-
     get hasChanges() {
       return hasChanges;
     },
@@ -335,7 +312,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
     },
 
-    supportedDocuments: getSupportedDocuments(),
+    documentTypeTree: getDocumentTypeTree(),
 
     undoChanges() {
       if (!selectedTheme) {

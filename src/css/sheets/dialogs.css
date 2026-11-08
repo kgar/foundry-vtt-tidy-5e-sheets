@@ -430,6 +430,37 @@
       gap: var(--t5e-size-2x);
     }
 
+    .theme-sheet-type-tree {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      gap: var(--t5e-size-2x);
+
+      label.checkbox {
+        gap: var(--t5e-size-1x);
+        min-height: var(--t5e-field-size-small);
+      }
+    }
+
+    .theme-sheet-type-tree-group {
+      flex: var(--t5e-theme-type-count, 1) 1 10rem;
+      min-inline-size: 0;
+    }
+
+    .theme-sheet-type-tree-parent {
+      font-weight: var(--font-weight-label);
+    }
+
+    .theme-sheet-type-tree-children {
+      columns: 9rem;
+      column-gap: var(--t5e-size-4x);
+      padding-inline-start: var(--t5e-size-6x);
+
+      label.checkbox {
+        break-inside: avoid;
+      }
+    }
+
     h3 {
       font-size: var(--font-size-20);
     }

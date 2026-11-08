@@ -4,6 +4,11 @@
     WorldThemeSettingEntry,
     WorldThemesSettingsEditor,
   } from 'src/settings/editors/world-themes-settings-editor.svelte';
+  import {
+    getEffectiveTypeSelection,
+    setEffectiveTypeSelection,
+    type ThemeDocumentTypeNode,
+  } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -14,54 +19,70 @@
 
   const localize = FoundryAdapter.localize;
 
-  const availableTypeKeys = $derived(
-    new Set<string>(app.availableTypes.map((t) => t.value)),
-  );
+  function applySelection(node: ThemeDocumentTypeNode, selected: string[]) {
+    const result = setEffectiveTypeSelection(
+      app.documentTypeTree,
+      node,
+      selectedTheme,
+      selected,
+    );
+    selectedTheme.documentNames = result.documentNames;
+    selectedTheme.types = result.types;
+  }
 
-  function onDocumentNamesChanged(
-    _event: Event & { currentTarget: EventTarget & HTMLInputElement },
-  ) {
-    selectedTheme.types = selectedTheme.types?.filter(availableTypeKeys.has);
+  function toggleType(node: ThemeDocumentTypeNode, type: string) {
+    const current = getEffectiveTypeSelection(node, selectedTheme);
+    applySelection(
+      node,
+      current.includes(type)
+        ? current.filter((t) => t !== type)
+        : [...current, type],
+    );
   }
 </script>
 
-<div class="form-group stacked checkbox-grid">
-  <label>{localize('TIDY5E.COMMON.Theme.Documents')}</label>
-  <div class="form-fields">
-    {#each app.supportedDocuments as supportedDocument}
-      <label class="checkbox">
-        <input
-          type="checkbox"
-          bind:group={selectedTheme.documentNames}
-          value={supportedDocument.value}
-          onchange={onDocumentNamesChanged}
-        />
-        {supportedDocument.text}
-      </label>
-    {/each}
-  </div>
-  <p class="hint">
-    {localize('TIDY5E.COMMON.Theme.DocumentsHint')}
-  </p>
-</div>
-{#if app.availableTypes.length}
-  <div class="form-group stacked checkbox-grid">
-    <label>{localize('TIDY5E.COMMON.Theme.DocumentTypes')}</label>
-    <div class="form-fields">
-      {#each app.availableTypes as type}
-        <label class="checkbox">
+<div class="form-group stacked">
+  <label>{localize('TIDY5E.COMMON.Theme.SheetTypes')}</label>
+  <div class="form-fields theme-sheet-type-tree">
+    {#each app.documentTypeTree as node (node.documentName)}
+      {@const selected = getEffectiveTypeSelection(node, selectedTheme)}
+      {@const full =
+        selected.length > 0 && selected.length >= node.types.length}
+      {@const partial = selected.length > 0 && !full}
+      <div
+        class="theme-sheet-type-tree-group"
+        role="group"
+        style:--t5e-theme-type-count={node.types.length}
+      >
+        <label class="checkbox theme-sheet-type-tree-parent">
           <input
             type="checkbox"
-            bind:group={selectedTheme.types}
-            value={type.value}
+            checked={full}
+            {@attach (el: HTMLInputElement) => {
+              el.indeterminate = partial;
+            }}
+            onchange={() =>
+              applySelection(node, full ? [] : node.types.map((t) => t.value))}
           />
-          {type.text}
+          {node.label}
         </label>
-      {/each}
-    </div>
-    <div class="hint">{localize('TIDY5E.COMMON.Theme.DocumentTypesHint')}</div>
+        <div class="theme-sheet-type-tree-children">
+          {#each node.types as type (type.value)}
+            <label class="checkbox">
+              <input
+                type="checkbox"
+                checked={selected.includes(type.value)}
+                onchange={() => toggleType(node, type.value)}
+              />
+              {type.text}
+            </label>
+          {/each}
+        </div>
+      </div>
+    {/each}
   </div>
-{/if}
+</div>
+
 <div class="form-group">
   <label>{localize('TIDY5E.COMMON.Theme.FilterMode')}</label>
   <div class="form-fields vertical">
