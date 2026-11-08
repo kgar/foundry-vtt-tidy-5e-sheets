@@ -248,7 +248,7 @@
       {/if}
 
       {#if currentSubTabId === 'filter'}
-        <div class="flex1">
+        <div class="flex1 theme-filter-settings">
           <WorldThemeSettingFilters {app} {selectedTheme} />
         </div>
       {/if}

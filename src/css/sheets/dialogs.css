@@ -394,6 +394,12 @@
       gap: var(--t5e-size-1x);
     }
 
+    .theme-filter-settings {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-3x);
+    }
+
     .world-theme-list-header {
       font-size: var(--font-size-20);
       margin: 0;

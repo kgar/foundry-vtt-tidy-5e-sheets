@@ -162,6 +162,7 @@
 
   formula-input {
     height: var(--t5e-field-size-default);
+    border: none;
 
     input[type='text'] {
       border-start-end-radius: 0;
@@ -174,6 +175,42 @@
 
     button.icon {
       --t5e-button-radius: 0 var(--t5e-size-halfx) var(--t5e-size-halfx) 0;
+    }
+
+    .icon::before {
+      transform: translateX(var(--t5e-size-1));
+    }
+  }
+
+  filters-input {
+    align-items: start;
+    align-self: stretch;
+    gap: var(--t5e-size-1x);
+
+    filters-breakdown {
+      min-height: var(--t5e-field-size-default);
+      color: var(--t5e-color-text-default);
+      overflow: hidden;
+      background: var(--t5e-component-field-background-disabled);
+      box-shadow: none;
+      border-color: transparent;
+      border-radius: var(--t5e-size-halfx);
+      padding-inline: var(--t5e-size-2x);
+
+      &.empty {
+        color: var(--t5e-color-text-disabled);
+      }
+    }
+
+    button.icon {
+      --t5e-button-height: var(--t5e-field-size-default);
+      --t5e-button-radius: var(--t5e-size-halfx);
+      padding: 0;
+    }
+  }
+
+  :is(formula-input, filters-input) {
+    button.icon {
       --t5e-button-width: var(--t5e-field-size-default);
       --t5e-button-border-width: var(--t5e-size-1);
       --t5e-button-border: var(--t5e-component-field-border);
@@ -185,10 +222,6 @@
         --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
         --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
       }
-    }
-
-    .icon::before {
-      transform: translateX(var(--t5e-size-1));
     }
 
     /* Core styles the host as a field; when disabled, let the inner input and button carry the disabled look. */

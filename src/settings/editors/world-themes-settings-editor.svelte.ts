@@ -38,13 +38,50 @@ export type WorldThemesSettingsEditor =
     compendia: { text: string; value: string }[];
     documentTypeTree: ThemeDocumentTypeNode[];
     applyBasicFilters(): void;
-    clearFilter(): void;
+    setFilter(filter: string | undefined): void;
     selectTheme(id: string | undefined): void;
     /** Returns to the theme list. */
     closeTheme(): void;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
     get updateSignal(): string;
   };
+
+function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
+  const filter: FilterDescription[] = [];
+
+  const folder = entry.folder.trim();
+  if (folder) {
+    filter.push({ k: 'folder', v: folder });
+  }
+
+  if (entry.themeMode) {
+    filter.push({ k: 'themeMode', v: entry.themeMode });
+  }
+
+  if (entry.compendium) {
+    filter.push({ k: 'document.pack', v: entry.compendium });
+  }
+
+  return filter;
+}
+
+function toFilterList(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): FilterDescription[] {
+  return Array.isArray(filter) ? filter : filter ? [filter] : [];
+}
+
+function stringifyBasicFilter(entry: WorldThemeSettingEntry): string {
+  return JSON.stringify(buildBasicFilter(entry), null, '  ');
+}
+
+/** Finds the value for a key in a basic filter. */
+function findBasicFilterValue(
+  filter: FilterDescription | FilterDescription[] | undefined,
+  key: string,
+): any {
+  return toFilterList(filter).find((f) => f.k === key)?.v;
+}
 
 export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   const current = $state<WorldThemesSettingsContext>(getSettings());
@@ -80,6 +117,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       refreshBasicFilterFields(formData);
 
+      if (formData.filterMode === 'basic') {
+        formData.filter = stringifyBasicFilter(formData);
+      }
+
       return formData;
     });
 
@@ -107,8 +148,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
-      const changed: WorldThemeSetting = foundry.utils.duplicate(curr);
-      changed.filter = nilToUndefined(changed.filter);
+      const { folder, compendium, themeMode, ...changed } =
+        foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
+      // Basic mode always regenerates the filter from its fields.
+      changed.filter =
+        curr.filterMode === 'basic'
+          ? stringifyBasicFilter(curr)
+          : nilToUndefined(changed.filter);
       changed.documentNames = changed.documentNames?.length
         ? changed.documentNames
         : undefined;
@@ -121,46 +167,29 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     }, {});
   }
 
-  function refreshBasicFilterFields(selectedTheme: WorldThemeSettingEntry) {
-    if (selectedTheme.filterMode === 'basic' && !!selectedTheme.filter) {
-      let filter: FilterDescription | FilterDescription[] | undefined =
-        undefined;
-      try {
-        filter = JSON.parse(selectedTheme.filter);
-      } catch {
-        // Failure is an option. Ignore.
-      }
-
-      // TODO: Somehow clean this up and streamline the code
-      // so it's easy to maintain and expand.
-      // Populate Folder input as facade over filter
-      selectedTheme.folder =
-        filter && Array.isArray(filter)
-          ? (filter.find((f) => f.k === 'folder')?.v ?? '')
-          : typeof filter === 'object' && filter.k === 'folder'
-            ? (filter.v ?? '')
-            : '';
-
-      // Populate Theme Mode input as facade over filter
-      selectedTheme.themeMode =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'themeMode')?.v
-          : typeof filter === 'object' && filter.k === 'themeMode'
-            ? filter.v
-            : undefined;
-
-      // Populate Compendium input as facade over filter
-      selectedTheme.compendium =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'document.pack')?.v
-          : typeof filter === 'object' && filter.k === 'document.pack'
-            ? filter.v
-            : undefined;
-    } else {
-      selectedTheme.folder = '';
-      selectedTheme.themeMode = undefined;
-      selectedTheme.compendium = undefined;
+  function parseFilter(
+    raw: string | undefined,
+  ): FilterDescription | FilterDescription[] | undefined {
+    if (!raw) {
+      return undefined;
     }
+
+    try {
+      return JSON.parse(raw);
+    } catch {
+      // Failure is an option. Ignore.
+      return undefined;
+    }
+  }
+
+  /** Populates the basic inputs as a facade over the filter, as best it can. */
+  function refreshBasicFilterFields(
+    entry: WorldThemeSettingEntry,
+    filter = parseFilter(entry.filter),
+  ) {
+    entry.folder = findBasicFilterValue(filter, 'folder') ?? '';
+    entry.themeMode = findBasicFilterValue(filter, 'themeMode');
+    entry.compendium = findBasicFilterValue(filter, 'document.pack');
   }
 
   return {
@@ -198,7 +227,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       const settingId = foundry.utils.randomID();
 
-      this.value.settings.push({
+      const entry: WorldThemeSettingEntry = {
         filterMode: 'basic',
         id: settingId,
         name: 'TODO: New Name Here',
@@ -210,7 +239,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         folder: '',
         compendium: undefined,
         themeMode: undefined,
-      });
+      };
+      entry.filter = stringifyBasicFilter(entry);
+
+      this.value.settings.push(entry);
 
       this.selectTheme(settingId);
     },
@@ -220,41 +252,28 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const filter: FilterDescription[] = [];
-
-      if (selectedTheme.folder.trim() !== '') {
-        filter.push({
-          k: 'folder',
-          v: selectedTheme.folder,
-        });
-      }
-
-      if (selectedTheme.themeMode) {
-        filter.push({
-          k: 'themeMode',
-          v: selectedTheme.themeMode,
-        });
-      }
-
-      if (selectedTheme.compendium) {
-        filter.push({
-          k: 'document.pack',
-          v: selectedTheme.compendium,
-        });
-      }
-
-      selectedTheme.filter = JSON.stringify(filter, null, '  ');
+      selectedTheme.filterMode = 'basic';
+      selectedTheme.filter = stringifyBasicFilter(selectedTheme);
     },
 
-    clearFilter() {
+    setFilter(filter: string | undefined) {
       if (!selectedTheme) {
         return;
       }
 
-      selectedTheme.filter = undefined;
-      selectedTheme.themeMode = undefined;
-      selectedTheme.compendium = undefined;
-      selectedTheme.folder = '';
+      selectedTheme.filter = filter?.trim() || undefined;
+
+      const parsed = parseFilter(selectedTheme.filter);
+      refreshBasicFilterFields(selectedTheme, parsed);
+
+      // If the fields can reproduce this filter exactly, keep them in charge.
+      // Otherwise it's a custom filter, saved as-is until a field is changed.
+      const reproducible =
+        !!parsed &&
+        JSON.stringify(buildBasicFilter(selectedTheme)) ===
+          JSON.stringify(parsed);
+
+      selectedTheme.filterMode = reproducible ? 'basic' : 'advanced';
     },
 
     deleteTheme(id: string): any {

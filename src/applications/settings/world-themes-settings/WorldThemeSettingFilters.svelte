@@ -18,6 +18,7 @@
   const { app, selectedTheme }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+  const idPrefix = foundry.utils.randomID();
 
   function applySelection(node: ThemeDocumentTypeNode, selected: string[]) {
     const result = setEffectiveTypeSelection(
@@ -83,39 +84,44 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label>{localize('TIDY5E.COMMON.Theme.FilterMode')}</label>
-  <div class="form-fields vertical">
-    <label class="radio">
-      <input
-        type="radio"
-        bind:group={selectedTheme.filterMode}
-        value="basic"
-        onclick={app.clearFilter}
-      />
-      {localize('TIDY5E.COMMON.Theme.FilterModeBasic')}
-    </label>
-    <label class="radio">
-      <input
-        type="radio"
-        bind:group={selectedTheme.filterMode}
-        value="advanced"
-      />
-      {localize('TIDY5E.COMMON.Theme.FilterModeAdvanced')}
-    </label>
-  </div>
-</div>
-{#if selectedTheme.filterMode === 'basic'}
-  <div class="form-group stacked">
-    <label>{localize('TIDY5E.COMMON.Theme.Folder')}</label>
+<fieldset>
+  <legend>
+    {localize('TIDY5E.FILTER.Title')}
+    <tidy-gold-header-underline></tidy-gold-header-underline>
+  </legend>
+  <div class="form-group">
+    <label for="{idPrefix}-folder"
+      >{localize('TIDY5E.COMMON.Theme.Folder')}</label
+    >
     <div class="form-fields">
       <input
+        id="{idPrefix}-folder"
         type="text"
         bind:value={selectedTheme.folder}
         onchange={app.applyBasicFilters}
       />
     </div>
     <p class="hint">{localize('TIDY5E.COMMON.Theme.FolderHint')}</p>
+  </div>
+  <div class="form-group">
+    <label for="{idPrefix}-compendium">
+      {localize('TIDY5E.COMMON.Theme.Compendium')}
+    </label>
+    <div class="form-fields">
+      <select
+        id="{idPrefix}-compendium"
+        bind:value={selectedTheme.compendium}
+        onchange={app.applyBasicFilters}
+      >
+        <option value={undefined}>
+          {localize('TIDY5E.COMMON.Theme.CompendiumNone')}
+        </option>
+        {#each app.compendia as c (c.value)}
+          <option value={c.value}>{c.text}</option>
+        {/each}
+      </select>
+    </div>
+    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiumHint')}</p>
   </div>
   <div class="form-group">
     <label>{localize('TIDY5E.COMMON.Theme.ThemeMode')}</label>
@@ -136,7 +142,7 @@
           bind:group={selectedTheme.themeMode}
           value="light"
         />
-        {localize('TIDY5E.COMMON.Theme.ThemeModeLight')}
+        {localize('SETTINGS.UI.FIELDS.colorScheme.choices.light')}
       </label>
       <label class="radio">
         <input
@@ -145,44 +151,30 @@
           bind:group={selectedTheme.themeMode}
           value="dark"
         />
-        {localize('TIDY5E.COMMON.Theme.ThemeModeDark')}
+        {localize('SETTINGS.UI.FIELDS.colorScheme.choices.dark')}
       </label>
+      <p class="hint">
+        {localize('TIDY5E.COMMON.Theme.ThemeModeHint')}
+      </p>
     </div>
   </div>
   <div class="form-group stacked">
-    <label>{localize('TIDY5E.COMMON.Theme.Compendium')}</label>
-    <div class="form-fields">
-      <select
-        bind:value={selectedTheme.compendium}
-        onchange={app.applyBasicFilters}
-      >
-        <option value={undefined}>
-          {localize('TIDY5E.COMMON.Theme.CompendiumNone')}
-        </option>
-        {#each app.compendia as c}
-          <option value={c.value}>
-            {c.text}
-          </option>
-        {/each}
-      </select>
-    </div>
-    <p class="hint">
-      {localize('TIDY5E.COMMON.Theme.CompendiumHint')}
-    </p>
-  </div>
-{:else}
-  <div class="form-group stacked">
-    <label>{localize('TIDY5E.COMMON.Theme.AdvancedFilter')}</label>
+    <label for="{idPrefix}-advanced-filter">
+      {localize('TIDY5E.COMMON.Theme.AdvancedFilter')}
+    </label>
     {#key selectedTheme.filter}
       <div class="form-fields">
         <filters-input
-          onchange={(e: any) => {
-            if (selectedTheme) {
-              selectedTheme.filter = e.target.value;
-            }
-          }}>{selectedTheme.filter}</filters-input
+          id="{idPrefix}-advanced-filter"
+          onchange={(e: any) => app.setFilter(e.target.value)}
+          >{selectedTheme.filter}</filters-input
         >
       </div>
     {/key}
+    <p class="hint">
+      {selectedTheme.filterMode === 'advanced'
+        ? localize('TIDY5E.COMMON.Theme.AdvancedFilterCustomHint')
+        : localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}
+    </p>
   </div>
-{/if}
+</fieldset>
