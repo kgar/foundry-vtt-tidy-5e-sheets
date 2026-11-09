@@ -494,10 +494,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     set value(value) {
-      const keys = Object.keys(
-        current.settings,
-      ) as (keyof WorldThemesSettingsContext['settings'])[];
-
       current.settings = [...value.settings];
     },
   };
