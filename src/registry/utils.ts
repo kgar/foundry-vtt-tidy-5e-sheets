@@ -204,6 +204,7 @@ const prepareThemeFilterData = (
   const data = {
     document: doc,
     folder,
+    inCompendium: !!doc?.inCompendium,
     themeMode,
   };
 

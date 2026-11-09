@@ -20,6 +20,14 @@
   const localize = FoundryAdapter.localize;
   const idPrefix = foundry.utils.randomID();
 
+  const compendiumLabels = $derived(
+    new Map(app.compendia.map((c) => [c.value, c.text])),
+  );
+
+  const availableCompendia = $derived(
+    app.compendia.filter((c) => !selectedTheme.compendia.includes(c.value)),
+  );
+
   function applySelection(node: ThemeDocumentTypeNode, selected: string[]) {
     const result = setEffectiveTypeSelection(
       app.documentTypeTree,
@@ -104,24 +112,60 @@
     <p class="hint">{localize('TIDY5E.COMMON.Theme.FolderHint')}</p>
   </div>
   <div class="form-group">
-    <label for="{idPrefix}-compendium">
-      {localize('TIDY5E.COMMON.Theme.Compendium')}
+    <label for="{idPrefix}-compendium-only">
+      {localize('TIDY5E.COMMON.Theme.CompendiumOnly')}
     </label>
     <div class="form-fields">
+      <input
+        type="checkbox"
+        id="{idPrefix}-compendium-only"
+        checked={selectedTheme.compendiumOnly}
+        onchange={(ev) => {
+          selectedTheme.compendiumOnly = ev.currentTarget.checked;
+          app.applyBasicFilters();
+        }}
+      />
+    </div>
+    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiumHint')}</p>
+  </div>
+  <div class="form-group">
+    <label for="{idPrefix}-add-compendium">
+      {localize('TIDY5E.COMMON.Theme.Compendia')}
+    </label>
+    <div class="form-fields vertical theme-compendia">
+      {#each selectedTheme.compendia as packId (packId)}
+        <div class="theme-compendia-row">
+          <span class="theme-compendia-row-name">
+            {compendiumLabels.get(packId) ?? packId}
+          </span>
+          <button
+            type="button"
+            class="button button-icon-only button-borderless"
+            aria-label={localize('TIDY5E.COMMON.Theme.RemoveCompendium')}
+            data-tooltip
+            onclick={() => app.removeCompendium(packId)}
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      {/each}
       <select
-        id="{idPrefix}-compendium"
-        bind:value={selectedTheme.compendium}
-        onchange={app.applyBasicFilters}
+        id="{idPrefix}-add-compendium"
+        value=""
+        onchange={(ev) => {
+          app.addCompendium(ev.currentTarget.value);
+          ev.currentTarget.value = '';
+        }}
       >
-        <option value={undefined}>
-          {localize('TIDY5E.COMMON.Theme.CompendiumNone')}
+        <option value="" disabled>
+          {localize('TIDY5E.COMMON.Theme.AddCompendium')}
         </option>
-        {#each app.compendia as c (c.value)}
+        {#each availableCompendia as c (c.value)}
           <option value={c.value}>{c.text}</option>
         {/each}
       </select>
     </div>
-    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiumHint')}</p>
+    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiaHint')}</p>
   </div>
   <div class="form-group">
     <label>{localize('TIDY5E.COMMON.Theme.ThemeMode')}</label>

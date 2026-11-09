@@ -20,7 +20,10 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
-  compendium?: string;
+  /** Limits the theme to compendium documents, excluding the sidebar, unlinked tokens, etc. */
+  compendiumOnly: boolean;
+  /** Compendium pack IDs whose documents are included. */
+  compendia: string[];
   themeMode?: string;
 };
 
@@ -36,6 +39,8 @@ export type WorldThemesSettingsEditor =
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
+    addCompendium(packId: string): void;
+    removeCompendium(packId: string): void;
     documentTypeTree: ThemeDocumentTypeNode[];
     applyBasicFilters(): void;
     setFilter(filter: string | undefined): void;
@@ -81,17 +86,62 @@ function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
     filter.push({ k: 'themeMode', v: entry.themeMode });
   }
 
-  if (entry.compendium) {
-    filter.push({ k: 'document.pack', v: entry.compendium });
+  // Document sources are alternatives. `compendiumOnly` without any choices applies to all compendia.
+  const sources: FilterDescription[] = [
+    ...(entry.compendiumOnly ? [] : [{ k: 'inCompendium', v: false }]),
+    ...entry.compendia.map((packId) => ({ k: 'document.pack', v: packId })),
+  ];
+
+  if (entry.compendiumOnly && !sources.length) {
+    sources.push({ k: 'inCompendium', v: true });
+  }
+
+  if (sources.length === 1) {
+    filter.push(sources[0]);
+  } else if (sources.length > 1) {
+    filter.push({ o: 'OR', v: sources });
   }
 
   return filter;
 }
 
+const documentSourceKeys = new Set(['inCompendium', 'document.pack']);
+
 function toFilterList(
   filter: FilterDescription | FilterDescription[] | undefined,
 ): FilterDescription[] {
   return Array.isArray(filter) ? filter : filter ? [filter] : [];
+}
+
+/** Reads the document source fields back out of a basic filter. */
+function findDocumentSources(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): Pick<WorldThemeSettingEntry, 'compendiumOnly' | 'compendia'> {
+  const entries = toFilterList(filter);
+
+  const sources = entries.flatMap((entry) => {
+    if (entry.k && documentSourceKeys.has(entry.k)) {
+      return [entry];
+    }
+
+    const isSourceGroup =
+      entry.o === 'OR' &&
+      Array.isArray(entry.v) &&
+      entry.v.every(
+        (f: FilterDescription) => !!f.k && documentSourceKeys.has(f.k),
+      );
+
+    return isSourceGroup ? (entry.v as FilterDescription[]) : [];
+  });
+
+  return {
+    compendiumOnly:
+      sources.length > 0 &&
+      !sources.some((f) => f.k === 'inCompendium' && f.v === false),
+    compendia: sources
+      .filter((f) => f.k === 'document.pack' && typeof f.v === 'string')
+      .map((f) => f.v),
+  };
 }
 
 function stringifyBasicFilter(entry: WorldThemeSettingEntry): string {
@@ -150,7 +200,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const formData: WorldThemeSettingEntry = {
         ...setting,
         folder: '',
-        compendium: undefined,
+        compendiumOnly: false,
+        compendia: [],
         themeMode: undefined,
       };
 
@@ -187,9 +238,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
-      const { folder, compendium, themeMode, ...changed } =
+      const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
-      // Basic mode always regenerates the filter from its fields.
+      // Basic mode always regenerates the filter from its fields, so new or
+      // cleared themes still get the default "Non-Compendium Documents" scope.
       changed.filter =
         curr.filterMode === 'basic'
           ? stringifyBasicFilter(curr)
@@ -228,7 +280,9 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   ) {
     entry.folder = findBasicFilterValue(filter, 'folder') ?? '';
     entry.themeMode = findBasicFilterValue(filter, 'themeMode');
-    entry.compendium = findBasicFilterValue(filter, 'document.pack');
+    const sources = findDocumentSources(filter);
+    entry.compendiumOnly = sources.compendiumOnly;
+    entry.compendia = sources.compendia;
   }
 
   return {
@@ -276,7 +330,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filter: undefined,
         types: [],
         folder: '',
-        compendium: undefined,
+        compendiumOnly: false,
+        compendia: [],
         themeMode: undefined,
       };
       entry.filter = stringifyBasicFilter(entry);
@@ -335,6 +390,30 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     spellMethods: getSpellMethods(),
 
     compendia: getCompendia(),
+
+    addCompendium(packId: string) {
+      if (
+        !selectedTheme ||
+        !packId ||
+        selectedTheme.compendia.includes(packId)
+      ) {
+        return;
+      }
+
+      selectedTheme.compendia = [...selectedTheme.compendia, packId];
+      this.applyBasicFilters();
+    },
+
+    removeCompendium(packId: string) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.compendia = selectedTheme.compendia.filter(
+        (c) => c !== packId,
+      );
+      this.applyBasicFilters();
+    },
 
     get hasChanges() {
       return hasChanges;

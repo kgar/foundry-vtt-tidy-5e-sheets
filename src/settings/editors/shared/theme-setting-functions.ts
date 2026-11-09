@@ -18,14 +18,17 @@ export function getSpellMethods(): ThemeColorSettingOption[] {
 
 export function getCompendia(): { text: string; value: string }[] {
   return [...game.packs.values()]
-    .map((c) => ({
-      // TODO: need a util for getting full folder path
-      text: `${[c.folder, ...c.folder.ancestors]
+    .map((c) => {
+      const folders = c.folder ? [c.folder, ...(c.folder.ancestors ?? [])] : [];
+      const path = folders
         .reverse()
         .map((f) => f.name)
-        .join('/')}/${c.metadata.label}`,
-      value: c.metadata.id,
-    }))
+        .join('/');
+      return {
+        text: path ? `${path}/${c.metadata.label}` : c.metadata.label,
+        value: c.metadata.id,
+      };
+    })
     .sort((a, b) => a.text.localeCompare(b.text));
 }
 
