@@ -151,7 +151,7 @@
       "Name": "Theme Name",
       "SheetTypes": "Filter to Sheet Types",
       "Folder": "Folder",
-      "FolderHint": "Folder paths must start with a slash \"\/\". For example, \"\/My Folder Path\/My Subfolder\".",
+      "FolderHint": "Matches documents in this folder and all of its subfolders.",
       "ThemeMode": "Theme Mode",
       "ThemeModeAll": "All",
       "ThemeModeHint": "Limit this sheet theme only to a particular theme mode.",

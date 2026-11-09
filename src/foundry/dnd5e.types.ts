@@ -190,9 +190,10 @@ export type ActivitySave = {
 
 /**
  * A filter description.
+ * Logical operators (e.g. `{ o: 'OR', v: [...] }`) omit `k` and nest descriptions in `v`.
  */
 export type FilterDescription = {
-  k: string;
+  k?: string;
   v: any;
   o?: string;
 };

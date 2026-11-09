@@ -46,12 +46,35 @@ export type WorldThemesSettingsEditor =
     get updateSignal(): string;
   };
 
+/** Trims, ensures a leading slash, and drops trailing slashes. Returns '' for no folder. */
+function normalizeFolderPath(path: string): string {
+  const trimmed = path.trim().replace(/\/+$/, '');
+  if (!trimmed) {
+    return '';
+  }
+  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+}
+
+/**
+ * Matches the folder itself or anything nested beneath it.
+ * The trailing slash on the prefix keeps "/Goblins" from matching a sibling like "/Goblins Elite".
+ */
+function buildFolderFilter(folder: string): FilterDescription {
+  return {
+    o: 'OR',
+    v: [
+      { k: 'folder', v: folder },
+      { k: 'folder', o: 'startswith', v: `${folder}/` },
+    ],
+  };
+}
+
 function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
   const filter: FilterDescription[] = [];
 
-  const folder = entry.folder.trim();
+  const folder = normalizeFolderPath(entry.folder);
   if (folder) {
-    filter.push({ k: 'folder', v: folder });
+    filter.push(buildFolderFilter(folder));
   }
 
   if (entry.themeMode) {
@@ -75,12 +98,28 @@ function stringifyBasicFilter(entry: WorldThemeSettingEntry): string {
   return JSON.stringify(buildBasicFilter(entry), null, '  ');
 }
 
-/** Finds the value for a key in a basic filter. */
+/**
+ * Finds the value for a key in a basic filter.
+ * Also checks inside OR groups, which is where the folder check lives.
+ */
 function findBasicFilterValue(
   filter: FilterDescription | FilterDescription[] | undefined,
   key: string,
 ): any {
-  return toFilterList(filter).find((f) => f.k === key)?.v;
+  for (const entry of toFilterList(filter)) {
+    if (entry.k === key) {
+      return entry.v;
+    }
+
+    if (entry.o === 'OR' && Array.isArray(entry.v)) {
+      const nested = entry.v.find((f: FilterDescription) => f.k === key);
+      if (nested) {
+        return nested.v;
+      }
+    }
+  }
+
+  return undefined;
 }
 
 export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
