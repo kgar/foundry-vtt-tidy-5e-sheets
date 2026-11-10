@@ -207,10 +207,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       refreshBasicFilterFields(formData);
 
-      if (formData.filterMode === 'basic') {
-        formData.filter = stringifyBasicFilter(formData);
-      }
-
       return formData;
     });
 
@@ -240,12 +236,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
-      // Basic mode always regenerates the filter from its fields, so new or
-      // cleared themes still get the default "Non-Compendium Documents" scope.
-      changed.filter =
-        curr.filterMode === 'basic'
-          ? stringifyBasicFilter(curr)
-          : nilToUndefined(changed.filter);
+      changed.filter = nilToUndefined(changed.filter);
       changed.documentNames = changed.documentNames?.length
         ? changed.documentNames
         : undefined;
@@ -321,7 +312,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const settingId = foundry.utils.randomID();
 
       const entry: WorldThemeSettingEntry = {
-        filterMode: 'basic',
         id: settingId,
         name: 'TODO: New Name Here',
         settings: ThemeQuadrone.getDefaultThemeSettings(),
@@ -346,7 +336,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      selectedTheme.filterMode = 'basic';
       selectedTheme.filter = stringifyBasicFilter(selectedTheme);
     },
 
@@ -357,17 +346,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       selectedTheme.filter = filter?.trim() || undefined;
 
-      const parsed = parseFilter(selectedTheme.filter);
-      refreshBasicFilterFields(selectedTheme, parsed);
-
-      // If the fields can reproduce this filter exactly, keep them in charge.
-      // Otherwise it's a custom filter, saved as-is until a field is changed.
-      const reproducible =
-        !!parsed &&
-        JSON.stringify(buildBasicFilter(selectedTheme)) ===
-          JSON.stringify(parsed);
-
-      selectedTheme.filterMode = reproducible ? 'basic' : 'advanced';
+      refreshBasicFilterFields(selectedTheme);
     },
 
     deleteTheme(id: string): any {

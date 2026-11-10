@@ -134,8 +134,7 @@
     },
     "Theme": {
       "AdvancedFilter": "Advanced Filter",
-      "AdvancedFilterHint": "Built from the fields above as you change them. Edit it directly for more control.",
-      "AdvancedFilterCustomHint": "This filter has been customized and will be saved as-is. Changing any field above will replace it.",
+      "AdvancedFilterHint": "Updated from the fields above as you make changes. You can edit the filter directly, but changing a field above will replace your edits.",
       "Label": "Theme",
       "LabelPl": "Themes",
       "Add": "Add Theme",

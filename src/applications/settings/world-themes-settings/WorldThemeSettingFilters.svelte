@@ -215,10 +215,6 @@
         >
       </div>
     {/key}
-    <p class="hint">
-      {selectedTheme.filterMode === 'advanced'
-        ? localize('TIDY5E.COMMON.Theme.AdvancedFilterCustomHint')
-        : localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}
-    </p>
+    <p class="hint">{localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}</p>
   </div>
 </fieldset>

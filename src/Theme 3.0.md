@@ -112,8 +112,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
             "useBasicTheme": true,
             "useHeaderBackground": false
         },
-        filter: '{\n  "k": "folder",\n  "v": "/A Folder/Faction - Buttercream Gang"\n}',
-        filterMode: 'basic'
+        filter: '{\n  "k": "folder",\n  "v": "/A Folder/Faction - Buttercream Gang"\n}'
     },
     '7654321': {
         id: '7654321',
@@ -127,8 +126,7 @@ game.settings.set('tidy5e-sheet', 'worldThemes', {
             "useBasicTheme": false,
             "useHeaderBackground": true
         },
-        filter: '{\n  "k": "document.name",\n  "o": "icontains",\n  "v": "vorpal"\n}',
-        filterMode: 'advanced'
+        filter: '{\n  "k": "document.name",\n  "o": "icontains",\n  "v": "vorpal"\n}'
     }
 });
 
