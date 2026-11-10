@@ -71,8 +71,6 @@ export type ThemeFilterData = {
   themeMode: 'light' | 'dark' | string;
   /** The folder of the target document. An empty string means the top-level. */
   folder: string;
-  /** Whether the target document (or its parent) lives in a compendium. */
-  inCompendium: boolean;
   /** The target document to consider, whether an Actor or Item. */
   document: Actor5e | Item5e;
 };

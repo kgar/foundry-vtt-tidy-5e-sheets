@@ -88,12 +88,12 @@ function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
 
   // Document sources are alternatives. `compendiumOnly` without any choices applies to all compendia.
   const sources: FilterDescription[] = [
-    ...(entry.compendiumOnly ? [] : [{ k: 'inCompendium', v: false }]),
+    ...(entry.compendiumOnly ? [] : [{ k: 'document.inCompendium', v: false }]),
     ...entry.compendia.map((packId) => ({ k: 'document.pack', v: packId })),
   ];
 
   if (entry.compendiumOnly && !sources.length) {
-    sources.push({ k: 'inCompendium', v: true });
+    sources.push({ k: 'document.inCompendium', v: true });
   }
 
   if (sources.length === 1) {
@@ -105,7 +105,7 @@ function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
   return filter;
 }
 
-const documentSourceKeys = new Set(['inCompendium', 'document.pack']);
+const documentSourceKeys = new Set(['document.inCompendium', 'document.pack']);
 
 function toFilterList(
   filter: FilterDescription | FilterDescription[] | undefined,
@@ -137,7 +137,7 @@ function findDocumentSources(
   return {
     compendiumOnly:
       sources.length > 0 &&
-      !sources.some((f) => f.k === 'inCompendium' && f.v === false),
+      !sources.some((f) => f.k === 'document.inCompendium' && f.v === false),
     compendia: sources
       .filter((f) => f.k === 'document.pack' && typeof f.v === 'string')
       .map((f) => f.v),
