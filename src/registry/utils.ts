@@ -1,9 +1,8 @@
-import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { getThemeV2 } from 'src/theme/theme';
+import { getThemeV2, Theme } from 'src/theme/theme';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ThemeFilterData,
@@ -89,12 +88,6 @@ const tryGetInspirationSource = async (
   return inspirationSource;
 };
 
-// TODO: to theme.ts
-const supportedDocumentNames = new Set<string>([
-  CONSTANTS.DOCUMENT_NAME_ACTOR,
-  CONSTANTS.DOCUMENT_NAME_ITEM,
-]);
-
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
 const initWorldThemes = () => {
   if (!CONFIG.TIDY5E) {
@@ -119,24 +112,25 @@ const initWorldThemes = () => {
   ).sort((a, b) => a.sort - b.sort);
 
   for (const theme of prioritizedWorldThemes) {
-    const targetDocumentNames =
-      !!theme.documentNames?.length &&
-      theme.documentNames.filter(supportedDocumentNames.has)
-        ? theme.documentNames
-        : [...supportedDocumentNames];
+    const validDocumentNames =
+      theme.documentNames?.filter((name) =>
+        Theme.supportedDocumentNames.has(name),
+      ) ?? [];
+
+    const targetDocumentNames = validDocumentNames.length
+      ? validDocumentNames
+      : [...Theme.supportedDocumentNames];
 
     for (const targetDocumentName of targetDocumentNames) {
       const configDocumentNames = (CONFIG.TIDY5E.worldThemes[
         targetDocumentName
       ] ??= {});
 
-      const targetTypes: string[] =
-        !!theme.types?.length &&
-        theme.types.some(
-          (t) => !!foundry.documents[targetDocumentName]?.TYPES[t],
-        )
-          ? theme.types
-          : (foundry.documents[targetDocumentName]?.TYPES ?? []);
+      const documentTypes: string[] =
+        foundry.documents[targetDocumentName]?.TYPES ?? [];
+      const explicitTypes =
+        theme.types?.filter((t) => documentTypes.includes(t)) ?? [];
+      const targetTypes = explicitTypes.length ? explicitTypes : documentTypes;
 
       for (const targetType of targetTypes) {
         const themes = (configDocumentNames[targetType] ??= []);

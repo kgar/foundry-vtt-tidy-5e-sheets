@@ -20,8 +20,6 @@ export function configureWorldThemeContextMenu(
     return;
   }
 
-  app.editors.themesSettingsTab.selectTheme(theme.id);
-
   ui.context.menuItems = getWorldThemeContextOptions(app, theme);
 
   TidyHooks.tidy5eSheetsGetWorldThemeContextOptions(
