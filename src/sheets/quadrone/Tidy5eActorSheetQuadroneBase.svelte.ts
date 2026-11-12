@@ -1740,18 +1740,7 @@ export function getTidy5eActorSheetQuadroneBase<
       options.behavior ??= (event as any)._behavior;
       options.event ??= event;
 
-      // TODO: Extract to TidyHooks
-      /**
-       * A hook event that fires when items are dropped onto the actor sheet to be created.
-       * @function dnd5e.dropCreateItems
-       * @memberof hookEvents
-       * @param {BaseActorSheet} sheet                The sheet.
-       * @param {Item5e[]} items                      The items being dropped.
-       * @param {object} options
-       * @param {DropEffectValue} [options.behavior]  The drag behavior.
-       * @param {Event} options.event                 The event which triggered the item creation.
-       */
-      if (Hooks.call('dnd5e.dropCreateItems', this, items, options) === false) {
+      if (TidyHooks.dnd5eDropCreateItems(this, items, options) === false) {
         return [];
       }
 
