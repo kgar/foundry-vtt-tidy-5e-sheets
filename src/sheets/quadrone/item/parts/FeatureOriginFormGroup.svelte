@@ -33,7 +33,6 @@
     return groups;
   });
 
-  // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
   let originValue = $derived(
     FoundryAdapter.getAdvancementOriginId(context.item),
   );

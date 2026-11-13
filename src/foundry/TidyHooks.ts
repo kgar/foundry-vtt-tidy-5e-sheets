@@ -15,9 +15,27 @@ import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
+  /**
+   * A hook event that fires when items are dropped onto the actor sheet to be created.
+   * @function dnd5e.dropCreateItems
+   * @param app                The sheet.
+   * @param items              The items being dropped.
+   * @param options
+   * @param [options.behavior]   The drag behavior.
+   * @param [options.event]      The event which triggered the item creation.
+   */
+  static dnd5eDropCreateItems(
+    app: any,
+    items: Item5e[],
+    options: { behavior?: DropEffectValue | null; event?: Event },
+  ): false | undefined {
+    return Hooks.call('dnd5e.dropCreateItems', app, items, options);
+  }
+
   /**
    * The active effect context menu has established its options and is about to show.
    * @param {ActiveEffect5e} effect The active effect document instance.
@@ -34,7 +52,7 @@ export class TidyHooks {
   static dnd5eGetActiveEffectContextOptions(
     effect: ActiveEffect5e,
     menuItems: ContextMenuEntry[],
-  ): boolean {
+  ): boolean | undefined {
     return Hooks.call('dnd5e.getActiveEffectContextOptions', effect, menuItems);
   }
 

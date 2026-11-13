@@ -350,7 +350,7 @@ export class Tidy5eContainerSheetQuadrone
       isContainer: true,
       isIdentifiable: isIdentifiable,
       isIdentified: this.document.system.identified !== false,
-      isPhysical: this.document.system.hasOwnProperty('quantity'),
+      isPhysical: this.document.system.isPhysical,
       item: this.item,
       itemContext: await Container.getContainerItemContext(this, this.item, {
         unlocked: documentSheetContext.unlocked,

@@ -39,7 +39,6 @@ export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
   /**
    * A hook even that fires when the context menu for an Activity is opened.
    * @function dnd5e.getItemActivityContext
-   * @memberof hookEvents
    * @param {Activity} activity             The Activity.
    * @param {HTMLElement} target            The element that menu was triggered on.
    * @param {ContextMenuEntry[]} menuItems  The context menu entries.
@@ -158,10 +157,9 @@ export function getContextMenuOptions(
 
   if (aggregatePinTab) {
     entries.push({
-      label: FoundryAdapter.localize(
-        'TIDY5E.CONTEXTMENU.Action.PinToTab',
-        { tabName: FoundryAdapter.localize(aggregatePinTab.tabName) },
-      ),
+      label: FoundryAdapter.localize('TIDY5E.CONTEXTMENU.Action.PinToTab', {
+        tabName: FoundryAdapter.localize(aggregatePinTab.tabName),
+      }),
       icon: `<i class="fa-solid fa-thumbtack"></i>`,
       onClick: async () => {
         await SheetPinsProvider.pin(

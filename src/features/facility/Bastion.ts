@@ -467,7 +467,6 @@ export function useFacility(args: {
   }
 
   return facility?.use({
-    legacy: false,
     chooseActivity: true,
     event,
     options: { sheet },

@@ -59,6 +59,8 @@ import type {
 } from 'src/api/api.types';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
 import { Container } from 'src/features/containers/Container';
+import RenownSheet from 'src/sheets/quadrone/item/RenownSheet.svelte';
+import ItemRenownDetailsTab from 'src/sheets/quadrone/item/tabs/ItemRenownDetailsTab.svelte';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -520,6 +522,16 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
+        component: ItemRenownDetailsTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_RENOWN]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
         component: ItemSpellDetailsTab,
         type: 'svelte',
       },
@@ -589,6 +601,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         CONSTANTS.ITEM_TYPE_FEAT,
         CONSTANTS.ITEM_TYPE_LOOT,
         CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_RENOWN,
         CONSTANTS.ITEM_TYPE_SPELL,
         CONSTANTS.ITEM_TYPE_SUBCLASS,
         CONSTANTS.ITEM_TYPE_TOOL,
@@ -718,6 +731,13 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
+      },
+    ],
+    [
+      CONSTANTS.ITEM_TYPE_RENOWN,
+      {
+        component: RenownSheet,
+        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
       },
     ],
     [

@@ -31,10 +31,19 @@ import type {
   SectionColumnSpecifications,
 } from './columns.types';
 import type { ContainerContentsVisibility } from 'src/features/containers/Container';
-import type { RegisteredItemToggle } from './registry.types';
+import type { IdentifierField } from 'dnd5e.dataModels.fields';
+import type { NumberField } from 'foundry.data.fields';
+
+export type RenownProperty = {
+  type: 'renown';
+  faction: string;
+  value: number;
+};
+
+type ActiveProperty = string | RenownProperty;
 
 export type PropertyContext = {
-  active: string[];
+  active: ActiveProperty[];
   object: Record<string, true>;
   options: {
     label: string;
@@ -137,6 +146,21 @@ export type ItemSheetQuadroneContext = {
   };
   limited: boolean;
   modernRules: boolean;
+  modifiers?: {
+    data: {
+      faction: string;
+      value: number;
+    };
+    fields: {
+      faction: IdentifierField;
+      value: NumberField;
+    };
+    options: {
+      value: string;
+      label: string;
+    }[];
+    prefix: string;
+  }[];
   options: any;
   name: ItemNameContext;
   orders?: ItemFacilityOrdersContext;
