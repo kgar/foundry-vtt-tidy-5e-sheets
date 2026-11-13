@@ -1,12 +1,16 @@
-import { downloadTextFile, readFileAsText } from "src/utils/file";
-import type { ThemeSettingsV3 } from "./theme-quadrone.types";
-import { ThemeQuadrone } from "./theme-quadrone.svelte";
-import { FoundryAdapter } from "src/foundry/foundry-adapter";
-import { error } from "src/utils/logging";
-import { CONSTANTS } from "src/constants";
+import { downloadTextFile, readFileAsText } from 'src/utils/file';
+import type { ThemeSettingsV3 } from './theme-quadrone.types';
+import { ThemeQuadrone } from './theme-quadrone.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { error } from 'src/utils/logging';
+import { CONSTANTS } from 'src/constants';
 
-export class ThemeQuadroneImportService {
-  static readonly CURRENT_THEME_VERSION = 2;
+export class ThemeImportService {
+  static readonly CURRENT_THEME_VERSION = 3;
+  static readonly COMPATIBLE_RANGE = {
+    min: 2,
+    max: this.CURRENT_THEME_VERSION,
+  };
 
   static async import(file: File): Promise<ThemeSettingsV3 | undefined> {
     try {
@@ -26,28 +30,35 @@ export class ThemeQuadroneImportService {
 
       const settings = foundry.utils.mergeObject(
         ThemeQuadrone.getDefaultThemeSettings(),
-        theme
+        theme,
       );
 
       ui.notifications.info(
-        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportSuccess')
+        FoundryAdapter.localize(
+          'TIDY5E.SETTINGS.Theme.Notification.ImportSuccess',
+        ),
       );
 
       return settings;
     } catch (e) {
       ui.notifications.error(
-        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportError')
+        FoundryAdapter.localize(
+          'TIDY5E.SETTINGS.Theme.Notification.ImportError',
+        ),
       );
       error(
         'An error occurred while attempting to import a theme file. See the devtools console for more details.',
         true,
-        e
+        e,
       );
     }
   }
 
   static validateImportFile(theme: ThemeSettingsV3 & { version: number }) {
-    return theme.version === this.CURRENT_THEME_VERSION;
+    return (
+      theme.version >= this.COMPATIBLE_RANGE.min &&
+      theme.version <= this.COMPATIBLE_RANGE.max
+    );
   }
 
   static async export(data: ThemeSettingsV3) {
@@ -58,7 +69,7 @@ export class ThemeQuadroneImportService {
 
     downloadTextFile(
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
-      JSON.stringify(toExport, null, ' ')
+      JSON.stringify(toExport, null, ' '),
     );
   }
 }

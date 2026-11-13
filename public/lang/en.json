@@ -132,6 +132,34 @@
     "Search": {
       "Label": "Search"
     },
+    "Theme": {
+      "AdvancedFilter": "Advanced Filter",
+      "Label": "Theme",
+      "LabelPl": "Themes",
+      "Add": "Add Theme",
+      "Delete": "Delete Theme",
+      "Compendium": "Compendium",
+      "CompendiumNone": "Non-Compendium Documents",
+      "CompendiumHint": "If no compendium is selected, then this theme applies to all relevant documents outside of compendia, such as the sidebar and unlinked tokens on the canvas.",
+      "Configure": "Configure Theme",
+      "ConfigureFilters": "Configure Filters",
+      "Name": "Theme Name",
+      "Documents": "Documents",
+      "DocumentsHint": "If no document name is selected, then this theme will apply to all documents listed here.",
+      "DocumentTypes": "Document Types",
+      "DocumentTypesHint": "If no type is selected, then this theme will apply to all types listed here.",
+      "FilterMode": "Filter Mode",
+      "FilterModeBasic": "Basic",
+      "FilterModeAdvanced": "Advanced",
+      "Folder": "Folder",
+      "FolderHint": "Folder paths must start with a slash \"\/\". For example, \"\/My Folder Path\/My Subfolder\".",
+      "ThemeMode": "Theme Mode",
+      "ThemeModeAll": "All",
+      "ThemeModeLight": "Light",
+      "ThemeModeDark": "Dark",
+      "ChooseAPreset.Title": "Choose a Preset",
+      "ChooseAPreset.Content": "Select a preset to apply to the current theme."
+    },
     "Unidentified": {
       "Placeholder": "?"
     },
@@ -612,6 +640,7 @@
         "Title": "Accent Color"
       },
       "Action": {
+        "ApplyPreset": "Apply Preset",
         "Export": "Export",
         "Import": "Import"
       },

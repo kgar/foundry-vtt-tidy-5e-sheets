@@ -5,6 +5,7 @@ import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
   TabConfiguration,
+  WorldThemesSetting,
 } from './settings.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -531,6 +532,28 @@ export function createSettings() {
         },
       },
 
+      worldThemes: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.Hint',
+          scope: 'world',
+          type: Object,
+          default: {},
+          config: false,
+          onChange: (settings: WorldThemesSetting) => {
+            CONFIG.TIDY5E.utils.theme.initWorldThemes(
+              /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
+            );
+          },
+        },
+        get() {
+          return (
+            FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
+            {}
+          );
+        },
+      },
+
       // Custom Sections
       globalCustomSections: {
         options: {
@@ -929,7 +952,6 @@ export function initSettings() {
   _settings = getCurrentSettings();
 
   ThemeQuadrone.insertTidyThemeStyleTag();
-  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
