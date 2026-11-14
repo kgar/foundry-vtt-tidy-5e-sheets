@@ -727,6 +727,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         { parent: this.item },
       );
 
+    let origins: Record<string, any> = {};
     let effects: Record<string, ActiveEffectSection> = {};
 
     for (const [key, category] of Object.entries(defaultEffects)) {
@@ -734,7 +735,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         ...category,
         effects: await category.effects.reduce(
           async (arr: ActiveEffectContext[], effect: ActiveEffect5e) => {
-            effect.updateDuration();
             const { id, name, img, disabled, duration } = effect;
             const source = await effect.getSource();
             arr = await arr;
@@ -764,8 +764,27 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
                 sheetDocument: context.document,
               }),
             });
-            if (riderIds.has(id)) riders.push(ctx);
-            else arr.push(ctx);
+
+            if (effect.system.trackRiders) {
+              const aeRelativeUuidPrefix = '.ActiveEffect.';
+
+              for (const uuid of effect.system.rider?.effects ?? []) {
+                if (!uuid.startsWith(aeRelativeUuidPrefix)) {
+                  continue;
+                }
+
+                (origins[uuid.slice(aeRelativeUuidPrefix.length)] ??= []).push(
+                  effect.id,
+                );
+              }
+            }
+
+            if (riderIds.has(id)) {
+              riders.push(ctx);
+            } else {
+              arr.push(ctx);
+            }
+
             return arr;
           },
           [],
@@ -773,7 +792,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       };
     }
 
-    const origins = (this.item.system.activities ?? [])
+    origins = (this.item.system.activities ?? [])
       .values()
       .filter((a: Activity5e) => a.metadata.hasRiders)
       .flatMap((a: any) => a.effects)
@@ -784,7 +803,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           obj[id].push(_id);
         }
         return obj;
-      }, {});
+      }, origins);
 
     riders.forEach((r) => {
       for (const origin of origins[r.id] ?? []) {
