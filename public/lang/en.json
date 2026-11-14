@@ -737,6 +737,9 @@
     "Action": {
       "AssignToClasses": "Assign Spells to Classes"
     },
+    "Antimagic": {
+      "warning": "Something is blocking all magic."
+    },
     "CastActivity": {
       "Grouping": {
         "Additional": "Additional Spells section",

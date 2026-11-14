@@ -28,9 +28,11 @@
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: Actor5e | Item5e;
+    antimagic: boolean;
   }
 
   let {
+    antimagic,
     sections,
     itemContext,
     inlineToggleService,
@@ -93,6 +95,7 @@
           {itemToggleMap}
           {sectionsInlineWidth}
           {sheetDocument}
+          {antimagic}
         />
       {/if}
     {/each}

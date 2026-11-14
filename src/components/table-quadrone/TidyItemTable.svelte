@@ -62,6 +62,7 @@
     afterImage?: Snippet<[entry: Item5e, ctx: any]>;
     afterEntryRow?: Snippet<[entry: Item5e, ctx: any]>;
     root?: boolean;
+    unavailable?: boolean;
   }
 
   let {
@@ -84,6 +85,7 @@
     headerRowClasses,
     headerRowAttributes,
     root = true,
+    unavailable,
   }: Props = $props();
 
   const searchResults = getSearchResultsContext();
@@ -120,13 +122,14 @@
     SectionVisibility.getItemSectionSearchState(entries, searchResults),
   );
 
-  // A spell section with nothing to show presents as unavailable rather than
-  // disappearing: slot-bearing ones always, the rest while searching. Sections
-  // visible only because the sheet is unlocked stay interactive for managing.
-  const unavailable = $derived(
-    section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
-      sectionSearchState.visibleItemCount === 0 &&
-      (section.usesSlots || sectionSearchState.isSearching),
+  const isUnavailable = $derived(
+    unavailable ||
+      // A spell section with nothing to show presents as unavailable rather than
+      // disappearing: slot-bearing ones always, the rest while searching. Sections
+      // visible only because the sheet is unlocked stay interactive for managing.
+      (section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK &&
+        sectionSearchState.visibleItemCount === 0 &&
+        (section.usesSlots || sectionSearchState.isSearching)),
   );
 </script>
 
@@ -135,7 +138,7 @@
   data-custom-section={section.custom ? true : null}
   dataset={section.dataset}
   expandedOverride={sectionSearchState.expandedOverride}
-  class={{ unavailable }}
+  class={{ unavailable: isUnavailable }}
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
