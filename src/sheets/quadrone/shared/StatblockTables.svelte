@@ -72,11 +72,7 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.FeatureAdd')}
       </button>
-      <CompendiumBrowseButton
-        class="button-tertiary"
-        {sheetDocument}
-        {tabId}
-      />
+      <CompendiumBrowseButton class="button-tertiary" {sheetDocument} {tabId} />
     </div>
   {:else}
     {#each sections as section (section.key)}
@@ -108,6 +104,7 @@
             {sectionsInlineWidth}
             {sheetDocument}
             tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+            antimagic={context.antimagic}
           />
         {/if}
       {/if}

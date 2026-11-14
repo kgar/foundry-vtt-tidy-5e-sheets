@@ -268,6 +268,12 @@
     </div>
   {/if}
 
+  {#if context.antimagic}
+    <div class="empty-state-container empty-state-description">
+      {FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning')}
+    </div>
+  {/if}
+
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each sections as section (section.key)}
       {#if section.type === 'inventory'}
@@ -370,6 +376,7 @@
           {section}
           {sectionsInlineWidth}
           sheetDocument={context.document}
+          antimagic={context.antimagic}
         />
       {:else if section.type === 'draft'}
         {const sectionSearchState = $derived(
