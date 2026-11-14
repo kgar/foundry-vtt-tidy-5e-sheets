@@ -823,6 +823,7 @@ export type ActorItemQuadroneContext = {
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   actor: { sheet: TSheet } & Record<string, any>;
+  antimagic: boolean;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];

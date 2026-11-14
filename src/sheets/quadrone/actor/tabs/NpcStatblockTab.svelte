@@ -64,6 +64,12 @@
 
   <SheetPins />
 
+  {#if context.antimagic}
+    <div class="empty-state-container empty-state-description">
+      {FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning')}
+    </div>
+  {/if}
+
   {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">
       {@html localize('TIDY5E.CHARACTER.Empty')}

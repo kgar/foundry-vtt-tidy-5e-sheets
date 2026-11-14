@@ -87,6 +87,12 @@
 <div class="tab-content" bind:this={tabContent}>
   <SheetPins />
 
+  {#if context.antimagic}
+    <div class="empty-state-container empty-state-description">
+      {FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning')}
+    </div>
+  {/if}
+
   <div
     class="tidy-table-container"
     {@attach observeResize(onResize)}
@@ -117,6 +123,7 @@
                 sheetDocument={context.document}
                 {sectionsInlineWidth}
                 {itemToggleMap}
+                antimagic={context.antimagic}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}

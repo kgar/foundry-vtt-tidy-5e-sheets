@@ -291,6 +291,7 @@ export function getTidy5eActorSheetQuadroneBase<
 
       let context: ActorSheetQuadroneContext = {
         actor: this.actor,
+        antimagic: this.actor.statuses.has(CONSTANTS.STATUS_ANTIMAGIC),
         appId: this.appId,
         customActorTraits: [],
         customContent: [],

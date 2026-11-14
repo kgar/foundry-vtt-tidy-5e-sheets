@@ -1860,6 +1860,18 @@ export function getTidyExtensibleDocumentSheetMixin<
         return;
       }
 
+      if (
+        activity.item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+        this.actor?.statuses.has(CONSTANTS.STATUS_ANTIMAGIC) &&
+        !FoundryAdapter.userIsGm()
+      ) {
+        ChatMessage.create({
+          content: FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning'),
+          speaker: ChatMessage.getSpeaker({ alias: this.document.name }),
+        });
+        return;
+      }
+
       await activity.use({ event, options: { sheet: this } });
     }
 
@@ -1877,6 +1889,18 @@ export function getTidyExtensibleDocumentSheetMixin<
       const { item } = this._getDocumentSubmissionInformation(target);
 
       if (!item) {
+        return;
+      }
+
+      if (
+        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+        this.actor?.statuses.has(CONSTANTS.STATUS_ANTIMAGIC) &&
+        !FoundryAdapter.userIsGm()
+      ) {
+        ChatMessage.create({
+          content: FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning'),
+          speaker: ChatMessage.getSpeaker({ alias: this.document.name }),
+        });
         return;
       }
 
