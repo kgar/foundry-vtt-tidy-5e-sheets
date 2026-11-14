@@ -55,6 +55,7 @@ import { error } from 'src/utils/logging';
 import { Rarity } from 'src/features/rarity/Rarity';
 import { Description } from 'src/features/description/Description';
 import type { EnrichmentOptions } from 'src/foundry/foundry.types';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -1285,6 +1286,21 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   /** @inheritDoc */
   _canDragDrop(selector: string) {
     return this.isEditable;
+  }
+
+  /* -------------------------------------------- */
+
+  _defaultDropBehavior(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any,
+  ): DropEffectValue {
+    const dropBehavior = super._defaultDropBehavior(event, data);
+
+    if (data?.effectType !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT) {
+      return dropBehavior;
+    }
+
+    return dropBehavior === 'copy' ? 'link' : dropBehavior;
   }
 
   /* -------------------------------------------- */
