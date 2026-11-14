@@ -1,0 +1,14 @@
+/* MODULE COMPATIBILITY
+ * Rules here don't follow our normal standards but help ensure
+ * compatibility with other modules.
+ * ------------------------------------------------------------ */
+
+/* Prevent the Monk's Little Details "Change Window Styles" background color
+ * override from wiping out sheet theme colors. */
+body.change-windows.theme-dark:not(.system-forbidden-lands)
+  .tidy5e-sheet.application:not(.theme-light):not(.image-popout):not(.prosemirror) {
+  background: var(--t5e-sheet-background);
+  background-position: var(--t5e-sheet-background-position, 0% 0%);
+  background-repeat: var(--t5e-sheet-background-repeat, repeat);
+  background-size: var(--t5e-sheet-background-size);
+}

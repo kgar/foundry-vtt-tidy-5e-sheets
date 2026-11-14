@@ -113,7 +113,8 @@
             "DecreaseNamed": "Diminuer {name}",
             "Increase": "Augmenter",
             "IncreaseNamed": "Augmenter {name}",
-            "ViewDescription": "Afficher {description}"
+            "ViewDescription": "Afficher {description}",
+            "CopyWithoutFormatting": "Copier sans mise en forme"
         },
         "BrokenLink": "Lien brisé",
         "GMOnly": {
@@ -138,7 +139,9 @@
         },
         "Warning": {
             "ActiveEffectOverride": "Cette valeur est modifiée par un effet actif et ne peut pas être modifiée."
-        }
+        },
+        "CopiedData": "Données copiées depuis {prop}",
+        "CopiedWithoutFormatting": "Texte copié sans mise en forme"
     },
     "TIDY5E.CONTAINER": {
         "Action": {
@@ -215,7 +218,11 @@
                 "Name": "Nom de L'emplacement",
                 "Notes": "Notes"
             },
-            "Title": "Espace réservé"
+            "Title": "Espace réservé",
+            "TitlePlural": "Espaces réservés"
+        },
+        "Placement": {
+            "WorldDefault": "Valeur du monde par défaut ({value})"
         }
     },
     "TIDY5E.FACILITY": {
@@ -509,6 +516,9 @@
                 },
                 "Tool": {
                     "name": "Afficher les infobulles d'outil"
+                },
+                "Favorite": {
+                    "name": "Afficher les infobulles des outils favoris du système"
                 }
             }
         },

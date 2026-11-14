@@ -11,6 +11,7 @@ Foundry v14's `@layer modules` contains Tidy's CSS above core and dnd5e. We brea
 5. **Sheets, sheet-level components, and dialogs**: `sheets.css`, `tables.css`, `header.css`, `abilities.css`, `actors.css`, `items.css`, sheet-type files, `inventory.css`, `tooltips.css`, `editors.css`, `dialogs.css`
 6. **Tabs**: `sheets/sheet-tabs/*.css`
 7. **Utilities**: `util.css` (utility classes, including the colour/font/flex utilities, and application-state rules such as `.minimized`)
+8. **Compatibility**: `sheets/compat.css` (conflict resolution for other modules' using the `modules` layer)
 
 ## Specificity
 

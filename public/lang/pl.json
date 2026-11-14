@@ -78,7 +78,12 @@
             "UseDefault": "Użyj domyślnych",
             "UseGlobalDefaults": "Użyj domyślnych ustawień globalnych",
             "CopyToClipboard": "Kopiuj do schowka",
-            "CopyWithoutFormatting": "Kopiuj bez formatowania"
+            "CopyWithoutFormatting": "Kopiuj bez formatowania",
+            "ViewDescription": "Wyświetl {description}",
+            "Decrease": "Zmniejsz",
+            "DecreaseNamed": "Zmniejsz {name}",
+            "Increase": "Zwiększ",
+            "IncreaseNamed": "Zwiększ {name}"
         },
         "BrokenLink": "Uszkodzone połączenie",
         "GMOnly": {
@@ -176,12 +181,18 @@
                 "Add": "Utwórz zastępnika dla walki",
                 "AddAll": "Dodaj wszystkich jako zastępniki",
                 "AddToTracker": "Dodaj do aktualnego spotkania jako zastępnik",
-                "Delete": "Usuń zastępnika"
+                "Delete": "Usuń zastępnika",
+                "AddAtInitiative": "Dodaj zastępnik do inicjatywy"
             },
             "Field": {
                 "Name": "Nazwa zastępnika",
                 "Notes": "Notatki"
-            }
+            },
+            "Title": "Zastępnik",
+            "TitlePlural": "Zastępniki"
+        },
+        "Placement": {
+            "WorldDefault": "Domyślne dla świata({value})"
         }
     },
     "TIDY5E.FACILITY": {
@@ -192,7 +203,8 @@
             "Label": "Stworzenia"
         },
         "Progress": {
-            "OrderAndCraft": "{orderName} - {craftingItemName}"
+            "OrderAndCraft": "{orderName} - {craftingItemName}",
+            "Label": "Postęp (dni)"
         },
         "RosterMember": {
             "Label": "{actorName} - {facilityName}"
@@ -258,6 +270,9 @@
             "Mastery": {
                 "Label": "Mistrzostwo broni: {mastery}"
             }
+        },
+        "Rarity": {
+            "Varies": "Różna rzadkość"
         }
     },
     "TIDY5E.JOURNAL": {
@@ -286,7 +301,14 @@
         },
         "Statblock": {
             "Option": {
-                "ShowLegendaryTrackers": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk"
+                "ShowLegendaryTrackers": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
+                "IncludeSpells": "Uwzględnij sekcje zaklęć w zakładce bloku statystyk"
+            }
+        },
+        "Refresh": {
+            "label": "Odśwież wszystkie przedmioty i zdolności NPC-ów",
+            "Group": {
+                "label": "Odśwież NPC-ów"
             }
         }
     },
@@ -316,7 +338,7 @@
             "FinancialSupport": "Jeśli podoba ci się Tidy 5e Sheets i chcesz wesprzeć nas finansowo, oto kilka sposobów:",
             "Github": "Czy masz pomysł na funkcję? Coś jest nie tak? Zgłoś problem przez {urlStart}Github Issue{urlEnd}.",
             "Link": {
-                "BuyMeACoffee": "{urlStart}Buy Me a Coffee{urlEnd}",
+                "BuyMeACoffee": "{urlStart}Postaw mi kawę{urlEnd}",
                 "KoFi": "{urlStart}Ko-Fi{urlEnd}"
             },
             "Localization": "{urlStart}Weblate{urlEnd}: Czy lubisz tłumaczyć treści internetowe? Tidy 5e Sheets przydałaby się twoja pomoc! Wejdź na stronę Weblate, aby zobaczyć postępy w tłumaczeniu na różne języki. Ta strona umożliwia tworzenie i modyfikacje już istniejących tłumaczeń.",
@@ -327,7 +349,7 @@
             "Defaults": {
                 "hint": "Zaktualizuj tutaj domyślne karty postaci i przedmiotów, jeśli menu Podstawowe → Domyślne karty, nie działa zgodnie z oczekiwaniami.",
                 "label": "Ustaw Tidy 5e jako domyślną kartę",
-                "name": "Ustaw TIdy jako domyślna kartę"
+                "name": "Ustaw Tidy jako domyślna kartę"
             },
             "HeaderControls": {
                 "buttonLabel": "Przyciski nagłówka",
@@ -464,6 +486,9 @@
                 },
                 "Tool": {
                     "name": "Pokaż systemowe podpowiedzi narzędzi"
+                },
+                "Favorite": {
+                    "name": "Pokaż systemowe podpowiedzi ulubionych"
                 }
             }
         },
@@ -713,6 +738,9 @@
             "Identifier": "Identyfikator klasy źródłowej",
             "IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
             "ShowUnassignedOnly": "Pokaż tylko nieprzypisane"
+        },
+        "Sections": {
+            "Title": "Sekcje zaklęć"
         }
     },
     "TIDY5E.TAB": {
@@ -809,10 +837,14 @@
                     "Hint": "Rozkazy bastionu zostaną wykonane dla wszystkich wybranych postaci. Odznacz postacie, które nie mogą wydawać rozkazów. Ich bastiony otrzymają rozkaz Utrzymanie, a realizacja trwających rozkazów dotyczących struktur nie będzie kontynuowana.",
                     "Title": "Postacie mogące wydawać rozkazy bastionu"
                 },
-                "Label": "Rozkaz utrzymania"
+                "Label": "Rozkaz utrzymania",
+                "Chat": "Wydano rozkaz utrzymania dla bastionu, {bastionName}."
             },
             "Orders": {
                 "Empty": "Żaden członek drużyny nie ma rozkazu w trakcie realizacji."
+            },
+            "ChooseFacility": {
+                "Title": "Wybierz strukturę"
             }
         }
     }

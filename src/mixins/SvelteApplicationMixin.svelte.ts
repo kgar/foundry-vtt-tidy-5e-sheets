@@ -10,7 +10,6 @@ import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import type {
   ThemeSettingsConfigurationOptions,
   ThemeSettingsV3,
@@ -21,6 +20,7 @@ import { EventHelper } from 'src/utils/events';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getTidyPerformanceSettings } from 'src/settings/settings.svelte';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { DisposablesRegistry } from '../features/resource-disposal/DisposablesRegistry';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -30,11 +30,6 @@ export type RenderResult<TContext> = {
 export type SvelteApplicationMixinInstance = InstanceType<
   ReturnType<typeof getSvelteApplicationMixin>
 >;
-
-const HEADER_CONTROLS_DROPDOWN_SELECTOR = '.controls-dropdown';
-const HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR = '.expanded';
-const HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR =
-  '[data-action="toggleControls"]';
 
 /**
  * A context-oriented Svelte mixin to provide Application V2 windows with Svelte integration.
@@ -49,12 +44,12 @@ export function getSvelteApplicationMixin<
   class SvelteApplication extends BaseApplication {
     constructor(args?: TConstructorArgs) {
       super(args);
+
+      DisposablesRegistry.disposeAll(this.id);
     }
 
     /** The component which represents the UI. */
     #components: Record<string, any>[] = [];
-
-    _hookSubscriptions: { name: string; id: unknown }[] = [];
 
     /**
      * Compatibility shim from Application V1.
@@ -136,6 +131,8 @@ export function getSvelteApplicationMixin<
         return;
       }
 
+      DisposablesRegistry.dispose(this.id, 'render');
+
       return await super.render(options, _options);
     }
 
@@ -155,42 +152,53 @@ export function getSvelteApplicationMixin<
     }
 
     async _renderFrame(options: ApplicationRenderOptions) {
-      // Clear hooks on each pass to avoid stacking duplicates
-      this._unsubscribeAllHooks();
-
       const element = await super._renderFrame(options);
 
-      EventHelper.subscribeToDynamicContentRenderEvents(element, () => {
-        this.#throttleSoftRendering();
-      });
+      const abortController = new AbortController();
+
+      EventHelper.subscribeToDynamicContentRenderEvents(
+        element,
+        () => {
+          this.#throttleSoftRendering();
+        },
+        abortController.signal,
+      );
+
+      DisposablesRegistry.register(this.id, 'close', () =>
+        abortController.abort(),
+      );
 
       this.applyTidyTheming(element);
 
       this.#trackApplicationWindowDrag(element);
 
-      this._hookSubscriptions.push({
-        name: 'updateSetting',
-        id: Hooks.on('updateSetting', (setting: any) => {
-          if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
-            debug('Tidy setting update detected. Requesting sheet re-render');
-            this.#debouncedRerenderForSettings();
-            this.applyTidyTheming();
-          }
-        }),
+      const hookId = Hooks.on('updateSetting', (setting: any) => {
+        if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
+          debug('Tidy setting update detected. Requesting sheet re-render');
+          this.#debouncedRerenderForSettings();
+          this.applyTidyTheming();
+        }
       });
+
+      DisposablesRegistry.registerHook(
+        this.id,
+        'updateSetting',
+        hookId,
+        'close',
+      );
 
       return element;
     }
 
-    _dragTrackingCleanupOnWindowClose?: () => void;
-
     #trackApplicationWindowDrag(element: HTMLElement) {
-      this._dragTrackingCleanupOnWindowClose?.();
-
       try {
         let dragging = false;
 
         const startDrag = (ev: PointerEvent) => {
+          if ((ev.target as HTMLElement)?.closest('.header-control')) {
+            return;
+          }
+
           if (ev?.button != null && ev.button !== 0) return;
 
           dragging = true;
@@ -234,10 +242,10 @@ export function getSvelteApplicationMixin<
           signal: abortController.signal,
         });
 
-        this._dragTrackingCleanupOnWindowClose = () => {
+        DisposablesRegistry.register(this.id, 'close', () => {
           abortController.abort();
           element.classList.remove('tidy-dragging');
-        };
+        });
       } catch (e) {
         error(
           'An error occurred while installing Tidy drag performance mode.',
@@ -316,16 +324,9 @@ export function getSvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      this.#abortframeListeners();
-      this._dragTrackingCleanupOnWindowClose?.();
-      this._unsubscribeAllHooks();
+      DisposablesRegistry.disposeAll(this.id);
 
       await super.close(options);
-    }
-
-    _unsubscribeAllHooks() {
-      this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
-      this._hookSubscriptions = [];
     }
 
     _tearDown(options: ApplicationClosingOptions = {}) {
@@ -339,13 +340,11 @@ export function getSvelteApplicationMixin<
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
-    themeSettingsSubscription?: Unsubscribable;
-
+    /**
+     * Attach event listeners to the Application frame
+     * once per application lifetime.
+     */
     _attachFrameListeners() {
-      // Foundry can re-run the render workflow on an open application
-      // (detach / reattach), so clear anything from a prior pass first.
-      this.#abortframeListeners();
-
       const originalContextImpl = CONFIG.ux.ContextMenu;
 
       // Tidy swaps in its Floating Context Menu for the menu header wire-up.
@@ -360,7 +359,10 @@ export function getSvelteApplicationMixin<
       }
 
       const frameListenerController = new AbortController();
-      this.#frameListenerAbortController = frameListenerController;
+
+      DisposablesRegistry.register(this.id, 'close', () => {
+        frameListenerController.abort();
+      });
 
       this.element.addEventListener(
         'plugins',
@@ -380,100 +382,16 @@ export function getSvelteApplicationMixin<
         signal: frameListenerController.signal,
       });
 
-      this.themeSettingsSubscription =
+      const themeSettingUnsubscribable =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
           this.themeConfigOptions(),
         );
 
-      try {
-        // If a controls dropdown button is clicked, close the controls dropdown.
-        this.element.addEventListener(
-          'click',
-          (ev: MouseEvent) => {
-            const target = ev.target;
-            if (!(target instanceof HTMLElement)) {
-              return;
-            }
-
-            if (target.closest(`${HEADER_CONTROLS_DROPDOWN_SELECTOR} button`)) {
-              this.toggleControls(false);
-            }
-          },
-          { signal: frameListenerController.signal },
-        );
-        this.element
-          .querySelector(HEADER_CONTROLS_DROPDOWN_SELECTOR)
-          ?.addEventListener(
-            'focusout',
-            (
-              ev: FocusEvent & {
-                currentTarget: HTMLElement;
-                relatedTarget?: HTMLElement;
-              },
-            ) => {
-              if (
-                ev.relatedTarget?.closest(
-                  `${HEADER_CONTROLS_DROPDOWN_SELECTOR}, ${HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR}`,
-                )
-              ) {
-                return;
-              }
-
-              if (
-                !ev.currentTarget.matches(
-                  HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR,
-                )
-              ) {
-                return;
-              }
-
-              this.toggleControls(false);
-            },
-            { signal: frameListenerController.signal },
-          );
-      } catch (e) {
-        error(
-          'An error occurred while attaching frame listeners for the application.',
-          false,
-          { error: e, sheet: this },
-        );
-      }
-    }
-
-    #frameListenerAbortController?: AbortController;
-
-    #abortframeListeners() {
-      this.#frameListenerAbortController?.abort();
-      this.#frameListenerAbortController = undefined;
-
-      this.themeSettingsSubscription?.unsubscribe();
-      this.themeSettingsSubscription = undefined;
-    }
-
-    /**
-     * Augments the base toggleControls with handling for closing menu when focus is lost.
-     */
-    toggleControls(expanded: boolean | undefined) {
-      super.toggleControls(expanded, { animate: false });
-
-      const controlsDropdown = this.element.querySelector(
-        HEADER_CONTROLS_DROPDOWN_SELECTOR,
+      DisposablesRegistry.register(this.id, 'close', () =>
+        themeSettingUnsubscribable.unsubscribe(),
       );
-      const menuIsExpanded = controlsDropdown?.matches(
-        HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR,
-      );
-      if (menuIsExpanded) {
-        debug('App V2 - On Menu Opened');
-        controlsDropdown.tabIndex = 0;
-        controlsDropdown.focus();
-      } else if (controlsDropdown) {
-        debug('App V2 - On Menu Closed');
-        controlsDropdown.blur();
-        controlsDropdown.tabIndex = -1;
-      }
     }
 
-    // TODO: Find a home for this:
     _updatePosition(position: ApplicationPosition) {
       const newPosition = super._updatePosition(position);
 
