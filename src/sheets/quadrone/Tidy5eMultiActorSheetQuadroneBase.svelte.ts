@@ -823,20 +823,21 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       items: Item5e[],
       options: { behavior?: DropEffectValue | null } & Record<string, any> = {},
     ) {
-      let foundNonPhysical = false;
+      let foundUnsupported = false;
       items = items.filter((item) => {
         if (
+          item.type !== CONSTANTS.ITEM_TYPE_RENOWN &&
           !item.system.constructor._schemaTemplates?.includes(
             dnd5e.dataModels.item.PhysicalItemTemplate,
           )
         ) {
-          foundNonPhysical = true;
+          foundUnsupported = true;
           return false;
         }
         return true;
       });
-      if (foundNonPhysical)
-        ui.notifications.warn('DND5E.Group.Warning.PhysicalItemOnly', {
+      if (foundUnsupported)
+        ui.notifications.warn('DND5E.Group.Warning.SupportedItemOnly', {
           localize: true,
         });
       return super._onDropCreateItems(event, items, options);
