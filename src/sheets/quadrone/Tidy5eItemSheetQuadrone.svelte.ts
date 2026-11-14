@@ -1378,6 +1378,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     currentDragData: Record<string, any> | undefined,
   ) {
+    (event as any)._behavior = this._dropBehavior(event);
     const data =
       currentDragData ??
       foundry.applications.ux.TextEditor.getDragEventData(event);
@@ -1443,9 +1444,10 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       parent: this.item,
       keepOrigin: false,
     };
+    const behavior = '_behavior' in event ? event._behavior : undefined;
 
     if (effect.type === 'enchantment') {
-      if ('_behavior' in event && event._behavior === 'link') {
+      if (behavior === 'link') {
         effectData.transfer = true;
         if (effect.parent) {
           effectData.system.origin.item = effect.parent?.uuid;
@@ -1465,7 +1467,13 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       }
     }
 
-    return ActiveEffect.create(effectData, options);
+    const created = ActiveEffect.create(effectData, options);
+
+    if (behavior === 'move' && this.item.uuid !== effect.item?.uuid) {
+      effect.delete();
+    }
+
+    return created;
   }
 
   /* -------------------------------------------- */
