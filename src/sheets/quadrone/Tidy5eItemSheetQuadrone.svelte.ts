@@ -1393,11 +1393,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     data: any,
   ): Promise<ActiveEffect5e | boolean> {
     const effect = await ActiveEffect.implementation.fromDropData(data);
+
     if (
       !this.item.isOwner ||
       !effect ||
       this.item.uuid === effect.parent?.uuid ||
-      this.item.uuid === effect.origin
+      effect.matchesOrigin(this.item.uuid)
     ) {
       return false;
     }
@@ -1409,18 +1410,24 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     };
 
     if (effect.type === 'enchantment') {
-      effectData.origin ??= effect.parent.uuid;
+      if ('_behavior' in event && event._behavior === 'link') {
+        effectData.transfer = true;
+        if (effect.parent) {
+          effectData.system.origin.item = effect.parent?.uuid;
+        }
+      }
       options.keepOrigin = true;
-      options.dnd5e = {
-        enchantmentProfile: effect.id,
-        activityId:
-          data.activityId ??
-          (effect.parent?.system.activities ?? [])
-            .values()
-            .filter((a: Activity5e) => a.metadata.hasRiders)
-            .find((a: any) => a.effects.some((e: any) => e._id === effect.id))
-            ?.id,
-      };
+      const activity = effect.parent?.system.activities?.get(data.activityId);
+      effectData.system.origin.item ??= effect.parent?.uuid;
+      if (activity && effectData.transfer) {
+        effectData.system.origin.activity = activity.uuid;
+        effectData.system.origin.profile = effect.id;
+        const errors = activity.canEnchant(this.item);
+        if (errors?.length) {
+          errors.forEach((err: Error) => ui.notifications.error(err.message));
+          return false;
+        }
+      }
     }
 
     return ActiveEffect.create(effectData, options);
