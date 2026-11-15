@@ -569,21 +569,19 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const defaultUnits = CONFIG.DND5E.encumbrance.baseUnits.default;
     const baseUnits =
       CONFIG.DND5E.encumbrance.baseUnits[actor.type] ?? defaultUnits;
-    const systemUnits = game.settings.get('dnd5e', 'metricWeightUnits')
+    const systemUnits = dnd5e.settings.metricWeightUnits
       ? 'metric'
       : 'imperial';
     return {
       pct,
-      max: dnd5e.utils.convertWeight(
-        max,
-        baseUnits[systemUnits],
-        defaultUnits[systemUnits],
-      ),
-      value: dnd5e.utils.convertWeight(
-        value,
-        baseUnits[systemUnits],
-        defaultUnits[systemUnits],
-      ),
+      max: dnd5e.utils.convertWeight(max, baseUnits[systemUnits], {
+        to: defaultUnits[systemUnits],
+        legacy: false,
+      }).value,
+      value: dnd5e.utils.convertWeight(value, baseUnits[systemUnits], {
+        to: defaultUnits[systemUnits],
+        legacy: false,
+      }).value,
     };
   }
 

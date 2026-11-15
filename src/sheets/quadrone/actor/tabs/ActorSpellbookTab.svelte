@@ -17,6 +17,7 @@
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context =
     $derived(
@@ -57,12 +58,14 @@
 <div class="tab-content">
   <SheetPins />
 
+
   <SpellTables
     sections={spellbook}
     itemContext={context.itemContext}
     {inlineToggleService}
     sheetDocument={context.actor}
     {searchCriteria}
+    antimagic={context.antimagic}
   />
 
   <ActorSpellbookFooter {tabId} />

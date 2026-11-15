@@ -31,10 +31,19 @@ import type {
   SectionColumnSpecifications,
 } from './columns.types';
 import type { ContainerContentsVisibility } from 'src/features/containers/Container';
-import type { RegisteredItemToggle } from './registry.types';
+import type { IdentifierField } from 'dnd5e.dataModels.fields';
+import type { NumberField } from 'foundry.data.fields';
+
+export type RenownProperty = {
+  type: 'renown';
+  faction: string;
+  value: number;
+};
+
+type ActiveProperty = string | RenownProperty;
 
 export type PropertyContext = {
-  active: string[];
+  active: ActiveProperty[];
   object: Record<string, true>;
   options: {
     label: string;
@@ -73,6 +82,7 @@ export type ItemSheetQuadroneContext = {
   /** The target sheet or its parent supports an aggregate/action section (e.g., action-economy Character Sheet tab or statblock NPC tab) */
   actionSectionEnabled: boolean;
   activities: ActivitySectionQuadrone[];
+  antimagic: boolean;
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementSection[];
   affectsPlaceholder: string;
@@ -137,6 +147,21 @@ export type ItemSheetQuadroneContext = {
   };
   limited: boolean;
   modernRules: boolean;
+  modifiers?: {
+    data: {
+      faction: string;
+      value: number;
+    };
+    fields: {
+      faction: IdentifierField;
+      value: NumberField;
+    };
+    options: {
+      value: string;
+      label: string;
+    }[];
+    prefix: string;
+  }[];
   options: any;
   name: ItemNameContext;
   orders?: ItemFacilityOrdersContext;
@@ -257,6 +282,7 @@ export type CurrencyContext = {
 export type ContainerSheetQuadroneContext = {
   /** The target sheet or its parent supports an aggregate/action section (e.g., action-economy Character Sheet tab or statblock NPC tab) */
   actionSectionEnabled: boolean;
+  antimagic: boolean;
   capacity: ContainerCapacityContext;
   canIdentify: boolean;
   contentsConcealedNotice: string;

@@ -6,6 +6,7 @@
     TidySectionBase,
   } from 'src/types/types';
   import ExpandCollapseButton from './ExpandCollapseButton.svelte';
+  import AntimagicWarning from './AntimagicWarning.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -58,6 +59,8 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTION_BAR}
 >
   <ExpandCollapseButton />
+
+  <AntimagicWarning variant="action-bar" />
 
   <Search bind:searchCriteria />
 

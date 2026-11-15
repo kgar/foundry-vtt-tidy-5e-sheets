@@ -24,9 +24,11 @@
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId?: string;
+    antimagic: boolean;
   }
 
   let {
+    antimagic,
     section,
     sheetDocument,
     sectionsInlineWidth,
@@ -61,9 +63,9 @@
           CONFIG.DND5E.spellPreparationStates.always.value,
       diminished:
         !entry.system.linkedActivity &&
-        entry.system.canPrepare &&
-        entry.system.prepared ===
-          CONFIG.DND5E.spellPreparationStates.unprepared.value,
+          entry.system.canPrepare &&
+          entry.system.prepared ===
+            CONFIG.DND5E.spellPreparationStates.unprepared.value,
     };
   }
 
@@ -112,6 +114,7 @@
   {rowClassFunction}
   {headerRowClasses}
   {headerRowAttributes}
+  unavailable={antimagic}
 >
   {#snippet endOfPrimaryHeaderCell()}
     {#if section.usesSlots}

@@ -117,6 +117,7 @@
                 sheetDocument={context.document}
                 {sectionsInlineWidth}
                 {itemToggleMap}
+                antimagic={context.antimagic}
               />
             {/if}
           {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}

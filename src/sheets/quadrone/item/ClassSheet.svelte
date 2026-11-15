@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from './parts/Sidebar.svelte';
@@ -90,6 +91,7 @@
       </div>
       {#if subtitle}
         <div class="subtitle">
+          <AntimagicWarning variant="subtitle" />
           {subtitle}
           {#if context.item.isOriginalClass}
             <i class="fas fa-chess-queen advancement-class-indicator"></i>

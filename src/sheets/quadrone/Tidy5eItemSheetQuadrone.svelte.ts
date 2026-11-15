@@ -55,6 +55,7 @@ import { error } from 'src/utils/logging';
 import { Rarity } from 'src/features/rarity/Rarity';
 import { Description } from 'src/features/description/Description';
 import type { EnrichmentOptions } from 'src/foundry/foundry.types';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -376,6 +377,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           ),
         },
       ],
+      antimagic: ItemContext.isSuppressedByAntimagic(this.item),
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),
@@ -443,7 +445,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       itemStatus: this._getItemStatus(),
       baseItems: {},
-      isPhysical: this.document.system.hasOwnProperty('quantity'),
+      isPhysical: this.document.system.isPhysical,
 
       // Identified state
       isIdentifiable: isIdentifiable,
@@ -726,6 +728,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         { parent: this.item },
       );
 
+    let origins: Record<string, any> = {};
     let effects: Record<string, ActiveEffectSection> = {};
 
     for (const [key, category] of Object.entries(defaultEffects)) {
@@ -733,7 +736,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         ...category,
         effects: await category.effects.reduce(
           async (arr: ActiveEffectContext[], effect: ActiveEffect5e) => {
-            effect.updateDuration();
             const { id, name, img, disabled, duration } = effect;
             const source = await effect.getSource();
             arr = await arr;
@@ -763,8 +765,27 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
                 sheetDocument: context.document,
               }),
             });
-            if (riderIds.has(id)) riders.push(ctx);
-            else arr.push(ctx);
+
+            if (effect.system.trackRiders) {
+              const aeRelativeUuidPrefix = '.ActiveEffect.';
+
+              for (const uuid of effect.system.rider?.effects ?? []) {
+                if (!uuid.startsWith(aeRelativeUuidPrefix)) {
+                  continue;
+                }
+
+                (origins[uuid.slice(aeRelativeUuidPrefix.length)] ??= []).push(
+                  effect.id,
+                );
+              }
+            }
+
+            if (riderIds.has(id)) {
+              riders.push(ctx);
+            } else {
+              arr.push(ctx);
+            }
+
             return arr;
           },
           [],
@@ -772,7 +793,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       };
     }
 
-    const origins = (this.item.system.activities?.getByType('enchant') ?? [])
+    origins = (this.item.system.activities ?? [])
+      .values()
+      .filter((a: Activity5e) => a.metadata.hasRiders)
       .flatMap((a: any) => a.effects)
       .reduce((obj: Record<string, string[]>, effect: ActiveEffect5e) => {
         const { _id, riders } = effect;
@@ -781,7 +804,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           obj[id].push(_id);
         }
         return obj;
-      }, {});
+      }, origins);
 
     riders.forEach((r) => {
       for (const origin of origins[r.id] ?? []) {
@@ -1287,6 +1310,21 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   /* -------------------------------------------- */
 
+  _defaultDropBehavior(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any,
+  ): DropEffectValue {
+    const dropBehavior = super._defaultDropBehavior(event, data);
+
+    if (data?.effectType !== CONSTANTS.EFFECT_TYPE_ENCHANTMENT) {
+      return dropBehavior;
+    }
+
+    return dropBehavior === 'copy' ? 'link' : dropBehavior;
+  }
+
+  /* -------------------------------------------- */
+
   /**
    * Handle beginning drag events on the sheet.
    * @param {DragEvent} event  The initiating drag start event.
@@ -1341,6 +1379,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     currentDragData: Record<string, any> | undefined,
   ) {
+    (event as any)._behavior = this._dropBehavior(event);
     const data =
       currentDragData ??
       foundry.applications.ux.TextEditor.getDragEventData(event);
@@ -1391,11 +1430,12 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     data: any,
   ): Promise<ActiveEffect5e | boolean> {
     const effect = await ActiveEffect.implementation.fromDropData(data);
+
     if (
       !this.item.isOwner ||
       !effect ||
       this.item.uuid === effect.parent?.uuid ||
-      this.item.uuid === effect.origin
+      effect.matchesOrigin(this.item.uuid)
     ) {
       return false;
     }
@@ -1405,22 +1445,36 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       parent: this.item,
       keepOrigin: false,
     };
+    const behavior = '_behavior' in event ? event._behavior : undefined;
 
     if (effect.type === 'enchantment') {
-      effectData.origin ??= effect.parent.uuid;
+      if (behavior === 'link') {
+        effectData.transfer = true;
+        if (effect.parent) {
+          effectData.system.origin.item = effect.parent?.uuid;
+        }
+      }
       options.keepOrigin = true;
-      options.dnd5e = {
-        enchantmentProfile: effect.id,
-        activityId:
-          data.activityId ??
-          effect.parent?.system.activities
-            ?.getByType('enchant')
-            .find((a: any) => a.effects.some((e: any) => e._id === effect.id))
-            ?.id,
-      };
+      const activity = effect.parent?.system.activities?.get(data.activityId);
+      effectData.system.origin.item ??= effect.parent?.uuid;
+      if (activity && effectData.transfer) {
+        effectData.system.origin.activity = activity.uuid;
+        effectData.system.origin.profile = effect.id;
+        const errors = activity.canEnchant(this.item);
+        if (errors?.length) {
+          errors.forEach((err: Error) => ui.notifications.error(err.message));
+          return false;
+        }
+      }
     }
 
-    return ActiveEffect.create(effectData, options);
+    const created = ActiveEffect.create(effectData, options);
+
+    if (behavior === 'move' && this.item.uuid !== effect.item?.uuid) {
+      effect.delete();
+    }
+
+    return created;
   }
 
   /* -------------------------------------------- */
@@ -1477,7 +1531,9 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       const activity = await fromUuid(data.uuid);
       const createData = activity.toObject();
       delete createData._id;
-      this.item.createActivity(activity.type, createData, { renderSheet: false });
+      this.item.createActivity(activity.type, createData, {
+        renderSheet: false,
+      });
     }
   }
 
