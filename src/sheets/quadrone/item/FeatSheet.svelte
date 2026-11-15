@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import ItemNameHeaderOrchestrator from './parts/ItemNameHeaderOrchestrator.svelte';
   import Sidebar from './parts/Sidebar.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -60,6 +61,7 @@
         <ItemName />
       </div>
       <div class="subtitle">
+        <AntimagicWarning variant="subtitle" />
         {subtitle}
       </div>
     </div>

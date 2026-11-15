@@ -693,6 +693,10 @@
       "CollapseAll": "Collapse All",
       "ExpandAll": "Expand All"
     },
+    "Antimagic": {
+      "label": "Magic Suppressed",
+      "warning": "Something is blocking all magic."
+    },
     "Class": {
       "Character": "Tidy 5e Character Sheet",
       "Container": "Tidy 5e Container Sheet",
@@ -736,9 +740,6 @@
   "TIDY5E.SPELLS": {
     "Action": {
       "AssignToClasses": "Assign Spells to Classes"
-    },
-    "Antimagic": {
-      "warning": "Something is blocking all magic."
     },
     "CastActivity": {
       "Grouping": {

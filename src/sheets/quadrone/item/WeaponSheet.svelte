@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
@@ -81,7 +82,10 @@
   >
     <ItemName />
   </div>
-  <div class="subtitle">{subtitle}</div>
+  <div class="subtitle">
+    <AntimagicWarning variant="subtitle" />
+    {subtitle}
+  </div>
 
   <!-- Header Summary -->
   <div class="item-header-summary">

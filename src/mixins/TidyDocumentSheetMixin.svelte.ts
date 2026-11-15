@@ -1866,7 +1866,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         !FoundryAdapter.userIsGm()
       ) {
         ChatMessage.create({
-          content: FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning'),
+          content: FoundryAdapter.localize('TIDY5E.SHEET.Antimagic.warning'),
           speaker: ChatMessage.getSpeaker({ alias: this.document.name }),
         });
         return;
@@ -1898,7 +1898,7 @@ export function getTidyExtensibleDocumentSheetMixin<
         !FoundryAdapter.userIsGm()
       ) {
         ChatMessage.create({
-          content: FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning'),
+          content: FoundryAdapter.localize('TIDY5E.SHEET.Antimagic.warning'),
           speaker: ChatMessage.getSpeaker({ alias: this.document.name }),
         });
         return;

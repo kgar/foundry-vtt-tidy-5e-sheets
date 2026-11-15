@@ -1,3 +1,4 @@
+import { ItemContext } from 'src/features/item/ItemContext';
 import { mount } from 'svelte';
 import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
@@ -327,6 +328,7 @@ export class Tidy5eContainerSheetQuadrone
       actionSectionEnabled: SheetSections.showActionSectionConfig(
         this.document.parent,
       ),
+      antimagic: ItemContext.isSuppressedByAntimagic(this.item),
       canIdentify: FoundryAdapter.canIdentify(this.document),
       capacity: capacityContext,
       contentsConcealedNotice: concealmentData.notice,

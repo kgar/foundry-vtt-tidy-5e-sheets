@@ -3,6 +3,22 @@ import type { Item5e } from 'src/types/item.types';
 import type { ItemSaveContext } from 'src/types/types';
 
 export class ItemContext {
+  static isSuppressedByAntimagic(item: Item5e): boolean {
+    if (!item.actor?.statuses.has(CONSTANTS.STATUS_ANTIMAGIC)) {
+      return false;
+    }
+
+    return (
+      item.type === CONSTANTS.ITEM_TYPE_SPELL ||
+      (item.type === CONSTANTS.ITEM_TYPE_CONSUMABLE &&
+        item.system.type?.value === 'scroll') ||
+      !!item.system.properties?.has('mgc') ||
+      !!item.system.activities?.some(
+        (activity: any) => activity.visibility?.requireMagic,
+      )
+    );
+  }
+
   static getItemSaveContext(item: Item5e): ItemSaveContext | undefined {
     let activitySave = {
       ...item.system.activities?.getByType(CONSTANTS.ACTIVITY_TYPE_SAVE)[0]

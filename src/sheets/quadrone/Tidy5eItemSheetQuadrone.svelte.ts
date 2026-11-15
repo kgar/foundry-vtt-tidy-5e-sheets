@@ -377,6 +377,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
           ),
         },
       ],
+      antimagic: ItemContext.isSuppressedByAntimagic(this.item),
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`,
       ),

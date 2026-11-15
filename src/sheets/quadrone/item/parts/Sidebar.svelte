@@ -188,28 +188,36 @@
 
   // General Properties
 
-  let sidebarProperties = $derived.by<string[]>(() => {
+  type SidebarProperty = { label: string; suppressed?: boolean };
+
+  let sidebarProperties = $derived.by<SidebarProperty[]>(() => {
     if (!includeSidebarProperties) {
       return [];
     }
 
-    let result: string[] = [];
+    let result: SidebarProperty[] = [];
 
     if (!isNil(proficiencyPill, '')) {
-      result.push(proficiencyPill);
+      result.push({ label: proficiencyPill });
     }
 
     if (!isNil(context.system.mastery, '')) {
-      result.push(
-        CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ??
+      result.push({
+        label:
+          CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ??
           context.system.mastery,
-      );
+      });
     }
 
     let props =
       context.labels.properties
-        ?.map((p: { label: string }) => p.label)
-        .toSorted() ?? [];
+        ?.map((p: { abbr: string; label: string }) => ({
+          label: p.label,
+          suppressed: context.antimagic && p.abbr === 'mgc',
+        }))
+        .toSorted((a: SidebarProperty, b: SidebarProperty) =>
+          a.label.localeCompare(b.label),
+        ) ?? [];
 
     result.push(...props);
 
@@ -511,8 +519,13 @@
         </h4>
         <ul class="pills stacked">
           {#each sidebarProperties as prop}
-            <li class="pill centered">
-              {prop}
+            <li
+              class={['pill centered', { 'warning': prop.suppressed }]}
+              data-tooltip={prop.suppressed
+                ? localize('TIDY5E.SHEET.Antimagic.warning')
+                : undefined}
+            >
+              {prop.label}
             </li>
           {/each}
         </ul>
@@ -697,3 +710,12 @@
     {/if}
   {/each}
 {/snippet}
+
+<style>
+  .pill.warning {
+    --text-color: var(--t5e-color-palette-yellow-100);
+    --t5e-component-pill-border: var(--t5e-color-palette-yellow-100);
+    --t5e-component-pill-background: color-mix(in oklab, var(--t5e-color-palette-orange-100) 16%, transparent);
+    cursor: help;
+  }
+</style>

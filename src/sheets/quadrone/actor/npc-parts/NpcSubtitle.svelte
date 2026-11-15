@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSpeedSenseEntryContext } from 'src/types/types';
@@ -56,6 +56,7 @@
   data-tidy-sheet-part="actor-details-row"
 >
   <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
+    <AntimagicWarning variant="subtitle" />
     {#each context.speeds as speed, i}
       {#if i > 0}
         <div class="divider-dot"></div>

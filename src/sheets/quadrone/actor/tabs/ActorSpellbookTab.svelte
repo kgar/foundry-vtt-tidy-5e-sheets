@@ -58,11 +58,6 @@
 <div class="tab-content">
   <SheetPins />
 
-  {#if context.antimagic}
-    <div class="empty-state-container empty-state-description">
-      {FoundryAdapter.localize('TIDY5E.SPELLS.Antimagic.warning')}
-    </div>
-  {/if}
 
   <SpellTables
     sections={spellbook}

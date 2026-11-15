@@ -54,7 +54,6 @@
       ['can-prepare']: entry.system.canPrepare,
       ['cannot-prepare']: !entry.system.canPrepare,
       prepared:
-        !antimagic &&
         entry.system.canPrepare &&
         entry.system.prepared ===
           CONFIG.DND5E.spellPreparationStates.prepared.value,
@@ -63,11 +62,10 @@
         entry.system.prepared ===
           CONFIG.DND5E.spellPreparationStates.always.value,
       diminished:
-        antimagic ||
-        (!entry.system.linkedActivity &&
+        !entry.system.linkedActivity &&
           entry.system.canPrepare &&
           entry.system.prepared ===
-            CONFIG.DND5E.spellPreparationStates.unprepared.value),
+            CONFIG.DND5E.spellPreparationStates.unprepared.value,
     };
   }
 

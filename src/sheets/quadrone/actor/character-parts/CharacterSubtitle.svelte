@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -51,6 +52,7 @@
   data-tidy-sheet-part="actor-details-row"
 >
   <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
+    <AntimagicWarning variant="subtitle" />
     {#each context.speeds.main as speed}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
