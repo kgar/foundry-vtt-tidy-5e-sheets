@@ -17,6 +17,7 @@
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] // TODO: Somehow clean this up and streamline the code
+- [ ] Make a nicer Apply Preset / Pick One dialog. See https://discord.com/channels/@me/1243307347682529423/1572383582071169219
 
 ### vNext Stretch Goals
 
