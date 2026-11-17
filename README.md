@@ -66,36 +66,9 @@ Or, you can still install Tidy manually via the `module.json` URL:
 
 &nbsp;
 
-## Tidy 5e Sheets UI
+## Tidy 5e Sheets has a Trailer?
 
-⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, is complete. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
-
-[![New Tidy 5e Sheets Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
-
-> [!NOTE]
-> **From kgar**:
-> Do you like what you see? Please consider thanking hightouch for giving us his time and expertise in graphic design by visiting his [ko-fi](<https://ko-fi.com/hightouch>). This is all volunteer work, but saying thanks with a cup of coffee is a gesture that goes a long way!
-> 
-> The community has been generous to me for my efforts with this module. With that said, this next chapter in Tidy's history is, in a large part, thanks to hightouch's willingness to give of himself and work with the community and me to give Tidy an amazing new look while preserving all the functional things that users have come to rely upon.
-
-| Item Sheets Progress | Actor Sheets Progress |
-| ---- | ---- |
-| ✅ Background  | ✅ Character |
-| ✅ Class  | ✅ NPC |
-| ✅ Consumable  | ✅ Group  |
-| ✅ Container  | ✅ Encounter |
-| ✅ Equipment | ✅ Vehicle |
-| ✅ Facility | |
-| ✅ Feat | |
-| ✅ Loot | |
-| ✅ Species | |
-| ✅ Spell | |
-| ✅ Subclass | |
-| ✅ Tattoo | |
-| ✅ Tool | |
-| ✅ Weapon | |
-
-&nbsp;
+[![The Tidy Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
 
 ## Character sheets
 Evocative character sheets that give players and DMs more control, with more ways of sorting, filtering, and organizing character details.

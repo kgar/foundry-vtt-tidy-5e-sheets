@@ -96,6 +96,7 @@ export const CONSTANTS = {
   ITEM_TYPE_FEAT: 'feat',
   ITEM_TYPE_LOOT: 'loot',
   ITEM_TYPE_RACE: 'race',
+  ITEM_TYPE_RENOWN: 'renown',
   ITEM_TYPE_SPELL: 'spell',
   ITEM_TYPE_SUBCLASS: 'subclass',
   ITEM_TYPE_TOOL: 'tool',
@@ -228,6 +229,7 @@ export const CONSTANTS = {
   SHEET_TYPE_CONTAINER: 'container',
   SHEET_TYPE_ITEM: 'item',
   SHEET_TYPE_ENCOUNTER: 'encounter',
+  SHEET_TYPE_FACTION: 'faction',
   SHEET_TYPE_GROUP: 'group',
   SHEET_LAYOUT_ALL: 'all',
   SHEET_LAYOUT_QUADRONE: 'quadrone',
@@ -495,6 +497,7 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
   TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-field]',
   SKILL_KEY_PERCEPTION: 'prc',
+  STATUS_ANTIMAGIC: 'antimagic',
   TREASURE_ANY: 'any',
   SVELTE_CONTEXT: {
     ACCORDION_CONTEXT: 'accordionContext',

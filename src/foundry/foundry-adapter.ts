@@ -554,7 +554,7 @@ export const FoundryAdapter = {
   getWeightUnit() {
     return FoundryAdapter.localize(
       `DND5E.UNITS.WEIGHT.${
-        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
+        dnd5e.settings.metricWeightUnits ? 'Kilogram' : 'Pound'
       }.Abbreviation`,
     );
   },

@@ -271,9 +271,9 @@
   <div class="tidy-table-container" {@attach observeResize(onResize)}>
     {#each sections as section (section.key)}
       {#if section.type === 'inventory'}
-        <!-- 
-            Only hide empty tables at the component rendering level, so that 
-            the derived hidden state doesn't propagate to the section config window. 
+        <!--
+            Only hide empty tables at the component rendering level, so that
+            the derived hidden state doesn't propagate to the section config window.
           -->
         {const emptyAndShouldHide = $derived(
           section.key === CONSTANTS.ITEM_TYPE_SPELL &&
@@ -370,6 +370,7 @@
           {section}
           {sectionsInlineWidth}
           sheetDocument={context.document}
+          antimagic={context.antimagic}
         />
       {:else if section.type === 'draft'}
         {const sectionSearchState = $derived(

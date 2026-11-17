@@ -113,14 +113,14 @@
   /* THEMES
   ------------------------------------------------------------ */
   &:where(:not(.theme-parchment)) {
-    background: var(--t5e-theme-color-header, var(--t5e-theme-color-default));
+    --t5e-sheet-background: var(--t5e-theme-color-header, var(--t5e-theme-color-default));
   }
 
   &:where(.theme-parchment) {
-    background: var(--t5e-actor-parchment-background);
-    background-position: var(--t5e-actor-parchment-background-position);
-    background-repeat: var(--t5e-actor-parchment-background-repeat);
-    background-size: var(--t5e-actor-parchment-background-size);
+    --t5e-sheet-background: var(--t5e-actor-parchment-background);
+    --t5e-sheet-background-position: var(--t5e-actor-parchment-background-position);
+    --t5e-sheet-background-repeat: var(--t5e-actor-parchment-background-repeat);
+    --t5e-sheet-background-size: var(--t5e-actor-parchment-background-size);
     --t5e-sheet-header-bg: url('../../systems/dnd5e/ui/official/banner-npc-dark.webp');
     --t5e-actor-parchment-background: var(--t5e-component-card-darker);
     --t5e-actor-parchment-background-position: initial;

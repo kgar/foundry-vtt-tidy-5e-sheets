@@ -63,6 +63,7 @@ import type {
   EffectColumnSpec,
   EncounterCombatantColumnSpec,
   EncounterMemberColumnSpec,
+  FactionMemberColumnSpec,
   GroupMemberColumnSpec,
   ItemColumnSpec,
   SectionColumnSpecifications,
@@ -70,6 +71,7 @@ import type {
   VehicleDraftAnimalColumnSpec,
   VehiclePassengerColumnSpec,
 } from './columns.types';
+import type { Tidy5eFactionSheetQuadrone } from 'src/sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -821,6 +823,7 @@ export type ActorItemQuadroneContext = {
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   actor: { sheet: TSheet } & Record<string, any>;
+  antimagic: boolean;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
@@ -1339,6 +1342,28 @@ export type GroupSheetQuadroneContext = {
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
+
+export type FactionMemberQuadroneContext = {
+  // TODO
+};
+
+export type FactionMemberSection = {
+  members: FactionMemberQuadroneContext[];
+  columns: SectionColumnSpecifications<
+    ConfiguredColumnSpecification<FactionMemberColumnSpec>
+  >;
+} & TidySectionBase;
+
+export type FactionSheetContext = {
+  members: FactionMemberSection[];
+  enriched: {
+    description: {
+      full: string;
+      summary: string;
+    };
+  };
+  // TODO
+} & MultiActorQuadroneContext<Tidy5eFactionSheetQuadrone>;
 
 export type EncounterCreatureTypeContext = {
   type: string;

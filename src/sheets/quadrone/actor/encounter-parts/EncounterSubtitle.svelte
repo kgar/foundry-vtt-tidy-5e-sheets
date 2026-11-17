@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AntimagicWarning from 'src/sheets/quadrone/shared/AntimagicWarning.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -36,6 +37,7 @@
 {/snippet}
 
 <div class="actor-subtitle separated-list" data-tidy-sheet-part="subtitle-row">
+  <AntimagicWarning variant="subtitle" />
   {#if memberCount > 0}
     <span class="members">
       <span class="color-text-gold font-label-medium"

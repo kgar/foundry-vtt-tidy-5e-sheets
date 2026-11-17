@@ -47,6 +47,7 @@ export const SYMBOLS = {
   generated: Symbol('generated'),
   readme: Symbol('readme'),
 };
+import type { Tidy5eFactionSheetQuadrone } from 'src/sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -61,10 +62,11 @@ export type TidyConfig = {
   applications: {
     actor: {
       Tidy5eCharacterSheetQuadrone: typeof Tidy5eCharacterSheetQuadrone;
+      Tidy5eEncounterSheetQuadrone: typeof Tidy5eEncounterSheetQuadrone;
+      Tidy5eFactionSheetQuadrone: typeof Tidy5eFactionSheetQuadrone;
+      Tidy5eGroupSheetQuadrone: typeof Tidy5eGroupSheetQuadrone;
       Tidy5eNpcSheetQuadrone: typeof Tidy5eNpcSheetQuadrone;
       Tidy5eVehicleSheetQuadrone: typeof Tidy5eVehicleSheetQuadrone;
-      Tidy5eGroupSheetQuadrone: typeof Tidy5eGroupSheetQuadrone;
-      Tidy5eEncounterSheetQuadrone: typeof Tidy5eEncounterSheetQuadrone;
     };
     item: {
       Tidy5eItemSheetQuadrone: typeof Tidy5eItemSheetQuadrone;

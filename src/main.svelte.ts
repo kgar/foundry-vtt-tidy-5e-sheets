@@ -1,7 +1,7 @@
 // 💡 Order of imports is important
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import './css/tidy5e.css';
-import { initSettings } from './settings/settings.svelte';
+import { initSettings, SettingsProvider } from './settings/settings.svelte';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
@@ -24,6 +24,7 @@ import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import * as registry from './registry';
 import { SYMBOLS } from './types/registry.types';
+import { Tidy5eFactionSheetQuadrone } from './sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
   initSettings();
@@ -34,6 +35,7 @@ Hooks.once('init', () => {
       actor: {
         Tidy5eCharacterSheetQuadrone: Tidy5eCharacterSheetQuadrone,
         Tidy5eEncounterSheetQuadrone: Tidy5eEncounterSheetQuadrone,
+        Tidy5eFactionSheetQuadrone: Tidy5eFactionSheetQuadrone,
         Tidy5eGroupSheetQuadrone: Tidy5eGroupSheetQuadrone,
         Tidy5eNpcSheetQuadrone: Tidy5eNpcSheetQuadrone,
         Tidy5eVehicleSheetQuadrone: Tidy5eVehicleSheetQuadrone,
@@ -78,7 +80,7 @@ Hooks.once('init', () => {
   initRuntime();
   initKeybindings();
 
-  const quadroneItemTypes = [
+  const quadroneItemTypes: string[] = [
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_CONSUMABLE,
@@ -92,6 +94,10 @@ Hooks.once('init', () => {
     CONSTANTS.ITEM_TYPE_TOOL,
     CONSTANTS.ITEM_TYPE_WEAPON,
   ];
+
+  if (SettingsProvider.settings.truesight.get()) {
+    quadroneItemTypes.push(CONSTANTS.ITEM_TYPE_RENOWN);
+  }
 
   documentSheetConfig.registerSheet(
     Item,
@@ -142,6 +148,17 @@ Hooks.once('init', () => {
       label: 'TIDY5E.SHEET.Class.Encounter',
     },
   );
+
+  if (SettingsProvider.settings.truesight.get())
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eFactionSheetQuadrone,
+      {
+        types: [CONSTANTS.SHEET_TYPE_FACTION],
+        label: 'TIDY5E.SHEET.Class.Faction',
+      },
+    );
 
   documentSheetConfig.registerSheet(
     Actor,

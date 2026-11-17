@@ -61,3 +61,5 @@
 @import 'sheets/sheet-tabs/vehicle-statblock-tab.css';
 /* Utilities */
 @import 'util.css';
+/* Module compatibility */
+@import 'sheets/compat.css';
