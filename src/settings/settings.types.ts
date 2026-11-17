@@ -74,10 +74,6 @@ export type WorldThemeSetting = {
    * It is meant to be structured like the a dnd5e system FilterDescription or a FilterDescription array.
    */
   filter?: string;
-  /**
-   * Denotes whether this theme's filters were configured in basic or advanced mode.
-   */
-  filterMode: 'basic' | 'advanced';
 };
 
 /** All of the user-configured world themes. */

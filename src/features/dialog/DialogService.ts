@@ -67,7 +67,7 @@ async function chooseFromOptions({
 
     return result;
   } catch (e) {
-    error('An error occured while managing an options dilaog.', false, {
+    error('An error occurred while managing an options dialog.', false, {
       error: e,
       title,
       message,

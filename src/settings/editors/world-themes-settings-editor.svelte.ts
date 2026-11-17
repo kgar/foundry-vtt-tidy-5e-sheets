@@ -6,21 +6,24 @@ import type {
 import type { SettingsEditor } from './settings-editors.svelte';
 import {
   getCompendia,
+  getDocumentTypeTree,
   getRarities,
   getSpellMethods,
-  getSupportedDocuments,
+  type ThemeDocumentTypeNode,
 } from './shared/theme-setting-functions';
 import { SettingsProvider } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
-  compendium?: string;
+  /** Limits the theme to compendium documents, excluding the sidebar, unlinked tokens, etc. */
+  compendiumOnly: boolean;
+  /** Compendium pack IDs whose documents are included. */
+  compendia: string[];
   themeMode?: string;
 };
 
@@ -36,14 +39,138 @@ export type WorldThemesSettingsEditor =
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
-    supportedDocuments: { text: string; value: string }[];
+    addCompendium(packId: string): void;
+    removeCompendium(packId: string): void;
+    documentTypeTree: ThemeDocumentTypeNode[];
     applyBasicFilters(): void;
-    clearFilter(): void;
+    setFilter(filter: string | undefined): void;
     selectTheme(id: string | undefined): void;
+    /** Returns to the theme list. */
+    closeTheme(): void;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
-    get availableTypes(): { text: string; value: string }[];
     get updateSignal(): string;
   };
+
+/** Trims, ensures a leading slash, and drops trailing slashes. Returns '' for no folder. */
+function normalizeFolderPath(path: string): string {
+  const trimmed = path.trim().replace(/\/+$/, '');
+  if (!trimmed) {
+    return '';
+  }
+  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+}
+
+/**
+ * Matches the folder itself or anything nested beneath it.
+ * The trailing slash on the prefix keeps "/Goblins" from matching a sibling like "/Goblins Elite".
+ */
+function buildFolderFilter(folder: string): FilterDescription {
+  return {
+    o: 'OR',
+    v: [
+      { k: 'folder', v: folder },
+      { k: 'folder', o: 'startswith', v: `${folder}/` },
+    ],
+  };
+}
+
+function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
+  const filter: FilterDescription[] = [];
+
+  const folder = normalizeFolderPath(entry.folder);
+  if (folder) {
+    filter.push(buildFolderFilter(folder));
+  }
+
+  if (entry.themeMode) {
+    filter.push({ k: 'themeMode', v: entry.themeMode });
+  }
+
+  // Document sources are alternatives. `compendiumOnly` without any choices applies to all compendia.
+  const sources: FilterDescription[] = [
+    ...(entry.compendiumOnly ? [] : [{ k: 'document.inCompendium', v: false }]),
+    ...entry.compendia.map((packId) => ({ k: 'document.pack', v: packId })),
+  ];
+
+  if (entry.compendiumOnly && !sources.length) {
+    sources.push({ k: 'document.inCompendium', v: true });
+  }
+
+  if (sources.length === 1) {
+    filter.push(sources[0]);
+  } else if (sources.length > 1) {
+    filter.push({ o: 'OR', v: sources });
+  }
+
+  return filter;
+}
+
+const documentSourceKeys = new Set(['document.inCompendium', 'document.pack']);
+
+function toFilterList(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): FilterDescription[] {
+  return Array.isArray(filter) ? filter : filter ? [filter] : [];
+}
+
+/** Reads the document source fields back out of a basic filter. */
+function findDocumentSources(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): Pick<WorldThemeSettingEntry, 'compendiumOnly' | 'compendia'> {
+  const entries = toFilterList(filter);
+
+  const sources = entries.flatMap((entry) => {
+    if (entry.k && documentSourceKeys.has(entry.k)) {
+      return [entry];
+    }
+
+    const isSourceGroup =
+      entry.o === 'OR' &&
+      Array.isArray(entry.v) &&
+      entry.v.every(
+        (f: FilterDescription) => !!f.k && documentSourceKeys.has(f.k),
+      );
+
+    return isSourceGroup ? (entry.v as FilterDescription[]) : [];
+  });
+
+  return {
+    compendiumOnly:
+      sources.length > 0 &&
+      !sources.some((f) => f.k === 'document.inCompendium' && f.v === false),
+    compendia: sources
+      .filter((f) => f.k === 'document.pack' && typeof f.v === 'string')
+      .map((f) => f.v),
+  };
+}
+
+function stringifyBasicFilter(entry: WorldThemeSettingEntry): string {
+  return JSON.stringify(buildBasicFilter(entry), null, '  ');
+}
+
+/**
+ * Finds the value for a key in a basic filter.
+ * Also checks inside OR groups, which is where the folder check lives.
+ */
+function findBasicFilterValue(
+  filter: FilterDescription | FilterDescription[] | undefined,
+  key: string,
+): any {
+  for (const entry of toFilterList(filter)) {
+    if (entry.k === key) {
+      return entry.v;
+    }
+
+    if (entry.o === 'OR' && Array.isArray(entry.v)) {
+      const nested = entry.v.find((f: FilterDescription) => f.k === key);
+      if (nested) {
+        return nested.v;
+      }
+    }
+  }
+
+  return undefined;
+}
 
 export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   const current = $state<WorldThemesSettingsContext>(getSettings());
@@ -54,29 +181,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return settings.toSorted((a, b) => a.sort - b.sort)[0];
   }
 
-  let selectedTheme = $state<WorldThemeSettingEntry | undefined>(
-    getFirstItemBySort(current.settings),
-  );
-
-  const typeDenylist = new Set(['base', 'backpack']);
-
-  const availableTypes = $derived(
-    (selectedTheme?.documentNames ?? [])
-      .flatMap(
-        (docName: any) =>
-          foundry.documents[docName]?.TYPES.filter(
-            (t: string) =>
-              !!CONFIG[docName as keyof typeof CONFIG]?.typeLabels[t] &&
-              !typeDenylist.has(t),
-          ).map((t: string) => ({
-            text: FoundryAdapter.localize(
-              CONFIG[docName as keyof typeof CONFIG].typeLabels[t],
-            ),
-            value: t,
-          })) ?? [],
-      )
-      .sort((a, b) => a.text.localeCompare(b.text)),
-  );
+  let selectedTheme = $state<WorldThemeSettingEntry | undefined>();
 
   let updateSignal = $state(foundry.utils.randomID());
 
@@ -95,7 +200,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const formData: WorldThemeSettingEntry = {
         ...setting,
         folder: '',
-        compendium: undefined,
+        compendiumOnly: false,
+        compendia: [],
         themeMode: undefined,
       };
 
@@ -128,10 +234,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
-      const changed: WorldThemeSetting = foundry.utils.duplicate(curr);
+      const { folder, compendiumOnly, compendia, themeMode, ...changed } =
+        foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
       changed.filter = nilToUndefined(changed.filter);
-      changed.types =
-        changed.types && changed.types.length > 0 ? changed.types : undefined;
+      changed.documentNames = changed.documentNames?.length
+        ? changed.documentNames
+        : undefined;
+      changed.types = changed.types?.length ? changed.types : undefined;
       changed.settings = removeEmptyProperties(changed.settings);
 
       prev[curr.id] = changed;
@@ -140,46 +249,31 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     }, {});
   }
 
-  function refreshBasicFilterFields(selectedTheme: WorldThemeSettingEntry) {
-    if (selectedTheme.filterMode === 'basic' && !!selectedTheme.filter) {
-      let filter: FilterDescription | FilterDescription[] | undefined =
-        undefined;
-      try {
-        filter = JSON.parse(selectedTheme.filter);
-      } catch {
-        // Failure is an option. Ignore.
-      }
-
-      // TODO: Somehow clean this up and streamline the code
-      // so it's easy to maintain and expand.
-      // Populate Folder input as facade over filter
-      selectedTheme.folder =
-        filter && Array.isArray(filter)
-          ? (filter.find((f) => f.k === 'folder')?.v ?? '')
-          : typeof filter === 'object' && filter.k === 'folder'
-            ? (filter.v ?? '')
-            : '';
-
-      // Populate Theme Mode input as facade over filter
-      selectedTheme.themeMode =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'themeMode')?.v
-          : typeof filter === 'object' && filter.k === 'themeMode'
-            ? filter.v
-            : undefined;
-
-      // Populate Compendium input as facade over filter
-      selectedTheme.compendium =
-        filter && Array.isArray(filter)
-          ? filter.find((f) => f.k === 'document.pack')?.v
-          : typeof filter === 'object' && filter.k === 'document.pack'
-            ? filter.v
-            : undefined;
-    } else {
-      selectedTheme.folder = '';
-      selectedTheme.themeMode = undefined;
-      selectedTheme.compendium = undefined;
+  function parseFilter(
+    raw: string | undefined,
+  ): FilterDescription | FilterDescription[] | undefined {
+    if (!raw) {
+      return undefined;
     }
+
+    try {
+      return JSON.parse(raw);
+    } catch {
+      // Failure is an option. Ignore.
+      return undefined;
+    }
+  }
+
+  /** Populates the basic inputs as a facade over the filter, as best it can. */
+  function refreshBasicFilterFields(
+    entry: WorldThemeSettingEntry,
+    filter = parseFilter(entry.filter),
+  ) {
+    entry.folder = findBasicFilterValue(filter, 'folder') ?? '';
+    entry.themeMode = findBasicFilterValue(filter, 'themeMode');
+    const sources = findDocumentSources(filter);
+    entry.compendiumOnly = sources.compendiumOnly;
+    entry.compendia = sources.compendia;
   }
 
   return {
@@ -217,8 +311,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       const settingId = foundry.utils.randomID();
 
-      this.value.settings.push({
-        filterMode: 'basic',
+      const entry: WorldThemeSettingEntry = {
         id: settingId,
         name: 'TODO: New Name Here',
         settings: ThemeQuadrone.getDefaultThemeSettings(),
@@ -227,9 +320,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filter: undefined,
         types: [],
         folder: '',
-        compendium: undefined,
+        compendiumOnly: false,
+        compendia: [],
         themeMode: undefined,
-      });
+      };
+      entry.filter = stringifyBasicFilter(entry);
+
+      this.value.settings.push(entry);
 
       this.selectTheme(settingId);
     },
@@ -239,41 +336,17 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const filter: FilterDescription[] = [];
-
-      if (selectedTheme.folder.trim() !== '') {
-        filter.push({
-          k: 'folder',
-          v: selectedTheme.folder,
-        });
-      }
-
-      if (selectedTheme.themeMode) {
-        filter.push({
-          k: 'themeMode',
-          v: selectedTheme.themeMode,
-        });
-      }
-
-      if (selectedTheme.compendium) {
-        filter.push({
-          k: 'document.pack',
-          v: selectedTheme.compendium,
-        });
-      }
-
-      selectedTheme.filter = JSON.stringify(filter, null, '  ');
+      selectedTheme.filter = stringifyBasicFilter(selectedTheme);
     },
 
-    clearFilter() {
+    setFilter(filter: string | undefined) {
       if (!selectedTheme) {
         return;
       }
 
-      selectedTheme.filter = undefined;
-      selectedTheme.themeMode = undefined;
-      selectedTheme.compendium = undefined;
-      selectedTheme.folder = '';
+      selectedTheme.filter = filter?.trim() || undefined;
+
+      refreshBasicFilterFields(selectedTheme);
     },
 
     deleteTheme(id: string): any {
@@ -287,7 +360,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         this.value.settings[i].sort = i + 1;
       }
 
-      this.selectTheme(selectedId);
+      // Go back to the theme list after deleting.
+      selectedTheme = this.value.settings.find((t) => t.id === selectedId);
     },
 
     rarities: getRarities(),
@@ -296,8 +370,28 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
     compendia: getCompendia(),
 
-    get availableTypes() {
-      return availableTypes;
+    addCompendium(packId: string) {
+      if (
+        !selectedTheme ||
+        !packId ||
+        selectedTheme.compendia.includes(packId)
+      ) {
+        return;
+      }
+
+      selectedTheme.compendia = [...selectedTheme.compendia, packId];
+      this.applyBasicFilters();
+    },
+
+    removeCompendium(packId: string) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.compendia = selectedTheme.compendia.filter(
+        (c) => c !== packId,
+      );
+      this.applyBasicFilters();
     },
 
     get hasChanges() {
@@ -324,13 +418,17 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       selectedTheme = themeOfId ?? fallback;
     },
 
+    closeTheme() {
+      selectedTheme = undefined;
+    },
+
     async save() {
       const toSave = mapContextToChangedSettings(this.value);
 
       game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
     },
 
-    supportedDocuments: getSupportedDocuments(),
+    documentTypeTree: getDocumentTypeTree(),
 
     undoChanges() {
       if (!selectedTheme) {
@@ -375,10 +473,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     set value(value) {
-      const keys = Object.keys(
-        current.settings,
-      ) as (keyof WorldThemesSettingsContext['settings'])[];
-
       current.settings = [...value.settings];
     },
   };

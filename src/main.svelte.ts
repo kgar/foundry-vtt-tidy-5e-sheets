@@ -59,9 +59,7 @@ Hooks.once('init', () => {
       rowActions: registry.getRowActionPartitions(),
     },
     symbols: SYMBOLS,
-    worldThemes: {
-      
-    },
+    worldThemes: {},
     utils: registry.getUtils(),
   };
 
