@@ -37,8 +37,8 @@ export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
     promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
-    applyPreset(themeToOverride?: WorldThemeSetting): Promise<void>;
     deleteTheme(id: string): any;
+    duplicate(theme: WorldThemeSetting): any;
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
@@ -307,23 +307,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       return this.value.settings.find((s) => s.id === selectedId);
     },
 
-    async applyPreset(themeToOverride?: WorldThemeSetting): Promise<void> {
-      themeToOverride ??= selectedTheme;
-      if (!themeToOverride?.settings) {
-        return;
-      }
-
-      const preset = await this.promptForThemePreset();
-
-      if (!preset) {
-        return;
-      }
-
-      const snapshot = $state.snapshot(preset.settings);
-
-      themeToOverride.settings = snapshot;
-    },
-
     addTheme(): any {
       const maxSort = this.value.settings.reduce(
         (prev, curr) => Math.max(prev, curr.sort),
@@ -335,7 +318,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const entry: WorldThemeSettingEntry = {
         filterMode: 'basic',
         id: settingId,
-        name: 'TODO: New Name Here',
+        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.NewTheme'),
         settings: ThemeQuadrone.getDefaultThemeSettings(),
         sort: maxSort + 1,
         documentNames: [],
@@ -349,8 +332,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       entry.filter = stringifyBasicFilter(entry);
 
       this.value.settings.push(entry);
-
-      this.selectTheme(settingId);
 
       return entry;
     },
@@ -399,6 +380,24 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         { signal: abortController.signal },
       );
       elem.click();
+    },
+
+    async duplicate(theme: WorldThemeSetting) {
+      const newTheme = this.addTheme();
+      const { sort, id, ...rest } = theme;
+
+      foundry.utils.mergeObject(newTheme, {
+        ...rest,
+        name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+          name: rest.name,
+        }),
+      });
+
+      console.log(selectedTheme);
+
+      if (selectedTheme) {
+        selectedTheme = newTheme;
+      }
     },
 
     async export(themeToExport?: WorldThemeSetting) {
@@ -475,18 +474,17 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     deleteTheme(id: string): any {
-      const selectedId = this.selectedTheme?.id;
-
       this.value.settings = this.value.settings
         .filter((t) => t.id !== id)
         .sort((a, b) => a.sort - b.sort);
 
+      // Renumber the sort.
       for (let i = 0; i < this.value.settings.length; i++) {
         this.value.settings[i].sort = i + 1;
       }
 
       // Go back to the theme list after deleting.
-      selectedTheme = this.value.settings.find((t) => t.id === selectedId);
+      this.closeTheme();
     },
 
     rarities: getRarities(),

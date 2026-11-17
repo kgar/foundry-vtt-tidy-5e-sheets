@@ -7,9 +7,6 @@
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import Tabs, { type TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
-  import ImportButton from '../theme/parts/ImportButton.svelte';
-  import { ThemeImportService } from 'src/theme/theme-import-service';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import {
     getAppliesToSummary,
     getEffectiveTypeSelection,
@@ -149,6 +146,14 @@
           <button
             type="button"
             class="button"
+            onclick={() => app.duplicate(selectedTheme)}
+          >
+            <i class="fa-solid fa-copy"></i>
+            {localize('DND5E.ContextMenuActionDuplicate')}
+          </button>
+          <button
+            type="button"
+            class="button"
             onclick={() => app.import(selectedTheme)}
           >
             <i class="fa-solid fa-file-import"></i>
@@ -210,16 +215,6 @@
 
       {#if currentSubTabId === 'theme'}
         <div class="flex1">
-          <div>
-            <button
-              type="button"
-              class="button"
-              onclick={() => app.applyPreset()}
-            >
-              <i class="fa-solid fa-sliders"></i>
-              {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
-            </button>
-          </div>
           <ThemeSettings3
             bind:settings={selectedTheme.settings}
             rarities={app.rarities}
@@ -240,9 +235,22 @@
         </div>
       {/if}
     {:else}
-      <h2 class="world-theme-list-header">
-        {localize('TIDY5E.COMMON.Theme.LabelPl')}
-      </h2>
+      <div class="flexrow">
+        <h2 class="world-theme-list-header">
+          {localize('TIDY5E.COMMON.Theme.LabelPl')}
+        </h2>
+        <button
+          type="button"
+          class="button button-primary flexshrink"
+          onclick={() => {
+            const theme = app.addTheme();
+            app.selectTheme(theme.id);
+          }}
+        >
+          <i class="fa-solid fa-plus"></i>
+          {localize('TIDY5E.COMMON.Theme.Add')}
+        </button>
+      </div>
       <p class="hint flexshrink">
         {localize('TIDY5E.COMMON.Theme.SortHint')}
       </p>
@@ -277,16 +285,6 @@
           </li>
         {/each}
       </ol>
-      <div>
-        <button
-          type="button"
-          class="button button-primary"
-          onclick={() => app.addTheme()}
-        >
-          <i class="fa-solid fa-plus"></i>
-          {localize('TIDY5E.COMMON.Theme.Add')}
-        </button>
-      </div>
     {/if}
   </div>
 {/key}

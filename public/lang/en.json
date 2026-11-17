@@ -141,6 +141,7 @@
       "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",
       "BasicFilterConfirmText": "Reverting back to basic filter controls will clear the current filter.",
       "SortHint": "Drag and drop themes into priority order. The theme nearest to the top whose filters match the target sheet will be used.",
+      "NewTheme": "New Theme",
       "Label": "Theme",
       "LabelPl": "Themes",
       "Add": "Add Theme",

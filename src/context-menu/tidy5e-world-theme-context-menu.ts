@@ -39,40 +39,10 @@ function getWorldThemeContextOptions(
 ): ContextMenuEntry[] {
   return [
     {
-      label: 'TIDY5E.SETTINGS.Theme.Action.ApplyPreset',
-      icon: 'fa-solid fa-sliders',
-      onClick: (event, target) => {
-        app.editors.themesSettingsTab.applyPreset(theme);
-      },
-      group: 'common',
-    },
-    {
       label: 'DND5E.ContextMenuActionDuplicate',
       icon: 'fa-solid fa-copy fa-fw',
       onClick: (event, target) => {
-        const duplicatedId = theme.id;
-        const newTheme = {
-          ...foundry.utils.duplicate(theme),
-          id: foundry.utils.randomID(),
-        };
-
-        let count = 0;
-        app.editors.themesSettingsTab.value.settings =
-          app.editors.themesSettingsTab.value.settings.reduce<
-            WorldThemeSettingEntry[]
-          >((prev, curr) => {
-            count++;
-            curr.sort = count;
-            prev.push(curr);
-
-            if (curr.id === duplicatedId) {
-              count++;
-              newTheme.sort = count;
-              prev.push(newTheme);
-            }
-
-            return prev;
-          }, []);
+        app.editors.themesSettingsTab.duplicate(theme);
       },
       group: 'common',
     },
