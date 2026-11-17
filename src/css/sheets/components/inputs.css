@@ -199,7 +199,12 @@
 
       &.empty {
         color: var(--t5e-color-text-disabled);
+        align-content: center;
       }
+    }
+    
+    button[disabled] {
+      display: none;
     }
 
     button.icon {

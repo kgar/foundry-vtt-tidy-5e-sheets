@@ -135,6 +135,11 @@
     "Theme": {
       "AdvancedFilter": "Advanced Filter",
       "AdvancedFilterHint": "Updated from the fields above as you make changes. You can edit the filter directly, but changing a field above will replace your edits.",
+      "AdvancedFilterCustomHint": "This filter has been customized and will be saved as-is.",
+      "AdvancedFilterButton": "Use Advanced Filter",
+      "BasicFilterButton": "Use Basic Filter",
+      "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",
+      "BasicFilterConfirmText": "Reverting back to basic filter controls will clear the current filter.",
       "Label": "Theme",
       "LabelPl": "Themes",
       "Add": "Add Theme",

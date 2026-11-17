@@ -97,111 +97,114 @@
     {localize('TIDY5E.FILTER.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
-  <div class="form-group">
-    <label for="{idPrefix}-folder"
-      >{localize('TIDY5E.COMMON.Theme.Folder')}</label
-    >
-    <div class="form-fields">
-      <input
-        id="{idPrefix}-folder"
-        type="text"
-        bind:value={selectedTheme.folder}
-        onchange={app.applyBasicFilters}
-      />
-    </div>
-    <p class="hint">{localize('TIDY5E.COMMON.Theme.FolderHint')}</p>
-  </div>
-  <div class="form-group">
-    <label for="{idPrefix}-compendium-only">
-      {localize('TIDY5E.COMMON.Theme.CompendiumOnly')}
-    </label>
-    <div class="form-fields">
-      <input
-        type="checkbox"
-        id="{idPrefix}-compendium-only"
-        checked={selectedTheme.compendiumOnly}
-        onchange={(ev) => {
-          selectedTheme.compendiumOnly = ev.currentTarget.checked;
-          app.applyBasicFilters();
-        }}
-      />
-    </div>
-    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiumHint')}</p>
-  </div>
-  <div class="form-group">
-    <label for="{idPrefix}-add-compendium">
-      {localize('TIDY5E.COMMON.Theme.Compendia')}
-    </label>
-    <div class="form-fields vertical theme-compendia">
-      {#each selectedTheme.compendia as packId (packId)}
-        <div class="theme-compendia-row">
-          <span class="theme-compendia-row-name">
-            {compendiumLabels.get(packId) ?? packId}
-          </span>
-          <button
-            type="button"
-            class="button button-icon-only button-borderless"
-            aria-label={localize('TIDY5E.COMMON.Theme.RemoveCompendium')}
-            data-tooltip
-            onclick={() => app.removeCompendium(packId)}
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      {/each}
-      <select
-        id="{idPrefix}-add-compendium"
-        value=""
-        onchange={(ev) => {
-          app.addCompendium(ev.currentTarget.value);
-          ev.currentTarget.value = '';
-        }}
+  {#if selectedTheme.filterMode === 'basic'}
+    <div class="form-group">
+      <label for="{idPrefix}-folder"
+        >{localize('TIDY5E.COMMON.Theme.Folder')}</label
       >
-        <option value="" disabled>
-          {localize('TIDY5E.COMMON.Theme.AddCompendium')}
-        </option>
-        {#each availableCompendia as c (c.value)}
-          <option value={c.value}>{c.text}</option>
+      <div class="form-fields">
+        <input
+          id="{idPrefix}-folder"
+          type="text"
+          bind:value={selectedTheme.folder}
+          onchange={app.applyBasicFilters}
+        />
+      </div>
+      <p class="hint">{localize('TIDY5E.COMMON.Theme.FolderHint')}</p>
+    </div>
+    <div class="form-group">
+      <label for="{idPrefix}-compendium-only">
+        {localize('TIDY5E.COMMON.Theme.CompendiumOnly')}
+      </label>
+      <div class="form-fields">
+        <input
+          type="checkbox"
+          id="{idPrefix}-compendium-only"
+          checked={selectedTheme.compendiumOnly}
+          onchange={(ev) => {
+            selectedTheme.compendiumOnly = ev.currentTarget.checked;
+            app.applyBasicFilters();
+          }}
+        />
+      </div>
+      <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiumHint')}</p>
+    </div>
+    <div class="form-group">
+      <label for="{idPrefix}-add-compendium">
+        {localize('TIDY5E.COMMON.Theme.Compendia')}
+      </label>
+      <div class="form-fields vertical theme-compendia">
+        {#each selectedTheme.compendia as packId (packId)}
+          <div class="theme-compendia-row">
+            <span class="theme-compendia-row-name">
+              {compendiumLabels.get(packId) ?? packId}
+            </span>
+            <button
+              type="button"
+              class="button button-icon-only button-borderless"
+              aria-label={localize('TIDY5E.COMMON.Theme.RemoveCompendium')}
+              data-tooltip
+              onclick={() => app.removeCompendium(packId)}
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
         {/each}
-      </select>
+        <select
+          id="{idPrefix}-add-compendium"
+          value=""
+          onchange={(ev) => {
+            app.addCompendium(ev.currentTarget.value);
+            ev.currentTarget.value = '';
+          }}
+        >
+          <option value="" disabled>
+            {localize('TIDY5E.COMMON.Theme.AddCompendium')}
+          </option>
+          {#each availableCompendia as c (c.value)}
+            <option value={c.value}>{c.text}</option>
+          {/each}
+        </select>
+      </div>
+      <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiaHint')}</p>
     </div>
-    <p class="hint">{localize('TIDY5E.COMMON.Theme.CompendiaHint')}</p>
-  </div>
-  <div class="form-group">
-    <label>{localize('TIDY5E.COMMON.Theme.ThemeMode')}</label>
-    <div class="form-fields vertical">
-      <label class="radio">
-        <input
-          type="radio"
-          onchange={app.applyBasicFilters}
-          bind:group={selectedTheme.themeMode}
-          value={undefined}
-        />
-        {localize('TIDY5E.COMMON.Theme.ThemeModeAll')}
-      </label>
-      <label class="radio">
-        <input
-          type="radio"
-          onchange={app.applyBasicFilters}
-          bind:group={selectedTheme.themeMode}
-          value="light"
-        />
-        {localize('SETTINGS.UI.FIELDS.colorScheme.choices.light')}
-      </label>
-      <label class="radio">
-        <input
-          type="radio"
-          onchange={app.applyBasicFilters}
-          bind:group={selectedTheme.themeMode}
-          value="dark"
-        />
-        {localize('SETTINGS.UI.FIELDS.colorScheme.choices.dark')}
-      </label>
-      <p class="hint">
-        {localize('TIDY5E.COMMON.Theme.ThemeModeHint')}
-      </p>
+    <div class="form-group">
+      <label>{localize('TIDY5E.COMMON.Theme.ThemeMode')}</label>
+      <div class="form-fields vertical">
+        <label class="radio">
+          <input
+            type="radio"
+            onchange={app.applyBasicFilters}
+            bind:group={selectedTheme.themeMode}
+            value={undefined}
+          />
+          {localize('TIDY5E.COMMON.Theme.ThemeModeAll')}
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            onchange={app.applyBasicFilters}
+            bind:group={selectedTheme.themeMode}
+            value="light"
+          />
+          {localize('SETTINGS.UI.FIELDS.colorScheme.choices.light')}
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            onchange={app.applyBasicFilters}
+            bind:group={selectedTheme.themeMode}
+            value="dark"
+          />
+          {localize('SETTINGS.UI.FIELDS.colorScheme.choices.dark')}
+        </label>
+        <p class="hint">
+          {localize('TIDY5E.COMMON.Theme.ThemeModeHint')}
+        </p>
+      </div>
     </div>
-  </div>
+  {/if}
+
   <div class="form-group stacked">
     <label for="{idPrefix}-advanced-filter">
       {localize('TIDY5E.COMMON.Theme.AdvancedFilter')}
@@ -211,10 +214,36 @@
         <filters-input
           id="{idPrefix}-advanced-filter"
           onchange={(e: any) => app.setFilter(e.target.value)}
-          >{selectedTheme.filter}</filters-input
+          disabled={selectedTheme.filterMode === 'basic'}
+          onsubmit={(event: any) => {
+            event.preventDefault();
+          }}>{selectedTheme.filter}</filters-input
         >
       </div>
     {/key}
-    <p class="hint">{localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}</p>
+    <p class="hint">
+      {selectedTheme.filterMode === 'advanced'
+        ? localize('TIDY5E.COMMON.Theme.AdvancedFilterCustomHint')
+        : localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}
+    </p>
+    {#if selectedTheme.filterMode === 'basic'}
+      <button
+        type="button"
+        class="button"
+        onclick={() => app.changeFilterMode('advanced')}
+      >
+        <a class="fa-solid fa-sliders"></a>
+        {localize('TIDY5E.COMMON.Theme.AdvancedFilterButton')}
+      </button>
+    {:else if selectedTheme.filterMode === 'advanced'}
+      <button
+        type="button"
+        class="button"
+        onclick={() => app.changeFilterMode('basic')}
+      >
+        <a class="fa-solid fa-slider-circle"></a>
+        {localize('TIDY5E.COMMON.Theme.BasicFilterButton')}
+      </button>
+    {/if}
   </div>
 </fieldset>

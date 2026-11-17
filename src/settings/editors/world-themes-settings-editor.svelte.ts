@@ -17,6 +17,7 @@ import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -47,6 +48,7 @@ export type WorldThemesSettingsEditor =
     selectTheme(id: string | undefined): void;
     /** Returns to the theme list. */
     closeTheme(): void;
+    changeFilterMode(filterMode: WorldThemeSetting['filterMode']): Promise<any>;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
     get updateSignal(): string;
   };
@@ -207,6 +209,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       refreshBasicFilterFields(formData);
 
+      if (formData.filterMode === 'basic') {
+        formData.filter = stringifyBasicFilter(formData);
+      }
+
       return formData;
     });
 
@@ -237,6 +243,12 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
       changed.filter = nilToUndefined(changed.filter);
+      // Basic mode always regenerates the filter from its fields, so new or
+      // cleared themes still get the default "Non-Compendium Documents" scope.
+      changed.filter =
+        curr.filterMode === 'basic'
+          ? stringifyBasicFilter(curr)
+          : nilToUndefined(changed.filter);
       changed.documentNames = changed.documentNames?.length
         ? changed.documentNames
         : undefined;
@@ -312,6 +324,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       const settingId = foundry.utils.randomID();
 
       const entry: WorldThemeSettingEntry = {
+        filterMode: 'basic',
         id: settingId,
         name: 'TODO: New Name Here',
         settings: ThemeQuadrone.getDefaultThemeSettings(),
@@ -336,6 +349,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
+      selectedTheme.filterMode = 'basic';
       selectedTheme.filter = stringifyBasicFilter(selectedTheme);
     },
 
@@ -346,7 +360,49 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       selectedTheme.filter = filter?.trim() || undefined;
 
-      refreshBasicFilterFields(selectedTheme);
+      if (selectedTheme.filterMode === 'advanced') {
+        return;
+      }
+
+      const parsed = parseFilter(selectedTheme.filter);
+      refreshBasicFilterFields(selectedTheme, parsed);
+
+      // If the fields can reproduce this filter exactly, keep them in charge.
+      // Otherwise it's a custom filter, saved as-is until a field is changed.
+      const reproducible =
+        !!parsed &&
+        JSON.stringify(buildBasicFilter(selectedTheme)) ===
+          JSON.stringify(parsed);
+
+      selectedTheme.filterMode = reproducible ? 'basic' : 'advanced';
+    },
+
+    async changeFilterMode(
+      filterMode: WorldThemeSetting['filterMode'],
+    ): Promise<any> {
+      if (!selectedTheme) {
+        return;
+      }
+
+      if (filterMode === 'basic') {
+        const proceed = await foundry.applications.api.DialogV2.confirm({
+          window: {
+            title: FoundryAdapter.localize(
+              'TIDY5E.COMMON.Theme.BasicFilterConfirmTitle',
+            ),
+          },
+          content: `<p>${FoundryAdapter.localize('TIDY5E.COMMON.Theme.BasicFilterConfirmText')}</p>`,
+        });
+
+        if (!proceed) {
+          return;
+        }
+
+        selectedTheme.filter = undefined;
+        refreshBasicFilterFields(selectedTheme);
+      }
+
+      selectedTheme.filterMode = filterMode;
     },
 
     deleteTheme(id: string): any {
