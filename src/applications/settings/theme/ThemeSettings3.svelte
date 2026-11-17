@@ -12,11 +12,11 @@
     ThemeColorSettingConfigEntry,
     ThemeSettingsContext,
   } from 'src/settings/editors/theme-settings-editor.svelte';
-  import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+  import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
   import type { ThemeColorSettingOption } from 'src/settings/settings.types';
 
   interface Props {
-    settings: Partial<ThemeSettingsV3>;
+    settings: Partial<ThemeSettings>;
     rarities: ThemeColorSettingOption[];
     spellPreparationMethodColors: ThemeColorSettingOption[];
     placeholders: ThemeSettingsContext | undefined;
@@ -26,9 +26,9 @@
     showItemSidebarBackground?: boolean;
     onLiveUpdateRequested?: () => void;
     onThemeImportRequested?: (
-      imported: ThemeSettingsV3 | undefined,
+      imported: ThemeSettings | undefined,
     ) => Promise<void>;
-    onExportRequested?: (exported: Partial<ThemeSettingsV3>) => Promise<void>;
+    onExportRequested?: (exported: Partial<ThemeSettings>) => Promise<void>;
   }
 
   let {

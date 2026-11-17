@@ -33,7 +33,7 @@ import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCha
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   PortraitShape,
-  ThemeSettingsV3,
+  ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
@@ -858,7 +858,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
-  themeSettings: ThemeSettingsV3;
+  themeSettings: ThemeSettings;
   token: TokenDocument | null;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];

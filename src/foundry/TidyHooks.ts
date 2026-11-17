@@ -13,7 +13,7 @@ import type {
 } from 'src/types/item.types';
 import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -788,7 +788,7 @@ export class TidyHooks {
    */
   static tidy5eSheetsThemeSettingsChanged(
     doc?: any,
-    liveThemeOverride?: ThemeSettingsV3,
+    liveThemeOverride?: ThemeSettings,
   ) {
     Hooks.callAll(
       this.tidy5eSheetsThemeSettingsChangedHook,
@@ -798,7 +798,7 @@ export class TidyHooks {
   }
 
   static tidy5eSheetsThemeSettingsChangedSubscribe(
-    callback: (doc?: any, liveThemeOverride?: ThemeSettingsV3) => void,
+    callback: (doc?: any, liveThemeOverride?: ThemeSettings) => void,
   ): number {
     return Hooks.on(
       this.tidy5eSheetsThemeSettingsChangedHook,

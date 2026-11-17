@@ -145,18 +145,36 @@
           <i class="fa-solid fa-arrow-left"></i>
           {localize('SETUP.GoBack')}
         </button>
-        <button
-          type="button"
-          class="button"
-          onclick={() => {
-            if (selectedTheme) {
-              app.deleteTheme(selectedTheme.id);
-            }
-          }}
-        >
-          <i class="fa-solid fa-trash"></i>
-          {localize('TIDY5E.COMMON.Theme.Delete')}
-        </button>
+        <div>
+          <button
+            type="button"
+            class="button"
+            onclick={() => app.import(selectedTheme)}
+          >
+            <i class="fa-solid fa-file-import"></i>
+            {localize('TIDY5E.SETTINGS.Theme.Action.Import')}
+          </button>
+          <button
+            type="button"
+            class="button"
+            onclick={() => app.export(selectedTheme)}
+          >
+            <i class="fa-solid fa-file-export"></i>
+            {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
+          </button>
+          <button
+            type="button"
+            class="button"
+            onclick={() => {
+              if (selectedTheme) {
+                app.deleteTheme(selectedTheme.id);
+              }
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+            {localize('TIDY5E.COMMON.Theme.Delete')}
+          </button>
+        </div>
       </div>
       <div class="theme-identity-fields">
         <div class="form-group">
@@ -201,37 +219,6 @@
               <i class="fa-solid fa-sliders"></i>
               {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
             </button>
-            <ImportButton
-              onfilechanged={async (file) => {
-                if (file) {
-                  const imported = await ThemeImportService.import(file);
-
-                  if (imported) {
-                    const indexOfSelectedTheme = app.value.settings.findIndex(
-                      (s) => s.id === selectedTheme?.id,
-                    );
-
-                    if (indexOfSelectedTheme >= 0) {
-                      app.value.settings[indexOfSelectedTheme].settings =
-                        imported;
-                    }
-                  }
-                }
-              }}
-            />
-            <button
-              type="button"
-              class="button"
-              onclick={() => {
-                ThemeImportService.export({
-                  ...ThemeQuadrone.getDefaultThemeSettings(),
-                  ...selectedTheme?.settings,
-                });
-              }}
-            >
-              <i class="fa-solid fa-file-export"></i>
-              {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
-            </button>
           </div>
           <ThemeSettings3
             bind:settings={selectedTheme.settings}
@@ -256,6 +243,9 @@
       <h2 class="world-theme-list-header">
         {localize('TIDY5E.COMMON.Theme.LabelPl')}
       </h2>
+      <p class="hint flexshrink">
+        {localize('TIDY5E.COMMON.Theme.SortHint')}
+      </p>
       <ol class="world-theme-list">
         {#each orderedThemes as theme, i (theme.id)}
           <li>

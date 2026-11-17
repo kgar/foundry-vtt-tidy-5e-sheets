@@ -1,11 +1,7 @@
 import type { WorldSettingsQuadroneApplication } from 'src/applications/settings/world/TidyWorldSettingsQuadroneApplication.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
-import { ThemeImportService } from 'src/theme/theme-import-service';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export function configureWorldThemeContextMenu(
   element: HTMLElement,
@@ -14,10 +10,8 @@ export function configureWorldThemeContextMenu(
   const { themeId } =
     element.closest<HTMLElement>('[data-theme-id]')?.dataset ?? {};
 
-  const theme = $state.snapshot(
-    app.editors.themesSettingsTab.value.settings.find(
-      (setting) => setting.id === themeId,
-    ),
+  const theme = app.editors.themesSettingsTab.value.settings.find(
+    (setting) => setting.id === themeId,
   );
 
   if (!theme) {
@@ -45,7 +39,15 @@ function getWorldThemeContextOptions(
 ): ContextMenuEntry[] {
   return [
     {
-      label: 'SIDEBAR Duplicate',
+      label: 'TIDY5E.SETTINGS.Theme.Action.ApplyPreset',
+      icon: 'fa-solid fa-sliders',
+      onClick: (event, target) => {
+        app.editors.themesSettingsTab.applyPreset(theme);
+      },
+      group: 'common',
+    },
+    {
+      label: 'DND5E.ContextMenuActionDuplicate',
       icon: 'fa-solid fa-copy fa-fw',
       onClick: (event, target) => {
         const duplicatedId = theme.id;
@@ -78,29 +80,7 @@ function getWorldThemeContextOptions(
       label: 'TIDY5E.SETTINGS.Theme.Action.Import',
       icon: 'fa-solid fa-file-import fa-fw',
       onClick: (event, target) => {
-        const abortController = new AbortController();
-
-        const elem = document.createElement('input');
-        elem.type = 'file';
-        elem.addEventListener(
-          'cancel',
-          () => {
-            abortController.abort();
-          },
-          { signal: abortController.signal },
-        );
-
-        elem.addEventListener(
-          'change',
-          () => {
-            abortController.abort();
-            if (elem.files.length === 1) {
-              ui.notifications.info('File selected: ' + elem.files[0]);
-            }
-          },
-          { signal: abortController.signal },
-        );
-        elem.click();
+        app.editors.themesSettingsTab.import(theme);
       },
       group: 'common',
     },
@@ -108,10 +88,7 @@ function getWorldThemeContextOptions(
       label: 'TIDY5E.SETTINGS.Theme.Action.Export',
       icon: 'fa-solid fa-file-export fa-fw',
       onClick: (event, target) => {
-        ThemeImportService.export({
-          ...ThemeQuadrone.getDefaultThemeSettings(),
-          ...theme,
-        });
+        app.editors.themesSettingsTab.export(theme);
       },
       group: 'common',
     },

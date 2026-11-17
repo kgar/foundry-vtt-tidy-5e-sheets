@@ -6,7 +6,7 @@ import { getThemeV2, Theme } from 'src/theme/theme';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ThemeFilterData,
-  ThemeSettingsV3,
+  ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
 import { SYMBOLS, type TidyPublicUtils } from 'src/types/registry.types';
@@ -167,7 +167,7 @@ const initWorldThemes = () => {
 };
 
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
-const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettingsV3 => {
+const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettings => {
   const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
 
   const defaultSettings = ThemeQuadrone.getDefaultThemeSettings();

@@ -1,5 +1,5 @@
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 export interface GlobalCustomSectionSheetFilters {
   [sheetType: string]: string[];
@@ -68,7 +68,7 @@ export type WorldThemeSetting = {
   /** The intended priority order of this theme setting. The UI reflects this sort order during settings management. */
   sort: number;
   /** The actual theme settings. */
-  settings: Partial<ThemeSettingsV3>;
+  settings: Partial<ThemeSettings>;
   /**
    * An optional filter to be evaluated when determining which theme should apply.
    * It is meant to be structured like the a dnd5e system FilterDescription or a FilterDescription array.

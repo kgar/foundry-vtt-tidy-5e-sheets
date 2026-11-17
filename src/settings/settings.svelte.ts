@@ -7,7 +7,7 @@ import type {
   TabConfiguration,
   WorldThemesSetting,
 } from './settings.types';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import {
@@ -517,7 +517,7 @@ export function createSettings() {
           type: Object,
           default: undefined,
           config: false,
-          onChange: (settings: ThemeSettingsV3) => {
+          onChange: (settings: ThemeSettings) => {
             ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
               settingsOverride: settings,
             });
@@ -525,7 +525,7 @@ export function createSettings() {
         },
         get() {
           return (
-            FoundryAdapter.getTidySetting<ThemeSettingsV3>(
+            FoundryAdapter.getTidySetting<ThemeSettings>(
               'worldThemeSettings',
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
           );

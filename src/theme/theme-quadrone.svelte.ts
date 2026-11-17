@@ -1,7 +1,7 @@
 import type {
   PortraitShape,
   ThemeQuadroneStyleDeclaration,
-  ThemeSettingsV3,
+  ThemeSettings,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -50,8 +50,8 @@ export class ThemeQuadrone {
   }
 
   static getDefaultThemeSettings(
-    alternateDefaults: Partial<ThemeSettingsV3> = {},
-  ): ThemeSettingsV3 {
+    alternateDefaults: Partial<ThemeSettings> = {},
+  ): ThemeSettings {
     const defaults = {
       accentColor: this.DEFAULT_ACCENT_COLOR,
       useBasicTheme: false,
@@ -68,12 +68,12 @@ export class ThemeQuadrone {
     return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
-  static saveWorldThemeSettings(settings: ThemeSettingsV3) {
+  static saveWorldThemeSettings(settings: ThemeSettings) {
     const toSave = { ...settings };
 
     for (const [key, value] of Object.entries(toSave)) {
       if (isNil(value, '')) {
-        delete toSave[key as keyof ThemeSettingsV3];
+        delete toSave[key as keyof ThemeSettings];
       }
     }
 
@@ -82,7 +82,7 @@ export class ThemeQuadrone {
 
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions,
-  ): ThemeSettingsV3 {
+  ): ThemeSettings {
     options.applyWorldThemeSetting ??= true;
 
     let defaultSettings = options.applyWorldThemeSetting
@@ -115,7 +115,7 @@ export class ThemeQuadrone {
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
       sheetFlagSettings,
-    ) as ThemeSettingsV3;
+    ) as ThemeSettings;
 
     if (
       options.doc?.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
@@ -135,7 +135,7 @@ export class ThemeQuadrone {
     return preferences;
   }
 
-  static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV3) {
+  static async saveSheetThemeSettings(doc: any, settings: ThemeSettings) {
     const toSave = { ...settings };
 
     const result = await TidyFlags.sheetThemeSettings.set(doc, toSave);
@@ -215,7 +215,7 @@ export class ThemeQuadrone {
     options: ThemeSettingsConfigurationOptions,
   ): Unsubscribable {
     const hookId = TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe(
-      (doc?: any, liveThemeOverride?: ThemeSettingsV3) => {
+      (doc?: any, liveThemeOverride?: ThemeSettings) => {
         const appliesToThisSheet =
           // We interpret changes to world themes as affecting all sheets.
           !doc ||
@@ -252,7 +252,7 @@ export class ThemeQuadrone {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
       SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
-      FoundryAdapter.getTidySetting<ThemeSettingsV3 | undefined>(
+      FoundryAdapter.getTidySetting<ThemeSettings | undefined>(
         'worldThemeSettings',
       )?.portraitShape,
       this.DEFAULT_PORTRAIT_SHAPE,

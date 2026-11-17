@@ -2,20 +2,14 @@
 
 ### TODO
 
-- [ ] Add context menu to theme tabs (Duplicate, Apply Preset, Import, Export, Delete)
-- [ ] Restore file drop to import a theme
-- [ ] Add rolling migration for existing world theme to the new world themes setup
-- [ ] Review WorldThemesSettings and finish pulling back the remainder of unnecessarily embedded functionality so that the editor can stand alone.
 - [ ] Finish making the origin theme-settings-editor fully require a document and solely support sheet theme editing.
 - [ ] Ensure both world and sheet theme editors are using the same core sheet theme setting component. Strip away any other header content so that it's fully shareable.
-- [ ] Add Apply Preset button to Sheet Theme Settings
+- [ ] Add rolling migration for existing world theme to the new world themes setup
+  - [ ] When the world settings are empty and there's a legacy world theme in the previous setting slot, add it as the only entry, with no types or doc name selected. On first save of settings, clear the legacy world theme from the data.
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
-- [ ] Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
-- [ ] Reimplement import and export
-  - This will need some planning. It would be nice to be able to bulk import world themes, as well as import individual theme settings. Import/export may mean something different for a sheet theme setting and a world theme setting. Or both types may be present for world theme settings.
-- [ ] When the world settings are empty and there's a legacy world theme in the previous setting slot, add it as the only entry, with no types or doc name selected. On first save of settings, clear the legacy world theme from the data.
+- [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
 - [ ] // TODO: need a util for getting full folder path
 - [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
 - [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
@@ -23,6 +17,16 @@
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] // TODO: Somehow clean this up and streamline the code
+
+### vNext Stretch Goals
+
+- [ ] Organize src\settings\editors\world-themes-settings-editor.svelte.ts API
+- [ ] Implement `tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
+- [ ] Implement Import Bundle and Export Bundle buttons on world themes list view.
+- [ ] Restore file drop to import a theme
+  - [ ] World, `.tidy5e-theme`, no selection - inserts a new theme
+  - [ ] World, `.tidy5e-theme`, a theme is selected - overwrites the selected theme
+  - [ ] World, `.tidy5e-theme-bundle`, no matter what - inserts the bundle as new entries
 
 ### General Notes
 

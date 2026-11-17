@@ -38,7 +38,7 @@ import type { Actor5e, InspirationSource } from './types';
 import type { Item5e } from './item.types';
 import type {
   ThemeFilterData,
-  ThemeSettingsV3,
+  ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 
@@ -313,7 +313,7 @@ export type TidyPublicUtils = {
   ) => string | null;
   getTabIdFromEvent: (event: Event) => string | null;
   theme: {
-    getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettingsV3;
+    getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettings;
     initWorldThemes: () => void;
     prepareThemeFilterData: (doc: Actor5e | Item5e) => ThemeFilterData;
   };
@@ -344,7 +344,7 @@ export type WorldThemeSettingConfig = {
   /** The intended priority order of this theme setting. The UI reflects this sort order during settings management. */
   sort: number;
   /** The actual theme settings. */
-  settings: Partial<ThemeSettingsV3>;
+  settings: Partial<ThemeSettings>;
   /**
    * An optional filter to be evaluated when determining which theme should apply.
    * It is meant to be structured like the a dnd5e system FilterDescription or a FilterDescription array.

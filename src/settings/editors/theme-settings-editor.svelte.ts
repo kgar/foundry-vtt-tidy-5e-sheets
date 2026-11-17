@@ -4,7 +4,7 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   PortraitShape,
   ThemeColorSetting,
-  ThemeSettingsV3,
+  ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
@@ -29,13 +29,13 @@ export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
    */
   mapContextToChangedSettings(
     context: ThemeSettingsContext,
-  ): Partial<ThemeSettingsV3>;
+  ): Partial<ThemeSettings>;
 
   /**
    * Map from the latest version of settings to the
    * theme settings editor context.
    */
-  mapFromSettings(source: Partial<ThemeSettingsV3>): ThemeSettingsContext;
+  mapFromSettings(source: Partial<ThemeSettings>): ThemeSettingsContext;
 };
 
 export type ThemeSettingsContext = {
@@ -63,7 +63,7 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
   }
 
   function mapFromSettings(
-    source: Partial<ThemeSettingsV3>,
+    source: Partial<ThemeSettings>,
   ): ThemeSettingsContext {
     const nullableBool = (
       value: boolean | null | undefined,
@@ -113,9 +113,9 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
 
   function mapContextToChangedSettings(
     context: ThemeSettingsContext,
-  ): Partial<ThemeSettingsV3> {
+  ): Partial<ThemeSettings> {
     const currentSettings = context;
-    const changedSettings: Partial<ThemeSettingsV3> = {};
+    const changedSettings: Partial<ThemeSettings> = {};
 
     const stringFields = [
       'accentColor',
@@ -177,12 +177,12 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
         } else {
           await ThemeQuadrone.saveSheetThemeSettings(
             document,
-            changedSettings as ThemeSettingsV3,
+            changedSettings as ThemeSettings,
           );
         }
       } else {
         await ThemeQuadrone.saveWorldThemeSettings(
-          changedSettings as ThemeSettingsV3,
+          changedSettings as ThemeSettings,
         );
       }
 

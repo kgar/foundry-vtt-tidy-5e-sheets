@@ -41,7 +41,7 @@ import {
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -150,14 +150,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     this._applySheetThemeClasses(themeSettings);
   }
 
-  _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+  _applySheetThemeClasses(themeSettings: ThemeSettings) {
     const isBasic = themeSettings.useBasicTheme;
 
     this.element.classList.toggle('theme-parchment', isBasic);
     this.element.classList.toggle('theme-basic', isBasic);
   }
 
-  onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+  onThemeConfigChanged(settingsOverride?: ThemeSettings) {
     const themeSettings =
       settingsOverride ??
       ThemeQuadrone.getSheetThemeSettings({ doc: this.document });

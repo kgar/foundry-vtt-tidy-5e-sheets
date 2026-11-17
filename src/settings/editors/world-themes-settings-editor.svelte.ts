@@ -18,6 +18,7 @@ import type { FilterDescription } from 'src/foundry/dnd5e.types';
 import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { ThemeImportService } from 'src/theme/theme-import-service';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -35,12 +36,15 @@ export type WorldThemesSettingsContext = {
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
-    applyPreset(): Promise<void>;
+    promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
+    applyPreset(themeToOverride?: WorldThemeSetting): Promise<void>;
     deleteTheme(id: string): any;
     rarities: ThemeColorSettingOption[];
     spellMethods: ThemeColorSettingOption[];
     compendia: { text: string; value: string }[];
     addCompendium(packId: string): void;
+    import(themeToOverride?: WorldThemeSetting): Promise<any>;
+    export(themeToExport?: WorldThemeSetting): Promise<any>;
     removeCompendium(packId: string): void;
     documentTypeTree: ThemeDocumentTypeNode[];
     applyBasicFilters(): void;
@@ -289,11 +293,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
-    async applyPreset(): Promise<void> {
-      if (!selectedTheme?.settings) {
-        return;
-      }
-
+    async promptForThemePreset(): Promise<WorldThemeSetting | undefined> {
       const options = current.settings
         .map((s) => ({ id: s.id, label: s.name }))
         .toSorted((a, b) => a.label.localeCompare(b.label));
@@ -304,7 +304,16 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         options,
       });
 
-      const preset = this.value.settings.find((s) => s.id === selectedId);
+      return this.value.settings.find((s) => s.id === selectedId);
+    },
+
+    async applyPreset(themeToOverride?: WorldThemeSetting): Promise<void> {
+      themeToOverride ??= selectedTheme;
+      if (!themeToOverride?.settings) {
+        return;
+      }
+
+      const preset = await this.promptForThemePreset();
 
       if (!preset) {
         return;
@@ -312,7 +321,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       const snapshot = $state.snapshot(preset.settings);
 
-      selectedTheme.settings = snapshot;
+      themeToOverride.settings = snapshot;
     },
 
     addTheme(): any {
@@ -342,6 +351,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       this.value.settings.push(entry);
 
       this.selectTheme(settingId);
+
+      return entry;
     },
 
     applyBasicFilters() {
@@ -351,6 +362,64 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       selectedTheme.filterMode = 'basic';
       selectedTheme.filter = stringifyBasicFilter(selectedTheme);
+    },
+
+    async import(themeToOverride?: WorldThemeSetting) {
+      themeToOverride ??= selectedTheme;
+
+      const abortController = new AbortController();
+
+      const elem = document.createElement('input');
+      elem.type = 'file';
+      elem.addEventListener(
+        'cancel',
+        () => {
+          abortController.abort();
+        },
+        { signal: abortController.signal },
+      );
+
+      elem.addEventListener(
+        'change',
+        async () => {
+          abortController.abort();
+          if (elem.files?.length === 1) {
+            const toImport = await ThemeImportService.import(elem.files[0]);
+
+            if (!toImport) {
+              return;
+            }
+
+            const { sort, id, ...rest } = toImport;
+            themeToOverride ??= this.addTheme();
+
+            foundry.utils.mergeObject(themeToOverride, rest);
+          }
+        },
+        { signal: abortController.signal },
+      );
+      elem.click();
+    },
+
+    async export(themeToExport?: WorldThemeSetting) {
+      themeToExport ??= selectedTheme;
+
+      if (!themeToExport) {
+        return;
+      }
+
+      const worldSetting: WorldThemeSetting = {
+        id: themeToExport.id,
+        filterMode: themeToExport.filterMode,
+        filter: themeToExport.filter,
+        name: themeToExport.name,
+        settings: themeToExport.settings,
+        sort: themeToExport.sort,
+        documentNames: themeToExport.documentNames,
+        types: themeToExport.types,
+      };
+
+      ThemeImportService.export(worldSetting);
     },
 
     setFilter(filter: string | undefined) {

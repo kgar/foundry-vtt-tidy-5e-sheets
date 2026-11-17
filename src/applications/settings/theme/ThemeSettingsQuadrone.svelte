@@ -17,7 +17,11 @@
     ThemeSettingsContext,
     ThemeSettingsEditor,
   } from 'src/settings/editors/theme-settings-editor.svelte';
-  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
+  import {
+    actorHeaderBackgroundSupportedActorTypes,
+    Theme,
+  } from 'src/theme/theme';
+  import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
 
   interface Props {
     app: ThemeSettingsEditor;
@@ -173,9 +177,20 @@
 
       if (imported) {
         app.resetToDefault();
-        app.value = app.mapFromSettings(imported);
+        app.value = app.mapFromSettings(imported.settings);
       }
     }
+  }
+
+  async function applyPreset() {
+    const editor = getWorldThemesSettingsEditor();
+    const preset = await editor.promptForThemePreset();
+
+    if (!preset) {
+      return;
+    }
+
+    app.value = app.mapFromSettings(preset.settings);
   }
 </script>
 
@@ -184,14 +199,23 @@
     <h2>
       {localize('TIDY5E.SETTINGS.Theme.Menu.name')}
     </h2>
+    <button type="button" class="button flexshrink" onclick={applyPreset}>
+      <i class="fa-solid fa-sliders"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
+    </button>
     <ImportButton onfilechanged={(file) => processImportFile(file)} />
     <button
       type="button"
       class="button flexshrink"
       onclick={() =>
         ThemeImportService.export({
-          ...ThemeQuadrone.getDefaultThemeSettings(),
-          ...app.mapContextToChangedSettings(context),
+          id: foundry.utils.randomID(),
+          sort: 0,
+          filterMode: 'basic',
+          name: app.document.name,
+          settings: {
+            ...app.mapContextToChangedSettings(context),
+          },
         })}
     >
       <i class="fa-solid fa-file-export"></i>

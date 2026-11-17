@@ -63,7 +63,7 @@ import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTyp
 import { error, warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { Container } from 'src/features/containers/Container';
 import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { getThemeV2 } from 'src/theme/theme';
@@ -1124,7 +1124,7 @@ export function getTidy5eActorSheetQuadroneBase<
       this._applySheetThemeClasses(themeSettings);
     }
 
-    _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+    _applySheetThemeClasses(themeSettings: ThemeSettings) {
       const isBasic = themeSettings.useBasicTheme;
       const isParchment = !themeSettings.useHeaderBackground || isBasic;
       const foundryThemeIsDark = getThemeV2(this.actor) === 'dark';
@@ -1166,7 +1166,7 @@ export function getTidy5eActorSheetQuadroneBase<
         element.dataset.tooltipClass = 'property-attribution';
     }
 
-    onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+    onThemeConfigChanged(settingsOverride?: ThemeSettings) {
       const themeSettings =
         settingsOverride ??
         ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });

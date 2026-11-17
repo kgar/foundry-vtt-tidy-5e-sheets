@@ -12,7 +12,7 @@ import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ThemeSettingsConfigurationOptions,
-  ThemeSettingsV3,
+  ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -72,7 +72,7 @@ export function getSvelteApplicationMixin<
       };
     }
 
-    protected onThemeConfigChanged(_settingsOverride?: ThemeSettingsV3) {}
+    protected onThemeConfigChanged(_settingsOverride?: ThemeSettings) {}
 
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
