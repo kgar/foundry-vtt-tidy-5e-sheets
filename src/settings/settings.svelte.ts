@@ -528,30 +528,6 @@ export function createSettings() {
             FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
             {};
 
-          // Only when there aren't already worldThemes
-          if (!Object.keys(themes).length) {
-            // Check for legacy theme in database
-            const legacyTheme: Partial<ThemeSettings | undefined> =
-              getLegacyWorldThemeSettingSettingDocument()?.value;
-
-            if (legacyTheme) {
-              const newId = foundry.utils.randomID();
-
-              themes[newId] = {
-                filterMode: 'basic',
-                id: newId,
-                name: FoundryAdapter.localize(
-                  'TIDY5E.COMMON.Theme.LegacyThemeName',
-                ),
-                settings: legacyTheme,
-                sort: 1,
-                documentNames: undefined,
-                filter: undefined,
-                types: undefined,
-              };
-            }
-          }
-
           return themes;
         },
       },
@@ -989,4 +965,31 @@ export function getLegacyWorldThemeSettingSettingDocument(): any {
   return game.settings.storage
     .get('world')
     .getSetting('tidy5e-sheet.worldThemeSettings');
+}
+
+export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
+  const source = SettingsProvider.settings.worldThemes.get() ?? {};
+
+  if (!Object.keys(source).length) {
+    // Check for legacy theme in database
+    const legacyTheme: Partial<ThemeSettings | undefined> =
+      getLegacyWorldThemeSettingSettingDocument()?.value;
+
+    if (legacyTheme) {
+      const newId = foundry.utils.randomID();
+
+      source[newId] = {
+        filterMode: 'basic',
+        id: newId,
+        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.LegacyThemeName'),
+        settings: legacyTheme,
+        sort: 1,
+        documentNames: undefined,
+        filter: undefined,
+        types: undefined,
+      };
+    }
+  }
+
+  return source;
 }

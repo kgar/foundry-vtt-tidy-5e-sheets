@@ -68,18 +68,6 @@ export class ThemeQuadrone {
     return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
-  static saveWorldThemeSettings(settings: ThemeSettings) {
-    const toSave = { ...settings };
-
-    for (const [key, value] of Object.entries(toSave)) {
-      if (isNil(value, '')) {
-        delete toSave[key as keyof ThemeSettings];
-      }
-    }
-
-    return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
-  }
-
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions,
   ): ThemeSettings {
@@ -251,10 +239,7 @@ export class ThemeQuadrone {
   static getActorPortraitShape(doc: any): PortraitShape {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
-      SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
-      FoundryAdapter.getTidySetting<ThemeSettings | undefined>(
-        'worldThemeSettings',
-      )?.portraitShape,
+      CONFIG.TIDY5E.utils.theme.getWorldTheme(doc)?.portraitShape,
       this.DEFAULT_PORTRAIT_SHAPE,
     ) as PortraitShape;
   }

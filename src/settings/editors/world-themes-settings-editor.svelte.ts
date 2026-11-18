@@ -13,6 +13,7 @@ import {
 } from './shared/theme-setting-functions';
 import {
   getLegacyWorldThemeSettingSettingDocument,
+  getEffectiveWorldThemesSetting,
   SettingsProvider,
 } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
@@ -22,6 +23,7 @@ import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -231,9 +233,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   function getSettings(): WorldThemesSettingsContext {
-    const source = SettingsProvider.settings.worldThemes.get() ?? {};
-
-    // TODO: When empty and there's a legacy world theme setting still stored, add it here.
+    const source = getEffectiveWorldThemesSetting();
 
     Object.values(source).forEach((s) => {
       s.settings.rarityColors ??= {};
@@ -551,11 +551,11 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     async save() {
       const toSave = mapContextToChangedSettings(this.value);
 
-      // TODO: move to settings.svelte.ts behind a helper
-      await game.settings
-        .get('tidy5e-sheet', 'worldThemes', { document: true })
-        ?.update({ value: _replace(toSave) });
+      await game.settings.set('tidy5e-sheet', 'worldThemes', toSave, {
+        diff: false,
+      });
 
+      // Remove legacy world theme data now that themes have been saved at least once.
       await getLegacyWorldThemeSettingSettingDocument()?.delete();
     },
 

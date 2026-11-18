@@ -1,7 +1,10 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import {
+  getEffectiveWorldThemesSetting,
+  SettingsProvider,
+} from 'src/settings/settings.svelte';
 import { getThemeV2, Theme } from 'src/theme/theme';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
@@ -107,9 +110,11 @@ const initWorldThemes = () => {
       'Partitioned, priority-ordered, optionally filtered world theme settings used for determining the appropriate theme to use for a given document sheet.',
   };
 
-  const prioritizedWorldThemes = Object.values(
-    SettingsProvider.settings.worldThemes.get() ?? {},
-  ).sort((a, b) => a.sort - b.sort);
+  const themes = getEffectiveWorldThemesSetting();
+
+  const prioritizedWorldThemes = Object.values(themes).sort(
+    (a, b) => a.sort - b.sort,
+  );
 
   for (const theme of prioritizedWorldThemes) {
     const validDocumentNames =

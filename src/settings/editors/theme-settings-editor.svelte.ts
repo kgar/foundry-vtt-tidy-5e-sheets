@@ -171,17 +171,11 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
     async save() {
       const changedSettings = mapContextToChangedSettings(this.value);
 
-      if (document) {
-        if (Object.keys(changedSettings).length === 0) {
-          await TidyFlags.sheetThemeSettings.unset(document);
-        } else {
-          await ThemeQuadrone.saveSheetThemeSettings(
-            document,
-            changedSettings as ThemeSettings,
-          );
-        }
+      if (Object.keys(changedSettings).length === 0) {
+        await TidyFlags.sheetThemeSettings.unset(document);
       } else {
-        await ThemeQuadrone.saveWorldThemeSettings(
+        await ThemeQuadrone.saveSheetThemeSettings(
+          document,
           changedSettings as ThemeSettings,
         );
       }
