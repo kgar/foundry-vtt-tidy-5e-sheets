@@ -11,7 +11,10 @@ import {
   getSpellMethods,
   type ThemeDocumentTypeNode,
 } from './shared/theme-setting-functions';
-import { SettingsProvider } from '../settings.svelte';
+import {
+  getLegacyWorldThemeSettingSettingDocument,
+  SettingsProvider,
+} from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
@@ -548,7 +551,12 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     async save() {
       const toSave = mapContextToChangedSettings(this.value);
 
-      game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
+      // TODO: move to settings.svelte.ts behind a helper
+      await game.settings
+        .get('tidy5e-sheet', 'worldThemes', { document: true })
+        ?.update({ value: _replace(toSave) });
+
+      await getLegacyWorldThemeSettingSettingDocument()?.delete();
     },
 
     documentTypeTree: getDocumentTypeTree(),

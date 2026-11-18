@@ -509,29 +509,6 @@ export function createSettings() {
         },
       },
 
-      worldThemeSettings: {
-        options: {
-          name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
-          hint: 'TIDY5E.SETTINGS.Theme.Hint',
-          scope: 'world',
-          type: Object,
-          default: undefined,
-          config: false,
-          onChange: (settings: ThemeSettings) => {
-            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-              settingsOverride: settings,
-            });
-          },
-        },
-        get() {
-          return (
-            FoundryAdapter.getTidySetting<ThemeSettings>(
-              'worldThemeSettings',
-            ) ?? ThemeQuadrone.getDefaultThemeSettings()
-          );
-        },
-      },
-
       worldThemes: {
         options: {
           name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
@@ -547,10 +524,35 @@ export function createSettings() {
           },
         },
         get() {
-          return (
+          const themes =
             FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
-            {}
-          );
+            {};
+
+          // Only when there aren't already worldThemes
+          if (!Object.keys(themes).length) {
+            // Check for legacy theme in database
+            const legacyTheme: Partial<ThemeSettings | undefined> =
+              getLegacyWorldThemeSettingSettingDocument()?.value;
+
+            if (legacyTheme) {
+              const newId = foundry.utils.randomID();
+
+              themes[newId] = {
+                filterMode: 'basic',
+                id: newId,
+                name: FoundryAdapter.localize(
+                  'TIDY5E.COMMON.Theme.LegacyThemeName',
+                ),
+                settings: legacyTheme,
+                sort: 1,
+                documentNames: undefined,
+                filter: undefined,
+                types: undefined,
+              };
+            }
+          }
+
+          return themes;
         },
       },
 
@@ -981,4 +983,10 @@ export function initSettings() {
     refreshFoundryCoreSettings();
     refreshSystemSettings();
   });
+}
+
+export function getLegacyWorldThemeSettingSettingDocument(): any {
+  return game.settings.storage
+    .get('world')
+    .getSetting('tidy5e-sheet.worldThemeSettings');
 }
