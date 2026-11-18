@@ -2,11 +2,9 @@
 
 ### TODO
 
-- [ ] Add rolling migration for existing world theme to the new world themes setup
-  - [x] When the world settings are empty and there's a legacy world theme in the previous setting slot, add it as the only entry, with no types or doc name selected. On first save of settings, clear the legacy world theme from the data.
-  - [ ] Evaluate: it's behaving erratically. Consider a "Migrate Legacy Setting" button that imports it.
 - [ ] Finish making the origin theme-settings-editor fully require a document and solely support sheet theme editing.
 - [ ] Ensure both world and sheet theme editors are using the same core sheet theme setting component. Strip away any other header content so that it's fully shareable.
+- [ ] The first theme that applies to all document names should be applied as the default world theme on startup, wherever the original code was doing it. If you must, provide a special method for finding this particular theme, as the registry will probably not suffice, unless we make a special one denoted with a symbol such as "world-default" 🤔
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
