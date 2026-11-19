@@ -177,11 +177,7 @@ const initWorldThemes = () => {
     }
   }
 
-  // TODO: Extract to TidyHooks
-  Hooks.callAll(
-    'tidy5e-sheet.worldThemesConfigChanged',
-    CONFIG.TIDY5E.worldThemes,
-  );
+  TidyHooks.tidy5eSheetWorldThemesConfigChanged(CONFIG.TIDY5E);
 
   TidyHooks.tidy5eSheetsThemeSettingsChanged();
 };

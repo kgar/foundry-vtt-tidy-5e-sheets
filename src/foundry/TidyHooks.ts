@@ -17,6 +17,7 @@ import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import type { TidyConfig } from 'src/types/registry.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -35,6 +36,15 @@ export class TidyHooks {
     options: { behavior?: DropEffectValue | null; event?: Event },
   ): false | undefined {
     return Hooks.call('dnd5e.dropCreateItems', app, items, options);
+  }
+
+  /**
+   * Tidy's World Themes have been updated to the latest and are
+   * about to go into effect.
+   * @param config      Tidy's runtime configurations.
+   */
+  static tidy5eSheetWorldThemesConfigChanged(config: TidyConfig) {
+    Hooks.callAll('tidy5e-sheet.worldThemesConfigChanged', config);
   }
 
   /**
