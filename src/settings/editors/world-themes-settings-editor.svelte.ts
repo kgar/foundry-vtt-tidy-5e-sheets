@@ -97,12 +97,11 @@ function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
 
   // Document sources are alternatives. `compendiumOnly` without any choices applies to all compendia.
   const sources: FilterDescription[] = [
-    ...(entry.compendiumOnly ? [] : [{ k: 'document.inCompendium', v: false }]),
     ...entry.compendia.map((packId) => ({ k: 'document.pack', v: packId })),
   ];
 
-  if (entry.compendiumOnly && !sources.length) {
-    sources.push({ k: 'document.inCompendium', v: true });
+  if (!entry.compendiumOnly && sources.length) {
+    sources.push({ k: 'document.pack', v: null });
   }
 
   if (sources.length === 1) {
@@ -146,15 +145,23 @@ function findDocumentSources(
   return {
     compendiumOnly:
       sources.length > 0 &&
-      !sources.some((f) => f.k === 'document.inCompendium' && f.v === false),
+      !sources.some((f) => f.k === 'document.pack' && f.v === null),
     compendia: sources
       .filter((f) => f.k === 'document.pack' && typeof f.v === 'string')
       .map((f) => f.v),
   };
 }
 
-function stringifyBasicFilter(entry: WorldThemeSettingEntry): string {
-  return JSON.stringify(buildBasicFilter(entry), null, '  ');
+function stringifyBasicFilter(
+  entry: WorldThemeSettingEntry,
+): string | undefined {
+  const filter = buildBasicFilter(entry);
+
+  if (!filter.length) {
+    return undefined;
+  }
+
+  return JSON.stringify(filter, null, '  ');
 }
 
 /**
@@ -247,7 +254,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
-      changed.filter = nilToUndefined(changed.filter);
       // Basic mode always regenerates the filter from its fields, so new or
       // cleared themes still get the default "Non-Compendium Documents" scope.
       changed.filter =
@@ -549,9 +555,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     async save() {
       const toSave = mapContextToChangedSettings(this.value);
 
-      await game.settings.set('tidy5e-sheet', 'worldThemes', toSave, {
-        diff: false,
-      });
+      await game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
 
       // Remove legacy world theme data now that themes have been saved at least once.
       await getLegacyWorldThemeSettingSettingDocument()?.delete();

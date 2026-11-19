@@ -207,7 +207,7 @@
 
   <div class="form-group stacked">
     <label for="{idPrefix}-advanced-filter">
-      {localize('TIDY5E.COMMON.Theme.AdvancedFilter')}
+      {localize('TIDY5E.COMMON.Theme.Filter')}
     </label>
     {#key selectedTheme.filter}
       <div class="form-fields">
@@ -221,29 +221,32 @@
         >
       </div>
     {/key}
-    <p class="hint">
-      {selectedTheme.filterMode === 'advanced'
-        ? localize('TIDY5E.COMMON.Theme.AdvancedFilterCustomHint')
-        : localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}
+    <p class="hint filter-hint">
+      <span class="flexgrow">
+        {selectedTheme.filterMode === 'advanced'
+          ? localize('TIDY5E.COMMON.Theme.AdvancedFilterCustomHint')
+          : localize('TIDY5E.COMMON.Theme.AdvancedFilterHint')}
+      </span>
+
+      {#if selectedTheme.filterMode === 'basic'}
+        <button
+          type="button"
+          class="button flexshrink"
+          onclick={() => app.changeFilterMode('advanced')}
+        >
+          <a class="fa-solid fa-sliders"></a>
+          {localize('TIDY5E.COMMON.Theme.AdvancedFilterButton')}
+        </button>
+      {:else if selectedTheme.filterMode === 'advanced'}
+        <button
+          type="button"
+          class="button flexshrink"
+          onclick={() => app.changeFilterMode('basic')}
+        >
+          <a class="fa-solid fa-slider-circle"></a>
+          {localize('TIDY5E.COMMON.Theme.BasicFilterButton')}
+        </button>
+      {/if}
     </p>
-    {#if selectedTheme.filterMode === 'basic'}
-      <button
-        type="button"
-        class="button"
-        onclick={() => app.changeFilterMode('advanced')}
-      >
-        <a class="fa-solid fa-sliders"></a>
-        {localize('TIDY5E.COMMON.Theme.AdvancedFilterButton')}
-      </button>
-    {:else if selectedTheme.filterMode === 'advanced'}
-      <button
-        type="button"
-        class="button"
-        onclick={() => app.changeFilterMode('basic')}
-      >
-        <a class="fa-solid fa-slider-circle"></a>
-        {localize('TIDY5E.COMMON.Theme.BasicFilterButton')}
-      </button>
-    {/if}
   </div>
 </fieldset>

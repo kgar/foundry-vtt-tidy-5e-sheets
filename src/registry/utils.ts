@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
@@ -5,6 +6,7 @@ import {
   getEffectiveWorldThemesSetting,
   SettingsProvider,
 } from 'src/settings/settings.svelte';
+import type { WorldThemeSetting } from 'src/settings/settings.types';
 import { getThemeV2, Theme } from 'src/theme/theme';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
@@ -12,8 +14,13 @@ import type {
   ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type { Item5e } from 'src/types/item.types';
-import { SYMBOLS, type TidyPublicUtils } from 'src/types/registry.types';
+import {
+  SYMBOLS,
+  type TidyPublicUtils,
+  type WorldThemeSettingConfig,
+} from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
+import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
 
 const getTabIdFromElement: TidyPublicUtils['getTabIdFromElement'] = (
@@ -117,6 +124,20 @@ const initWorldThemes = () => {
   );
 
   for (const theme of prioritizedWorldThemes) {
+    if (
+      !theme.documentNames &&
+      !theme.types &&
+      isNil(theme.filter?.trim(), '')
+    ) {
+      // The first found world theme default is registered as the
+      // world theme default in addition to permuting across
+      // document world themes.
+      CONFIG.TIDY5E.worldThemeDefault ??= mapToRegisteredTheme({
+        ...theme,
+        filter: undefined,
+      });
+    }
+
     const validDocumentNames =
       theme.documentNames?.filter((name) =>
         Theme.supportedDocumentNames.has(name),
@@ -141,13 +162,7 @@ const initWorldThemes = () => {
         const themes = (configDocumentNames[targetType] ??= []);
 
         try {
-          themes.push({
-            id: theme.id,
-            name: theme.name,
-            settings: theme.settings,
-            sort: theme.sort,
-            filter: theme.filter ? JSON.parse(theme.filter) : undefined,
-          });
+          themes.push(mapToRegisteredTheme(theme));
         } catch (e) {
           warn(
             `Unable to parse filter for theme ${theme.name}. It has been excluded.`,
@@ -171,25 +186,43 @@ const initWorldThemes = () => {
   TidyHooks.tidy5eSheetsThemeSettingsChanged();
 };
 
+function mapToRegisteredTheme(
+  theme: WorldThemeSetting,
+): import('src/types/registry.types').WorldThemeSettingConfig {
+  return {
+    id: theme.id,
+    name: theme.name,
+    settings: theme.settings,
+    sort: theme.sort,
+    filter: theme.filter ? JSON.parse(theme.filter) : undefined,
+  };
+}
+
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.
-const getWorldTheme = (doc: Actor5e | Item5e | undefined): ThemeSettings => {
-  const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(doc);
+const getWorldTheme = (document?: Actor5e | Item5e): ThemeSettings => {
+  const worldDefaultSettings = foundry.utils.mergeObject(
+    ThemeQuadrone.getDefaultThemeSettings(),
+    CONFIG.TIDY5E.worldThemeDefault?.settings ?? {},
+  );
 
-  const defaultSettings = ThemeQuadrone.getDefaultThemeSettings();
+  if (!document) {
+    return worldDefaultSettings;
+  }
 
-  const values = doc
+  const filterData = CONFIG.TIDY5E.utils.theme.prepareThemeFilterData(document);
+  const values = document
     ? Object.values(
-        CONFIG.TIDY5E.worldThemes[doc.documentName]?.[doc.type] ?? [],
+        CONFIG.TIDY5E.worldThemes[document.documentName]?.[document.type] ?? [],
       )
     : [];
 
   for (const entry of values) {
     if (dnd5e.Filter.performCheck(filterData, entry.filter)) {
-      return foundry.utils.mergeObject(defaultSettings, entry.settings);
+      return foundry.utils.mergeObject(worldDefaultSettings, entry.settings);
     }
   }
 
-  return defaultSettings;
+  return worldDefaultSettings;
 };
 
 // TODO: Consider moving the implementation details over into the theme script space and simply referencing here.

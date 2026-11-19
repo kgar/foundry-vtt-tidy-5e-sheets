@@ -41,14 +41,7 @@ export class TidyDialog extends getSvelteApplicationMixin<
 
   static DEFAULT_OPTIONS = {
     id: 'dialog-{id}',
-    classes: [
-      CONSTANTS.MODULE_ID,
-      'dialog',
-      'sheet',
-      'quadrone',
-      'dialog-content-container',
-      'flexcol',
-    ],
+    classes: [CONSTANTS.MODULE_ID, 'dialog', 'sheet', 'quadrone', 'flexcol'],
     tag: 'dialog',
     form: {
       closeOnSubmit: true,

@@ -73,7 +73,7 @@ export type TidyConfig = {
       Tidy5eItemSheetQuadrone: typeof Tidy5eItemSheetQuadrone;
       Tidy5eContainerSheetQuadrone: typeof Tidy5eContainerSheetQuadrone;
     };
-    TidyDialog: typeof TidyDialog
+    TidyDialog: typeof TidyDialog;
     // anything else?
   };
   components: TidyComponentRegistry;
@@ -86,6 +86,7 @@ export type TidyConfig = {
   partitions: TidyPartitionRegistry;
   symbols: TidySymbolRegistry;
   worldThemes: TidyThemeRegistry;
+  worldThemeDefault?: WorldThemeSettingConfig;
   utils: TidyPublicUtils;
 };
 
@@ -315,7 +316,7 @@ export type TidyPublicUtils = {
   ) => string | null;
   getTabIdFromEvent: (event: Event) => string | null;
   theme: {
-    getWorldTheme: (document: Actor5e | Item5e | undefined) => ThemeSettings;
+    getWorldTheme: (document?: Actor5e | Item5e) => ThemeSettings;
     initWorldThemes: () => void;
     prepareThemeFilterData: (doc: Actor5e | Item5e) => ThemeFilterData;
   };

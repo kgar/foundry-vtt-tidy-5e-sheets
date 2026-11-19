@@ -377,6 +377,15 @@
       color: var(--t5e-color-text-lighter);
     }
 
+    .filter-hint {
+      display: flex;
+      column-gap: 0.5rem;
+
+      > :first-child {
+        flex: 1;
+      }
+    }
+
     .theme-identity-fields {
       display: flex;
       flex-direction: column;

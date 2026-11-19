@@ -194,7 +194,7 @@ export class ThemeQuadrone {
       options.settingsOverride ??
       (options.doc
         ? this.getSheetThemeSettings(options)
-        : CONFIG.TIDY5E.utils.theme.getWorldTheme(options.doc));
+        : CONFIG.TIDY5E.utils.theme.getWorldTheme());
     const declarations = ThemeStylesProvider.create(themeSettings, options);
     this.applyStyleDeclarations(declarations, options.doc, options.idOverride);
   }

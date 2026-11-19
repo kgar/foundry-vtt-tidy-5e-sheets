@@ -134,9 +134,9 @@
       "Label": "Search"
     },
     "Theme": {
-      "AdvancedFilter": "Advanced Filter",
-      "AdvancedFilterHint": "Updated from the fields above as you make changes. You can edit the filter directly, but changing a field above will replace your edits.",
-      "AdvancedFilterCustomHint": "This filter has been customized and will be saved as-is.",
+      "Filter": "Filter",
+      "AdvancedFilterHint": "Updated from the fields above as you make changes. To edit the filter directly, switch to advanced filtering.",
+      "AdvancedFilterCustomHint": "This filter will be saved as-is.",
       "AdvancedFilterButton": "Use Advanced Filter",
       "BasicFilterButton": "Use Basic Filter",
       "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",

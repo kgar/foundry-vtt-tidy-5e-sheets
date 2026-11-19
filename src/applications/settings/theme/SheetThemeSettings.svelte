@@ -5,12 +5,7 @@
   import { ThemeImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { onMount } from 'svelte';
-  import chroma from 'chroma-js';
-  import type {
-    ThemeSettingsContext,
-    ThemeSettingsEditor,
-  } from 'src/settings/editors/theme-settings-editor.svelte';
+  import type { ThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
   import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import ThemeSettings from './parts/ThemeSettings.svelte';
@@ -22,25 +17,9 @@
 
   let { app }: Props = $props();
 
-  const context = $derived(app.value);
+  let context = $derived(app.value);
 
   const localize = FoundryAdapter.localize;
-
-  let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
-
-  let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
-
-  let portraitShapeDefaultValue = $derived(
-    ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
-  );
-
-  let portraitShapeDefaultLabel = $derived(
-    localize('TIDY5E.SETTINGS.TabOptions.UseSpecificDefault', {
-      value: localize(
-        `TIDY5E.SETTINGS.Theme.PortraitShape.option.${portraitShapeDefaultValue}`,
-      ),
-    }),
-  );
 
   $effect(() => {
     const liveSettings = ThemeQuadrone.getSheetThemeSettings({
@@ -116,7 +95,7 @@
   </div>
 
   <ThemeSettings
-    settings={context}
+    bind:settings={context}
     rarities={app.rarities}
     spellPreparationMethodColors={app.spellMethods}
     doc={app.document}

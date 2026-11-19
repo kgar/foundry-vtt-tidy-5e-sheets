@@ -2,7 +2,6 @@
 
 ### TODO
 
-- [ ] The first theme that applies to all document names should be applied as the default world theme on startup, wherever the original code was doing it. If you must, provide a special method for finding this particular theme, as the registry will probably not suffice, unless we make a special one denoted with a symbol such as "world-default" 🤔
 - [ ] /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
 - [ ] // TODO: Extract to TidyHooks
 - [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
