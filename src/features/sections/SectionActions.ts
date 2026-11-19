@@ -310,7 +310,7 @@ class SectionActions {
     section: TidyItemSectionBase,
   ): SectionCommand | undefined {
     const data = { type: section.key, ...section.dataset };
-    const types = actor.sheet._browseAddDocumentItemTypes(tabId, data.type);
+    const types = actor.sheet._getBrowseAddDocumentItemTypes(tabId, data.type);
 
     if (!ItemCompendiumBrowse.canBrowse(types)) {
       return undefined;

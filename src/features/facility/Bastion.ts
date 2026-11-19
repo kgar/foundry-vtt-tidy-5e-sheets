@@ -50,9 +50,7 @@ export function getUnlockThresholdLevel(): number {
 export function characterHasBastionTab(actor: Actor5e): boolean {
   const { enabled } = systemSettings.value.bastionConfiguration;
 
-  return (
-    enabled && actor?.system?.details?.level >= getUnlockThresholdLevel()
-  );
+  return enabled && actor?.system?.details?.level >= getUnlockThresholdLevel();
 }
 
 /**
@@ -68,7 +66,8 @@ export async function prepareFacilities(
 
   // TODO: Consider batching compendium lookups. Most occupants are likely to all be from the same compendium.
   for (const facility of Object.values<any>(actor.itemTypes.facility)) {
-    const chosenFacilityContext: ChosenFacilityContext = await buildChosenFacilityContext(facility);
+    const chosenFacilityContext: ChosenFacilityContext =
+      await buildChosenFacilityContext(facility);
 
     allDefenders.push(
       ...chosenFacilityContext.defenders
@@ -139,7 +138,18 @@ export async function prepareFacilities(
 export async function buildChosenFacilityContext(facility: any) {
   const { id, img, labels, name, system } = facility;
   const {
-    building, craft, defenders, disabled, free, hirelings, level, order, progress, size, trade, type,
+    building,
+    craft,
+    defenders,
+    disabled,
+    free,
+    hirelings,
+    level,
+    order,
+    progress,
+    size,
+    trade,
+    type,
   } = system;
   const subtitle = [];
 
@@ -154,12 +164,12 @@ export async function buildChosenFacilityContext(facility: any) {
   subtitle.push(
     building.built
       ? CONFIG.DND5E.facilities.sizes[size].label
-      : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt')
+      : FoundryAdapter.localize('DND5E.FACILITY.Build.Unbuilt'),
   );
 
   if (!isNil(level)) {
     subtitle.push(
-      FoundryAdapter.localize('DND5E.LevelNumber', { level: level })
+      FoundryAdapter.localize('DND5E.LevelNumber', { level: level }),
     );
   }
 
@@ -336,9 +346,7 @@ export async function advanceBastions(
  * to get it from  types if it's around.
  * TODO: Get this from the order dialog and save it as a Tidy flag
  */
-export function getOrderCost(
-  chosen: ChosenFacilityContext,
-): number | null {
+export function getOrderCost(chosen: ChosenFacilityContext): number | null {
   const order = chosen.progress.order;
   const system = chosen.facility.system;
 
@@ -354,8 +362,7 @@ export function getOrderCost(
     }
 
     // harvest has a quantity, craft is always 1.
-    const quantity =
-      order === 'harvest' ? (system.craft?.quantity ?? 1) : 1;
+    const quantity = order === 'harvest' ? (system.craft?.quantity ?? 1) : 1;
 
     return price * quantity;
   }
@@ -487,7 +494,7 @@ export async function addFacility(args: {
    */
   ignoreLevelRestriction?: boolean;
   /** Creates the chosen item on the target actor. */
-  onSelected: (itemData: unknown, event: Event) => unknown;
+  onSelected: (item: Item5e, event: Event) => unknown;
 }) {
   const {
     actor,
@@ -532,7 +539,9 @@ export async function addFacility(args: {
 
   if (result) {
     onSelected(
-      game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+      new Item.implementation(
+        game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+      ),
       event,
     );
   }

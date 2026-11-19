@@ -25,7 +25,7 @@
   let context = $derived(getSheetContext());
 
   let types = $derived<string[]>(
-    sheetDocument.sheet._browseAddDocumentItemTypes(tabId, data?.type),
+    sheetDocument.sheet._getBrowseAddDocumentItemTypes(tabId, data?.type),
   );
 
   // Hide the button if not editable, or if users don't have any compendiums with the browsable item types.

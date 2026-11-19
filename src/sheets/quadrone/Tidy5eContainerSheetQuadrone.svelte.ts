@@ -737,7 +737,7 @@ export class Tidy5eContainerSheetQuadrone
     }
 
     const result = await ItemCompendiumBrowse.selectOne(
-      this._browseAddDocumentItemTypes(args.tabId),
+      this._getBrowseAddDocumentItemTypes(args.tabId),
       this._detachOptions(),
     );
 
