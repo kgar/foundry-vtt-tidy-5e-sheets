@@ -1993,7 +1993,7 @@ export function getTidy5eActorSheetQuadroneBase<
         return [];
       }
 
-      const droppedItemData: Item5e[] = await Promise.all(
+      const droppedItems: Item5e[] = await Promise.all(
         document.contents.map(async (item: any) => {
           if (!(item instanceof dnd5e.documents.Item5e))
             item = await fromUuid(item.uuid);
@@ -2001,7 +2001,7 @@ export function getTidy5eActorSheetQuadroneBase<
         }),
       );
 
-      return this._onDropCreateItems(event, [droppedItemData], {
+      return this._onDropCreateItems(event, droppedItems, {
         behavior: (event as any)._behavior,
       });
     }
@@ -2168,9 +2168,9 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     /** Singleton types the actor already has (background/species) can't be browsed for. */
-    _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
       return super
-        ._browseAddDocumentItemTypes(tabId, datasetType)
+        ._getBrowseAddDocumentItemTypes(tabId, datasetType)
         .filter(
           (type) =>
             !CONFIG.Item.dataModels[type].metadata?.singleton ||
@@ -2190,7 +2190,7 @@ export function getTidy5eActorSheetQuadroneBase<
       const { type: datasetType, ...restDataSet } = args.data ?? {};
 
       const result = await ItemCompendiumBrowse.selectOne(
-        this._browseAddDocumentItemTypes(args.tabId, datasetType),
+        this._getBrowseAddDocumentItemTypes(args.tabId, datasetType),
         this._detachOptions(),
       );
 
