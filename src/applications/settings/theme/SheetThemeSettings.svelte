@@ -13,7 +13,7 @@
   } from 'src/settings/editors/theme-settings-editor.svelte';
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
   import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
-  import ThemeSettings from './ThemeSettings.svelte';
+  import ThemeSettings from './parts/ThemeSettings.svelte';
   import { CONSTANTS } from 'src/constants';
 
   interface Props {

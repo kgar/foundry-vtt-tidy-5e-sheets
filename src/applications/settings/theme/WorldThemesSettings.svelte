@@ -3,10 +3,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
-  import ThemeSettings from '../theme/ThemeSettings.svelte';
+  import ThemeSettings from './parts/ThemeSettings.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import Tabs, { type TabStripInfo } from 'src/components/tabs/Tabs.svelte';
-  import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
+  import WorldThemeSettingFilters from './parts/WorldThemeSettingFilters.svelte';
   import {
     getAppliesToSummary,
     getEffectiveTypeSelection,

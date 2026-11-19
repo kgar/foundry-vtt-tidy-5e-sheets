@@ -1,10 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ThemeSettingColorFormGroupQuadrone from './parts/ThemeSettingColorFormGroupQuadrone.svelte';
+  import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { coalesce } from 'src/utils/formatting';
-  import ImagePickerButton from './parts/ImagePickerButton.svelte';
+  import ImagePickerButton from './ImagePickerButton.svelte';
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
   import type { ThemeSettings } from 'src/theme/theme-quadrone.types';

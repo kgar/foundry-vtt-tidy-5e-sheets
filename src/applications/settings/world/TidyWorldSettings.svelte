@@ -6,12 +6,11 @@
     type WorldSettingsQuadroneApplication,
   } from './TidyWorldSettingsQuadroneApplication.svelte';
   import WorldSettingsOverview from 'src/applications/settings/world-settings-overview/WorldSettingsOverview.svelte';
-  import SheetThemeSettings from 'src/applications/settings/theme/SheetThemeSettings.svelte';
   import HomebrewSettings from 'src/applications/settings/homebrew-settings/HomebrewSettings.svelte';
   import ApplyTidySheetPreferences from 'src/applications/settings/default-sheet-preferences/DefaultSheetPreferences.svelte';
   import WorldSheetSettings from './WorldSheetSettings.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
-  import WorldThemesSettings from '../world-themes-settings/WorldThemesSettings.svelte';
+  import WorldThemesSettings from '../theme/WorldThemesSettings.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
