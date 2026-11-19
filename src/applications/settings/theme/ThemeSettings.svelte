@@ -3,15 +3,10 @@
   import ThemeSettingColorFormGroupQuadrone from './parts/ThemeSettingColorFormGroupQuadrone.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
-  import type {
-    ThemeColorSettingConfigEntry,
-    ThemeSettingsContext,
-  } from 'src/settings/editors/theme-settings-editor.svelte';
   import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
   import type { ThemeColorSettingOption } from 'src/settings/settings.types';
 
@@ -19,12 +14,11 @@
     settings: Partial<ThemeSettings>;
     rarities: ThemeColorSettingOption[];
     spellPreparationMethodColors: ThemeColorSettingOption[];
-    placeholders: ThemeSettingsContext | undefined;
+    placeholders: Partial<ThemeSettings> | undefined;
     doc?: any;
     showActorPortraitShape?: boolean;
     showActorHeaderBackground?: boolean;
     showItemSidebarBackground?: boolean;
-    onLiveUpdateRequested?: () => void;
   }
 
   let {
@@ -36,7 +30,6 @@
     showActorPortraitShape,
     showActorHeaderBackground,
     showItemSidebarBackground,
-    onLiveUpdateRequested,
   }: Props = $props();
 
   const localize = FoundryAdapter.localize;
@@ -98,33 +91,13 @@
 
   let methodColorPlaceholders = $derived.by(() => ({
     ...defaultMethodColors,
-    ...createColorPlaceholderMap(placeholders?.spellPreparationMethodColors),
+    ...(placeholders?.spellPreparationMethodColors ?? {}),
   }));
 
   let rarityColorPlaceholders = $derived.by(() => ({
     ...defaultRarityColors,
-    ...createColorPlaceholderMap(placeholders?.rarityColors),
+    ...(placeholders?.rarityColors ?? {}),
   }));
-
-  function createColorPlaceholderMap(colors?: ThemeColorSettingConfigEntry[]) {
-    return (
-      colors?.reduce<Record<string, string>>((prev, curr) => {
-        if (!isNil(curr, '')) {
-          prev[curr.key] = curr.value;
-        }
-        return prev;
-      }, {}) ?? {}
-    );
-  }
-
-  $effect(() => {
-    // Live Preview is only sanely feasible for sheet-specific theming.
-    if (!doc) {
-      return;
-    }
-
-    onLiveUpdateRequested?.();
-  });
 
   let useBasicThemeIfChanged = $derived(
     settings.useBasicTheme ?? placeholders?.useBasicTheme ?? false,

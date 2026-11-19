@@ -13,7 +13,7 @@ import {
   confirmUseDefault,
   type SettingsEditor,
 } from './settings-editors.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { ThemeColorSettingOption } from '../settings.types';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -36,20 +36,13 @@ export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
    * theme settings editor context.
    */
   mapFromSettings(source: Partial<ThemeSettings>): ThemeSettingsContext;
+
+  rarities: ThemeColorSettingOption[];
+
+  spellMethods: ThemeColorSettingOption[];
 };
 
-export type ThemeSettingsContext = {
-  accentColor: string;
-  useBasicTheme: boolean | null;
-  useHeaderBackground: boolean | null;
-  headerColor: string;
-  actorHeaderBackground: string;
-  headerBackgroundColor: string;
-  itemSidebarBackground: string;
-  portraitShape: PortraitShape | undefined;
-  rarityColors: ThemeColorSettingConfigEntry[];
-  spellPreparationMethodColors: ThemeColorSettingConfigEntry[];
-};
+export type ThemeSettingsContext = Partial<ThemeSettings>;
 
 export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
   const current = $state<ThemeSettingsContext>(getSettings());
@@ -72,27 +65,15 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
 
     return {
       accentColor: source.accentColor ?? '',
-      useBasicTheme: nullableBool(source.useBasicTheme, false),
-      useHeaderBackground: nullableBool(source.useHeaderBackground, true),
+      useBasicTheme: source.useBasicTheme,
+      useHeaderBackground: source.useHeaderBackground,
       headerColor: source.headerColor ?? '',
       actorHeaderBackground: source.actorHeaderBackground ?? '',
       headerBackgroundColor: source.headerBackgroundColor ?? '',
       itemSidebarBackground: source.itemSidebarBackground ?? '',
       portraitShape: source.portraitShape,
-      rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
-        ([key, label]) => ({
-          label,
-          key,
-          value: source.rarityColors?.[key] ?? '',
-        }),
-      ),
-      spellPreparationMethodColors: Object.entries(
-        CONFIG.DND5E.spellcasting,
-      ).map(([key, config]) => ({
-        label: config.label,
-        key,
-        value: source.spellPreparationMethodColors?.[key] ?? '',
-      })),
+      rarityColors: source.rarityColors ?? {},
+      spellPreparationMethodColors: source.spellPreparationMethodColors ?? {},
     };
   }
 
@@ -102,11 +83,11 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
     return mapFromSettings(source);
   }
 
-  function collectColors(entries: ThemeColorSettingConfigEntry[]) {
-    return entries
-      .filter((t) => !isNil(t.value.trim(), ''))
-      .reduce<Record<string, string>>((prev, curr) => {
-        prev[curr.key] = curr.value;
+  function collectColors(colors: Record<string, string>) {
+    return Object.entries(colors)
+      .filter(([key, value]) => !isNil(value?.trim(), ''))
+      .reduce<Record<string, string>>((prev, [key, value]) => {
+        prev[key] = value;
         return prev;
       }, {});
   }
@@ -140,12 +121,14 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
       changedSettings.portraitShape = currentSettings.portraitShape;
     }
 
-    const rarities = collectColors(currentSettings.rarityColors);
+    const rarities = collectColors(currentSettings.rarityColors ?? {});
     if (Object.keys(rarities).length) {
       changedSettings.rarityColors = rarities;
     }
 
-    const methods = collectColors(currentSettings.spellPreparationMethodColors);
+    const methods = collectColors(
+      currentSettings.spellPreparationMethodColors ?? {},
+    );
     if (Object.keys(methods).length) {
       changedSettings.spellPreparationMethodColors = methods;
     }
@@ -218,5 +201,17 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
 
       Object.assign(current, value);
     },
+
+    rarities: Object.entries(CONFIG.DND5E.itemRarity).map(([key, label]) => ({
+      label,
+      key,
+    })),
+
+    spellMethods: Object.entries(CONFIG.DND5E.spellcasting).map(
+      ([key, config]) => ({
+        label: config.label,
+        key,
+      }),
+    ),
   };
 }
