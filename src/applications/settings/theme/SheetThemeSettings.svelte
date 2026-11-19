@@ -44,45 +44,6 @@
     }),
   );
 
-  let defaultRarityColors = $state<Record<string, string>>({});
-  let defaultMethodColors = $state<Record<string, string>>({});
-
-  onMount(() => {
-    let target = document.querySelector<HTMLElement>('.tidy5e-sheet');
-    // imps are so back, gimme those styles
-    let imp: HTMLElement | undefined;
-    if (!target) {
-      imp = document.createElement('div');
-      imp.classList.add('tidy5e-sheet');
-      imp.style.display = 'none';
-      document.body.appendChild(imp);
-      target = imp;
-    }
-
-    const styles = getComputedStyle(target);
-
-    const readColor = (variableName: string) => {
-      const raw = styles.getPropertyValue(variableName).trim();
-      return raw && chroma.valid(raw) ? chroma(raw).hex() : raw;
-    };
-
-    defaultRarityColors = Object.fromEntries(
-      app.rarities.map((c) => [
-        c.key,
-        readColor(`--t5e-color-rarity-${c.key.toLowerCase()}`),
-      ]),
-    );
-
-    defaultMethodColors = Object.fromEntries(
-      app.spellMethods.map((c) => [
-        c.key,
-        readColor(`--t5e-color-spellcasting-${c.key.toLowerCase()}`),
-      ]),
-    );
-
-    imp?.remove();
-  });
-
   $effect(() => {
     const liveSettings = ThemeQuadrone.getSheetThemeSettings({
       doc: app.document,
