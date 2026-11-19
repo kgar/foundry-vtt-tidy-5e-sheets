@@ -207,7 +207,7 @@ export type ItemSheetQuadroneContext = {
   /** The crew slots of a mountable item. */
   vehicleCrew?: OccupantContext[];
   tabs: Tab[];
-} & DocumentSheetV2Context;
+} & DocumentSheetV2Context<Item5e>;
 
 export type RarityContext = {
   /** When an item has a single selected rarity, then this field has that value. */
@@ -326,7 +326,7 @@ export type ContainerSheetQuadroneContext = {
   toggles: ItemToggle[];
   unlocked: boolean;
   userPreferences: UserPreferences;
-} & DocumentSheetV2Context;
+} & DocumentSheetV2Context<Item5e>;
 
 export type ContainerContents = {
   capacity: { max: number; value: number; units: string; pct: number };

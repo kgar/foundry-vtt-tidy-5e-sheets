@@ -2,13 +2,19 @@
 
 ### TODO
 
+- [ ] Move the main call to Theme.getSheetThemeSettings to the svelte mixin's render method, before it does anything else. 
+  - [ ] Assign this to a stateful prop on the svelte mixin
+  - [ ] Somehow get typescript to see it in the mixed-in apps
+  - [ ] Use it in context prep at the doc mixin level
+  - [ ] Reevaluate calls to Theme.getSheetThemeSettings and see if you now have the adequate data available on the application itself. Remove as many as you can and adjust TODOs accordingly.
 - [ ] // TODO: this is used way too widely; it needs to be consolidated to sheet prep and passed down as universal context
-- [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
-- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
+- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
-- [ ] // TODO: Somehow clean this up and streamline the code
 - [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
+- [ ] // TODO: Somehow eliminate. Potentially store the retrieved theme as a sheet member? Or pass it through options when acquired from context prep.
+- [ ] // TODO: Analyze this again and see if there's a better way
+- [ ] Test: Ensure child sheets still inherit defaults from their parents. e.g., Actor-owned Item sheet inheriting its actor's theme settings as default/fallbacks.
 
 ### vNext Stretch Goals
 

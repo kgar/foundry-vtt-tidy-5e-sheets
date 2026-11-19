@@ -590,12 +590,12 @@ export type SpecialTraits = {
 };
 
 // TODO: Try to eliminate this because it's already being
-export type DocumentSheetV2Context = {
+export type DocumentSheetV2Context<TDocument> = {
   config: typeof CONFIG.DND5E;
   /** The game world's default currency when a single currency is needed. */
   defaultCurrency: CurrencyItemConfig & { key: string };
   /** The document which the sheet represents. */
-  document: any;
+  document: TDocument;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
@@ -606,6 +606,7 @@ export type DocumentSheetV2Context = {
   rootId: string;
   sheet: TidyExtensibleDocumentSheetMixinInstance;
   source: Record<string, any>;
+  themeSettings: ThemeSettings;
   /**
    * Tells whether the sheet is unlocked via the Sheet Mode feature.
    */
@@ -758,18 +759,6 @@ export type GroupableSelectOption = {
   group?: string;
 };
 
-/* Quadrone Types */
-export type DocumentSheetQuadroneContext<TDocument> = {
-  defaultCurrency: CurrencyItemConfig & { key: string };
-  document: TDocument;
-  editable: boolean;
-  fields: any;
-  rootId: string;
-  source: any;
-  unlocked: boolean;
-  user: any;
-};
-
 export type ActorSizeContext = {
   key: string;
   label: string;
@@ -858,11 +847,10 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
-  themeSettings: ThemeSettings;
   token: TokenDocument | null;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & DocumentSheetV2Context<Actor5e>;
 
 export type SingleActorContext<TSheet> = {
   abilities: ActorAbilityContextEntry[];

@@ -22,11 +22,7 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
-
+  
   function onEmptySlotClicked(
     ev: (MouseEvent | KeyboardEvent) & {
       currentTarget: EventTarget & HTMLAnchorElement;

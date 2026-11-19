@@ -28,7 +28,7 @@ import type {
   Actor5e,
   GroupableSelectOption,
   ActiveEffectContext,
-  DocumentSheetQuadroneContext,
+  DocumentSheetV2Context,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -159,8 +159,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   onThemeConfigChanged(settingsOverride?: ThemeSettings) {
     const themeSettings =
-      settingsOverride ??
-      Theme.getSheetThemeSettings({ doc: this.document });
+      settingsOverride ?? Theme.getSheetThemeSettings({ doc: this.document });
     this._applySheetThemeClasses(themeSettings);
   }
 
@@ -718,7 +717,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   /* -------------------------------------------- */
 
-  async _getEffectsSections(context: DocumentSheetQuadroneContext<any>) {
+  async _getEffectsSections(context: DocumentSheetV2Context<any>) {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
     const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);

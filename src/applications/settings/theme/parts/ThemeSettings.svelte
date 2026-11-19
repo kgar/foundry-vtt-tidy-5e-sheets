@@ -25,7 +25,7 @@
     settings = $bindable(),
     rarities,
     spellPreparationMethodColors,
-    placeholders,
+    placeholders = Theme.getWorldTheme(),
     doc,
     showActorPortraitShape,
     showActorHeaderBackground,

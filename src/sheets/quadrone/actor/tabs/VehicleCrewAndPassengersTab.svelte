@@ -19,10 +19,6 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -98,9 +94,12 @@
           tabindex="0"
           class="button button-icon-only button-borderless highlight-on-hover"
           data-action="browseActors"
-          aria-label={FoundryAdapter.localize('TIDY5E.COMMON.Action.AddFromCompendium', {
-            name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
-          })}
+          aria-label={FoundryAdapter.localize(
+            'TIDY5E.COMMON.Action.AddFromCompendium',
+            {
+              name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+            },
+          )}
           data-tooltip=""
         >
           <i class="fas fa-user-magnifying-glass"></i>
@@ -152,7 +151,12 @@
         </span>
         {#if context.passengerBrokenLinks.length && context.editable}
           <!-- svelte-ignore a11y_missing_attribute -->
-          <a role="button" tabindex="0" class="remove-broken-links-button" data-action="removeBrokenLinks">
+          <a
+            role="button"
+            tabindex="0"
+            class="remove-broken-links-button"
+            data-action="removeBrokenLinks"
+          >
             <i class="fa-solid fa-link-broken"></i>
             {localize('TIDY5E.VEHICLE.Action.RemoveBrokenLinks', {
               value: context.passengerBrokenLinks.length,
@@ -167,11 +171,14 @@
           tabindex="0"
           class="button button-icon-only button-borderless highlight-on-hover"
           data-action="browseActors"
-          aria-label={FoundryAdapter.localize('TIDY5E.COMMON.Action.AddFromCompendium', {
-            name: FoundryAdapter.localize(
-              'TIDY5E.VEHICLE.Member.Passenger.Title.one',
-            ),
-          })}
+          aria-label={FoundryAdapter.localize(
+            'TIDY5E.COMMON.Action.AddFromCompendium',
+            {
+              name: FoundryAdapter.localize(
+                'TIDY5E.VEHICLE.Member.Passenger.Title.one',
+              ),
+            },
+          )}
           data-tooltip=""
         >
           <i class="fas fa-user-magnifying-glass"></i>
@@ -216,7 +223,9 @@
           data-custom-section={section.custom ? true : null}
         >
           {#snippet header(expanded)}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderRow
+              class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+            >
               <TidyTableHeaderCell primary={true} class="header-label-cell">
                 <h3>
                   {localize(section.label)}

@@ -30,11 +30,9 @@
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
+
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
+
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
   const localize = FoundryAdapter.localize;
@@ -123,7 +121,9 @@
           expandedOverride={sectionSearchState.expandedOverride}
         >
           {#snippet header()}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderRow
+              class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+            >
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}

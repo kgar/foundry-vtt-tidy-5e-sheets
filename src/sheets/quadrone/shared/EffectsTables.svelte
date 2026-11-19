@@ -35,11 +35,6 @@
       >(),
     );
 
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
-
   let sections = $derived(context.effects);
 
   function getLongestRowActionsFromNestedEffects(effect: ActiveEffectContext) {
@@ -81,8 +76,11 @@
     <TidyTable key={section.key}>
       {#snippet header(expanded)}
         <TidyTableHeaderRow
-          class="{!isBasicTheme ? 'theme-dark' : ''} {section.type ===
-            'suppressed' || section.disabled || effectEntries.length === 0
+          class="{!context.themeSettings.useBasicTheme
+            ? 'theme-dark'
+            : ''} {section.type === 'suppressed' ||
+          section.disabled ||
+          effectEntries.length === 0
             ? 'diminished'
             : ''}"
         >
@@ -108,7 +106,6 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-
         {#each effectEntries as effectContext}
           {@render EffectRow(
             effectContext.effect,

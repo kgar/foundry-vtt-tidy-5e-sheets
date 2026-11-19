@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {
-    DocumentSheetQuadroneContext,
+    DocumentSheetV2Context,
     TidySectionBase,
   } from 'src/types/types';
   import TidyTableHeaderCell from '../TidyTableHeaderCell.svelte';
@@ -19,7 +19,7 @@
         >
       >;
     };
-    context: DocumentSheetQuadroneContext<any>;
+    context: DocumentSheetV2Context<any>;
     expanded?: boolean;
     root?: boolean;
   };

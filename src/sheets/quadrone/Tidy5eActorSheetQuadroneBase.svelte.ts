@@ -283,10 +283,6 @@ export function getTidy5eActorSheetQuadroneBase<
         }
       }
 
-      const themeSettings = Theme.getSheetThemeSettings({
-        doc: this.actor,
-      });
-
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
@@ -321,12 +317,14 @@ export function getTidy5eActorSheetQuadroneBase<
         tabSheetPins: await SheetPinsProvider.getTabSheetPinsContext(
           this.document,
         ),
-        portrait: await this._preparePortrait(this.actor),
+        portrait: await this._preparePortrait(
+          this.actor,
+          documentSheetContext.themeSettings,
+        ),
         rollData,
         saves,
         system: this.actor.system,
         tabs: [],
-        themeSettings,
         token: this.token,
         userPreferences: UserPreferencesService.get(),
         warnings:
@@ -407,12 +405,13 @@ export function getTidy5eActorSheetQuadroneBase<
 
     async _preparePortrait(
       actor: Actor5e,
+      // TODO: Eliminate this param once the sheet itself always has a theme available
+      theme: ThemeSettings,
     ): Promise<ActorSheetQuadroneContext['portrait']> {
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-      const themeSettings = Theme.getSheetThemeSettings({ doc: actor });
       const showToken =
         actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-          true || themeSettings.portraitShape === 'token';
+          true || theme.portraitShape === 'token';
       const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
       const isRandom = !!effectiveToken?.randomImg;
       const rawSrc = showToken
@@ -435,8 +434,7 @@ export function getTidy5eActorSheetQuadroneBase<
         path: showToken ? 'prototypeToken.texture.src' : 'img',
         shape: showToken
           ? 'token'
-          : (themeSettings.portraitShape ??
-            Theme.DEFAULT_PORTRAIT_SHAPE),
+          : (theme.portraitShape ?? Theme.DEFAULT_PORTRAIT_SHAPE),
         isVideo,
         isRandom,
       };
@@ -1119,6 +1117,7 @@ export function getTidy5eActorSheetQuadroneBase<
     _updateFrame(options: ApplicationRenderOptions) {
       super._updateFrame(options);
 
+      // TODO: Somehow eliminate. Potentially store the retrieved theme as a sheet member? Or pass it through options when acquired from context prep.
       const themeSettings = Theme.getSheetThemeSettings({
         doc: this.actor,
       });
@@ -1168,10 +1167,10 @@ export function getTidy5eActorSheetQuadroneBase<
         element.dataset.tooltipClass = 'property-attribution';
     }
 
+    // TODO: Analyze this again and see if there's a better way
     onThemeConfigChanged(settingsOverride?: ThemeSettings) {
       const themeSettings =
-        settingsOverride ??
-        Theme.getSheetThemeSettings({ doc: this.actor });
+        settingsOverride ?? Theme.getSheetThemeSettings({ doc: this.actor });
       this._applySheetThemeClasses(themeSettings);
     }
 
@@ -2170,7 +2169,10 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     /** Singleton types the actor already has (background/species) can't be browsed for. */
-    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(
+      tabId: string,
+      datasetType?: string,
+    ): string[] {
       return super
         ._getBrowseAddDocumentItemTypes(tabId, datasetType)
         .filter(
@@ -2414,7 +2416,9 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     static async #showArtwork(this: Tidy5eActorSheetQuadroneBase) {
-      const { src } = await this._preparePortrait(this.actor);
+      const themeSettings = Theme.getSheetThemeSettings({ doc: this.document });
+      
+      const { src } = await this._preparePortrait(this.actor, themeSettings);
 
       this._renderChild(
         new foundry.applications.apps.ImagePopout({

@@ -111,13 +111,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  // Item sheet context has no themeSettings; resolve from the document like Theme.prepare.
-
-  const isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
-
   const sectionSearchState = $derived(
     SectionVisibility.getItemSectionSearchState(entries, searchResults),
   );
@@ -142,7 +135,10 @@
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
-      class={[!isBasicTheme ? 'theme-dark' : '', headerRowClasses]}
+      class={[
+        !context.themeSettings.useBasicTheme ? 'theme-dark' : '',
+        headerRowClasses,
+      ]}
       {...headerRowAttributes}
     >
       <TidyTableHeaderCell primary={true} class="header-label-cell">

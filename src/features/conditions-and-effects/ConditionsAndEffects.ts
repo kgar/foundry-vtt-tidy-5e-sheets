@@ -6,8 +6,8 @@ import type {
   ActiveEffectSection,
   Actor5e,
   SectionCommand,
-  DocumentSheetQuadroneContext,
   EffectCategory,
+  DocumentSheetV2Context,
 } from 'src/types/types';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
@@ -99,7 +99,7 @@ export class ConditionsAndEffects {
   }
 
   static async getConditionsAndEffectsForActorQuadrone(
-    context: DocumentSheetQuadroneContext<any>,
+    context: DocumentSheetV2Context<any>,
     object: any,
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<{
@@ -212,7 +212,7 @@ export class ConditionsAndEffects {
   }
 
   static async getEffectsForItem(
-    context: DocumentSheetQuadroneContext<any>,
+    context: DocumentSheetV2Context<any>,
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>,
   ): Promise<ActiveEffectSection[]> {
     const newCategories: ActiveEffectSection[] = [];

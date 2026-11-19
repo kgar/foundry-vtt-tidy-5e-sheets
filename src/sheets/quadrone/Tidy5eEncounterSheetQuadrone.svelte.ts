@@ -318,7 +318,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
             : undefined,
           index,
           name: actor.name,
-          portrait: await this._preparePortrait(actor),
+          portrait: await this._preparePortrait(actor, context.themeSettings),
           initiative: combatantSettings.initiative,
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
@@ -571,12 +571,9 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
       this.addNewPlaceholder(
         {
-          name: FoundryAdapter.localize(
-            'TIDY5E.ENCOUNTER.Placeholder.Title',
-            {
-              count: initiativeNumber,
-            },
-          ),
+          name: FoundryAdapter.localize('TIDY5E.ENCOUNTER.Placeholder.Title', {
+            count: initiativeNumber,
+          }),
         },
         { initiative: initiativeNumber },
       );
@@ -710,8 +707,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   /** System placement choices */
   _getPlacementBehaviorChoices(): Record<string, string> {
     const choices: Record<string, string> =
-      game.settings.settings.get('dnd5e.encounterPlacementBehavior')
-        ?.choices ?? {};
+      game.settings.settings.get('dnd5e.encounterPlacementBehavior')?.choices ??
+      {};
 
     return Object.fromEntries(
       Object.entries(choices).map(([value, label]) => [

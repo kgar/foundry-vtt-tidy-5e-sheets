@@ -56,6 +56,7 @@ import {
   shouldParseInputDelta,
 } from 'src/utils/form';
 import * as Bastion from 'src/features/facility/Bastion';
+import { Theme } from 'src/theme/theme';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -401,7 +402,7 @@ export function getTidyExtensibleDocumentSheetMixin<
 
     async _prepareContext(
       options: Partial<TidyDocumentSheetRenderOptions>,
-    ): Promise<DocumentSheetV2Context> {
+    ): Promise<DocumentSheetV2Context<any>> {
       const context = await super._prepareContext(options);
 
       const sheetModeConfig = {
@@ -420,7 +421,8 @@ export function getTidyExtensibleDocumentSheetMixin<
         defaultCurrency: FoundryAdapter.getDefaultCurrencyConfig(),
         unlocked: sheetModeConfig.unlocked,
         config: CONFIG.DND5E,
-      } as DocumentSheetV2Context;
+        themeSettings: Theme.getSheetThemeSettings({ doc: this.document }),
+      } as DocumentSheetV2Context<any>;
     }
 
     /* -------------------------------------------- */
@@ -1991,7 +1993,10 @@ export function getTidyExtensibleDocumentSheetMixin<
      * The item types to display in the compendium browser for a tab.
      * Some sections customize. Not available for effects.
      */
-    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(
+      tabId: string,
+      datasetType?: string,
+    ): string[] {
       const types = this._addDocumentItemTypes(tabId);
       return datasetType && types.includes(datasetType) ? [datasetType] : types;
     }

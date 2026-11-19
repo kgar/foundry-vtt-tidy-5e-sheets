@@ -263,12 +263,7 @@ export class Theme {
       preferences.portraitShape = 'token';
     }
 
-    // TODO: Extract to TidyHooks
-    Hooks.callAll(
-      'tidy5e-sheet.getSheetThemeSettings',
-      preferences,
-      options.doc,
-    );
+    TidyHooks.tidy5eSheetGetSheetThemeSettings(preferences, options.doc);
 
     return preferences;
   }

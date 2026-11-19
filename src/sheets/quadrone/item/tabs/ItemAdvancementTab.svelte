@@ -21,10 +21,6 @@
   let localize = FoundryAdapter.localize;
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   // TODO: Move advancement sections / columns / row actions to context prep
 
@@ -71,7 +67,9 @@
 
     <TidyTable key={section.key}>
       {#snippet header()}
-        <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+        <TidyTableHeaderRow
+          class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+        >
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
@@ -111,9 +109,8 @@
                 ]}
                 aria-label={localize('DND5E.ADVANCEMENT.Action.Edit')}
                 data-action={context.unlocked ? 'editDocument' : undefined}
-                data-uuid={context.item.system.advancement?.get(
-                  advancement.id,
-                )?.uuid}
+                data-uuid={context.item.system.advancement?.get(advancement.id)
+                  ?.uuid}
               >
                 <img
                   class="item-image"

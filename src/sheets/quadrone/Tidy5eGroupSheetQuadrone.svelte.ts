@@ -452,7 +452,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
               actor,
             )
           : undefined,
-        portrait: await this._preparePortrait(actor),
+        portrait: await this._preparePortrait(
+          actor,
+          actorContext.themeSettings,
+        ),
         gold: FoundryAdapter.formatNumber(
           this.getDefaultCurrencySummary(actor),
         ),

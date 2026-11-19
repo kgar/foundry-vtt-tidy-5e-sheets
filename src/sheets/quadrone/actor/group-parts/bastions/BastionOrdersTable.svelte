@@ -25,11 +25,6 @@
 
   let context = $derived(getGroupSheetQuadroneContext());
 
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
-
   const localize = FoundryAdapter.localize;
 
   const searchResults = getSearchResultsContext();
@@ -73,7 +68,7 @@
   expandedOverride={searchResults.isSearching ? visibleOrders.length > 0 : undefined}
 >
   {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+    <TidyTableHeaderRow class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true}>
         <h3>
           {localize(section.label)}

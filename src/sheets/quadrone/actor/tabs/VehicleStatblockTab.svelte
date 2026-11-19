@@ -36,10 +36,6 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    Theme.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -404,7 +400,9 @@
             expandedOverride={sectionSearchState.expandedOverride}
           >
             {#snippet header(expanded)}
-              <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+              <TidyTableHeaderRow
+                class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+              >
                 <TidyTableHeaderCell primary={true} class="header-label-cell">
                   <h3>
                     {localize(section.label)}

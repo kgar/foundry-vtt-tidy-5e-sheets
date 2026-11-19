@@ -16,8 +16,6 @@
       >(),
     );
 
-  let isBasicTheme = $derived(Theme.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
-
   let sectionsInlineWidth: number = $state(0);
 
   function onResize(entry: ResizeObserverEntry) {
@@ -30,7 +28,10 @@
     <EffectsTables inlineWidth={sectionsInlineWidth} />
 
     {#if 'conditions' in context}
-      <ActorConditionsQuadrone {isBasicTheme} conditions={context.conditions} />
+      <ActorConditionsQuadrone
+        isBasicTheme={context.themeSettings.useBasicTheme}
+        conditions={context.conditions}
+      />
     {/if}
   </div>
 </div>
