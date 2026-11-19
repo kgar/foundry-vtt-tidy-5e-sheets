@@ -102,6 +102,7 @@
       "AddNamed": "Add {name}",
       "CopyToClipboard": "Copy to Clipboard",
       "CopyWithoutFormatting": "Copy Without Formatting",
+      "ChooseOne": "Choose One",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
       "Hide": "Hide",

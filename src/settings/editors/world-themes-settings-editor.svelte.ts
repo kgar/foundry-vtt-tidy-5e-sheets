@@ -14,16 +14,14 @@ import {
 import {
   getLegacyWorldThemeSettingSettingDocument,
   getEffectiveWorldThemesSetting,
-  SettingsProvider,
 } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { DialogService } from 'src/features/dialog/DialogService';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -298,10 +296,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   return {
     async promptForThemePreset(): Promise<WorldThemeSetting | undefined> {
       const options = current.settings
-        .map((s) => ({ id: s.id, label: s.name }))
+        .map((s) => ({ value: s.id, label: s.name }))
         .toSorted((a, b) => a.label.localeCompare(b.label));
 
-      const selectedId = await DialogService.chooseFromOptions({
+      const selectedId = await TidyDialog.chooseOne({
         title: 'TIDY5E.COMMON.Theme.ChooseAPreset.Title',
         message: 'TIDY5E.COMMON.Theme.ChooseAPreset.Content',
         options,
