@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import * as Bastion from 'src/features/facility/Bastion';
 import { BastionMaintainOrderDialog } from 'src/features/facility/BastionMaintainOrderDialog';
 import {
@@ -1125,7 +1125,7 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
     const element = await super._renderFrame(options);
 
     // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+    const themeSettings = Theme.getSheetThemeSettings({
       doc: this.actor,
     });
     if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {

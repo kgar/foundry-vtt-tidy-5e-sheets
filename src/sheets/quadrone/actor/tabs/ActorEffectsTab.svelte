@@ -7,7 +7,7 @@
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
 
   let context =
     $derived(
@@ -16,7 +16,7 @@
       >(),
     );
 
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
+  let isBasicTheme = $derived(Theme.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   let sectionsInlineWidth: number = $state(0);
 

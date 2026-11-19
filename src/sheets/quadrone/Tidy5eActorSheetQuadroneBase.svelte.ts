@@ -58,12 +58,12 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { error, warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import { Container } from 'src/features/containers/Container';
 import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { getThemeV2 } from 'src/theme/theme';
@@ -283,7 +283,7 @@ export function getTidy5eActorSheetQuadroneBase<
         }
       }
 
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      const themeSettings = Theme.getSheetThemeSettings({
         doc: this.actor,
       });
 
@@ -409,7 +409,7 @@ export function getTidy5eActorSheetQuadroneBase<
       actor: Actor5e,
     ): Promise<ActorSheetQuadroneContext['portrait']> {
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
+      const themeSettings = Theme.getSheetThemeSettings({ doc: actor });
       const showToken =
         actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
           true || themeSettings.portraitShape === 'token';
@@ -436,7 +436,7 @@ export function getTidy5eActorSheetQuadroneBase<
         shape: showToken
           ? 'token'
           : (themeSettings.portraitShape ??
-            ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE),
+            Theme.DEFAULT_PORTRAIT_SHAPE),
         isVideo,
         isRandom,
       };
@@ -1119,7 +1119,7 @@ export function getTidy5eActorSheetQuadroneBase<
     _updateFrame(options: ApplicationRenderOptions) {
       super._updateFrame(options);
 
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      const themeSettings = Theme.getSheetThemeSettings({
         doc: this.actor,
       });
 
@@ -1171,7 +1171,7 @@ export function getTidy5eActorSheetQuadroneBase<
     onThemeConfigChanged(settingsOverride?: ThemeSettings) {
       const themeSettings =
         settingsOverride ??
-        ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
+        Theme.getSheetThemeSettings({ doc: this.actor });
       this._applySheetThemeClasses(themeSettings);
     }
 

@@ -18,7 +18,7 @@ import type {
   SheetPinLegacyFlag,
   AnySheetPinFlagData,
 } from './TidyFlags.types';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import { TabConfigurationSchema } from 'src/settings/settings-data-models';
 import { SettingsShims } from 'src/settings/settings-shims';

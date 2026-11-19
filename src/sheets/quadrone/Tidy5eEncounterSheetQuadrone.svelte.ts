@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
@@ -1063,7 +1063,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
     const element = await super._renderFrame(options);
 
     // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+    const themeSettings = Theme.getSheetThemeSettings({
       doc: this.actor,
     });
     if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {

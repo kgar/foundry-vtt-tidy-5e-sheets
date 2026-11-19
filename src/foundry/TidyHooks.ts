@@ -13,7 +13,10 @@ import type {
 } from 'src/types/item.types';
 import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type {
+  ThemeSettings,
+  ThemeSettingsConfigurationOptions,
+} from 'src/theme/theme.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -36,15 +39,6 @@ export class TidyHooks {
     options: { behavior?: DropEffectValue | null; event?: Event },
   ): false | undefined {
     return Hooks.call('dnd5e.dropCreateItems', app, items, options);
-  }
-
-  /**
-   * Tidy's World Themes have been updated to the latest and are
-   * about to go into effect.
-   * @param config      Tidy's runtime configurations.
-   */
-  static tidy5eSheetWorldThemesConfigChanged(config: TidyConfig) {
-    Hooks.callAll('tidy5e-sheet.worldThemesConfigChanged', config);
   }
 
   /**
@@ -377,6 +371,22 @@ export class TidyHooks {
       skill,
       contextOptions,
     );
+  }
+
+  /**
+   * Tidy is preparing theme settings for a given sheet.
+   * @param theme       the tentative theme to use.
+   * @param document    the document for which the theme applies.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getSheetThemeSettings', (theme, document) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetGetSheetThemeSettings(theme: ThemeSettings, document: any) {
+    Hooks.callAll('tidy5e-sheet.getSheetThemeSettings', theme, document);
   }
 
   /**
@@ -820,5 +830,21 @@ export class TidyHooks {
 
   static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId?: number): number {
     return Hooks.off(this.tidy5eSheetsThemeSettingsChangedHook, hookId);
+  }
+
+  /**
+   * Tidy's World Themes have been updated to the latest and are
+   * about to go into effect.
+   * @param config      Tidy's runtime configurations.
+   * 
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.worldThemesConfigChanged', (config) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetWorldThemesConfigChanged(config: TidyConfig) {
+    Hooks.callAll('tidy5e-sheet.worldThemesConfigChanged', config);
   }
 }

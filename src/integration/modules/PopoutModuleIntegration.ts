@@ -1,6 +1,6 @@
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import type { ModuleIntegrationBase } from '../integration-classes';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { SvelteApplicationMixinInstance } from 'src/mixins/SvelteApplicationMixin.svelte';
 
@@ -51,7 +51,7 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
       const data = this.poppedOut.get(app);
       if (data) {
         this.poppedOut.delete(app);
-        ThemeQuadrone.unsubscribeStylesheet(data.stylesheet);
+        Theme.unsubscribeStylesheet(data.stylesheet);
         data.abortController.abort();
       }
     };
@@ -67,7 +67,7 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
   ) {
     const copiedStylesheet = new popoutWindow.CSSStyleSheet();
 
-    ThemeQuadrone.subscribeStylesheet(copiedStylesheet);
+    Theme.subscribeStylesheet(copiedStylesheet);
 
     popoutDocument.adoptedStyleSheets.push(copiedStylesheet);
 

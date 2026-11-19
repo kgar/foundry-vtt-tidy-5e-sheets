@@ -10,7 +10,7 @@
   import type { Actor5e, VehicleItemQuadroneContext } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
 
   type Props = {
     ctx: VehicleItemQuadroneContext;
@@ -23,7 +23,7 @@
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+    Theme.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
 

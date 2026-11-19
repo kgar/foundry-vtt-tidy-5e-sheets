@@ -2,8 +2,8 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import DeathSavesOverlay from 'src/sheets/quadrone/actor/character-parts/DeathSavesOverlay.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-  import type { PortraitShape } from 'src/theme/theme-quadrone.types';
+  import { Theme } from 'src/theme/theme';
+  import type { PortraitShape } from 'src/theme/theme.types';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
@@ -28,7 +28,7 @@
 
   let currentPortraitShape = $derived(context.portrait.shape);
 
-  const availableShapes = ThemeQuadrone.getActorPortraitShapes();
+  const availableShapes = Theme.getActorPortraitShapes();
 
   const shapeIcons: Record<PortraitShape, string> = {
     transparent: 'fa-user',
@@ -123,7 +123,7 @@
           aria-pressed={shape === currentPortraitShape}
           aria-label={label}
           data-tooltip={label}
-          onclick={() => ThemeQuadrone.updatePortraitShape(context.actor, shape)}
+          onclick={() => Theme.updatePortraitShape(context.actor, shape)}
         >
           <i class={['fas', shapeIcons[shape]]}></i>
         </button>

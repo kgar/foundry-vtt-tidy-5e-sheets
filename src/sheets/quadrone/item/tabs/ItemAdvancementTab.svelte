@@ -8,7 +8,7 @@
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
@@ -22,7 +22,7 @@
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
   let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+    Theme.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
 

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { CONSTANTS } from 'src/constants';
   import { coalesce } from 'src/utils/formatting';
   import ImagePickerButton from './ImagePickerButton.svelte';
   import { onMount } from 'svelte';
   import chroma from 'chroma-js';
-  import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+  import type { ThemeSettings } from 'src/theme/theme.types';
   import type { ThemeColorSettingOption } from 'src/settings/settings.types';
 
   interface Props {
@@ -36,10 +36,10 @@
 
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
-  let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
+  let portraitShapes = Theme.getActorPortraitShapes();
 
   let portraitShapeDefaultValue = $derived(
-    placeholders?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+    placeholders?.portraitShape ?? Theme.DEFAULT_PORTRAIT_SHAPE,
   );
 
   let portraitShapeDefaultLabel = $derived(
@@ -147,7 +147,7 @@
     label={localize('TIDY5E.SETTINGS.Theme.AccentColor.Title')}
     placeholder={coalesce(
       placeholders?.accentColor,
-      ThemeQuadrone.DEFAULT_ACCENT_COLOR,
+      Theme.DEFAULT_ACCENT_COLOR,
     )}
   />
 

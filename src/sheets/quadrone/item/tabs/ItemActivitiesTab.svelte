@@ -10,7 +10,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import RowActionsColumn from '../columns/RowActionsColumn.svelte';
@@ -20,7 +20,7 @@
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
   let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+    Theme.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
 

@@ -4,7 +4,7 @@ import type {
   ThemeSettingsConfigurationOptions,
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
-} from './theme-quadrone.types';
+} from './theme.types';
 import { formatResourcePathForCss } from 'src/utils/path';
 import { THEME_CLASS_DARK, THEME_CLASS_LIGHT, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
 import {

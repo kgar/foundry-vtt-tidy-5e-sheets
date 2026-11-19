@@ -1,5 +1,5 @@
 import { downloadTextFile, readFileAsText } from 'src/utils/file';
-import type { ThemeData, ThemeSettings } from './theme-quadrone.types';
+import type { ThemeData, ThemeSettings } from './theme.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';

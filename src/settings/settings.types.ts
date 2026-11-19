@@ -1,5 +1,5 @@
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 
 export interface GlobalCustomSectionSheetFilters {
   [sheetType: string]: string[];

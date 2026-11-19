@@ -39,7 +39,7 @@ import type { Item5e } from './item.types';
 import type {
   ThemeFilterData,
   ThemeSettings,
-} from 'src/theme/theme-quadrone.types';
+} from 'src/theme/theme.types';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 
 export const SYMBOLS = {

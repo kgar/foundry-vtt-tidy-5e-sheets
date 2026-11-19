@@ -27,7 +27,7 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import * as Bastion from 'src/features/facility/Bastion';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import { getTidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
@@ -1078,7 +1078,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
     const element = await super._renderFrame(options);
 
     // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+    const themeSettings = Theme.getSheetThemeSettings({
       doc: this.actor,
     });
     if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {

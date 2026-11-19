@@ -12,7 +12,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
@@ -23,7 +23,7 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+    Theme.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
 

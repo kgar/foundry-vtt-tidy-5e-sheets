@@ -1,11 +1,11 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type {
   PortraitShape,
   ThemeColorSetting,
   ThemeSettings,
-} from 'src/theme/theme-quadrone.types';
+} from 'src/theme/theme.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -157,7 +157,7 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
       if (Object.keys(changedSettings).length === 0) {
         await TidyFlags.sheetThemeSettings.unset(document);
       } else {
-        await ThemeQuadrone.saveSheetThemeSettings(
+        await Theme.saveSheetThemeSettings(
           document,
           changedSettings as ThemeSettings,
         );

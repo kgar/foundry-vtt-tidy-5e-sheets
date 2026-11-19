@@ -2,17 +2,13 @@
 
 ### TODO
 
-- [ ] // TODO: Extract to TidyHooks
-- [ ] applyCurrentThemeSettingsToStylesheet - retrofit to hard require a document
-- [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
-- [ ] // TODO: need a util for getting full folder path
-- [ ] // TODO: Absorb all the theme things into here. Strongly consider absorbing ThemeQuadrone, too.
+- [ ] // TODO: this is used way too widely; it needs to be consolidated to sheet prep and passed down as universal context
 - [ ] // TODO: to theme.ts | and on that note, registry utils.ts should really just pull in other scripts and aggregate them in, say, main.svelte.ts.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] // TODO: Somehow clean this up and streamline the code
-- [ ] Make a nicer Apply Preset / Pick One dialog. See https://discord.com/channels/@me/1243307347682529423/1572383582071169219
+- [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
 
 ### vNext Stretch Goals
 

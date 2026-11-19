@@ -14,7 +14,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import EffectActionsColumnHeader from '../item/columns/EffectActionsColumnHeader.svelte';
   import RowActionsColumn from '../item/columns/RowActionsColumn.svelte';
@@ -36,7 +36,7 @@
     );
 
   let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
+    Theme.getSheetThemeSettings({ doc: context.document })
       .useBasicTheme ?? false,
   );
 

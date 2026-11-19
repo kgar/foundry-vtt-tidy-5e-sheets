@@ -34,7 +34,7 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type {
   PortraitShape,
   ThemeSettings,
-} from 'src/theme/theme-quadrone.types';
+} from 'src/theme/theme.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';

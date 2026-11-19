@@ -18,7 +18,7 @@ import {
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
 import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
@@ -326,7 +326,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filterMode: 'basic',
         id: settingId,
         name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.NewTheme'),
-        settings: ThemeQuadrone.getDefaultThemeSettings(),
+        settings: Theme.getDefaultThemeSettings(),
         sort: maxSort + 1,
         documentNames: [],
         filter: undefined,

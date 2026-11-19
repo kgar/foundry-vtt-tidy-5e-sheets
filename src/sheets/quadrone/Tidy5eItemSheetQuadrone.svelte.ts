@@ -40,8 +40,8 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { Theme } from 'src/theme/theme';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -144,7 +144,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   _updateFrame(options: TidyDocumentSheetRenderOptions = {}) {
     super._updateFrame(options);
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+    const themeSettings = Theme.getSheetThemeSettings({
       doc: this.document,
     });
     this._applySheetThemeClasses(themeSettings);
@@ -160,7 +160,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
   onThemeConfigChanged(settingsOverride?: ThemeSettings) {
     const themeSettings =
       settingsOverride ??
-      ThemeQuadrone.getSheetThemeSettings({ doc: this.document });
+      Theme.getSheetThemeSettings({ doc: this.document });
     this._applySheetThemeClasses(themeSettings);
   }
 

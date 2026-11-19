@@ -15,7 +15,7 @@ import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadro
 import { Tidy5eVehicleSheetQuadrone } from './sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
-import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
+import { Theme } from './theme/theme';
 import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
@@ -191,7 +191,7 @@ Hooks.once('ready', async () => {
 
   DebugTools.onReady(api);
 
-  ThemeQuadrone.onReady();
+  Theme.onReady();
 
   TidyNotificationsManager.onReady();
 

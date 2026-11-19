@@ -9,11 +9,11 @@ import type {
 import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type {
   ThemeSettingsConfigurationOptions,
   ThemeSettings,
-} from 'src/theme/theme-quadrone.types';
+} from 'src/theme/theme.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
@@ -260,7 +260,7 @@ export function getSvelteApplicationMixin<
 
       applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
 
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
+      Theme.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
@@ -383,7 +383,7 @@ export function getSvelteApplicationMixin<
       });
 
       const themeSettingUnsubscribable =
-        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
+        Theme.subscribeAndReactToThemeSettingsChanges(
           this.themeConfigOptions(),
         );
 

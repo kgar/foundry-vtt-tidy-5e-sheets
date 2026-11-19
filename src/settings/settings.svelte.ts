@@ -7,8 +7,8 @@ import type {
   TabConfiguration,
   WorldThemesSetting,
 } from './settings.types';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type { ThemeSettings } from 'src/theme/theme.types';
+import { Theme } from 'src/theme/theme';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import {
   HeaderControlConfigurationSchema,
@@ -927,7 +927,7 @@ export function initSettings() {
 
   _settings = getCurrentSettings();
 
-  ThemeQuadrone.insertTidyThemeStyleTag();
+  Theme.insertTidyThemeStyleTag();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();

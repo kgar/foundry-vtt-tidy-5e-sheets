@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
   import { ThemeImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
@@ -22,7 +22,7 @@
   const localize = FoundryAdapter.localize;
 
   $effect(() => {
-    const liveSettings = ThemeQuadrone.getSheetThemeSettings({
+    const liveSettings = Theme.getSheetThemeSettings({
       doc: app.document,
       settingsOverride: app.mapContextToChangedSettings(context) as any,
     });
