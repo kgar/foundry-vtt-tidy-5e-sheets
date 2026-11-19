@@ -7,7 +7,7 @@
   import BasicTabSettingsPane from './tabs/BasicTabSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
+  import SheetThemeSettings from 'src/applications/settings/theme/SheetThemeSettings.svelte';
   import SheetTabConfigurationQuadrone from 'src/applications/settings/tab-configuration/SheetTabConfigurationQuadrone.svelte';
   import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
   import SheetTabOptions from 'src/applications/settings/sheet-tab-options/SheetTabOptions.svelte';
@@ -322,7 +322,7 @@
 
   <section class="settings-pane" role="tabpanel">
     {#if activeSelectedId === SETTINGS_THEME && app.themeSettingsTab}
-      <ThemeSettingsQuadrone
+      <SheetThemeSettings
         app={app.themeSettingsTab}
         placeholders={undefined}
       />

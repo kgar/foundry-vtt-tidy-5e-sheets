@@ -3,7 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
-  import ThemeSettings3 from '../theme/ThemeSettings3.svelte';
+  import ThemeSettings from '../theme/ThemeSettings.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import Tabs, { type TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
@@ -215,7 +215,7 @@
 
       {#if currentSubTabId === 'theme'}
         <div class="flex1">
-          <ThemeSettings3
+          <ThemeSettings
             bind:settings={selectedTheme.settings}
             rarities={app.rarities}
             spellPreparationMethodColors={app.spellMethods}

@@ -6,7 +6,7 @@
     type WorldSettingsQuadroneApplication,
   } from './TidyWorldSettingsQuadroneApplication.svelte';
   import WorldSettingsOverview from 'src/applications/settings/world-settings-overview/WorldSettingsOverview.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
+  import SheetThemeSettings from 'src/applications/settings/theme/SheetThemeSettings.svelte';
   import HomebrewSettings from 'src/applications/settings/homebrew-settings/HomebrewSettings.svelte';
   import ApplyTidySheetPreferences from 'src/applications/settings/default-sheet-preferences/DefaultSheetPreferences.svelte';
   import WorldSheetSettings from './WorldSheetSettings.svelte';

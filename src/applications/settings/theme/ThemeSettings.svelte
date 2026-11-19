@@ -25,10 +25,6 @@
     showActorHeaderBackground?: boolean;
     showItemSidebarBackground?: boolean;
     onLiveUpdateRequested?: () => void;
-    onThemeImportRequested?: (
-      imported: ThemeSettings | undefined,
-    ) => Promise<void>;
-    onExportRequested?: (exported: Partial<ThemeSettings>) => Promise<void>;
   }
 
   let {
