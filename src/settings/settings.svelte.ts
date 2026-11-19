@@ -518,9 +518,7 @@ export function createSettings() {
           default: {},
           config: false,
           onChange: (settings: WorldThemesSetting) => {
-            CONFIG.TIDY5E.utils.theme.initWorldThemes(
-              /* TODO: Do we need to pass down a temp copy, or have the settings properly updated globally by now? */
-            );
+            CONFIG.TIDY5E.utils.theme.initWorldThemes();
           },
         },
         get() {
