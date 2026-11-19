@@ -1991,7 +1991,7 @@ export function getTidyExtensibleDocumentSheetMixin<
      * The item types to display in the compendium browser for a tab.
      * Some sections customize. Not available for effects.
      */
-    _browseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
       const types = this._addDocumentItemTypes(tabId);
       return datasetType && types.includes(datasetType) ? [datasetType] : types;
     }
