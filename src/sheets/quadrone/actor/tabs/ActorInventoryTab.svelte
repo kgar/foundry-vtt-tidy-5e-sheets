@@ -71,6 +71,9 @@
     sheetDocument={context.actor}
     root={true}
   />
+
+  <!-- Currency moves beneath the table on short viewports -->
+  <ActorInventoryFooter class="footer-inline" useAttunement={false} showActions={false} />
 </div>
 
-<ActorInventoryFooter useAttunement={true} />
+<ActorInventoryFooter class="footer-pinned" useAttunement={true} />

@@ -65,9 +65,9 @@
   <div class={['sheet-footer-left spellcasting-cards flexcol', { 'collapse-spellcasting-cards': collapsed }, { 'compact': mode === 'compact' }]}>
     {#each context.spellcasting as info}
       {#if info.type === 'class'}
-        <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} onNameClick={toggleCollapsed} />
+        <SpellcastingClassSummaryCard {info} {multiclass} {tabId} onNameClick={toggleCollapsed} />
       {:else if info.type === 'npc'}
-        <SpellcastingNpcSummaryCard {info} {mode} onNameClick={toggleCollapsed} />
+        <SpellcastingNpcSummaryCard {info} onNameClick={toggleCollapsed} />
       {/if}
     {/each}
   </div>

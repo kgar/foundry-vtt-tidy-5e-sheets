@@ -158,8 +158,12 @@
     .actor-name {
       gap: 0;
 
-      .separated-list {
+      .separated-list:not(.member-summary) {
         display: none;
+      }
+
+      .separated-list .no-gap {
+        gap: 0;
       }
     }
 

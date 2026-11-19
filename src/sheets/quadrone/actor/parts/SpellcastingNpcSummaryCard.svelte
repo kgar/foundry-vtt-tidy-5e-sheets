@@ -9,18 +9,17 @@
 
   interface Props {
     info: NpcSpellcastingContext;
-    mode: 'expanded' | 'compact';
     onNameClick?: () => void;
   }
 
-  let { info, mode, onNameClick }: Props = $props();
+  let { info, onNameClick }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getNpcSheetQuadroneContext());
 </script>
 
-{#if mode === 'expanded'}
+<!-- Both variants render; the footer's container queries pick which one shows. -->
   <div
     class={[
       'spellcasting-class-card flexrow',
@@ -90,7 +89,7 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="save pill pill-medium hide-collapsed">
+      <div class="save pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellDC')}</span
         >
@@ -116,7 +115,7 @@
       </div>
     </div>
   </div>
-{:else}
+
   <div
     class={[
       'spellcasting-class-card compact flexrow',
@@ -165,8 +164,8 @@
           ><span class="font-data-medium">{info.ability.mod.value}</span>
         </span>
       </div>
-      <div class="divider-dot"></div>
-      <div class="attack">
+      <div class="divider-dot hide-tiny"></div>
+      <div class="attack hide-tiny">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Attack')}</span
         >
@@ -185,8 +184,8 @@
           <span class="font-data-medium">{info.save}</span>
         </span>
       </div>
-      <div class="divider-dot"></div>
-      <div class="level">
+      <div class="divider-dot hide-tiny"></div>
+      <div class="level hide-tiny">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellcasterLevel')}</span
         >
@@ -200,7 +199,6 @@
       </div>
     </div>
   </div>
-{/if}
 
 {#snippet abilitySelector(labelProp: string)}
   <SelectQuadrone

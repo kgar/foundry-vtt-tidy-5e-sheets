@@ -227,7 +227,7 @@
                 {#if combatant.type === 'placeholder'}
                   <EncounterPlaceholderNameColumn placeholder={combatant} />
                 {:else if member}
-                  <EncounterMemberNameCell {member} />
+                  <EncounterMemberNameCell {member} {hiddenColumns} />
                 {/if}
 
                 <TidyTableCustomCells

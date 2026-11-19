@@ -18,9 +18,10 @@
   interface Props {
     class?: ClassValue;
     useAttunement: boolean;
+    showActions?: boolean;
   }
 
-  let { class: classValue, useAttunement }: Props = $props();
+  let { class: classValue, useAttunement, showActions = true }: Props = $props();
 
   let context =
     $derived(
@@ -132,7 +133,7 @@
     {/each}
   </div>
 
-  {#if context.editable}
+  {#if context.editable && showActions}
     <div class="footer-content-right flexrow flexshrink">
       <a
         class={[
