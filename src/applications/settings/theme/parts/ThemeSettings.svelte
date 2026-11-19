@@ -153,7 +153,6 @@
 
   <!-- Hide if basic theme -->
   {#if !useBasicThemeIfChanged}
-    <!-- TODO: Also toggle visibility based on filter criteria -->
     {#if showActorPortraitShape}
       <div class="form-group">
         <label for="{idPrefix}-actor-portrait-shape">
@@ -304,7 +303,6 @@
     </p>
   </div>
 
-  <!-- TODO: Add item sidebar background setting -->
   {#if showItemSidebarBackground}
     <div class="form-group">
       <label for="{idPrefix}-item-sidebar-background">
