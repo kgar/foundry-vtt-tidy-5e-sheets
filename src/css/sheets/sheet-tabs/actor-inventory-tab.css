@@ -3,8 +3,49 @@
   --t5e-attunement-tracker-background-hover: var(--t5e-component-card-default);
 
   .window-content .main-content > .tidy-tab.inventory {
+    /* Size container so short windows can unpin the footer. */
+    container-type: size;
     row-gap: 0;
     padding-inline-end: 0;
+  }
+
+  /* SHORT VIEWPORTS */
+  .tidy-tab.inventory .inventory-footer.footer-inline {
+    padding: 0;
+  }
+
+  @container tab-content (height > 21rem) {
+    .tidy-tab.inventory .inventory-footer.footer-inline {
+      display: none;
+    }
+  }
+
+  @container tab-content (height <= 21rem) {
+    .tidy-tab.inventory {
+
+      /* Shift to make room for currency */
+      .tab-content {
+        padding-block-end: calc(var(--t5e-field-size-default) + 2 * var(--padding-vertical));
+        padding-block-start: var(--t5e-size-1x);
+      }
+
+      .inventory-footer.footer-pinned {
+        position: absolute;
+        inset-inline: 0;
+        inset-block-end: 0;
+        justify-content: space-between;
+        /* Block accidental clicks through the gaps between buttons */
+        pointer-events: none;
+
+        > * {
+          pointer-events: auto;
+        }
+
+        .currency-container {
+          display: none;
+        }
+      }
+    }
   }
 
   .tidy-tab.inventory {

@@ -782,7 +782,7 @@ export type ActorTraitContext<TValue = unknown> = {
   key?: string;
   /** Icons associated with the trait. */
   icons?: { icon: string; label: string }[];
-  /** 
+  /**
     Custom HTML content, to appear to the right of any specified icons and before any other content.
     This content is specifically rendered as HTML, unlike the more specific building blocks.
    */
@@ -999,6 +999,7 @@ export type SpellcastingClassContext = {
   uuid: string;
   classIdentifier: string;
   primary: boolean;
+  usesPrimarySpellcastingAbility: boolean;
   prepared: {
     value: string;
     max?: string;

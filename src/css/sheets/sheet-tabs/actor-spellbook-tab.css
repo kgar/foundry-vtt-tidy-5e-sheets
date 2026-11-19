@@ -1,5 +1,8 @@
 .tidy5e-sheet:where(.application.actor) {
   .tidy-tab.spellbook {
+    /* Size container so short windows can unpin the footer. */
+    container-type: size;
+
     .tidy-table-container {
       padding-bottom: var(--t5e-size-2x);
     }
@@ -93,13 +96,68 @@
       padding-block-start: var(--t5e-size-1x);
     }
 
-    .compact {
-      .spellcasting-class-card {
-        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-2x);
 
-        button {
-          --t5e-button-height: var(--t5e-size-6x);
-          margin-inline-start: 0.375rem;
+    .spellcasting-class-card.compact {
+      display: none;
+    }
+
+    .sheet-footer-left.compact .spellcasting-class-card {
+      &:not(.compact) {
+        display: none;
+      }
+
+      &.compact {
+        display: flex;
+      }
+    }
+
+    .spellcasting-class-card.compact {
+      box-sizing: border-box;
+      flex-wrap: nowrap;
+      max-height: var(--t5e-field-size-default);
+      height: var(--t5e-field-size-default);
+      padding-block: 0;
+      padding-inline: var(--t5e-size-2x);
+      gap: var(--t5e-size-2x);
+
+      .header {
+        flex: 0 1 auto;
+        height: auto;
+        min-width: 0;
+        padding-block-end: 0;
+      }
+
+      .name {
+        margin-block-end: var(--t5e-size-1);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .info {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+
+        > * {
+          flex-shrink: 0;
+        }
+      }
+
+      button {
+        --t5e-button-height: var(--t5e-size-6x);
+        margin-inline-start: 0.375rem;
+      }
+
+      .divider-dot {
+        margin-inline: var(--t5e-size-halfx)
+      }
+
+      .prepared {
+        border-color: transparent;
+        box-shadow: none;
+
+        &:not(:hover, :focus-visible) {
+          background: transparent;
         }
       }
     }
@@ -154,6 +212,79 @@
             max-width: 100%;
           }
         }
+      }
+    }
+  }
+
+  /* SHORT TABS */
+  /* Compact cards shrink to fit and match the button height. */
+  @container tab-content (height <= 20rem) {
+    .tidy-tab.spellbook .spellbook-footer {
+      .spellcasting-class-card {
+        &:not(.compact) {
+          display: none;
+        }
+
+        &.compact {
+          display: flex;
+        }
+      }
+
+      /* Outranks the multiclass rule that stacks the actions beside expanded cards. */
+      .sheet-footer-left + .sheet-footer-right .spellbook-footer-actions {
+        flex-direction: row;
+      }
+
+      /* Cards and buttons never wrap; the cards clip once names can't shrink further. */
+      flex-wrap: nowrap;
+
+      /* Multiclass cards share one row; names truncate before anything wraps. */
+      .spellcasting-cards {
+        flex: 0 1 auto;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: var(--t5e-size-2x);
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .spellcasting-class-card {
+        flex: 0 1 auto;
+        min-width: 0;
+        width: auto;
+        height: var(--t5e-field-size-default);
+      }
+
+      .hide-tiny {
+        display: none;
+      }
+
+      /* Keep concentration beside the add buttons instead of stacking above them. */
+      .sheet-footer-right {
+        flex-direction: row;
+        margin-inline-start: auto;
+        padding-block-start: 0;
+      }
+    }
+  }
+
+  /* NARROW MULTICLASS */
+  /* Expanded multiclass cards wrap their pills here, so they go compact. */
+  @container tab-content (width <= 30rem) {
+    .tidy-tab.spellbook .spellbook-footer.multiclass {
+      .spellcasting-class-card {
+        &:not(.compact) {
+          display: none;
+        }
+
+        &.compact {
+          display: flex;
+        }
+      }
+
+      /* Outranks the multiclass rule that stacks the actions beside expanded cards. */
+      .sheet-footer-left + .sheet-footer-right .spellbook-footer-actions {
+        flex-direction: row;
       }
     }
   }

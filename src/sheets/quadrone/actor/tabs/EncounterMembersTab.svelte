@@ -135,7 +135,7 @@
                 data-index={member.index}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
               >
-                <EncounterMemberNameCell {member} />
+                <EncounterMemberNameCell {member} {hiddenColumns} />
 
                 <TidyTableCustomCells
                   {context}
