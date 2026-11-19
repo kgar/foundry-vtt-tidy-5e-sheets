@@ -48,6 +48,7 @@ export const SYMBOLS = {
   readme: Symbol('readme'),
 };
 import type { Tidy5eFactionSheetQuadrone } from 'src/sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
+import type { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
 
 /**
  * `CONFIG.TIDY5E`, the configuration backbone of Tidy 5e Sheets. Contains runtime data, components,
@@ -72,6 +73,7 @@ export type TidyConfig = {
       Tidy5eItemSheetQuadrone: typeof Tidy5eItemSheetQuadrone;
       Tidy5eContainerSheetQuadrone: typeof Tidy5eContainerSheetQuadrone;
     };
+    TidyDialog: typeof TidyDialog
     // anything else?
   };
   components: TidyComponentRegistry;

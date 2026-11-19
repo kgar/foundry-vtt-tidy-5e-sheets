@@ -25,6 +25,7 @@ import './theme/theme-quadrone-detached';
 import * as registry from './registry';
 import { SYMBOLS } from './types/registry.types';
 import { Tidy5eFactionSheetQuadrone } from './sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
+import { TidyDialog } from './features/dialog/TidyDialog.svelte';
 
 Hooks.once('init', () => {
   initSettings();
@@ -44,6 +45,7 @@ Hooks.once('init', () => {
         Tidy5eItemSheetQuadrone: Tidy5eItemSheetQuadrone,
         Tidy5eContainerSheetQuadrone: Tidy5eContainerSheetQuadrone,
       },
+      TidyDialog: TidyDialog,
     },
     components: registry.getRegistryComponents(),
     description:
