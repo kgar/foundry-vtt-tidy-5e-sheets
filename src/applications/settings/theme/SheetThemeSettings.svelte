@@ -18,11 +18,9 @@
 
   interface Props {
     app: ThemeSettingsEditor;
-    // TODO: nix placeholders
-    placeholders: ThemeSettingsContext | undefined;
   }
 
-  let { app, placeholders }: Props = $props();
+  let { app }: Props = $props();
 
   const context = $derived(app.value);
 
@@ -33,7 +31,7 @@
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 
   let portraitShapeDefaultValue = $derived(
-    placeholders?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+    ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
   );
 
   let portraitShapeDefaultLabel = $derived(
@@ -53,9 +51,7 @@
     TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
   });
 
-  let useBasicTheme = $derived(
-    context.useBasicTheme ?? placeholders?.useBasicTheme ?? false,
-  );
+  let useBasicTheme = $derived(context.useBasicTheme ?? false);
 
   async function onDrop(
     ev: DragEvent & {
@@ -123,7 +119,6 @@
     settings={context}
     rarities={app.rarities}
     spellPreparationMethodColors={app.spellMethods}
-    {placeholders}
     doc={app.document}
     showActorPortraitShape={!useBasicTheme &&
       app.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}

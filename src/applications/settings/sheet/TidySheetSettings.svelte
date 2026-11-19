@@ -70,9 +70,7 @@
       ? [
           {
             id: SETTINGS_HEADER_CONTROLS,
-            title: localize(
-              'TIDY5E.SETTINGS.Menu.HeaderControls.buttonLabel',
-            ),
+            title: localize('TIDY5E.SETTINGS.Menu.HeaderControls.buttonLabel'),
             iconClass: 'fas fa-ellipsis-vertical',
             hasChanges: app.headerControlsTab.hasChanges,
           },
@@ -322,10 +320,7 @@
 
   <section class="settings-pane" role="tabpanel">
     {#if activeSelectedId === SETTINGS_THEME && app.themeSettingsTab}
-      <SheetThemeSettings
-        app={app.themeSettingsTab}
-        placeholders={undefined}
-      />
+      <SheetThemeSettings app={app.themeSettingsTab} />
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.sheetTabsConfigurationSettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.sheetTabsConfigurationSettingsTab}
@@ -356,7 +351,9 @@
               }
             }}
           >
-            {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings')}
+            {localize(
+              'TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings',
+            )}
           </a>
         </p>
         <SheetHeaderControlConfig

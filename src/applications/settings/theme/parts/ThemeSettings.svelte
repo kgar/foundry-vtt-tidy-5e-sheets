@@ -14,7 +14,7 @@
     settings: Partial<ThemeSettings>;
     rarities: ThemeColorSettingOption[];
     spellPreparationMethodColors: ThemeColorSettingOption[];
-    placeholders: Partial<ThemeSettings> | undefined;
+    placeholders?: Partial<ThemeSettings> | undefined;
     doc?: any;
     showActorPortraitShape?: boolean;
     showActorHeaderBackground?: boolean;
