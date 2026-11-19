@@ -1718,24 +1718,12 @@ export function getTidy5eActorSheetQuadroneBase<
         return initialSortResult;
       }
 
-      return this._onDropItemCreate(document, event, behavior);
-    }
-
-    /**
-     * Handle the final creation of dropped Item data on the Actor.
-     */
-    async _onDropItemCreate(
-      itemData: Item5e[] | Item5e | object,
-      event: Event,
-      behavior?: DropEffectValue | null,
-    ): Promise<Item5e[]> {
-      let items = itemData instanceof Array ? itemData : [itemData];
-      return await this._onDropCreateItems(event, items, { behavior });
+      return this._onDropCreateItems(event, [document], { behavior });
     }
 
     async _onDropCreateItems(
       event: Event,
-      items: any[],
+      items: Item5e[],
       options: { behavior?: DropEffectValue | null } & Record<string, any> = {},
     ) {
       options.behavior ??= (event as any)._behavior;
@@ -2005,18 +1993,17 @@ export function getTidy5eActorSheetQuadroneBase<
         return [];
       }
 
-      const droppedItemData = await Promise.all(
+      const droppedItemData: Item5e[] = await Promise.all(
         document.contents.map(async (item: any) => {
-          if (!(item instanceof Item)) item = await fromUuid(item.uuid);
+          if (!(item instanceof dnd5e.documents.Item5e))
+            item = await fromUuid(item.uuid);
           return item;
         }),
       );
 
-      return this._onDropItemCreate(
-        droppedItemData,
-        event,
-        (event as any)._behavior,
-      );
+      return this._onDropCreateItems(event, [droppedItemData], {
+        behavior: (event as any)._behavior,
+      });
     }
 
     /* -------------------------------------------- */
@@ -2160,8 +2147,8 @@ export function getTidy5eActorSheetQuadroneBase<
           facilityType,
           event,
           detachOptions: this._detachOptions(),
-          onSelected: (itemData, ev) =>
-            this._onDropItemCreate(itemData, ev, 'copy'),
+          onSelected: (item, ev) =>
+            this._onDropCreateItems(ev, [item], { behavior: 'copy' }),
         });
       }
 
@@ -2172,13 +2159,12 @@ export function getTidy5eActorSheetQuadroneBase<
         this._detachOptions(),
       );
 
-      if (result) {
-        this._onDropItemCreate(
-          game.items.fromCompendium(await fromUuid(result), { keepId: true }),
-          event,
-          'copy',
-        );
-      }
+      if (result)
+        this._onDropCreateItems(event, [
+          new Item.implementation(
+            game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+          ),
+        ]);
     }
 
     /** Singleton types the actor already has (background/species) can't be browsed for. */
@@ -2224,12 +2210,16 @@ export function getTidy5eActorSheetQuadroneBase<
       // Pass the document so that container contents aren't missing
       const itemData = foundry.utils.isEmpty(sectionFlags)
         ? item
-        : foundry.utils.mergeObject(
-            game.items.fromCompendium(item, { keepId: true }),
-            foundry.utils.expandObject(sectionFlags),
+        : new Item.implementation(
+            foundry.utils.mergeObject(
+              game.items.fromCompendium(item, { keepId: true }),
+              foundry.utils.expandObject(sectionFlags),
+            ),
           );
 
-      return this._onDropItemCreate(itemData, args.event, 'copy');
+      return this._onDropCreateItems(args.event, [itemData], {
+        behavior: 'copy',
+      });
     }
 
     async tryUseItem(item: Item5e, event: Event) {
