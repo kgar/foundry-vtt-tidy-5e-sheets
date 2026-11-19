@@ -18,11 +18,10 @@
     info: SpellcastingClassContext;
     multiclass: boolean;
     tabId: string;
-    mode: 'expanded' | 'compact';
     onNameClick?: () => void;
   }
 
-  let { info, multiclass, tabId, mode, onNameClick }: Props = $props();
+  let { info, multiclass, tabId, onNameClick }: Props = $props();
 
   let itemFilterService = getContext<ItemFilterService>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE,
@@ -48,7 +47,7 @@
   }
 </script>
 
-{#if mode === 'expanded'}
+<!-- Both variants render; the footer's container queries pick which one shows. -->
   <div
     class={[
       'spellcasting-class-card flexrow',
@@ -77,11 +76,13 @@
 
       {#if info.primary}
         <i
-          data-tooltip="DND5E.SpellAbility"
+          data-tooltip
+          aria-label={localize('DND5E.ClassOriginal')}
           class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
         >
         </i>
-      {:else if context.unlocked}
+      {/if}
+      {#if !info.usesPrimarySpellcastingAbility && context.unlocked}
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
           role="button"
@@ -108,7 +109,12 @@
       {/if}
     </div>
     <div class="info pills flex1">
-      <div class="spellcasting-ability pill pill-medium hide-collapsed">
+      <div
+        class={[
+          'spellcasting-ability pill pill-medium hide-collapsed',
+          { 'color-text-gold-emphasis': info.usesPrimarySpellcastingAbility },
+        ]}
+      >
         {info.ability.label}
       </div>
       <div class="pill pill-medium">
@@ -131,7 +137,7 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="pill pill-medium hide-collapsed">
+      <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellDC')}</span
         >
@@ -166,7 +172,7 @@
       </a>
     </div>
   </div>
-{:else}
+
   <div
     class={[
       'spellcasting-class-card compact flexrow',
@@ -195,11 +201,13 @@
 
       {#if info.primary}
         <i
-          data-tooltip="DND5E.SpellAbility"
+          data-tooltip
+          aria-label={localize('DND5E.ClassOriginal')}
           class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
         >
         </i>
-      {:else if context.unlocked}
+      {/if}
+      {#if !info.usesPrimarySpellcastingAbility && context.unlocked}
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
           role="button"
@@ -227,8 +235,13 @@
     </div>
     <div class="info pills flex1">
       <div data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}>
-        <span class="label font-label-medium color-text-gold uppercase"
-          >{info.ability.abbreviation}</span
+        <span
+          class={[
+            'label font-label-medium uppercase',
+            info.usesPrimarySpellcastingAbility
+              ? 'color-text-gold-emphasis'
+              : 'color-text-lighter',
+          ]}>{info.ability.abbreviation}</span
         >
         <span class="value">
           <span class="sign font-label-medium color-text-lightest"
@@ -236,8 +249,8 @@
           ><span class="font-data-medium">{info.ability.mod.value}</span>
         </span>
       </div>
-      <div class="divider-dot"></div>
-      <div>
+      <div class="divider-dot hide-tiny"></div>
+      <div class="hide-tiny">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Attack')}</span
         >
@@ -247,8 +260,8 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="divider-dot hide-collapsed"></div>
-      <div data-tooltip={localize('DND5E.SpellDC')} class="hide-collapsed">
+      <div class="divider-dot"></div>
+      <div data-tooltip={localize('DND5E.SpellDC')}>
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.AbbreviationDC')}</span
         >
@@ -258,7 +271,7 @@
       </div>
       <button
         type="button"
-        class="prepared pill pill-medium interactive hide-collapsed"
+        class="prepared pill pill-medium interactive hide-collapsed hide-tiny"
         data-tooltip={localize('DND5E.Prepared')}
         aria-label={localize('DND5E.Prepared')}
         data-action="emphasize"
@@ -278,4 +291,3 @@
       </button>
     </div>
   </div>
-{/if}

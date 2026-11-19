@@ -4,4 +4,17 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  /* Embedded content names, we can't inherit the styles */
+  p > .embed-name {
+    font-style: italic;
+    font-weight: bold;
+
+    &:has(> a) > a::after { content: "."; }
+    &:not(:has(> a))::after { content: ". "; }
+  }
+
+  .subfeature .embed-name {
+    font-style: normal;
+  }
 }

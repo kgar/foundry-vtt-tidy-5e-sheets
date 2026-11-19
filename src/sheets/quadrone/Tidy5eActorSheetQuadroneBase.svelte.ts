@@ -532,7 +532,9 @@ export function getTidy5eActorSheetQuadroneBase<
             mod: getModifierData(sc.attack),
           },
           prepared: sc.preparation,
-          primary: this.actor.system.attributes.spellcasting === sc.ability,
+          primary: !!item.system.isOriginalClass,
+          usesPrimarySpellcastingAbility:
+            this.actor.system.attributes.spellcasting === sc.ability,
           save: sc.save,
         });
       }

@@ -12,9 +12,19 @@
   type Props = {
     member:
       EncounterMemberQuadroneContext | EncounterMemberCombatantQuadroneContext;
+    hiddenColumns?: Set<string>;
   };
 
-  let { member }: Props = $props();
+  let { member, hiddenColumns }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
+
+  // When narrow tables hide the CR and quantity columns, show them under the name instead.
+  let cr = $derived(member.actor.system.details.cr);
+  let showCr = $derived(hiddenColumns?.has('cr') && cr != null);
+  let showQuantity = $derived(
+    hiddenColumns?.has('quantity') && member.quantity.value != null,
+  );
 
   let emphasizedActorRef = getContext<
     Ref<
@@ -43,6 +53,31 @@
     <h4 class="font-label-medium">
       {member.actor.name}
     </h4>
+    {#if showQuantity || showCr}
+      <span class="separated-list member-summary">
+        {#if showQuantity}
+          <span class="quantity no-gap">
+            <span class="font-label-medium color-text-lightest">&times;</span
+            ><span class="font-label-medium color-text-default"
+              >{member.quantity.value}</span
+            >
+          </span>
+        {/if}
+        {#if showQuantity && showCr}
+          <div class="divider-dot"></div>
+        {/if}
+        {#if showCr}
+          <span class="cr">
+            <span class="font-label-medium color-text-gold-emphasis"
+              >{localize('DND5E.AbbreviationCR')}</span
+            >
+            <span class="font-label-medium color-text-default"
+              >{FoundryAdapter.formatCr(cr)}</span
+            >
+          </span>
+        {/if}
+      </span>
+    {/if}
     {#if member.actor.system.details.cr}
       {const size = $derived(
         CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??

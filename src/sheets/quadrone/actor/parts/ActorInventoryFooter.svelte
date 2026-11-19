@@ -18,9 +18,10 @@
   interface Props {
     class?: ClassValue;
     useAttunement: boolean;
+    showActions?: boolean;
   }
 
-  let { class: classValue, useAttunement }: Props = $props();
+  let { class: classValue, useAttunement, showActions = true }: Props = $props();
 
   let context =
     $derived(
@@ -132,15 +133,17 @@
     {/each}
   </div>
 
-  {#if context.editable}
+  {#if context.editable && showActions}
     <div class="footer-content-right flexrow flexshrink">
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
+        aria-label={localize('DND5E.CurrencyManager.Title')}
         class={[
           'button button-icon-only currency-conversion flexshrink',
           { disabled: !context.editable },
         ]}
         data-action="currency"
-        data-tooltip="DND5E.CurrencyManager.Title"
+        data-tooltip
       >
         <i class="fas fa-database"></i>
       </a>
@@ -150,10 +153,15 @@
         tabId={CONSTANTS.TAB_ACTOR_INVENTORY}
         iconOnly
       />
+      <!-- svelte-ignore a11y_missing_attribute, a11y_click_events_have_key_events -->
       <a
-        data-tooltip="DND5E.ItemCreate"
+        aria-label={localize('DND5E.ItemCreate')}
+        role="button"
+        tabindex="0"
+        data-tooltip
         class="button button-icon-only button-primary item-create flexshrink"
         onclick={onAddClicked}
+        {@attach InputAttachments.triggerClickOnKeydown}
       >
         <i class="fas fa-plus"></i>
       </a>

@@ -211,7 +211,8 @@ export function getTidy5eMultiActorSheetQuadroneBase<
       let sumCurrencyInCheapestDenomination = currencies.reduce(
         (amount, [denomination, config]) =>
           amount +
-          currency[denomination] * (smallestConversion / config.conversion),
+          (currency[denomination] ?? 0) *
+            (smallestConversion / config.conversion),
         0,
       );
 
