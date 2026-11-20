@@ -10,6 +10,7 @@
   import {
     getAppliesToSummary,
     getEffectiveTypeSelection,
+    getThemePreview,
   } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
@@ -256,10 +257,19 @@
       </p>
       <ol class="world-theme-list">
         {#each orderedThemes as theme, i (theme.id)}
+          {@const preview = getThemePreview(theme.settings, theme.themeMode)}
           <li>
             <button
               type="button"
-              class="world-theme-card"
+              class={[
+                'world-theme-card',
+                `theme-${preview.themeMode}`,
+                {
+                  'world-theme-card-parchment': preview.isParchment,
+                  dragging: draggedIndex === i,
+                },
+              ]}
+              style={preview.style}
               draggable="true"
               data-index={i}
               onclick={() => app.selectTheme(theme.id)}

@@ -1,6 +1,8 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ThemeColorSettingOption } from 'src/settings/settings.types';
-import { Theme } from 'src/theme/theme';
+import { Theme, getThemeV2 } from 'src/theme/theme';
+import { ThemeStylesProvider } from 'src/theme/theme-styles-provider';
+import type { ThemeSettings } from 'src/theme/theme.types';
 
 export function getRarities(): ThemeColorSettingOption[] {
   return Object.entries(CONFIG.DND5E.itemRarity).map(([key, label]) => ({
@@ -118,47 +120,103 @@ export function setEffectiveTypeSelection(
   return result;
 }
 
-/** Summarizes which sheet types a theme applies to, e.g. "All Actor (5), Item (14) Sheets". */
-export function getAppliesToSummary(
+/** Localizes a `.one` / `.other` key for `count`. */
+export function localizeCount(
+  key: string,
+  count: number,
+  data: Record<string, string> = {},
+): string {
+  return FoundryAdapter.localize(
+    dnd5e.utils.getPluralLocalizationKey(count, (pr: string) => `${key}.${pr}`),
+    { ...data, count: dnd5e.utils.formatNumber(count) },
+  );
+}
+
+/** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "all 15 Item sheets". */
+export function getAppliesToSegments(
   tree: ThemeDocumentTypeNode[],
   selection: ThemeDocumentTypeSelection,
-): string {
-  const full: string[] = [];
-  const segments: string[] = [];
-
-  for (const node of tree) {
+): string[] {
+  return tree.flatMap((node) => {
     const selected = getEffectiveTypeSelection(node, selection);
 
     if (!selected.length) {
-      continue;
+      return [];
     }
 
     if (selected.length === node.types.length) {
-      full.push(`${node.label} (${node.types.length})`);
-      continue;
+      return localizeCount(
+        'TIDY5E.COMMON.Theme.Summary.AllSheets',
+        node.types.length,
+        { document: node.label },
+      );
     }
 
-    segments.push(
-      FoundryAdapter.localize('TIDY5E.COMMON.Theme.AppliesToSome', {
+    return localizeCount(
+      'TIDY5E.COMMON.Theme.Summary.SomeSheets',
+      selected.length,
+      {
         document: node.label,
         types: node.types
           .filter((t) => selected.includes(t.value))
           .map((t) => t.text)
           .join(', '),
-        count: String(selected.length),
-      }),
+      },
     );
-  }
+  });
+}
 
-  if (full.length) {
-    segments.unshift(
-      FoundryAdapter.localize('TIDY5E.COMMON.Theme.AppliesToAll', {
-        types: full.join(', '),
-      }),
-    );
-  }
+/** Joins summary phrases into a sentence-case line. */
+export function joinSummarySegments(segments: string[]): string {
+  return segments.join(', ').capitalize();
+}
 
-  return segments.join('; ');
+/** Summarizes which sheet types a theme applies to, e.g. "1 Actor sheet (Non-Player Character), all 15 Item sheets". */
+export function getAppliesToSummary(
+  tree: ThemeDocumentTypeNode[],
+  selection: ThemeDocumentTypeSelection,
+): string {
+  return joinSummarySegments(getAppliesToSegments(tree, selection));
+}
+
+export type ThemePreview = {
+  /** Inline CSS custom properties, the same ones a themed sheet receives. */
+  style: string;
+  isParchment: boolean;
+  themeMode: 'light' | 'dark';
+};
+
+/** Styles a theme preview card to get a sense of the sheet style. */
+export function getThemePreview(
+  settings: Partial<ThemeSettings>,
+  themeMode?: string,
+): ThemePreview {
+  // Fill out all the necessary style fields by falling back to the default
+  // theme settings if one isn't set in the Theme.
+  const effectiveStyles = Theme.getDefaultThemeSettings(
+    Object.fromEntries(
+      Object.entries(settings).filter(([, value]) => value !== undefined),
+    ),
+  );
+
+  const style = ThemeStylesProvider.create(effectiveStyles, {})
+    .flatMap((declaration) => declaration.ruleset)
+    .filter(
+      (rule) => rule.property !== ThemeStylesProvider.worldSettingIdentifierKey,
+    )
+    .map((rule) => `${rule.property}: ${rule.value}`)
+    .join('; ');
+
+  // Themed = dark. Parchment (which basic includes) = light/dark.
+  const isParchment =
+    !effectiveStyles.useHeaderBackground || effectiveStyles.useBasicTheme;
+  const mode = isParchment ? themeMode || getThemeV2() : 'dark';
+
+  return {
+    style,
+    isParchment,
+    themeMode: mode === 'dark' ? 'dark' : 'light',
+  };
 }
 
 export function getSupportedDocuments() {
