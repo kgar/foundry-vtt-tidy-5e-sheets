@@ -7,6 +7,7 @@
 - [ ] Test: Ensure child sheets still inherit defaults from their parents. e.g., Actor-owned Item sheet inheriting its actor's theme settings as default/fallbacks.
 - [ ] Consider: a world theme setting checkbox "Inherit Themes" and the three radio buttons for "Yes" / "No" / "Default ({defaultHere})". That could drive whether theme inheritance occurs.
 - [ ] // TODO: Analyze this again and see if there's a better way
+- [ ] Request help to organize loc keys
 
 ### vNext Stretch Goals
 
