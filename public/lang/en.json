@@ -149,8 +149,16 @@
       "Add": "Add Theme",
       "Delete": "Delete Theme",
       "AppliesTo": "Applies To",
-      "AppliesToAll": "All {types} Sheets",
-      "AppliesToSome": "{count} {document} Sheets: {types}",
+      "Summary": {
+        "AllSheets": {
+          "one": "all {count} {document} sheet",
+          "other": "all {count} {document} sheets"
+        },
+        "SomeSheets": {
+          "one": "{count} {document} sheet ({types})",
+          "other": "{count} {document} sheets ({types})"
+        }
+      },
       "AddCompendium": "Add a compendium…",
       "Compendia": "Compendia",
       "CompendiaHint": "Also applies to documents in these compendia. With Compendium Documents Only checked, applies to these compendia alone.",
