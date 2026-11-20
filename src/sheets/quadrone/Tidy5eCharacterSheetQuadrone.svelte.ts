@@ -1077,11 +1077,7 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = Theme.getSheetThemeSettings({
-      doc: this.actor,
-    });
-    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
+    if (this._themeSettings.useHeaderBackground && !this._themeSettings.useBasicTheme) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
 

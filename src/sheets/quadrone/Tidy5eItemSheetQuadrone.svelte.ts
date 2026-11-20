@@ -143,11 +143,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   _updateFrame(options: TidyDocumentSheetRenderOptions = {}) {
     super._updateFrame(options);
-
-    const themeSettings = Theme.getSheetThemeSettings({
-      doc: this.document,
-    });
-    this._applySheetThemeClasses(themeSettings);
+    this._applySheetThemeClasses(this._themeSettings);
   }
 
   _applySheetThemeClasses(themeSettings: ThemeSettings) {
@@ -155,12 +151,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
     this.element.classList.toggle('theme-parchment', isBasic);
     this.element.classList.toggle('theme-basic', isBasic);
-  }
-
-  onThemeConfigChanged(settingsOverride?: ThemeSettings) {
-    const themeSettings =
-      settingsOverride ?? Theme.getSheetThemeSettings({ doc: this.document });
-    this._applySheetThemeClasses(themeSettings);
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {

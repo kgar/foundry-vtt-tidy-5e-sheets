@@ -2,13 +2,6 @@
 
 ### TODO
 
-- [ ] Move the main call to Theme.getSheetThemeSettings to the svelte mixin's render method, before it does anything else. 
-  - [ ] Assign this to a stateful prop on the svelte mixin
-  - [ ] Somehow get typescript to see it in the mixed-in apps
-  - [ ] Use it in context prep at the doc mixin level
-  - [ ] Reevaluate calls to Theme.getSheetThemeSettings and see if you now have the adequate data available on the application itself. Remove as many as you can and adjust TODOs accordingly.
-- [ ] // TODO: this is used way too widely; it needs to be consolidated to sheet prep and passed down as universal context
-- [ ] Goal: Theme settings should be passed down through context and is never pulled out of the air in a svelte component.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.

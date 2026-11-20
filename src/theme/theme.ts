@@ -218,7 +218,6 @@ export class Theme {
     return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
-  // TODO: this is used way too widely; it needs to be consolidated to sheet prep and passed down as universal context
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions,
   ): ThemeSettings {

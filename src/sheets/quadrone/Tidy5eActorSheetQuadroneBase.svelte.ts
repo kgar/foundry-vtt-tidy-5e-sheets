@@ -1117,12 +1117,7 @@ export function getTidy5eActorSheetQuadroneBase<
     _updateFrame(options: ApplicationRenderOptions) {
       super._updateFrame(options);
 
-      // TODO: Somehow eliminate. Potentially store the retrieved theme as a sheet member? Or pass it through options when acquired from context prep.
-      const themeSettings = Theme.getSheetThemeSettings({
-        doc: this.actor,
-      });
-
-      this._applySheetThemeClasses(themeSettings);
+      this._applySheetThemeClasses(this._themeSettings);
     }
 
     _applySheetThemeClasses(themeSettings: ThemeSettings) {
@@ -1165,13 +1160,6 @@ export function getTidy5eActorSheetQuadroneBase<
         `;
       if (element.dataset.attribution)
         element.dataset.tooltipClass = 'property-attribution';
-    }
-
-    // TODO: Analyze this again and see if there's a better way
-    onThemeConfigChanged(settingsOverride?: ThemeSettings) {
-      const themeSettings =
-        settingsOverride ?? Theme.getSheetThemeSettings({ doc: this.actor });
-      this._applySheetThemeClasses(themeSettings);
     }
 
     /* -------------------------------------------- */
@@ -2416,9 +2404,10 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     static async #showArtwork(this: Tidy5eActorSheetQuadroneBase) {
-      const themeSettings = Theme.getSheetThemeSettings({ doc: this.document });
-      
-      const { src } = await this._preparePortrait(this.actor, themeSettings);
+      const { src } = await this._preparePortrait(
+        this.actor,
+        this._themeSettings,
+      );
 
       this._renderChild(
         new foundry.applications.apps.ImagePopout({

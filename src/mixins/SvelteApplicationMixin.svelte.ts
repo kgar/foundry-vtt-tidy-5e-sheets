@@ -46,10 +46,17 @@ export function getSvelteApplicationMixin<
       super(args);
 
       DisposablesRegistry.disposeAll(this.id);
+
+      this._themeSettings = Theme.getDefaultThemeSettings();
     }
 
-    /** The component which represents the UI. */
+    /** The components which represent the UI. */
     #components: Record<string, any>[] = [];
+
+    /**
+     * The current theme settings of this svelte application.
+     */
+    _themeSettings: ThemeSettings;
 
     /**
      * Compatibility shim from Application V1.
@@ -72,7 +79,11 @@ export function getSvelteApplicationMixin<
       };
     }
 
-    protected onThemeConfigChanged(_settingsOverride?: ThemeSettings) {}
+    protected onThemeConfigChanged(settingsOverride?: ThemeSettings) {
+      if (settingsOverride) {
+        this._themeSettings = settingsOverride;
+      }
+    }
 
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
@@ -116,6 +127,15 @@ export function getSvelteApplicationMixin<
     /* -------------------------------------------- */
     /*  Rendering                                   */
     /* -------------------------------------------- */
+
+    _configureRenderOptions(options: ApplicationRenderOptions) {
+      super._configureRenderOptions(options);
+
+      // Refresh Theme Settings
+      options.tidy ??= {};
+      this._themeSettings = options.tidy.themeSettings ??=
+        Theme.getSheetThemeSettings({ doc: this.document });
+    }
 
     async render(
       options: boolean | ApplicationRenderOptions = {},
