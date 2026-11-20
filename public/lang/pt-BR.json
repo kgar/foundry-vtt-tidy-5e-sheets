@@ -701,7 +701,8 @@
             "Group": "Ficha de Grupo Tidy 5e",
             "Item": "Ficha de Item Tidy 5e",
             "Npc": "Ficha de PNJ Tidy 5e",
-            "Vehicle": "Ficha de Veículo Tidy 5e"
+            "Vehicle": "Ficha de Veículo Tidy 5e",
+            "Faction": "Ficha de Facção Tidy 5e"
         },
         "Expansion": {
             "AllSections": "Todas as Seções",
@@ -715,6 +716,10 @@
         "Notification": {
             "ClassicsRetired": "<strong>Aviso</strong>: As <strong>Fichas Clássicas</strong> Tidy 5e's foram removidas do módulo Tidy 5e Sheets à partir do Foundry v14.",
             "FirstTimeWelcome": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}."
+        },
+        "Antimagic": {
+            "label": "Magia Suprimida",
+            "warning": "Algo está bloqueando toda a magia."
         }
     },
     "TIDY5E.SORT": {
