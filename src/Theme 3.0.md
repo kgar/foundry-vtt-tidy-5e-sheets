@@ -4,10 +4,9 @@
 
 - [ ] Sheet Type checkboxes are behaving erratically when toggling Actor or Item. Uncheck some doc types and then toggle the main checkboxes. Unexpected behavior ensues.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
-- [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
-- [ ] // TODO: Somehow eliminate. Potentially store the retrieved theme as a sheet member? Or pass it through options when acquired from context prep.
-- [ ] // TODO: Analyze this again and see if there's a better way
 - [ ] Test: Ensure child sheets still inherit defaults from their parents. e.g., Actor-owned Item sheet inheriting its actor's theme settings as default/fallbacks.
+- [ ] Consider: a world theme setting checkbox "Inherit Themes" and the three radio buttons for "Yes" / "No" / "Default ({defaultHere})". That could drive whether theme inheritance occurs.
+- [ ] // TODO: Analyze this again and see if there's a better way
 
 ### vNext Stretch Goals
 
