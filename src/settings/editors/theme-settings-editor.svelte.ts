@@ -1,11 +1,6 @@
-import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Theme } from 'src/theme/theme';
-import type {
-  PortraitShape,
-  ThemeColorSetting,
-  ThemeSettings,
-} from 'src/theme/theme.types';
+import type { ThemeColorSetting, ThemeSettings } from 'src/theme/theme.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';

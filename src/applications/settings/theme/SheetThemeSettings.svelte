@@ -10,6 +10,7 @@
   import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import ThemeSettings from './parts/ThemeSettings.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { untrack } from 'svelte';
 
   interface Props {
     app: ThemeSettingsEditor;
@@ -21,13 +22,25 @@
 
   const localize = FoundryAdapter.localize;
 
+  // The effect fires twice. Throttle to prevent overeager live updates.
+  const notifyThemeChanged = foundry.utils.throttle((settings: any) => {
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, settings);
+  }, 50);
+
+  let initialized = false;
+
   $effect(() => {
     const liveSettings = Theme.getSheetThemeSettings({
       doc: app.document,
       settingsOverride: app.mapContextToChangedSettings(context) as any,
     });
 
-    TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
+    if (!initialized) {
+      initialized = true;
+      return;
+    }
+
+    untrack(() => notifyThemeChanged(liveSettings));
   });
 
   let useBasicTheme = $derived(context.useBasicTheme ?? false);

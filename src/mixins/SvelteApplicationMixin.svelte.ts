@@ -290,6 +290,13 @@ export function getSvelteApplicationMixin<
         this.element?.classList.toggle(cssClass, toggle);
       }
 
+      // Update styles so that conditional themes go into effect
+      // as soon as the conditions are met.
+      Theme.applyCurrentThemeSettingsToStylesheet({
+        doc: this.document,
+        settingsOverride: options.tidy?.themeSettings,
+      });
+
       super._updateFrame(options);
     }
 

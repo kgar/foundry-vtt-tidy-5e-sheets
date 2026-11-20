@@ -2,8 +2,8 @@
 
 ### TODO
 
+- [ ] Sheet Type checkboxes are behaving erratically when toggling Actor or Item. Uncheck some doc types and then toggle the main checkboxes. Unexpected behavior ensues.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
-- [ ] Goal: Theme Settings should refresh on a sheet when the sheet meets the criteria to change ; maybe we can hold a snapshot or some kind of JSON string copy to compare on each render and selectively update on actual change? Or pursue a more svelte-reactive approach that will yield the proper side effect in the style sheets when an actual change occurs in a theme setting.
 - [ ] (potentially done) Sheet settings should pull the world theme settings appropriate to that document and show those as the defaults for that form.
 - [ ] // TODO: Somehow eliminate. Potentially store the retrieved theme as a sheet member? Or pass it through options when acquired from context prep.
 - [ ] // TODO: Analyze this again and see if there's a better way
