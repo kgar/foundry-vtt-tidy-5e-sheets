@@ -43,11 +43,15 @@
             type="checkbox"
             checked={full}
             indeterminate={partial}
-            onchange={() =>
+            onclick={(event) => {
               app.applySelection(
                 node,
                 full ? [] : node.types.map((t) => t.value),
-              )}
+              );
+
+              event.currentTarget.checked = full;
+              event.currentTarget.indeterminate = partial;
+            }}
           />
           {node.label}
         </label>
