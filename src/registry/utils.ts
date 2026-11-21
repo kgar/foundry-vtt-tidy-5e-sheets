@@ -1,7 +1,8 @@
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import type { TidyPublicUtils } from 'src/types/registry.types';
+import { Theme } from 'src/theme/theme';
+import { type TidyPublicUtils } from 'src/types/registry.types';
 import type { Actor5e, InspirationSource } from 'src/types/types';
 import { error } from 'src/utils/logging';
 
@@ -82,10 +83,15 @@ const tryGetInspirationSource = async (
 
 export function getUtils(): TidyPublicUtils {
   return {
+    actorInspiration: {
+      tryGetInspirationSource,
+    },
     getTabIdFromElement,
     getTabIdFromEvent,
-    actorInspiration: {
-      tryGetInspirationSource
-    }
+    theme: {
+      getWorldTheme: Theme.getWorldTheme,
+      initWorldThemes: Theme.initWorldThemes,
+      prepareThemeFilterData: Theme.prepareThemeFilterData,
+    },
   };
 }

@@ -1,5 +1,5 @@
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme.types';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,

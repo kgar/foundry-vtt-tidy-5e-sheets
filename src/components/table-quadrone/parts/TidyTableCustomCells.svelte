@@ -2,7 +2,7 @@
   import type { SectionColumnSpecifications } from 'src/types/columns.types';
   import TidyTableCell from '../TidyTableCell.svelte';
   import type {
-    DocumentSheetQuadroneContext,
+    DocumentSheetV2Context,
     TidySectionBase,
   } from 'src/types/types';
 
@@ -14,7 +14,7 @@
     section: TidySectionBase & {
       columns: SectionColumnSpecifications<any>;
     };
-    context: DocumentSheetQuadroneContext<any>;
+    context: DocumentSheetV2Context<any>;
   };
 
   let {

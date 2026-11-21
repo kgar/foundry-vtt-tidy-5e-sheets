@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { EncounterPlaceholderQuadroneContext } from 'src/types/types';
-  import type { PortraitShape } from 'src/theme/theme-quadrone.types';
+  import type { PortraitShape } from 'src/theme/theme.types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

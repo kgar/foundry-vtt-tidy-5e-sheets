@@ -102,6 +102,7 @@
       "AddNamed": "Add {name}",
       "CopyToClipboard": "Copy to Clipboard",
       "CopyWithoutFormatting": "Copy Without Formatting",
+      "ChooseOne": "Choose One",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
       "Hide": "Hide",
@@ -131,6 +132,50 @@
     },
     "Search": {
       "Label": "Search"
+    },
+    "Theme": {
+      "Filter": "Filter",
+      "AdvancedFilterHint": "Updated from the fields above as you make changes. To edit the filter directly, switch to advanced filtering.",
+      "AdvancedFilterCustomHint": "This filter will be saved as-is.",
+      "AdvancedFilterButton": "Use Advanced Filter",
+      "BasicFilterButton": "Use Basic Filter",
+      "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",
+      "BasicFilterConfirmText": "Reverting back to basic filter controls will clear the current filter.",
+      "SortHint": "Drag and drop themes into priority order. The theme nearest to the top whose filters match the target sheet will be used.",
+      "NewTheme": "New Theme",
+      "Label": "Theme",
+      "LabelPl": "Themes",
+      "LegacyThemeName": "Legacy World Theme",
+      "Add": "Add Theme",
+      "Delete": "Delete Theme",
+      "AppliesTo": "Applies To",
+      "Summary": {
+        "AllSheets": {
+          "one": "all {count} {document} sheet",
+          "other": "all {count} {document} sheets"
+        },
+        "SomeSheets": {
+          "one": "{count} {document} sheet ({types})",
+          "other": "{count} {document} sheets ({types})"
+        }
+      },
+      "AddCompendium": "Add a compendium…",
+      "Compendia": "Compendia",
+      "CompendiaHint": "Also applies to documents in these compendia. With Compendium Documents Only checked, applies to these compendia alone.",
+      "CompendiumOnly": "Compendium Documents Only",
+      "CompendiumHint": "Only search compendia. If you don't add any below, it will apply to every compendium.",
+      "RemoveCompendium": "Remove Compendium",
+      "Configure": "Configure Theme",
+      "ConfigureFilters": "Configure Filters",
+      "Name": "Theme Name",
+      "SheetTypes": "Filter to Sheet Types",
+      "Folder": "Folder",
+      "FolderHint": "Matches documents in this folder and all of its subfolders.",
+      "ThemeMode": "Theme Mode",
+      "ThemeModeAll": "All",
+      "ThemeModeHint": "Limit this sheet theme only to a particular theme mode.",
+      "ChooseAPreset.Title": "Choose a Preset",
+      "ChooseAPreset.Content": "Select a preset to apply to the current theme."
     },
     "Unidentified": {
       "Placeholder": "?"
@@ -612,6 +657,7 @@
         "Title": "Accent Color"
       },
       "Action": {
+        "ApplyPreset": "Apply Preset",
         "Export": "Export",
         "Import": "Import"
       },

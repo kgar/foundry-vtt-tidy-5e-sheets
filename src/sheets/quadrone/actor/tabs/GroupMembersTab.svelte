@@ -20,7 +20,7 @@
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
@@ -30,11 +30,9 @@
   import SectionActionsColumnHeader from '../../item/columns/SectionActionsColumnHeader.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
+
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
+
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
   const localize = FoundryAdapter.localize;
@@ -123,7 +121,9 @@
           expandedOverride={sectionSearchState.expandedOverride}
         >
           {#snippet header()}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderRow
+              class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+            >
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}

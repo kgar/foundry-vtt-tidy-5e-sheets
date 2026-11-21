@@ -19,7 +19,7 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { buildVehicleStatblockSections } from '../../../../settings/tab-options/VehicleStatblockTabOptions';
   import type { VehicleSheetQuadroneContext } from 'src/types/types';
@@ -36,10 +36,6 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -404,7 +400,9 @@
             expandedOverride={sectionSearchState.expandedOverride}
           >
             {#snippet header(expanded)}
-              <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+              <TidyTableHeaderRow
+                class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+              >
                 <TidyTableHeaderCell primary={true} class="header-label-cell">
                   <h3>
                     {localize(section.label)}

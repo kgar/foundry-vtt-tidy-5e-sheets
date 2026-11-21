@@ -2,6 +2,7 @@ import type {
   CustomHeaderControlsEntry,
   SheetHeaderControlPosition,
 } from 'src/api/api.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 
 /** For use with Tidy applications that apply updates to a document but are not necessarily full-fledged sheets. */
 export type DocumentSheetApplicationConfiguration =
@@ -98,6 +99,10 @@ export interface ApplicationRenderOptions {
      * when opening the sheet.
      */
     tab?: string;
+    /**
+     * Theme settings that will be used in this render cycle.
+     */
+    themeSettings?: ThemeSettings;
   };
 }
 

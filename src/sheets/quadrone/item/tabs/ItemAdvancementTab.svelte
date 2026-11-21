@@ -8,7 +8,7 @@
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import TidyAdvancementTableRow from 'src/components/table-quadrone/TidyAdvancementTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { AdvancementColumnRuntime } from 'src/runtime/table-columns/AdvancementColumnRuntime.svelte';
   import { observeResize } from 'src/features/resize-observation/attachments';
@@ -21,10 +21,6 @@
   let localize = FoundryAdapter.localize;
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   // TODO: Move advancement sections / columns / row actions to context prep
 
@@ -71,7 +67,9 @@
 
     <TidyTable key={section.key}>
       {#snippet header()}
-        <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+        <TidyTableHeaderRow
+          class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+        >
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
@@ -111,9 +109,8 @@
                 ]}
                 aria-label={localize('DND5E.ADVANCEMENT.Action.Edit')}
                 data-action={context.unlocked ? 'editDocument' : undefined}
-                data-uuid={context.item.system.advancement?.get(
-                  advancement.id,
-                )?.uuid}
+                data-uuid={context.item.system.advancement?.get(advancement.id)
+                  ?.uuid}
               >
                 <img
                   class="item-image"

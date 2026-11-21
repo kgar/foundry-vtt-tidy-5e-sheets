@@ -10,7 +10,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import SectionActionsColumnHeader from '../columns/SectionActionsColumnHeader.svelte';
   import RowActionsColumn from '../columns/RowActionsColumn.svelte';
@@ -18,11 +18,6 @@
   import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
-
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -58,7 +53,9 @@
 
       <TidyTable key={section.key}>
         {#snippet header(expanded)}
-          <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+          <TidyTableHeaderRow
+            class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+          >
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}

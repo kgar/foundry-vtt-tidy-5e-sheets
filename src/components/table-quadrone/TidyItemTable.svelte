@@ -11,7 +11,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { SectionVisibility } from 'src/features/sections/SectionVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorItemQuadroneContext,
@@ -111,13 +111,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  // Item sheet context has no themeSettings; resolve from the document like ThemeQuadrone.prepare.
-
-  const isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
-
   const sectionSearchState = $derived(
     SectionVisibility.getItemSectionSearchState(entries, searchResults),
   );
@@ -142,7 +135,10 @@
 >
   {#snippet header(expanded)}
     <TidyTableHeaderRow
-      class={[!isBasicTheme ? 'theme-dark' : '', headerRowClasses]}
+      class={[
+        !context.themeSettings.useBasicTheme ? 'theme-dark' : '',
+        headerRowClasses,
+      ]}
       {...headerRowAttributes}
     >
       <TidyTableHeaderCell primary={true} class="header-label-cell">

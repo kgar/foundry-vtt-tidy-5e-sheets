@@ -15,7 +15,7 @@ import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadro
 import { Tidy5eVehicleSheetQuadrone } from './sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
-import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
+import { Theme } from './theme/theme';
 import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
@@ -23,7 +23,9 @@ import { formatResourcePathForCss } from './utils/path';
 import { preloadSheetImages } from './utils/preload-images';
 import './theme/theme-quadrone-detached';
 import * as registry from './registry';
+import { SYMBOLS } from './types/registry.types';
 import { Tidy5eFactionSheetQuadrone } from './sheets/quadrone/Tidy5eFactionSheetQuadrone.svelte';
+import { TidyDialog } from './features/dialog/TidyDialog.svelte';
 
 Hooks.once('init', () => {
   initSettings();
@@ -43,6 +45,7 @@ Hooks.once('init', () => {
         Tidy5eItemSheetQuadrone: Tidy5eItemSheetQuadrone,
         Tidy5eContainerSheetQuadrone: Tidy5eContainerSheetQuadrone,
       },
+      TidyDialog: TidyDialog,
     },
     components: registry.getRegistryComponents(),
     description:
@@ -59,6 +62,8 @@ Hooks.once('init', () => {
       columns: registry.getColumnPartitions(),
       rowActions: registry.getRowActionPartitions(),
     },
+    symbols: SYMBOLS,
+    worldThemes: {},
     utils: registry.getUtils(),
   };
 
@@ -178,13 +183,15 @@ Hooks.once('ready', async () => {
 
   initRuntimeOnReady();
 
+  CONFIG.TIDY5E.utils.theme.initWorldThemes();
+
   TidyHooks.tidy5eSheetsReady(api);
 
   setupIntegrations(api);
 
   DebugTools.onReady(api);
 
-  ThemeQuadrone.onReady();
+  Theme.onReady();
 
   TidyNotificationsManager.onReady();
 

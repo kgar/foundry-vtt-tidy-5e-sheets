@@ -56,6 +56,8 @@ import {
   shouldParseInputDelta,
 } from 'src/utils/form';
 import * as Bastion from 'src/features/facility/Bastion';
+import { Theme } from 'src/theme/theme';
+import type { ThemeSettings } from 'src/theme/theme.types';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -82,8 +84,16 @@ export function getTidyExtensibleDocumentSheetMixin<
     _sectionForMenu?: TidySectionBase;
     currentTabId: string = '';
 
+    /**
+     * The current theme settings of this sheet.
+     */
+    _themeSettings: ThemeSettings;
+
     constructor(options: TConstructorArgs) {
       super(options);
+
+      this._themeSettings =
+        super._themeSettings ?? Theme.getDefaultThemeSettings();
     }
 
     static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -389,6 +399,11 @@ export function getTidyExtensibleDocumentSheetMixin<
     _configureRenderOptions(options: TidyDocumentSheetRenderOptions) {
       super._configureRenderOptions(options);
 
+      // Refresh Theme Settings
+      options.tidy ??= {};
+      this._themeSettings = options.tidy.themeSettings ??=
+        Theme.getSheetThemeSettings({ doc: this.document });
+
       // Configure Sheet Mode
       let mode = options?.mode;
 
@@ -399,9 +414,24 @@ export function getTidyExtensibleDocumentSheetMixin<
       this.sheetMode = mode ?? this.sheetMode ?? CONSTANTS.SHEET_MODE_PLAY;
     }
 
+    // TODO: Analyze this again and see if there's a better way
+    onThemeConfigChanged(settingsOverride?: ThemeSettings) {
+      this._themeSettings =
+        settingsOverride ?? Theme.getSheetThemeSettings({ doc: this.document });
+
+      this.#debouncedRenderOnThemeChanged(this._themeSettings);
+    }
+
+    #debouncedRenderOnThemeChanged = FoundryAdapter.debounce(
+      (themeSettings: ThemeSettings) => {
+        this.render({ tidy: { themeSettings } });
+      },
+      250,
+    );
+
     async _prepareContext(
       options: Partial<TidyDocumentSheetRenderOptions>,
-    ): Promise<DocumentSheetV2Context> {
+    ): Promise<DocumentSheetV2Context<any>> {
       const context = await super._prepareContext(options);
 
       const sheetModeConfig = {
@@ -420,7 +450,8 @@ export function getTidyExtensibleDocumentSheetMixin<
         defaultCurrency: FoundryAdapter.getDefaultCurrencyConfig(),
         unlocked: sheetModeConfig.unlocked,
         config: CONFIG.DND5E,
-      } as DocumentSheetV2Context;
+        themeSettings: this._themeSettings,
+      } as DocumentSheetV2Context<any>;
     }
 
     /* -------------------------------------------- */
@@ -431,8 +462,10 @@ export function getTidyExtensibleDocumentSheetMixin<
       options: boolean | ApplicationRenderOptions = {},
       _options: ApplicationRenderOptions = {},
     ) {
-      if (typeof options === 'object' && options.tidy?.tab) {
-        this.currentTabId = options.tidy.tab;
+      if (typeof options === 'object') {
+        if (options.tidy?.tab) {
+          this.currentTabId = options.tidy.tab;
+        }
       }
 
       return await super.render(options, _options);
@@ -1991,7 +2024,10 @@ export function getTidyExtensibleDocumentSheetMixin<
      * The item types to display in the compendium browser for a tab.
      * Some sections customize. Not available for effects.
      */
-    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(
+      tabId: string,
+      datasetType?: string,
+    ): string[] {
       const types = this._addDocumentItemTypes(tabId);
       return datasetType && types.includes(datasetType) ? [datasetType] : types;
     }

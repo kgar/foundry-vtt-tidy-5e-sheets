@@ -7,7 +7,7 @@
   import BasicTabSettingsPane from './tabs/BasicTabSettingsPane.svelte';
   import SpecialTraitsPane from './tabs/SpecialTraitsPane.svelte';
   import SpellSourceAssignmentsPane from './tabs/SpellSourceAssignmentsPane.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
+  import SheetThemeSettings from 'src/applications/settings/theme/SheetThemeSettings.svelte';
   import SheetTabConfigurationQuadrone from 'src/applications/settings/tab-configuration/SheetTabConfigurationQuadrone.svelte';
   import SheetHeaderControlConfig from 'src/applications/settings/header-control-configuration/SheetHeaderControlConfig.svelte';
   import SheetTabOptions from 'src/applications/settings/sheet-tab-options/SheetTabOptions.svelte';
@@ -70,9 +70,7 @@
       ? [
           {
             id: SETTINGS_HEADER_CONTROLS,
-            title: localize(
-              'TIDY5E.SETTINGS.Menu.HeaderControls.buttonLabel',
-            ),
+            title: localize('TIDY5E.SETTINGS.Menu.HeaderControls.buttonLabel'),
             iconClass: 'fas fa-ellipsis-vertical',
             hasChanges: app.headerControlsTab.hasChanges,
           },
@@ -322,10 +320,7 @@
 
   <section class="settings-pane" role="tabpanel">
     {#if activeSelectedId === SETTINGS_THEME && app.themeSettingsTab}
-      <ThemeSettingsQuadrone
-        app={app.themeSettingsTab}
-        placeholders={undefined}
-      />
+      <SheetThemeSettings app={app.themeSettingsTab} />
     {:else if activeSelectedId === SETTINGS_TAB_CONFIG && app.sheetTabsConfigurationSettingsTab}
       <SheetTabConfigurationQuadrone
         app={app.sheetTabsConfigurationSettingsTab}
@@ -356,7 +351,9 @@
               }
             }}
           >
-            {localize('TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings')}
+            {localize(
+              'TIDY5E.SETTINGS.Sheet.HeaderControls.Action.OpenWorldSettings',
+            )}
           </a>
         </p>
         <SheetHeaderControlConfig

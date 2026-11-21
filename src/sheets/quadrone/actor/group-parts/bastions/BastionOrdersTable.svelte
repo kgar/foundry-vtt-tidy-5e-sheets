@@ -15,7 +15,7 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
 
   interface Props {
     sectionsInlineWidth: number;
@@ -24,11 +24,6 @@
   let { sectionsInlineWidth }: Props = $props();
 
   let context = $derived(getGroupSheetQuadroneContext());
-
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -73,7 +68,7 @@
   expandedOverride={searchResults.isSearching ? visibleOrders.length > 0 : undefined}
 >
   {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+    <TidyTableHeaderRow class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}>
       <TidyTableHeaderCell primary={true}>
         <h3>
           {localize(section.label)}

@@ -1,64 +1,100 @@
-import { downloadTextFile, readFileAsText } from "src/utils/file";
-import type { ThemeSettingsV3 } from "./theme-quadrone.types";
-import { ThemeQuadrone } from "./theme-quadrone.svelte";
-import { FoundryAdapter } from "src/foundry/foundry-adapter";
-import { error } from "src/utils/logging";
-import { CONSTANTS } from "src/constants";
+import { downloadTextFile, readFileAsText } from 'src/utils/file';
+import type { ThemeData, ThemeSettings } from './theme.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { error } from 'src/utils/logging';
+import { CONSTANTS } from 'src/constants';
+import type { WorldThemeSetting } from 'src/settings/settings.types';
 
-export class ThemeQuadroneImportService {
-  static readonly CURRENT_THEME_VERSION = 2;
+export class ThemeImportService {
+  static readonly MIN_SUPPORTED_THEME_VERSION = 2;
+  static readonly CURRENT_THEME_VERSION = 3;
 
-  static async import(file: File): Promise<ThemeSettingsV3 | undefined> {
+  static async import(file: File): Promise<WorldThemeSetting | undefined> {
     try {
       let result = await readFileAsText(file);
 
-      const toImport = JSON.parse(result) as ThemeSettingsV3 & {
-        version: number;
-      };
+      const toImport = JSON.parse(result) as ThemeData;
 
-      const isValid = this.validateImportFile(toImport);
+      const worldThemeSetting = this.mapThemeData(toImport);
 
-      if (!isValid) {
-        throw new Error(`Theme file ${file.name} is in an invalid format.`);
+      if (!worldThemeSetting) {
+        error(`Theme file ${file.name} is in an invalid format.`);
+        return undefined;
       }
 
-      let { version, ...theme } = toImport;
-
-      const settings = foundry.utils.mergeObject(
-        ThemeQuadrone.getDefaultThemeSettings(),
-        theme
-      );
-
       ui.notifications.info(
-        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportSuccess')
+        FoundryAdapter.localize(
+          'TIDY5E.SETTINGS.Theme.Notification.ImportSuccess',
+        ),
       );
 
-      return settings;
+      return worldThemeSetting;
     } catch (e) {
       ui.notifications.error(
-        FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.Notification.ImportError')
+        FoundryAdapter.localize(
+          'TIDY5E.SETTINGS.Theme.Notification.ImportError',
+        ),
       );
       error(
         'An error occurred while attempting to import a theme file. See the devtools console for more details.',
         true,
-        e
+        e,
       );
     }
   }
 
-  static validateImportFile(theme: ThemeSettingsV3 & { version: number }) {
-    return theme.version === this.CURRENT_THEME_VERSION;
+  static mapThemeData(data: ThemeData): WorldThemeSetting | undefined {
+    var result: WorldThemeSetting = {
+      documentNames: undefined,
+      filter: undefined,
+      filterMode: 'basic',
+      id: foundry.utils.randomID(),
+      name: '',
+      settings: {},
+      sort: 0,
+      types: undefined,
+    };
+
+    if (data.version === this.MIN_SUPPORTED_THEME_VERSION) {
+      const { version, ...settings } = data;
+      foundry.utils.mergeObject(result.settings, settings);
+
+      return result;
+    }
+
+    if (data.version === this.CURRENT_THEME_VERSION) {
+      const { version, ...theme } = data;
+      foundry.utils.mergeObject(result, theme);
+
+      return result;
+    }
+
+    return undefined;
   }
 
-  static async export(data: ThemeSettingsV3) {
+  static async export(data: WorldThemeSetting | ThemeSettings) {
+    const restData: WorldThemeSetting =
+      'settings' in data
+        ? data
+        : {
+            filterMode: 'basic',
+            id: foundry.utils.randomID(),
+            name: '',
+            settings: data,
+            sort: 1,
+            documentNames: undefined,
+            filter: undefined,
+            types: undefined,
+          };
+
     const toExport: Record<string, any> = {
       version: this.CURRENT_THEME_VERSION,
-      ...data,
+      ...restData,
     };
 
     downloadTextFile(
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
-      JSON.stringify(toExport, null, ' ')
+      JSON.stringify(toExport, null, ' '),
     );
   }
 }

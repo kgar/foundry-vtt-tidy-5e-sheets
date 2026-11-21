@@ -22,7 +22,7 @@ export function tryGetSheetContext<TContext = any>(): TContext | undefined {
   )?.data;
 }
 
-export function getSheetContext<TContext = DocumentSheetV2Context>(): TContext {
+export function getSheetContext<TContext = DocumentSheetV2Context<any>>(): TContext {
   return getContext<CoarseReactivityProvider<TContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   ).data;
