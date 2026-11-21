@@ -1,0 +1,151 @@
+<script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import {
+    getAppliesToSummary,
+    getThemePreview,
+  } from 'src/settings/editors/shared/theme-setting-functions';
+  import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
+
+  type Props = {
+    app: WorldThemesSettingsEditor;
+  };
+
+  let { app }: Props = $props();
+
+  const config = $derived(app.value);
+
+  const localize = FoundryAdapter.localize;
+
+  const orderedThemes = $derived(
+    config.settings.toSorted((a, b) => a.sort - b.sort),
+  );
+
+  let draggedIndex = $state<number>();
+
+  function onThemeDrag(
+    event: DragEvent & { currentTarget: EventTarget & HTMLButtonElement },
+  ) {
+    draggedIndex = Number(event.currentTarget.dataset.index ?? '');
+
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
+  function onDragOver(ev: DragEvent) {
+    ev.preventDefault();
+  }
+
+  function onDragEnd(ev: DragEvent) {
+    ev.preventDefault();
+    draggedIndex = undefined;
+  }
+
+  async function onThemeDrop(
+    event: DragEvent & { currentTarget: EventTarget & HTMLButtonElement },
+  ) {
+    event.preventDefault();
+
+    const sourceIndex = draggedIndex;
+    if (!Number.isNumeric(sourceIndex)) {
+      return;
+    }
+
+    const targetIndex = Number(event.currentTarget.dataset.index);
+    if (!Number.isNumeric(targetIndex)) {
+      return;
+    }
+
+    if (sourceIndex === targetIndex) {
+      return;
+    }
+
+    const o = $state.snapshot(orderedThemes);
+
+    let source = o[sourceIndex];
+    let target = o[targetIndex];
+    let siblings = o.filter((s, i) => i !== sourceIndex);
+
+    if (!source || !target) {
+      return;
+    }
+
+    const updates = foundry.utils.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+
+    for (const { target, update } of updates) {
+      const entry = app.value.settings.find((entry) => entry.id === target.id);
+      if (entry) {
+        entry.sort = update.sort;
+      }
+    }
+
+    // renumber the sort to sane values
+    for (const [i, entry] of orderedThemes.entries()) {
+      entry.sort = i + 1;
+    }
+  }
+</script>
+
+<div class="flexrow">
+  <h2 class="world-theme-list-header">
+    {localize('TIDY5E.COMMON.Theme.LabelPl')}
+  </h2>
+  <button
+    type="button"
+    class="button button-primary flexshrink"
+    onclick={() => {
+      const theme = app.addTheme();
+      app.selectTheme(theme.id);
+    }}
+  >
+    <i class="fa-solid fa-plus"></i>
+    {localize('TIDY5E.COMMON.Theme.Add')}
+  </button>
+</div>
+<p class="hint flexshrink">
+  {localize('TIDY5E.COMMON.Theme.SortHint')}
+</p>
+<ol class="world-theme-list">
+  {#each orderedThemes as theme, i (theme.id)}
+    {@const preview = getThemePreview(theme.settings, theme.themeMode)}
+    <li>
+      <button
+        type="button"
+        class={[
+          'world-theme-card',
+          `theme-${preview.themeMode}`,
+          {
+            'world-theme-card-parchment': preview.isParchment,
+            dragging: draggedIndex === i,
+          },
+        ]}
+        style={preview.style}
+        draggable="true"
+        data-index={i}
+        onclick={() => app.selectTheme(theme.id)}
+        ondragstart={onThemeDrag}
+        ondrop={onThemeDrop}
+        ondragover={onDragOver}
+        ondragend={onDragEnd}
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
+        data-theme-id={theme.id}
+      >
+        <span class="world-theme-card-text">
+          <span class="world-theme-card-name">{theme.name}</span>
+          <span class="world-theme-card-applies-to">
+            {localize('TIDY5E.COMMON.Theme.AppliesTo')}:
+            {getAppliesToSummary(app.documentTypeTree, theme)}
+          </span>
+        </span>
+        <i
+          class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
+          aria-hidden="true"
+        ></i>
+      </button>
+    </li>
+  {/each}
+</ol>
