@@ -7,9 +7,11 @@ import type { SettingsEditor } from './settings-editors.svelte';
 import {
   getCompendia,
   getDocumentTypeTree,
+  getEffectiveTypeSelection,
   getRarities,
   getSpellMethods,
-  type ThemeDocumentTypeNode,
+  setEffectiveTypeSelection,
+  type ThemeDocumentNameNode,
 } from './shared/theme-setting-functions';
 import {
   getLegacyWorldThemeSettingSettingDocument,
@@ -43,6 +45,8 @@ export type WorldThemesSettingsContext = {
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
+    applySelection(node: ThemeDocumentNameNode, selected: string[]): void;
+    toggleType(node: ThemeDocumentNameNode, type: string): void;
     promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
     deleteTheme(id: string): any;
     duplicate(theme: WorldThemeSetting): any;
@@ -53,7 +57,7 @@ export type WorldThemesSettingsEditor =
     import(themeToOverride?: WorldThemeSetting): Promise<any>;
     export(themeToExport?: WorldThemeSetting): Promise<any>;
     removeCompendium(packId: string): void;
-    documentTypeTree: ThemeDocumentTypeNode[];
+    documentTypeTree: ThemeDocumentNameNode[];
     applyBasicFilters(): void;
     setFilter(filter: string | undefined): void;
     selectTheme(id: string | undefined): void;
@@ -310,6 +314,35 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   }
 
   return {
+    applySelection(node: ThemeDocumentNameNode, selected: string[]) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      const result = setEffectiveTypeSelection(
+        this.documentTypeTree,
+        node,
+        selectedTheme,
+        selected,
+      );
+      selectedTheme.documentNames = result.documentNames;
+      selectedTheme.types = result.types;
+    },
+
+    toggleType(node: ThemeDocumentNameNode, type: string) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      const current = getEffectiveTypeSelection(node, selectedTheme);
+      this.applySelection(
+        node,
+        current.includes(type)
+          ? current.filter((t) => t !== type)
+          : [...current, type],
+      );
+    },
+
     async promptForThemePreset(): Promise<WorldThemeSetting | undefined> {
       const options = current.settings
         .map((s) => ({ value: s.id, label: s.name }))

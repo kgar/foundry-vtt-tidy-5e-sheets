@@ -34,13 +34,18 @@ export function getCompendia(): { text: string; value: string }[] {
     .sort((a, b) => a.text.localeCompare(b.text));
 }
 
-export type ThemeDocumentTypeNode = {
-  documentName: string;
-  label: string;
-  types: { text: string; value: string }[];
+export type ThemeDocumentTypeOption = {
+  text: string;
+  value: string;
 };
 
-export type ThemeDocumentTypeSelection = {
+export type ThemeDocumentNameNode = {
+  documentName: string;
+  label: string;
+  types: ThemeDocumentTypeOption[];
+};
+
+export type ThemeDocumentFilterSelections = {
   documentNames?: string[];
   types?: string[];
 };
@@ -48,7 +53,7 @@ export type ThemeDocumentTypeSelection = {
 // Foundry's placeholder type and dnd5e's legacy container type.
 const hiddenThemeTypes = new Set(['base', 'backpack']);
 
-export function getDocumentTypeTree(): ThemeDocumentTypeNode[] {
+export function getDocumentTypeTree(): ThemeDocumentNameNode[] {
   return getSupportedDocuments().map((doc) => {
     const types: string[] = foundry.documents[doc.value].TYPES;
 
@@ -71,8 +76,8 @@ export function getDocumentTypeTree(): ThemeDocumentTypeNode[] {
  * No child document selected = all actors/items.
  */
 export function getEffectiveTypeSelection(
-  node: ThemeDocumentTypeNode,
-  selection: ThemeDocumentTypeSelection,
+  node: ThemeDocumentNameNode,
+  selection: ThemeDocumentFilterSelections,
 ): string[] {
   const allTypes = node.types.map((t) => t.value);
   const documentNames =
@@ -93,11 +98,11 @@ export function getEffectiveTypeSelection(
 }
 
 export function setEffectiveTypeSelection(
-  tree: ThemeDocumentTypeNode[],
-  node: ThemeDocumentTypeNode,
-  selection: ThemeDocumentTypeSelection,
+  tree: ThemeDocumentNameNode[],
+  node: ThemeDocumentNameNode,
+  selection: ThemeDocumentFilterSelections,
   selected: string[],
-): Required<ThemeDocumentTypeSelection> {
+): Required<ThemeDocumentFilterSelections> {
   const result = { documentNames: [] as string[], types: [] as string[] };
 
   for (const n of tree) {
@@ -134,8 +139,8 @@ export function localizeCount(
 
 /** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "all 15 Item sheets". */
 export function getAppliesToSegments(
-  tree: ThemeDocumentTypeNode[],
-  selection: ThemeDocumentTypeSelection,
+  tree: ThemeDocumentNameNode[],
+  selection: ThemeDocumentFilterSelections,
 ): string[] {
   return tree.flatMap((node) => {
     const selected = getEffectiveTypeSelection(node, selection);
@@ -173,8 +178,8 @@ export function joinSummarySegments(segments: string[]): string {
 
 /** Summarizes which sheet types a theme applies to, e.g. "1 Actor sheet (Non-Player Character), all 15 Item sheets". */
 export function getAppliesToSummary(
-  tree: ThemeDocumentTypeNode[],
-  selection: ThemeDocumentTypeSelection,
+  tree: ThemeDocumentNameNode[],
+  selection: ThemeDocumentFilterSelections,
 ): string {
   return joinSummarySegments(getAppliesToSegments(tree, selection));
 }

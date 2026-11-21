@@ -4,8 +4,8 @@
 
 - [ ] Sheet Type checkboxes are behaving erratically when toggling Actor or Item. Uncheck some doc types and then toggle the main checkboxes. Unexpected behavior ensues.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
-- [ ] // TODO: Analyze this again and see if there's a better way
 - [ ] Request help to organize loc keys
+- [ ] // TODO: Analyze this again and see if there's a better way
 
 ### vNext Stretch Goals
 

@@ -4,11 +4,7 @@
     WorldThemeSettingEntry,
     WorldThemesSettingsEditor,
   } from 'src/settings/editors/world-themes-settings-editor.svelte';
-  import {
-    getEffectiveTypeSelection,
-    setEffectiveTypeSelection,
-    type ThemeDocumentTypeNode,
-  } from 'src/settings/editors/shared/theme-setting-functions';
+  import { getEffectiveTypeSelection } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -27,27 +23,6 @@
   const availableCompendia = $derived(
     app.compendia.filter((c) => !selectedTheme.compendia.includes(c.value)),
   );
-
-  function applySelection(node: ThemeDocumentTypeNode, selected: string[]) {
-    const result = setEffectiveTypeSelection(
-      app.documentTypeTree,
-      node,
-      selectedTheme,
-      selected,
-    );
-    selectedTheme.documentNames = result.documentNames;
-    selectedTheme.types = result.types;
-  }
-
-  function toggleType(node: ThemeDocumentTypeNode, type: string) {
-    const current = getEffectiveTypeSelection(node, selectedTheme);
-    applySelection(
-      node,
-      current.includes(type)
-        ? current.filter((t) => t !== type)
-        : [...current, type],
-    );
-  }
 </script>
 
 <div class="form-group stacked">
@@ -67,11 +42,12 @@
           <input
             type="checkbox"
             checked={full}
-            {@attach (el: HTMLInputElement) => {
-              el.indeterminate = partial;
-            }}
+            indeterminate={partial}
             onchange={() =>
-              applySelection(node, full ? [] : node.types.map((t) => t.value))}
+              app.applySelection(
+                node,
+                full ? [] : node.types.map((t) => t.value),
+              )}
           />
           {node.label}
         </label>
@@ -81,7 +57,7 @@
               <input
                 type="checkbox"
                 checked={selected.includes(type.value)}
-                onchange={() => toggleType(node, type.value)}
+                onchange={() => app.toggleType(node, type.value)}
               />
               {type.text}
             </label>
