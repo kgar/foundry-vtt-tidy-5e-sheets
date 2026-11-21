@@ -6,6 +6,8 @@
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Test: Ensure child sheets still inherit defaults from their parents. e.g., Actor-owned Item sheet inheriting its actor's theme settings as default/fallbacks.
 - [ ] Consider: a world theme setting checkbox "Inherit Themes" and the three radio buttons for "Yes" / "No" / "Default ({defaultHere})". That could drive whether theme inheritance occurs.
+  - hightouch recommends a single world setting defaulted to true, like "Apply Actor Themes to Owned Items"
+  - I think we should also have a sheet-specific override to that setting on actor sheets. Yes / No / Default
 - [ ] // TODO: Analyze this again and see if there's a better way
 - [ ] Request help to organize loc keys
 
