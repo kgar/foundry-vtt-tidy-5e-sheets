@@ -6,7 +6,10 @@ import {
   SYMBOLS,
   type WorldThemeSettingConfig,
 } from 'src/types/registry.types';
-import { getEffectiveWorldThemesSetting } from 'src/settings/settings.svelte';
+import {
+  getEffectiveWorldThemesSetting,
+  SettingsProvider,
+} from 'src/settings/settings.svelte';
 import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { WorldThemeSetting } from 'src/settings/settings.types';
@@ -227,7 +230,10 @@ export class Theme {
       ? CONFIG.TIDY5E.utils.theme.getWorldTheme(options.doc)
       : Theme.getDefaultThemeSettings(options.alternateDefaults);
 
-    if (options.doc?.parent) {
+    const inheritStyles =
+      SettingsProvider.settings.applyThemeToEmbeddedDocuments.get();
+
+    if (inheritStyles && options.doc?.parent) {
       let parentSettings = Theme.getSheetThemeSettings({
         ...options,
         doc: options.doc?.parent,
@@ -353,7 +359,8 @@ export class Theme {
           !doc ||
           (options.doc &&
             (doc.uuid === options.doc.uuid ||
-              doc.uuid === options.doc.parent?.uuid));
+              (SettingsProvider.settings.applyThemeToEmbeddedDocuments.get() &&
+                doc.uuid === options.doc.parent?.uuid)));
 
         if (appliesToThisSheet && options.doc) {
           Theme.applyCurrentThemeSettingsToStylesheet({

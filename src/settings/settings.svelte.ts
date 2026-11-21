@@ -509,6 +509,27 @@ export function createSettings() {
         },
       },
 
+      // Theme
+
+      applyThemeToEmbeddedDocuments: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Theme.ApplyThemeToEmbeddedDocuments.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.ApplyThemeToEmbeddedDocuments.Hint',
+          scope: 'world',
+          type: Boolean,
+          default: true,
+          config: false,
+          onChange: (_value: boolean) => {
+            CONFIG.TIDY5E.utils.theme.initWorldThemes();
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'applyThemeToEmbeddedDocuments',
+          );
+        },
+      },
+
       worldThemes: {
         options: {
           name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
@@ -517,7 +538,7 @@ export function createSettings() {
           type: Object,
           default: {},
           config: false,
-          onChange: (settings: WorldThemesSetting) => {
+          onChange: (_settings: WorldThemesSetting) => {
             CONFIG.TIDY5E.utils.theme.initWorldThemes();
           },
         },

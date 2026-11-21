@@ -168,6 +168,7 @@
       "Configure": "Configure Theme",
       "ConfigureFilters": "Configure Filters",
       "Name": "Theme Name",
+      "Options": "Theme Options",
       "SheetTypes": "Filter to Sheet Types",
       "Folder": "Folder",
       "FolderHint": "Matches documents in this folder and all of its subfolders.",
@@ -663,6 +664,10 @@
       },
       "ActorHeaderBackground": {
         "Title": "Actor Header Image"
+      },
+      "ApplyThemeToEmbeddedDocuments": {
+        "Title": "Apply Theme to Embedded Documents",
+        "Hint": "If the theme applies to a document that has embedded documents, such as an Actor with Items, the embedded items will receive the same theme as the parent actor, rather than a world theme."
       },
       "HeaderBackgroundColor": {
         "Hint": "Use a different color than the sheet accent color for the sheet header.",

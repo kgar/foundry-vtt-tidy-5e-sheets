@@ -4,22 +4,19 @@
 
 - [ ] Sheet Type checkboxes are behaving erratically when toggling Actor or Item. Uncheck some doc types and then toggle the main checkboxes. Unexpected behavior ensues.
 - [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
-- [ ] Test: Ensure child sheets still inherit defaults from their parents. e.g., Actor-owned Item sheet inheriting its actor's theme settings as default/fallbacks.
-- [ ] Consider: a world theme setting checkbox "Inherit Themes" and the three radio buttons for "Yes" / "No" / "Default ({defaultHere})". That could drive whether theme inheritance occurs.
-  - hightouch recommends a single world setting defaulted to true, like "Apply Actor Themes to Owned Items"
-  - I think we should also have a sheet-specific override to that setting on actor sheets. Yes / No / Default
 - [ ] // TODO: Analyze this again and see if there's a better way
 - [ ] Request help to organize loc keys
 
 ### vNext Stretch Goals
 
-- [ ] Organize src\settings\editors\world-themes-settings-editor.svelte.ts API
 - [ ] Implement `tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
 - [ ] Implement Import Bundle and Export Bundle buttons on world themes list view.
 - [ ] Restore file drop to import a theme
   - [ ] World, `.tidy5e-theme`, no selection - inserts a new theme
   - [ ] World, `.tidy5e-theme`, a theme is selected - overwrites the selected theme
   - [ ] World, `.tidy5e-theme-bundle`, no matter what - inserts the bundle as new entries
+- [ ] Provide Sheet Theme Setting "Apply Theme to Embedded Documents" with Yes / No / Default (worldSettingHere) radio buttons.
+- [ ] Organize src\settings\editors\world-themes-settings-editor.svelte.ts API
 
 ### General Notes
 

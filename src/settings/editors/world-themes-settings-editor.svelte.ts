@@ -14,6 +14,7 @@ import {
 import {
   getLegacyWorldThemeSettingSettingDocument,
   getEffectiveWorldThemesSetting,
+  SettingsProvider,
 } from '../settings.svelte';
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
@@ -34,6 +35,9 @@ export type WorldThemeSettingEntry = WorldThemeSetting & {
 
 export type WorldThemesSettingsContext = {
   settings: WorldThemeSettingEntry[];
+  options: {
+    applyThemeToEmbeddedDocuments: boolean;
+  };
 };
 
 export type WorldThemesSettingsEditor =
@@ -230,8 +234,14 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       return formData;
     });
 
+    const applyThemeToEmbeddedDocuments =
+      SettingsProvider.settings.applyThemeToEmbeddedDocuments.get();
+
     const context: WorldThemesSettingsContext = {
       settings: settings,
+      options: {
+        applyThemeToEmbeddedDocuments,
+      },
     };
 
     return context;
@@ -555,7 +565,11 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     async save() {
       const toSave = mapContextToChangedSettings(this.value);
 
-      await game.settings.set('tidy5e-sheet', 'worldThemes', toSave);
+      FoundryAdapter.setTidySetting('worldThemes', toSave);
+      FoundryAdapter.setTidySetting(
+        'applyThemeToEmbeddedDocuments',
+        this.value.options.applyThemeToEmbeddedDocuments,
+      );
 
       // Remove legacy world theme data now that themes have been saved at least once.
       await getLegacyWorldThemeSettingSettingDocument()?.delete();
