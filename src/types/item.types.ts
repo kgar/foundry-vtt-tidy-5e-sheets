@@ -31,8 +31,8 @@ import type {
   SectionColumnSpecifications,
 } from './columns.types';
 import type { ContainerContentsVisibility } from 'src/features/containers/Container';
-import type { IdentifierField } from 'dnd5e.dataModels.fields';
-import type { NumberField } from 'foundry.data.fields';
+import type { IdentifierField } from 'dnd5e-fields';
+import type { NumberField } from 'foundry-types';
 
 export type RenownProperty = {
   type: 'renown';

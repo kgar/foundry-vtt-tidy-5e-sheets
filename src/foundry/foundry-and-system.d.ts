@@ -143,7 +143,7 @@ declare global {
   var foundry: {
     abstract: {
       DataModel: typeof DataModel;
-    };
+    } & Record<string, any>;
     applications: {
       api: any;
       apps: any;

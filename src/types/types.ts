@@ -26,7 +26,7 @@ import type {
   SheetItemPinFlagData,
   SheetActivityPinFlagData,
 } from 'src/foundry/TidyFlags.types';
-import type { DataField } from 'foundry.data.fields';
+import type { DataField } from 'foundry-types';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
