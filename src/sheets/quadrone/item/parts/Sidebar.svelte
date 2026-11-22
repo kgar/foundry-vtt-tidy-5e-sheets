@@ -188,7 +188,11 @@
 
   // General Properties
 
-  type SidebarProperty = { label: string; suppressed?: boolean };
+  type SidebarProperty = {
+    label: string;
+    suppressed?: boolean;
+    attributes?: Record<string, any>;
+  };
 
   let sidebarProperties = $derived.by<SidebarProperty[]>(() => {
     if (!includeSidebarProperties) {
@@ -206,6 +210,9 @@
         label:
           CONFIG.DND5E.weaponMasteries[context.system.mastery]?.label ??
           context.system.mastery,
+        attributes: {
+          'data-reference-tooltip': context.references.mastery,
+        },
       });
     }
 
@@ -520,10 +527,11 @@
         <ul class="pills stacked">
           {#each sidebarProperties as prop}
             <li
-              class={['pill centered', { 'warning': prop.suppressed }]}
+              class={['pill centered', { warning: prop.suppressed }]}
               data-tooltip={prop.suppressed
                 ? localize('TIDY5E.SHEET.Antimagic.warning')
                 : undefined}
+              {...prop.attributes}
             >
               {prop.label}
             </li>
@@ -715,7 +723,11 @@
   .pill.warning {
     --text-color: var(--t5e-color-palette-yellow-100);
     --t5e-component-pill-border: var(--t5e-color-palette-yellow-100);
-    --t5e-component-pill-background: color-mix(in oklab, var(--t5e-color-palette-orange-100) 16%, transparent);
+    --t5e-component-pill-background: color-mix(
+      in oklab,
+      var(--t5e-color-palette-orange-100) 16%,
+      transparent
+    );
     cursor: help;
   }
 </style>

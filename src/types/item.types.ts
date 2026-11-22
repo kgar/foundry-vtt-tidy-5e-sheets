@@ -78,6 +78,11 @@ export type ActivitySectionQuadrone = TidySectionBase & {
   >;
 };
 
+export type ItemReferences = {
+  mastery?: string;
+  // TODO: Add more here
+};
+
 export type ItemSheetQuadroneContext = {
   /** The target sheet or its parent supports an aggregate/action section (e.g., action-economy Character Sheet tab or statblock NPC tab) */
   actionSectionEnabled: boolean;
@@ -175,6 +180,7 @@ export type ItemSheetQuadroneContext = {
     label: string;
     value: string;
   }[];
+  references: ItemReferences;
   rollData: Record<string, any>;
   scalarTarget: boolean;
   sheet: Tidy5eItemSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
@@ -318,6 +324,7 @@ export type ContainerSheetQuadroneContext = {
   owner: boolean;
   properties: PropertyContext;
   rarities: RarityContext | undefined;
+  references: ItemReferences;
   rollData: Record<string, any>;
   sheet: Tidy5eContainerSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
