@@ -759,6 +759,20 @@ export function createSettings() {
           );
         },
       },
+      referenceTooltipProperty: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Option.Tooltip.Property.name',
+          scope: 'user',
+          config: true,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'referenceTooltipProperty',
+          );
+        },
+      },
 
       // Development and Troubleshooting
       debug: {

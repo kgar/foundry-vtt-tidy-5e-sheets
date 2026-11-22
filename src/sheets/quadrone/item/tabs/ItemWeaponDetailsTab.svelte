@@ -84,12 +84,8 @@
     labelAttr="label"
   >
     {#snippet children()}
-      {const reference = $derived(
-        CONFIG.DND5E.weaponMasteries[context.source.mastery]?.reference,
-      )}
-
-      {#if reference}
-        {#await foundry.applications.ux.TextEditor.enrichHTML(`@UUID[${reference}]`) then html}
+      {#if context.references.mastery}
+        {#await foundry.applications.ux.TextEditor.enrichHTML(`@UUID[${context.references.mastery}]`) then html}
           {@html html}
         {/await}
       {/if}

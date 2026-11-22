@@ -36,7 +36,10 @@ import { settings } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import { getTidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import {
+  getTidyExtensibleDocumentSheetMixin,
+  type TidyDocumentSheetRenderOptions,
+} from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
@@ -376,6 +379,9 @@ export class Tidy5eContainerSheetQuadrone
         options: [],
       },
       rarities: Rarity.getRarityContext(documentSheetContext.source),
+      references: {
+        // TODO: Gather references for container elements.
+      },
       rollData: rollData,
       system: this.document.system,
       tabs: [],
@@ -476,6 +482,32 @@ export class Tidy5eContainerSheetQuadrone
     delete game.user.apps[this.id];
 
     return await super.close(options);
+  }
+
+  async _onRender(
+    context: ContainerSheetQuadroneContext,
+    options: TidyDocumentSheetRenderOptions,
+  ) {
+    await super._onRender(context, options);
+
+    // Apply attribution & reference tooltips
+    this.element
+      .querySelectorAll('[data-attribution],[data-reference-tooltip]')
+      .forEach((e: HTMLElement) => this._applyTooltips(e));
+  }
+
+  /**
+   * Apply a property attribution tooltip to an element.
+   * @param {HTMLElement} element  The element to get the tooltip.
+   * @protected
+   */
+  _applyTooltips(element: HTMLElement) {
+    const uuid = element.dataset.referenceTooltip ?? this.document.uuid;
+    element.dataset.tooltip = `
+            <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
+          `;
+    if (element.dataset.attribution)
+      element.dataset.tooltipClass = 'property-attribution';
   }
 
   /* -------------------------------------------- */

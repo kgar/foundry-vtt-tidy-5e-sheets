@@ -3381,96 +3381,120 @@ export type CONFIG = {
       ada: {
         label: string;
         isPhysical: boolean;
+        reference?: string;
       };
       amm: {
         label: string;
+        reference?: string;
       };
       concentration: {
         label: string;
         abbreviation: string;
         icon: string;
-        reference: string;
+        reference?: string;
         isTag: boolean;
       };
       fin: {
         label: string;
+        reference?: string;
       };
       fir: {
         label: string;
+        reference?: string;
       };
       foc: {
         label: string;
+        reference?: string;
       };
       hvy: {
         label: string;
+        reference?: string;
       };
       lgt: {
         label: string;
+        reference?: string;
       };
       lod: {
         label: string;
+        reference?: string;
       };
       mgc: {
         label: string;
         icon: string;
         isPhysical: boolean;
+        reference?: string;
       };
       material: {
         label: string;
         abbreviation: string;
-        reference: string;
+        reference?: string;
       };
       rch: {
         label: string;
+        reference?: string;
       };
       rel: {
         label: string;
+        reference?: string;
       };
       ret: {
         label: string;
+        reference?: string;
       };
       ritual: {
         label: string;
         abbreviation: string;
         icon: string;
-        reference: string;
+        reference?: string;
         isTag: boolean;
       };
       sil: {
         label: string;
         isPhysical: boolean;
+        reference?: string;
       };
       somatic: {
         label: string;
         abbreviation: string;
-        reference: string;
+        reference?: string;
       };
       spc: {
         label: string;
+        reference?: string;
       };
       stealthDisadvantage: {
         label: string;
+        reference?: string;
       };
       thr: {
         label: string;
+        reference?: string;
       };
       two: {
         label: string;
+        reference?: string;
       };
       vocal: {
         label: string;
         abbreviation: string;
-        reference: string;
+        reference?: string;
       };
       ver: {
         label: string;
+        reference?: string;
       };
       weightlessContents: {
         label: string;
+        reference?: string;
       };
     } & Record<
       string,
-      { abbreviation?: string; label: string; isPhysical?: boolean }
+      {
+        abbreviation?: string;
+        label: string;
+        isPhysical?: boolean;
+        reference?: string;
+      }
     >;
     validProperties: {
       consumable: Set<string>;

@@ -1,16 +1,30 @@
 <script lang="ts">
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { mapPropertiesToSave } from 'src/utils/system-properties-quadrone';
 
-  let context = $derived(getItemSheetContextQuadrone());
+  const context = $derived(getItemSheetContextQuadrone());
 
-  let appId = $derived(context.document.id);
+  const appId = $derived(context.document.id);
+
+  const showReferences = $derived(
+    SettingsProvider.settings.referenceTooltipProperty.get(),
+  );
 </script>
 
 {#each context.properties.options as property}
   {const field = $derived(`system.properties.${property.value}`)}
-  <label class="checkbox" for="{appId}-properties-{property.value?.slugify()}">
+  {const reference = $derived(
+    showReferences
+      ? CONFIG.DND5E.itemProperties[property.value]?.reference
+      : undefined,
+  )}
+  <label
+    class="checkbox"
+    for="{appId}-properties-{property.value?.slugify()}"
+    data-reference-tooltip={reference}
+  >
     <CheckboxQuadrone
       id="{appId}-properties-{property.value?.slugify()}"
       document={context.item}
