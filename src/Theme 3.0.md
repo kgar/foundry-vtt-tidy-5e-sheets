@@ -2,12 +2,7 @@
 
 ### TODO
 
-- [ ] Request help to organize loc keys
-- [ ] // TODO: Analyze this again and see if there's a better way
-
-### vNext Stretch Goals
-
-- [ ] Implement `tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
+- [ ] Implement `.tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
 - [ ] Implement Import Bundle and Export Bundle buttons on world themes list view.
 - [ ] Restore file drop to import a theme
   - [ ] World, `.tidy5e-theme`, no selection - inserts a new theme
