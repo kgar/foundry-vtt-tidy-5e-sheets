@@ -6,7 +6,6 @@
  * representing breaking off from Tidy 5e Sheets to the untyped core and system
  * globals.
  */
-
 import {
   AlphaField,
   AngleField,
@@ -15,6 +14,7 @@ import {
   BooleanField,
   ColorField,
   DataField,
+  DataModel,
   DocumentAuthorField,
   DocumentFlagsField,
   DocumentIdField,
@@ -41,8 +41,7 @@ import {
   TypeDataField,
   TypedObjectField,
   TypedSchemaField,
-} from 'foundry.data.fields';
-
+} from 'foundry-types';
 import {
   AdvancementDataField,
   TypedField,
@@ -51,8 +50,7 @@ import {
   IdentifierField,
   LocalDocumentField,
   MappingField,
-} from 'dnd5e.dataModels.fields';
-
+} from 'dnd5e-fields';
 import type { CONFIG } from './config.types';
 import type { FilterDescription } from './dnd5e.types';
 
@@ -143,6 +141,9 @@ declare global {
   } & Record<string, any>;
   var Folder: any;
   var foundry: {
+    abstract: {
+      DataModel: typeof DataModel;
+    };
     applications: {
       api: any;
       apps: any;

@@ -1,8 +1,5 @@
-import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
-import type {
-  SheetTabConfigEntry,
-  SheetTabsConfiguration,
-} from './settings.types';
+import type { SheetTabsConfiguration } from './settings.types';
+import type { DataSchema } from 'foundry-types';
 
 export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
   {
@@ -104,3 +101,124 @@ export const HeaderControlConfigurationSchema =
       { initial: [] },
     ),
   });
+
+export class ThemeSettingModel extends foundry.abstract.DataModel {
+  static defineSchema(): DataSchema {
+    return {
+      accentColor: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      useBasicTheme: new fields.BooleanField({
+        required: false,
+      }),
+      useHeaderBackground: new fields.BooleanField({
+        required: false,
+      }),
+      headerColor: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      actorHeaderBackground: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      headerBackgroundColor: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      itemSidebarBackground: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      portraitShape: new fields.StringField({
+        required: false,
+        nullable: true,
+      }),
+      rarityColors: new fields.TypedObjectField(
+        new fields.StringField({ required: true, nullable: false }),
+        { required: false },
+      ),
+      spellPreparationMethodColors: new fields.TypedObjectField(
+        new fields.StringField({ required: true, nullable: false }),
+        { required: false },
+      ),
+    };
+  }
+}
+
+export class WorldThemeSettingsModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    return {
+      id: new fields.StringField({
+        required: true,
+        nullable: false,
+        blank: false,
+      }),
+      name: new fields.StringField({
+        required: true,
+        nullable: false,
+        blank: true,
+        initial: '',
+      }),
+      documentNames: new fields.ArrayField(
+        new fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+        }),
+        {
+          required: false,
+          nullable: true,
+        },
+      ),
+      types: new fields.ArrayField(
+        new fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+        }),
+        {
+          required: false,
+          nullable: true,
+        },
+      ),
+      sort: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: Number.MAX_SAFE_INTEGER,
+      }),
+      settings: new fields.EmbeddedDataField(ThemeSettingModel, {
+        required: true,
+        nullable: false,
+      }),
+      filter: new fields.StringField({
+        required: false,
+        nullable: true,
+        blank: true,
+        trim: false,
+      }),
+      filterMode: new fields.StringField({
+        required: true,
+        nullable: false,
+        blank: false,
+        choices: ['basic', 'advanced'],
+        initial: 'basic',
+      }),
+    };
+  }
+}
+
+const fields = foundry.data.fields;
+
+export function getWorldThemesSettingsDataModel() {
+  return new fields.TypedObjectField(
+    new fields.EmbeddedDataField(WorldThemeSettingsModel),
+    {
+      hint: 'The keys are the IDs of the various theme settings.',
+      required: true,
+      nullable: false,
+      initial: () => ({}),
+    },
+  );
+}

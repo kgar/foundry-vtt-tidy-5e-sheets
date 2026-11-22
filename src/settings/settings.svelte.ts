@@ -11,6 +11,7 @@ import type { ThemeSettings } from 'src/theme/theme.types';
 import { Theme } from 'src/theme/theme';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import {
+  getWorldThemesSettingsDataModel,
   HeaderControlConfigurationSchema,
   TabConfigurationSchema,
 } from './settings-data-models';
@@ -535,7 +536,7 @@ export function createSettings() {
           name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
           hint: 'TIDY5E.SETTINGS.Theme.Hint',
           scope: 'world',
-          type: Object,
+          type: getWorldThemesSettingsDataModel(),
           default: {},
           config: false,
           onChange: (_settings: WorldThemesSetting) => {

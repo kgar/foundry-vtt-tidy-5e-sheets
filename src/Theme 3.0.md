@@ -2,7 +2,6 @@
 
 ### TODO
 
-- [ ] Enforce data model validation on save and when initializing CONFIG.TIDY5E.worldThemes?
 - [ ] Request help to organize loc keys
 - [ ] // TODO: Analyze this again and see if there's a better way
 

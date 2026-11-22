@@ -1,7 +1,149 @@
-declare module 'foundry.data.fields' {
+declare module 'foundry-types' {
+  /**
+   * A class responsible for recording information about a validation failure.
+   */
+  declare class DataModelValidationFailure {
+    constructor(
+      message = '',
+      {
+        invalidValue,
+        fallbackValue,
+        fieldPath,
+        dropped = false,
+        unresolved = false,
+        ...options
+      } = {},
+    ): DataModelValidationFailure;
+
+    invalidValue: any;
+    fallbackValue: any;
+    fieldPath: string;
+    dropped: boolean;
+    fields: Record<string, DataModelValidationFailure>;
+    elements: DataModelValidationFailureElement[];
+    joint: string;
+    message: string;
+    options: Error;
+    unresolved: boolean;
+
+    get empty(): boolean;
+
+    asError(): DataModelValidationError;
+
+    copyTo(failure: DataModelValidationFailure);
+
+    getFailure(key: string): DataModelValidationFailure | null;
+
+    getAllFailures(): Record<string, DataModelValidationFailure>;
+
+    toObject(): {
+      invalidValue: any;
+      fallbackValue: any;
+      dropped: boolean;
+      message: string;
+    };
+
+    toString(): string;
+
+    logAsTable();
+
+    asHTML(): string;
+  }
+
+  declare class DataModelValidationError extends Error {
+    constructor(
+      failure: DataModelValidationFailure | string,
+      ...params: any[]
+    ): DataModelValidationError;
+
+    getFailure(key: string): DataModelValidationFailure | null;
+
+    getAllFailures(): Record<string, DataModelValidationFailure>;
+
+    logAsTable();
+
+    asHTML(): string;
+
+    toString(): string;
+  }
+
+  type DataModelConstructionContext = DataModelConstructionOptions &
+    Pick<
+      DataModelValidationOptions,
+      'strict' | 'fallback' | 'dropInvalidEmbedded'
+    >;
+
+  interface DataModelValidationOptions {
+    fields?: boolean;
+    joint?: boolean;
+    changes?: object;
+    clean?: boolean;
+    strict?: boolean;
+    fallback?: boolean;
+    dropInvalidEmbedded?: boolean;
+  }
+
+  interface DataModelConstructionOptions {
+    parent?: DataModel | null;
+  }
+
+  interface DataModelUpdateOptions {
+    dryRun?: boolean;
+    fallback?: boolean;
+    recursive?: boolean;
+    restoreDelta?: boolean;
+  }
+
+  interface DataModelFromSourceOptions {
+    strict?: boolean;
+  }
+
+  declare class DataModel {
+    constructor(
+      data: Partial<ModelData> = {},
+      context: DataModelConstructionContext = {},
+    ): DataModel;
+
+    _source: object;
+    _schema: SchemaField;
+    parent: DataModel | null;
+    static defineSchema(): DataSchema;
+    static get schema(): SchemaField;
+    get schema(): SchemaField;
+    get invalid(): boolean;
+    get validationFailures(): {
+      fields: DataModelValidationFailure | null;
+      joint: DataModelValidationFailure | null;
+    };
+    static LOCALIZATION_PREFIXES: string[];
+    static cleanData(source: object = {}, options: object = {}): object;
+    reset(): void;
+    clone(
+      data: object = {},
+      context: DataModelConstructionContext = {},
+    ): DataModel;
+    validate(options: Partial<DataModelValidationOptions>): boolean;
+    validateJoint(data: object);
+    updateSource(
+      changes: object = {},
+      options: DataModelUpdateOptions = {},
+    ): object;
+    toObject(source?: boolean): object;
+    toJSON(): object;
+    static fromSource(
+      source: object,
+      options: Omit<DataModelConstructionContext, 'strict'> &
+        DataModelFromSourceOptions = {},
+    ): DataModel;
+    static fromJSON(json: string): DataModel;
+    static migrateData(source: object): object;
+    static migrateDataSafe(source: object): object;
+    static shimData(data: object, options: { embedded: boolean });
+  }
+
   type DataFieldValidator = (
     value: any,
-    options: DataFieldValidationOptions
+    options: DataFieldValidationOptions,
   ) => boolean | void;
 
   interface DataFieldOptions {
@@ -72,12 +214,7 @@ declare module 'foundry.data.fields' {
   };
 
   type CodeMirrorLanguage =
-    | 'javascript'
-    | 'json'
-    | 'html'
-    | 'markdown'
-    | ''
-    | 'plain';
+    'javascript' | 'json' | 'html' | 'markdown' | '' | 'plain';
 
   interface CodeMirrorInputConfig {
     language?: CodeMirrorLanguage;
@@ -178,76 +315,6 @@ declare module 'foundry.data.fields' {
     priority: number;
   }
 
-  interface DataModelValidationOptions {
-    fields?: boolean;
-    joint?: boolean;
-    changes?: object;
-    clean?: boolean;
-    strict?: boolean;
-    fallback?: boolean;
-    dropInvalidEmbedded?: boolean;
-  }
-
-  interface DataModelConstructionOptions {
-    parent?: DataModel | null;
-  }
-
-  type DataModelConstructionContext = DataModelConstructionOptions &
-    Pick<
-      DataModelValidationOptions,
-      'strict' | 'fallback' | 'dropInvalidEmbedded'
-    >;
-
-  interface DataModelUpdateOptions {
-    dryRun?: boolean;
-    fallback?: boolean;
-    recursive?: boolean;
-    restoreDelta?: boolean;
-  }
-
-  declare class DataModel {
-    constructor(
-      data: Partial<ModelData> = {},
-      context: DataModelConstructionContext = {}
-    ): DataModel;
-
-    _source: object;
-    _schema: SchemaField;
-    parent: DataModel | null;
-    static defineSchema(): DataSchema;
-    static get schema(): SchemaField;
-    get schema(): SchemaField;
-    get invalid(): boolean;
-    get validationFailures(): {
-      fields: DataModelValidationFailure | null;
-      joint: DataModelValidationFailure | null;
-    };
-    static LOCALIZATION_PREFIXES: string[];
-    static cleanData(source: object = {}, options: object = {}): object;
-    reset(): void;
-    clone(
-      data: object = {},
-      context: DataModelConstructionContext = {}
-    ): DataModel;
-    validate(options: Partial<DataModelValidationOptions>): boolean;
-    validateJoint(data: object);
-    updateSource(
-      changes: object = {},
-      options: DataModelUpdateOptions = {}
-    ): object;
-    toObject(source?: boolean): object;
-    toJSON(): object;
-    static fromSource(
-      source: object,
-      options: Omit<DataModelConstructionContext, 'strict'> &
-        DataModelFromSourceOptions = {}
-    ): DataModel;
-    static fromJSON(json: string): DataModel;
-    static migrateData(source: object): object;
-    static migrateDataSafe(source: object): object;
-    static shimData(data: object, options: { embedded: boolean });
-  }
-
   type DataModelValidationFailureConstructionOptions = {
     invalidValue: any;
     fallback: any;
@@ -256,58 +323,12 @@ declare module 'foundry.data.fields' {
     unresolved: boolean;
   };
 
-  declare class DataModelValidationFailure {
-    constructor(
-      options: Partial<DataModelValidationFailureConstructionOptions> = {}
-    );
-
-    invalidValue: any;
-
-    fallback: any;
-
-    dropped: boolean;
-
-    message: string;
-
-    fields: Record<string, DataModelValidationFailure>;
-
-    elements: ElementValidationFailure[];
-
-    unresolved: boolean;
-
-    asError(): DataModelValidationError;
-
-    isEmpty(): boolean;
-
-    toObject(): Exclude<
-      DataModelValidationFailureConstructionOptions,
-      { unresolved: boolean }
-    >;
-
-    toString(): string;
-  }
-
-  declare class DataModelValidationError extends Error {
-    constructor(
-      failure: DataModelValidationFailure | string,
-      ...params: any[]
-    ): DataModelValidationError;
-
-    getFailure(path: string): DataModelValidationFailure;
-
-    getAllFailures(): Record<string, DataModelValidationFailure>;
-
-    logAsTable(): void;
-
-    asHTML(): string;
-  }
-
   declare type DataSchema = Record<string, DataField>;
 
   declare class DataField {
     constructor(
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): DataField;
 
     name: string;
@@ -323,13 +344,13 @@ declare module 'foundry.data.fields' {
     toObject(value: any): any;
     validate(
       value: any,
-      options: DataFieldValidationOptions = {}
+      options: DataFieldValidationOptions = {},
     ): DataModelValidationFailure | void;
     initialize(value: any, model: Object, options: object = {}): any;
     toInput(config: FormInputConfig = {}): HTMLElement | HTMLCollection;
     toFormGroup(
       groupConfig: FormGroupConfig = {},
-      inputConfig: FormInputConfig = {}
+      inputConfig: FormInputConfig = {},
     ): HTMLDivElement;
     applyChange(value: any, model: DataModel, change: EffectChangeData): any;
   }
@@ -343,7 +364,7 @@ declare module 'foundry.data.fields' {
     constructor(
       fields: DataSchema,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): DataField;
     fields: DataSchema;
     keys(): string[];
@@ -358,7 +379,7 @@ declare module 'foundry.data.fields' {
   declare class NumberField extends DataField {
     constructor(
       options: NumberFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     );
     options: NumberFieldOptions;
   }
@@ -368,7 +389,7 @@ declare module 'foundry.data.fields' {
   declare class StringField extends DataField {
     constructor(
       options: StringFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     );
 
     options: StringFieldOptions;
@@ -386,14 +407,14 @@ declare module 'foundry.data.fields' {
     constructor(
       element: DataField,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): DataField;
   }
   declare class ArrayField extends DataField {
     constructor(
       element: ElementType,
       options: ArrayFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): ArrayField;
 
     options: ArrayFieldOptions;
@@ -407,7 +428,7 @@ declare module 'foundry.data.fields' {
     constructor(
       model: typeof DataModel,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     );
 
     model: DataModel;
@@ -416,7 +437,7 @@ declare module 'foundry.data.fields' {
     constructor(
       element: typeof FoundryDocument,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): EmbeddedCollectionField;
 
     readonly: boolean;
@@ -432,7 +453,7 @@ declare module 'foundry.data.fields' {
     constructor(
       model: typeof FoundryDocument,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): EmbeddedDocumentField;
 
     getCollection(parent: FoundryDocument): Map<string, FoundryDocument>;
@@ -441,7 +462,7 @@ declare module 'foundry.data.fields' {
   declare class DocumentUUIDField extends StringField {
     constructor(
       options: DocumentUUIDFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): DocumentUUIDField;
     options: DocumentUUIDFieldOptions;
   }
@@ -450,7 +471,7 @@ declare module 'foundry.data.fields' {
   declare class FilePathField extends StringField {
     constructor(
       options: FilePathFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): FilePathField;
     options: FilePathFieldOptions;
   }
@@ -475,7 +496,7 @@ declare module 'foundry.data.fields' {
     constructor(
       documentClass: typeof FoundryDocument,
       options: StringFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): DocumentTypeField;
   }
 
@@ -485,7 +506,7 @@ declare module 'foundry.data.fields' {
     constructor(
       document: typeof FoundryDocument,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): TypeDataField;
     document: typeof FoundryDocument;
     getModelProvider(model: DataModel): any | null;
@@ -497,7 +518,7 @@ declare module 'foundry.data.fields' {
     constructor(
       types: Record<string, DataSchema | SchemaField | typeof DataModel>,
       options: DataFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): TypedSchemaField;
 
     types: Record<string, SchemaField>;
@@ -507,7 +528,7 @@ declare module 'foundry.data.fields' {
   declare class JavaScriptField extends StringField {
     constructor(
       options: JavaScriptFieldOptions = {},
-      context: DataFieldContext = {}
+      context: DataFieldContext = {},
     ): JavaScriptField;
     options: JavaScriptFieldOptions;
   }
