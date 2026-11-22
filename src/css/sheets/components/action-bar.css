@@ -5,7 +5,7 @@
     gap: 0.25rem;
     container: action-bar / inline-size;
 
-    search.clearable-input {
+    search {
       flex: 1;
     }
 
