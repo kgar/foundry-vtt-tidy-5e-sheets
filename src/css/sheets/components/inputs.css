@@ -352,12 +352,12 @@
     &:hover,
     &:focus {
       input:not(:disabled) {
-        &:not(:is(:checked, :indeterminate)) {
+        &:not(:is(:checked, :not(input[type='radio']):indeterminate)) {
           border-color: var(--t5e-component-field-border-hover);
           background: var(--t5e-component-field-background-hover);
         }
 
-        &:is(:checked, :indeterminate) {
+        &:is(:checked, :not(input[type='radio']):indeterminate) {
           border-color: var(--t5e-theme-color-darker);
           background-color: var(--t5e-theme-color-darker);
           box-shadow: var(--t5e-drop-shadow-field-hover);
