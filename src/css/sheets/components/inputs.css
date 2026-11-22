@@ -11,7 +11,7 @@
   .input-group,
   textarea,
   select,
-  :where(search) {
+  :where(.clearable-input) {
     color: var(--t5e-color-text-default);
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@
   .input-group,
   textarea,
   select,
-  :where(search) {
+  :where(.clearable-input) {
     line-height: 1rem;
     font-family: var(--t5e-font-family-forms);
   }
@@ -242,7 +242,7 @@
     }
   }
 
-  :where(search) {
+  :where(.clearable-input) {
     font-size: var(--font-size-default, 0.8666666667rem);
     font-weight: var(--font-weight-alternate, 400);
     height: var(--t5e-field-size-default);
@@ -307,7 +307,7 @@
       font-size: 0.6875rem;
     }
 
-    .cancel-search {
+    .clear-input {
       width: var(--t5e-field-size-default);
       height: var(--t5e-field-size-default);
       color: var(--t5e-color-text-lighter);

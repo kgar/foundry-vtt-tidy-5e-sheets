@@ -264,9 +264,7 @@ export function getTidyExtensibleDocumentSheetMixin<
           return this._onSingleInputChange(event);
         }
 
-        const result = super._onChangeForm(formConfig, event);
-
-        this._revertIfNotMatchingDocumentValue(result, event);
+        super._onChangeForm(formConfig, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
           ui.notifications.error(failure.message),
@@ -274,15 +272,36 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
     }
 
-    async _revertIfNotMatchingDocumentValue(
-      maybePromise: Promise<any>,
-      event: any,
-    ) {
-      await maybePromise;
-
-      const { targetDocument } = this._getDocumentSubmissionInformation(
-        event.target,
+    async _processSubmitData(
+      event: Event,
+      form: HTMLFormElement,
+      submitData: Record<string, any>,
+      options: any,
+    ): Promise<{ created?: Document; updated?: Document }> {
+      const result = await super._processSubmitData(
+        event,
+        form,
+        submitData,
+        options,
       );
+
+      try {
+        this._revertIfNotMatchingDocumentValue(event, result?.updated);
+      } catch (e) {
+        error(
+          'An error occurred while potentially reverting drifted input data',
+          false,
+          e,
+        );
+      }
+
+      return result;
+    }
+
+    _revertIfNotMatchingDocumentValue(event: any, submissionDocument?: any) {
+      const targetDocument =
+        submissionDocument ??
+        this._getDocumentSubmissionInformation(event.target)?.targetDocument;
 
       const shouldRevertInput =
         event.target.name &&
@@ -710,7 +729,9 @@ export function getTidyExtensibleDocumentSheetMixin<
       }
     }
 
-    _getDocumentSubmissionInformation(target: HTMLElement): Partial<{
+    _getDocumentSubmissionInformation(
+      target: HTMLElement | null | undefined,
+    ): Partial<{
       itemId: string;
       item: Item5e;
       activityId: string;
@@ -719,6 +740,10 @@ export function getTidyExtensibleDocumentSheetMixin<
       effect: ActiveEffect5e;
       targetDocument: Actor5e | Item5e | Activity5e;
     }> {
+      if (!target) {
+        return {};
+      }
+
       const { itemId } =
         target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
       const sheetDocument = this.document;

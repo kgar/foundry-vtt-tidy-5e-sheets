@@ -56,6 +56,7 @@ import { Rarity } from 'src/features/rarity/Rarity';
 import { Description } from 'src/features/description/Description';
 import type { EnrichmentOptions } from 'src/foundry/foundry.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin<
   DocumentSheetApplicationConfiguration | undefined,
@@ -416,6 +417,13 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
       options: this.options,
       owner: this.document.isOwner,
       rarities: Rarity.getRarityContext(documentSheetContext.source),
+      references: {
+        mastery:
+          SettingsProvider.settings.referenceTooltipMastery.get() &&
+          systemObject.mastery
+            ? CONFIG.DND5E.weaponMasteries[systemObject.mastery]?.reference
+            : undefined,
+      },
       scalarTarget:
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
@@ -505,8 +513,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         }, []),
       ],
 
-      recoveryPeriods: CONFIG.DND5E.limitedUsePeriods.recoveryOptions,
-
       recoveryTypes: [
         { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },
         { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
@@ -524,6 +530,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             this.item.system.schema.fields.uses.fields.recovery.element.fields,
           prefix: `system.uses.recovery.${index}.`,
           source: systemSource.uses.recovery[index] ?? data,
+          periods: dnd5e.dataModels.shared.UsesField.recoveryOptions(this.document, data.period),
         }),
       ),
 
@@ -1711,6 +1718,32 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
     }
 
     return app.render({ force: true, ...options });
+  }
+
+  async _onRender(
+    context: ItemSheetQuadroneContext,
+    options: TidyDocumentSheetRenderOptions,
+  ) {
+    await super._onRender(context, options);
+
+    // Apply attribution & reference tooltips
+    this.element
+      .querySelectorAll('[data-attribution],[data-reference-tooltip]')
+      .forEach((e: HTMLElement) => this._applyTooltips(e));
+  }
+
+  /**
+   * Apply a property attribution tooltip to an element.
+   * @param {HTMLElement} element  The element to get the tooltip.
+   * @protected
+   */
+  _applyTooltips(element: HTMLElement) {
+    const uuid = element.dataset.referenceTooltip ?? this.document.uuid;
+    element.dataset.tooltip = `
+          <section class="loading" data-uuid="${uuid}"><i class="fas fa-spinner fa-spin-pulse"></i></section>
+        `;
+    if (element.dataset.attribution)
+      element.dataset.tooltipClass = 'property-attribution';
   }
 
   /* -------------------------------------------- */

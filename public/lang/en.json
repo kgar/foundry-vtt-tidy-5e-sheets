@@ -560,6 +560,9 @@
         "Mastery": {
           "name": "Show system Weapon Mastery tooltips"
         },
+        "Property": {
+          "name": "Show system Property tooltips"
+        },
         "Skill": {
           "name": "Show system Skill tooltips"
         },

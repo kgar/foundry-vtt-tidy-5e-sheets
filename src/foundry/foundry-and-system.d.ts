@@ -81,6 +81,7 @@ declare global {
       };
       item: any;
       spellcasting: any;
+      shared: any;
     };
     Filter: {
       performCheck(
