@@ -387,7 +387,7 @@
     box-shadow: var(--t5e-drop-shadow-field);
     transition: all var(--t5e-transition-default);
 
-    &:is(:checked, :indeterminate) {
+    &:is(:checked, :not(input[type='radio']):indeterminate) {
       background-color: var(--t5e-component-toggle-toggled-background);
       border-color: var(--t5e-component-toggle-toggled-border);
       filter: none;
@@ -399,24 +399,24 @@
       border-color: transparent;
       box-shadow: none;
 
-      &:is(:checked, :indeterminate) {
+      &:is(:checked, :not(input[type='radio']):indeterminate) {
         background-color: var(--t5e-component-toggle-toggled-background);
       }
     }
 
-    &:is(:checked, :indeterminate):hover:not(:disabled) {
+    &:is(:checked, :not(input[type='radio']):indeterminate):hover:not(:disabled) {
       border-color: var(--t5e-input-check-border-color-checked-hover);
     }
 
     &:focus:not(:disabled) {
       outline: var(--t5e-outline-field-focus);
 
-      &:not(:is(:checked, :indeterminate)) {
+      &:not(:is(:checked, :not(input[type='radio']):indeterminate)) {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
 
-      &:is(:checked, :indeterminate) {
+      &:is(:checked, :not(input[type='radio']):indeterminate) {
         border-color: var(--t5e-input-check-border-color-checked-focus);
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);
