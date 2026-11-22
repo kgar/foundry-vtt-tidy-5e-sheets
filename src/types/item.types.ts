@@ -175,7 +175,6 @@ export type ItemSheetQuadroneContext = {
   properties: PropertyContext;
   rangeTypes: GroupableSelectOption[];
   rarities: RarityContext | undefined;
-  recoveryPeriods: GroupableSelectOption[];
   recoveryTypes: {
     label: string;
     value: string;
@@ -209,6 +208,7 @@ export type ItemSheetQuadroneContext = {
     source: any;
     fields: any;
     prefix: string;
+    periods: GroupableSelectOption[] | null;
   }[];
   /** The crew slots of a mountable item. */
   vehicleCrew?: OccupantContext[];

@@ -82,6 +82,7 @@ declare global {
       };
       item: any;
       spellcasting: any;
+      shared: any;
     };
   } & Record<string, any>;
   var Folder: any;
@@ -174,7 +175,7 @@ declare global {
   interface Number {
     toNearest: <T extends keyof Math>(
       interval: number,
-      method: T = 'round'
+      method: T = 'round',
     ) => number;
   }
 
@@ -206,7 +207,7 @@ declare global {
     createDragImage(
       img: HTMLImageElement,
       width: number,
-      height: number
+      height: number,
     ): HTMLElement;
   }
 

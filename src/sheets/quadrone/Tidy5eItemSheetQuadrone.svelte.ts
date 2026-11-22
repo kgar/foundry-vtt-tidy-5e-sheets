@@ -524,8 +524,6 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
         }, []),
       ],
 
-      recoveryPeriods: CONFIG.DND5E.limitedUsePeriods.recoveryOptions,
-
       recoveryTypes: [
         { value: 'recoverAll', label: 'DND5E.USES.Recovery.Type.RecoverAll' },
         { value: 'loseAll', label: 'DND5E.USES.Recovery.Type.LoseAll' },
@@ -543,6 +541,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
             this.item.system.schema.fields.uses.fields.recovery.element.fields,
           prefix: `system.uses.recovery.${index}.`,
           source: systemSource.uses.recovery[index] ?? data,
+          periods: dnd5e.dataModels.shared.UsesField.recoveryOptions(this.document, data.period),
         }),
       ),
 

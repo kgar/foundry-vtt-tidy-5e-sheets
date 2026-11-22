@@ -88,7 +88,6 @@
     </legend>
 
     {#each context.usesRecovery as recovery, index}
-      {const systemRecovery = $derived(context.system.uses.recovery)}
       {const disabled = $derived(!context.unlocked)}
       <div class="form-group split-group full-width card" data-index={index}>
         <div class="form-fields">
@@ -100,19 +99,18 @@
             field={recovery.fields.period}
             config={{
               id: `${appId}-uses-recovery-${index}-period`,
-              value: !disabled
-                ? recovery.data.period
-                : systemRecovery[index].period,
+              value: recovery.source.period,
               disabled,
               name: `${recovery.prefix}period`,
             }}
-            choices={context.recoveryPeriods}
+            choices={recovery.periods}
             groupClasses="label-top"
             submissionMode="full"
+            clearable={true}
           />
 
           <!-- Type -->
-          {#if recovery.data.period !== 'recharge'}
+          {#if recovery.source.period !== 'recharge'}
             <FormGroup
               label="DND5E.Recovery"
               labelFor="{appId}-uses-recovery-${index}-type"
@@ -120,9 +118,7 @@
               field={recovery.fields.type}
               config={{
                 id: `${appId}-uses-recovery-${index}-type`,
-                value: !disabled
-                  ? recovery.data.type
-                  : systemRecovery[index].type,
+                value: recovery.source.type,
                 disabled,
                 name: `${recovery.prefix}type`,
               }}
@@ -133,7 +129,7 @@
           {/if}
 
           <!-- Formula -->
-          {#if recovery.data.type === 'formula' || recovery.formulaOptions}
+          {#if recovery.source.type === 'formula' || recovery.formulaOptions}
             <FormGroup
               label="DND5E.Formula"
               labelFor="{appId}-uses-recovery-${index}-formula"
@@ -141,9 +137,7 @@
               field={recovery.fields.formula}
               config={{
                 id: `${appId}-uses-recovery-${index}-formula`,
-                value: !disabled
-                  ? recovery.data.formula
-                  : systemRecovery[index].formula,
+                value: recovery.source.formula,
                 disabled,
                 name: `${recovery.prefix}formula`,
                 blank: false,
