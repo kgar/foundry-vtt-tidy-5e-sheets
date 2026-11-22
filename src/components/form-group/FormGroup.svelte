@@ -60,6 +60,7 @@
     valueAttr,
     submissionMode = 'single',
     onChange,
+    clearable,
   }: Props = $props();
 
   let effectiveLabel = $derived(label ?? field?.label ?? field?.fieldPath);
@@ -76,9 +77,7 @@
     }
 
     const formElement = target as
-      | HTMLInputElement
-      | HTMLSelectElement
-      | HTMLTextAreaElement;
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
     let value: string | boolean = formElement.value;
 
@@ -139,6 +138,7 @@
           labelAttr,
           valueAttr,
           condition,
+          clearable,
         })}
       {/if}
       {#each fields as options}
@@ -168,6 +168,7 @@
   labelAttr,
   valueAttr,
   condition,
+  clearable,
 }: FormInputOptions)}
   {#if field}
     <TidyFormInput
@@ -183,6 +184,7 @@
       {valueAttr}
       {submissionMode}
       {condition}
+      {clearable}
     />
   {/if}
 {/snippet}

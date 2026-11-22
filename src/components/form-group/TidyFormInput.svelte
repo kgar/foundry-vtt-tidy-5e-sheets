@@ -13,6 +13,7 @@
   import StringTags from '../inputs/StringTags.svelte';
   import DocumentTag from '../inputs/DocumentTag.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import ClearableInput from 'src/sheets/quadrone/shared/ClearableInput.svelte';
 
   type Choices<T = any> = T[] | object | Function;
 
@@ -29,6 +30,7 @@
     labelAttr?: string;
     valueAttr?: string;
     submissionMode?: 'full' | 'single' | 'none';
+    clearable?: boolean;
   };
 
   let {
@@ -44,6 +46,7 @@
     tooltip,
     valueAttr,
     submissionMode = 'single',
+    clearable,
   }: Props = $props();
 
   function enumerateChoices(
@@ -205,20 +208,37 @@
       >
     {/key}
   {:else if field instanceof foundry.data.fields.StringField && !(choices ?? field.choices)}
-    <input
-      type="text"
-      id={config.id}
-      value={config.value}
-      {@attach InputAttachments.selectOnFocus}
-      {disabled}
-      placeholder={config.placeholder}
-      class={config.classes}
-      data-formula-editor={field.constructor.name === 'FormulaField'
-        ? ''
-        : undefined}
-      {...submissionAttributes}
-      {...attributes}
-    />
+    {#if clearable}
+      <ClearableInput
+        type="text"
+        id={config.id}
+        value={config.value}
+        {@attach InputAttachments.selectOnFocus}
+        {disabled}
+        placeholder={config.placeholder}
+        class={config.classes}
+        data-formula-editor={field.constructor.name === 'FormulaField'
+          ? ''
+          : undefined}
+        {...submissionAttributes}
+        {...attributes}
+      />
+    {:else}
+      <input
+        type="text"
+        id={config.id}
+        value={config.value}
+        {@attach InputAttachments.selectOnFocus}
+        {disabled}
+        placeholder={config.placeholder}
+        class={config.classes}
+        data-formula-editor={field.constructor.name === 'FormulaField'
+          ? ''
+          : undefined}
+        {...submissionAttributes}
+        {...attributes}
+      />
+    {/if}
   {:else if field instanceof foundry.data.fields.NumberField && (choices ?? field.choices)}
     {let numberChoices = $derived.by(() => {
       if (
@@ -233,9 +253,7 @@
     {const options = $derived(enumerateChoices(numberChoices))}
     {const blankLabel = $derived(getBlankValue())}
     {const value = $derived(
-      isNil(config.value, '')
-        ? null
-        : config.value.toString(),
+      isNil(config.value, '') ? null : config.value.toString(),
     )}
     <select
       id={config.id}
