@@ -93,7 +93,7 @@
 
   h3.nav-group-header {
     font-size: var(--font-size-20);
-    padding-block: 0.25rem 0.375rem;
+    padding-block: 0.25rem 0.5rem;
     padding-inline: var(--t5e-size-2x) 0;
   }
 
@@ -106,6 +106,7 @@
     --t5e-button-focus: none;
     --t5e-button-padding-inline-start: var(--t5e-size-2x);
     --t5e-button-padding-inline-end: var(--t5e-size-2x);
+    --t5e-button-height: var(--t5e-size-8x);
     justify-content: flex-start;
     font: inherit;
     padding-block: var(--t5e-size-2x);
@@ -414,6 +415,10 @@
       margin: 0;
     }
 
+    .world-theme-empty {
+      flex: none;
+    }
+
     .world-theme-list {
       display: flex;
       flex-direction: column;
@@ -423,12 +428,12 @@
       list-style: none;
     }
 
-    .world-theme-card {
+    button.world-theme-card {
       --_world-theme-card-background: var(--t5e-component-field-background);
       --t5e-button-background: var(--_world-theme-card-background);
       --t5e-button-border: var(--t5e-component-field-border);
       --t5e-button-border-width: var(--t5e-size-1);
-      --t5e-button-radius: var(--t5e-size-halfx);
+      --t5e-button-radius: var(--t5e-size-1x);
       --t5e-button-padding-inline-start: var(--t5e-size-3x);
       --t5e-button-padding-inline-end: var(--t5e-size-3x);
 
@@ -439,6 +444,7 @@
       isolation: isolate;
       overflow: hidden;
       width: 100%;
+      align-items: center;;
       justify-content: space-between;
       gap: var(--t5e-size-3x);
       padding-block: var(--t5e-size-2x);
@@ -505,6 +511,8 @@
     }
 
     .world-theme-card-applies-to {
+      display: flex;
+      align-items: center;
       color: var(--t5e-color-text-lighter);
       font: var(--t5e-font-default-small);
     }
@@ -642,9 +650,9 @@
       }
     }
 
-    .hidden-input {
+    input.hidden-input {
       position: absolute;
-      inset-block-start: 0;
+      inset-block-start: -0.125rem;
       inset-inline-start: 0;
       width: 0;
       height: 0;
@@ -652,6 +660,13 @@
       padding-block: 0;
       padding-inline: 0;
       border: 0;
+      outline: none;
+      border: none;
+
+      &:hover, &:focus {
+        outline: none;
+        border: none;
+      }
     }
   }
 }

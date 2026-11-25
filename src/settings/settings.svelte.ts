@@ -1002,7 +1002,10 @@ export function getLegacyWorldThemeSettingSettingDocument(): any {
 }
 
 export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
-  const source = SettingsProvider.settings.worldThemes.get() ?? {};
+  // Can't work in the DataModel directly, copy it.
+  const source: WorldThemesSetting = foundry.utils.duplicate(
+    SettingsProvider.settings.worldThemes.get() ?? {},
+  );
 
   if (!Object.keys(source).length) {
     // Check for legacy theme in database
@@ -1015,7 +1018,7 @@ export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
       source[newId] = {
         filterMode: 'basic',
         id: newId,
-        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.LegacyThemeName'),
+        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.World.Title'),
         settings: legacyTheme,
         sort: 1,
         documentNames: undefined,
