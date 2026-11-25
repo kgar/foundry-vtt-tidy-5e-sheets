@@ -109,6 +109,21 @@
 <p class="hint flexshrink">
   {localize('TIDY5E.COMMON.Theme.SortHint')}
 </p>
+<!-- TODO: If there's not already a default world theme -->
+<div class="world-theme-empty empty-state-container">
+  <button type="button" class="button button-tertiary" onclick={() =>
+      // TODO: Add a real real World Default Theme editor here.
+      foundry.applications.api.DialogV2.prompt({
+        window: { title: localize('TIDY5E.SETTINGS.Theme.World.Title') },
+        content: '<p>uhhh... TODO</p>',
+        rejectClose: false,
+      })}>
+    <i class="fa-solid fa-swatchbook"></i>
+    {localize('DND5E.DescriptionEdit', {
+      description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
+    })}
+  </button>
+</div>
 <ol class="world-theme-list">
   {#each orderedThemes as theme, i (theme.id)}
     {@const preview = getThemePreview(theme.settings, theme.themeMode)}

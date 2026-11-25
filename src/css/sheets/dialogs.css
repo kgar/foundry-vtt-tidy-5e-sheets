@@ -415,6 +415,10 @@
       margin: 0;
     }
 
+    .world-theme-empty {
+      flex: none;
+    }
+
     .world-theme-list {
       display: flex;
       flex-direction: column;
