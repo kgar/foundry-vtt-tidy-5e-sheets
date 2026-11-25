@@ -56,6 +56,7 @@ import {
   shouldParseInputDelta,
 } from 'src/utils/form';
 import * as Bastion from 'src/features/facility/Bastion';
+import { isNil } from 'src/utils/data';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -293,16 +294,19 @@ export function getTidyExtensibleDocumentSheetMixin<
         submissionDocument ??
         this._getDocumentSubmissionInformation(event.target)?.targetDocument;
 
+      const nameAttribute = event.target?.name;
+
       const shouldRevertInput =
-        event.target.name &&
-        foundry.utils.getProperty(targetDocument, event.target.name) !==
+        targetDocument &&
+        !isNil(nameAttribute, '') &&
+        foundry.utils.getProperty(targetDocument, nameAttribute) !==
           event.target.value;
 
       if (shouldRevertInput) {
         this._revertFormChangeToDocumentValue(
           targetDocument,
           event,
-          event.target.name,
+          nameAttribute,
         );
       }
     }
