@@ -520,6 +520,9 @@
                 },
                 "Favorite": {
                     "name": "Exibir Dicas dos Favoritos do Sistema"
+                },
+                "Property": {
+                    "name": "Exibir Dicas das Propriedades do Sistema"
                 }
             }
         },
