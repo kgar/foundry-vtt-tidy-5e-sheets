@@ -1002,7 +1002,10 @@ export function getLegacyWorldThemeSettingSettingDocument(): any {
 }
 
 export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
-  const source = SettingsProvider.settings.worldThemes.get() ?? {};
+  // Can't work in the DataModel directly, copy it.
+  const source: WorldThemesSetting = foundry.utils.duplicate(
+    SettingsProvider.settings.worldThemes.get() ?? {},
+  );
 
   if (!Object.keys(source).length) {
     // Check for legacy theme in database

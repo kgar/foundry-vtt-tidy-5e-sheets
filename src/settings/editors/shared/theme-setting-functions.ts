@@ -188,6 +188,7 @@ export type ThemePreview = {
   /** Inline CSS custom properties, the same ones a themed sheet receives. */
   style: string;
   isParchment: boolean;
+  sheetStyle: 'basic' | 'parchment' | 'themed';
   themeMode: 'light' | 'dark';
 };
 
@@ -220,6 +221,11 @@ export function getThemePreview(
   return {
     style,
     isParchment,
+    sheetStyle: effectiveStyles.useBasicTheme
+      ? 'basic'
+      : isParchment
+        ? 'parchment'
+        : 'themed',
     themeMode: mode === 'dark' ? 'dark' : 'light',
   };
 }

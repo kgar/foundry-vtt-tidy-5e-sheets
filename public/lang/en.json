@@ -669,8 +669,8 @@
         "Title": "Actor Header Image"
       },
       "ApplyThemeToEmbeddedDocuments": {
-        "Title": "Apply Theme to Embedded Documents",
-        "Hint": "If the theme applies to a document that has embedded documents, such as an Actor with Items, the embedded items will receive the same theme as the parent actor, rather than a world theme."
+        "Title": "Inherit Parent Sheet Themes",
+        "Hint": "Child documents will use a parent document's theme first before inherting world themes."
       },
       "HeaderBackgroundColor": {
         "Hint": "Use a different color than the sheet accent color for the sheet header.",
@@ -712,7 +712,8 @@
       },
       "UseHeaderBackground": {
         "Hint": "Includes styles that support a colorful sheet header with an image background.",
-        "Title": "Use Header Background"
+        "Title": "Use Header Background",
+        "labelOff": "No Header Background"
       }
     },
     "World": {

@@ -136,15 +136,25 @@
       >
         <span class="world-theme-card-text">
           <span class="world-theme-card-name">{theme.name}</span>
-          <span class="world-theme-card-applies-to">
+          <div class="world-theme-card-applies-to">
             {localize('TIDY5E.COMMON.Theme.AppliesTo')}:
             {getAppliesToSummary(app.documentTypeTree, theme)}
-          </span>
+            <div class="divider-dot"></div>
+            {#if preview.sheetStyle === 'basic'}
+              {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
+            {:else if preview.sheetStyle === 'parchment'}
+              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.labelOff')}
+            {:else}
+              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
+            {/if}
+          </div>
         </span>
+        <span class="button button-icon-only button-primary">
         <i
           class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
           aria-hidden="true"
         ></i>
+        </span>
       </button>
     </li>
   {/each}
