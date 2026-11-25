@@ -63,7 +63,12 @@ Hooks.once('init', () => {
       rowActions: registry.getRowActionPartitions(),
     },
     symbols: SYMBOLS,
-    worldThemes: {},
+    get worldThemes() {
+      return Theme.lazyConfiguredWorldThemes.value;
+    },
+    get worldThemeDefault() {
+      return Theme.lazyConfiguredWorldDefaultTheme.value;
+    },
     utils: registry.getUtils(),
   };
 
@@ -182,8 +187,6 @@ Hooks.once('ready', async () => {
   tidy5eModule.api = api;
 
   initRuntimeOnReady();
-
-  CONFIG.TIDY5E.utils.theme.initWorldThemes();
 
   TidyHooks.tidy5eSheetsReady(api);
 

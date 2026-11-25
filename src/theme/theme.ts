@@ -4,6 +4,7 @@ import chroma from 'chroma-js';
 import { debug, error, warn } from 'src/utils/logging';
 import {
   SYMBOLS,
+  type TidyThemeRegistry,
   type WorldThemeSettingConfig,
 } from 'src/types/registry.types';
 import {
@@ -25,6 +26,7 @@ import type {
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
+import { lazy } from 'src/features/reactivity/lazy.svelte';
 
 export class Theme {
   static supportedDocumentNames: ReadonlySet<string> = new Set<string>([
@@ -36,88 +38,42 @@ export class Theme {
   // a collection of stylesheets currently only used for popped out stylesheets
   private static readonly _externalStylesheets: Set<CSSStyleSheet> = new Set();
 
-  static initWorldThemes() {
+  /**
+   * Lazily-evaluated partitioned world theme configs
+   * for CONFIG.TIDY5E.
+   */
+  static lazyConfiguredWorldThemes = lazy(() => {
+    const result = generateConfiguredWorldThemes();
+    return result;
+  });
+
+  /**
+   * Lazily-evaluated world default theme config
+   * for CONFIG.TIDY5E.
+   */
+  static lazyConfiguredWorldDefaultTheme = lazy(() =>
+    getConfiguredWorldDefaultTheme(),
+  );
+
+  /**
+   * Sets up CONFIG.TIDY5E world themes and world default theme
+   * to regenerate their partitioned configurations with the
+   * latest theme settings.
+   */
+  static resetWorldThemeConfigs() {
     if (!CONFIG.TIDY5E) {
       error(
-        `Invalid setup. CONFIG.TIDY5E must be initialized before calling ${Theme.initWorldThemes.name}`,
+        `Invalid setup. CONFIG.TIDY5E must be initialized before calling ${Theme.resetWorldThemeConfigs.name}`,
         true,
       );
 
       return;
     }
 
-    // Reset worldThemes every time.
-    CONFIG.TIDY5E.worldThemes = {
-      [SYMBOLS.generated]:
-        'This code is generated. To ensure external changes are included every time this is generated, use the hook "tidy5e-sheet.worldThemesConfigChanged"',
-      [SYMBOLS.readme]:
-        'Partitioned, priority-ordered, optionally filtered world theme settings used for determining the appropriate theme to use for a given document sheet.',
-    };
-
-    const themes = getEffectiveWorldThemesSetting();
-
-    const prioritizedWorldThemes = Object.values(themes).sort(
-      (a, b) => a.sort - b.sort,
-    );
-
-    for (const theme of prioritizedWorldThemes) {
-      if (
-        !theme.documentNames &&
-        !theme.types &&
-        isNil(theme.filter?.trim(), '')
-      ) {
-        // The first found world theme default is registered as the
-        // world theme default in addition to permuting across
-        // document world themes.
-        CONFIG.TIDY5E.worldThemeDefault ??= mapToRegisteredTheme({
-          ...theme,
-          filter: undefined,
-        });
-      }
-
-      const validDocumentNames =
-        theme.documentNames?.filter((name) =>
-          Theme.supportedDocumentNames.has(name),
-        ) ?? [];
-
-      const targetDocumentNames = validDocumentNames.length
-        ? validDocumentNames
-        : [...Theme.supportedDocumentNames];
-
-      for (const targetDocumentName of targetDocumentNames) {
-        const configDocumentNames = (CONFIG.TIDY5E.worldThemes[
-          targetDocumentName
-        ] ??= {});
-
-        const documentTypes: string[] =
-          foundry.documents[targetDocumentName]?.TYPES ?? [];
-        const explicitTypes =
-          theme.types?.filter((t) => documentTypes.includes(t)) ?? [];
-        const targetTypes = explicitTypes.length
-          ? explicitTypes
-          : documentTypes;
-
-        for (const targetType of targetTypes) {
-          const themes = (configDocumentNames[targetType] ??= []);
-
-          try {
-            themes.push(mapToRegisteredTheme(theme));
-          } catch (e) {
-            warn(
-              `Unable to parse filter for theme ${theme.name}. It has been excluded.`,
-              false,
-              {
-                error: e,
-                ...theme,
-              },
-            );
-          }
-        }
-      }
-    }
+    Theme.lazyConfiguredWorldDefaultTheme.invalidate();
+    Theme.lazyConfiguredWorldThemes.invalidate();
 
     TidyHooks.tidy5eSheetWorldThemesConfigChanged(CONFIG.TIDY5E);
-
     TidyHooks.tidy5eSheetsThemeSettingsChanged();
   }
 
@@ -514,4 +470,94 @@ function mapToRegisteredTheme(
     sort: theme.sort,
     filter: theme.filter ? JSON.parse(theme.filter) : undefined,
   };
+}
+function generateConfiguredWorldThemes(): TidyThemeRegistry {
+  debug('Generating world themes.');
+
+  const registry: TidyThemeRegistry = {
+    [SYMBOLS.generated]:
+      'This code is generated. To ensure external changes are included every time this is generated, use the hook "tidy5e-sheet.worldThemesConfigChanged"',
+    [SYMBOLS.readme]:
+      'Partitioned, priority-ordered, optionally filtered world theme settings used for determining the appropriate theme to use for a given document sheet.',
+  };
+
+  const prioritizedWorldThemes = getPrioritizedWorldThemeSettings();
+
+  for (const theme of prioritizedWorldThemes) {
+    const validDocumentNames =
+      theme.documentNames?.filter((name) =>
+        Theme.supportedDocumentNames.has(name),
+      ) ?? [];
+
+    const targetDocumentNames = validDocumentNames.length
+      ? validDocumentNames
+      : [...Theme.supportedDocumentNames];
+
+    for (const targetDocumentName of targetDocumentNames) {
+      const configDocumentNames = (registry[targetDocumentName] ??= {});
+
+      const documentTypes: string[] =
+        foundry.documents[targetDocumentName]?.TYPES ?? [];
+      const explicitTypes =
+        theme.types?.filter((t) => documentTypes.includes(t)) ?? [];
+      const targetTypes = explicitTypes.length ? explicitTypes : documentTypes;
+
+      for (const targetType of targetTypes) {
+        const themes = (configDocumentNames[targetType] ??= []);
+
+        try {
+          themes.push(mapToRegisteredTheme(theme));
+        } catch (e) {
+          warn(
+            `Unable to parse filter for theme ${theme.name}. It has been excluded.`,
+            false,
+            {
+              error: e,
+              ...theme,
+            },
+          );
+        }
+      }
+    }
+  }
+
+  return registry;
+}
+
+function getConfiguredWorldDefaultTheme(): WorldThemeSettingConfig | undefined {
+  debug('Getting world default theme.');
+
+  const prioritizedWorldThemes = getPrioritizedWorldThemeSettings();
+
+  for (const theme of prioritizedWorldThemes) {
+    if (
+      !theme.documentNames &&
+      !theme.types &&
+      isNil(theme.filter?.trim(), '')
+    ) {
+      // The first found world theme default is registered as the
+      // world theme default in addition to permuting across
+      // document world themes.
+      return mapToRegisteredTheme({
+        [SYMBOLS.generated]:
+          'This code is generated. To ensure external changes are included every time this is generated, ' +
+          'use the hook "tidy5e-sheet.worldThemesConfigChanged"',
+        [SYMBOLS.readme]:
+          'The world theme setting which acts as the world-level fallback ' +
+          'for all Tidy applicaitons, including sheets and dialogs. ' +
+          'It is derived by finding the highest-priority theme with no document name, ' +
+          'no document type, and no filter.',
+        ...theme,
+        filter: undefined,
+      });
+    }
+  }
+}
+function getPrioritizedWorldThemeSettings() {
+  const themes = getEffectiveWorldThemesSetting();
+
+  const prioritizedWorldThemes = Object.values(themes).sort(
+    (a, b) => a.sort - b.sort,
+  );
+  return prioritizedWorldThemes;
 }

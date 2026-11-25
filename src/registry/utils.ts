@@ -90,7 +90,6 @@ export function getUtils(): TidyPublicUtils {
     getTabIdFromEvent,
     theme: {
       getWorldTheme: Theme.getWorldTheme,
-      initWorldThemes: Theme.initWorldThemes,
       prepareThemeFilterData: Theme.prepareThemeFilterData,
     },
   };

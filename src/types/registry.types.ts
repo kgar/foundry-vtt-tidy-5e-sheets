@@ -36,10 +36,7 @@ import type {
 } from './columns.types';
 import type { Actor5e, InspirationSource } from './types';
 import type { Item5e } from './item.types';
-import type {
-  ThemeFilterData,
-  ThemeSettings,
-} from 'src/theme/theme.types';
+import type { ThemeFilterData, ThemeSettings } from 'src/theme/theme.types';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
 
 export const SYMBOLS = {
@@ -317,7 +314,6 @@ export type TidyPublicUtils = {
   getTabIdFromEvent: (event: Event) => string | null;
   theme: {
     getWorldTheme: (document?: Actor5e | Item5e) => ThemeSettings;
-    initWorldThemes: () => void;
     prepareThemeFilterData: (doc: Actor5e | Item5e) => ThemeFilterData;
   };
 };

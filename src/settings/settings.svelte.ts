@@ -521,7 +521,7 @@ export function createSettings() {
           default: true,
           config: false,
           onChange: (_value: boolean) => {
-            CONFIG.TIDY5E.utils.theme.initWorldThemes();
+            Theme.resetWorldThemeConfigs();
           },
         },
         get() {
@@ -540,7 +540,7 @@ export function createSettings() {
           default: {},
           config: false,
           onChange: (_settings: WorldThemesSetting) => {
-            CONFIG.TIDY5E.utils.theme.initWorldThemes();
+            Theme.resetWorldThemeConfigs();
           },
         },
         get() {

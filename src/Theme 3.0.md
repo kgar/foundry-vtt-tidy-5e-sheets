@@ -1,6 +1,6 @@
 ## Theme 3.0
 
-### TODO
+### TODO - Phase 2
 
 - [ ] Implement `.tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
 - [ ] Implement Import Bundle and Export Bundle buttons on world themes list view.
