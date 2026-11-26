@@ -15,7 +15,7 @@ export class ThemeImportService {
 
       const toImport = JSON.parse(result) as ThemeData;
 
-      const worldThemeSetting = this.mapThemeData(toImport);
+      const worldThemeSetting = ThemeImportService.mapThemeData(toImport);
 
       if (!worldThemeSetting) {
         error(`Theme file ${file.name} is in an invalid format.`);
@@ -55,14 +55,14 @@ export class ThemeImportService {
       types: undefined,
     };
 
-    if (data.version === this.MIN_SUPPORTED_THEME_VERSION) {
+    if (data.version === ThemeImportService.MIN_SUPPORTED_THEME_VERSION) {
       const { version, ...settings } = data;
       foundry.utils.mergeObject(result.settings, settings);
 
       return result;
     }
 
-    if (data.version === this.CURRENT_THEME_VERSION) {
+    if (data.version === ThemeImportService.CURRENT_THEME_VERSION) {
       const { version, ...theme } = data;
       foundry.utils.mergeObject(result, theme);
 
@@ -88,13 +88,59 @@ export class ThemeImportService {
           };
 
     const toExport: Record<string, any> = {
-      version: this.CURRENT_THEME_VERSION,
+      version: ThemeImportService.CURRENT_THEME_VERSION,
       ...restData,
     };
 
     downloadTextFile(
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
       JSON.stringify(toExport, null, ' '),
+    );
+  }
+
+  static async importBundle(file: File) {
+    try {
+      let result = await readFileAsText(file);
+
+      const toImport = (JSON.parse(result) as ThemeData[]).reduce<
+        WorldThemeSetting[]
+      >((result, entry, index) => {
+        const settings = ThemeImportService.mapThemeData(entry);
+
+        if (settings) {
+          result.push(settings);
+        } else {
+          error(
+            `Part of theme file ${file.name} is in an invalid format.`,
+            false,
+            { index, entry },
+          );
+        }
+
+        return result;
+      }, []);
+
+      return toImport;
+    } catch (e) {
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.SETTINGS.Theme.Notification.ImportError',
+        ),
+      );
+      error(
+        'An error occurred while attempting to import a theme file. See the devtools console for more details.',
+        true,
+        e,
+      );
+    }
+
+    return [];
+  }
+
+  static async exportBundle(themes: WorldThemeSetting[]) {
+    downloadTextFile(
+      'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
+      JSON.stringify(themes, null, ' '),
     );
   }
 }

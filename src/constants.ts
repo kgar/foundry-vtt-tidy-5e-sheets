@@ -215,6 +215,7 @@ export const CONSTANTS = {
   TAB_WORLD_SETTINGS_SHEETLOCK: 'world-settings-sheet-lock',
   TAB_WORLD_SETTINGS_VEHICLE: 'world-settings-vehicle',
   WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR: 'character-sidebar',
+  THEME_BUNDLE_EXTENSION_WITH_DOT: '.tidy5e-theme-bundle',
   THEME_EXTENSION_WITH_DOT: '.tidy5e-theme',
   THEME_ID_DEFAULT_LIGHT: 'light',
   THEME_ID_DEFAULT_DARK: 'dark',
