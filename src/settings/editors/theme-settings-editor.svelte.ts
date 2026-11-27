@@ -9,6 +9,9 @@ import {
   type SettingsEditor,
 } from './settings-editors.svelte';
 import type { ThemeColorSettingOption } from '../settings.types';
+import { ThemeImportService } from 'src/theme/theme-import-service';
+import { CONSTANTS } from 'src/constants';
+import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -35,6 +38,8 @@ export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
   rarities: ThemeColorSettingOption[];
 
   spellMethods: ThemeColorSettingOption[];
+
+  processImportFile(file: File): Promise<any>;
 };
 
 export type ThemeSettingsContext = Partial<ThemeSettings>;
@@ -208,5 +213,49 @@ export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
         key,
       }),
     ),
+
+    async processImportFile(file: File) {
+      if (
+        file.name
+          .toLowerCase()
+          .trim()
+          .endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT)
+      ) {
+        const toImport = (await ThemeImportService.import(file))?.settings;
+
+        if (toImport) {
+          this.value = toImport;
+        }
+
+        return;
+      }
+
+      if (
+        file.name
+          .toLowerCase()
+          .trim()
+          .endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+      ) {
+        const themes = await ThemeImportService.importBundle(file);
+
+        if (!themes.length) {
+          return;
+        }
+
+        const toImport =
+          themes.length === 1
+            ? themes[0].settings
+            : (
+                await TidyDialog.chooseOne({
+                  title: 'TIDY5E.SETTINGS.Theme.Action.Import',
+                  options: themes.map((t) => ({ label: t.name, value: t })),
+                })
+              )?.settings;
+
+        if (toImport) {
+          this.value = toImport;
+        }
+      }
+    },
   };
 }

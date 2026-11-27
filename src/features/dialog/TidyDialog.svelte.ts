@@ -105,7 +105,7 @@ export class TidyDialog extends getSvelteApplicationMixin<
     }: ChooseOneArgs<T>,
     waitParams?: WaitParams,
   ): Promise<T | undefined> {
-    message ??= 'TIDY5E.COMMON.Actions.ChooseOne';
+    message ??= 'TIDY5E.COMMON.Action.ChooseOne';
 
     return this.wait({
       title,

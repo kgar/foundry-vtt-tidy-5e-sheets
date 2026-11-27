@@ -1,3 +1,4 @@
+import { getDragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme.types';
 import type {
@@ -9,13 +10,14 @@ import type {
 import { error } from 'src/utils/logging';
 
 export function DocumentSheetDialog<
-  TConstructorArgs extends DocumentSheetApplicationConfiguration = DocumentSheetApplicationConfiguration,
-  TContext extends any = {}
+  TConstructorArgs extends DocumentSheetApplicationConfiguration =
+    DocumentSheetApplicationConfiguration,
+  TContext extends any = {},
 >() {
   return class DocumentSheetDialog extends getSvelteApplicationMixin<
     Partial<DocumentSheetConfiguration> & { document: any },
     TContext
-  >(foundry.applications.api.DocumentSheetV2) {
+  >(getDragAndDropMixin(foundry.applications.api.DocumentSheetV2)) {
     constructor(options: TConstructorArgs) {
       super(options);
     }
@@ -29,6 +31,16 @@ export function DocumentSheetDialog<
         controls: [],
       },
       submitOnClose: true,
+      dragDrop: [
+        {
+          dragSelector: `[data-tidy-always-draggable]`,
+          dropSelector: null,
+        },
+        {
+          dragSelector: '[data-tidy-draggable]',
+          dropSelector: null,
+        },
+      ],
     };
 
     _onChangeForm(formConfig: unknown, event: any) {
@@ -54,7 +66,7 @@ export function DocumentSheetDialog<
         super._onChangeForm(formConfig, event);
       } catch (e: any) {
         Object.values(e.getAllFailures()).forEach((failure: any) =>
-          ui.notifications.error(failure.message)
+          ui.notifications.error(failure.message),
         );
       }
     }

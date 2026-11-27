@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Theme } from 'src/theme/theme';
-  import { getSingleFileFromDropEvent } from 'src/utils/file';
   import { ThemeImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -45,27 +44,6 @@
 
   let useBasicTheme = $derived(context.useBasicTheme ?? false);
 
-  async function onDrop(
-    ev: DragEvent & {
-      currentTarget: EventTarget & HTMLElement;
-    },
-  ) {
-    let file = getSingleFileFromDropEvent(ev);
-
-    await processImportFile(file);
-  }
-
-  async function processImportFile(file: File | null | undefined) {
-    if (file) {
-      const imported = await ThemeImportService.import(file);
-
-      if (imported) {
-        app.resetToDefault();
-        app.value = app.mapFromSettings(imported.settings);
-      }
-    }
-  }
-
   async function applyPreset() {
     const editor = getWorldThemesSettingsEditor();
     const preset = await editor.promptForThemePreset();
@@ -78,7 +56,7 @@
   }
 </script>
 
-<div class="dialog-content-container flexcol" ondrop={onDrop} role="region">
+<div class="dialog-content-container flexcol" role="region">
   <div class="flexrow flexgap-1">
     <h2>
       {localize('TIDY5E.SETTINGS.Theme.Menu.name')}
@@ -87,7 +65,13 @@
       <i class="fa-solid fa-sliders"></i>
       {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
     </button>
-    <ImportButton onfilechanged={(file) => processImportFile(file)} />
+    <ImportButton
+      onfilechanged={async (file) => {
+        if (file) {
+          await app.processImportFile(file);
+        }
+      }}
+    />
     <button
       type="button"
       class="button flexshrink"
