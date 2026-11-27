@@ -1,6 +1,7 @@
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type {
+  ChooseMultipleArgs,
   ChooseFromOptionsArgs as ChooseOneArgs,
   Resolvable,
 } from './tidy-dialog.types';
@@ -9,6 +10,7 @@ import ChooseOneDialog from './ChooseOneDialog.svelte';
 import type { ComponentWithProps } from 'src/utils/component';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
+import ChooseMultipleDialog from './ChooseMultipleDialog.svelte';
 
 export type TidyDialogContext = {};
 
@@ -24,9 +26,10 @@ export type TidyDialogComponentPartsFunction = (
   callbacks: Resolvable,
 ) => ComponentWithProps<any>;
 
-type WaitParams = {
+export type WaitParams = {
   title: string;
   getComponentParts: TidyDialogComponentPartsFunction;
+  valueOnClose?: any;
 };
 
 export class TidyDialog extends getSvelteApplicationMixin<
@@ -70,35 +73,51 @@ export class TidyDialog extends getSvelteApplicationMixin<
     return component;
   }
 
-  // static async chooseMultiple<T>({
-  //   title = 'TIDY5E.COMMON.Action.Choose',
-  //   message,
-  //   options,
-  // }: ChooseMultipleArgs<T>): Promise<T[]> {
-  //   // TODO
-  // }
+  static async chooseMultiple<T>(
+    {
+      title = 'TIDY5E.COMMON.Action.Choose',
+      message,
+      options,
+    }: ChooseMultipleArgs<T>,
+    waitParams?: WaitParams,
+  ): Promise<T[]> {
+    return this.wait({
+      title,
+      getComponentParts(app, _node, callbacks) {
+        const componentParts: ComponentWithProps<typeof ChooseMultipleDialog> =
+          {
+            component: ChooseMultipleDialog,
+            props: { app: app, ...callbacks, options, message },
+          };
 
-  static async chooseOne<T>({
-    title = 'TIDY5E.COMMON.Action.ChooseOne',
-    message,
-    options,
-  }: ChooseOneArgs<T>): Promise<T | undefined> {
-    message = FoundryAdapter.localize(
-      message ?? 'TIDY5E.COMMON.Actions.ChooseOne',
-    );
+        return componentParts;
+      },
+      valueOnClose: [],
+      ...waitParams,
+    });
+  }
+
+  static async chooseOne<T>(
+    {
+      title = 'TIDY5E.COMMON.Action.ChooseOne',
+      message,
+      options,
+    }: ChooseOneArgs<T>,
+    waitParams?: WaitParams,
+  ): Promise<T | undefined> {
+    message ??= 'TIDY5E.COMMON.Actions.ChooseOne';
 
     return this.wait({
       title,
       getComponentParts(app, _node, callbacks) {
-        const componentParts: ComponentWithProps<
-          typeof ChooseOneDialog
-        > = {
+        const componentParts: ComponentWithProps<typeof ChooseOneDialog> = {
           component: ChooseOneDialog,
           props: { app: app, ...callbacks, options, message },
         };
 
         return componentParts;
       },
+      ...waitParams,
     });
   }
 
@@ -113,8 +132,7 @@ export class TidyDialog extends getSvelteApplicationMixin<
       dialog.addEventListener(
         'close',
         (event: Event) => {
-          // TODO: Expand if needed. We just want to clean up and ensure promises are resolved.
-          resolve(undefined);
+          resolve(params.valueOnClose);
         },
         { once: true },
       );

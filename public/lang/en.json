@@ -103,6 +103,7 @@
       "CopyToClipboard": "Copy to Clipboard",
       "CopyWithoutFormatting": "Copy Without Formatting",
       "Choose": "Choose",
+      "Options": "Options",
       "ChooseOne": "Choose One",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
@@ -663,7 +664,11 @@
       "Action": {
         "ApplyPreset": "Apply Preset",
         "Export": "Export",
-        "Import": "Import"
+        "ExportBundle": "Export Bundle",
+        "Import": "Import",
+        "ImportBundle": "Import Bundle",
+        "SelectToExport": "Select themes to export.",
+        "SelectToImport": "Select themes to import."
       },
       "ActorHeaderBackground": {
         "Title": "Actor Header Image"

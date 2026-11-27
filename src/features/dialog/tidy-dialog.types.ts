@@ -13,3 +13,9 @@ export type ChooseFromOptionsArgs<T> = {
   message?: string;
   options: DialogOption<T>[];
 };
+
+export type ChooseMultipleArgs<T> = {
+  title?: string;
+  message?: string;
+  options: DialogOption<T>[];
+};

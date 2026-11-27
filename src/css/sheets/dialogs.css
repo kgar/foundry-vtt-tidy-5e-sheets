@@ -38,6 +38,12 @@
     }
   }
 
+  .dialog-content-container.choose-multiple {
+    .option {
+      margin-inline-start: var(--t5e-size-4x);
+    }
+  }
+
   .tidy-sheet-settings {
     border-block-start: var(--t5e-size-1) solid var(--t5e-table-row-divider);
     flex: 1;

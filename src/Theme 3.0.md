@@ -2,17 +2,6 @@
 
 ### TODO - Phase 2
 
-- [x] Implement `.tidy5e-theme-bundle` import/export at the world themes level, which is a JSON file that includes an array of themes.
-- [ ] Implement "Select Multiple" dialog helper as checkbox list
-- [ ] Implement Import Bundle button on world themes list view.
-  - [x] Prompt for file of type `.tidy5e-theme` or `.tidy5e-theme-bundle` 
-  - [x] Handle importing `.tidy5e-theme`
-  - [ ] Handle importing `.tidy5e-theme-bundle`
-    - [ ] Prompt dialog with a list of the importable themes as checkboxes with Confirm button; default, all checked
-    - [x] On confirm, bring in the selected entries as new rows in the world theme settings
-- [ ] Implement Export Bundle button on world themes list view.
-  - [ ] Prompt dialog with a list of the exportable themes as checkboxes with Confirm button; default, all checked
-  - [x] On confirm, export an array of the selected entries
 - [ ] Restore file drop to import a theme
   - [ ] World, `.tidy5e-theme`, no selection - inserts a new theme
   - [ ] World, `.tidy5e-theme`, a theme is selected - overwrites the selected theme

@@ -457,17 +457,57 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         multiple: true,
       });
 
-      const themes: any = [];
+      const themes: WorldThemeSetting[] = [];
 
       for (const file of files) {
-        themes.push(...(await ThemeImportService.importBundle(file)));
+        if (
+          file.name
+            .trim()
+            .toLowerCase()
+            .endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT)
+        ) {
+          const toImport = await ThemeImportService.import(file);
+
+          if (toImport) {
+            themes.push(toImport);
+          }
+
+          continue;
+        }
+
+        if (
+          file.name
+            .trim()
+            .toLowerCase()
+            .endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+        ) {
+          themes.push(...(await ThemeImportService.importBundle(file)));
+        }
       }
 
-      for (const theme of themes) {
+      if (!themes.length) {
+        return;
+      }
+
+      const toImport =
+        themes.length === 1
+          ? themes
+          : await TidyDialog.chooseMultiple({
+              title: 'TIDY5E.SETTINGS.Theme.Action.ImportBundle',
+              message: 'TIDY5E.SETTINGS.Theme.Action.SelectToImport',
+              options: themes.map((theme) => ({
+                label: theme.name,
+                value: theme,
+              })),
+            });
+
+      for (const theme of toImport) {
         const { sort, id, isWorldDefault, ...rest } = theme;
         const newTheme = this.addTheme();
         foundry.utils.mergeObject(newTheme, rest);
       }
+
+      await this.save();
     },
 
     async duplicate(theme: WorldThemeSetting) {
@@ -501,11 +541,20 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     async exportBundle() {
-      const toExport = this.value.settings.map(mapThemeForExport);
+      const themes = this.value.settings.map(mapThemeForExport);
 
-      // TODO: prompt for a selection amongst these options.
+      const toExport = await TidyDialog.chooseMultiple({
+        title: 'TIDY5E.SETTINGS.Theme.Action.ExportBundle',
+        message: 'TIDY5E.SETTINGS.Theme.Action.SelectToExport',
+        options: themes.map((theme) => ({
+          label: theme.name,
+          value: theme,
+        })),
+      });
 
-      ThemeImportService.exportBundle(toExport);
+      if (toExport.length) {
+        ThemeImportService.exportBundle(toExport);
+      }
     },
 
     setFilter(filter: string | undefined) {
@@ -650,32 +699,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     documentTypeTree: getDocumentTypeTree(),
 
     undoChanges() {
-      if (!selectedTheme) {
-        return;
-      }
-
-      const selectedId = selectedTheme.id;
-
-      const selectedThemeInitialState = (
-        JSON.parse(initialSnapshot) as WorldThemesSettingsContext
-      ).settings.find((setting) => setting.id === selectedTheme?.id);
-
-      if (!selectedThemeInitialState?.id) {
-        // Exclude the entry that no longer exists
-        this.value.settings = this.value.settings.filter(
-          (setting) => setting.id !== selectedId,
-        );
-      } else {
-        this.value.settings = this.value.settings.map((setting) =>
-          setting.id === selectedThemeInitialState.id
-            ? selectedThemeInitialState
-            : setting,
-        );
-      }
-
+      this.value = JSON.parse(initialSnapshot) as WorldThemesSettingsContext;
       updateSignal = foundry.utils.randomID();
-
-      this.selectTheme(selectedThemeInitialState?.id);
     },
 
     get canUndo() {

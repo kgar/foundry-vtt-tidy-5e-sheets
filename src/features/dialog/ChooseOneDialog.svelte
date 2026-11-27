@@ -2,6 +2,7 @@
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import type { DialogOption, Resolvable } from './tidy-dialog.types';
   import type { TidyDialog } from './TidyDialog.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = Resolvable & {
     app: TidyDialog;
@@ -12,6 +13,8 @@
   };
 
   let { app, resolve, reject, options, message }: Props = $props();
+
+  const localize = FoundryAdapter.localize;
 
   let searchCriteria = $state('');
 
@@ -35,7 +38,7 @@
   <fieldset>
     {#if message}
       <p class="hint">
-        {message}
+        {localize(message)}
       </p>
     {/if}
 
@@ -47,7 +50,7 @@
         class="button"
         onclick={() => onOptionSelected(option)}
       >
-        {option.label}
+        {localize(option.label)}
       </button>
     {/each}
   </fieldset>
