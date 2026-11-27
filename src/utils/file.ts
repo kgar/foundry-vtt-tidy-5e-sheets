@@ -1,3 +1,54 @@
+type PromptTextFileInputArgs = {
+  accept?: string;
+  multiple?: boolean;
+};
+
+export function promptTextFileInput({
+  accept,
+  multiple,
+}: PromptTextFileInputArgs = {}): Promise<File[]> {
+  const abortController = new AbortController();
+
+  return new Promise((resolve, reject) => {
+    try {
+      const elem = document.createElement('input');
+
+      elem.type = 'file';
+
+      if (accept !== undefined) {
+        elem.accept = accept;
+      }
+
+      if (multiple !== undefined) {
+        elem.multiple = multiple;
+      }
+
+      elem.addEventListener(
+        'cancel',
+        () => {
+          abortController.abort();
+          resolve([]);
+        },
+        { signal: abortController.signal },
+      );
+
+      elem.addEventListener(
+        'change',
+        async () => {
+          abortController.abort();
+
+          resolve(elem.files ? Array.from(elem.files) : []);
+        },
+        { signal: abortController.signal },
+      );
+
+      elem.click();
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function downloadTextFile(filename: string, text: string) {
   const a = document.createElement('a');
   const blob = new Blob([text], { type: 'text/json;charset=utf-8;' });
@@ -10,7 +61,7 @@ export function downloadTextFile(filename: string, text: string) {
 export function getSingleFileFromDropEvent(
   ev: DragEvent & {
     currentTarget: EventTarget & HTMLElement;
-  }
+  },
 ): File | null {
   ev.preventDefault();
 

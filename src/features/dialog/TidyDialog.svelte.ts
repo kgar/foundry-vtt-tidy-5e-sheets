@@ -5,7 +5,7 @@ import type {
   Resolvable,
 } from './tidy-dialog.types';
 import { mount, type SvelteComponent } from 'svelte';
-import ChooseFromOptionsDialog from './ChooseFromOptionsDialog.svelte';
+import ChooseOneDialog from './ChooseOneDialog.svelte';
 import type { ComponentWithProps } from 'src/utils/component';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
@@ -70,6 +70,14 @@ export class TidyDialog extends getSvelteApplicationMixin<
     return component;
   }
 
+  // static async chooseMultiple<T>({
+  //   title = 'TIDY5E.COMMON.Action.Choose',
+  //   message,
+  //   options,
+  // }: ChooseMultipleArgs<T>): Promise<T[]> {
+  //   // TODO
+  // }
+
   static async chooseOne<T>({
     title = 'TIDY5E.COMMON.Action.ChooseOne',
     message,
@@ -83,9 +91,9 @@ export class TidyDialog extends getSvelteApplicationMixin<
       title,
       getComponentParts(app, _node, callbacks) {
         const componentParts: ComponentWithProps<
-          typeof ChooseFromOptionsDialog
+          typeof ChooseOneDialog
         > = {
-          component: ChooseFromOptionsDialog,
+          component: ChooseOneDialog,
           props: { app: app, ...callbacks, options, message },
         };
 

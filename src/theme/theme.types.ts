@@ -26,6 +26,8 @@ export type ThemeSettings = {
 /** The supported theme data format(s). */
 export type ThemeData = ThemeDataV2 | ThemeDataV3;
 
+export type ThemeBundle = ThemeDataV3[];
+
 export type ThemeDataV2 = {
   version: 2;
 } & Partial<ThemeSettings>;

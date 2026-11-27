@@ -1,5 +1,5 @@
 import { downloadTextFile, readFileAsText } from 'src/utils/file';
-import type { ThemeData, ThemeSettings } from './theme.types';
+import type { ThemeBundle, ThemeData, ThemeSettings } from './theme.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
@@ -100,25 +100,32 @@ export class ThemeImportService {
 
   static async importBundle(file: File) {
     try {
-      let result = await readFileAsText(file);
+      const fileText = await readFileAsText(file);
+      const bundle = JSON.parse(fileText) as ThemeBundle;
 
-      const toImport = (JSON.parse(result) as ThemeData[]).reduce<
-        WorldThemeSetting[]
-      >((result, entry, index) => {
-        const settings = ThemeImportService.mapThemeData(entry);
+      if (!Array.isArray(bundle)) {
+        error('Unable to import. Invalid file format.', false, bundle);
+        return [];
+      }
 
-        if (settings) {
-          result.push(settings);
-        } else {
-          error(
-            `Part of theme file ${file.name} is in an invalid format.`,
-            false,
-            { index, entry },
-          );
-        }
+      const toImport = bundle.reduce<WorldThemeSetting[]>(
+        (result, entry, index) => {
+          const settings = ThemeImportService.mapThemeData(entry);
 
-        return result;
-      }, []);
+          if (settings) {
+            result.push(settings);
+          } else {
+            error(
+              `Part of theme file ${file.name} is in an invalid format.`,
+              false,
+              { index, entry },
+            );
+          }
+
+          return result;
+        },
+        [],
+      );
 
       return toImport;
     } catch (e) {
@@ -138,9 +145,14 @@ export class ThemeImportService {
   }
 
   static async exportBundle(themes: WorldThemeSetting[]) {
+    const content = themes.map((theme) => ({
+      version: ThemeImportService.CURRENT_THEME_VERSION,
+      ...theme,
+    }));
+
     downloadTextFile(
-      'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
-      JSON.stringify(themes, null, ' '),
+      'themes' + CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT,
+      JSON.stringify(content, null, ' '),
     );
   }
 }

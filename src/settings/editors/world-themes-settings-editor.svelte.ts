@@ -25,6 +25,8 @@ import { Theme } from 'src/theme/theme';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
 import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
+import { promptTextFileInput } from 'src/utils/file';
+import { CONSTANTS } from 'src/constants';
 
 export type WorldThemeSettingEntry = WorldThemeSetting & {
   folder: string;
@@ -55,7 +57,9 @@ export type WorldThemesSettingsEditor =
     compendia: { text: string; value: string }[];
     addCompendium(packId: string): void;
     import(themeToOverride?: WorldThemeSetting): Promise<any>;
+    importBundle(): Promise<any>;
     export(themeToExport?: WorldThemeSetting): Promise<any>;
+    exportBundle(): Promise<any>;
     removeCompendium(packId: string): void;
     documentTypeTree: ThemeDocumentNameNode[];
     applyBasicFilters(): void;
@@ -398,38 +402,43 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     async import(themeToOverride?: WorldThemeSetting) {
       themeToOverride ??= selectedTheme;
 
-      const abortController = new AbortController();
+      const files = await promptTextFileInput({
+        accept: CONSTANTS.THEME_EXTENSION_WITH_DOT,
+        multiple: false,
+      });
 
-      const elem = document.createElement('input');
-      elem.type = 'file';
-      elem.addEventListener(
-        'cancel',
-        () => {
-          abortController.abort();
-        },
-        { signal: abortController.signal },
-      );
+      if (files?.length !== 1) {
+        return;
+      }
+      const toImport = await ThemeImportService.import(files[0]);
 
-      elem.addEventListener(
-        'change',
-        async () => {
-          abortController.abort();
-          if (elem.files?.length === 1) {
-            const toImport = await ThemeImportService.import(elem.files[0]);
+      if (!toImport) {
+        return;
+      }
 
-            if (!toImport) {
-              return;
-            }
+      const { sort, id, ...rest } = toImport;
+      themeToOverride ??= this.addTheme();
 
-            const { sort, id, ...rest } = toImport;
-            themeToOverride ??= this.addTheme();
+      foundry.utils.mergeObject(themeToOverride, rest);
+    },
 
-            foundry.utils.mergeObject(themeToOverride, rest);
-          }
-        },
-        { signal: abortController.signal },
-      );
-      elem.click();
+    async importBundle() {
+      const files = await promptTextFileInput({
+        accept: `${CONSTANTS.THEME_EXTENSION_WITH_DOT}, ${CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT}`,
+        multiple: true,
+      });
+
+      const themes: any = [];
+
+      for (const file of files) {
+        themes.push(...(await ThemeImportService.importBundle(file)));
+      }
+
+      for (const theme of themes) {
+        const { sort, id, ...rest } = theme;
+        const newTheme = this.addTheme();
+        foundry.utils.mergeObject(newTheme, rest);
+      }
     },
 
     async duplicate(theme: WorldThemeSetting) {
@@ -457,18 +466,18 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const worldSetting: WorldThemeSetting = {
-        id: themeToExport.id,
-        filterMode: themeToExport.filterMode,
-        filter: themeToExport.filter,
-        name: themeToExport.name,
-        settings: themeToExport.settings,
-        sort: themeToExport.sort,
-        documentNames: themeToExport.documentNames,
-        types: themeToExport.types,
-      };
+      const worldSetting: WorldThemeSetting = mapThemeForExport(themeToExport);
 
       ThemeImportService.export(worldSetting);
+    },
+    
+    async exportBundle() {
+      const toExport = this.value.settings.map(mapThemeForExport);
+      
+      // TODO: prompt for a selection amongst these options.
+      
+      ThemeImportService.exportBundle(toExport);
+      
     },
 
     setFilter(filter: string | undefined) {
@@ -655,5 +664,20 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     set value(value) {
       current.settings = [...value.settings];
     },
+  };
+}
+
+function mapThemeForExport(
+  themeToExport: WorldThemeSetting,
+): WorldThemeSetting {
+  return {
+    id: themeToExport.id,
+    filterMode: themeToExport.filterMode,
+    filter: themeToExport.filter,
+    name: themeToExport.name,
+    settings: themeToExport.settings,
+    sort: themeToExport.sort,
+    documentNames: themeToExport.documentNames,
+    types: themeToExport.types,
   };
 }

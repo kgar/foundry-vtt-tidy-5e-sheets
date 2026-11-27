@@ -94,30 +94,52 @@
   <h2 class="world-theme-list-header">
     {localize('TIDY5E.COMMON.Theme.LabelPl')}
   </h2>
-  <button
-    type="button"
-    class="button button-primary flexshrink"
-    onclick={() => {
-      const theme = app.addTheme();
-      app.selectTheme(theme.id);
-    }}
-  >
-    <i class="fa-solid fa-plus"></i>
-    {localize('TIDY5E.COMMON.Theme.Add')}
-  </button>
+  <span class="flexshrink flexrow flexgap-1">
+    <button
+      type="button"
+      class="button flexshrink"
+      onclick={() => app.importBundle()}
+    >
+      <i class="fa-solid fa-file-import"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.Import')}
+    </button>
+    <button
+      type="button"
+      class="button flexshrink"
+      onclick={() => app.exportBundle()}
+    >
+      <i class="fa-solid fa-file-export"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
+    </button>
+    <button
+      type="button"
+      class="button button-primary flexshrink"
+      onclick={() => {
+        const theme = app.addTheme();
+        app.selectTheme(theme.id);
+      }}
+    >
+      <i class="fa-solid fa-plus"></i>
+      {localize('TIDY5E.COMMON.Theme.Add')}
+    </button>
+  </span>
 </div>
 <p class="hint flexshrink">
   {localize('TIDY5E.COMMON.Theme.SortHint')}
 </p>
 <!-- TODO: If there's not already a default world theme -->
 <div class="world-theme-empty empty-state-container">
-  <button type="button" class="button button-tertiary" onclick={() =>
+  <button
+    type="button"
+    class="button button-tertiary"
+    onclick={() =>
       // TODO: Add a real real World Default Theme editor here.
       foundry.applications.api.DialogV2.prompt({
         window: { title: localize('TIDY5E.SETTINGS.Theme.World.Title') },
         content: '<p>uhhh... TODO</p>',
         rejectClose: false,
-      })}>
+      })}
+  >
     <i class="fa-solid fa-swatchbook"></i>
     {localize('DND5E.DescriptionEdit', {
       description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
@@ -165,10 +187,10 @@
           </div>
         </span>
         <span class="button button-icon-only button-primary">
-        <i
-          class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
-          aria-hidden="true"
-        ></i>
+          <i
+            class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
+            aria-hidden="true"
+          ></i>
         </span>
       </button>
     </li>
