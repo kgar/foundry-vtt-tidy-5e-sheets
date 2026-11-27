@@ -13,7 +13,7 @@
   } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import ThemeSettings from './ThemeSettings.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import { actorHeaderBackgroundSupportedActorTypes, isWorldDefaultTheme } from 'src/theme/theme';
+  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
   import WorldThemeSettingFilters from './WorldThemeSettingFilters.svelte';
 
   type Props = {
@@ -43,7 +43,9 @@
   const localize = FoundryAdapter.localize;
 
   const appliesTo = $derived(
-    selectedTheme ? getAppliesToSegments(app.documentTypeTree, selectedTheme) : [],
+    selectedTheme
+      ? getAppliesToSegments(app.documentTypeTree, selectedTheme)
+      : [],
   );
 
   function getSelectedTypes(documentName: string) {
@@ -110,38 +112,38 @@
     </div>
   </div>
   <div class="theme-identity-fields">
-    {#if !isWorldDefaultTheme(selectedTheme)}
-    <div class="form-group">
-      <label for="{appId}-theme-name">
-        {localize('TIDY5E.COMMON.Theme.Name')}
-      </label>
-      <div class="form-fields">
-        <input
-          id="{appId}-theme-name"
-          class="document-name"
-          type="text"
-          bind:value={selectedTheme.name}
-          {@attach InputAttachments.selectOnFocus}
-        />
+    {#if !selectedTheme.isWorldDefault}
+      <div class="form-group">
+        <label for="{appId}-theme-name">
+          {localize('TIDY5E.COMMON.Theme.Name')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{appId}-theme-name"
+            class="document-name"
+            type="text"
+            bind:value={selectedTheme.name}
+            {@attach InputAttachments.selectOnFocus}
+          />
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label>{localize('TIDY5E.COMMON.Theme.AppliesTo')}</label>
-      <div class="form-fields">
-        <span class="theme-applies-to-summary">
-          {#each appliesTo as segment, i}{#if i > 0}<div class="divider-dot"></div>{/if}<span>{segment}</span>{/each}
-        </span>
+      <div class="form-group">
+        <label>{localize('TIDY5E.COMMON.Theme.AppliesTo')}</label>
+        <div class="form-fields">
+          <span class="theme-applies-to-summary">
+            {#each appliesTo as segment, i}{#if i > 0}<div
+                  class="divider-dot"
+                ></div>{/if}<span>{segment}</span>{/each}
+          </span>
+        </div>
       </div>
-    </div>
-
     {:else}
-
-    <h2>{selectedTheme.name}</h2>
+      <h2>{selectedTheme.name}</h2>
     {/if}
   </div>
 
   <!-- Don't show tabs for the default theme -->
-  {#if !isWorldDefaultTheme(selectedTheme)}
+  {#if !selectedTheme.isWorldDefault}
     <div class="tabs-row tab-configuration-tabs">
       <Tabs bind:selectedTabId={currentSubTabId} {tabs} cssClass="item-tabs" />
       <hr class="golden-fade" />

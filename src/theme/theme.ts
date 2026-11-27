@@ -476,7 +476,7 @@ function generateConfiguredWorldThemes(): TidyThemeRegistry {
 
   const registry: TidyThemeRegistry = {
     [SYMBOLS.generated]:
-      'This code is generated. To ensure external changes are included every time this is generated, use the hook "tidy5e-sheet.worldThemesConfigChanged"',
+      'This config is generated. To ensure external changes are included every time this is generated, use the hook "tidy5e-sheet.worldThemesConfigChanged"',
     [SYMBOLS.readme]:
       'Partitioned, priority-ordered, optionally filtered world theme settings used for determining the appropriate theme to use for a given document sheet.',
   };
@@ -484,6 +484,11 @@ function generateConfiguredWorldThemes(): TidyThemeRegistry {
   const prioritizedWorldThemes = getPrioritizedWorldThemeSettings();
 
   for (const theme of prioritizedWorldThemes) {
+    // The world default is a special, reserved case and is excluded from the regular theme pool.
+    if (theme.isWorldDefault) {
+      continue;
+    }
+
     const validDocumentNames =
       theme.documentNames?.filter((name) =>
         Theme.supportedDocumentNames.has(name),
@@ -524,25 +529,19 @@ function generateConfiguredWorldThemes(): TidyThemeRegistry {
   return registry;
 }
 
-export function isWorldDefaultTheme(
-  theme: Pick<WorldThemeSetting, 'isWorldDefault'>,
-): boolean {
-  return theme.isWorldDefault === true;
-}
-
 function getConfiguredWorldDefaultTheme(): WorldThemeSettingConfig | undefined {
   debug('Getting world default theme.');
 
   const prioritizedWorldThemes = getPrioritizedWorldThemeSettings();
 
   for (const theme of prioritizedWorldThemes) {
-    if (isWorldDefaultTheme(theme)) {
+    if (theme.isWorldDefault) {
       // The first found world theme default is registered as the
       // world theme default in addition to permuting across
       // document world themes.
       return mapToRegisteredTheme({
         [SYMBOLS.generated]:
-          'This code is generated. To ensure external changes are included every time this is generated, ' +
+          'This config is generated. To ensure external changes are included every time this is generated, ' +
           'use the hook "tidy5e-sheet.worldThemesConfigChanged"',
         [SYMBOLS.readme]:
           'The world theme setting which acts as the world-level fallback ' +

@@ -21,7 +21,7 @@ import {
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { isWorldDefaultTheme, Theme } from 'src/theme/theme';
+import { Theme } from 'src/theme/theme';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
 import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
@@ -70,7 +70,6 @@ export type WorldThemesSettingsEditor =
     closeTheme(): void;
     changeFilterMode(filterMode: WorldThemeSetting['filterMode']): Promise<any>;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
-    get hasWorldDefaultTheme(): boolean;
     get updateSignal(): string;
   };
 
@@ -280,7 +279,9 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   function mapContextToChangedSettings(
     context: WorldThemesSettingsContext,
   ): WorldThemesSetting {
-    return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
+    let worldDefault: WorldThemeSetting | undefined;
+
+    const mapped = context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
       changed.filter =
@@ -293,10 +294,21 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       changed.types = changed.types?.length ? changed.types : undefined;
       changed.settings = removeEmptyProperties(changed.settings);
 
-      prev[curr.id] = changed;
+      // There can be only one world default 🗡️
+      if (changed.isWorldDefault) {
+        worldDefault ??= changed;
+      } else {
+        prev[curr.id] = changed;
+      }
 
       return prev;
     }, {});
+
+    if (worldDefault) {
+      mapped[worldDefault.id] = worldDefault;
+    }
+
+    return mapped;
   }
 
   function parseFilter(
@@ -494,7 +506,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       // TODO: prompt for a selection amongst these options.
 
       ThemeImportService.exportBundle(toExport);
-
     },
 
     setFilter(filter: string | undefined) {
@@ -603,10 +614,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
     get selectedTheme() {
       return selectedTheme;
-    },
-
-    get hasWorldDefaultTheme() {
-      return this.value.settings.some(isWorldDefaultTheme);
     },
 
     selectTheme(id: string | undefined) {

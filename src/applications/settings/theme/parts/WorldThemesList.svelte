@@ -9,7 +9,6 @@
     WorldThemeSettingEntry,
     WorldThemesSettingsEditor,
   } from 'src/settings/editors/world-themes-settings-editor.svelte';
-  import { isWorldDefaultTheme } from 'src/theme/theme';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -23,12 +22,12 @@
 
   const orderedThemes = $derived(
     config.settings
-      .filter((t) => !isWorldDefaultTheme(t))
+      .filter((t) => !t.isWorldDefault)
       .toSorted((a, b) => a.sort - b.sort),
   );
 
   const worldDefaultTheme = $derived(
-    config.settings.find((t) => isWorldDefaultTheme(t)),
+    config.settings.find((t) => t.isWorldDefault),
   );
 
   let draggedIndex = $state<number>();
@@ -160,7 +159,9 @@
     </button>
   </div>
 {/if}
-<h2 class="world-theme-list-header">{localize('TIDY5E.SETTINGS.Theme.World.Title')}</h2>
+<h2 class="world-theme-list-header">
+  {localize('TIDY5E.SETTINGS.Theme.World.Title')}
+</h2>
 {#if worldDefaultTheme}
   {@render themeCard(worldDefaultTheme)}
 {:else}
