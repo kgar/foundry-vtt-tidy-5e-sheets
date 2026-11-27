@@ -59,6 +59,11 @@ export type WorldThemesSettingsEditor =
     addCompendium(packId: string): void;
     import(themeToOverride?: WorldThemeSetting): Promise<any>;
     importBundle(): Promise<any>;
+    processImportFile(
+      file: File,
+      themeToOverride?: WorldThemeSetting,
+    ): Promise<any>;
+    processImportFiles(files: File[]): Promise<any>;
     export(themeToExport?: WorldThemeSetting): Promise<any>;
     exportBundle(): Promise<any>;
     removeCompendium(packId: string): void;
@@ -429,8 +434,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     async import(themeToOverride?: WorldThemeSetting) {
-      themeToOverride ??= selectedTheme;
-
       const files = await promptTextFileInput({
         accept: CONSTANTS.THEME_EXTENSION_WITH_DOT,
         multiple: false,
@@ -439,7 +442,14 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       if (files?.length !== 1) {
         return;
       }
-      const toImport = await ThemeImportService.import(files[0]);
+
+      const file = files[0];
+
+      this.processImportFile(file, themeToOverride ?? selectedTheme);
+    },
+
+    async processImportFile(file: File, themeToOverride?: WorldThemeSetting) {
+      const toImport = await ThemeImportService.import(file);
 
       if (!toImport) {
         return;
@@ -457,8 +467,11 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         multiple: true,
       });
 
-      const themes: WorldThemeSetting[] = [];
+      this.processImportFiles(files);
+    },
 
+    async processImportFiles(files: File[]) {
+      const themes: WorldThemeSetting[] = [];
       for (const file of files) {
         if (
           file.name

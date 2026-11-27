@@ -2,10 +2,7 @@
 
 ### TODO - Phase 2
 
-- [ ] Restore file drop to import a theme
-  - [ ] World, `.tidy5e-theme`, no selection - inserts a new theme
-  - [ ] World, `.tidy5e-theme`, a theme is selected - overwrites the selected theme
-  - [ ] World, `.tidy5e-theme-bundle`, no matter what - inserts the bundle as new entries
+- [ ] // TODO: Handle theme sorting here instead of in the component.
 - [ ] Organize src\settings\editors\world-themes-settings-editor.svelte.ts API
 
 ### Dubious, but curious

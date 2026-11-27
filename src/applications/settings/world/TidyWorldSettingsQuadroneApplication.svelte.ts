@@ -1,14 +1,11 @@
 import { CONSTANTS } from 'src/constants';
 import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
-  ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
-  ApplicationWindowRenderOptions,
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import TidyWorldSettings from './TidyWorldSettings.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/world-tab-configuration-settings-editor.svelte';
 import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
@@ -25,6 +22,9 @@ import {
 } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
 import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { getDragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
+import { getFilesFromDropEvent } from 'src/utils/file';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -47,7 +47,7 @@ export class WorldSettingsQuadroneApplication
   extends getSvelteApplicationMixin<
     WorldSettingsApplicationConfiguration,
     WorldSettingsContext
-  >(foundry.applications.api.ApplicationV2)
+  >(getDragAndDropMixin(foundry.applications.api.ApplicationV2))
   implements SettingsEditorController
 {
   _config: WorldSettingsContext = $state({});
@@ -83,6 +83,16 @@ export class WorldSettingsQuadroneApplication
     },
     actions: {},
     submitOnClose: false,
+    dragDrop: [
+      {
+        dragSelector: `[data-tidy-always-draggable]`,
+        dropSelector: null,
+      },
+      {
+        dragSelector: '[data-tidy-draggable]',
+        dropSelector: null,
+      },
+    ],
   };
 
   constructor(options: WorldSettingsApplicationConfiguration = {}) {
@@ -135,6 +145,10 @@ export class WorldSettingsQuadroneApplication
 
   selectTab(id: string) {
     this.currentTabId = id;
+  }
+
+  get isEditable() {
+    return FoundryAdapter.userIsGm();
   }
 
   /**
@@ -224,5 +238,46 @@ export class WorldSettingsQuadroneApplication
   // TODO: organize
   getSheetConfigTabId(documentName: string, documentType: string) {
     return `${this.SETTINGS_SHEET_PREFIX}:${documentName}:${documentType}`;
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    _currentDragData: Record<string, any> | undefined,
+  ): Promise<any> {
+    // TODO: Handle theme sorting here instead of in the component.
+    
+    // World Theme Files
+    let files = getFilesFromDropEvent(event);
+
+    let themeFiles = files.filter(
+      (file) =>
+        file.name.trim().endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT) ||
+        file.name.trim().endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT),
+    );
+
+    // Apply a single theme file drop
+    // when a theme is selected for viewing.
+    if (
+      themeFiles.length === 1 &&
+      themeFiles[0].name.trim().endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT)
+    ) {
+      this.editors.themesSettingsTab.processImportFile(
+        themeFiles[0],
+        this.editors.themesSettingsTab.selectedTheme,
+      );
+
+      return;
+    }
+
+    // Process multiple theme files and/or bundle(s)
+    // via a bulk import.
+    if (themeFiles.length >= 1) {
+      await this.editors.themesSettingsTab.processImportFiles(themeFiles);
+      return;
+    }
   }
 }

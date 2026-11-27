@@ -75,6 +75,24 @@ export function getSingleFileFromDropEvent(
   return file;
 }
 
+export function getFilesFromDropEvent(
+  ev: DragEvent & {
+    currentTarget: EventTarget & HTMLElement;
+  },
+): File[] {
+  if (ev.dataTransfer?.items) {
+    return Array.from(ev.dataTransfer.items)
+      .map((item) => item.getAsFile())
+      .filter((file) => !!file);
+  }
+
+  if (ev.dataTransfer?.files) {
+    return Array.from(ev.dataTransfer.files);
+  }
+
+  return [];
+}
+
 export function readFileAsText(file: File): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     const fileReader = new FileReader();
