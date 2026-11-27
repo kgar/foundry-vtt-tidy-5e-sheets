@@ -670,7 +670,7 @@
       },
       "ApplyThemeToEmbeddedDocuments": {
         "Title": "Inherit Parent Sheet Themes",
-        "Hint": "Child documents will use a parent document's theme first before inherting world themes."
+        "Hint": "Child documents will use a parent document's theme first before inheriting world themes."
       },
       "HeaderBackgroundColor": {
         "Hint": "Use a different color than the sheet accent color for the sheet header.",
