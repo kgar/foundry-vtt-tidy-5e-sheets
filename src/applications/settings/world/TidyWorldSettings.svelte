@@ -11,6 +11,7 @@
   import WorldSheetSettings from './WorldSheetSettings.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
   import WorldThemesSettings from '../theme/WorldThemesSettings.svelte';
+  import WorldThemeSettingsFooter from '../theme/parts/WorldThemeSettingsFooter.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -196,7 +197,15 @@
   </section>
 
   {const activePane = $derived(app.getActivePane())}
-  {#if activePane}
+  {const showThemeButtons = $derived(
+    activePane &&
+      activeSelectedId === WorldSettingsTabIds.theme &&
+      app.editors.themesSettingsTab.selectedTheme,
+  )}
+
+  {#if showThemeButtons}
+    <WorldThemeSettingsFooter app={app.editors.themesSettingsTab} />
+  {:else if activePane}
     <SettingsFooter host={activePane} save={() => app.save()} />
   {/if}
 </div>

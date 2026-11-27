@@ -68,48 +68,42 @@
 
 {#if selectedTheme}
   <div class="world-theme-detail-actions">
-    <button type="button" class="button" onclick={() => app.closeTheme()}>
-      <i class="fa-solid fa-arrow-left"></i>
-      {localize('SETUP.GoBack')}
+    <button
+      type="button"
+      class="button"
+      onclick={() => app.duplicate(selectedTheme)}
+    >
+      <i class="fa-solid fa-copy"></i>
+      {localize('DND5E.ContextMenuActionDuplicate')}
     </button>
-    <div>
-      <button
-        type="button"
-        class="button"
-        onclick={() => app.duplicate(selectedTheme)}
-      >
-        <i class="fa-solid fa-copy"></i>
-        {localize('DND5E.ContextMenuActionDuplicate')}
-      </button>
-      <button
-        type="button"
-        class="button"
-        onclick={() => app.import(selectedTheme)}
-      >
-        <i class="fa-solid fa-file-import"></i>
-        {localize('TIDY5E.SETTINGS.Theme.Action.Import')}
-      </button>
-      <button
-        type="button"
-        class="button"
-        onclick={() => app.export(selectedTheme)}
-      >
-        <i class="fa-solid fa-file-export"></i>
-        {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
-      </button>
-      <button
-        type="button"
-        class="button"
-        onclick={() => {
-          if (selectedTheme) {
-            app.deleteTheme(selectedTheme.id);
-          }
-        }}
-      >
-        <i class="fa-solid fa-trash"></i>
-        {localize('TIDY5E.COMMON.Theme.Delete')}
-      </button>
-    </div>
+    <button
+      type="button"
+      class="button"
+      onclick={() => app.import(selectedTheme)}
+    >
+      <i class="fa-solid fa-file-import"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.Import')}
+    </button>
+    <button
+      type="button"
+      class="button"
+      onclick={() => app.export(selectedTheme)}
+    >
+      <i class="fa-solid fa-file-export"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
+    </button>
+    <button
+      type="button"
+      class="button"
+      onclick={() => {
+        if (selectedTheme) {
+          app.deleteTheme(selectedTheme.id);
+        }
+      }}
+    >
+      <i class="fa-solid fa-trash"></i>
+      {localize('TIDY5E.COMMON.Theme.Delete')}
+    </button>
   </div>
   <div class="theme-identity-fields">
     {#if !selectedTheme.isWorldDefault}

@@ -643,6 +643,8 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       // Remove legacy world theme data now that themes have been saved at least once.
       await getLegacyWorldThemeSettingSettingDocument()?.delete();
+
+      initialSnapshot = JSON.stringify(snapshotConfig(current));
     },
 
     documentTypeTree: getDocumentTypeTree(),
@@ -659,18 +661,21 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       ).settings.find((setting) => setting.id === selectedTheme?.id);
 
       if (!selectedThemeInitialState?.id) {
-        return;
+        // Exclude the entry that no longer exists
+        this.value.settings = this.value.settings.filter(
+          (setting) => setting.id !== selectedId,
+        );
+      } else {
+        this.value.settings = this.value.settings.map((setting) =>
+          setting.id === selectedThemeInitialState.id
+            ? selectedThemeInitialState
+            : setting,
+        );
       }
-
-      this.value.settings = this.value.settings.map((setting) =>
-        setting.id === selectedThemeInitialState.id
-          ? selectedThemeInitialState
-          : setting,
-      );
 
       updateSignal = foundry.utils.randomID();
 
-      this.selectTheme(selectedId);
+      this.selectTheme(selectedThemeInitialState?.id);
     },
 
     get canUndo() {

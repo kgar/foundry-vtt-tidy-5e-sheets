@@ -537,8 +537,8 @@
 
     .world-theme-detail-actions {
       display: flex;
-      justify-content: space-between;
-      gap: var(--t5e-size-2x);
+      justify-content: end;
+      gap: var(--t5e-size-1x);
     }
 
     .theme-sheet-type-tree {
