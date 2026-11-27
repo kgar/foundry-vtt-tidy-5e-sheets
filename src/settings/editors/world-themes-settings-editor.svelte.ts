@@ -720,6 +720,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     },
 
     set value(value) {
+      current.options = value.options;
       current.settings = [...value.settings];
     },
   };
