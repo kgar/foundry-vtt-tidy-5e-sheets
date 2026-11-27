@@ -7,7 +7,7 @@ import type { SettingsEditor } from './settings-editors.svelte';
 import {
   getCompendia,
   getDocumentTypeTree,
-  getEffectiveTypeSelection,
+  getSelectedDocumentTypes,
   getRarities,
   getSpellMethods,
   setEffectiveTypeSelection,
@@ -202,6 +202,11 @@ function findBasicFilterValue(
   return undefined;
 }
 
+/** Feels like a hack, but get every document when nothing or everything is selected.. */
+function getAllThemeDocumentNames(): string[] {
+  return getDocumentTypeTree().map((node) => node.documentName);
+}
+
 export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   const current = $state<WorldThemesSettingsContext>(getSettings());
 
@@ -229,6 +234,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     const settings = Object.values(source ?? {}).map((setting) => {
       const formData: WorldThemeSettingEntry = {
         ...setting,
+        // Nothing selected = everything selected.
+        documentNames: setting.documentNames?.length
+          ? setting.documentNames
+          : getAllThemeDocumentNames(),
         folder: '',
         compendiumOnly: false,
         compendia: [],
@@ -338,7 +347,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const current = getEffectiveTypeSelection(node, selectedTheme);
+      const current = getSelectedDocumentTypes(node, selectedTheme);
       this.applySelection(
         node,
         current.includes(type)
@@ -376,7 +385,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         isWorldDefault: false,
         settings: Theme.getDefaultThemeSettings(),
         sort: maxSort + 1,
-        documentNames: [],
+        documentNames: getAllThemeDocumentNames(),
         filter: undefined,
         types: [],
         folder: '',
@@ -478,14 +487,14 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       ThemeImportService.export(worldSetting);
     },
-    
+
     async exportBundle() {
       const toExport = this.value.settings.map(mapThemeForExport);
-      
+
       // TODO: prompt for a selection amongst these options.
-      
+
       ThemeImportService.exportBundle(toExport);
-      
+
     },
 
     setFilter(filter: string | undefined) {

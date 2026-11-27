@@ -4,7 +4,7 @@
     WorldThemeSettingEntry,
     WorldThemesSettingsEditor,
   } from 'src/settings/editors/world-themes-settings-editor.svelte';
-  import { getEffectiveTypeSelection } from 'src/settings/editors/shared/theme-setting-functions';
+  import { getSelectedDocumentTypes } from 'src/settings/editors/shared/theme-setting-functions';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -29,7 +29,7 @@
   <label>{localize('TIDY5E.COMMON.Theme.SheetTypes')}</label>
   <div class="form-fields theme-sheet-type-tree">
     {#each app.documentTypeTree as node (node.documentName)}
-      {@const selected = getEffectiveTypeSelection(node, selectedTheme)}
+      {@const selected = getSelectedDocumentTypes(node, selectedTheme)}
       {@const full =
         selected.length > 0 && selected.length >= node.types.length}
       {@const partial = selected.length > 0 && !full}

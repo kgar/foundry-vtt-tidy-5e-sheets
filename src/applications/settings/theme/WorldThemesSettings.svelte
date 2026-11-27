@@ -18,9 +18,8 @@
     {#if selectedTheme}
       <WorldThemeSettingForm {app} />
     {:else}
-      <WorldThemeOptions {app} />
-      <hr class="golden-fade" />
       <WorldThemeSettingsThemeList {app} />
+      <WorldThemeOptions {app} />
     {/if}
   </div>
 {/key}
