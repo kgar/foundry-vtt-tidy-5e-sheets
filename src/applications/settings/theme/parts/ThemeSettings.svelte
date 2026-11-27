@@ -136,7 +136,7 @@
   }
 </script>
 
-<fieldset>
+<fieldset class="theme-settings">
   <legend>
     {localize('TIDY5E.SETTINGS.Theme.SheetTheme.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>

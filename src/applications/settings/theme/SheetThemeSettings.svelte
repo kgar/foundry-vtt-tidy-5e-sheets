@@ -97,6 +97,7 @@
           sort: 0,
           filterMode: 'basic',
           name: app.document.name,
+          isWorldDefault: false,
           settings: {
             ...app.mapContextToChangedSettings(context),
           },

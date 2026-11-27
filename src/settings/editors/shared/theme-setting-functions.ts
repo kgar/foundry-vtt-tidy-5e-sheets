@@ -137,7 +137,7 @@ export function localizeCount(
   );
 }
 
-/** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "all 15 Item sheets". */
+/** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "All 15 Item sheets". */
 export function getAppliesToSegments(
   tree: ThemeDocumentNameNode[],
   selection: ThemeDocumentFilterSelections,
@@ -169,19 +169,6 @@ export function getAppliesToSegments(
       },
     );
   });
-}
-
-/** Joins summary phrases into a sentence-case line. */
-export function joinSummarySegments(segments: string[]): string {
-  return segments.join(', ').capitalize();
-}
-
-/** Summarizes which sheet types a theme applies to, e.g. "1 Actor sheet (Non-Player Character), all 15 Item sheets". */
-export function getAppliesToSummary(
-  tree: ThemeDocumentNameNode[],
-  selection: ThemeDocumentFilterSelections,
-): string {
-  return joinSummarySegments(getAppliesToSegments(tree, selection));
 }
 
 export type ThemePreview = {

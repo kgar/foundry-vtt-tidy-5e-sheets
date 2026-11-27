@@ -391,13 +391,23 @@
       display: flex;
       flex-direction: column;
       gap: var(--t5e-size-2x);
-      margin-block: var(--t5e-size-2x);
+      margin-block: var(--t5e-size-4x) var(--t5e-size-2x);
     }
 
     .theme-applies-to-summary {
+      display: block;
       align-content: center;
       min-height: var(--t5e-field-size-default);
       color: var(--t5e-color-text-default);
+    }
+
+    :is(.theme-applies-to-summary, .world-theme-card-applies-to) .divider-dot {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .theme-settings {
+      gap: var(--t5e-size-3x);
     }
 
     .world-theme-settings {
@@ -495,10 +505,14 @@
           --_world-theme-card-background: var(--t5e-component-card-dark-darker) url('../../modules/tidy5e-sheet/images/denim065.png');
         }
       }
+
+      .button.button-primary {
+        --t5e-button-border: var(--t5e-component-field-border);
+      }
     }
 
     .world-theme-card-text {
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       gap: var(--t5e-size-1x);
       min-inline-size: 0;
@@ -511,8 +525,7 @@
     }
 
     .world-theme-card-applies-to {
-      display: flex;
-      align-items: center;
+      display: block;
       color: var(--t5e-color-text-lighter);
       font: var(--t5e-font-default-small);
     }
@@ -541,7 +554,7 @@
     }
 
     .theme-sheet-type-tree-group {
-      flex: var(--t5e-theme-type-count, 1) 1 10rem;
+      flex: var(--t5e-theme-type-count, 1) 1 6rem;
       min-inline-size: 0;
     }
 
@@ -550,8 +563,8 @@
     }
 
     .theme-sheet-type-tree-children {
-      columns: 9rem;
-      column-gap: var(--t5e-size-4x);
+      columns: 8rem;
+      column-gap: var(--t5e-size-3x);
       padding-inline-start: var(--t5e-size-6x);
 
       label.checkbox {

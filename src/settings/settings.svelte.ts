@@ -1018,7 +1018,8 @@ export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
       source[newId] = {
         filterMode: 'basic',
         id: newId,
-        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.World.Title'),
+        name: FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.World.Title'),
+        isWorldDefault: true,
         settings: legacyTheme,
         sort: 1,
         documentNames: undefined,

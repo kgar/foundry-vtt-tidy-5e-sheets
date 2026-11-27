@@ -142,7 +142,7 @@
       "BasicFilterButton": "Use Basic Filter",
       "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",
       "BasicFilterConfirmText": "Reverting back to basic filter controls will clear the current filter.",
-      "SortHint": "Drag and drop themes into priority order. The theme nearest to the top whose filters match the target sheet will be used.",
+      "SortHint": "Themes are applied in priority order, from top to bottom, when their filters match a sheet. Drag and drop to reorder.",
       "NewTheme": "New Theme",
       "Label": "Theme",
       "LabelPl": "Themes",
@@ -151,8 +151,8 @@
       "AppliesTo": "Applies To",
       "Summary": {
         "AllSheets": {
-          "one": "all {count} {document} sheet",
-          "other": "all {count} {document} sheets"
+          "one": "All {count} {document} sheet",
+          "other": "All {count} {document} sheets"
         },
         "SomeSheets": {
           "one": "{count} {document} sheet ({types})",

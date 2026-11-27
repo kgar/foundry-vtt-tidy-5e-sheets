@@ -8,6 +8,36 @@
     align-self: center;
   }
 
+  --t5e-item-name-input-background: linear-gradient(0deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.5) 100%),
+    var(--t5e-component-card-default, #f8f4f1);
+  --t5e-item-name-input-shadow: none;
+
+  &:where(.theme-dark),
+  :where(.theme-dark) {
+    --t5e-item-name-input-background: var(--t5e-component-field-background);
+    --t5e-item-name-input-shadow: var(--t5e-drop-shadow-field);
+  }
+
+  input.document-name {
+    border-radius: 0.125rem;
+    border: 0.0625rem solid var(--t5e-component-field-border);
+    background: var(--t5e-item-name-input-background);
+    box-shadow: var(--t5e-item-name-input-shadow);
+    font-family: var(--t5e-font-modesto-condensed);
+    font-size: var(--font-size-24);
+    font-style: normal;
+    height: 2rem;
+    line-height: normal;
+    letter-spacing: 0.015rem;
+
+    &:focus {
+      box-shadow: var(--t5e-drop-shadow-field-focus);
+      outline: none;
+    }
+  }
+
   .empty-state-container {
     display: flex;
     flex-direction: column;

@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    getAppliesToSummary,
+    getAppliesToSegments,
     getThemePreview,
   } from 'src/settings/editors/shared/theme-setting-functions';
   import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
@@ -127,25 +127,23 @@
 <p class="hint flexshrink">
   {localize('TIDY5E.COMMON.Theme.SortHint')}
 </p>
-<!-- TODO: If there's not already a default world theme -->
-<div class="world-theme-empty empty-state-container">
-  <button
-    type="button"
-    class="button button-tertiary"
-    onclick={() =>
-      // TODO: Add a real real World Default Theme editor here.
-      foundry.applications.api.DialogV2.prompt({
-        window: { title: localize('TIDY5E.SETTINGS.Theme.World.Title') },
-        content: '<p>uhhh... TODO</p>',
-        rejectClose: false,
+{#if !app.hasWorldDefaultTheme}
+  <div class="world-theme-empty empty-state-container">
+    <button
+      type="button"
+      class="button button-tertiary"
+      onclick={() => {
+        const theme = app.addDefaultWorldTheme();
+        app.selectTheme(theme.id);
+      }}
+    >
+      <i class="fa-solid fa-swatchbook"></i>
+      {localize('DND5E.DescriptionEdit', {
+        description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
       })}
-  >
-    <i class="fa-solid fa-swatchbook"></i>
-    {localize('DND5E.DescriptionEdit', {
-      description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
-    })}
-  </button>
-</div>
+    </button>
+  </div>
+{/if}
 <ol class="world-theme-list">
   {#each orderedThemes as theme, i (theme.id)}
     {@const preview = getThemePreview(theme.settings, theme.themeMode)}
@@ -174,16 +172,19 @@
         <span class="world-theme-card-text">
           <span class="world-theme-card-name">{theme.name}</span>
           <div class="world-theme-card-applies-to">
-            {localize('TIDY5E.COMMON.Theme.AppliesTo')}:
-            {getAppliesToSummary(app.documentTypeTree, theme)}
-            <div class="divider-dot"></div>
-            {#if preview.sheetStyle === 'basic'}
-              {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
-            {:else if preview.sheetStyle === 'parchment'}
-              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.labelOff')}
-            {:else}
-              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
-            {/if}
+            {#each getAppliesToSegments(app.documentTypeTree, theme) as segment}
+              <span>{segment}</span>
+              <div class="divider-dot"></div>
+            {/each}
+            <span>
+              {#if preview.sheetStyle === 'basic'}
+                {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
+              {:else if preview.sheetStyle === 'parchment'}
+                {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.labelOff')}
+              {:else}
+                {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
+              {/if}
+            </span>
           </div>
         </span>
         <span class="button button-icon-only button-primary">
@@ -196,3 +197,5 @@
     </li>
   {/each}
 </ol>
+<h3>{localize('TIDY5E.SETTINGS.Theme.World.Title')}</h3>
+<!-- TODO: put the default world theme card here -->

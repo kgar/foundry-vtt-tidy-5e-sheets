@@ -138,9 +138,9 @@ export class Theme {
         let rarityIdentifier = key.toLowerCase().slugify();
 
         stylesheet.insertRule(
-          `@layer modules { 
+          `@layer modules {
             .tidy5e-sheet .rarity.${rarityIdentifier} {
-              --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier}) 
+              --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier})
             }
           }`,
         );
@@ -524,17 +524,19 @@ function generateConfiguredWorldThemes(): TidyThemeRegistry {
   return registry;
 }
 
+export function isWorldDefaultTheme(
+  theme: Pick<WorldThemeSetting, 'isWorldDefault'>,
+): boolean {
+  return theme.isWorldDefault === true;
+}
+
 function getConfiguredWorldDefaultTheme(): WorldThemeSettingConfig | undefined {
   debug('Getting world default theme.');
 
   const prioritizedWorldThemes = getPrioritizedWorldThemeSettings();
 
   for (const theme of prioritizedWorldThemes) {
-    if (
-      !theme.documentNames &&
-      !theme.types &&
-      isNil(theme.filter?.trim(), '')
-    ) {
+    if (isWorldDefaultTheme(theme)) {
       // The first found world theme default is registered as the
       // world theme default in addition to permuting across
       // document world themes.
@@ -545,8 +547,7 @@ function getConfiguredWorldDefaultTheme(): WorldThemeSettingConfig | undefined {
         [SYMBOLS.readme]:
           'The world theme setting which acts as the world-level fallback ' +
           'for all Tidy applicaitons, including sheets and dialogs. ' +
-          'It is derived by finding the highest-priority theme with no document name, ' +
-          'no document type, and no filter.',
+          'It is derived by finding the highest-priority theme flagged as the world default.',
         ...theme,
         filter: undefined,
       });

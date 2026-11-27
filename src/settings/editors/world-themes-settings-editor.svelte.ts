@@ -21,7 +21,7 @@ import {
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { Theme } from 'src/theme/theme';
+import { isWorldDefaultTheme, Theme } from 'src/theme/theme';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
 import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
@@ -47,6 +47,7 @@ export type WorldThemesSettingsContext = {
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
+    addDefaultWorldTheme(): WorldThemeSettingEntry;
     applySelection(node: ThemeDocumentNameNode, selected: string[]): void;
     toggleType(node: ThemeDocumentNameNode, type: string): void;
     promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
@@ -69,6 +70,7 @@ export type WorldThemesSettingsEditor =
     closeTheme(): void;
     changeFilterMode(filterMode: WorldThemeSetting['filterMode']): Promise<any>;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
+    get hasWorldDefaultTheme(): boolean;
     get updateSignal(): string;
   };
 
@@ -272,8 +274,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
-      // Basic mode always regenerates the filter from its fields, so new or
-      // cleared themes still get the default "Non-Compendium Documents" scope.
       changed.filter =
         curr.filterMode === 'basic'
           ? stringifyBasicFilter(curr)
@@ -373,6 +373,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filterMode: 'basic',
         id: settingId,
         name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.NewTheme'),
+        isWorldDefault: false,
         settings: Theme.getDefaultThemeSettings(),
         sort: maxSort + 1,
         documentNames: [],
@@ -387,6 +388,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       this.value.settings.push(entry);
 
+      return entry;
+    },
+
+    addDefaultWorldTheme(): WorldThemeSettingEntry {
+      const entry: WorldThemeSettingEntry = this.addTheme();
+      entry.name = FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.World.Title');
+      entry.isWorldDefault = true;
       return entry;
     },
 
@@ -416,7 +424,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const { sort, id, ...rest } = toImport;
+      const { sort, id, isWorldDefault, ...rest } = toImport;
       themeToOverride ??= this.addTheme();
 
       foundry.utils.mergeObject(themeToOverride, rest);
@@ -435,7 +443,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       }
 
       for (const theme of themes) {
-        const { sort, id, ...rest } = theme;
+        const { sort, id, isWorldDefault, ...rest } = theme;
         const newTheme = this.addTheme();
         foundry.utils.mergeObject(newTheme, rest);
       }
@@ -443,7 +451,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
     async duplicate(theme: WorldThemeSetting) {
       const newTheme = this.addTheme();
-      const { sort, id, ...rest } = theme;
+      const { sort, id, isWorldDefault, ...rest } = theme;
 
       foundry.utils.mergeObject(newTheme, {
         ...rest,
@@ -588,6 +596,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       return selectedTheme;
     },
 
+    get hasWorldDefaultTheme() {
+      return this.value.settings.some(isWorldDefaultTheme);
+    },
+
     selectTheme(id: string | undefined) {
       const themeOfId = this.value.settings.find((t) => t.id === id);
 
@@ -675,6 +687,7 @@ function mapThemeForExport(
     filterMode: themeToExport.filterMode,
     filter: themeToExport.filter,
     name: themeToExport.name,
+    isWorldDefault: themeToExport.isWorldDefault,
     settings: themeToExport.settings,
     sort: themeToExport.sort,
     documentNames: themeToExport.documentNames,

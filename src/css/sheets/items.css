@@ -4,11 +4,6 @@
   --window-border-color: var(--t5e-color-gold);
   --sidebar-bg: var(--t5e-sidebar-bg, url('../../modules/tidy5e-sheet/images/sidebar-item-sheet.webp') top center / auto no-repeat,
       var(--t5e-component-card-dark-darker));
-  --t5e-item-name-input-background: linear-gradient(0deg,
-      rgba(255, 255, 255, 0.5) 0%,
-      rgba(255, 255, 255, 0.5) 100%),
-    var(--t5e-component-card-default, #f8f4f1);
-  --t5e-item-name-input-shadow: none;
 
   /* Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area. */
   .window-header {
@@ -432,24 +427,8 @@
     font: var(--t5e-font-title-medium);
 
     &:is(input) {
-      border-radius: 0.125rem;
-      border: 0.0625rem solid var(--t5e-component-field-border);
-      background: var(--t5e-item-name-input-background);
-      box-shadow: var(--t5e-item-name-input-shadow);
-      /* Typography */
-      font-family: var(--t5e-font-modesto-condensed);
-      font-size: var(--font-size-24);
-      font-style: normal;
-      height: 2rem;
-      line-height: normal;
-      letter-spacing: 0.015rem;
       margin: 0 -0.5rem -0.0625rem;
       width: calc(100% + 1rem);
-
-      &:focus {
-        box-shadow: var(--t5e-drop-shadow-field-focus);
-        outline: none;
-      }
     }
   }
 
@@ -568,8 +547,6 @@
   &:where(.theme-dark),
   :where(.theme-dark) {
     --window-border-color: var(--t5e-color-palette-gold-45);
-    --t5e-item-name-input-background: var(--t5e-component-field-background);
-    --t5e-item-name-input-shadow: var(--t5e-drop-shadow-field);
   }
 
   &:where(.theme-basic) {
