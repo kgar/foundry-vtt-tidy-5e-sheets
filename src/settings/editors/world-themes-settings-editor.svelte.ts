@@ -7,7 +7,7 @@ import type { SettingsEditor } from './settings-editors.svelte';
 import {
   getCompendia,
   getDocumentTypeTree,
-  getEffectiveTypeSelection,
+  getSelectedDocumentTypes,
   getRarities,
   getSpellMethods,
   setEffectiveTypeSelection,
@@ -21,7 +21,7 @@ import {
 import { removeEmptyProperties } from 'src/utils/data';
 import { nilToUndefined } from 'src/utils/formatting';
 import type { FilterDescription } from 'src/foundry/dnd5e.types';
-import { Theme } from 'src/theme/theme';
+import { isWorldDefaultTheme, Theme } from 'src/theme/theme';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ThemeImportService } from 'src/theme/theme-import-service';
 import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
@@ -47,6 +47,7 @@ export type WorldThemesSettingsContext = {
 export type WorldThemesSettingsEditor =
   SettingsEditor<WorldThemesSettingsContext> & {
     addTheme(): any;
+    addDefaultWorldTheme(): WorldThemeSettingEntry;
     applySelection(node: ThemeDocumentNameNode, selected: string[]): void;
     toggleType(node: ThemeDocumentNameNode, type: string): void;
     promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
@@ -69,6 +70,7 @@ export type WorldThemesSettingsEditor =
     closeTheme(): void;
     changeFilterMode(filterMode: WorldThemeSetting['filterMode']): Promise<any>;
     get selectedTheme(): WorldThemeSettingEntry | undefined;
+    get hasWorldDefaultTheme(): boolean;
     get updateSignal(): string;
   };
 
@@ -200,6 +202,11 @@ function findBasicFilterValue(
   return undefined;
 }
 
+/** Feels like a hack, but get every document when nothing or everything is selected.. */
+function getAllThemeDocumentNames(): string[] {
+  return getDocumentTypeTree().map((node) => node.documentName);
+}
+
 export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
   const current = $state<WorldThemesSettingsContext>(getSettings());
 
@@ -227,6 +234,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     const settings = Object.values(source ?? {}).map((setting) => {
       const formData: WorldThemeSettingEntry = {
         ...setting,
+        // Nothing selected = everything selected.
+        documentNames: setting.documentNames?.length
+          ? setting.documentNames
+          : getAllThemeDocumentNames(),
         folder: '',
         compendiumOnly: false,
         compendia: [],
@@ -272,8 +283,6 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
     return context.settings.reduce<WorldThemesSetting>((prev, curr) => {
       const { folder, compendiumOnly, compendia, themeMode, ...changed } =
         foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
-      // Basic mode always regenerates the filter from its fields, so new or
-      // cleared themes still get the default "Non-Compendium Documents" scope.
       changed.filter =
         curr.filterMode === 'basic'
           ? stringifyBasicFilter(curr)
@@ -338,7 +347,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const current = getEffectiveTypeSelection(node, selectedTheme);
+      const current = getSelectedDocumentTypes(node, selectedTheme);
       this.applySelection(
         node,
         current.includes(type)
@@ -373,9 +382,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         filterMode: 'basic',
         id: settingId,
         name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.NewTheme'),
+        isWorldDefault: false,
         settings: Theme.getDefaultThemeSettings(),
         sort: maxSort + 1,
-        documentNames: [],
+        documentNames: getAllThemeDocumentNames(),
         filter: undefined,
         types: [],
         folder: '',
@@ -387,6 +397,13 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       this.value.settings.push(entry);
 
+      return entry;
+    },
+
+    addDefaultWorldTheme(): WorldThemeSettingEntry {
+      const entry: WorldThemeSettingEntry = this.addTheme();
+      entry.name = FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.World.Title');
+      entry.isWorldDefault = true;
       return entry;
     },
 
@@ -416,7 +433,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
         return;
       }
 
-      const { sort, id, ...rest } = toImport;
+      const { sort, id, isWorldDefault, ...rest } = toImport;
       themeToOverride ??= this.addTheme();
 
       foundry.utils.mergeObject(themeToOverride, rest);
@@ -435,7 +452,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       }
 
       for (const theme of themes) {
-        const { sort, id, ...rest } = theme;
+        const { sort, id, isWorldDefault, ...rest } = theme;
         const newTheme = this.addTheme();
         foundry.utils.mergeObject(newTheme, rest);
       }
@@ -443,7 +460,7 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
     async duplicate(theme: WorldThemeSetting) {
       const newTheme = this.addTheme();
-      const { sort, id, ...rest } = theme;
+      const { sort, id, isWorldDefault, ...rest } = theme;
 
       foundry.utils.mergeObject(newTheme, {
         ...rest,
@@ -470,14 +487,14 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
 
       ThemeImportService.export(worldSetting);
     },
-    
+
     async exportBundle() {
       const toExport = this.value.settings.map(mapThemeForExport);
-      
+
       // TODO: prompt for a selection amongst these options.
-      
+
       ThemeImportService.exportBundle(toExport);
-      
+
     },
 
     setFilter(filter: string | undefined) {
@@ -588,6 +605,10 @@ export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
       return selectedTheme;
     },
 
+    get hasWorldDefaultTheme() {
+      return this.value.settings.some(isWorldDefaultTheme);
+    },
+
     selectTheme(id: string | undefined) {
       const themeOfId = this.value.settings.find((t) => t.id === id);
 
@@ -675,6 +696,7 @@ function mapThemeForExport(
     filterMode: themeToExport.filterMode,
     filter: themeToExport.filter,
     name: themeToExport.name,
+    isWorldDefault: themeToExport.isWorldDefault,
     settings: themeToExport.settings,
     sort: themeToExport.sort,
     documentNames: themeToExport.documentNames,

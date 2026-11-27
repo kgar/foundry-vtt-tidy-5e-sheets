@@ -61,6 +61,8 @@ export type WorldThemeSetting = {
   id: string;
   /** A display name for the world theme. */
   name: string;
+  /** Default world themes are treated differently in the UI and are the base for all sheets. */
+  isWorldDefault: boolean;
   /** An optional filter for document name, e.g. "Actor" or "Item" */
   documentNames?: string[];
   /** An optional filter for document type, e.g. "weapon", "equipment", "character", "npc", "loot", etc. */

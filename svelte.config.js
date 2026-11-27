@@ -6,13 +6,15 @@ export default {
   preprocess: vitePreprocess(),
   vitePlugin: {
     inspector: {
-      toggleKeyCombo: 'control-alt-shift',
+      // Use Cmd+Shift on macOS
+      toggleKeyCombo:
+        process.platform === 'darwin' ? 'meta-shift' : 'control-alt-shift',
     },
   },
   customElement: true,
   onwarn: (warning, handler) => {
-    // Unless we're specifically doing work to resolve warnings, 
-    // suppress all warnings during build. 
+    // Unless we're specifically doing work to resolve warnings,
+    // suppress all warnings during build.
     // Every build results in flooding github actions with logs.
   }
 };

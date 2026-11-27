@@ -2,6 +2,7 @@ import type { WorldSettingsQuadroneApplication } from 'src/applications/settings
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
+import { isWorldDefaultTheme } from 'src/theme/theme';
 
 export function configureWorldThemeContextMenu(
   element: HTMLElement,
@@ -68,6 +69,7 @@ function getWorldThemeContextOptions(
       onClick: (event, target) => {
         app.editors.themesSettingsTab.deleteTheme(theme.id);
       },
+      visible: () => !isWorldDefaultTheme(theme),
       group: 'be-careful',
     },
   ];

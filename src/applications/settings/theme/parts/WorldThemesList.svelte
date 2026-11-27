@@ -2,10 +2,14 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    getAppliesToSummary,
+    getAppliesToSegments,
     getThemePreview,
   } from 'src/settings/editors/shared/theme-setting-functions';
-  import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
+  import type {
+    WorldThemeSettingEntry,
+    WorldThemesSettingsEditor,
+  } from 'src/settings/editors/world-themes-settings-editor.svelte';
+  import { isWorldDefaultTheme } from 'src/theme/theme';
 
   type Props = {
     app: WorldThemesSettingsEditor;
@@ -18,7 +22,13 @@
   const localize = FoundryAdapter.localize;
 
   const orderedThemes = $derived(
-    config.settings.toSorted((a, b) => a.sort - b.sort),
+    config.settings
+      .filter((t) => !isWorldDefaultTheme(t))
+      .toSorted((a, b) => a.sort - b.sort),
+  );
+
+  const worldDefaultTheme = $derived(
+    config.settings.find((t) => isWorldDefaultTheme(t)),
   );
 
   let draggedIndex = $state<number>();
@@ -127,72 +137,99 @@
 <p class="hint flexshrink">
   {localize('TIDY5E.COMMON.Theme.SortHint')}
 </p>
-<!-- TODO: If there's not already a default world theme -->
-<div class="world-theme-empty empty-state-container">
+{#if orderedThemes.length}
+  <ol class="world-theme-list">
+    {#each orderedThemes as theme, i (theme.id)}
+      <li>
+        {@render themeCard(theme, i)}
+      </li>
+    {/each}
+  </ol>
+{:else}
+  <div class="world-theme-empty empty-state-container">
+    <button
+      type="button"
+      class="button button-tertiary"
+      onclick={() => {
+        const theme = app.addTheme();
+        app.selectTheme(theme.id);
+      }}
+    >
+      <i class="fa-solid fa-plus"></i>
+      {localize('TIDY5E.COMMON.Theme.Add')}
+    </button>
+  </div>
+{/if}
+<h2 class="world-theme-list-header">{localize('TIDY5E.SETTINGS.Theme.World.Title')}</h2>
+{#if worldDefaultTheme}
+  {@render themeCard(worldDefaultTheme)}
+{:else}
+  <div class="world-theme-empty empty-state-container">
+    <button
+      type="button"
+      class="button button-tertiary"
+      onclick={() => {
+        const theme = app.addDefaultWorldTheme();
+        app.selectTheme(theme.id);
+      }}
+    >
+      <i class="fa-solid fa-swatchbook"></i>
+      {localize('DND5E.DescriptionEdit', {
+        description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
+      })}
+    </button>
+  </div>
+{/if}
+
+{#snippet themeCard(theme: WorldThemeSettingEntry, index?: number)}
+  {@const preview = getThemePreview(theme.settings, theme.themeMode)}
+  {@const sortable = index !== undefined}
   <button
     type="button"
-    class="button button-tertiary"
-    onclick={() =>
-      // TODO: Add a real real World Default Theme editor here.
-      foundry.applications.api.DialogV2.prompt({
-        window: { title: localize('TIDY5E.SETTINGS.Theme.World.Title') },
-        content: '<p>uhhh... TODO</p>',
-        rejectClose: false,
-      })}
+    class={[
+      'world-theme-card',
+      `theme-${preview.themeMode}`,
+      {
+        'world-theme-card-parchment': preview.isParchment,
+        dragging: sortable && draggedIndex === index,
+      },
+    ]}
+    style={preview.style}
+    draggable={sortable}
+    data-index={index}
+    onclick={() => app.selectTheme(theme.id)}
+    ondragstart={sortable ? onThemeDrag : undefined}
+    ondrop={sortable ? onThemeDrop : undefined}
+    ondragover={sortable ? onDragOver : undefined}
+    ondragend={sortable ? onDragEnd : undefined}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
+    data-theme-id={theme.id}
   >
-    <i class="fa-solid fa-swatchbook"></i>
-    {localize('DND5E.DescriptionEdit', {
-      description: localize('TIDY5E.SETTINGS.Theme.World.Title'),
-    })}
+    <span class="world-theme-card-text">
+      <span class="world-theme-card-name">{theme.name}</span>
+      <div class="world-theme-card-applies-to">
+        {#each getAppliesToSegments(app.documentTypeTree, theme) as segment}
+          <span>{segment}</span>
+          <div class="divider-dot"></div>
+        {/each}
+        <span>
+          {#if preview.sheetStyle === 'basic'}
+            {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
+          {:else if preview.sheetStyle === 'parchment'}
+            {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.labelOff')}
+          {:else}
+            {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
+          {/if}
+        </span>
+      </div>
+    </span>
+    {#if sortable}
+      <span class="button button-icon-only button-primary">
+        <i
+          class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
+          aria-hidden="true"
+        ></i>
+      </span>
+    {/if}
   </button>
-</div>
-<ol class="world-theme-list">
-  {#each orderedThemes as theme, i (theme.id)}
-    {@const preview = getThemePreview(theme.settings, theme.themeMode)}
-    <li>
-      <button
-        type="button"
-        class={[
-          'world-theme-card',
-          `theme-${preview.themeMode}`,
-          {
-            'world-theme-card-parchment': preview.isParchment,
-            dragging: draggedIndex === i,
-          },
-        ]}
-        style={preview.style}
-        draggable="true"
-        data-index={i}
-        onclick={() => app.selectTheme(theme.id)}
-        ondragstart={onThemeDrag}
-        ondrop={onThemeDrop}
-        ondragover={onDragOver}
-        ondragend={onDragEnd}
-        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_WORLD_THEME}
-        data-theme-id={theme.id}
-      >
-        <span class="world-theme-card-text">
-          <span class="world-theme-card-name">{theme.name}</span>
-          <div class="world-theme-card-applies-to">
-            {localize('TIDY5E.COMMON.Theme.AppliesTo')}:
-            {getAppliesToSummary(app.documentTypeTree, theme)}
-            <div class="divider-dot"></div>
-            {#if preview.sheetStyle === 'basic'}
-              {localize('TIDY5E.SETTINGS.Theme.UseBasicTheme.Title')}
-            {:else if preview.sheetStyle === 'parchment'}
-              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.labelOff')}
-            {:else}
-              {localize('TIDY5E.SETTINGS.Theme.UseHeaderBackground.Title')}
-            {/if}
-          </div>
-        </span>
-        <span class="button button-icon-only button-primary">
-          <i
-            class="world-theme-card-drag-icon fa-solid fa-grip-lines fa-fw"
-            aria-hidden="true"
-          ></i>
-        </span>
-      </button>
-    </li>
-  {/each}
-</ol>
+{/snippet}

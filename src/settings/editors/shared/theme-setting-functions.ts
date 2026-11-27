@@ -71,30 +71,40 @@ export function getDocumentTypeTree(): ThemeDocumentNameNode[] {
   });
 }
 
+function getSupportedDocumentNames(
+  selection: ThemeDocumentFilterSelections,
+): string[] {
+  return (
+    selection.documentNames?.filter((d) =>
+      Theme.supportedDocumentNames.has(d),
+    ) ?? []
+  );
+}
+
 /**
- * Matches how world themes apply. Nothing selected = every document.
- * No child document selected = all actors/items.
+ * What document types are selected. nothing selected = everything selected.
  */
+export function getSelectedDocumentTypes(
+  node: ThemeDocumentNameNode,
+  selection: ThemeDocumentFilterSelections,
+): string[] {
+  if (!getSupportedDocumentNames(selection).includes(node.documentName)) {
+    return [];
+  }
+
+  const allTypes = node.types.map((t) => t.value);
+  const types = allTypes.filter((t) => selection.types?.includes(t));
+  return types.length ? types : allTypes;
+}
+
+/** Matches how world themes apply. Nothing selected = every document. */
 export function getEffectiveTypeSelection(
   node: ThemeDocumentNameNode,
   selection: ThemeDocumentFilterSelections,
 ): string[] {
-  const allTypes = node.types.map((t) => t.value);
-  const documentNames =
-    selection.documentNames?.filter((d) =>
-      Theme.supportedDocumentNames.has(d),
-    ) ?? [];
-
-  if (!documentNames.length) {
-    return allTypes;
-  }
-
-  if (!documentNames.includes(node.documentName)) {
-    return [];
-  }
-
-  const types = allTypes.filter((t) => selection.types?.includes(t));
-  return types.length ? types : allTypes;
+  return getSupportedDocumentNames(selection).length
+    ? getSelectedDocumentTypes(node, selection)
+    : node.types.map((t) => t.value);
 }
 
 export function setEffectiveTypeSelection(
@@ -109,7 +119,7 @@ export function setEffectiveTypeSelection(
     const types =
       n.documentName === node.documentName
         ? n.types.map((t) => t.value).filter((t) => selected.includes(t))
-        : getEffectiveTypeSelection(n, selection);
+        : getSelectedDocumentTypes(n, selection);
 
     if (!types.length) {
       continue;
@@ -137,7 +147,7 @@ export function localizeCount(
   );
 }
 
-/** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "all 15 Item sheets". */
+/** One phrase per document, e.g. "1 Actor sheet (Non-Player Character)", "All 15 Item sheets". */
 export function getAppliesToSegments(
   tree: ThemeDocumentNameNode[],
   selection: ThemeDocumentFilterSelections,
@@ -169,19 +179,6 @@ export function getAppliesToSegments(
       },
     );
   });
-}
-
-/** Joins summary phrases into a sentence-case line. */
-export function joinSummarySegments(segments: string[]): string {
-  return segments.join(', ').capitalize();
-}
-
-/** Summarizes which sheet types a theme applies to, e.g. "1 Actor sheet (Non-Player Character), all 15 Item sheets". */
-export function getAppliesToSummary(
-  tree: ThemeDocumentNameNode[],
-  selection: ThemeDocumentFilterSelections,
-): string {
-  return joinSummarySegments(getAppliesToSegments(tree, selection));
 }
 
 export type ThemePreview = {
