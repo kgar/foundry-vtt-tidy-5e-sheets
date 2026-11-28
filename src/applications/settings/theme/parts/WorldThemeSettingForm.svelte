@@ -7,10 +7,7 @@
     getAppliesToSegments,
     getEffectiveTypeSelection,
   } from 'src/settings/editors/shared/theme-setting-functions';
-  import type {
-    WorldThemeSettingEntry,
-    WorldThemesSettingsEditor,
-  } from 'src/settings/editors/world-themes-settings-editor.svelte';
+  import type { WorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
   import ThemeSettings from './ThemeSettings.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
