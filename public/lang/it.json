@@ -520,6 +520,9 @@
                 },
                 "Favorite": {
                     "name": "Mostra suggerimenti Preferiti sistema"
+                },
+                "Property": {
+                    "name": "Mostra suggerimenti Proprietà di sistema"
                 }
             }
         },
@@ -701,7 +704,8 @@
             "Group": "Scheda Gruppo Tidy 5e",
             "Item": "Scheda Inventario Tidy 5e",
             "Npc": "Scheda PNG Tidy 5e",
-            "Vehicle": "Scheda Veicolo Tidy 5e"
+            "Vehicle": "Scheda Veicolo Tidy 5e",
+            "Faction": "Scheda Fazione Tidy 5e"
         },
         "Expansion": {
             "AllSections": "Tutte le sezioni",
@@ -715,6 +719,10 @@
         "Notification": {
             "ClassicsRetired": "<strong>Avviso</strong>: le <strong>Schede Classiche</strong> di Tidy 5e sono state rimosse dal modulo Tidy 5e Sheets a partire da Foundry v14.",
             "FirstTimeWelcome": "Benvenuti in Tidy 5e Sheets! Per iniziare, dovrete modificare {sheetLinkStart}un foglio{sheetLinkEnd} (o {allSheetsLinkStart}tutti i vostri fogli{allSheetsLinkEnd}!) per utilizzare la versione Tidy. Scoprite di più su questo modulo e sulle sue funzionalità sul {wikiLinkStart}wiki ufficiale{wikiLinkEnd}."
+        },
+        "Antimagic": {
+            "label": "Magia Soppressa",
+            "warning": "Qualcosa sta bloccando tutta la magia."
         }
     },
     "TIDY5E.SORT": {
