@@ -2,7 +2,6 @@
 
 ### TODO - Phase 2
 
-- [ ] // TODO: Handle theme sorting here instead of in the component.
 - [ ] Organize src\settings\editors\world-themes-settings-editor.svelte.ts API
 
 ### Dubious, but curious
