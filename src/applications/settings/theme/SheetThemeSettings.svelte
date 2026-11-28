@@ -1,0 +1,125 @@
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { Theme } from 'src/theme/theme';
+  import { ThemeImportService } from 'src/theme/theme-import-service';
+  import ImportButton from './parts/ImportButton.svelte';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import type { ThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
+  import { actorHeaderBackgroundSupportedActorTypes } from 'src/theme/theme';
+  import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
+  import ThemeSettings from './parts/ThemeSettings.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { untrack } from 'svelte';
+  import { getFilesFromDropEvent } from 'src/utils/file';
+
+  interface Props {
+    app: ThemeSettingsEditor;
+  }
+
+  let { app }: Props = $props();
+
+  let context = $derived(app.value);
+
+  const localize = FoundryAdapter.localize;
+
+  // The effect fires twice. Throttle to prevent overeager live updates.
+  const notifyThemeChanged = foundry.utils.throttle((settings: any) => {
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, settings);
+  }, 50);
+
+  let initialized = false;
+
+  $effect(() => {
+    const liveSettings = Theme.getSheetThemeSettings({
+      doc: app.document,
+      settingsOverride: app.mapContextToChangedSettings(context) as any,
+    });
+
+    if (!initialized) {
+      initialized = true;
+      return;
+    }
+
+    untrack(() => notifyThemeChanged(liveSettings));
+  });
+
+  let useBasicTheme = $derived(context.useBasicTheme ?? false);
+
+  async function applyPreset() {
+    const editor = getWorldThemesSettingsEditor();
+    const preset = await editor.promptForThemePreset();
+
+    if (!preset) {
+      return;
+    }
+
+    app.value = app.mapFromSettings(preset.settings);
+  }
+
+  async function onDrop(event: DragEvent & { currentTarget: HTMLElement }) {
+    let files = getFilesFromDropEvent(event);
+
+    if (files.length !== 1) {
+      return;
+    }
+
+    const file = files[0];
+
+    if (
+      file.name.trim().endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT) ||
+      file.name.trim().endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+    ) {
+      await app.processImportFile(file);
+    }
+  }
+</script>
+
+<div class="dialog-content-container flexcol" role="region" ondrop={onDrop}>
+  <div class="flexrow flexgap-1">
+    <h2>
+      {localize('TIDY5E.SETTINGS.Theme.Menu.name')}
+    </h2>
+    <button type="button" class="button flexshrink" onclick={applyPreset}>
+      <i class="fa-solid fa-sliders"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.ApplyPreset')}
+    </button>
+    <ImportButton
+      onfilechanged={async (file) => {
+        if (file) {
+          await app.processImportFile(file);
+        }
+      }}
+    />
+    <button
+      type="button"
+      class="button flexshrink"
+      onclick={() =>
+        ThemeImportService.export({
+          id: foundry.utils.randomID(),
+          sort: 0,
+          filterMode: 'basic',
+          name: app.document.name,
+          isWorldDefault: false,
+          settings: {
+            ...app.mapContextToChangedSettings(context),
+          },
+        })}
+    >
+      <i class="fa-solid fa-file-export"></i>
+      {localize('TIDY5E.SETTINGS.Theme.Action.Export')}
+    </button>
+  </div>
+
+  <ThemeSettings
+    bind:settings={context}
+    rarities={app.rarities}
+    spellPreparationMethodColors={app.spellMethods}
+    doc={app.document}
+    showActorPortraitShape={!useBasicTheme &&
+      app.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
+    showActorHeaderBackground={!useBasicTheme &&
+      actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
+    showItemSidebarBackground={app.document.documentName ===
+      CONSTANTS.DOCUMENT_NAME_ITEM}
+  />
+</div>

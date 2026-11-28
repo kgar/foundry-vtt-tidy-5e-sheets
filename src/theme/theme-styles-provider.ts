@@ -1,10 +1,10 @@
 import { isNil } from 'src/utils/data';
 import type {
-  ThemeSettingsV3,
+  ThemeSettings,
   ThemeSettingsConfigurationOptions,
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
-} from './theme-quadrone.types';
+} from './theme.types';
 import { formatResourcePathForCss } from 'src/utils/path';
 import { THEME_CLASS_DARK, THEME_CLASS_LIGHT, getColorWithContrast, getForegroundAtContrast } from './theme-color-functions';
 import {
@@ -30,7 +30,7 @@ const TIDY_CSS_VARIABLES = {
 
 export class ThemeStylesProvider {
   static create(
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     options: ThemeSettingsConfigurationOptions
   ): ThemeQuadroneStyleDeclaration[] {
     let { doc, idOverride } = options;
@@ -81,7 +81,7 @@ export class ThemeStylesProvider {
 
   static getAccentColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -159,7 +159,7 @@ export class ThemeStylesProvider {
 
   static getHeaderBackgroundColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -192,7 +192,7 @@ export class ThemeStylesProvider {
   
   static getActorHeaderBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -229,7 +229,7 @@ export class ThemeStylesProvider {
 
   static getItemSidebarBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -262,7 +262,7 @@ export class ThemeStylesProvider {
 
   static getHeaderColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -292,7 +292,7 @@ export class ThemeStylesProvider {
 
   static getRarityColorsDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -323,7 +323,7 @@ export class ThemeStylesProvider {
 
   static getSpellPreparationMethodDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV3,
+    settings: ThemeSettings,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {

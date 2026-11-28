@@ -18,7 +18,7 @@ import type {
   SheetPinLegacyFlag,
   AnySheetPinFlagData,
 } from './TidyFlags.types';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import type { SheetTabsConfiguration } from 'src/settings/settings.types';
 import { TabConfigurationSchema } from 'src/settings/settings-data-models';
 import { SettingsShims } from 'src/settings/settings-shims';
@@ -1471,13 +1471,13 @@ export class TidyFlags {
   static sheetThemeSettings = {
     key: 'sheet-theme-settings',
     prop: TidyFlags.getFlagPropertyPath('sheet-theme-settings'),
-    get(doc: any): ThemeSettingsV3 | null | undefined {
-      return TidyFlags.tryGetFlag<ThemeSettingsV3>(
+    get(doc: any): ThemeSettings | null | undefined {
+      return TidyFlags.tryGetFlag<ThemeSettings>(
         doc,
         TidyFlags.sheetThemeSettings.key,
       );
     },
-    set(doc: any, settings: ThemeSettingsV3) {
+    set(doc: any, settings: ThemeSettings) {
       return TidyFlags.setFlag(
         doc,
         TidyFlags.sheetThemeSettings.key,

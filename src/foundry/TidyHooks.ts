@@ -13,9 +13,14 @@ import type {
 } from 'src/types/item.types';
 import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type {
+  ThemeSettings,
+  ThemeSettingsConfigurationOptions,
+} from 'src/theme/theme.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
+import type { WorldThemeSettingEntry } from 'src/settings/editors/world-themes-settings-editor.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import type { TidyConfig } from 'src/types/registry.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -369,6 +374,22 @@ export class TidyHooks {
   }
 
   /**
+   * Tidy is preparing theme settings for a given sheet.
+   * @param theme       the tentative theme to use.
+   * @param document    the document for which the theme applies.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getSheetThemeSettings', (theme, document) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetGetSheetThemeSettings(theme: ThemeSettings, document: any) {
+    Hooks.callAll('tidy5e-sheet.getSheetThemeSettings', theme, document);
+  }
+
+  /**
    * The actor skill roll context menu has established its options and is about to show.
    * @param actor             The affected actor.
    * @param skill             The key for the corresponding skill. Use it to look up the skill in CONFIG.DND5E.
@@ -430,6 +451,35 @@ export class TidyHooks {
       memberUuid,
       vehicleItemId,
       area,
+      contextOptions,
+    );
+  }
+
+  /**
+   * The world theme context menu has established its options and is about to show.
+   * This fires for world theme entries in world settings.
+   * @param app              The World Settings application.
+   * @param theme            The related theme settings.
+   * @param contextOptions    The menu items for this theme.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getWorldThemeContextOptions', (app, theme, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetWorldThemeContextOptions(
+    app: any,
+    theme: WorldThemeSettingEntry,
+    contextOptions: ContextMenuEntry[],
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getWorldThemeContextOptions',
+      app,
+      theme,
       contextOptions,
     );
   }
@@ -758,7 +808,7 @@ export class TidyHooks {
    */
   static tidy5eSheetsThemeSettingsChanged(
     doc?: any,
-    liveThemeOverride?: ThemeSettingsV3,
+    liveThemeOverride?: ThemeSettings,
   ) {
     Hooks.callAll(
       this.tidy5eSheetsThemeSettingsChangedHook,
@@ -768,7 +818,7 @@ export class TidyHooks {
   }
 
   static tidy5eSheetsThemeSettingsChangedSubscribe(
-    callback: (doc?: any, liveThemeOverride?: ThemeSettingsV3) => void,
+    callback: (doc?: any, liveThemeOverride?: ThemeSettings) => void,
   ): number {
     return Hooks.on(
       this.tidy5eSheetsThemeSettingsChangedHook,
@@ -780,5 +830,21 @@ export class TidyHooks {
 
   static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId?: number): number {
     return Hooks.off(this.tidy5eSheetsThemeSettingsChangedHook, hookId);
+  }
+
+  /**
+   * Tidy's World Themes have been updated to the latest and are
+   * about to go into effect.
+   * @param config      Tidy's runtime configurations.
+   * 
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.worldThemesConfigChanged', (config) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetWorldThemesConfigChanged(config: TidyConfig) {
+    Hooks.callAll('tidy5e-sheet.worldThemesConfigChanged', config);
   }
 }

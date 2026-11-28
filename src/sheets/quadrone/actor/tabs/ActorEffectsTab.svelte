@@ -7,7 +7,7 @@
     CharacterSheetQuadroneContext,
   } from 'src/types/types';
   import { observeResize } from 'src/features/resize-observation/attachments';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
 
   let context =
     $derived(
@@ -15,8 +15,6 @@
         ActorSheetQuadroneContext | CharacterSheetQuadroneContext
       >(),
     );
-
-  let isBasicTheme = $derived(ThemeQuadrone.getSheetThemeSettings({ doc: context.document }).useBasicTheme ?? false);
 
   let sectionsInlineWidth: number = $state(0);
 
@@ -30,7 +28,10 @@
     <EffectsTables inlineWidth={sectionsInlineWidth} />
 
     {#if 'conditions' in context}
-      <ActorConditionsQuadrone {isBasicTheme} conditions={context.conditions} />
+      <ActorConditionsQuadrone
+        isBasicTheme={context.themeSettings.useBasicTheme}
+        conditions={context.conditions}
+      />
     {/if}
   </div>
 </div>

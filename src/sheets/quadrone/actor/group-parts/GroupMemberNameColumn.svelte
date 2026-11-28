@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';

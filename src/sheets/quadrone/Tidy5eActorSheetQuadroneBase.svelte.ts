@@ -58,12 +58,12 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { error, warn } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import { Container } from 'src/features/containers/Container';
 import { ItemCompendiumBrowse } from 'src/features/compendium/ItemCompendiumBrowse';
 import { getThemeV2 } from 'src/theme/theme';
@@ -283,10 +283,6 @@ export function getTidy5eActorSheetQuadroneBase<
         }
       }
 
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-        doc: this.actor,
-      });
-
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
@@ -321,12 +317,14 @@ export function getTidy5eActorSheetQuadroneBase<
         tabSheetPins: await SheetPinsProvider.getTabSheetPinsContext(
           this.document,
         ),
-        portrait: await this._preparePortrait(this.actor),
+        portrait: await this._preparePortrait(
+          this.actor,
+          documentSheetContext.themeSettings,
+        ),
         rollData,
         saves,
         system: this.actor.system,
         tabs: [],
-        themeSettings,
         token: this.token,
         userPreferences: UserPreferencesService.get(),
         warnings:
@@ -407,12 +405,13 @@ export function getTidy5eActorSheetQuadroneBase<
 
     async _preparePortrait(
       actor: Actor5e,
+      // TODO: Eliminate this param once the sheet itself always has a theme available
+      theme: ThemeSettings,
     ): Promise<ActorSheetQuadroneContext['portrait']> {
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
       const showToken =
         actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-          true || themeSettings.portraitShape === 'token';
+          true || theme.portraitShape === 'token';
       const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
       const isRandom = !!effectiveToken?.randomImg;
       const rawSrc = showToken
@@ -435,8 +434,7 @@ export function getTidy5eActorSheetQuadroneBase<
         path: showToken ? 'prototypeToken.texture.src' : 'img',
         shape: showToken
           ? 'token'
-          : (themeSettings.portraitShape ??
-            ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE),
+          : (theme.portraitShape ?? Theme.DEFAULT_PORTRAIT_SHAPE),
         isVideo,
         isRandom,
       };
@@ -1119,14 +1117,10 @@ export function getTidy5eActorSheetQuadroneBase<
     _updateFrame(options: ApplicationRenderOptions) {
       super._updateFrame(options);
 
-      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-        doc: this.actor,
-      });
-
-      this._applySheetThemeClasses(themeSettings);
+      this._applySheetThemeClasses(this._themeSettings);
     }
 
-    _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+    _applySheetThemeClasses(themeSettings: ThemeSettings) {
       const isBasic = themeSettings.useBasicTheme;
       const isParchment = !themeSettings.useHeaderBackground || isBasic;
       const foundryThemeIsDark = getThemeV2(this.actor) === 'dark';
@@ -1166,13 +1160,6 @@ export function getTidy5eActorSheetQuadroneBase<
         `;
       if (element.dataset.attribution)
         element.dataset.tooltipClass = 'property-attribution';
-    }
-
-    onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
-      const themeSettings =
-        settingsOverride ??
-        ThemeQuadrone.getSheetThemeSettings({ doc: this.actor });
-      this._applySheetThemeClasses(themeSettings);
     }
 
     /* -------------------------------------------- */
@@ -2170,7 +2157,10 @@ export function getTidy5eActorSheetQuadroneBase<
     }
 
     /** Singleton types the actor already has (background/species) can't be browsed for. */
-    _getBrowseAddDocumentItemTypes(tabId: string, datasetType?: string): string[] {
+    _getBrowseAddDocumentItemTypes(
+      tabId: string,
+      datasetType?: string,
+    ): string[] {
       return super
         ._getBrowseAddDocumentItemTypes(tabId, datasetType)
         .filter(
@@ -2414,7 +2404,10 @@ export function getTidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     static async #showArtwork(this: Tidy5eActorSheetQuadroneBase) {
-      const { src } = await this._preparePortrait(this.actor);
+      const { src } = await this._preparePortrait(
+        this.actor,
+        this._themeSettings,
+      );
 
       this._renderChild(
         new foundry.applications.apps.ImagePopout({

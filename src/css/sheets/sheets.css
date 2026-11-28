@@ -8,6 +8,90 @@
     align-self: center;
   }
 
+  --t5e-item-name-input-background: linear-gradient(0deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.5) 100%),
+    var(--t5e-component-card-default, #f8f4f1);
+  --t5e-item-name-input-shadow: none;
+
+  &:where(.theme-dark),
+  :where(.theme-dark) {
+    --t5e-item-name-input-background: var(--t5e-component-field-background);
+    --t5e-item-name-input-shadow: var(--t5e-drop-shadow-field);
+  }
+
+  input.document-name {
+    border-radius: 0.125rem;
+    border: 0.0625rem solid var(--t5e-component-field-border);
+    background: var(--t5e-item-name-input-background);
+    box-shadow: var(--t5e-item-name-input-shadow);
+    font-family: var(--t5e-font-modesto-condensed);
+    font-size: var(--font-size-24);
+    font-style: normal;
+    height: 2rem;
+    line-height: normal;
+    letter-spacing: 0.015rem;
+
+    &:focus {
+      box-shadow: var(--t5e-drop-shadow-field-focus);
+      outline: none;
+    }
+  }
+
+  .empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+    gap: var(--t5e-size-2x);
+
+    :where(.button) {
+      --t5e-button-padding-inline-start: var(--t5e-size-12x);
+      --t5e-button-padding-inline-end: var(--t5e-size-12x);
+      padding-block: var(--t5e-size-6x);
+    }
+
+    &.empty-state-description {
+      display: flex;
+      align-items: center;
+      border: 0.0625rem dashed var(--t5e-component-field-border);
+      border-radius: var(--t5e-component-card-radius);
+      color: var(--t5e-color-text-lighter);
+      flex: 0 1 fit-content;
+      gap: 0.25rem;
+      justify-content: center;
+      line-height: 1.125rem;
+      min-height: 3rem;
+      padding-block: calc(var(--t5e-size-3x) - var(--t5e-size-halfx)) var(--t5e-size-3x);
+      padding-inline: var(--t5e-size-3x);
+      text-align: center;
+      transition: color var(--t5e-transition-default);
+
+      strong,
+      i {
+        color: var(--t5e-color-text-gold-light);
+      }
+
+      a:hover {
+        text-shadow: 0 0 0.375rem var(--t5e-theme-color-highlight);
+        border-bottom: 0.0625rem solid var(--t5e-theme-color-highlight);
+
+        i {
+          color: var(--t5e-theme-color-highlight);
+        }
+      }
+
+      i {
+        text-align: center;
+        width: 1rem;
+      }
+
+      &:hover {
+        color: var(--t5e-color-text-default);
+      }
+    }
+  }
+
   &:where(.item, .actor) {
 
     /* generic trait-like lists */
@@ -38,60 +122,6 @@
           select {
             width: auto;
           }
-        }
-      }
-    }
-
-    .empty-state-container {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      flex: 1;
-      gap: var(--t5e-size-2x);
-
-      :where(.button) {
-        --t5e-button-padding-inline-start: var(--t5e-size-12x);
-        --t5e-button-padding-inline-end: var(--t5e-size-12x);
-        padding-block: var(--t5e-size-6x);
-      }
-
-      &.empty-state-description {
-        display: flex;
-        align-items: center;
-        border: 0.0625rem dashed var(--t5e-component-field-border);
-        border-radius: var(--t5e-component-card-radius);
-        color: var(--t5e-color-text-lighter);
-        flex: 0 1 fit-content;
-        gap: 0.25rem;
-        justify-content: center;
-        line-height: 1.125rem;
-        min-height: 3rem;
-        padding-block: calc(var(--t5e-size-3x) - var(--t5e-size-halfx)) var(--t5e-size-3x);
-        padding-inline: var(--t5e-size-3x);
-        text-align: center;
-        transition: color var(--t5e-transition-default);
-
-        strong,
-        i {
-          color: var(--t5e-color-text-gold-light);
-        }
-
-        a:hover {
-          text-shadow: 0 0 0.375rem var(--t5e-theme-color-highlight);
-          border-bottom: 0.0625rem solid var(--t5e-theme-color-highlight);
-
-          i {
-            color: var(--t5e-theme-color-highlight);
-          }
-        }
-
-        i {
-          text-align: center;
-          width: 1rem;
-        }
-
-        &:hover {
-          color: var(--t5e-color-text-default);
         }
       }
     }

@@ -1,26 +1,25 @@
-import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import type {
-  PortraitShape,
-  ThemeColorSetting,
-  ThemeSettingsV3,
-} from 'src/theme/theme-quadrone.types';
+import { Theme } from 'src/theme/theme';
+import type { ThemeColorSetting, ThemeSettings } from 'src/theme/theme.types';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import { confirmUseDefault, type SettingsEditor } from './settings-editors.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import {
+  confirmUseDefault,
+  type SettingsEditor,
+} from './settings-editors.svelte';
+import type { ThemeColorSettingOption } from '../settings.types';
+import { ThemeImportService } from 'src/theme/theme-import-service';
+import { CONSTANTS } from 'src/constants';
+import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
 };
 
 export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
-  actorHeaderBackgroundSupportedActorTypes: Set<string>;
-
-  /** The optional document for sheet-specific theming. */
-  document?: Actor5e | Item5e;
+  /** The document for sheet-specific theming. */
+  document: Actor5e | Item5e;
 
   /**
    * Maps the editor context data to a partial representation of the
@@ -28,29 +27,24 @@ export type ThemeSettingsEditor = SettingsEditor<ThemeSettingsContext> & {
    */
   mapContextToChangedSettings(
     context: ThemeSettingsContext,
-  ): Partial<ThemeSettingsV3>;
+  ): Partial<ThemeSettings>;
 
   /**
    * Map from the latest version of settings to the
    * theme settings editor context.
    */
-  mapFromSettings(source: Partial<ThemeSettingsV3>): ThemeSettingsContext;
+  mapFromSettings(source: Partial<ThemeSettings>): ThemeSettingsContext;
+
+  rarities: ThemeColorSettingOption[];
+
+  spellMethods: ThemeColorSettingOption[];
+
+  processImportFile(file: File): Promise<any>;
 };
 
-export type ThemeSettingsContext = {
-  accentColor: string;
-  useBasicTheme: boolean | null;
-  useHeaderBackground: boolean | null;
-  headerColor: string;
-  actorHeaderBackground: string;
-  headerBackgroundColor: string;
-  itemSidebarBackground: string;
-  portraitShape: PortraitShape | undefined;
-  rarityColors: ThemeColorSettingConfigEntry[];
-  spellPreparationMethodColors: ThemeColorSettingConfigEntry[];
-};
+export type ThemeSettingsContext = Partial<ThemeSettings>;
 
-export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
+export function getThemeSettingsEditor(document: any): ThemeSettingsEditor {
   const current = $state<ThemeSettingsContext>(getSettings());
 
   let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
@@ -62,7 +56,7 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   }
 
   function mapFromSettings(
-    source: Partial<ThemeSettingsV3>,
+    source: Partial<ThemeSettings>,
   ): ThemeSettingsContext {
     const nullableBool = (
       value: boolean | null | undefined,
@@ -71,52 +65,38 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
 
     return {
       accentColor: source.accentColor ?? '',
-      useBasicTheme: nullableBool(source.useBasicTheme, false),
-      useHeaderBackground: nullableBool(source.useHeaderBackground, true),
+      useBasicTheme: source.useBasicTheme,
+      useHeaderBackground: source.useHeaderBackground,
       headerColor: source.headerColor ?? '',
       actorHeaderBackground: source.actorHeaderBackground ?? '',
       headerBackgroundColor: source.headerBackgroundColor ?? '',
       itemSidebarBackground: source.itemSidebarBackground ?? '',
       portraitShape: source.portraitShape,
-      rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
-        ([key, label]) => ({
-          label,
-          key,
-          value: source.rarityColors?.[key] ?? '',
-        }),
-      ),
-      spellPreparationMethodColors: Object.entries(
-        CONFIG.DND5E.spellcasting,
-      ).map(([key, config]) => ({
-        label: config.label,
-        key,
-        value: source.spellPreparationMethodColors?.[key] ?? '',
-      })),
+      rarityColors: source.rarityColors ?? {},
+      spellPreparationMethodColors: source.spellPreparationMethodColors ?? {},
     };
   }
 
   function getSettings(): ThemeSettingsContext {
-    const source = document
-      ? (TidyFlags.sheetThemeSettings.get(document) ?? {})
-      : ThemeQuadrone.getChangedWorldThemeSettingsForForm();
+    const source = TidyFlags.sheetThemeSettings.get(document) ?? {};
 
     return mapFromSettings(source);
   }
 
-  function collectColors(entries: ThemeColorSettingConfigEntry[]) {
-    return entries
-      .filter((t) => !isNil(t.value.trim(), ''))
-      .reduce<Record<string, string>>((prev, curr) => {
-        prev[curr.key] = curr.value;
+  function collectColors(colors: Record<string, string>) {
+    return Object.entries(colors)
+      .filter(([key, value]) => !isNil(value?.trim(), ''))
+      .reduce<Record<string, string>>((prev, [key, value]) => {
+        prev[key] = value;
         return prev;
       }, {});
   }
 
   function mapContextToChangedSettings(
     context: ThemeSettingsContext,
-  ): Partial<ThemeSettingsV3> {
+  ): Partial<ThemeSettings> {
     const currentSettings = context;
-    const changedSettings: Partial<ThemeSettingsV3> = {};
+    const changedSettings: Partial<ThemeSettings> = {};
 
     const stringFields = [
       'accentColor',
@@ -141,12 +121,14 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
       changedSettings.portraitShape = currentSettings.portraitShape;
     }
 
-    const rarities = collectColors(currentSettings.rarityColors);
+    const rarities = collectColors(currentSettings.rarityColors ?? {});
     if (Object.keys(rarities).length) {
       changedSettings.rarityColors = rarities;
     }
 
-    const methods = collectColors(currentSettings.spellPreparationMethodColors);
+    const methods = collectColors(
+      currentSettings.spellPreparationMethodColors ?? {},
+    );
     if (Object.keys(methods).length) {
       changedSettings.spellPreparationMethodColors = methods;
     }
@@ -155,14 +137,6 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
   }
 
   return {
-    actorHeaderBackgroundSupportedActorTypes: new Set<string>([
-      CONSTANTS.SHEET_TYPE_CHARACTER,
-      CONSTANTS.SHEET_TYPE_NPC,
-      CONSTANTS.SHEET_TYPE_VEHICLE,
-      CONSTANTS.SHEET_TYPE_GROUP,
-      CONSTANTS.SHEET_TYPE_ENCOUNTER,
-    ]),
-
     document: document,
 
     get hasChanges() {
@@ -180,18 +154,12 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
     async save() {
       const changedSettings = mapContextToChangedSettings(this.value);
 
-      if (document) {
-        if (Object.keys(changedSettings).length === 0) {
-          await TidyFlags.sheetThemeSettings.unset(document);
-        } else {
-          await ThemeQuadrone.saveSheetThemeSettings(
-            document,
-            changedSettings as ThemeSettingsV3,
-          );
-        }
+      if (Object.keys(changedSettings).length === 0) {
+        await TidyFlags.sheetThemeSettings.unset(document);
       } else {
-        await ThemeQuadrone.saveWorldThemeSettings(
-          changedSettings as ThemeSettingsV3,
+        await Theme.saveSheetThemeSettings(
+          document,
+          changedSettings as ThemeSettings,
         );
       }
 
@@ -232,6 +200,62 @@ export function getThemeSettingsEditor(document?: any): ThemeSettingsEditor {
       }
 
       Object.assign(current, value);
+    },
+
+    rarities: Object.entries(CONFIG.DND5E.itemRarity).map(([key, label]) => ({
+      label,
+      key,
+    })),
+
+    spellMethods: Object.entries(CONFIG.DND5E.spellcasting).map(
+      ([key, config]) => ({
+        label: config.label,
+        key,
+      }),
+    ),
+
+    async processImportFile(file: File) {
+      if (
+        file.name
+          .toLowerCase()
+          .trim()
+          .endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT)
+      ) {
+        const toImport = (await ThemeImportService.import(file))?.settings;
+
+        if (toImport) {
+          this.value = toImport;
+        }
+
+        return;
+      }
+
+      if (
+        file.name
+          .toLowerCase()
+          .trim()
+          .endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+      ) {
+        const themes = await ThemeImportService.importBundle(file);
+
+        if (!themes.length) {
+          return;
+        }
+
+        const toImport =
+          themes.length === 1
+            ? themes[0].settings
+            : (
+                await TidyDialog.chooseOne({
+                  title: 'TIDY5E.SETTINGS.Theme.Action.Import',
+                  options: themes.map((t) => ({ label: t.name, value: t })),
+                })
+              )?.settings;
+
+        if (toImport) {
+          this.value = toImport;
+        }
+      }
     },
   };
 }

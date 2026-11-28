@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import * as Bastion from 'src/features/facility/Bastion';
 import { BastionMaintainOrderDialog } from 'src/features/facility/BastionMaintainOrderDialog';
 import {
@@ -452,7 +452,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
               actor,
             )
           : undefined,
-        portrait: await this._preparePortrait(actor),
+        portrait: await this._preparePortrait(
+          actor,
+          actorContext.themeSettings,
+        ),
         gold: FoundryAdapter.formatNumber(
           this.getDefaultCurrencySummary(actor),
         ),
@@ -1124,11 +1127,10 @@ export class Tidy5eGroupSheetQuadrone extends getTidy5eMultiActorSheetQuadroneBa
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
+    if (
+      this._themeSettings.useHeaderBackground &&
+      !this._themeSettings.useBasicTheme
+    ) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
 

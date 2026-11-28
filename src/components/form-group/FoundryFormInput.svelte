@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DataField, FormInputConfig } from 'foundry.data.fields';
+  import type { DataField, FormInputConfig } from 'foundry-types';
 
   type Props = {
     field: DataField;

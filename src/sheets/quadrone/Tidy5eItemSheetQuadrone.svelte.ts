@@ -28,7 +28,7 @@ import type {
   Actor5e,
   GroupableSelectOption,
   ActiveEffectContext,
-  DocumentSheetQuadroneContext,
+  DocumentSheetV2Context,
 } from 'src/types/types';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -40,8 +40,8 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import { Theme } from 'src/theme/theme';
+import type { ThemeSettings } from 'src/theme/theme.types';
 import { EffectColumnRuntime } from 'src/runtime/table-columns/EffectColumnRuntime.svelte';
 import { ActivityColumnRuntime } from 'src/runtime/table-columns/ActivityColumnRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
@@ -144,25 +144,14 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   _updateFrame(options: TidyDocumentSheetRenderOptions = {}) {
     super._updateFrame(options);
-
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.document,
-    });
-    this._applySheetThemeClasses(themeSettings);
+    this._applySheetThemeClasses(this._themeSettings);
   }
 
-  _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+  _applySheetThemeClasses(themeSettings: ThemeSettings) {
     const isBasic = themeSettings.useBasicTheme;
 
     this.element.classList.toggle('theme-parchment', isBasic);
     this.element.classList.toggle('theme-basic', isBasic);
-  }
-
-  onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
-    const themeSettings =
-      settingsOverride ??
-      ThemeQuadrone.getSheetThemeSettings({ doc: this.document });
-    this._applySheetThemeClasses(themeSettings);
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -725,7 +714,7 @@ export class Tidy5eItemSheetQuadrone extends getTidyExtensibleDocumentSheetMixin
 
   /* -------------------------------------------- */
 
-  async _getEffectsSections(context: DocumentSheetQuadroneContext<any>) {
+  async _getEffectsSections(context: DocumentSheetV2Context<any>) {
     const effectMap: Record<string, ActiveEffectContext> = {};
     const riders: ActiveEffectContext[] = [];
     const riderIds = new Set(this.item.getFlag('dnd5e', 'riders.effect') ?? []);

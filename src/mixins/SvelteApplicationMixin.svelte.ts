@@ -9,11 +9,11 @@ import type {
 import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type {
   ThemeSettingsConfigurationOptions,
-  ThemeSettingsV3,
-} from 'src/theme/theme-quadrone.types';
+  ThemeSettings,
+} from 'src/theme/theme.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
@@ -46,10 +46,17 @@ export function getSvelteApplicationMixin<
       super(args);
 
       DisposablesRegistry.disposeAll(this.id);
+
+      this._themeSettings = Theme.getDefaultThemeSettings();
     }
 
-    /** The component which represents the UI. */
+    /** The components which represent the UI. */
     #components: Record<string, any>[] = [];
+
+    /**
+     * The current theme settings of this svelte application.
+     */
+    _themeSettings: ThemeSettings;
 
     /**
      * Compatibility shim from Application V1.
@@ -72,7 +79,11 @@ export function getSvelteApplicationMixin<
       };
     }
 
-    protected onThemeConfigChanged(_settingsOverride?: ThemeSettingsV3) {}
+    protected onThemeConfigChanged(settingsOverride?: ThemeSettings) {
+      if (settingsOverride) {
+        this._themeSettings = settingsOverride;
+      }
+    }
 
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
@@ -116,6 +127,15 @@ export function getSvelteApplicationMixin<
     /* -------------------------------------------- */
     /*  Rendering                                   */
     /* -------------------------------------------- */
+
+    _configureRenderOptions(options: ApplicationRenderOptions) {
+      super._configureRenderOptions(options);
+
+      // Refresh Theme Settings
+      options.tidy ??= {};
+      this._themeSettings = options.tidy.themeSettings ??=
+        Theme.getSheetThemeSettings({ doc: this.document });
+    }
 
     async render(
       options: boolean | ApplicationRenderOptions = {},
@@ -260,7 +280,7 @@ export function getSvelteApplicationMixin<
 
       applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
 
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
+      Theme.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
@@ -269,6 +289,13 @@ export function getSvelteApplicationMixin<
       for (const [cssClass, toggle] of performanceSettings) {
         this.element?.classList.toggle(cssClass, toggle);
       }
+
+      // Update styles so that conditional themes go into effect
+      // as soon as the conditions are met.
+      Theme.applyCurrentThemeSettingsToStylesheet({
+        doc: this.document,
+        settingsOverride: options.tidy?.themeSettings,
+      });
 
       super._updateFrame(options);
     }
@@ -383,7 +410,7 @@ export function getSvelteApplicationMixin<
       });
 
       const themeSettingUnsubscribable =
-        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
+        Theme.subscribeAndReactToThemeSettingsChanges(
           this.themeConfigOptions(),
         );
 

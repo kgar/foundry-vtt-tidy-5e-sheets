@@ -5,8 +5,8 @@
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
   import type { Actor5e } from 'src/types/types';
-  import type { PortraitShape } from 'src/theme/theme-quadrone.types';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import type { PortraitShape } from 'src/theme/theme.types';
+  import { Theme } from 'src/theme/theme';
 
   const localize = FoundryAdapter.localize;
 
@@ -84,7 +84,7 @@
         <li class="group-skill-grid">
           <!-- TODO add token shape to class list  -->
           <div
-            class={['item-image', member.portrait?.shape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE]}
+            class={['item-image', member.portrait?.shape ?? Theme.DEFAULT_PORTRAIT_SHAPE]}
             style="background-image: url('{member.actor.img}')"
           ></div>
           <div class="item-name truncate">{member.actor.name}</div>

@@ -3,13 +3,10 @@ import { getSvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.sve
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
-  ApplicationWindowRenderOptions,
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import TidyWorldSettings from './TidyWorldSettings.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import { getThemeSettingsEditor } from 'src/settings/editors/theme-settings-editor.svelte';
 import { getWorldTabConfigurationSettingsEditor } from 'src/settings/editors/world-tab-configuration-settings-editor.svelte';
 import { getWorldHeaderControlConfigurationSettingsEditor } from 'src/settings/editors/world-header-control-configuration-settings-editor.svelte';
 import { getHomebrewSettingsEditor } from 'src/settings/editors/homebrew-settings-editor.svelte';
@@ -23,6 +20,9 @@ import {
   getWorldSheetConfigurationSettingsEditor,
   type WorldSheetConfigurationSettingsEditor,
 } from 'src/settings/editors/world-sheet-configuration-settings-editor.svelte';
+import { getWorldThemesSettingsEditor } from 'src/settings/editors/world-themes-settings-editor.svelte';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export const WorldSettingsTabIds = {
   defaults: 'settings:defaults',
@@ -91,7 +91,7 @@ export class WorldSettingsQuadroneApplication
 
     // Create base editors
     this.editors = {
-      themeSettingsTab: getThemeSettingsEditor(),
+      themesSettingsTab: getWorldThemesSettingsEditor(),
       tabConfigTab: getWorldTabConfigurationSettingsEditor(),
       headerControlsTab: getWorldHeaderControlConfigurationSettingsEditor(),
       homebrewTab: getHomebrewSettingsEditor(),
@@ -135,6 +135,10 @@ export class WorldSettingsQuadroneApplication
     this.currentTabId = id;
   }
 
+  get isEditable() {
+    return FoundryAdapter.userIsGm();
+  }
+
   /**
    * The pane for undo/use defaults.
    */
@@ -142,7 +146,7 @@ export class WorldSettingsQuadroneApplication
     const currentTabId = this.currentTabId;
     switch (currentTabId) {
       case WorldSettingsTabIds.theme:
-        return this.editors.themeSettingsTab;
+        return this.editors.themesSettingsTab;
       case WorldSettingsTabIds.sheetPreferences:
         return this.editors.sheetPreferencesTab;
       case WorldSettingsTabIds.homebrew:
@@ -197,13 +201,17 @@ export class WorldSettingsQuadroneApplication
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    return mount(TidyWorldSettings, {
+    const component = mount(TidyWorldSettings, {
       target: node,
       props: {
         app: this,
         config: this._config,
       },
     });
+
+    initTidy5eContextMenu(this, this.element);
+
+    return component;
   }
 
   async _prepareContext(

@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { Theme } from 'src/theme/theme';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
@@ -318,7 +318,7 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
             : undefined,
           index,
           name: actor.name,
-          portrait: await this._preparePortrait(actor),
+          portrait: await this._preparePortrait(actor, context.themeSettings),
           initiative: combatantSettings.initiative,
           includeInCombat: combatantSettings.include,
           visible: combatantSettings.visible,
@@ -571,12 +571,9 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
 
       this.addNewPlaceholder(
         {
-          name: FoundryAdapter.localize(
-            'TIDY5E.ENCOUNTER.Placeholder.Title',
-            {
-              count: initiativeNumber,
-            },
-          ),
+          name: FoundryAdapter.localize('TIDY5E.ENCOUNTER.Placeholder.Title', {
+            count: initiativeNumber,
+          }),
         },
         { initiative: initiativeNumber },
       );
@@ -710,8 +707,8 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   /** System placement choices */
   _getPlacementBehaviorChoices(): Record<string, string> {
     const choices: Record<string, string> =
-      game.settings.settings.get('dnd5e.encounterPlacementBehavior')
-        ?.choices ?? {};
+      game.settings.settings.get('dnd5e.encounterPlacementBehavior')?.choices ??
+      {};
 
     return Object.fromEntries(
       Object.entries(choices).map(([value, label]) => [
@@ -1062,11 +1059,10 @@ export class Tidy5eEncounterSheetQuadrone extends getTidy5eMultiActorSheetQuadro
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    // Frame renders before _renderHTML populates _context; read theme from the document.
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-    if (themeSettings.useHeaderBackground && !themeSettings.useBasicTheme) {
+    if (
+      this._themeSettings.useHeaderBackground &&
+      !this._themeSettings.useBasicTheme
+    ) {
       element.querySelector('.window-header')?.classList.add('theme-dark');
     }
 

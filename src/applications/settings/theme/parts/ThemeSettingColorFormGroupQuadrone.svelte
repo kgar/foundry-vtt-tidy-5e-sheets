@@ -7,7 +7,7 @@
   interface Props {
     key: string;
     label: string;
-    value: string;
+    value: string | undefined;
     placeholder?: string;
     colorSelected?: () => void;
     disableDelete?: boolean;

@@ -31,8 +31,8 @@ import type {
   SectionColumnSpecifications,
 } from './columns.types';
 import type { ContainerContentsVisibility } from 'src/features/containers/Container';
-import type { IdentifierField } from 'dnd5e.dataModels.fields';
-import type { NumberField } from 'foundry.data.fields';
+import type { IdentifierField } from 'dnd5e-fields';
+import type { NumberField } from 'foundry-types';
 
 export type RenownProperty = {
   type: 'renown';
@@ -213,7 +213,7 @@ export type ItemSheetQuadroneContext = {
   /** The crew slots of a mountable item. */
   vehicleCrew?: OccupantContext[];
   tabs: Tab[];
-} & DocumentSheetV2Context;
+} & DocumentSheetV2Context<Item5e>;
 
 export type RarityContext = {
   /** When an item has a single selected rarity, then this field has that value. */
@@ -333,7 +333,7 @@ export type ContainerSheetQuadroneContext = {
   toggles: ItemToggle[];
   unlocked: boolean;
   userPreferences: UserPreferences;
-} & DocumentSheetV2Context;
+} & DocumentSheetV2Context<Item5e>;
 
 export type ContainerContents = {
   capacity: { max: number; value: number; units: string; pct: number };

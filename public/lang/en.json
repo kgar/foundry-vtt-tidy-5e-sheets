@@ -102,6 +102,9 @@
       "AddNamed": "Add {name}",
       "CopyToClipboard": "Copy to Clipboard",
       "CopyWithoutFormatting": "Copy Without Formatting",
+      "Choose": "Choose",
+      "Options": "Options",
+      "ChooseOne": "Choose One",
       "Decrease": "Decrease",
       "DecreaseNamed": "Decrease {name}",
       "Hide": "Hide",
@@ -131,6 +134,50 @@
     },
     "Search": {
       "Label": "Search"
+    },
+    "Theme": {
+      "Filter": "Filter",
+      "AdvancedFilterHint": "Updated from the fields above as you make changes. To edit the filter directly, switch to advanced filtering.",
+      "AdvancedFilterCustomHint": "This filter will be saved as-is.",
+      "AdvancedFilterButton": "Use Advanced Filter",
+      "BasicFilterButton": "Use Basic Filter",
+      "BasicFilterConfirmTitle": "Confirm: Use Basic Filter",
+      "BasicFilterConfirmText": "Reverting back to basic filter controls will clear the current filter.",
+      "SortHint": "Themes are applied in priority order, from top to bottom, when their filters match a sheet. Drag and drop to reorder.",
+      "NewTheme": "New Theme",
+      "Label": "Theme",
+      "LabelPl": "Themes",
+      "Add": "Add Theme",
+      "Delete": "Delete Theme",
+      "AppliesTo": "Applies To",
+      "Summary": {
+        "AllSheets": {
+          "one": "All {count} {document} sheet",
+          "other": "All {count} {document} sheets"
+        },
+        "SomeSheets": {
+          "one": "{count} {document} sheet ({types})",
+          "other": "{count} {document} sheets ({types})"
+        }
+      },
+      "AddCompendium": "Add a compendium…",
+      "Compendia": "Compendia",
+      "CompendiaHint": "Also applies to documents in these compendia. With Compendium Documents Only checked, applies to these compendia alone.",
+      "CompendiumOnly": "Compendium Documents Only",
+      "CompendiumHint": "Only search compendia. If you don't add any below, it will apply to every compendium.",
+      "RemoveCompendium": "Remove Compendium",
+      "Configure": "Configure Theme",
+      "ConfigureFilters": "Configure Filters",
+      "Name": "Theme Name",
+      "Options": "Theme Options",
+      "SheetTypes": "Filter to Sheet Types",
+      "Folder": "Folder",
+      "FolderHint": "Matches documents in this folder and all of its subfolders.",
+      "ThemeMode": "Theme Mode",
+      "ThemeModeAll": "All",
+      "ThemeModeHint": "Limit this sheet theme only to a particular theme mode.",
+      "ChooseAPreset.Title": "Choose a Preset",
+      "ChooseAPreset.Content": "Select a preset to apply to the current theme."
     },
     "Unidentified": {
       "Placeholder": "?"
@@ -615,11 +662,20 @@
         "Title": "Accent Color"
       },
       "Action": {
+        "ApplyPreset": "Apply Preset",
         "Export": "Export",
-        "Import": "Import"
+        "ExportBundle": "Export Bundle",
+        "Import": "Import",
+        "ImportBundle": "Import Bundle",
+        "SelectToExport": "Select themes to export.",
+        "SelectToImport": "Select themes to import."
       },
       "ActorHeaderBackground": {
         "Title": "Actor Header Image"
+      },
+      "ApplyThemeToEmbeddedDocuments": {
+        "Title": "Inherit Parent Sheet Themes",
+        "Hint": "Child documents will use a parent document's theme first before inheriting world themes."
       },
       "HeaderBackgroundColor": {
         "Hint": "Use a different color than the sheet accent color for the sheet header.",
@@ -661,7 +717,11 @@
       },
       "UseHeaderBackground": {
         "Hint": "Includes styles that support a colorful sheet header with an image background.",
-        "Title": "Use Header Background"
+        "Title": "Use Header Background",
+        "labelOff": "No Header Background"
+      },
+      "World": {
+        "Title": "World Default Theme"
       }
     },
     "World": {

@@ -4,7 +4,7 @@
     type DocumentUUIDFieldOptions,
     type FormInputConfig,
     type NumberFieldOptions,
-  } from 'foundry.data.fields';
+  } from 'foundry-types';
   import SelectOptions from '../inputs/SelectOptions.svelte';
   import FoundryFormInput from './FoundryFormInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';

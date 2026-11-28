@@ -9,7 +9,7 @@
   import { RowActionRuntimeBase } from 'src/runtime/table-row-actions/RowActionRuntimeBase';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import BastionFacilityRow from './BastionFacilityRow.svelte';
   import BastionMemberRow from './BastionMemberRow.svelte';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
@@ -22,11 +22,6 @@
   let { sectionsInlineWidth }: Props = $props();
 
   let context = $derived(getGroupSheetQuadroneContext());
-
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -83,9 +78,8 @@
   );
 
   let showTable = $derived(
-    members.some((member) =>
-      searchResults.show(member.member.actor.uuid),
-    ) || !searchResults.isSearching,
+    members.some((member) => searchResults.show(member.member.actor.uuid)) ||
+      !searchResults.isSearching,
   );
 </script>
 
@@ -95,61 +89,63 @@
 />
 
 {#if showTable}
-<TidyTable
-  key={section.key}
-  class="bastion-facilities"
-  expandedOverride={searchResults.isSearching ? showTable : undefined}
->
-  {#snippet header()}
-    <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
-      <TidyTableHeaderCell primary={true}>
-        <h3>
-          {localize(section.label)}
-          <span class="table-header-count">{facilityCount}</span>
-        </h3>
-      </TidyTableHeaderCell>
-
-      <TidyTableCustomHeaderCells {context} {section} {hiddenColumns} />
-
-      <TidyTableHeaderCell
-        class="header-cell-actions"
-        columnWidth="{rowActionInfo.widthRems}rem"
-        data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
-      />
-    </TidyTableHeaderRow>
-  {/snippet}
-  {#snippet body()}
-    {#each members as member (member.member.actor.uuid)}
-      <div
-        class={[
-          'tidy-table-bastion-row',
-          { hidden: !searchResults.show(member.member.actor.uuid) },
-        ]}
+  <TidyTable
+    key={section.key}
+    class="bastion-facilities"
+    expandedOverride={searchResults.isSearching ? showTable : undefined}
+  >
+    {#snippet header()}
+      <TidyTableHeaderRow
+        class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
       >
-        {const facilities = $derived(getFacilities(member))}
+        <TidyTableHeaderCell primary={true}>
+          <h3>
+            {localize(section.label)}
+            <span class="table-header-count">{facilityCount}</span>
+          </h3>
+        </TidyTableHeaderCell>
 
-        <BastionMemberRow
-          {member}
-          {hiddenColumns}
-          rowActionWidthRems={rowActionInfo.widthRems}
+        <TidyTableCustomHeaderCells {context} {section} {hiddenColumns} />
+
+        <TidyTableHeaderCell
+          class="header-cell-actions"
+          columnWidth="{rowActionInfo.widthRems}rem"
+          data-tidy-column-key={CONSTANTS.COLUMN_KEY_ROW_ACTIONS}
         />
+      </TidyTableHeaderRow>
+    {/snippet}
+    {#snippet body()}
+      {#each members as member (member.member.actor.uuid)}
+        <div
+          class={[
+            'tidy-table-bastion-row',
+            { hidden: !searchResults.show(member.member.actor.uuid) },
+          ]}
+        >
+          {const facilities = $derived(getFacilities(member))}
 
-        {#each facilities as chosen (chosen.id)}
-          <BastionFacilityRow
+          <BastionMemberRow
             {member}
-            {chosen}
             {hiddenColumns}
             rowActionWidthRems={rowActionInfo.widthRems}
           />
-        {/each}
 
-        {#if !facilities.length}
-          <div class="empty-state-container empty-state-description">
-            {localize('TIDY5E.BASTION.Group.Facilities.Empty')}
-          </div>
-        {/if}
-      </div>
-    {/each}
-  {/snippet}
-</TidyTable>
+          {#each facilities as chosen (chosen.id)}
+            <BastionFacilityRow
+              {member}
+              {chosen}
+              {hiddenColumns}
+              rowActionWidthRems={rowActionInfo.widthRems}
+            />
+          {/each}
+
+          {#if !facilities.length}
+            <div class="empty-state-container empty-state-description">
+              {localize('TIDY5E.BASTION.Group.Facilities.Empty')}
+            </div>
+          {/if}
+        </div>
+      {/each}
+    {/snippet}
+  </TidyTable>
 {/if}

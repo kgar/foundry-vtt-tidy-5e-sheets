@@ -6,11 +6,12 @@
     type WorldSettingsQuadroneApplication,
   } from './TidyWorldSettingsQuadroneApplication.svelte';
   import WorldSettingsOverview from 'src/applications/settings/world-settings-overview/WorldSettingsOverview.svelte';
-  import ThemeSettingsQuadrone from 'src/applications/settings/theme/ThemeSettingsQuadrone.svelte';
   import HomebrewSettings from 'src/applications/settings/homebrew-settings/HomebrewSettings.svelte';
   import ApplyTidySheetPreferences from 'src/applications/settings/default-sheet-preferences/DefaultSheetPreferences.svelte';
   import WorldSheetSettings from './WorldSheetSettings.svelte';
   import SettingsFooter from 'src/applications/settings/SettingsFooter.svelte';
+  import WorldThemesSettings from '../theme/WorldThemesSettings.svelte';
+  import WorldThemeSettingsFooter from '../theme/parts/WorldThemeSettingsFooter.svelte';
 
   interface Props {
     app: WorldSettingsQuadroneApplication;
@@ -55,7 +56,7 @@
       id: WorldSettingsTabIds.theme,
       title: localize('TIDY5E.SETTINGS.World.Tab.Theme'),
       iconClass: 'fa-solid fa-swatchbook',
-      hasChanges: app.editors.themeSettingsTab.hasChanges,
+      hasChanges: app.editors.themesSettingsTab.hasChanges,
     },
     {
       id: WorldSettingsTabIds.homebrew,
@@ -182,10 +183,7 @@
     {#if activeSelectedId === WorldSettingsTabIds.defaults}
       <WorldSettingsOverview {app} />
     {:else if activeSelectedId === WorldSettingsTabIds.theme}
-      <ThemeSettingsQuadrone
-        app={app.editors.themeSettingsTab}
-        placeholders={undefined}
-      />
+      <WorldThemesSettings app={app.editors.themesSettingsTab} />
     {:else if activeSelectedId === WorldSettingsTabIds.homebrew}
       <HomebrewSettings app={app.editors.homebrewTab} />
     {:else if activeSelectedId === WorldSettingsTabIds.sheetPreferences}
@@ -199,7 +197,15 @@
   </section>
 
   {const activePane = $derived(app.getActivePane())}
-  {#if activePane}
+  {const showThemeButtons = $derived(
+    activePane &&
+      activeSelectedId === WorldSettingsTabIds.theme &&
+      app.editors.themesSettingsTab.selectedTheme,
+  )}
+
+  {#if showThemeButtons}
+    <WorldThemeSettingsFooter app={app.editors.themesSettingsTab} />
+  {:else if activePane}
     <SettingsFooter host={activePane} save={() => app.save()} />
   {/if}
 </div>

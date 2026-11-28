@@ -1,3 +1,7 @@
+import type { WorldThemeSetting } from 'src/settings/settings.types';
+import type { Item5e } from 'src/types/item.types';
+import type { Actor5e } from 'src/types/types';
+
 export type ThemeColorSetting = {
   /** The key of the configurable entity as found in CONFIG.DND5E. For example, `veryrare` for the "Very Rare" item rarity */
   key: string;
@@ -5,7 +9,7 @@ export type ThemeColorSetting = {
   value: string;
 };
 
-export type ThemeSettingsV3 = {
+export type ThemeSettings = {
   accentColor: string;
   useBasicTheme: boolean;
   useHeaderBackground: boolean;
@@ -18,6 +22,19 @@ export type ThemeSettingsV3 = {
   spellPreparationMethodColors: Record<string, string>;
   // etc. settings here ;)
 };
+
+/** The supported theme data format(s). */
+export type ThemeData = ThemeDataV2 | ThemeDataV3;
+
+export type ThemeBundle = ThemeDataV3[];
+
+export type ThemeDataV2 = {
+  version: 2;
+} & Partial<ThemeSettings>;
+
+export type ThemeDataV3 = {
+  version: 3;
+} & Partial<WorldThemeSetting>;
 
 export type ThemeQuadroneStyleRule = {
   property: string;
@@ -40,7 +57,7 @@ export type ThemeSettingsConfigurationOptions = {
   /**
    * Use these theme settings when applying the appropriate CSS updates.
    */
-  settingsOverride?: ThemeSettingsV3;
+  settingsOverride?: ThemeSettings;
   /**
    * Some applications are related to a document but are
    * a separate dialog. This ID override ensures they receive
@@ -54,9 +71,20 @@ export type ThemeSettingsConfigurationOptions = {
    */
   applyWorldThemeSetting?: boolean;
   /** Optional callback to use after settings have been applied. */
-  callback?: (params: { settingsOverride?: ThemeSettingsV3 }) => void;
+  callback?: (params: { settingsOverride?: ThemeSettings }) => void;
   /** Alternative default settings. */
-  alternateDefaults?: Partial<ThemeSettingsV3>;
+  alternateDefaults?: Partial<ThemeSettings>;
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';
+
+export type ThemeFilterData = {
+  /**
+   * The current effective theme mode for the target document.
+   */
+  themeMode: 'light' | 'dark' | string;
+  /** The folder of the target document. An empty string means the top-level. */
+  folder: string;
+  /** The target document to consider, whether an Actor or Item. */
+  document: Actor5e | Item5e;
+};

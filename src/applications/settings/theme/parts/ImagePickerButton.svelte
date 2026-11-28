@@ -1,6 +1,6 @@
 <script lang="ts">
   interface Props {
-    current: string;
+    current: string | undefined;
     onimagepicked?: (image: string) => any;
   }
 
@@ -8,13 +8,13 @@
 
   function pickImage(
     event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
-    current: string,
+    current: string | undefined,
   ) {
     const rect = event.currentTarget.getBoundingClientRect();
 
     const fp = new foundry.applications.apps.FilePicker.implementation({
       type: 'image',
-      current: current,
+      current: current ?? '',
       callback: (path: string) => {
         onimagepicked?.(path ?? '');
       },

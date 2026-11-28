@@ -5,11 +5,13 @@ import type {
   GlobalCustomSectionsetting,
   HeaderControlConfiguration,
   TabConfiguration,
+  WorldThemesSetting,
 } from './settings.types';
-import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type { ThemeSettings } from 'src/theme/theme.types';
+import { Theme } from 'src/theme/theme';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import {
+  getWorldThemesSettingsDataModel,
   HeaderControlConfigurationSchema,
   TabConfigurationSchema,
 } from './settings-data-models';
@@ -508,26 +510,45 @@ export function createSettings() {
         },
       },
 
-      worldThemeSettings: {
+      // Theme
+
+      applyThemeToEmbeddedDocuments: {
+        options: {
+          name: 'TIDY5E.SETTINGS.Theme.ApplyThemeToEmbeddedDocuments.Menu.buttonLabel',
+          hint: 'TIDY5E.SETTINGS.Theme.ApplyThemeToEmbeddedDocuments.Hint',
+          scope: 'world',
+          type: Boolean,
+          default: true,
+          config: false,
+          onChange: (_value: boolean) => {
+            Theme.resetWorldThemeConfigs();
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'applyThemeToEmbeddedDocuments',
+          );
+        },
+      },
+
+      worldThemes: {
         options: {
           name: 'TIDY5E.SETTINGS.Theme.Menu.buttonLabel',
           hint: 'TIDY5E.SETTINGS.Theme.Hint',
           scope: 'world',
-          type: Object,
-          default: undefined,
+          type: getWorldThemesSettingsDataModel(),
+          default: {},
           config: false,
-          onChange: (settings: ThemeSettingsV3) => {
-            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-              settingsOverride: settings,
-            });
+          onChange: (_settings: WorldThemesSetting) => {
+            Theme.resetWorldThemeConfigs();
           },
         },
         get() {
-          return (
-            FoundryAdapter.getTidySetting<ThemeSettingsV3>(
-              'worldThemeSettings',
-            ) ?? ThemeQuadrone.getDefaultThemeSettings()
-          );
+          const themes =
+            FoundryAdapter.getTidySetting<WorldThemesSetting>('worldThemes') ??
+            {};
+
+          return themes;
         },
       },
 
@@ -942,8 +963,7 @@ export function initSettings() {
 
   _settings = getCurrentSettings();
 
-  ThemeQuadrone.insertTidyThemeStyleTag();
-  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
+  Theme.insertTidyThemeStyleTag();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
@@ -973,4 +993,41 @@ export function initSettings() {
     refreshFoundryCoreSettings();
     refreshSystemSettings();
   });
+}
+
+export function getLegacyWorldThemeSettingSettingDocument(): any {
+  return game.settings.storage
+    .get('world')
+    .getSetting('tidy5e-sheet.worldThemeSettings');
+}
+
+export function getEffectiveWorldThemesSetting(): WorldThemesSetting {
+  // Can't work in the DataModel directly, copy it.
+  const source: WorldThemesSetting = foundry.utils.duplicate(
+    SettingsProvider.settings.worldThemes.get() ?? {},
+  );
+
+  if (!Object.keys(source).length) {
+    // Check for legacy theme in database
+    const legacyTheme: Partial<ThemeSettings | undefined> =
+      getLegacyWorldThemeSettingSettingDocument()?.value;
+
+    if (legacyTheme) {
+      const newId = foundry.utils.randomID();
+
+      source[newId] = {
+        filterMode: 'basic',
+        id: newId,
+        name: FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.World.Title'),
+        isWorldDefault: true,
+        settings: legacyTheme,
+        sort: 1,
+        documentNames: undefined,
+        filter: undefined,
+        types: undefined,
+      };
+    }
+  }
+
+  return source;
 }

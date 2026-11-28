@@ -12,7 +12,7 @@
   import SheetPins from '../../shared/SheetPins.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import { EncounterMemberColumnRuntime } from 'src/runtime/table-columns/EncounterMemberColumnRuntime';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
@@ -21,11 +21,6 @@
   import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
-
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
   setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
@@ -51,8 +46,9 @@
       <div class="difficulty-row flexrow">
         <div
           class="pill pill-medium flexshrink"
-          data-tooltip="{localize('TIDY5E.ENCOUNTER.Difficulty.Label')}: {context.difficulty
-            .label}"
+          data-tooltip="{localize(
+            'TIDY5E.ENCOUNTER.Difficulty.Label',
+          )}: {context.difficulty.label}"
         >
           {context.difficulty.label}
         </div>
@@ -72,7 +68,9 @@
           onclick={() => context.sheet._browseAddNpc()}
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.COMMON.Action.AddNamed', { name: localize('DND5E.Group.Member.one') })}
+          {localize('TIDY5E.COMMON.Action.AddNamed', {
+            name: localize('DND5E.Group.Member.one'),
+          })}
         </button>
       </div>
     {/if}
@@ -101,7 +99,9 @@
           data-custom-section={section.custom ? true : null}
         >
           {#snippet header()}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderRow
+              class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+            >
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}

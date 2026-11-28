@@ -1,0 +1,756 @@
+import type {
+  ThemeColorSettingOption,
+  WorldThemeSetting,
+  WorldThemesSetting,
+} from '../settings.types';
+import type { SettingsEditor } from './settings-editors.svelte';
+import {
+  getCompendia,
+  getDocumentTypeTree,
+  getSelectedDocumentTypes,
+  getRarities,
+  getSpellMethods,
+  setEffectiveTypeSelection,
+  type ThemeDocumentNameNode,
+} from './shared/theme-setting-functions';
+import {
+  getLegacyWorldThemeSettingSettingDocument,
+  getEffectiveWorldThemesSetting,
+  SettingsProvider,
+} from '../settings.svelte';
+import { removeEmptyProperties } from 'src/utils/data';
+import { nilToUndefined } from 'src/utils/formatting';
+import type { FilterDescription } from 'src/foundry/dnd5e.types';
+import { Theme } from 'src/theme/theme';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { ThemeImportService } from 'src/theme/theme-import-service';
+import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
+import { promptTextFileInput } from 'src/utils/file';
+import { CONSTANTS } from 'src/constants';
+
+export type WorldThemeSettingEntry = WorldThemeSetting & {
+  folder: string;
+  /** Limits the theme to compendium documents, excluding the sidebar, unlinked tokens, etc. */
+  compendiumOnly: boolean;
+  /** Compendium pack IDs whose documents are included. */
+  compendia: string[];
+  themeMode?: string;
+};
+
+export type WorldThemesSettingsContext = {
+  settings: WorldThemeSettingEntry[];
+  options: {
+    applyThemeToEmbeddedDocuments: boolean;
+  };
+};
+
+export type WorldThemesSettingsEditor =
+  SettingsEditor<WorldThemesSettingsContext> & {
+    addTheme(): any;
+    addDefaultWorldTheme(): WorldThemeSettingEntry;
+    applySelection(node: ThemeDocumentNameNode, selected: string[]): void;
+    toggleType(node: ThemeDocumentNameNode, type: string): void;
+    promptForThemePreset(): Promise<WorldThemeSetting | undefined>;
+    deleteTheme(id: string): any;
+    duplicate(theme: WorldThemeSetting): any;
+    rarities: ThemeColorSettingOption[];
+    spellMethods: ThemeColorSettingOption[];
+    compendia: { text: string; value: string }[];
+    addCompendium(packId: string): void;
+    import(themeToOverride?: WorldThemeSetting): Promise<any>;
+    importBundle(): Promise<any>;
+    processImportFile(
+      file: File,
+      themeToOverride?: WorldThemeSetting,
+    ): Promise<any>;
+    processImportFiles(files: File[]): Promise<any>;
+    export(themeToExport?: WorldThemeSetting): Promise<any>;
+    exportBundle(): Promise<any>;
+    removeCompendium(packId: string): void;
+    documentTypeTree: ThemeDocumentNameNode[];
+    applyBasicFilters(): void;
+    setFilter(filter: string | undefined): void;
+    selectTheme(id: string | undefined): void;
+    /** Returns to the theme list. */
+    closeTheme(): void;
+    changeFilterMode(filterMode: WorldThemeSetting['filterMode']): Promise<any>;
+    get selectedTheme(): WorldThemeSettingEntry | undefined;
+    get updateSignal(): string;
+  };
+
+/** Trims, ensures a leading slash, and drops trailing slashes. Returns '' for no folder. */
+function normalizeFolderPath(path: string): string {
+  const trimmed = path.trim().replace(/\/+$/, '');
+  if (!trimmed) {
+    return '';
+  }
+  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+}
+
+/**
+ * Matches the folder itself or anything nested beneath it.
+ * The trailing slash on the prefix keeps "/Goblins" from matching a sibling like "/Goblins Elite".
+ */
+function buildFolderFilter(folder: string): FilterDescription {
+  return {
+    o: 'OR',
+    v: [
+      { k: 'folder', v: folder },
+      { k: 'folder', o: 'startswith', v: `${folder}/` },
+    ],
+  };
+}
+
+function buildBasicFilter(entry: WorldThemeSettingEntry): FilterDescription[] {
+  const filter: FilterDescription[] = [];
+
+  const folder = normalizeFolderPath(entry.folder);
+  if (folder) {
+    filter.push(buildFolderFilter(folder));
+  }
+
+  if (entry.themeMode) {
+    filter.push({ k: 'themeMode', v: entry.themeMode });
+  }
+
+  // Document sources are alternatives. `compendiumOnly` without any choices applies to all compendia.
+  const sources: FilterDescription[] = [
+    ...entry.compendia.map((packId) => ({ k: 'document.pack', v: packId })),
+  ];
+
+  if (!entry.compendiumOnly && sources.length) {
+    sources.push({ k: 'document.pack', v: null });
+  }
+
+  if (sources.length === 1) {
+    filter.push(sources[0]);
+  } else if (sources.length > 1) {
+    filter.push({ o: 'OR', v: sources });
+  }
+
+  return filter;
+}
+
+const documentSourceKeys = new Set(['document.inCompendium', 'document.pack']);
+
+function toFilterList(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): FilterDescription[] {
+  return Array.isArray(filter) ? filter : filter ? [filter] : [];
+}
+
+/** Reads the document source fields back out of a basic filter. */
+function findDocumentSources(
+  filter: FilterDescription | FilterDescription[] | undefined,
+): Pick<WorldThemeSettingEntry, 'compendiumOnly' | 'compendia'> {
+  const entries = toFilterList(filter);
+
+  const sources = entries.flatMap((entry) => {
+    if (entry.k && documentSourceKeys.has(entry.k)) {
+      return [entry];
+    }
+
+    const isSourceGroup =
+      entry.o === 'OR' &&
+      Array.isArray(entry.v) &&
+      entry.v.every(
+        (f: FilterDescription) => !!f.k && documentSourceKeys.has(f.k),
+      );
+
+    return isSourceGroup ? (entry.v as FilterDescription[]) : [];
+  });
+
+  return {
+    compendiumOnly:
+      sources.length > 0 &&
+      !sources.some((f) => f.k === 'document.pack' && f.v === null),
+    compendia: sources
+      .filter((f) => f.k === 'document.pack' && typeof f.v === 'string')
+      .map((f) => f.v),
+  };
+}
+
+function stringifyBasicFilter(
+  entry: WorldThemeSettingEntry,
+): string | undefined {
+  const filter = buildBasicFilter(entry);
+
+  if (!filter.length) {
+    return undefined;
+  }
+
+  return JSON.stringify(filter, null, '  ');
+}
+
+/**
+ * Finds the value for a key in a basic filter.
+ * Also checks inside OR groups, which is where the folder check lives.
+ */
+function findBasicFilterValue(
+  filter: FilterDescription | FilterDescription[] | undefined,
+  key: string,
+): any {
+  for (const entry of toFilterList(filter)) {
+    if (entry.k === key) {
+      return entry.v;
+    }
+
+    if (entry.o === 'OR' && Array.isArray(entry.v)) {
+      const nested = entry.v.find((f: FilterDescription) => f.k === key);
+      if (nested) {
+        return nested.v;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/** Feels like a hack, but get every document when nothing or everything is selected.. */
+function getAllThemeDocumentNames(): string[] {
+  return getDocumentTypeTree().map((node) => node.documentName);
+}
+
+export function getWorldThemesSettingsEditor(): WorldThemesSettingsEditor {
+  const current = $state<WorldThemesSettingsContext>(getSettings());
+
+  let initialSnapshot = $state<string>(JSON.stringify(snapshotConfig(current)));
+
+  function getFirstItemBySort(settings: WorldThemeSettingEntry[]) {
+    return settings.toSorted((a, b) => a.sort - b.sort)[0];
+  }
+
+  let selectedTheme = $state<WorldThemeSettingEntry | undefined>();
+
+  let updateSignal = $state(foundry.utils.randomID());
+
+  const hasChanges = $derived(
+    JSON.stringify(snapshotConfig(current)) !== initialSnapshot,
+  );
+
+  function snapshotConfig(config: WorldThemesSettingsContext) {
+    return $state.snapshot(config);
+  }
+
+  function mapFromSettings(
+    source: WorldThemesSetting,
+  ): WorldThemesSettingsContext {
+    const settings = Object.values(source ?? {}).map((setting) => {
+      const formData: WorldThemeSettingEntry = {
+        ...setting,
+        // Nothing selected = everything selected.
+        documentNames: setting.documentNames?.length
+          ? setting.documentNames
+          : getAllThemeDocumentNames(),
+        folder: '',
+        compendiumOnly: false,
+        compendia: [],
+        themeMode: undefined,
+      };
+
+      refreshBasicFilterFields(formData);
+
+      if (formData.filterMode === 'basic') {
+        formData.filter = stringifyBasicFilter(formData);
+      }
+
+      return formData;
+    });
+
+    const applyThemeToEmbeddedDocuments =
+      SettingsProvider.settings.applyThemeToEmbeddedDocuments.get();
+
+    const context: WorldThemesSettingsContext = {
+      settings: settings,
+      options: {
+        applyThemeToEmbeddedDocuments,
+      },
+    };
+
+    return context;
+  }
+
+  function getSettings(): WorldThemesSettingsContext {
+    const source = getEffectiveWorldThemesSetting();
+
+    Object.values(source).forEach((s) => {
+      s.settings.rarityColors ??= {};
+      s.settings.spellPreparationMethodColors ??= {};
+    });
+
+    return mapFromSettings(source);
+  }
+
+  function mapContextToChangedSettings(
+    context: WorldThemesSettingsContext,
+  ): WorldThemesSetting {
+    let worldDefault: WorldThemeSetting | undefined;
+
+    const mapped = context.settings.reduce<WorldThemesSetting>((prev, curr) => {
+      const { folder, compendiumOnly, compendia, themeMode, ...changed } =
+        foundry.utils.duplicate(curr) as WorldThemeSettingEntry;
+      changed.filter =
+        curr.filterMode === 'basic'
+          ? stringifyBasicFilter(curr)
+          : nilToUndefined(changed.filter);
+      changed.documentNames = changed.documentNames?.length
+        ? changed.documentNames
+        : undefined;
+      changed.types = changed.types?.length ? changed.types : undefined;
+      changed.settings = removeEmptyProperties(changed.settings);
+
+      // There can be only one world default 🗡️
+      if (changed.isWorldDefault) {
+        worldDefault ??= changed;
+      } else {
+        prev[curr.id] = changed;
+      }
+
+      return prev;
+    }, {});
+
+    if (worldDefault) {
+      mapped[worldDefault.id] = worldDefault;
+    }
+
+    return mapped;
+  }
+
+  function parseFilter(
+    raw: string | undefined,
+  ): FilterDescription | FilterDescription[] | undefined {
+    if (!raw) {
+      return undefined;
+    }
+
+    try {
+      return JSON.parse(raw);
+    } catch {
+      // Failure is an option. Ignore.
+      return undefined;
+    }
+  }
+
+  /** Populates the basic inputs as a facade over the filter, as best it can. */
+  function refreshBasicFilterFields(
+    entry: WorldThemeSettingEntry,
+    filter = parseFilter(entry.filter),
+  ) {
+    entry.folder = findBasicFilterValue(filter, 'folder') ?? '';
+    entry.themeMode = findBasicFilterValue(filter, 'themeMode');
+    const sources = findDocumentSources(filter);
+    entry.compendiumOnly = sources.compendiumOnly;
+    entry.compendia = sources.compendia;
+  }
+
+  return {
+    applySelection(node: ThemeDocumentNameNode, selected: string[]) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      const result = setEffectiveTypeSelection(
+        this.documentTypeTree,
+        node,
+        selectedTheme,
+        selected,
+      );
+      selectedTheme.documentNames = result.documentNames;
+      selectedTheme.types = result.types;
+    },
+
+    toggleType(node: ThemeDocumentNameNode, type: string) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      const current = getSelectedDocumentTypes(node, selectedTheme);
+      this.applySelection(
+        node,
+        current.includes(type)
+          ? current.filter((t) => t !== type)
+          : [...current, type],
+      );
+    },
+
+    async promptForThemePreset(): Promise<WorldThemeSetting | undefined> {
+      const options = current.settings
+        .map((s) => ({ value: s.id, label: s.name }))
+        .toSorted((a, b) => a.label.localeCompare(b.label));
+
+      const selectedId = await TidyDialog.chooseOne({
+        title: 'TIDY5E.COMMON.Theme.ChooseAPreset.Title',
+        message: 'TIDY5E.COMMON.Theme.ChooseAPreset.Content',
+        options,
+      });
+
+      return this.value.settings.find((s) => s.id === selectedId);
+    },
+
+    addTheme(): any {
+      const maxSort = this.value.settings.reduce(
+        (prev, curr) => Math.max(prev, curr.sort),
+        0,
+      );
+
+      const settingId = foundry.utils.randomID();
+
+      const entry: WorldThemeSettingEntry = {
+        filterMode: 'basic',
+        id: settingId,
+        name: FoundryAdapter.localize('TIDY5E.COMMON.Theme.NewTheme'),
+        isWorldDefault: false,
+        settings: Theme.getDefaultThemeSettings(),
+        sort: maxSort + 1,
+        documentNames: getAllThemeDocumentNames(),
+        filter: undefined,
+        types: [],
+        folder: '',
+        compendiumOnly: false,
+        compendia: [],
+        themeMode: undefined,
+      };
+      entry.filter = stringifyBasicFilter(entry);
+
+      this.value.settings.push(entry);
+
+      return entry;
+    },
+
+    addDefaultWorldTheme(): WorldThemeSettingEntry {
+      const entry: WorldThemeSettingEntry = this.addTheme();
+      entry.name = FoundryAdapter.localize('TIDY5E.SETTINGS.Theme.World.Title');
+      entry.isWorldDefault = true;
+      return entry;
+    },
+
+    applyBasicFilters() {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.filterMode = 'basic';
+      selectedTheme.filter = stringifyBasicFilter(selectedTheme);
+    },
+
+    async import(themeToOverride?: WorldThemeSetting) {
+      const files = await promptTextFileInput({
+        accept: CONSTANTS.THEME_EXTENSION_WITH_DOT,
+        multiple: false,
+      });
+
+      if (files?.length !== 1) {
+        return;
+      }
+
+      const file = files[0];
+
+      this.processImportFile(file, themeToOverride ?? selectedTheme);
+    },
+
+    async processImportFile(file: File, themeToOverride?: WorldThemeSetting) {
+      const toImport = await ThemeImportService.import(file);
+
+      if (!toImport) {
+        return;
+      }
+
+      const { sort, id, isWorldDefault, ...rest } = toImport;
+      themeToOverride ??= this.addTheme();
+
+      foundry.utils.mergeObject(themeToOverride, rest);
+    },
+
+    async importBundle() {
+      const files = await promptTextFileInput({
+        accept: `${CONSTANTS.THEME_EXTENSION_WITH_DOT}, ${CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT}`,
+        multiple: true,
+      });
+
+      this.processImportFiles(files);
+    },
+
+    async processImportFiles(files: File[]) {
+      const themes: WorldThemeSetting[] = [];
+      for (const file of files) {
+        if (
+          file.name
+            .trim()
+            .toLowerCase()
+            .endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT)
+        ) {
+          const toImport = await ThemeImportService.import(file);
+
+          if (toImport) {
+            themes.push(toImport);
+          }
+
+          continue;
+        }
+
+        if (
+          file.name
+            .trim()
+            .toLowerCase()
+            .endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+        ) {
+          themes.push(...(await ThemeImportService.importBundle(file)));
+        }
+      }
+
+      if (!themes.length) {
+        return;
+      }
+
+      const toImport =
+        themes.length === 1
+          ? themes
+          : await TidyDialog.chooseMultiple({
+              title: 'TIDY5E.SETTINGS.Theme.Action.ImportBundle',
+              message: 'TIDY5E.SETTINGS.Theme.Action.SelectToImport',
+              options: themes.map((theme) => ({
+                label: theme.name,
+                value: theme,
+              })),
+            });
+
+      for (const theme of toImport) {
+        const { sort, id, isWorldDefault, ...rest } = theme;
+        const newTheme = this.addTheme();
+        foundry.utils.mergeObject(newTheme, rest);
+      }
+
+      await this.save();
+    },
+
+    async duplicate(theme: WorldThemeSetting) {
+      const newTheme = this.addTheme();
+      const { sort, id, isWorldDefault, ...rest } = theme;
+
+      foundry.utils.mergeObject(newTheme, {
+        ...rest,
+        name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+          name: rest.name,
+        }),
+      });
+
+      console.log(selectedTheme);
+
+      if (selectedTheme) {
+        selectedTheme = newTheme;
+      }
+    },
+
+    async export(themeToExport?: WorldThemeSetting) {
+      themeToExport ??= selectedTheme;
+
+      if (!themeToExport) {
+        return;
+      }
+
+      const worldSetting: WorldThemeSetting = mapThemeForExport(themeToExport);
+
+      ThemeImportService.export(worldSetting);
+    },
+
+    async exportBundle() {
+      const themes = this.value.settings.map(mapThemeForExport);
+
+      const toExport = await TidyDialog.chooseMultiple({
+        title: 'TIDY5E.SETTINGS.Theme.Action.ExportBundle',
+        message: 'TIDY5E.SETTINGS.Theme.Action.SelectToExport',
+        options: themes.map((theme) => ({
+          label: theme.name,
+          value: theme,
+        })),
+      });
+
+      if (toExport.length) {
+        ThemeImportService.exportBundle(toExport);
+      }
+    },
+
+    setFilter(filter: string | undefined) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.filter = filter?.trim() || undefined;
+
+      if (selectedTheme.filterMode === 'advanced') {
+        return;
+      }
+
+      const parsed = parseFilter(selectedTheme.filter);
+      refreshBasicFilterFields(selectedTheme, parsed);
+
+      // If the fields can reproduce this filter exactly, keep them in charge.
+      // Otherwise it's a custom filter, saved as-is until a field is changed.
+      const reproducible =
+        !!parsed &&
+        JSON.stringify(buildBasicFilter(selectedTheme)) ===
+          JSON.stringify(parsed);
+
+      selectedTheme.filterMode = reproducible ? 'basic' : 'advanced';
+    },
+
+    async changeFilterMode(
+      filterMode: WorldThemeSetting['filterMode'],
+    ): Promise<any> {
+      if (!selectedTheme) {
+        return;
+      }
+
+      if (filterMode === 'basic') {
+        const proceed = await foundry.applications.api.DialogV2.confirm({
+          window: {
+            title: FoundryAdapter.localize(
+              'TIDY5E.COMMON.Theme.BasicFilterConfirmTitle',
+            ),
+          },
+          content: `<p>${FoundryAdapter.localize('TIDY5E.COMMON.Theme.BasicFilterConfirmText')}</p>`,
+        });
+
+        if (!proceed) {
+          return;
+        }
+
+        selectedTheme.filter = undefined;
+        refreshBasicFilterFields(selectedTheme);
+      }
+
+      selectedTheme.filterMode = filterMode;
+    },
+
+    deleteTheme(id: string): any {
+      this.value.settings = this.value.settings
+        .filter((t) => t.id !== id)
+        .sort((a, b) => a.sort - b.sort);
+
+      // Renumber the sort.
+      for (let i = 0; i < this.value.settings.length; i++) {
+        this.value.settings[i].sort = i + 1;
+      }
+
+      // Go back to the theme list after deleting.
+      this.closeTheme();
+    },
+
+    rarities: getRarities(),
+
+    spellMethods: getSpellMethods(),
+
+    compendia: getCompendia(),
+
+    addCompendium(packId: string) {
+      if (
+        !selectedTheme ||
+        !packId ||
+        selectedTheme.compendia.includes(packId)
+      ) {
+        return;
+      }
+
+      selectedTheme.compendia = [...selectedTheme.compendia, packId];
+      this.applyBasicFilters();
+    },
+
+    removeCompendium(packId: string) {
+      if (!selectedTheme) {
+        return;
+      }
+
+      selectedTheme.compendia = selectedTheme.compendia.filter(
+        (c) => c !== packId,
+      );
+      this.applyBasicFilters();
+    },
+
+    get hasChanges() {
+      return hasChanges;
+    },
+
+    resetToDefault() {
+      this.value = mapFromSettings({});
+    },
+
+    get selectedTheme() {
+      return selectedTheme;
+    },
+
+    selectTheme(id: string | undefined) {
+      const themeOfId = this.value.settings.find((t) => t.id === id);
+
+      const fallback = this.value.settings.some(
+        (theme) => theme.id === this.selectedTheme?.id,
+      )
+        ? this.selectedTheme
+        : getFirstItemBySort(this.value.settings);
+
+      selectedTheme = themeOfId ?? fallback;
+    },
+
+    closeTheme() {
+      selectedTheme = undefined;
+    },
+
+    async save() {
+      const toSave = mapContextToChangedSettings(this.value);
+
+      FoundryAdapter.setTidySetting('worldThemes', toSave);
+      FoundryAdapter.setTidySetting(
+        'applyThemeToEmbeddedDocuments',
+        this.value.options.applyThemeToEmbeddedDocuments,
+      );
+
+      // Remove legacy world theme data now that themes have been saved at least once.
+      await getLegacyWorldThemeSettingSettingDocument()?.delete();
+
+      initialSnapshot = JSON.stringify(snapshotConfig(current));
+    },
+
+    documentTypeTree: getDocumentTypeTree(),
+
+    undoChanges() {
+      this.value = JSON.parse(initialSnapshot) as WorldThemesSettingsContext;
+      updateSignal = foundry.utils.randomID();
+    },
+
+    get canUndo() {
+      return this.hasChanges;
+    },
+
+    get updateSignal() {
+      return updateSignal;
+    },
+
+    canUseDefault: false,
+
+    async useDefault() {},
+
+    get value() {
+      return current;
+    },
+
+    set value(value) {
+      current.options = value.options;
+      current.settings = [...value.settings];
+    },
+  };
+}
+
+function mapThemeForExport(
+  themeToExport: WorldThemeSetting,
+): WorldThemeSetting {
+  return {
+    id: themeToExport.id,
+    filterMode: themeToExport.filterMode,
+    filter: themeToExport.filter,
+    name: themeToExport.name,
+    isWorldDefault: themeToExport.isWorldDefault,
+    settings: themeToExport.settings,
+    sort: themeToExport.sort,
+    documentNames: themeToExport.documentNames,
+    types: themeToExport.types,
+  };
+}

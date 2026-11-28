@@ -162,6 +162,7 @@
 
   formula-input {
     height: var(--t5e-field-size-default);
+    border: none;
 
     input[type='text'] {
       border-start-end-radius: 0;
@@ -174,6 +175,47 @@
 
     button.icon {
       --t5e-button-radius: 0 var(--t5e-size-halfx) var(--t5e-size-halfx) 0;
+    }
+
+    .icon::before {
+      transform: translateX(var(--t5e-size-1));
+    }
+  }
+
+  filters-input {
+    align-items: start;
+    align-self: stretch;
+    gap: var(--t5e-size-1x);
+
+    filters-breakdown {
+      min-height: var(--t5e-field-size-default);
+      color: var(--t5e-color-text-default);
+      overflow: hidden;
+      background: var(--t5e-component-field-background-disabled);
+      box-shadow: none;
+      border-color: transparent;
+      border-radius: var(--t5e-size-halfx);
+      padding-inline: var(--t5e-size-2x);
+
+      &.empty {
+        color: var(--t5e-color-text-disabled);
+        align-content: center;
+      }
+    }
+    
+    button[disabled] {
+      display: none;
+    }
+
+    button.icon {
+      --t5e-button-height: var(--t5e-field-size-default);
+      --t5e-button-radius: var(--t5e-size-halfx);
+      padding: 0;
+    }
+  }
+
+  :is(formula-input, filters-input) {
+    button.icon {
       --t5e-button-width: var(--t5e-field-size-default);
       --t5e-button-border-width: var(--t5e-size-1);
       --t5e-button-border: var(--t5e-component-field-border);
@@ -185,10 +227,6 @@
         --t5e-button-shadow: var(--t5e-drop-shadow-field-hover);
         --t5e-button-focus: var(--t5e-drop-shadow-field-hover);
       }
-    }
-
-    .icon::before {
-      transform: translateX(var(--t5e-size-1));
     }
 
     /* Core styles the host as a field; when disabled, let the inner input and button carry the disabled look. */
@@ -314,12 +352,12 @@
     &:hover,
     &:focus {
       input:not(:disabled) {
-        &:not(:checked) {
+        &:not(:is(:checked, :not(input[type='radio']):indeterminate)) {
           border-color: var(--t5e-component-field-border-hover);
           background: var(--t5e-component-field-background-hover);
         }
 
-        &:checked {
+        &:is(:checked, :not(input[type='radio']):indeterminate) {
           border-color: var(--t5e-theme-color-darker);
           background-color: var(--t5e-theme-color-darker);
           box-shadow: var(--t5e-drop-shadow-field-hover);
@@ -335,7 +373,7 @@
   }
 
   .checkbox {
-    &:has(input:disabled:not(:checked)) {
+    &:has(input:disabled:not(:is(:checked, :indeterminate))) {
       color: var(--t5e-color-text-lightest);
     }
   }
@@ -349,7 +387,7 @@
     box-shadow: var(--t5e-drop-shadow-field);
     transition: all var(--t5e-transition-default);
 
-    &:checked {
+    &:is(:checked, :not(input[type='radio']):indeterminate) {
       background-color: var(--t5e-component-toggle-toggled-background);
       border-color: var(--t5e-component-toggle-toggled-border);
       filter: none;
@@ -361,24 +399,24 @@
       border-color: transparent;
       box-shadow: none;
 
-      &:checked {
+      &:is(:checked, :not(input[type='radio']):indeterminate) {
         background-color: var(--t5e-component-toggle-toggled-background);
       }
     }
 
-    &:checked:hover:not(:disabled) {
+    &:is(:checked, :not(input[type='radio']):indeterminate):hover:not(:disabled) {
       border-color: var(--t5e-input-check-border-color-checked-hover);
     }
 
     &:focus:not(:disabled) {
       outline: var(--t5e-outline-field-focus);
 
-      &:not(:checked) {
+      &:not(:is(:checked, :not(input[type='radio']):indeterminate)) {
         border-color: var(--t5e-component-field-border-hover);
         background: var(--t5e-component-field-background-hover);
       }
 
-      &:checked {
+      &:is(:checked, :not(input[type='radio']):indeterminate) {
         border-color: var(--t5e-input-check-border-color-checked-focus);
         background-color: var(--t5e-theme-color-darker);
         box-shadow: var(--t5e-drop-shadow-field-hover);
@@ -436,11 +474,11 @@
       font-weight: var(--icon-weight-bold);
     }
 
-    &:checked {
+    &:is(:checked, :indeterminate) {
       display: inline-flex;
     }
 
-    &:checked::before {
+    &:is(:checked, :indeterminate)::before {
       content: '\f00c';
       color: var(--t5e-theme-color-foreground);
       font-family: 'Font Awesome 7 Pro',
@@ -448,14 +486,18 @@
         'Font Awesome 6 Pro';
     }
 
-    &:checked:disabled::before {
+    &:indeterminate::before {
+      content: '\2d';
+    }
+
+    &:is(:checked, :indeterminate):disabled::before {
       font-family: var(--font-awesome);
       content: '\f023';
       font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.72);
     }
 
-    &:not(:checked):disabled::before {
+    &:not(:is(:checked, :indeterminate)):disabled::before {
       content: '\e59b';
       color: var(--t5e-input-checkbox-disabled-icon-color);
     }

@@ -26,15 +26,15 @@ import type {
   SheetItemPinFlagData,
   SheetActivityPinFlagData,
 } from 'src/foundry/TidyFlags.types';
-import type { DataField } from 'foundry.data.fields';
+import type { DataField } from 'foundry-types';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   PortraitShape,
-  ThemeSettingsV3,
-} from 'src/theme/theme-quadrone.types';
+  ThemeSettings,
+} from 'src/theme/theme.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
@@ -590,12 +590,12 @@ export type SpecialTraits = {
 };
 
 // TODO: Try to eliminate this because it's already being
-export type DocumentSheetV2Context = {
+export type DocumentSheetV2Context<TDocument> = {
   config: typeof CONFIG.DND5E;
   /** The game world's default currency when a single currency is needed. */
   defaultCurrency: CurrencyItemConfig & { key: string };
   /** The document which the sheet represents. */
-  document: any;
+  document: TDocument;
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
@@ -606,6 +606,7 @@ export type DocumentSheetV2Context = {
   rootId: string;
   sheet: TidyExtensibleDocumentSheetMixinInstance;
   source: Record<string, any>;
+  themeSettings: ThemeSettings;
   /**
    * Tells whether the sheet is unlocked via the Sheet Mode feature.
    */
@@ -758,18 +759,6 @@ export type GroupableSelectOption = {
   group?: string;
 };
 
-/* Quadrone Types */
-export type DocumentSheetQuadroneContext<TDocument> = {
-  defaultCurrency: CurrencyItemConfig & { key: string };
-  document: TDocument;
-  editable: boolean;
-  fields: any;
-  rootId: string;
-  source: any;
-  unlocked: boolean;
-  user: any;
-};
-
 export type ActorSizeContext = {
   key: string;
   label: string;
@@ -858,11 +847,10 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
-  themeSettings: ThemeSettingsV3;
   token: TokenDocument | null;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
-} & DocumentSheetQuadroneContext<Actor5e>;
+} & DocumentSheetV2Context<Actor5e>;
 
 export type SingleActorContext<TSheet> = {
   abilities: ActorAbilityContextEntry[];

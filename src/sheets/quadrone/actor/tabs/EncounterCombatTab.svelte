@@ -8,7 +8,7 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { Theme } from 'src/theme/theme';
   import { observeResize } from 'src/features/resize-observation/attachments';
   import MemberActionsColumnHeader from '../../item/columns/MemberActionsColumnHeader.svelte';
   import RowActionsColumn from '../../item/columns/RowActionsColumn.svelte';
@@ -18,10 +18,6 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = $derived(getEncounterSheetQuadroneContext());
-  let isBasicTheme = $derived(
-    ThemeQuadrone.getSheetThemeSettings({ doc: context.document })
-      .useBasicTheme ?? false,
-  );
 
   const localize = FoundryAdapter.localize;
 
@@ -36,9 +32,7 @@
   <!-- Placement -->
   {#if context.editable}
     <section class="combat-sidebar-section combat-placement">
-      <h4
-        class="font-label-medium bordered"
-      >
+      <h4 class="font-label-medium bordered">
         <i class="fa-solid fa-street-view"></i>
         {localize('SETTINGS.DND5E.ENCOUNTERS.EncounterPlacementBehavior.Name')}
       </h4>
@@ -128,7 +122,9 @@
           class="button button-add-placeholder"
           data-action="addNewPlaceholder"
           data-tooltip="TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative"
-          aria-label={localize('TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative')}
+          aria-label={localize(
+            'TIDY5E.ENCOUNTER.Placeholder.Action.AddAtInitiative',
+          )}
         >
           {localize('DND5E.None')}
         </button>
@@ -150,7 +146,9 @@
           onclick={() => context.sheet._browseAddNpc()}
         >
           <i class="fas fa-plus"></i>
-          {localize('TIDY5E.COMMON.Action.AddNamed', { name: localize('DND5E.Group.Member.one') })}
+          {localize('TIDY5E.COMMON.Action.AddNamed', {
+            name: localize('DND5E.Group.Member.one'),
+          })}
         </button>
       </div>
     {/if}
@@ -179,7 +177,9 @@
           data-custom-section={section.custom ? true : null}
         >
           {#snippet header()}
-            <TidyTableHeaderRow class={!isBasicTheme ? 'theme-dark' : ''}>
+            <TidyTableHeaderRow
+              class={!context.themeSettings.useBasicTheme ? 'theme-dark' : ''}
+            >
               <TidyTableHeaderCell primary={true}>
                 <h3>
                   {localize(section.label)}
