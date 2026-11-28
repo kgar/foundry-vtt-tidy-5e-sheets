@@ -10,6 +10,7 @@
   import ThemeSettings from './parts/ThemeSettings.svelte';
   import { CONSTANTS } from 'src/constants';
   import { untrack } from 'svelte';
+  import { getFilesFromDropEvent } from 'src/utils/file';
 
   interface Props {
     app: ThemeSettingsEditor;
@@ -54,9 +55,26 @@
 
     app.value = app.mapFromSettings(preset.settings);
   }
+
+  async function onDrop(event: DragEvent & { currentTarget: HTMLElement }) {
+    let files = getFilesFromDropEvent(event);
+
+    if (files.length !== 1) {
+      return;
+    }
+
+    const file = files[0];
+
+    if (
+      file.name.trim().endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT) ||
+      file.name.trim().endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
+    ) {
+      await app.processImportFile(file);
+    }
+  }
 </script>
 
-<div class="dialog-content-container flexcol" role="region">
+<div class="dialog-content-container flexcol" role="region" ondrop={onDrop}>
   <div class="flexrow flexgap-1">
     <h2>
       {localize('TIDY5E.SETTINGS.Theme.Menu.name')}

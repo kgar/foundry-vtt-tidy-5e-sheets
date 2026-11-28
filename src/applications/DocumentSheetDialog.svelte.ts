@@ -17,7 +17,7 @@ export function DocumentSheetDialog<
   return class DocumentSheetDialog extends getSvelteApplicationMixin<
     Partial<DocumentSheetConfiguration> & { document: any },
     TContext
-  >(getDragAndDropMixin(foundry.applications.api.DocumentSheetV2)) {
+  >(foundry.applications.api.DocumentSheetV2) {
     constructor(options: TConstructorArgs) {
       super(options);
     }

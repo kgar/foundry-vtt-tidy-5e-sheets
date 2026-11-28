@@ -54,6 +54,10 @@
   async function onThemeDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLButtonElement },
   ) {
+    if (draggedIndex === undefined) {
+      return;
+    }
+
     event.preventDefault();
 
     const sourceIndex = draggedIndex;

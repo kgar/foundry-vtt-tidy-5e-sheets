@@ -59,8 +59,6 @@ import {
   type SectionOptionGroup,
 } from 'src/settings/editors/sheet-tab-options-settings-editor.svelte';
 import { WorldSettingsQuadroneApplication } from '../world/TidyWorldSettingsQuadroneApplication.svelte';
-import { getFilesFromDropEvent } from 'src/utils/file';
-import { TidyDialog } from 'src/features/dialog/TidyDialog.svelte';
 
 type SheetSettingsRuntimeAdapter = {
   getAllRegisteredTabs(): RegisteredTab<any>[];
@@ -510,29 +508,5 @@ export class TidySheetSettingsQuadroneApplication
     }
 
     await super.close(options);
-  }
-
-  /* -------------------------------------------- */
-  /*  Drag and Drop                               */
-  /* -------------------------------------------- */
-
-  async _onDrop(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    _currentDragData: Record<string, any> | undefined,
-  ): Promise<any> {
-    let files = getFilesFromDropEvent(event);
-
-    if (files.length === 1) {
-      await this._handleSingleFileDrop(files[0]);
-    }
-  }
-
-  async _handleSingleFileDrop(file: File) {
-    if (
-      file.name.trim().endsWith(CONSTANTS.THEME_EXTENSION_WITH_DOT) ||
-      file.name.trim().endsWith(CONSTANTS.THEME_BUNDLE_EXTENSION_WITH_DOT)
-    ) {
-      await this.themeSettingsTab.processImportFile(file);
-    }
   }
 }
