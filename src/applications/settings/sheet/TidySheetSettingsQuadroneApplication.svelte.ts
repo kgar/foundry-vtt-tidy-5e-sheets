@@ -520,9 +520,6 @@ export class TidySheetSettingsQuadroneApplication
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     _currentDragData: Record<string, any> | undefined,
   ): Promise<any> {
-    // TODO: Handle theme sorting here instead of in the component.
-
-    // World Theme Files
     let files = getFilesFromDropEvent(event);
 
     if (files.length === 1) {
