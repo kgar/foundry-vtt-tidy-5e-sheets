@@ -57,7 +57,6 @@ export class Inventory {
         }Pl`,
         show: true,
         custom: undefined,
-        isExternal: false,
         sectionActions: [],
         columns: InventoryColumnRuntime.getColumnSpecifications({
           ...columnOptions,

@@ -486,7 +486,6 @@ export class Tidy5eCharacterSheetQuadrone extends getTidy5eActorSheetQuadroneBas
           creationItemTypes: [],
           section: key,
         },
-        isExternal: false,
         show: true,
         canCreate: false,
         sectionActions: [],
